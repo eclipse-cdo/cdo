@@ -22,7 +22,7 @@ import java.util.Map;
 
 /**
  * Represents the CDO-specific URI data needed to access a resource in a repository.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  */
@@ -31,6 +31,11 @@ public final class CDOURIData
   public static final String BRANCH_PARAMETER = "branch";
 
   public static final String TIME_PARAMETER = "time";
+
+  /**
+   * @since 4.1
+   */
+  public static final String VIEW_ID_PARAMETER = "view";
 
   public static final String TRANSACTIONAL_PARAMETER = "transactional";
 
@@ -49,6 +54,8 @@ public final class CDOURIData
   private IPath branchPath = new Path(CDOBranch.MAIN_BRANCH_NAME);
 
   private long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
+
+  private String viewID;
 
   private boolean transactional;
 
@@ -105,6 +112,8 @@ public final class CDOURIData
             timeStamp = Long.parseLong(time);
           }
         }
+
+        viewID = parameters.get(VIEW_ID_PARAMETER);
 
         String transactional = parameters.get(TRANSACTIONAL_PARAMETER);
         if (transactional != null)
@@ -234,6 +243,22 @@ public final class CDOURIData
     this.timeStamp = timeStamp;
   }
 
+  /**
+   * @since 4.1
+   */
+  public String getViewID()
+  {
+    return viewID;
+  }
+
+  /**
+   * @since 4.1
+   */
+  public void setViewID(String viewID)
+  {
+    this.viewID = viewID;
+  }
+
   public boolean isTransactional()
   {
     return transactional;
@@ -292,6 +317,14 @@ public final class CDOURIData
       builder.append(TIME_PARAMETER);
       builder.append("=");
       builder.append(timeStamp);
+    }
+
+    if (viewID != null)
+    {
+      builder.append(params++ == 0 ? "?" : "&");
+      builder.append(VIEW_ID_PARAMETER);
+      builder.append("=");
+      builder.append(viewID);
     }
 
     if (transactional)

@@ -33,7 +33,7 @@ import java.util.Date;
 
 /**
  * A {@link CDOViewProvider view provider} that uses Net4j-specific CDO {@link CDONet4jSession sessions} to open views.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  */
@@ -52,7 +52,19 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
     CDOURIData data = new CDOURIData(uri);
 
     IConnector connector = getConnector(data.getAuthority());
-    CDONet4jSession session = getSession(connector, data.getUserName(), data.getPassWord(), data.getRepositoryName());
+    CDONet4jSession session = getNet4jSession(connector, data.getUserName(), data.getPassWord(),
+        data.getRepositoryName());
+
+    String viewID = data.getViewID();
+    if (viewID != null)
+    {
+      if (data.isTransactional())
+      {
+        return session.openTransaction(viewID, resourceSet);
+      }
+
+      return session.openView(viewID, resourceSet);
+    }
 
     String branchPath = data.getBranchPath().toPortableString();
     CDOBranch branch = session.getBranchManager().getBranch(branchPath);
@@ -146,7 +158,8 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   protected CDONet4jSession getNet4jSession(IConnector connector, String userName, String passWord,
       String repositoryName)
   {
-    CDONet4jSessionConfiguration configuration = getSessionConfiguration(connector, userName, passWord, repositoryName);
+    CDONet4jSessionConfiguration configuration = getNet4jSessionConfiguration(connector, userName, passWord,
+        repositoryName);
     return configuration.openNet4jSession();
   }
 
@@ -234,7 +247,7 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
 
   /**
    * A TCP-based {@link CDONet4jViewProvider view provider}.
-   * 
+   *
    * @author Eike Stepper
    */
   public static class TCP extends CDONet4jViewProvider
@@ -253,7 +266,7 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
 
   /**
    * An SSL-based {@link CDONet4jViewProvider view provider}.
-   * 
+   *
    * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
    */
   public static class SSL extends CDONet4jViewProvider
@@ -272,7 +285,7 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
 
   /**
    * A JVM-based {@link CDONet4jViewProvider view provider}.
-   * 
+   *
    * @author Eike Stepper
    */
   public static class JVM extends CDONet4jViewProvider

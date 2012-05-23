@@ -1,8 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.dawn.examples.acore.graphiti;singleton:=true
 Bundle-Version: 1.0.0.qualifier
+Bundle-Localization: plugin
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
 Bundle-Activator: org.eclipse.emf.cdo.dawn.examples.acore.graphiti.Activator
 Require-Bundle: org.eclipse.ui;bundle-version="[3.6.0,4.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
@@ -21,4 +23,3 @@ Export-Package: org.eclipse.emf.cdo.dawn.examples.acore.graphiti;version="1.0.0"
  org.eclipse.emf.cdo.dawn.examples.acore.graphiti.diagram;version="1.0.0",
  org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features;version="1.0.0",
  org.eclipse.emf.cdo.dawn.examples.acore.graphiti.util;version="1.0.0"
-Bundle-Vendor: %providerName

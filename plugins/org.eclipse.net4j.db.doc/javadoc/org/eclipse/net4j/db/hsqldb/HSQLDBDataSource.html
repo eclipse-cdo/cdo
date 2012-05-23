@@ -76,7 +76,7 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.hsqldb.jdbc.JDBCCommonDataSource">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
 DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
@@ -93,8 +93,9 @@ org.eclipse.net4j.db.hsqldb</FONT>
 Class HSQLDBDataSource</H2>
 <PRE>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
-  <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by ">org.hsqldb.jdbc.jdbcDataSource
-      <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.db.hsqldb.HSQLDBDataSource</B>
+  <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by ">org.hsqldb.jdbc.JDBCCommonDataSource
+      <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by ">org.hsqldb.jdbc.JDBCDataSource
+          <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.db.hsqldb.HSQLDBDataSource</B>
 </PRE>
 <DL>
 <DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Wrapper.html?is-external=true" title="class or interface in java.sql">Wrapper</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/naming/Referenceable.html?is-external=true" title="class or interface in javax.naming">Referenceable</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/CommonDataSource.html?is-external=true" title="class or interface in javax.sql">CommonDataSource</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</A></DD>
@@ -102,11 +103,11 @@ Class HSQLDBDataSource</H2>
 <HR>
 <DL>
   <DT>public class <B>HSQLDBDataSource</B>
-  <DD>extends org.hsqldb.jdbc.jdbcDataSource
+  <DD>extends org.hsqldb.jdbc.JDBCDataSource
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" title="jdbcDataSource (org.hsqldb.jdbc)" alt="" coords="17,5,135,45"/>
+<area shape="rect" id="node1" title="JDBCDataSource (org.hsqldb.jdbc)" alt="" coords="15,5,137,45"/>
 <area shape="rect" id="node2" href="HSQLDBDataSource.html" title="HSQLDBDataSource" alt="" coords="5,85,147,110"/>
 </map>
 
@@ -120,7 +121,25 @@ Class HSQLDBDataSource</H2>
 <HR>
 
 <P>
+<!-- =========== FIELD SUMMARY =========== -->
 
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.hsqldb.jdbc.JDBCCommonDataSource"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from class org.hsqldb.jdbc.JDBCCommonDataSource</B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>connectionProps, dataSourceName, description, loginTimeout, logWriter, networkProtocol, password, serverName, url, user</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 
 <A NAME="constructor_summary"><!-- --></A>
@@ -154,13 +173,22 @@ Class HSQLDBDataSource</H2>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_org.hsqldb.jdbc.jdbcDataSource"><!-- --></A>
+&nbsp;<A NAME="methods_inherited_from_class_org.hsqldb.jdbc.JDBCDataSource"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class org.hsqldb.jdbc.jdbcDataSource</B></TH>
+<TH ALIGN="left"><B>Methods inherited from class org.hsqldb.jdbc.JDBCDataSource</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE>getConnection, getConnection, getDatabase, getLoginTimeout, getLogWriter, getReference, getUser, setDatabase, setLoginTimeout, setLogWriter, setPassword, setUser</CODE></TD>
+<TD><CODE>getConnection, getConnection, getReference, isWrapperFor, unwrap</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.hsqldb.jdbc.JDBCCommonDataSource"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.hsqldb.jdbc.JDBCCommonDataSource</B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>getDatabase, getDatabaseName, getDataSourceName, getDescription, getLoginTimeout, getLogWriter, getNetworkProtocol, getParentLogger, getServerName, getUrl, getUser, setDatabase, setDatabaseName, setDataSourceName, setDescription, setLoginTimeout, setLogWriter, setNetworkProtocol, setPassword, setProperties, setServerName, setUrl, setUser</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -172,13 +200,13 @@ Class HSQLDBDataSource</H2>
 <TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
 </TR>
 </TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_java.sql.Wrapper"><!-- --></A>
+&nbsp;<A NAME="methods_inherited_from_class_javax.sql.CommonDataSource"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface java.sql.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Wrapper.html?is-external=true" title="class or interface in java.sql">Wrapper</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from interface javax.sql.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/CommonDataSource.html?is-external=true" title="class or interface in javax.sql">CommonDataSource</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Wrapper.html?is-external=true#isWrapperFor(java.lang.Class)" title="class or interface in java.sql">isWrapperFor</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Wrapper.html?is-external=true#unwrap(java.lang.Class)" title="class or interface in java.sql">unwrap</A></CODE></TD>
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/CommonDataSource.html?is-external=true#getLoginTimeout()" title="class or interface in javax.sql">getLoginTimeout</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/CommonDataSource.html?is-external=true#getLogWriter()" title="class or interface in javax.sql">getLogWriter</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/CommonDataSource.html?is-external=true#setLoginTimeout(int)" title="class or interface in javax.sql">setLoginTimeout</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/CommonDataSource.html?is-external=true#setLogWriter(java.io.PrintWriter)" title="class or interface in javax.sql">setLogWriter</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -274,7 +302,7 @@ public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Strin
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.hsqldb.jdbc.JDBCCommonDataSource">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
 DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>

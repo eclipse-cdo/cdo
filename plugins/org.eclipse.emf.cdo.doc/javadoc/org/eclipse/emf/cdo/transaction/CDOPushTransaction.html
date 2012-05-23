@@ -55,7 +55,7 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.ConflictException.html" title="class in org.eclipse.emf.cdo.transaction"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html" title="class in org.eclipse.emf.cdo.transaction"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/transaction/CDOPushTransaction.html" target="_top"><B>FRAMES</B></A>  &nbsp;
@@ -97,7 +97,7 @@ Class CDOPushTransaction</H2>
       <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.emf.cdo.transaction.CDOPushTransaction</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonTransaction.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonTransaction</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetDataProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetDataProvider</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</A>, <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonTransaction.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonTransaction</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetDataProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetDataProvider</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</A>, <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A></DD>
 </DL>
 <HR>
 <DL>
@@ -456,6 +456,14 @@ A <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" t
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOSavepoint</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#getFirstSavepoint()">getFirstSavepoint</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;long</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#getLastCommitTime()">getLastCommitTime</A></B>()</CODE>
 
@@ -619,6 +627,14 @@ T</CODE></FONT></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#getSessionID()">getSessionID</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;long</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#getTimeStamp()">getTimeStamp</A></B>()</CODE>
 
@@ -724,6 +740,14 @@ T</CODE></FONT></TD>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <code>true</code> if this transaction is not closed and contains uncommitted changes, <code>false</code>
  otherwise.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#isDurableView()">isDurableView</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -1648,6 +1672,22 @@ public <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.h
 </DL>
 <HR>
 
+<A NAME="getFirstSavepoint()"><!-- --></A><H3>
+getFirstSavepoint</H3>
+<PRE>
+public <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOSavepoint</A> <B>getFirstSavepoint</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#getFirstSavepoint()">getFirstSavepoint</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="getLastSavepoint()"><!-- --></A><H3>
 getLastSavepoint</H3>
 <PRE>
@@ -1947,7 +1987,7 @@ getDurableLockingID</H3>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getDurableLockingID</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html#getDurableLockingID()">getDurableLockingID</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html#getDurableLockingID()">getDurableLockingID</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</A></CODE><DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html#getDurableLockingID()">getDurableLockingID</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</A></CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Since:</B></DT>
@@ -2003,16 +2043,50 @@ public <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHan
 </DL>
 <HR>
 
+<A NAME="getSessionID()"><!-- --></A><H3>
+getSessionID</H3>
+<PRE>
+public int <B>getSessionID</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html#getSessionID()">getSessionID</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</A></CODE></DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the ID identifying the session that owns the view<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isDurableView()"><!-- --></A><H3>
+isDurableView</H3>
+<PRE>
+public boolean <B>isDurableView</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html#isDurableView()">isDurableView</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="getViewID()"><!-- --></A><H3>
 getViewID</H3>
 <PRE>
 public int <B>getViewID</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html#getViewID()">getViewID</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html#getViewID()">getViewID</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</A></CODE><DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html#getViewID()">getViewID</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</A></CODE></DL>
 </DD>
 <DD><DL>
-</DL>
+
+<DT><B>Returns:</B><DD>the ID identifying the view within the session</DL>
 </DD>
 </DL>
 <HR>
@@ -2731,7 +2805,7 @@ public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.ConflictException.html" title="class in org.eclipse.emf.cdo.transaction"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html" title="class in org.eclipse.emf.cdo.transaction"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/transaction/CDOPushTransaction.html" target="_top"><B>FRAMES</B></A>  &nbsp;

@@ -193,9 +193,19 @@ PROXY</H3>
 <PRE>
 static final <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</A> <B>PROXY</B></PRE>
 <DL>
-<DD>Returns a proxy object with the appropriate EClass. The proxy object supports the <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eClass()" title="class or interface in org.eclipse.emf.ecore"><CODE>eClass()</CODE></A> and <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsProxy()" title="class or interface in org.eclipse.emf.ecore"><CODE>eIsProxy()</CODE></A> methods. For all invocations to other methods the proxy
- object throws an <A HREF="../../../../../org/eclipse/emf/cdo/util/ObjectNotFoundException.html" title="class in org.eclipse.emf.cdo.util"><CODE>ObjectNotFoundException</CODE></A>. The receiver can use <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#isStaleObject(java.lang.Object)"><CODE>CDOUtil.isStaleObject(Object)</CODE></A> to
- detect proxy objects.
+<DD>Returns a proxy object with the appropriate EClass. The proxy object supports the following methods:
+ <ul>
+ <li>
+ <A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html#cdoID()"><CODE>CDOWithID.cdoID()</CODE></A>
+ <li>
+ <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eClass()" title="class or interface in org.eclipse.emf.ecore"><CODE>EObject.eClass()</CODE></A>
+ <li>
+ <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsProxy()" title="class or interface in org.eclipse.emf.ecore"><CODE>EObject.eIsProxy()</CODE></A>
+ <li>
+ <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eAdapters()" title="class or interface in org.eclipse.emf.common.notify"><CODE>Notifier.eAdapters()</CODE></A>
+ </ul>
+ For all invocations of other methods the proxy object throws an <A HREF="../../../../../org/eclipse/emf/cdo/util/ObjectNotFoundException.html" title="class in org.eclipse.emf.cdo.util"><CODE>ObjectNotFoundException</CODE></A>. The receiver can
+ use <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#isStaleObject(java.lang.Object)"><CODE>CDOUtil.isStaleObject(Object)</CODE></A> or <code>instanceof <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOStaleObject.html" title="interface in org.eclipse.emf.cdo.view"><CODE>CDOStaleObject</CODE></A></code> to detect proxy objects.
 <P>
 <DL>
 </DL>

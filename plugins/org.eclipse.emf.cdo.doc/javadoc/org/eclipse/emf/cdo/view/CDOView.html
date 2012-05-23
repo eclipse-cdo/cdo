@@ -92,7 +92,7 @@ org.eclipse.emf.cdo.view</FONT>
 <BR>
 Interface CDOView</H2>
 <DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>, <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A></DD>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>, <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A></DD>
 </DL>
 <DL>
 <DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A></DD>
@@ -143,7 +143,7 @@ A read-only view to the state of the object graph in the repository of the under
  Mutable objects can be provided by a <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A>.
  <p>
  A view is opened through API of the underlying session like this:
- 
+
  <pre>
    CDOSession session = ...
    CDOView view = session.openView();
@@ -599,6 +599,15 @@ T</CODE></FONT></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html#getDurableLockingID()">getDurableLockingID</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html#getViewID()">getViewID</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html#isReadOnly()">isReadOnly</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.lock.CDOLockOwner"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html#getSessionID()">getSessionID</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html#isDurableView()">isDurableView</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.branch.CDOBranchPoint"><!-- --></A>

@@ -173,6 +173,23 @@ Encapsulates a set of notifying <A HREF="../../../../../org/eclipse/emf/cdo/view
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.DetachmenNotificationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.DetachmenNotificationEvent</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><CODE>options event</CODE></A> fired from view <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options()"><CODE>options</CODE></A> when the
+ <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setDetachmentNotificationEnabled(boolean)"><CODE>detachment notification enabled</CODE></A> option has changed.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.FeatureAnalyzerEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.FeatureAnalyzerEvent</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;interface</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.InvalidationNotificationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.InvalidationNotificationEvent</A></B></CODE>
 
 <BR>
@@ -312,6 +329,14 @@ Encapsulates a set of notifying <A HREF="../../../../../org/eclipse/emf/cdo/view
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getFeatureAnalyzer()">getFeatureAnalyzer</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOInvalidationPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOInvalidationPolicy</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getInvalidationPolicy()">getInvalidationPolicy</A></B>()</CODE>
 
@@ -353,6 +378,16 @@ Encapsulates a set of notifying <A HREF="../../../../../org/eclipse/emf/cdo/view
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#isDetachmentNotificationEnabled()">isDetachmentNotificationEnabled</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <code>true</code> if the <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A> in this view will notify their
+ <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><CODE>adapters</CODE></A> about the fact that they are <em>detached</em> (due to
+ remote changes), <code>false</code> otherwise.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#isInvalidationNotificationEnabled()">isInvalidationNotificationEnabled</A></B>()</CODE>
 
 <BR>
@@ -386,6 +421,24 @@ Encapsulates a set of notifying <A HREF="../../../../../org/eclipse/emf/cdo/view
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the reference type to be used in the internal object cache to either <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#STRONG" title="class or interface in org.eclipse.net4j.util.ref"><CODE>STRONG</CODE></A>,
  <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#SOFT" title="class or interface in org.eclipse.net4j.util.ref"><CODE>SOFT</CODE></A> or <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#WEAK" title="class or interface in org.eclipse.net4j.util.ref"><CODE>WEAK</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setDetachmentNotificationEnabled(boolean)">setDetachmentNotificationEnabled</A></B>(boolean&nbsp;enabled)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies whether the <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A> in this view will notify their
+ <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><CODE>adapters</CODE></A> about the fact that they are <em>detached</em> (due to
+ remote changes) or not.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)">setFeatureAnalyzer</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</A>&nbsp;featureAnalyzer)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -562,6 +615,46 @@ void <B>setLoadNotificationEnabled</B>(boolean&nbsp;enabled)</PRE>
 <DT><B>Since:</B></DT>
   <DD>4.1</DD>
 </DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isDetachmentNotificationEnabled()"><!-- --></A><H3>
+isDetachmentNotificationEnabled</H3>
+<PRE>
+boolean <B>isDetachmentNotificationEnabled</B>()</PRE>
+<DL>
+<DD>Returns <code>true</code> if the <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A> in this view will notify their
+ <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><CODE>adapters</CODE></A> about the fact that they are <em>detached</em> (due to
+ remote changes), <code>false</code> otherwise.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/CDONotification.html#DETACH_OBJECT"><CODE>CDONotification.DETACH_OBJECT</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setDetachmentNotificationEnabled(boolean)"><!-- --></A><H3>
+setDetachmentNotificationEnabled</H3>
+<PRE>
+void <B>setDetachmentNotificationEnabled</B>(boolean&nbsp;enabled)</PRE>
+<DL>
+<DD>Specifies whether the <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A> in this view will notify their
+ <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><CODE>adapters</CODE></A> about the fact that they are <em>detached</em> (due to
+ remote changes) or not.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/CDONotification.html#DETACH_OBJECT"><CODE>CDONotification.DETACH_OBJECT</CODE></A></DL>
 </DD>
 </DL>
 <HR>
@@ -893,6 +986,38 @@ void <B>setRevisionPrefetchingPolicy</B>(<A HREF="../../../../../org/eclipse/emf
 </DL>
 </DD>
 <DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getFeatureAnalyzer()"><!-- --></A><H3>
+getFeatureAnalyzer</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</A> <B>getFeatureAnalyzer</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)"><!-- --></A><H3>
+setFeatureAnalyzer</H3>
+<PRE>
+void <B>setFeatureAnalyzer</B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</A>&nbsp;featureAnalyzer)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
 </DL>
 </DD>
 </DL>

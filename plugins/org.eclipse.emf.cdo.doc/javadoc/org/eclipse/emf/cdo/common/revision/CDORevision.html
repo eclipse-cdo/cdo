@@ -172,6 +172,14 @@ Encapsulates the immutable system information of a <b>single</b> CDO <A HREF="ht
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermissionProvider.html" title="interface in org.eclipse.emf.cdo.common.security">CDOPermissionProvider</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#PERMISSION_PROVIDER">PERMISSION_PROVIDER</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#UNCHUNKED">UNCHUNKED</A></B></CODE>
 
@@ -240,12 +248,28 @@ Encapsulates the immutable system information of a <b>single</b> CDO <A HREF="ht
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#getPermission()">getPermission</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;boolean</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#isHistorical()">isHistorical</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <code>true</code> exactly if <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><CODE>CDOBranchPoint.getTimeStamp()</CODE></A> does not return <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><CODE>CDOBranchPoint.UNSPECIFIED_DATE</CODE></A>,
  <code>false</code> otherwise.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#isReadable()">isReadable</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -283,6 +307,14 @@ Encapsulates the immutable system information of a <b>single</b> CDO <A HREF="ht
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;boolean</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#isValid(long)">isValid</A></B>(long&nbsp;timeStamp)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#isWritable()">isWritable</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -400,6 +432,18 @@ static final int <B>DEPTH_INFINITE</B></PRE>
 <DT><B>Since:</B></DT>
   <DD>3.0</DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.revision.CDORevision.DEPTH_INFINITE">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="PERMISSION_PROVIDER"><!-- --></A><H3>
+PERMISSION_PROVIDER</H3>
+<PRE>
+static final <A HREF="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermissionProvider.html" title="interface in org.eclipse.emf.cdo.common.security">CDOPermissionProvider</A> <B>PERMISSION_PROVIDER</B></PRE>
+<DL>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
 </DL>
 
 <!-- ============ METHOD DETAIL ========== -->
@@ -578,6 +622,54 @@ copy</H3>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getPermission()"><!-- --></A><H3>
+getPermission</H3>
+<PRE>
+<A HREF="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</A> <B>getPermission</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isReadable()"><!-- --></A><H3>
+isReadable</H3>
+<PRE>
+boolean <B>isReadable</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isWritable()"><!-- --></A><H3>
+isWritable</H3>
+<PRE>
+boolean <B>isWritable</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
 </DL>
 </DD>
 </DL>

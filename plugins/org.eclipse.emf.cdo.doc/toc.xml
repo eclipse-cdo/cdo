@@ -59,6 +59,7 @@
         <topic label="org.eclipse.emf.cdo.common.protocol" href="javadoc/org/eclipse/emf/cdo/common/protocol/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.common.revision" href="javadoc/org/eclipse/emf/cdo/common/revision/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.common.revision.delta" href="javadoc/org/eclipse/emf/cdo/common/revision/delta/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.common.security" href="javadoc/org/eclipse/emf/cdo/common/security/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.common.util" href="javadoc/org/eclipse/emf/cdo/common/util/package-summary.html" icon="package" />
       </topic>
       <topic label="CDO Model Repository Server" href="javadoc/org/eclipse/emf/cdo/server/package-summary.html" icon="plugin">

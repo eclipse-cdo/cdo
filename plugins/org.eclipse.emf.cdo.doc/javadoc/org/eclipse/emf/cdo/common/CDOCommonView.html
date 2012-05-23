@@ -92,7 +92,7 @@ org.eclipse.emf.cdo.common</FONT>
 <BR>
 Interface CDOCommonView</H2>
 <DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A></DD>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A></DD>
 </DL>
 <DL>
 <DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonTransaction.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonTransaction</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</A></DD>
@@ -103,20 +103,21 @@ Interface CDOCommonView</H2>
 <HR>
 <DL>
   <DT>public interface <B>CDOCommonView</B>
-  <DD>extends <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>
+  <DD>extends <A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="../server/IView.html" title="&#171;interface&#187; IView (org.eclipse.emf.cdo.server)" alt="" coords="187,201,368,255"/>
-<area shape="rect" id="node2" title="&#171;interface&#187; IOptionsContainer (org.eclipse.net4j.util.options)" alt="" coords="5,6,197,61"/>
-<area shape="rect" id="node3" title="&#171;interface&#187; Closeable (org.eclipse.net4j.util.collection)" alt="" coords="227,6,432,61"/>
-<area shape="rect" id="node4" href="../view/CDOView.html" title="&#171;interface&#187; CDOView (org.eclipse.emf.cdo.view)" alt="" coords="397,201,568,255"/>
-<area shape="rect" id="node5" href="revision/CDORevisionProvider.html" title="&#171;interface&#187; CDORevisionProvider (org.eclipse.emf.cdo.common.revision)" alt="" coords="462,6,705,61"/>
-<area shape="rect" id="node6" href="CDOCommonView.Options.html" title="&#171;interface&#187; CDOCommonView.Options" alt="" coords="597,208,776,248"/>
-<area shape="rect" id="node7" href="CDOCommonView.html" title="&#171;interface&#187; CDOCommonView" alt="" coords="519,117,649,157"/>
-<area shape="rect" id="node8" href="CDOCommonTransaction.html" title="&#171;interface&#187; CDOCommonTransaction" alt="" coords="806,208,975,248"/>
-<area shape="rect" id="node9" href="CDOCommonSession.html" title="&#171;interface&#187; CDOCommonSession" alt="" coords="736,13,885,53"/>
-<area shape="rect" id="node10" href="branch/CDOBranchPoint.html" title="&#171;interface&#187; CDOBranchPoint (org.eclipse.emf.cdo.common.branch)" alt="" coords="915,6,1155,61"/>
+<area shape="rect" id="node1" href="branch/CDOBranchPoint.html" title="&#171;interface&#187; CDOBranchPoint (org.eclipse.emf.cdo.common.branch)" alt="" coords="8,5,248,59"/>
+<area shape="rect" id="node2" href="CDOCommonSession.html" title="&#171;interface&#187; CDOCommonSession" alt="" coords="53,79,203,119"/>
+<area shape="rect" id="node3" href="CDOCommonTransaction.html" title="&#171;interface&#187; CDOCommonTransaction" alt="" coords="614,91,783,131"/>
+<area shape="rect" id="node4" href="CDOCommonView.html" title="&#171;interface&#187; CDOCommonView" alt="" coords="379,183,509,223"/>
+<area shape="rect" id="node5" href="CDOCommonView.Options.html" title="&#171;interface&#187; CDOCommonView.Options" alt="" coords="609,149,788,189"/>
+<area shape="rect" id="node6" href="lock/CDOLockOwner.html" title="&#171;interface&#187; CDOLockOwner (org.eclipse.emf.cdo.common.lock)" alt="" coords="15,138,241,193"/>
+<area shape="rect" id="node7" href="revision/CDORevisionProvider.html" title="&#171;interface&#187; CDORevisionProvider (org.eclipse.emf.cdo.common.revision)" alt="" coords="6,211,250,266"/>
+<area shape="rect" id="node8" href="../view/CDOView.html" title="&#171;interface&#187; CDOView (org.eclipse.emf.cdo.view)" alt="" coords="613,209,784,263"/>
+<area shape="rect" id="node9" title="&#171;interface&#187; Closeable (org.eclipse.net4j.util.collection)" alt="" coords="25,285,231,339"/>
+<area shape="rect" id="node10" title="&#171;interface&#187; IOptionsContainer (org.eclipse.net4j.util.options)" alt="" coords="32,358,224,413"/>
+<area shape="rect" id="node11" href="../server/IView.html" title="&#171;interface&#187; IView (org.eclipse.emf.cdo.server)" alt="" coords="608,282,789,337"/>
 </map>
 
 <CENTER><IMG SRC="CDOCommonView.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -224,6 +225,15 @@ Abstracts the information about CDO views that is common to both client and serv
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common"><CODE>options</CODE></A> of this view.</TD>
 </TR>
 </TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.lock.CDOLockOwner"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html#getSessionID()">getSessionID</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html#isDurableView()">isDurableView</A></CODE></TD>
+</TR>
+</TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.branch.CDOBranchPoint"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
@@ -270,10 +280,11 @@ getViewID</H3>
 int <B>getViewID</B>()</PRE>
 <DL>
 <DD><DL>
-</DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html#getViewID()">getViewID</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</A></CODE></DL>
 </DD>
 <DD><DL>
-</DL>
+
+<DT><B>Returns:</B><DD>the ID identifying the view within the session</DL>
 </DD>
 </DL>
 <HR>
@@ -314,7 +325,7 @@ getDurableLockingID</H3>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getDurableLockingID</B>()</PRE>
 <DL>
 <DD><DL>
-</DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html#getDurableLockingID()">getDurableLockingID</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</A></CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Since:</B></DT>

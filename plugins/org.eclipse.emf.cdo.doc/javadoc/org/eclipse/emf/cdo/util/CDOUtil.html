@@ -156,8 +156,40 @@ Various static methods that may help in CDO client applications.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#createModelBasedFeatureAnalyzer()">createModelBasedFeatureAnalyzer</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDORevisionPrefetchingPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDORevisionPrefetchingPolicy</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#createRevisionPrefetchingPolicy(int)">createRevisionPrefetchingPolicy</A></B>(int&nbsp;chunkSize)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#createThreadLocalFetchRuleManager()">createThreadLocalFetchRuleManager</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#createUIFeatureAnalyzer()">createUIFeatureAnalyzer</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#createUIFeatureAnalyzer(long)">createUIFeatureAnalyzer</A></B>(long&nbsp;maxTimeBetweenOperation)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -381,6 +413,20 @@ public static boolean <B>prepareDynamicEPackage</B>(<A HREF="http://download.ecl
 </DL>
 <HR>
 
+<A NAME="createCollectionLoadingPolicy(int, int)"><!-- --></A><H3>
+createCollectionLoadingPolicy</H3>
+<PRE>
+public static <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</A> <B>createCollectionLoadingPolicy</B>(int&nbsp;initialChunkSize,
+                                                                       int&nbsp;resolveChunkSize)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="createRevisionPrefetchingPolicy(int)"><!-- --></A><H3>
 createRevisionPrefetchingPolicy</H3>
 <PRE>
@@ -394,15 +440,53 @@ public static <A HREF="../../../../../org/eclipse/emf/cdo/view/CDORevisionPrefet
 </DL>
 <HR>
 
-<A NAME="createCollectionLoadingPolicy(int, int)"><!-- --></A><H3>
-createCollectionLoadingPolicy</H3>
+<A NAME="createThreadLocalFetchRuleManager()"><!-- --></A><H3>
+createThreadLocalFetchRuleManager</H3>
 <PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</A> <B>createCollectionLoadingPolicy</B>(int&nbsp;initialChunkSize,
-                                                                       int&nbsp;resolveChunkSize)</PRE>
+public static <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</A> <B>createThreadLocalFetchRuleManager</B>()</PRE>
 <DL>
 <DD><DL>
 <DT><B>Since:</B></DT>
-  <DD>2.0</DD>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createModelBasedFeatureAnalyzer()"><!-- --></A><H3>
+createModelBasedFeatureAnalyzer</H3>
+<PRE>
+public static <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</A> <B>createModelBasedFeatureAnalyzer</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createUIFeatureAnalyzer()"><!-- --></A><H3>
+createUIFeatureAnalyzer</H3>
+<PRE>
+public static <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</A> <B>createUIFeatureAnalyzer</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createUIFeatureAnalyzer(long)"><!-- --></A><H3>
+createUIFeatureAnalyzer</H3>
+<PRE>
+public static <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</A> <B>createUIFeatureAnalyzer</B>(long&nbsp;maxTimeBetweenOperation)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
 </DL>
 </DD>
 </DL>

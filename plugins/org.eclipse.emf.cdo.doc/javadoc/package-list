@@ -10,6 +10,7 @@ org.eclipse.emf.cdo.common.model
 org.eclipse.emf.cdo.common.protocol
 org.eclipse.emf.cdo.common.revision
 org.eclipse.emf.cdo.common.revision.delta
+org.eclipse.emf.cdo.common.security
 org.eclipse.emf.cdo.common.util
 org.eclipse.emf.cdo.edit
 org.eclipse.emf.cdo.eresource

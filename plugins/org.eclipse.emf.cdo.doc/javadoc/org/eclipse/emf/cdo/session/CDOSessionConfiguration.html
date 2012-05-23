@@ -183,6 +183,14 @@ Configures and opens new <A HREF="../../../../../org/eclipse/emf/cdo/session/CDO
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#getFetchRuleManager()">getFetchRuleManager</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDGenerator</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#getIDGenerator()">getIDGenerator</A></B>()</CODE>
 
@@ -253,6 +261,14 @@ Configures and opens new <A HREF="../../../../../org/eclipse/emf/cdo/session/CDO
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A special exception handler can be set <b>before</b> the session is opened and can not be changed thereafter.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setFetchRuleManager(org.eclipse.emf.cdo.view.CDOFetchRuleManager)">setFetchRuleManager</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</A>&nbsp;fetchRuleManager)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A special ID generator can be set <b>before</b> the session is opened and can not be changed thereafter.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -466,6 +482,41 @@ void <B>setIDGenerator</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/id
 <DT><B>Since:</B></DT>
   <DD>4.1</DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getIDGenerator()"><CODE>CDOSession.getIDGenerator()</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getFetchRuleManager()"><!-- --></A><H3>
+getFetchRuleManager</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</A> <B>getFetchRuleManager</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getFetchRuleManager()"><CODE>CDOSession.getFetchRuleManager()</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setFetchRuleManager(org.eclipse.emf.cdo.view.CDOFetchRuleManager)"><!-- --></A><H3>
+setFetchRuleManager</H3>
+<PRE>
+void <B>setFetchRuleManager</B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</A>&nbsp;fetchRuleManager)</PRE>
+<DL>
+<DD>A special ID generator can be set <b>before</b> the session is opened and can not be changed thereafter. If not
+ <code>null</code>, the passed generator <b>must be</b> thread-safe.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getFetchRuleManager()"><CODE>CDOSession.getFetchRuleManager()</CODE></A></DL>
 </DD>
 </DL>
 <HR>

@@ -46,6 +46,7 @@
     <packages name="org.eclipse.emf.cdo.common.protocol"/>
     <packages name="org.eclipse.emf.cdo.common.revision"/>
     <packages name="org.eclipse.emf.cdo.common.revision.delta"/>
+    <packages name="org.eclipse.emf.cdo.common.security"/>
     <packages name="org.eclipse.emf.cdo.common.util"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server" label="CDO Model Repository Server">

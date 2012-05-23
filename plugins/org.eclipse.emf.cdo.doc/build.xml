@@ -100,6 +100,7 @@
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/common/protocol/*.java" />
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/common/revision/*.java" />
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/common/revision/delta/*.java" />
+				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/common/security/*.java" />
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/common/util/*.java" />
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/edit/*.java" />
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/eresource/provider/*.java" />
@@ -180,6 +181,7 @@
 				<package name="org.eclipse.emf.cdo.common.protocol" />
 				<package name="org.eclipse.emf.cdo.common.revision" />
 				<package name="org.eclipse.emf.cdo.common.revision.delta" />
+				<package name="org.eclipse.emf.cdo.common.security" />
 				<package name="org.eclipse.emf.cdo.common.util" />
 			</group>
 			<group title="CDO Model Repository Server">

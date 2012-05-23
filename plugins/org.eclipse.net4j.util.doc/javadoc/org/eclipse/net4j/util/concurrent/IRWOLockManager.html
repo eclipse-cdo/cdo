@@ -114,6 +114,11 @@ Interface IRWOLockManager&lt;OBJECT,CONTEXT&gt;</H2>
 
 
 <P>
+A <A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent"><CODE>read/write lock manager</CODE></A> that supports <A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html#OPTION"><CODE>write option</CODE></A>
+ locks.
+<P>
+
+<P>
 <DL>
 <DT><B>Since:</B></DT>
   <DD>3.2</DD>
@@ -176,7 +181,24 @@ Interface IRWOLockManager&lt;OBJECT,CONTEXT&gt;</H2>
       long&nbsp;timeout)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds locks of the given type, owned by the given context on the given objects.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</A>&gt;&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html#unlock2(CONTEXT)">unlock2</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</A>&nbsp;context)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes all locks owned by the given context on any objects.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</A>&gt;&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html#unlock2(CONTEXT, java.util.Collection)">unlock2</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</A>&nbsp;context,
+        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</A>&gt;&nbsp;objectsToUnlock)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes all locks owned by the given context.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -186,7 +208,7 @@ Interface IRWOLockManager&lt;OBJECT,CONTEXT&gt;</H2>
         <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</A>&gt;&nbsp;objectsToUnlock)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes all locks of the given type, owned by the given context on the given objects.</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.concurrent.IRWLockManager"><!-- --></A>
@@ -220,6 +242,8 @@ lock2</H3>
                                                      long&nbsp;timeout)
                                                      throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</A></PRE>
 <DL>
+<DD>Adds locks of the given type, owned by the given context on the given objects.
+<P>
 <DD><DL>
 </DL>
 </DD>
@@ -238,6 +262,41 @@ unlock2</H3>
                                                        <A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</A>&nbsp;context,
                                                        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</A>&gt;&nbsp;objectsToUnlock)</PRE>
 <DL>
+<DD>Removes all locks of the given type, owned by the given context on the given objects.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unlock2(java.lang.Object)"><!-- --></A><A NAME="unlock2(CONTEXT)"><!-- --></A><H3>
+unlock2</H3>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</A>&gt;&gt; <B>unlock2</B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</A>&nbsp;context)</PRE>
+<DL>
+<DD>Removes all locks owned by the given context on any objects.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unlock2(java.lang.Object,java.util.Collection)"><!-- --></A><A NAME="unlock2(CONTEXT, java.util.Collection)"><!-- --></A><H3>
+unlock2</H3>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</A>&gt;&gt; <B>unlock2</B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</A>&nbsp;context,
+                                                       <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</A>&gt;&nbsp;objectsToUnlock)</PRE>
+<DL>
+<DD>Removes all locks owned by the given context.
+<P>
 <DD><DL>
 </DL>
 </DD>

@@ -486,13 +486,16 @@ getFactoryTypes</H3>
 getFactory</H3>
 <PRE>
 <A HREF="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</A> <B>getFactory</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;productGroup,
-                    <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;factoryType)</PRE>
+                    <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;factoryType)
+                    throws <A HREF="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</A></PRE>
 <DL>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
-</DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</A></CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -562,13 +565,18 @@ getElement</H3>
 <PRE>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>getElement</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;productGroup,
                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;factoryType,
-                  <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;description)</PRE>
+                  <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;description)
+                  throws <A HREF="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</A>,
+                         <A HREF="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</A></PRE>
 <DL>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
-</DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</A></CODE>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</A></CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -579,13 +587,18 @@ getElement</H3>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>getElement</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;productGroup,
                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;factoryType,
                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;description,
-                  boolean&nbsp;activate)</PRE>
+                  boolean&nbsp;activate)
+                  throws <A HREF="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</A>,
+                         <A HREF="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</A></PRE>
 <DL>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
-<DT><B>Since:</B></DT>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</A></CODE>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</A></CODE><DT><B>Since:</B></DT>
   <DD>2.0</DD>
 </DL>
 </DD>
@@ -626,7 +639,9 @@ void <B>clearElements</B>()</PRE>
 loadElements</H3>
 <PRE>
 void <B>loadElements</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;stream)
-                  throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></PRE>
+                  throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A>,
+                         <A HREF="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</A>,
+                         <A HREF="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</A></PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -634,7 +649,9 @@ void <B>loadElements</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/a
 <DD><DL>
 
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE></DL>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</A></CODE>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</A></CODE></DL>
 </DD>
 </DL>
 <HR>

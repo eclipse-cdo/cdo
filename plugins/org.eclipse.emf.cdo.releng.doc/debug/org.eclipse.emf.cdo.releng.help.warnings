@@ -7,6 +7,7 @@ Class description missing: org.eclipse.emf.cdo.releng.version.Release.class(Rele
 Class description missing: org.eclipse.emf.cdo.releng.version.ReleaseManager.class(ReleaseManager.java:32)
 Class description missing: org.eclipse.emf.cdo.releng.version.VersionBuilder.class(VersionBuilder.java:41)
 Class description missing: org.eclipse.emf.cdo.releng.version.VersionNature.class(VersionNature.java:22)
+Class description missing: org.eclipse.emf.cdo.releng.version.VersionUtil.class(VersionUtil.java:16)
 Class description missing: org.eclipse.emf.cdo.releng.version.VersionValidator.class(VersionValidator.java:21)
 Class description missing: org.eclipse.emf.cdo.releng.version.digest.Activator.class(Activator.java:23)
 Class description missing: org.eclipse.emf.cdo.releng.version.digest.DigestValidator$BuildModel.class(DigestValidator.java:383)

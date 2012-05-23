@@ -2,9 +2,12 @@
 <project name="JavaDoc" default="build" basedir="../..">
 
 	<property file="${user.home}/org.eclipse.emf.cdo.releng.doc_4.1.properties" />
-	<property name="path.tp" value=".target" />
+	<property name="path.tp" value=".buckminster/tp" />
 	<property name="path.supplemental" value="${user.home}/git/local/org.eclipse.emf.cdo.releng.doc.supplemental" />
-		
+
+	<property name="root" location="${basedir}" />
+	<echo message="Root: ${root}" />
+
 	<property name="releng.project" value="plugins/org.eclipse.emf.cdo.releng.doc" />
 
 	<target name="assemble.scripts">
@@ -16,6 +19,7 @@
 					<include name="**/*.jar" />
 				</fileset>
 			</classpath>
+			<arg file="${root}" />
 		</java>
 	</target>
 
@@ -35,14 +39,14 @@
 		<ant antfile="${releng.project}/buildLib.ant" target="delegate">
 			<property name="delegate.target" value="build.article" />
 		</ant>
-		<ant antfile="${releng.project}/buildLib.ant" target="toc"/>
+		<ant antfile="${releng.project}/buildLib.ant" target="toc" />
 	</target>
 
 	<target name="build" depends="assemble.scripts">
 		<ant antfile="${releng.project}/buildLib.ant" target="delegate">
 			<property name="delegate.target" value="build" />
 		</ant>
-		<ant antfile="${releng.project}/buildLib.ant" target="toc"/>
+		<ant antfile="${releng.project}/buildLib.ant" target="toc" />
 	</target>
 
 </project>

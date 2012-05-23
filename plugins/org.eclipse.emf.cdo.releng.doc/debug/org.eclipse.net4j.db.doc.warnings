@@ -3,7 +3,7 @@ Class description missing: org.eclipse.net4j.db.DBUtil$RowHandler.class(DBUtil.j
 Class description missing: org.eclipse.net4j.db.DBUtil$SerializeRowHandler.class(DBUtil.java:1065)
 Class description missing: org.eclipse.net4j.db.derby.DerbyAdapter.class(DerbyAdapter.java:21)
 Class description missing: org.eclipse.net4j.db.derby.EmbeddedDerbyAdapter.class(EmbeddedDerbyAdapter.java:24)
-Class description missing: org.eclipse.net4j.db.h2.H2Adapter.class(H2Adapter.java:27)
+Class description missing: org.eclipse.net4j.db.h2.H2Adapter.class(H2Adapter.java:28)
 Class description missing: org.eclipse.net4j.db.hsqldb.HSQLDBAdapter.class(HSQLDBAdapter.java:27)
 Class description missing: org.eclipse.net4j.db.hsqldb.HSQLDBDataSource.class(HSQLDBDataSource.java:20)
 Class description missing: org.eclipse.net4j.db.mysql.MYSQLAdapter.class(MYSQLAdapter.java:29)

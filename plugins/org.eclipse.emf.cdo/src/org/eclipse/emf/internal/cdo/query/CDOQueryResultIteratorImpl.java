@@ -11,9 +11,12 @@
  */
 package org.eclipse.emf.internal.cdo.query;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.EList;
@@ -25,15 +28,25 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 /**
  * @author Simon McDuff
  */
 public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
 {
+  private Map<CDOID, CDOObject> detachedObjects;
+
   public CDOQueryResultIteratorImpl(CDOView view, CDOQueryInfo queryInfo)
   {
     super(view, queryInfo);
+  }
+
+  @Override
+  public void close()
+  {
+    detachedObjects = null;
+    super.close();
   }
 
   @Override
@@ -47,12 +60,35 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
   {
     if (object instanceof CDOID)
     {
-      if (((CDOID)object).isNull())
+      CDOID id = (CDOID)object;
+      if (id.isNull())
       {
         return null;
       }
 
-      return (T)CDOUtil.getEObject(getView().getObject((CDOID)object, true));
+      CDOView view = getView();
+
+      try
+      {
+        CDOObject cdoObject = view.getObject(id, true);
+        return (T)CDOUtil.getEObject(cdoObject);
+      }
+      catch (ObjectNotFoundException ex)
+      {
+        if (view instanceof CDOTransaction)
+        {
+          if (detachedObjects == null)
+          {
+            CDOTransaction transaction = (CDOTransaction)view;
+            detachedObjects = transaction.getDetachedObjects();
+          }
+
+          CDOObject cdoObject = detachedObjects.get(id);
+          return (T)CDOUtil.getEObject(cdoObject);
+        }
+
+        return null;
+      }
     }
 
     // Support a query return value of Object[]

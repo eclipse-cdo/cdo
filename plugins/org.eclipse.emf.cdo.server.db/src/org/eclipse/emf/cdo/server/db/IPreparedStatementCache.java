@@ -15,6 +15,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 /**
+ * Caches JDBC {@link PreparedStatement statements} according to given {@link ReuseProbability reuse probabilities}.
+ *
  * @author Stefan Winkler
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -40,7 +42,7 @@ public interface IPreparedStatementCache
    * {@link ReuseProbability#MEDIUM MEDIUM}.
    * <li>For all other dynamic statements, like queries, use {@link ReuseProbability#LOW LOW}
    * </ul>
-   * 
+   *
    * @author Stefan Winkler
    * @since 2.0
    * @noextend This interface is not intended to be extended by clients.

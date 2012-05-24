@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -32,7 +32,6 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.connector.IConnector;
@@ -66,7 +65,7 @@ import org.eclipse.emf.ecore.EPackage;
  * the server.
  * <p>
  * The following diagram illustrates the major building blocks of a CDO repository: {@img repository-architecture.png}
- * 
+ *
  * @author Eike Stepper
  */
 public class Architecture
@@ -118,7 +117,7 @@ public class Architecture
    * Concrete implementations are fully separated and can be plugged into the core as described in {@link Store}.
    * <p>
    * All <b>communication aspects</b> (the sending/receiving of signals to/from a network system) are fully abstracted
-   * through the service provider interface (SPI) {@link ISessionProtocol}. Concrete implementations are fully separated
+   * through the service provider interface (SPI) ISessionProtocol. Concrete implementations are fully separated
    * and can be plugged into the core as described in {@link Protocol}.
    */
   public class Core
@@ -131,7 +130,7 @@ public class Architecture
    * A concrete storage adapter, an {@link IStore} implementation, operates on top of the generic {@link Core server
    * core}. A number of such stores already ship with CDO, making it possible to connect a repository to all sorts of
    * JDBC databases, Hibernate, Objectivity/DB, MongoDB or DB4O.
-   * 
+   *
    * @see StoreFeatures
    */
   public class Store
@@ -141,7 +140,7 @@ public class Architecture
   /**
    * Protocol
    * <p>
-   * A concrete communications adapter, an {@link ISessionProtocol} implementation, operates on top of the generic
+   * A concrete communications adapter, an ISessionProtocol implementation, operates on top of the generic
    * {@link Core server core}. The only session protocol implementation that currently ships with CDO is based on
    * {@link Net4j}.
    */
@@ -165,7 +164,7 @@ public class Architecture
    * {@link ITCPConnector TCP}, {@link SSLUtil SSL}, {@link IHTTPConnector HTTP} and {@link IJVMConnector JVM}
    * (in-process) transport. The core of Net4j is a fast, asynchronous and non-blocking {@link IBuffer buffer}
    * multiplexing kernel, based on {@link OSGi} but also executable stand-alone.
-   * 
+   *
    * @see Transport
    * @see Protocol
    */

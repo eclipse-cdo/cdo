@@ -107,10 +107,11 @@ Interface CDOTransactionHandler1</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="CDOTransactionHandlerBase.html" title="&#171;interface&#187; CDOTransactionHandlerBase" alt="" coords="97,5,287,45"/>
-<area shape="rect" id="node2" href="CDOTransactionHandler1.html" title="&#171;interface&#187; CDOTransactionHandler1" alt="" coords="108,84,276,124"/>
-<area shape="rect" id="node3" href="CDOTransactionHandler.html" title="&#171;interface&#187; CDOTransactionHandler" alt="" coords="5,163,165,203"/>
-<area shape="rect" id="node4" href="CDODefaultTransactionHandler1.html" title="CDODefaultTransactionHandler1" alt="" coords="196,170,404,195"/>
+<area shape="rect" id="node1" href="CDOTransactionHandlerBase.html" title="&#171;interface&#187; CDOTransactionHandlerBase" alt="" coords="5,5,195,45"/>
+<area shape="rect" id="node2" href="CDOTransactionHandler1.html" title="&#171;interface&#187; CDOTransactionHandler1" alt="" coords="133,101,301,141"/>
+<area shape="rect" id="node3" href="CDOTransactionHandler.html" title="&#171;interface&#187; CDOTransactionHandler" alt="" coords="30,184,191,224"/>
+<area shape="rect" id="node4" href="CDOPostEventTransactionHandler.html" title="CDOPostEventTransactionHandler" alt="" coords="225,13,447,38"/>
+<area shape="rect" id="node5" href="CDODefaultTransactionHandler1.html" title="CDODefaultTransactionHandler1" alt="" coords="221,191,429,217"/>
 </map>
 
 <CENTER><IMG SRC="CDOTransactionHandler1.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -118,7 +119,7 @@ Interface CDOTransactionHandler1</H2>
 
 
 <P>
-A call-back interface that is called by a <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transcation</CODE></A> when <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A> are
+A call-back interface that is called by a <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transcation</CODE></A> before <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A> are
  attached, modified or detached.
 <P>
 
@@ -126,7 +127,7 @@ A call-back interface that is called by a <A HREF="../../../../../org/eclipse/em
 <DL>
 <DT><B>Since:</B></DT>
   <DD>4.0</DD>
-</DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction"><CODE>CDOPostEventTransactionHandler</CODE></A></DL>
 <HR>
 
 <P>
@@ -193,7 +194,7 @@ void <B>attachingObject</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transact
  <p>
  <b>Note:</b> Implementors <b>must not</b> start threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> and wait for their
  completion since deadlocks can result. The following example causes a deadlock:<br>
- 
+
  <pre>
  getDisplay().syncExec(new Runnable()
  {
@@ -209,7 +210,7 @@ void <B>attachingObject</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transact
    }
  });
  </pre>
- 
+
  If you need to synchronously execute threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> you should use
  <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction"><CODE>CDOAsyncTransactionHandler</CODE></A>.
 <P>
@@ -234,7 +235,7 @@ void <B>detachingObject</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transact
  <p>
  <b>Note:</b> Implementors <b>must not</b> start threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> and wait for their
  completion since deadlocks can result. The following example causes a deadlock:<br>
- 
+
  <pre>
  getDisplay().syncExec(new Runnable()
  {
@@ -250,7 +251,7 @@ void <B>detachingObject</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transact
    }
  });
  </pre>
- 
+
  If you need to synchronously execute threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> you should use
  <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction"><CODE>CDOAsyncTransactionHandler</CODE></A>.
 <P>
@@ -276,7 +277,7 @@ void <B>modifyingObject</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transact
  <p>
  <b>Note:</b> Implementors <b>must not</b> start threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> and wait for their
  completion since deadlocks can result. The following example causes a deadlock:<br>
- 
+
  <pre>
  getDisplay().syncExec(new Runnable()
  {
@@ -292,7 +293,7 @@ void <B>modifyingObject</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transact
    }
  });
  </pre>
- 
+
  If you need to synchronously execute threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> you should use
  <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction"><CODE>CDOAsyncTransactionHandler</CODE></A>.
 <P>

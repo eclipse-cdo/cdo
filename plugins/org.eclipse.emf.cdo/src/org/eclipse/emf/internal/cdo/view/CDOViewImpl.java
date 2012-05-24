@@ -2092,7 +2092,7 @@ public class CDOViewImpl extends AbstractCDOView
     /**
      * @author Eike Stepper
      */
-    private final class DetachmentNotificationEventImpl extends OptionsEvent implements DetachmenNotificationEvent
+    private final class DetachmentNotificationEventImpl extends OptionsEvent implements DetachmentNotificationEvent
     {
       private static final long serialVersionUID = 1L;
 

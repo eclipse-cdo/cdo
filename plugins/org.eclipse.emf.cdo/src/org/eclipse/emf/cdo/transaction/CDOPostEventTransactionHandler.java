@@ -22,6 +22,10 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
+ * An abstract call-back class that is called by a {@link CDOTransaction transcation} after {@link CDOObject objects} have been
+ * attached, modified or detached.
+ *
+ * @see CDOTransactionHandler1
  * @author Martin Fluegge
  * @since 4.1
  */
@@ -92,6 +96,8 @@ public abstract class CDOPostEventTransactionHandler implements CDOTransactionHa
   protected abstract void detachedObject(CDOTransaction transaction, CDOObject object, Notification msg);
 
   /**
+   * An empty default implementation of {@link CDOPostEventTransactionHandler}.
+   *
    * @author Eike Stepper
    */
   public static class Default extends CDOPostEventTransactionHandler

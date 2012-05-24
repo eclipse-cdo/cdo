@@ -14,6 +14,8 @@ package org.eclipse.emf.cdo.server.db4o;
 import org.eclipse.emf.cdo.server.IStore;
 
 /**
+ * The main entry point to the API of CDO's integration with DB4O databases.
+ *
  * @author Victor Roldan Betancort
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

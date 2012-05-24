@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * Represents a local {@link CDOWorkspaceConfiguration#checkout() checkout} from a remote repository.
- * 
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -75,6 +75,10 @@ public interface CDOWorkspace extends CDORevisionProvider, Closeable, INotifier
   public boolean isDirty();
 
   /**
+   * An {@link IEvent event} fired when the overall state of the {@link CDOWorkspace workspace} changes between <i>dirty</i> and <i>clean</i>.
+   * fired.
+   *
+   * @see CDOWorkspace#isDirty()
    * @author Eike Stepper
    * @since 4.1
    */

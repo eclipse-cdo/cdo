@@ -444,6 +444,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
    * @apiviz.uses {@link CDOView.Options.InvalidationPolicyEvent} - - fires
    * @apiviz.uses {@link CDOView.Options.InvalidationNotificationEvent} - - fires
    * @apiviz.uses {@link CDOView.Options.RevisionPrefetchingPolicyEvent} - - fires
+   * @apiviz.uses {@link CDOView.Options.FeatureAnalyzerEvent} - - fires
    */
   public interface Options extends org.eclipse.emf.cdo.common.CDOCommonView.Options
   {
@@ -685,7 +686,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
      * @noimplement This interface is not intended to be implemented by clients.
      * @since 4.1
      */
-    public interface DetachmenNotificationEvent extends IOptionsEvent
+    public interface DetachmentNotificationEvent extends IOptionsEvent
     {
     }
 
@@ -792,6 +793,10 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
     }
 
     /**
+     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
+     * {@link Options#setFeatureAnalyzer(CDOFeatureAnalyzer) feature analyzer} option has
+     * changed.
+     *
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.

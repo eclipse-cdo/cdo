@@ -24,6 +24,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
+ * A utility class that attaches {@link EObject objects} to a {@link CDOResourceFolder folder} rooted, balanced tree such that configurable
+ * capacities for resources per folder and objects per resource are never exceeded. This class is useful if a large number of objects
+ * does not form a tree naturally but long lists would hinder fast lazy loading.
+ *
  * @author Eike Stepper
  * @since 4.1
  */

@@ -18,9 +18,10 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.view.CDOView;
 
 /**
- * A call-back interface that is called by a {@link CDOTransaction transcation} when {@link CDOObject objects} are
+ * A call-back interface that is called by a {@link CDOTransaction transcation} before {@link CDOObject objects} are
  * attached, modified or detached.
- * 
+ *
+ * @see CDOPostEventTransactionHandler
  * @author Eike Stepper
  * @since 4.0
  */
@@ -33,7 +34,7 @@ public interface CDOTransactionHandler1 extends CDOTransactionHandlerBase
    * <p>
    * <b>Note:</b> Implementors <b>must not</b> start threads which access the {@link CDOView view} and wait for their
    * completion since deadlocks can result. The following example causes a deadlock:<br>
-   * 
+   *
    * <pre>
    * getDisplay().syncExec(new Runnable()
    * {
@@ -49,7 +50,7 @@ public interface CDOTransactionHandler1 extends CDOTransactionHandlerBase
    *   }
    * });
    * </pre>
-   * 
+   *
    * If you need to synchronously execute threads which access the {@link CDOView view} you should use
    * {@link CDOAsyncTransactionHandler}.
    */
@@ -62,7 +63,7 @@ public interface CDOTransactionHandler1 extends CDOTransactionHandlerBase
    * <p>
    * <b>Note:</b> Implementors <b>must not</b> start threads which access the {@link CDOView view} and wait for their
    * completion since deadlocks can result. The following example causes a deadlock:<br>
-   * 
+   *
    * <pre>
    * getDisplay().syncExec(new Runnable()
    * {
@@ -78,7 +79,7 @@ public interface CDOTransactionHandler1 extends CDOTransactionHandlerBase
    *   }
    * });
    * </pre>
-   * 
+   *
    * If you need to synchronously execute threads which access the {@link CDOView view} you should use
    * {@link CDOAsyncTransactionHandler}.
    */
@@ -91,7 +92,7 @@ public interface CDOTransactionHandler1 extends CDOTransactionHandlerBase
    * <p>
    * <b>Note:</b> Implementors <b>must not</b> start threads which access the {@link CDOView view} and wait for their
    * completion since deadlocks can result. The following example causes a deadlock:<br>
-   * 
+   *
    * <pre>
    * getDisplay().syncExec(new Runnable()
    * {
@@ -107,7 +108,7 @@ public interface CDOTransactionHandler1 extends CDOTransactionHandlerBase
    *   }
    * });
    * </pre>
-   * 
+   *
    * If you need to synchronously execute threads which access the {@link CDOView view} you should use
    * {@link CDOAsyncTransactionHandler}.
    */

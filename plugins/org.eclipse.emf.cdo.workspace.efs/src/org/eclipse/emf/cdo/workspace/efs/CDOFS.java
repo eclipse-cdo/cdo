@@ -50,6 +50,8 @@ import java.io.IOException;
 import java.net.URI;
 
 /**
+ * This class is the main entry point to the {@link org.eclipse.core.filesystem.EFS Eclipse File System (EFS)} implementation
+ * for CDO {@link org.eclipse.emf.cdo.workspace.CDOWorkspace workspaces}.
  * @author Eike Stepper
  */
 public final class CDOFS

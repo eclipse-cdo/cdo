@@ -36,6 +36,8 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
 /**
+ * Various static methods that may help in setting up and dealing with {@link IDBStore DB stores}.
+ *
  * @author Eike Stepper
  */
 public final class CDODBUtil
@@ -142,7 +144,7 @@ public final class CDODBUtil
   /**
    * Creates a horizontal {@link IMappingStrategy mapping strategy} that supports all valid combinations of auditing and
    * branching.
-   * 
+   *
    * @since 4.1
    */
   public static IMappingStrategy createHorizontalMappingStrategy()
@@ -153,7 +155,7 @@ public final class CDODBUtil
   /**
    * Can only be used when Eclipse is running. In standalone scenarios create the mapping strategy instance by directly
    * calling the constructor of the mapping strategy class.
-   * 
+   *
    * @see #createHorizontalMappingStrategy(boolean)
    * @see #createHorizontalMappingStrategy(boolean, boolean)
    * @since 2.0
@@ -186,7 +188,7 @@ public final class CDODBUtil
 
   /**
    * Creates a prepared statement cache with the {@link CDODBUtil#DEFAULT_STATEMENT_CACHE_CAPACITY default capacity}.
-   * 
+   *
    * @since 2.0
    * @see CDODBUtil#createStatementCache(int)
    */
@@ -197,7 +199,7 @@ public final class CDODBUtil
 
   /**
    * Creates a prepared statement cache with the given capacity.
-   * 
+   *
    * @since 2.0
    */
   public static IPreparedStatementCache createStatementCache(int capacity)

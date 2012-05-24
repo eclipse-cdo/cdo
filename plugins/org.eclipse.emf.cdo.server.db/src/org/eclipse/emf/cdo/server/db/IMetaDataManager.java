@@ -14,8 +14,10 @@
 package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -28,6 +30,8 @@ import java.sql.Connection;
 import java.util.Collection;
 
 /**
+ * Manages the {@link CDOPackageUnit elements} of the meta model level of a CDO {@link IRepository repository}.
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -38,7 +42,7 @@ public interface IMetaDataManager
   /**
    * Returns the meta ID of the given {@link EModelElement}. <code> getMetaID(getMetaInstance(x))</code> yields
    * <code>x</code>
-   * 
+   *
    * @param modelElement
    *          the element
    * @return the corresponding ID
@@ -49,14 +53,14 @@ public interface IMetaDataManager
   /**
    * Returns the {@link EModelElement} referred to by the given ID. <code> getMetaInstance(getMetaID(m))</code> yields
    * <code>m</code>
-   * 
+   *
    * @since 4.0
    */
   public EModelElement getMetaInstance(CDOID id);
 
   /**
    * Loads a package unit from the database.
-   * 
+   *
    * @param connection
    *          the DB connection to read from.
    * @param packageUnit
@@ -73,7 +77,7 @@ public interface IMetaDataManager
 
   /**
    * Reads information about package units present in the database.
-   * 
+   *
    * @param connection
    *          the DB connection to read from.
    * @return a collection of package unit information records which can be passed to
@@ -84,7 +88,7 @@ public interface IMetaDataManager
 
   /**
    * Write package units to the database.
-   * 
+   *
    * @param connection
    *          the DB connection to write to.
    * @param packageUnits

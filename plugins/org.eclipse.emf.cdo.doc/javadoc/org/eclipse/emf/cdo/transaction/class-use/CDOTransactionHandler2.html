@@ -124,8 +124,8 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactio
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler3.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler3</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface that is called by a <A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transcation</CODE></A> when it is about to be committed, has
- been committed or rolled back.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface that is called by a <A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transcation</CODE></A> before it is committed and after it has
+ been committed (with result info) or rolled back.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -173,7 +173,8 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactio
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction">CDOPostEventTransactionHandler</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An abstract call-back class that is called by a <A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transcation</CODE></A> after <A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A> have been
+ attached, modified or detached.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -181,7 +182,7 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactio
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html" title="class in org.eclipse.emf.cdo.transaction">CDOPostEventTransactionHandler.Default</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An empty default implementation of <A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction"><CODE>CDOPostEventTransactionHandler</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;

@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import java.sql.Connection;
 
 /**
+ * A {@link IStoreAccessor store accessor} for CDO's proprietary object/relational mapper.
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

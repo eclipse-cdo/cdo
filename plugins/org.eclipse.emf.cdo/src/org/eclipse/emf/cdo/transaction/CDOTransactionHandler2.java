@@ -16,9 +16,9 @@ package org.eclipse.emf.cdo.transaction;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 
 /**
- * A call-back interface that is called by a {@link CDOTransaction transcation} when it is about to be committed, has
+ * A call-back interface that is called by a {@link CDOTransaction transcation} before it is committed and after it has
  * been committed or rolled back.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  */

@@ -1,4 +1,4 @@
 # Debugging and tracing options
 
-org.eclipse.emf.cdo.dawn/debug = true
+org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn/debug = true
 

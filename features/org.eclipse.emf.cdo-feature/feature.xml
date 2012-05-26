@@ -14,7 +14,9 @@
       label="%featureName"
       version="4.1.0.qualifier"
       provider-name="%providerName"
-      image="eclipse_update_120.jpg" license-feature="org.eclipse.emf.cdo.license" license-feature-version="4.1.0.qualifier">
+      image="eclipse_update_120.jpg"
+      license-feature="org.eclipse.emf.cdo.license"
+      license-feature-version="4.1.0.qualifier">
 
    <description>
       %description
@@ -105,6 +107,48 @@
 
    <plugin
          id="org.eclipse.emf.cdo.ui.shared"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.workspace"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.workspace.efs"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.ui.workspace"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.security"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.security.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.security.editor"
          download-size="0"
          install-size="0"
          version="0.0.0"

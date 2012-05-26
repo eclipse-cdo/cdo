@@ -310,6 +310,14 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
     getDelegate().write(out, referenceChunk);
   }
 
+  /**
+   * @since 4.1
+   */
+  public void write(CDODataOutput out, int referenceChunk, CDOBranchPoint securityContext) throws IOException
+  {
+    getDelegate().write(out, referenceChunk, securityContext);
+  }
+
   public void convertEObjects(CDOIDProvider oidProvider)
   {
     getDelegate().convertEObjects(oidProvider);

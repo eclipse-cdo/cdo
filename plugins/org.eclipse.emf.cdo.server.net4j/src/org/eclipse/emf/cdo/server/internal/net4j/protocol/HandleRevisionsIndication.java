@@ -101,7 +101,7 @@ public class HandleRevisionsIndication extends CDOServerReadIndication
             try
             {
               out.writeBoolean(true);
-              out.writeCDORevision(revision, CDORevision.UNCHUNKED);
+              out.writeCDORevision(revision, CDORevision.UNCHUNKED); // Exposes revision to client side
               return true;
             }
             catch (IOException ex)

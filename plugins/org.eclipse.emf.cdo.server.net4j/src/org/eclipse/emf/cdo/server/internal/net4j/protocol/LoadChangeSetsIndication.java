@@ -55,7 +55,7 @@ public class LoadChangeSetsIndication extends CDOServerReadIndication
       CDOBranchPoint startPoint = range.getStartPoint();
       CDOBranchPoint endPoint = range.getEndPoint();
       CDOChangeSetData data = repository.getChangeSet(startPoint, endPoint);
-      out.writeCDOChangeSetData(data);
+      out.writeCDOChangeSetData(data); // Exposes revision to client side
     }
   }
 }

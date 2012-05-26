@@ -34,6 +34,6 @@ public class CommitNotificationRequest extends CDOServerRequest
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeCDOCommitInfo(commitInfo);
+    out.writeCDOCommitInfo(commitInfo); // Exposes revision to client side
   }
 }

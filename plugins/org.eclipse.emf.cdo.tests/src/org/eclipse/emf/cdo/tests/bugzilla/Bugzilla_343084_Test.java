@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.security.NoPermissionException;
@@ -59,16 +60,13 @@ public class Bugzilla_343084_Test extends AbstractCDOTest
 
     IPermissionManager permissionManager = new IPermissionManager()
     {
-      public CDOPermission getPermission(Object protectableObject, String userID)
+      public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID)
       {
-        if (protectableObject instanceof CDORevision)
+        EClass eClass = revision.getEClass();
+        CDOPermission permission = permissions.get(eClass);
+        if (permission != null)
         {
-          EClass eClass = ((CDORevision)protectableObject).getEClass();
-          CDOPermission permission = permissions.get(eClass);
-          if (permission != null)
-          {
-            return permission;
-          }
+          return permission;
         }
 
         return CDOPermission.WRITE;

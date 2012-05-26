@@ -387,10 +387,16 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
 
   public void writeCDORevision(CDORevision revision, int referenceChunk) throws IOException
   {
+    writeCDORevision(revision, referenceChunk, null);
+  }
+
+  public void writeCDORevision(CDORevision revision, int referenceChunk, CDOBranchPoint securityContext)
+      throws IOException
+  {
     if (revision != null)
     {
       writeBoolean(true);
-      ((InternalCDORevision)revision).write(this, referenceChunk);
+      ((InternalCDORevision)revision).write(this, referenceChunk, securityContext);
     }
     else
     {

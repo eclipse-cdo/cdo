@@ -185,7 +185,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
     {
       RevisionInfo info = infos[i];
       info.setResult(revisions[i]);
-      info.writeResult(out, referenceChunk);
+      info.writeResult(out, referenceChunk, branchPoint); // Exposes revision to client side
     }
 
     int additionalSize = additionalRevisions.size();
@@ -197,7 +197,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
     out.writeInt(additionalSize);
     for (CDORevision revision : additionalRevisions)
     {
-      out.writeCDORevision(revision, referenceChunk);
+      out.writeCDORevision(revision, referenceChunk, branchPoint); // Exposes revision to client side
     }
   }
 

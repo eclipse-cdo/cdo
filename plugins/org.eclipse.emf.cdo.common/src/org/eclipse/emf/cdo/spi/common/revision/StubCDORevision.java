@@ -142,6 +142,14 @@ public class StubCDORevision extends AbstractCDORevision
     throw new UnsupportedOperationException(getExceptionMessage());
   }
 
+  /**
+   * @since 4.1
+   */
+  public void write(CDODataOutput out, int referenceChunk, CDOBranchPoint securityContext) throws IOException
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
   public void convertEObjects(CDOIDProvider oidProvider)
   {
     throw new UnsupportedOperationException(getExceptionMessage());

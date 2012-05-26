@@ -197,6 +197,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
    */
   public void write(CDODataOutput out, int referenceChunk) throws IOException
   {
+    write(out, referenceChunk, null);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public void write(CDODataOutput out, int referenceChunk, CDOBranchPoint securityContext) throws IOException
+  {
     if (WRITING.isEnabled())
     {
       WRITING.start(this);
@@ -205,7 +213,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     writeSystemValues(out);
 
     CDOPermissionProvider permissionProvider = out.getPermissionProvider();
-    CDOPermission permission = permissionProvider.getPermission(this);
+    CDOPermission permission = permissionProvider.getPermission(this, securityContext);
 
     int bits = flags & TRANSFER_MASK & ~PERMISSION_MASK;
     bits |= permission.getBits();

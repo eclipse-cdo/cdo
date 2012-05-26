@@ -125,6 +125,12 @@ public interface CDODataOutput extends ExtendedDataOutput
   public void writeCDORevision(CDORevision revision, int referenceChunk) throws IOException;
 
   /**
+   * @since 4.1
+   */
+  public void writeCDORevision(CDORevision revision, int referenceChunk, CDOBranchPoint securityContext)
+      throws IOException;
+
+  /**
    * @since 4.0
    */
   public void writeCDORevisable(CDORevisable revisable) throws IOException;

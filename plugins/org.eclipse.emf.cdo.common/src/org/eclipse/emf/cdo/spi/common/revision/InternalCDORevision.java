@@ -103,6 +103,11 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
   public void write(CDODataOutput out, int referenceChunk) throws IOException;
 
   /**
+   * @since 4.1
+   */
+  public void write(CDODataOutput out, int referenceChunk, CDOBranchPoint securityContext) throws IOException;
+
+  /**
    * @since 3.0
    */
   public void convertEObjects(CDOIDProvider oidProvider);

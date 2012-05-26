@@ -68,7 +68,7 @@ import java.util.Map;
 
 /**
  * Various static methods that may help in CDO client applications.
- * 
+ *
  * @author Eike Stepper
  */
 public final class CDOUtil
@@ -477,7 +477,7 @@ public final class CDOUtil
   /**
    * Returns <code>true</code> if the given {@link CDOSession session} contains a dirty {@link CDOTransaction
    * transaction}, <code>false</code> otherwise.
-   * 
+   *
    * @since 2.0
    * @see CDOTransaction
    */

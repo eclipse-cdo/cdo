@@ -165,7 +165,7 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
         if (writtenRevisions.add(key))
         {
           out.writeBoolean(true);
-          out.writeCDORevision((CDORevision)revision, CDORevision.UNCHUNKED);
+          out.writeCDORevision((CDORevision)revision, CDORevision.UNCHUNKED); // Exposes revision to client side
         }
         else
         {

@@ -39,6 +39,6 @@ public class LoadCommitDataIndication extends CDOServerReadIndication
   protected void responding(final CDODataOutput out) throws IOException
   {
     CDOCommitData commitData = getRepository().loadCommitData(timeStamp);
-    out.writeCDOCommitData(commitData);
+    out.writeCDOCommitData(commitData); // Exposes revision to client side
   }
 }

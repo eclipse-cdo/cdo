@@ -10,6 +10,9 @@
  */
 package org.eclipse.emf.cdo.common.security;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+
 /**
  * Provides the protection level of protectable objects.
  *
@@ -24,10 +27,10 @@ public interface CDOPermissionProvider
 
   public static final CDOPermissionProvider WRITE = new Constant(CDOPermission.WRITE);
 
-  public CDOPermission getPermission(Object protectableObject);
+  public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext);
 
   /**
-   * Provides a constant protection level for all protectable entities.
+   * Provides a constant protection level for all {@link CDORevision revisions}.
    *
    * @author Eike Stepper
    */
@@ -40,7 +43,7 @@ public interface CDOPermissionProvider
       this.permission = permission;
     }
 
-    public CDOPermission getPermission(Object protectableObject)
+    public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext)
     {
       return permission;
     }

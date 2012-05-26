@@ -109,10 +109,20 @@ public class RefreshSessionIndication extends CDOServerReadIndication
     out.writeCDOPackageUnit(packageUnit, false);
   }
 
+  /**
+   * @deprecated Call {@link #writeChangedObject(CDODataOutput, InternalCDORevision, CDOBranchPoint)}
+   */
+  @Deprecated
   protected void writeChangedObject(CDODataOutput out, InternalCDORevision revision) throws IOException
   {
+    writeChangedObject(out, revision, null);
+  }
+
+  protected void writeChangedObject(CDODataOutput out, InternalCDORevision revision, CDOBranchPoint securityContext)
+      throws IOException
+  {
     out.writeByte(CDOProtocolConstants.REFRESH_CHANGED_OBJECT);
-    out.writeCDORevision(revision, initialChunkSize);
+    out.writeCDORevision(revision, initialChunkSize, securityContext); // Exposes revision to client side
   }
 
   protected void writeDetachedObject(CDODataOutput out, CDORevisionKey key) throws IOException
@@ -154,7 +164,7 @@ public class RefreshSessionIndication extends CDOServerReadIndication
         }
         else if (hasChanged(key, revision))
         {
-          writeChangedObject(out, revision);
+          writeChangedObject(out, revision, head);
         }
       }
     }

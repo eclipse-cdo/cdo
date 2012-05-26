@@ -134,10 +134,22 @@ public abstract class RevisionInfo
     synthetic = synthetics[0];
   }
 
+  /**
+   * @deprecated Not called anymore by the framework
+   */
+  @Deprecated
   public void writeResult(CDODataOutput out, int referenceChunk) throws IOException
   {
-    writeRevision(out, referenceChunk);
-    writeResult(out, synthetic, referenceChunk);
+    writeResult(out, referenceChunk, null);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public void writeResult(CDODataOutput out, int referenceChunk, CDOBranchPoint securityContext) throws IOException
+  {
+    writeRevision(out, referenceChunk, securityContext);
+    writeResult(out, synthetic, referenceChunk, securityContext);
   }
 
   public void readResult(CDODataInput in) throws IOException
@@ -183,9 +195,22 @@ public abstract class RevisionInfo
     }
   }
 
+  /**
+   * @deprecated Not called anymore by the framework
+   */
+  @Deprecated
   protected void writeRevision(CDODataOutput out, int referenceChunk) throws IOException
   {
-    out.writeCDORevision(result, referenceChunk);
+    writeRevision(out, referenceChunk, null);
+  }
+
+  /**
+   * @since 4.1
+   */
+  protected void writeRevision(CDODataOutput out, int referenceChunk, CDOBranchPoint securityContext)
+      throws IOException
+  {
+    out.writeCDORevision(result, referenceChunk, securityContext);
   }
 
   protected void readRevision(CDODataInput in) throws IOException
@@ -195,9 +220,20 @@ public abstract class RevisionInfo
 
   /**
    * @since 4.0
+   * @deprecated Call {@link #writeResult(CDODataOutput, InternalCDORevision, int, CDOBranchPoint)}
    */
+  @Deprecated
   public static void writeResult(CDODataOutput out, InternalCDORevision revision, int referenceChunk)
       throws IOException
+  {
+    writeResult(out, revision, referenceChunk, null);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static void writeResult(CDODataOutput out, InternalCDORevision revision, int referenceChunk,
+      CDOBranchPoint securityContext) throws IOException
   {
     if (revision == null)
     {
@@ -213,7 +249,7 @@ public abstract class RevisionInfo
       CDOBranchVersion target = pointer.getTarget();
       if (target instanceof InternalCDORevision)
       {
-        writeResult(out, (InternalCDORevision)target, referenceChunk);
+        writeResult(out, (InternalCDORevision)target, referenceChunk, securityContext);
       }
       else
       {
@@ -232,7 +268,7 @@ public abstract class RevisionInfo
     else
     {
       out.writeByte(NORMAL_RESULT);
-      out.writeCDORevision(revision, referenceChunk);
+      out.writeCDORevision(revision, referenceChunk, securityContext);
     }
   }
 
@@ -272,14 +308,22 @@ public abstract class RevisionInfo
     }
   }
 
+  /**
+   * @deprecated Not called anymore by the framework
+   */
+  @Deprecated
   protected void doWriteResult(CDODataOutput out, InternalCDORevision revision, int referenceChunk) throws IOException
   {
-    writeResult(out, revision, referenceChunk);
+    throw new UnsupportedOperationException();
   }
 
+  /**
+   * @deprecated Not called anymore by the framework
+   */
+  @Deprecated
   protected InternalCDORevision doReadResult(CDODataInput in) throws IOException
   {
-    return readResult(in, id, requestedBranchPoint.getBranch());
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -335,7 +379,8 @@ public abstract class RevisionInfo
     }
 
     @Override
-    protected void writeRevision(CDODataOutput out, int referenceChunk) throws IOException
+    protected void writeRevision(CDODataOutput out, int referenceChunk, CDOBranchPoint securityContext)
+        throws IOException
     {
       InternalCDORevision result = getResult();
       if (result != null && ObjectUtil.equals(result.getBranch(), availableBranchVersion.getBranch()))
@@ -346,7 +391,7 @@ public abstract class RevisionInfo
       else
       {
         out.writeBoolean(false);
-        super.writeRevision(out, referenceChunk);
+        super.writeRevision(out, referenceChunk, securityContext);
       }
     }
 

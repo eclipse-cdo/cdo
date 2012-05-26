@@ -20,8 +20,10 @@ import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.RealmUtil;
+import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.SecurityItem;
 import org.eclipse.emf.cdo.security.User;
+import org.eclipse.emf.cdo.security.UserPassword;
 import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
@@ -32,10 +34,12 @@ import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -43,6 +47,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.IUserManager;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,7 +62,7 @@ public class SecurityManager implements ISecurityManager, IUserManager, IPermiss
 
   private final String realmPath;
 
-  private IManagedContainer container;
+  private final IManagedContainer container;
 
   private IAcceptor acceptor;
 
@@ -136,46 +141,17 @@ public class SecurityManager implements ISecurityManager, IUserManager, IPermiss
     return realmPath;
   }
 
-  public void addUser(String userID, char[] password)
+  public final IManagedContainer getContainer()
   {
+    return container;
   }
 
-  public void removeUser(String userID)
+  public Realm getRealm()
   {
+    return realm;
   }
 
-  public byte[] encrypt(String userID, byte[] data, String algorithmName, byte[] salt, int count)
-      throws SecurityException
-  {
-    return null;
-  }
-
-  public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID)
-  {
-    User user = getUser(userID);
-    CDORevisionProvider revisionProvider = new ManagedRevisionProvider(repository.getRevisionManager(), securityContext);
-    return getPermission(revision, revisionProvider, user);
-  }
-
-  public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
-      throws RuntimeException
-  {
-    String userID = commitContext.getUserID();
-    User user = getUser(userID);
-
-    for (InternalCDORevision revision : commitContext.getNewObjects())
-    {
-      getPermission(revision, commitContext, user);
-
-    }
-  }
-
-  public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
-  {
-    // Do nothing
-  }
-
-  private User getUser(String userID)
+  public User getUser(String userID)
   {
     synchronized (users)
     {
@@ -194,7 +170,100 @@ public class SecurityManager implements ISecurityManager, IUserManager, IPermiss
     }
   }
 
-  private CDOPermission getPermission(CDORevision revision, CDORevisionProvider revisionProvider, User user)
+  public void addUser(final String userID, final char[] password)
+  {
+    modify(new RealmOperation()
+    {
+      public void execute(Realm realm)
+      {
+        UserPassword userPassword = SecurityFactory.eINSTANCE.createUserPassword();
+        userPassword.setEncrypted(new String(password));
+
+        User user = SecurityFactory.eINSTANCE.createUser();
+        user.setId(userID);
+        user.setPassword(userPassword);
+
+        realm.getItems().add(user);
+      }
+    });
+  }
+
+  public void removeUser(final String userID)
+  {
+    modify(new RealmOperation()
+    {
+      public void execute(Realm realm)
+      {
+        User user = getUser(userID);
+        if (user != null)
+        {
+          EcoreUtil.remove(user);
+        }
+      }
+    });
+  }
+
+  public byte[] encrypt(String userID, byte[] data, String algorithmName, byte[] salt, int count)
+      throws SecurityException
+  {
+    return null;
+  }
+
+  public void modify(RealmOperation operation)
+  {
+    synchronized (transaction)
+    {
+      operation.execute(realm);
+
+      try
+      {
+        transaction.commit();
+      }
+      catch (CommitException ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+    }
+  }
+
+  public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID)
+  {
+    User user = getUser(userID);
+    CDORevisionProvider revisionProvider = new ManagedRevisionProvider(repository.getRevisionManager(), securityContext);
+    return getPermission(revision, revisionProvider, securityContext, user);
+  }
+
+  public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
+      throws RuntimeException
+  {
+    CDOBranchPoint securityContext = commitContext.getBranchPoint();
+    String userID = commitContext.getUserID();
+    User user = getUser(userID);
+
+    handleRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getNewObjects());
+    handleRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getDirtyObjects());
+  }
+
+  private void handleRevisionsBeforeCommitting(CommitContext commitContext, CDOBranchPoint securityContext, User user,
+      InternalCDORevision[] revisions)
+  {
+    for (InternalCDORevision revision : revisions)
+    {
+      CDOPermission permission = getPermission(revision, commitContext, securityContext, user);
+      if (permission != CDOPermission.WRITE)
+      {
+        throw new SecurityException("User " + user + " is not allowed to write to " + revision);
+      }
+    }
+  }
+
+  public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
+  {
+    // Do nothing
+  }
+
+  protected CDOPermission getPermission(CDORevision revision, CDORevisionProvider revisionProvider,
+      CDOBranchPoint securityContext, User user)
   {
     return null;
   }

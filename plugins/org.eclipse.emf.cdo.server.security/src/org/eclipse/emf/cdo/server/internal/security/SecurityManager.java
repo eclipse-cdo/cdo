@@ -160,10 +160,12 @@ public class SecurityManager implements ISecurityManager, IUserManager, IPermiss
       {
         EList<SecurityItem> items = realm.getItems();
         user = RealmUtil.findUser(items, userID);
-        if (user != null)
+        if (user == null)
         {
-          users.put(userID, user);
+          throw new SecurityException("User " + userID + " not found");
         }
+
+        users.put(userID, user);
       }
 
       return user;
@@ -195,10 +197,7 @@ public class SecurityManager implements ISecurityManager, IUserManager, IPermiss
       public void execute(Realm realm)
       {
         User user = getUser(userID);
-        if (user != null)
-        {
-          EcoreUtil.remove(user);
-        }
+        EcoreUtil.remove(user);
       }
     });
   }
@@ -206,7 +205,16 @@ public class SecurityManager implements ISecurityManager, IUserManager, IPermiss
   public byte[] encrypt(String userID, byte[] data, String algorithmName, byte[] salt, int count)
       throws SecurityException
   {
-    return null;
+    User user = getUser(userID);
+    UserPassword userPassword = user.getPassword();
+    String password = userPassword == null ? null : userPassword.getEncrypted();
+    if (password != null)
+    {
+      // TODO
+    }
+
+    // TODO: implement SecurityManager.encrypt(userID, data, algorithmName, salt, count)
+    throw new UnsupportedOperationException();
   }
 
   public void modify(RealmOperation operation)
@@ -265,6 +273,7 @@ public class SecurityManager implements ISecurityManager, IUserManager, IPermiss
   protected CDOPermission getPermission(CDORevision revision, CDORevisionProvider revisionProvider,
       CDOBranchPoint securityContext, User user)
   {
-    return null;
+    // TODO: implement SecurityManager.getPermission(revision, revisionProvider, securityContext, user)
+    throw new UnsupportedOperationException();
   }
 }

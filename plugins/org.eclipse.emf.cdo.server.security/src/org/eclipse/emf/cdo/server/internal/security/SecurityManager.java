@@ -414,6 +414,11 @@ public class SecurityManager implements ISecurityManager
     public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
         OMMonitor monitor) throws RuntimeException
     {
+      for (IRoleProvider roleProvider : getRoleProviders())
+      {
+        roleProvider.handleCommit(SecurityManager.this, commitContext);
+      }
+
       CDOBranchPoint securityContext = commitContext.getBranchPoint();
       String userID = commitContext.getUserID();
       User user = getUser(userID);

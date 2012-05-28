@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.security.Role;
+import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
@@ -26,6 +27,8 @@ import java.util.Set;
  */
 public interface IRoleProvider
 {
+  public void handleCommit(ISecurityManager securityManager, CommitContext commitContext);
+
   public Set<Role> getRoles(ISecurityManager securityManager, CDOBranchPoint securityContext,
       CDORevisionProvider revisionProvider, CDORevision revision, CDOPermission permission);
 

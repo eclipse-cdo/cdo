@@ -15,12 +15,20 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.security.Role;
+import org.eclipse.emf.cdo.security.SecurityFactory;
+import org.eclipse.emf.cdo.security.SecurityItem;
+import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
 import org.eclipse.emf.cdo.server.spi.security.IRoleProvider;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.Collections;
@@ -41,10 +49,36 @@ public class AnnotationRoleProvider implements IRoleProvider
 
   public static final String WRITE_KEY = "write";
 
+  public static final String DELIMITERS = " ,;|";
+
   private final Map<EClass, EClassRoles> cache = new WeakHashMap<EClass, EClassRoles>();
 
   public AnnotationRoleProvider()
   {
+  }
+
+  public void handleCommit(ISecurityManager securityManager, CommitContext commitContext)
+  {
+    InternalCDOPackageUnit[] newPackageUnits = commitContext.getNewPackageUnits();
+    if (newPackageUnits != null && newPackageUnits.length != 0)
+    {
+      for (InternalCDOPackageUnit packageUnit : newPackageUnits)
+      {
+        for (InternalCDOPackageInfo packageInfo : packageUnit.getPackageInfos())
+        {
+          EPackage ePackage = packageInfo.getEPackage();
+          for (EClassifier eClassifier : ePackage.getEClassifiers())
+          {
+            if (eClassifier instanceof EClass)
+            {
+              EClass eClass = (EClass)eClassifier;
+              addMissingRoles(securityManager, eClass, READ_KEY);
+              addMissingRoles(securityManager, eClass, WRITE_KEY);
+            }
+          }
+        }
+      }
+    }
   }
 
   public Set<Role> getRoles(ISecurityManager securityManager, CDOBranchPoint securityContext,
@@ -99,7 +133,7 @@ public class AnnotationRoleProvider implements IRoleProvider
     }
 
     Set<Role> result = new HashSet<Role>();
-    StringTokenizer tokenizer = new StringTokenizer(annotation, " ,;|");
+    StringTokenizer tokenizer = new StringTokenizer(annotation, DELIMITERS);
     while (tokenizer.hasMoreTokens())
     {
       String token = tokenizer.nextToken();
@@ -111,6 +145,34 @@ public class AnnotationRoleProvider implements IRoleProvider
     }
 
     return result;
+  }
+
+  private void addMissingRoles(ISecurityManager securityManager, EClass eClass, String key)
+  {
+    String annotation = EcoreUtil.getAnnotation(eClass, SOURCE_URI, key);
+    if (annotation == null || annotation.length() == 0)
+    {
+      return;
+    }
+
+    EList<SecurityItem> items = securityManager.getRealm().getItems();
+
+    StringTokenizer tokenizer = new StringTokenizer(annotation, DELIMITERS);
+    while (tokenizer.hasMoreTokens())
+    {
+      String token = tokenizer.nextToken();
+      if (token != null && token.length() != 0)
+      {
+        Role role = securityManager.getRole(token);
+        if (role == null)
+        {
+          role = SecurityFactory.eINSTANCE.createRole();
+          role.setId(token);
+
+          items.add(role);
+        }
+      }
+    }
   }
 
   /**

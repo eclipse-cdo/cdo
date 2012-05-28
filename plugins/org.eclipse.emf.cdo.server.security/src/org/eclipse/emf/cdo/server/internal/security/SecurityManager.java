@@ -18,8 +18,10 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.security.Group;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.RealmUtil;
+import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.SecurityItem;
 import org.eclipse.emf.cdo.security.User;
@@ -149,6 +151,30 @@ public class SecurityManager implements ISecurityManager, IUserManager, IPermiss
   public Realm getRealm()
   {
     return realm;
+  }
+
+  public Group getGroup(String groupID)
+  {
+    EList<SecurityItem> items = realm.getItems();
+    Group group = RealmUtil.findGroup(items, groupID);
+    if (group == null)
+    {
+      throw new SecurityException("Group " + groupID + " not found");
+    }
+
+    return group;
+  }
+
+  public Role getRole(String roleID)
+  {
+    EList<SecurityItem> items = realm.getItems();
+    Role role = RealmUtil.findRole(items, roleID);
+    if (role == null)
+    {
+      throw new SecurityException("Role " + roleID + " not found");
+    }
+
+    return role;
   }
 
   public User getUser(String userID)

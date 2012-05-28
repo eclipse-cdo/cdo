@@ -1361,7 +1361,7 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
 
   /**
    * This returns whether something has been persisted to the URI of the specified resource.
-   * The implementation uses the URI converter from the editor's resource set to try to open an input stream.
+   * The implementation uses the URI converter from the editor's resource set to try to open an input stream. 
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1426,7 +1426,7 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
    */
   protected void doSaveAs(URI uri, IEditorInput editorInput)
   {
-    editingDomain.getResourceSet().getResources().get(0).setURI(uri);
+    (editingDomain.getResourceSet().getResources().get(0)).setURI(uri);
     setInputWithNotify(editorInput);
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()

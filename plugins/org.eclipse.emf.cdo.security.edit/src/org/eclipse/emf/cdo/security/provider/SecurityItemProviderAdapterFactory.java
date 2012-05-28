@@ -312,7 +312,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
+      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
       {
         return adapter;
       }
@@ -390,7 +390,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
   }
 
   /**
-   * This disposes all of the item providers created by this factory.
+   * This disposes all of the item providers created by this factory. 
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -398,29 +398,17 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
   public void dispose()
   {
     if (realmItemProvider != null)
-    {
       realmItemProvider.dispose();
-    }
     if (directoryItemProvider != null)
-    {
       directoryItemProvider.dispose();
-    }
     if (roleItemProvider != null)
-    {
       roleItemProvider.dispose();
-    }
     if (groupItemProvider != null)
-    {
       groupItemProvider.dispose();
-    }
     if (userItemProvider != null)
-    {
       userItemProvider.dispose();
-    }
     if (userPasswordItemProvider != null)
-    {
       userPasswordItemProvider.dispose();
-    }
   }
 
 }

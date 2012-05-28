@@ -10,7 +10,9 @@
  */
 package org.eclipse.emf.cdo.server.security;
 
+import org.eclipse.emf.cdo.security.Group;
 import org.eclipse.emf.cdo.security.Realm;
+import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.server.IRepository;
 
@@ -24,7 +26,11 @@ public interface ISecurityManager
 {
   public Realm getRealm();
 
-  public User getUser(String userID);
+  public User getUser(String userID) throws SecurityException;
+
+  public Group getGroup(String groupID) throws SecurityException;
+
+  public Role getRole(String roleID) throws SecurityException;
 
   public void modify(RealmOperation operation);
 

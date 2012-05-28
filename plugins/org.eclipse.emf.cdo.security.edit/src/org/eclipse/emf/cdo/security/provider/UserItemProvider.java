@@ -70,6 +70,9 @@ public class UserItemProvider extends AssigneeItemProvider implements IEditingDo
       super.getPropertyDescriptors(object);
 
       addGroupsPropertyDescriptor(object);
+      addAllGroupsPropertyDescriptor(object);
+      addAllRolesPropertyDescriptor(object);
+      addLabelPropertyDescriptor(object);
       addFirstNamePropertyDescriptor(object);
       addLastNamePropertyDescriptor(object);
       addEmailPropertyDescriptor(object);
@@ -91,6 +94,53 @@ public class UserItemProvider extends AssigneeItemProvider implements IEditingDo
         getString("_UI_User_groups_feature"), //$NON-NLS-1$
         getString("_UI_PropertyDescriptor_description", "_UI_User_groups_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         SecurityPackage.Literals.USER__GROUPS, true, false, true, null, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the All Groups feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addAllGroupsPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_User_allGroups_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_User_allGroups_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.USER__ALL_GROUPS, false, false, false, null, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the All Roles feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addAllRolesPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_User_allRoles_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_User_allRoles_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.USER__ALL_ROLES, false, false, false, null, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Label feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addLabelPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_User_label_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_User_label_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.USER__LABEL, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
+        null));
   }
 
   /**
@@ -245,6 +295,7 @@ public class UserItemProvider extends AssigneeItemProvider implements IEditingDo
 
     switch (notification.getFeatureID(User.class))
     {
+    case SecurityPackage.USER__LABEL:
     case SecurityPackage.USER__FIRST_NAME:
     case SecurityPackage.USER__LAST_NAME:
     case SecurityPackage.USER__EMAIL:

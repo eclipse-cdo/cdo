@@ -21,7 +21,10 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.Group#getInheritedGroups <em>Inherited Groups</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Group#getAllInheritedGroups <em>All Inherited Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Group#getInheritingGroups <em>Inheriting Groups</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Group#getAllInheritingGroups <em>All Inheriting Groups</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Group#getAllRoles <em>All Roles</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Group#getUsers <em>Users</em>}</li>
  * </ul>
  * </p>
@@ -85,5 +88,53 @@ public interface Group extends Assignee
    * @generated
    */
   EList<Group> getInheritingGroups();
+
+  /**
+   * Returns the value of the '<em><b>All Inheriting Groups</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.security.Group}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>All Inheriting Groups</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>All Inheriting Groups</em>' reference list.
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getGroup_AllInheritingGroups()
+   * @model transient="true" changeable="false" volatile="true" derived="true"
+   * @generated
+   */
+  EList<Group> getAllInheritingGroups();
+
+  /**
+   * Returns the value of the '<em><b>All Inherited Groups</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.security.Group}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>All Inherited Groups</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>All Inherited Groups</em>' reference list.
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getGroup_AllInheritedGroups()
+   * @model transient="true" changeable="false" volatile="true" derived="true"
+   * @generated
+   */
+  EList<Group> getAllInheritedGroups();
+
+  /**
+   * Returns the value of the '<em><b>All Roles</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.security.Role}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>All Roles</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>All Roles</em>' reference list.
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getGroup_AllRoles()
+   * @model transient="true" changeable="false" volatile="true" derived="true"
+   * @generated
+   */
+  EList<Role> getAllRoles();
 
 } // Group

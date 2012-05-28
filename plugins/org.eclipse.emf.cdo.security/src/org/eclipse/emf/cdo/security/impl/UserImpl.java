@@ -11,12 +11,18 @@
 package org.eclipse.emf.cdo.security.impl;
 
 import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.security.UserPassword;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,6 +32,9 @@ import org.eclipse.emf.ecore.EClass;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getGroups <em>Groups</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getAllGroups <em>All Groups</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getAllRoles <em>All Roles</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getFirstName <em>First Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getLastName <em>Last Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getEmail <em>Email</em>}</li>
@@ -38,6 +47,64 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class UserImpl extends AssigneeImpl implements User
 {
+  private EList<Group> allGroups = new CachedList<Group>()
+  {
+    @Override
+    protected InternalEObject getOwner()
+    {
+      return UserImpl.this;
+    }
+
+    @Override
+    protected EStructuralFeature getFeature()
+    {
+      return SecurityPackage.Literals.USER__ALL_GROUPS;
+    }
+
+    @Override
+    protected Object[] getData()
+    {
+      Set<Group> result = new HashSet<Group>();
+
+      for (Group group : getGroups())
+      {
+        result.add(group);
+        result.addAll(group.getAllInheritedGroups());
+      }
+
+      return result.toArray();
+    }
+  };
+
+  private EList<Role> allRoles = new CachedList<Role>()
+  {
+    @Override
+    protected InternalEObject getOwner()
+    {
+      return UserImpl.this;
+    }
+
+    @Override
+    protected EStructuralFeature getFeature()
+    {
+      return SecurityPackage.Literals.USER__ALL_ROLES;
+    }
+
+    @Override
+    protected Object[] getData()
+    {
+      Set<Role> result = new HashSet<Role>();
+      result.addAll(getRoles());
+
+      for (Group group : getAllGroups())
+      {
+        result.addAll(group.getAllRoles());
+      }
+
+      return result.toArray();
+    }
+  };
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -68,6 +135,36 @@ public class UserImpl extends AssigneeImpl implements User
   public EList<Group> getGroups()
   {
     return (EList<Group>)eGet(SecurityPackage.Literals.USER__GROUPS, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public EList<Group> getAllGroups()
+  {
+    return allGroups;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public EList<Role> getAllRoles()
+  {
+    return allRoles;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getLabel()
+  {
+    return (String)eGet(SecurityPackage.Literals.USER__LABEL, true);
   }
 
   /**

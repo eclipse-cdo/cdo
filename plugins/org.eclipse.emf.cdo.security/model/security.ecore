@@ -30,14 +30,26 @@
   <eClassifiers xsi:type="ecore:EClass" name="Group" eSuperTypes="#//Assignee">
     <eStructuralFeatures xsi:type="ecore:EReference" name="inheritedGroups" upperBound="-1"
         eType="#//Group" eOpposite="#//Group/inheritingGroups"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allInheritedGroups" upperBound="-1"
+        eType="#//Group" changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="inheritingGroups" upperBound="-1"
         eType="#//Group" eOpposite="#//Group/inheritedGroups"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allInheritingGroups" upperBound="-1"
+        eType="#//Group" changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allRoles" upperBound="-1"
+        eType="#//Role" changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="users" upperBound="-1"
         eType="#//User" eOpposite="#//User/groups"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="User" eSuperTypes="#//Assignee">
     <eStructuralFeatures xsi:type="ecore:EReference" name="groups" upperBound="-1"
         eType="#//Group" eOpposite="#//Group/users"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allGroups" upperBound="-1"
+        eType="#//Group" changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allRoles" upperBound="-1"
+        eType="#//Role" changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"
+        changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstName" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastName" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>

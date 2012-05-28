@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.security.impl;
 
+//import org.eclipse.emf.cdo.security.*;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
 import org.eclipse.emf.cdo.security.Realm;
@@ -44,7 +45,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
     try
     {
       SecurityFactory theSecurityFactory = (SecurityFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/security/4.1.0"); //$NON-NLS-1$
+          .getEFactory("http://www.eclipse.org/emf/CDO/security/4.1.0"); //$NON-NLS-1$ 
       if (theSecurityFactory != null)
       {
         return theSecurityFactory;
@@ -79,17 +80,17 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
     switch (eClass.getClassifierID())
     {
     case SecurityPackage.REALM:
-      return createRealm();
+      return (EObject)createRealm();
     case SecurityPackage.DIRECTORY:
-      return createDirectory();
+      return (EObject)createDirectory();
     case SecurityPackage.ROLE:
-      return createRole();
+      return (EObject)createRole();
     case SecurityPackage.GROUP:
-      return createGroup();
+      return (EObject)createGroup();
     case SecurityPackage.USER:
-      return createUser();
+      return (EObject)createUser();
     case SecurityPackage.USER_PASSWORD:
-      return createUserPassword();
+      return (EObject)createUserPassword();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }

@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.server.IRepository;
 
+import org.eclipse.net4j.util.container.IManagedContainer;
+
 /**
  * Protects a given {@link IRepository repository}.
  *
@@ -24,6 +26,12 @@ import org.eclipse.emf.cdo.server.IRepository;
  */
 public interface ISecurityManager
 {
+  public IRepository getRepository();
+
+  public String getRealmPath();
+
+  public IManagedContainer getContainer();
+
   public Realm getRealm();
 
   public User getUser(String userID) throws SecurityException;

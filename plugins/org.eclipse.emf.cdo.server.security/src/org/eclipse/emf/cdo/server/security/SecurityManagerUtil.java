@@ -36,4 +36,9 @@ public final class SecurityManagerUtil
   {
     return new org.eclipse.emf.cdo.server.internal.security.SecurityManager(repository, realmPath, container);
   }
+
+  public static void prepareContainer(IManagedContainer container)
+  {
+
+  }
 }

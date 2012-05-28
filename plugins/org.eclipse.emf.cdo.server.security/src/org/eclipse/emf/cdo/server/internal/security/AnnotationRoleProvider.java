@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
 import org.eclipse.emf.cdo.server.spi.security.IRoleProvider;
 
+import org.eclipse.net4j.util.factory.ProductCreationException;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
@@ -142,6 +144,25 @@ public class AnnotationRoleProvider implements IRoleProvider
     public void setWriteRoles(Set<Role> writeRoles)
     {
       this.writeRoles = writeRoles;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class Factory extends IRoleProvider.Factory
+  {
+    public static final String TYPE = "annotation";
+
+    public Factory()
+    {
+      super(TYPE);
+    }
+
+    @Override
+    public AnnotationRoleProvider create(String description) throws ProductCreationException
+    {
+      return new AnnotationRoleProvider();
     }
   }
 }

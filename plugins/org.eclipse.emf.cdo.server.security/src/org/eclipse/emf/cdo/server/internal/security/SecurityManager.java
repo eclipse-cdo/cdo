@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
+import org.eclipse.emf.cdo.server.spi.security.IRoleProvider;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
@@ -43,7 +44,10 @@ import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.container.ContainerEventAdapter;
+import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -54,6 +58,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -62,6 +67,8 @@ import java.util.Set;
  */
 public class SecurityManager implements ISecurityManager
 {
+  private final Map<String, User> users = new HashMap<String, User>();
+
   private final IUserManager userManager = new UserManager();
 
   private final IPermissionManager permissionManager = new PermissionManager();
@@ -74,6 +81,20 @@ public class SecurityManager implements ISecurityManager
 
   private final IManagedContainer container;
 
+  private final IListener containerListener = new ContainerEventAdapter<Object>()
+  {
+    @Override
+    protected void notifyContainerEvent(IContainerEvent<Object> event)
+    {
+      synchronized (containerListener)
+      {
+        roleProviders = null;
+      }
+    }
+  };
+
+  private IRoleProvider[] roleProviders;
+
   private IAcceptor acceptor;
 
   private IConnector connector;
@@ -81,8 +102,6 @@ public class SecurityManager implements ISecurityManager
   private CDOTransaction transaction;
 
   private Realm realm;
-
-  private Map<String, User> users = new HashMap<String, User>();
 
   public SecurityManager(IRepository repository, String realmPath, IManagedContainer container)
   {
@@ -265,7 +284,35 @@ public class SecurityManager implements ISecurityManager
   protected Set<Role> getNeededRoles(CDORevision revision, CDORevisionProvider revisionProvider,
       CDOBranchPoint securityContext, CDOPermission permission)
   {
-    return null;
+    Set<Role> result = null;
+    for (IRoleProvider roleProvider : getRoleProviders())
+    {
+      Set<Role> roles = roleProvider.getRoles(this, securityContext, revisionProvider, revision, permission);
+      if (roles != null && !roles.isEmpty())
+      {
+        if (result == null)
+        {
+          result = new HashSet<Role>();
+        }
+
+        result.addAll(roles);
+      }
+    }
+
+    return result;
+  }
+
+  protected IRoleProvider[] getRoleProviders()
+  {
+    synchronized (containerListener)
+    {
+      if (roleProviders == null)
+      {
+        roleProviders = (IRoleProvider[])container.getElements(IRoleProvider.Factory.PRODUCT_GROUP);
+      }
+    }
+
+    return roleProviders;
   }
 
   /**

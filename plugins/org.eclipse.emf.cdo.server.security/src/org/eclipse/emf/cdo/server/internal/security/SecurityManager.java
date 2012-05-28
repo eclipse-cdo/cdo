@@ -57,9 +57,14 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class SecurityManager implements ISecurityManager, IUserManager, IPermissionManager,
-    IRepository.WriteAccessHandler
+public class SecurityManager implements ISecurityManager
 {
+  private final IUserManager userManager = new UserManager();
+
+  private final IPermissionManager permissionManager = new PermissionManager();
+
+  private final IRepository.WriteAccessHandler writeAccessHandler = new WriteAccessHandler();
+
   private final InternalRepository repository;
 
   private final String realmPath;
@@ -105,9 +110,9 @@ public class SecurityManager implements ISecurityManager, IUserManager, IPermiss
 
     // Wire up with repository
     InternalSessionManager sessionManager = repository.getSessionManager();
-    sessionManager.setUserManager(this);
-    sessionManager.setPermissionManager(this);
-    repository.addHandler(this);
+    sessionManager.setUserManager(userManager);
+    sessionManager.setPermissionManager(permissionManager);
+    repository.addHandler(writeAccessHandler);
     repository.addListener(new LifecycleEventAdapter()
     {
       @Override
@@ -153,6 +158,27 @@ public class SecurityManager implements ISecurityManager, IUserManager, IPermiss
     return realm;
   }
 
+  public User getUser(String userID)
+  {
+    synchronized (users)
+    {
+      User user = users.get(userID);
+      if (user == null)
+      {
+        EList<SecurityItem> items = realm.getItems();
+        user = RealmUtil.findUser(items, userID);
+        if (user == null)
+        {
+          throw new SecurityException("User " + userID + " not found");
+        }
+  
+        users.put(userID, user);
+      }
+  
+      return user;
+    }
+  }
+
   public Group getGroup(String groupID)
   {
     EList<SecurityItem> items = realm.getItems();
@@ -177,72 +203,6 @@ public class SecurityManager implements ISecurityManager, IUserManager, IPermiss
     return role;
   }
 
-  public User getUser(String userID)
-  {
-    synchronized (users)
-    {
-      User user = users.get(userID);
-      if (user == null)
-      {
-        EList<SecurityItem> items = realm.getItems();
-        user = RealmUtil.findUser(items, userID);
-        if (user == null)
-        {
-          throw new SecurityException("User " + userID + " not found");
-        }
-
-        users.put(userID, user);
-      }
-
-      return user;
-    }
-  }
-
-  public void addUser(final String userID, final char[] password)
-  {
-    modify(new RealmOperation()
-    {
-      public void execute(Realm realm)
-      {
-        UserPassword userPassword = SecurityFactory.eINSTANCE.createUserPassword();
-        userPassword.setEncrypted(new String(password));
-
-        User user = SecurityFactory.eINSTANCE.createUser();
-        user.setId(userID);
-        user.setPassword(userPassword);
-
-        realm.getItems().add(user);
-      }
-    });
-  }
-
-  public void removeUser(final String userID)
-  {
-    modify(new RealmOperation()
-    {
-      public void execute(Realm realm)
-      {
-        User user = getUser(userID);
-        EcoreUtil.remove(user);
-      }
-    });
-  }
-
-  public byte[] encrypt(String userID, byte[] data, String algorithmName, byte[] salt, int count)
-      throws SecurityException
-  {
-    User user = getUser(userID);
-    UserPassword userPassword = user.getPassword();
-    String password = userPassword == null ? null : userPassword.getEncrypted();
-    if (password != null)
-    {
-      // TODO
-    }
-
-    // TODO: implement SecurityManager.encrypt(userID, data, algorithmName, salt, count)
-    throw new UnsupportedOperationException();
-  }
-
   public void modify(RealmOperation operation)
   {
     synchronized (transaction)
@@ -260,46 +220,113 @@ public class SecurityManager implements ISecurityManager, IUserManager, IPermiss
     }
   }
 
-  public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID)
-  {
-    User user = getUser(userID);
-    CDORevisionProvider revisionProvider = new ManagedRevisionProvider(repository.getRevisionManager(), securityContext);
-    return getPermission(revision, revisionProvider, securityContext, user);
-  }
-
-  public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
-      throws RuntimeException
-  {
-    CDOBranchPoint securityContext = commitContext.getBranchPoint();
-    String userID = commitContext.getUserID();
-    User user = getUser(userID);
-
-    handleRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getNewObjects());
-    handleRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getDirtyObjects());
-  }
-
-  private void handleRevisionsBeforeCommitting(CommitContext commitContext, CDOBranchPoint securityContext, User user,
-      InternalCDORevision[] revisions)
-  {
-    for (InternalCDORevision revision : revisions)
-    {
-      CDOPermission permission = getPermission(revision, commitContext, securityContext, user);
-      if (permission != CDOPermission.WRITE)
-      {
-        throw new SecurityException("User " + user + " is not allowed to write to " + revision);
-      }
-    }
-  }
-
-  public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
-  {
-    // Do nothing
-  }
-
   protected CDOPermission getPermission(CDORevision revision, CDORevisionProvider revisionProvider,
       CDOBranchPoint securityContext, User user)
   {
     // TODO: implement SecurityManager.getPermission(revision, revisionProvider, securityContext, user)
     throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class UserManager implements IUserManager
+  {
+
+    public void addUser(final String userID, final char[] password)
+    {
+      modify(new RealmOperation()
+      {
+        public void execute(Realm realm)
+        {
+          UserPassword userPassword = SecurityFactory.eINSTANCE.createUserPassword();
+          userPassword.setEncrypted(new String(password));
+
+          User user = SecurityFactory.eINSTANCE.createUser();
+          user.setId(userID);
+          user.setPassword(userPassword);
+
+          realm.getItems().add(user);
+        }
+      });
+    }
+
+    public void removeUser(final String userID)
+    {
+      modify(new RealmOperation()
+      {
+        public void execute(Realm realm)
+        {
+          User user = getUser(userID);
+          EcoreUtil.remove(user);
+        }
+      });
+    }
+
+    public byte[] encrypt(String userID, byte[] data, String algorithmName, byte[] salt, int count)
+        throws SecurityException
+    {
+      User user = getUser(userID);
+      UserPassword userPassword = user.getPassword();
+      String password = userPassword == null ? null : userPassword.getEncrypted();
+      if (password != null)
+      {
+        // TODO
+      }
+
+      // TODO: implement SecurityManager.encrypt(userID, data, algorithmName, salt, count)
+      throw new UnsupportedOperationException();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class PermissionManager implements IPermissionManager
+  {
+
+    public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID)
+    {
+      User user = getUser(userID);
+      CDORevisionProvider revisionProvider = new ManagedRevisionProvider(repository.getRevisionManager(),
+          securityContext);
+      return SecurityManager.this.getPermission(revision, revisionProvider, securityContext, user);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class WriteAccessHandler implements IRepository.WriteAccessHandler
+  {
+
+    public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
+        OMMonitor monitor) throws RuntimeException
+    {
+      CDOBranchPoint securityContext = commitContext.getBranchPoint();
+      String userID = commitContext.getUserID();
+      User user = getUser(userID);
+
+      handleRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getNewObjects());
+      handleRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getDirtyObjects());
+    }
+
+    private void handleRevisionsBeforeCommitting(CommitContext commitContext, CDOBranchPoint securityContext,
+        User user, InternalCDORevision[] revisions)
+    {
+      for (InternalCDORevision revision : revisions)
+      {
+        CDOPermission permission = getPermission(revision, commitContext, securityContext, user);
+        if (permission != CDOPermission.WRITE)
+        {
+          throw new SecurityException("User " + user + " is not allowed to write to " + revision);
+        }
+      }
+    }
+
+    public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
+    {
+      // Do nothing
+    }
   }
 }

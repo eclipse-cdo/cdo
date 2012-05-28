@@ -47,6 +47,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.IUserManager;
+import org.eclipse.net4j.util.security.SecurityUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -171,10 +172,10 @@ public class SecurityManager implements ISecurityManager
         {
           throw new SecurityException("User " + userID + " not found");
         }
-  
+
         users.put(userID, user);
       }
-  
+
       return user;
     }
   }
@@ -232,7 +233,6 @@ public class SecurityManager implements ISecurityManager
    */
   private final class UserManager implements IUserManager
   {
-
     public void addUser(final String userID, final char[] password)
     {
       modify(new RealmOperation()
@@ -268,14 +268,25 @@ public class SecurityManager implements ISecurityManager
     {
       User user = getUser(userID);
       UserPassword userPassword = user.getPassword();
-      String password = userPassword == null ? null : userPassword.getEncrypted();
-      if (password != null)
+      String encrypted = userPassword == null ? null : userPassword.getEncrypted();
+      char[] password = encrypted == null ? null : encrypted.toCharArray();
+      if (password == null)
       {
-        // TODO
+        throw new SecurityException("No password: " + userID);
       }
 
-      // TODO: implement SecurityManager.encrypt(userID, data, algorithmName, salt, count)
-      throw new UnsupportedOperationException();
+      try
+      {
+        return SecurityUtil.encrypt(data, password, algorithmName, salt, count);
+      }
+      catch (RuntimeException ex)
+      {
+        throw ex;
+      }
+      catch (Exception ex)
+      {
+        throw new SecurityException(ex);
+      }
     }
   }
 
@@ -284,7 +295,6 @@ public class SecurityManager implements ISecurityManager
    */
   private final class PermissionManager implements IPermissionManager
   {
-
     public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID)
     {
       User user = getUser(userID);
@@ -299,7 +309,6 @@ public class SecurityManager implements ISecurityManager
    */
   private final class WriteAccessHandler implements IRepository.WriteAccessHandler
   {
-
     public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
         OMMonitor monitor) throws RuntimeException
     {

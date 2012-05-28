@@ -58,8 +58,10 @@ import org.eclipse.net4j.util.security.SecurityUtil;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -316,7 +318,13 @@ public class SecurityManager implements ISecurityManager
     {
       if (roleProviders == null)
       {
-        roleProviders = (IRoleProvider[])container.getElements(IRoleProvider.Factory.PRODUCT_GROUP);
+        List<IRoleProvider> result = new ArrayList<IRoleProvider>();
+        for (String factoryType : container.getFactoryTypes(IRoleProvider.Factory.PRODUCT_GROUP))
+        {
+          result.add((IRoleProvider)container.getElement(IRoleProvider.Factory.PRODUCT_GROUP, factoryType, null));
+        }
+
+        roleProviders = result.toArray(new IRoleProvider[result.size()]);
       }
     }
 

@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
@@ -54,6 +55,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -91,7 +93,7 @@ public class SecurityManager implements ISecurityManager
     init();
   }
 
-  private void init()
+  protected void init()
   {
     String repositoryName = repository.getName();
     String acceptorName = repositoryName + "_security";
@@ -124,7 +126,7 @@ public class SecurityManager implements ISecurityManager
     });
   }
 
-  private void dispose()
+  protected void dispose()
   {
     users.clear();
     realm = null;
@@ -224,8 +226,46 @@ public class SecurityManager implements ISecurityManager
   protected CDOPermission getPermission(CDORevision revision, CDORevisionProvider revisionProvider,
       CDOBranchPoint securityContext, User user)
   {
-    // TODO: implement SecurityManager.getPermission(revision, revisionProvider, securityContext, user)
-    throw new UnsupportedOperationException();
+    EList<Role> userRoles = null;
+
+    Set<Role> readRoles = getNeededRoles(revision, revisionProvider, securityContext, CDOPermission.READ);
+    if (readRoles == null || !readRoles.isEmpty())
+    {
+      userRoles = user.getAllRoles();
+
+      for (Role readRole : readRoles)
+      {
+        if (!userRoles.contains(readRole))
+        {
+          return CDOPermission.NONE;
+        }
+      }
+    }
+
+    Set<Role> writeRoles = getNeededRoles(revision, revisionProvider, securityContext, CDOPermission.WRITE);
+    if (writeRoles == null || !writeRoles.isEmpty())
+    {
+      if (userRoles == null)
+      {
+        userRoles = user.getAllRoles();
+      }
+
+      for (Role writeRole : writeRoles)
+      {
+        if (!userRoles.contains(writeRole))
+        {
+          return CDOPermission.READ;
+        }
+      }
+    }
+
+    return CDOPermission.WRITE;
+  }
+
+  protected Set<Role> getNeededRoles(CDORevision revision, CDORevisionProvider revisionProvider,
+      CDOBranchPoint securityContext, CDOPermission permission)
+  {
+    return null;
   }
 
   /**
@@ -298,8 +338,10 @@ public class SecurityManager implements ISecurityManager
     public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID)
     {
       User user = getUser(userID);
-      CDORevisionProvider revisionProvider = new ManagedRevisionProvider(repository.getRevisionManager(),
-          securityContext);
+
+      InternalCDORevisionManager revisionManager = repository.getRevisionManager();
+      CDORevisionProvider revisionProvider = new ManagedRevisionProvider(revisionManager, securityContext);
+
       return SecurityManager.this.getPermission(revision, revisionProvider, securityContext, user);
     }
   }
@@ -309,17 +351,6 @@ public class SecurityManager implements ISecurityManager
    */
   private final class WriteAccessHandler implements IRepository.WriteAccessHandler
   {
-    public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
-        OMMonitor monitor) throws RuntimeException
-    {
-      CDOBranchPoint securityContext = commitContext.getBranchPoint();
-      String userID = commitContext.getUserID();
-      User user = getUser(userID);
-
-      handleRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getNewObjects());
-      handleRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getDirtyObjects());
-    }
-
     private void handleRevisionsBeforeCommitting(CommitContext commitContext, CDOBranchPoint securityContext,
         User user, InternalCDORevision[] revisions)
     {
@@ -331,6 +362,17 @@ public class SecurityManager implements ISecurityManager
           throw new SecurityException("User " + user + " is not allowed to write to " + revision);
         }
       }
+    }
+
+    public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
+        OMMonitor monitor) throws RuntimeException
+    {
+      CDOBranchPoint securityContext = commitContext.getBranchPoint();
+      String userID = commitContext.getUserID();
+      User user = getUser(userID);
+
+      handleRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getNewObjects());
+      handleRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getDirtyObjects());
     }
 
     public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)

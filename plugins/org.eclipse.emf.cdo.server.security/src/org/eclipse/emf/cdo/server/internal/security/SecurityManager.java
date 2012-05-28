@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
 import org.eclipse.emf.cdo.server.spi.security.IRoleProvider;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -287,15 +288,22 @@ public class SecurityManager implements ISecurityManager
     Set<Role> result = null;
     for (IRoleProvider roleProvider : getRoleProviders())
     {
-      Set<Role> roles = roleProvider.getRoles(this, securityContext, revisionProvider, revision, permission);
-      if (roles != null && !roles.isEmpty())
+      try
       {
-        if (result == null)
+        Set<Role> roles = roleProvider.getRoles(this, securityContext, revisionProvider, revision, permission);
+        if (roles != null && !roles.isEmpty())
         {
-          result = new HashSet<Role>();
-        }
+          if (result == null)
+          {
+            result = new HashSet<Role>();
+          }
 
-        result.addAll(roles);
+          result.addAll(roles);
+        }
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
       }
     }
 
@@ -416,7 +424,14 @@ public class SecurityManager implements ISecurityManager
     {
       for (IRoleProvider roleProvider : getRoleProviders())
       {
-        roleProvider.handleCommit(SecurityManager.this, commitContext);
+        try
+        {
+          roleProvider.handleCommit(SecurityManager.this, commitContext);
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
       }
 
       CDOBranchPoint securityContext = commitContext.getBranchPoint();

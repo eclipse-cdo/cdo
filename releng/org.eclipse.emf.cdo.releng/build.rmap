@@ -126,7 +126,7 @@
 		<!-- OCL -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/mdt/ocl/updates/releases/3.1.1">
+			<rm:uri format="{0}/modeling/mdt/ocl/updates/releases">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>

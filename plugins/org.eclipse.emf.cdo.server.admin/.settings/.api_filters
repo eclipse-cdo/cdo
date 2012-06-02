@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.server.admin" version="2">
+    <resource path="src/org/eclipse/emf/cdo/server/internal/admin/CDOAdminServer.java" type="org.eclipse.emf.cdo.server.internal.admin.CDOAdminServer">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOAdmin"/>
+                <message_argument value="CDOAdminServer"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/internal/admin/CDOAdminServerRepository.java" type="org.eclipse.emf.cdo.server.internal.admin.CDOAdminServerRepository">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOAdminRepository"/>
+                <message_argument value="CDOAdminServerRepository"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

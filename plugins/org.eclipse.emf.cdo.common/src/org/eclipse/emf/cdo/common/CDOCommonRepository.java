@@ -25,7 +25,7 @@ import java.util.Set;
  * <li> {@link TypeChangedEvent} after the {@link #getType() repository type} has changed in a fail-over cluster.
  * <li> {@link StateChangedEvent} after the {@link #getState() repository state} has changed in a replicating deployment.
  * </ul>
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
@@ -96,14 +96,14 @@ public interface CDOCommonRepository extends CDOTimeProvider
 
   /**
    * Returns <code>true</code> if this repository supports instances of Ecore, <code>false</code> otherwise.
-   * 
+   *
    * @since 4.0
    */
   public boolean isSupportingEcore();
 
   /**
    * Returns <code>true</code> if this repository ensures referential integrity, <code>false</code> otherwise.
-   * 
+   *
    * @since 4.0
    */
   public boolean isEnsuringReferentialIntegrity();
@@ -111,7 +111,7 @@ public interface CDOCommonRepository extends CDOTimeProvider
   /**
    * Enumerates the possible {@link CDOCommonRepository#getIDGenerationLocation() ID generation locations} of a CDO
    * repository.
-   * 
+   *
    * @author Eike Stepper
    * @since 4.1
    */
@@ -122,7 +122,7 @@ public interface CDOCommonRepository extends CDOTimeProvider
 
   /**
    * Enumerates the possible {@link CDOCommonRepository#getType() types} of a CDO repository.
-   * 
+   *
    * @author Eike Stepper
    */
   public enum Type
@@ -132,7 +132,7 @@ public interface CDOCommonRepository extends CDOTimeProvider
 
   /**
    * Enumerates the possible {@link CDOCommonRepository#getState() states} of a CDO repository.
-   * 
+   *
    * @author Eike Stepper
    */
   public static enum State
@@ -148,7 +148,7 @@ public interface CDOCommonRepository extends CDOTimeProvider
   /**
    * An {@link IEvent event} fired when the {@link Type type} of a CDO repository has changed. This usually happens only
    * for repository fail-over participants.
-   * 
+   *
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
@@ -162,7 +162,7 @@ public interface CDOCommonRepository extends CDOTimeProvider
 
   /**
    * An {@link IEvent event} fired when the {@link State state} of a CDO repository has changed.
-   * 
+   *
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.

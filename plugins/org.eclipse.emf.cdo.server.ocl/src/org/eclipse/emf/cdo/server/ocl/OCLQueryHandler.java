@@ -42,6 +42,7 @@ import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.OCL;
 import org.eclipse.ocl.Query;
 import org.eclipse.ocl.ecore.BooleanLiteralExp;
@@ -147,37 +148,17 @@ public class OCLQueryHandler implements IQueryHandler
         }
       }
 
+      EvaluationEnvironment<EClassifier, ?, ?, EClass, EObject> evalEnv = query.getEvaluationEnvironment();
       Set<Entry<String, Object>> entrySet = parameters.entrySet();
       for (Entry<String, Object> parameter : entrySet)
       {
-        query.getEvaluationEnvironment().add(parameter.getKey(), parameter.getValue());
+        String key = parameter.getKey();
+        Object value = parameter.getValue();
+        evalEnv.add(key, value);
       }
 
-      Object evaluated = evaluate(query, object);
-      if (evaluated instanceof Collection<?>)
-      {
-        Collection<?> results = (Collection<?>)evaluated;
-        for (Object result : results)
-        {
-          if (result instanceof EObject)
-          {
-            CDORevision revision = getRevision((EObject)result, view);
-            if (!context.addResult(revision))
-            {
-              break;
-            }
-          }
-        }
-      }
-      else if (evaluated instanceof EObject)
-      {
-        CDORevision revision = getRevision((EObject)evaluated, view);
-        context.addResult(revision);
-      }
-      else
-      {
-        context.addResult(evaluated);
-      }
+      Object result = evaluate(query, object);
+      addResult(result, context, view);
     }
     catch (Exception ex)
     {
@@ -190,6 +171,30 @@ public class OCLQueryHandler implements IQueryHandler
         extentMap.cancel();
       }
     }
+  }
+
+  protected boolean addResult(Object result, IQueryContext context, CDOView view)
+  {
+    if (result instanceof EObject)
+    {
+      CDORevision revision = getRevision((EObject)result, view);
+      return context.addResult(revision);
+    }
+
+    if (result instanceof Collection<?>)
+    {
+      for (Object element : (Collection<?>)result)
+      {
+        if (!addResult(element, context, view))
+        {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    return context.addResult(result);
   }
 
   protected CDORevision getRevision(EObject object, CDOView view)

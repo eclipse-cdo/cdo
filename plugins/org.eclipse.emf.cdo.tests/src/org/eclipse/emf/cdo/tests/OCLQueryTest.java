@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOQuery;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,6 +125,16 @@ public class OCLQueryTest extends AbstractCDOTest
     {
       assertEquals(p.getVat(), VAT.VAT15);
     }
+  }
+
+  public void testAllProductNames() throws Exception
+  {
+    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances().name", getModel1Package().getProduct1());
+
+    List<String> names = query.getResult(String.class);
+    assertEquals(NUM_OF_PRODUCTS, names.size());
+
+    IOUtil.OUT().println(names);
   }
 
   public void testSelfNavigation() throws Exception

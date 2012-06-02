@@ -282,6 +282,12 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
       return input;
     }
 
+    @Override
+    public String toString()
+    {
+      return objects.toString();
+    }
+
     /**
      * @author Simon McDuff
      */

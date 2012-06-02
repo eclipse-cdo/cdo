@@ -158,7 +158,20 @@ public class OCLQueryHandler implements IQueryHandler
       }
 
       Object result = evaluate(query, object);
-      addResult(result, context, view);
+      if (result instanceof Collection<?>)
+      {
+        for (Object element : (Collection<?>)result)
+        {
+          if (!addResult(element, context, view))
+          {
+            break;
+          }
+        }
+      }
+      else
+      {
+        addResult(result, context, view);
+      }
     }
     catch (Exception ex)
     {
@@ -179,19 +192,6 @@ public class OCLQueryHandler implements IQueryHandler
     {
       CDORevision revision = getRevision((EObject)result, view);
       return context.addResult(revision);
-    }
-
-    if (result instanceof Collection<?>)
-    {
-      for (Object element : (Collection<?>)result)
-      {
-        if (!addResult(element, context, view))
-        {
-          return false;
-        }
-      }
-
-      return true;
     }
 
     return context.addResult(result);

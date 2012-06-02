@@ -22,7 +22,7 @@ import java.io.IOException;
 
 /**
  * Provides access to all CDO-supported data types.
- * 
+ *
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  * @since 2.0
@@ -79,6 +79,16 @@ public interface CDOType
    * @since 4.0
    */
   public static final CDOType MAP = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.MAP;
+
+  /**
+   * @since 4.1
+   */
+  public static final CDOType SET = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.SET;
+
+  /**
+   * @since 4.1
+   */
+  public static final CDOType LIST = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.LIST;
 
   /**
    * @since 2.0

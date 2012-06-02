@@ -53,10 +53,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Various static helper methods for dealing with CDO meta models.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @apiviz.uses {@link CDOType} - - provides
@@ -255,7 +256,7 @@ public final class CDOModelUtil implements CDOModelConstants
 
   /**
    * Core types includes also complex data like EAnnotation, and EEnum
-   * 
+   *
    * @since 2.0
    */
   public static CDOType getCoreType(EClassifier eDataType)
@@ -332,6 +333,16 @@ public final class CDOModelUtil implements CDOModelConstants
     if (Map.class.isAssignableFrom(primitiveType))
     {
       return CDOType.MAP;
+    }
+
+    if (Set.class.isAssignableFrom(primitiveType))
+    {
+      return CDOType.SET;
+    }
+
+    if (List.class.isAssignableFrom(primitiveType))
+    {
+      return CDOType.LIST;
     }
 
     throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOModelUtil.7"), primitiveType)); //$NON-NLS-1$

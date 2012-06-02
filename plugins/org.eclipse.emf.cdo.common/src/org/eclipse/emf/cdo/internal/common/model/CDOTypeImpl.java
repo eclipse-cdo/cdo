@@ -42,8 +42,11 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -750,10 +753,10 @@ public abstract class CDOTypeImpl implements CDOType
 
   public static final CDOType MAP = new ObjectType("MAP", -6) //$NON-NLS-1$
   {
-    @SuppressWarnings("unchecked")
     @Override
     protected void doWriteValue(CDODataOutput out, Object value) throws IOException
     {
+      @SuppressWarnings("unchecked")
       Map<Object, Object> map = (Map<Object, Object>)value;
       out.writeInt(map.size());
 
@@ -774,6 +777,64 @@ public abstract class CDOTypeImpl implements CDOType
         Object key = readTypeAndValue(in);
         Object value = readTypeAndValue(in);
         result.put(key, value == CDOID.NULL ? null : value);
+      }
+
+      return result;
+    }
+  };
+
+  public static final CDOType SET = new ObjectType("SET", -7) //$NON-NLS-1$
+  {
+    @Override
+    protected void doWriteValue(CDODataOutput out, Object value) throws IOException
+    {
+      @SuppressWarnings("unchecked")
+      Set<Object> set = (Set<Object>)value;
+      out.writeInt(set.size());
+      for (Object element : set)
+      {
+        writeTypeAndValue(out, element);
+      }
+    }
+
+    @Override
+    protected Set<Object> doReadValue(CDODataInput in) throws IOException
+    {
+      Set<Object> result = new HashSet<Object>();
+      int size = in.readInt();
+      for (int i = 0; i < size; i++)
+      {
+        Object element = readTypeAndValue(in);
+        result.add(element == CDOID.NULL ? null : element);
+      }
+
+      return result;
+    }
+  };
+
+  public static final CDOType LIST = new ObjectType("LIST", -8) //$NON-NLS-1$
+  {
+    @Override
+    protected void doWriteValue(CDODataOutput out, Object value) throws IOException
+    {
+      @SuppressWarnings("unchecked")
+      List<Object> list = (List<Object>)value;
+      out.writeInt(list.size());
+      for (Object element : list)
+      {
+        writeTypeAndValue(out, element);
+      }
+    }
+
+    @Override
+    protected List<Object> doReadValue(CDODataInput in) throws IOException
+    {
+      List<Object> result = new ArrayList<Object>();
+      int size = in.readInt();
+      for (int i = 0; i < size; i++)
+      {
+        Object element = readTypeAndValue(in);
+        result.add(element == CDOID.NULL ? null : element);
       }
 
       return result;

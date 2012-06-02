@@ -137,6 +137,15 @@ public class OCLQueryHandler implements IQueryHandler
 
       OCLExpression<EClassifier> expr = helper.createQuery(queryString);
       Query<EClassifier, EClass, EObject> query = ocl.createQuery(expr);
+      if (query instanceof ProblemAware)
+      {
+        ProblemAware problemAware = (ProblemAware)query;
+        Diagnostic problems = problemAware.getProblems();
+        if (problems != null)
+        {
+          throw new DiagnosticException(problems);
+        }
+      }
 
       Set<Entry<String, Object>> entrySet = parameters.entrySet();
       for (Entry<String, Object> parameter : entrySet)
@@ -160,19 +169,14 @@ public class OCLQueryHandler implements IQueryHandler
           }
         }
       }
+      else if (evaluated instanceof EObject)
+      {
+        CDORevision revision = getRevision((EObject)evaluated, view);
+        context.addResult(revision);
+      }
       else
       {
-        if (query instanceof ProblemAware)
-        {
-          ProblemAware problemAware = (ProblemAware)query;
-          Diagnostic problems = problemAware.getProblems();
-          if (problems != null)
-          {
-            throw new DiagnosticException(problems);
-          }
-        }
-
-        throw new IllegalStateException("Invalid result: " + evaluated.toString());
+        context.addResult(evaluated);
       }
     }
     catch (Exception ex)

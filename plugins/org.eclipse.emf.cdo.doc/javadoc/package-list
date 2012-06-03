@@ -1,5 +1,7 @@
 org.eclipse.emf.cdo
+org.eclipse.emf.cdo.admin
 org.eclipse.emf.cdo.common
+org.eclipse.emf.cdo.common.admin
 org.eclipse.emf.cdo.common.branch
 org.eclipse.emf.cdo.common.commit
 org.eclipse.emf.cdo.common.commit.handler
@@ -24,6 +26,7 @@ org.eclipse.emf.cdo.etypes.util
 org.eclipse.emf.cdo.location
 org.eclipse.emf.cdo.net4j
 org.eclipse.emf.cdo.server
+org.eclipse.emf.cdo.server.admin
 org.eclipse.emf.cdo.server.db
 org.eclipse.emf.cdo.server.db.mapping
 org.eclipse.emf.cdo.server.db4o
@@ -34,6 +37,7 @@ org.eclipse.emf.cdo.server.mongodb
 org.eclipse.emf.cdo.server.net4j
 org.eclipse.emf.cdo.server.objectivity
 org.eclipse.emf.cdo.server.ocl
+org.eclipse.emf.cdo.server.security
 org.eclipse.emf.cdo.session
 org.eclipse.emf.cdo.session.remote
 org.eclipse.emf.cdo.team

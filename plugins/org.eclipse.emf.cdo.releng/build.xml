@@ -439,6 +439,13 @@
 				<arg value="--thorough" />
 			</cmdargs>
 		</buckminster>
+		<delete failonerror="false" includeemptydirs="true">
+			<fileset dir="${git.clone}/plugins">
+				<exclude name="org.eclipse.emf.cdo.releng.doc/**" />
+				<include name="*.doc/bin/**" />
+				<include name="*.help/bin/**" />
+			</fileset>
+		</delete>
 	</target>
 
 	<!-- ======= -->

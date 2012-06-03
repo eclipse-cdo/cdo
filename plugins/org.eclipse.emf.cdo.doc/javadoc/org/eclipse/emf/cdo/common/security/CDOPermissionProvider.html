@@ -134,7 +134,7 @@ Provides the protection level of protectable objects.
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermissionProvider.Constant.html" title="class in org.eclipse.emf.cdo.common.security">CDOPermissionProvider.Constant</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides a constant protection level for all protectable entities.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides a constant protection level for all <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;<!-- =========== FIELD SUMMARY =========== -->
@@ -182,7 +182,8 @@ Provides the protection level of protectable objects.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermissionProvider.html#getPermission(java.lang.Object)">getPermission</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;protectableObject)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermissionProvider.html#getPermission(org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">getPermission</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A>&nbsp;revision,
+              <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;securityContext)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -240,10 +241,11 @@ static final <A HREF="../../../../../../org/eclipse/emf/cdo/common/security/CDOP
 </TR>
 </TABLE>
 
-<A NAME="getPermission(java.lang.Object)"><!-- --></A><H3>
+<A NAME="getPermission(org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><!-- --></A><H3>
 getPermission</H3>
 <PRE>
-<A HREF="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</A> <B>getPermission</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;protectableObject)</PRE>
+<A HREF="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</A> <B>getPermission</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A>&nbsp;revision,
+                            <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;securityContext)</PRE>
 <DL>
 <DD><DL>
 </DL>

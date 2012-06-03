@@ -26,7 +26,8 @@ Class description missing: org.eclipse.emf.cdo.server.ocl.CDOExtentCreator$Lazy.
 Class description missing: org.eclipse.emf.cdo.server.ocl.CDOExtentCreator.class(CDOExtentCreator.java:43)
 Class description missing: org.eclipse.emf.cdo.server.ocl.CDOExtentMap.class(CDOExtentMap.java:24)
 Class description missing: org.eclipse.emf.cdo.server.ocl.OCLExtentCreator.class(OCLExtentCreator.java:22)
-Class description missing: org.eclipse.emf.cdo.server.ocl.OCLQueryHandler$Factory.class(OCLQueryHandler.java:369)
-Class description missing: org.eclipse.emf.cdo.server.ocl.OCLQueryHandler.class(OCLQueryHandler.java:70)
+Class description missing: org.eclipse.emf.cdo.server.ocl.OCLQueryHandler$Factory.class(OCLQueryHandler.java:378)
+Class description missing: org.eclipse.emf.cdo.server.ocl.OCLQueryHandler.class(OCLQueryHandler.java:71)
 Class description missing: org.eclipse.emf.internal.cdo.CDOObjectImpl$CDOStoreEcoreEMap.class(CDOObjectImpl.java:1306)
 Class description missing: org.eclipse.emf.internal.cdo.CDOObjectImpl$CDOStoreUnorderedEList.class(CDOObjectImpl.java:1435)
+Package description missing: org.eclipse.emf.cdo.common.admin

@@ -106,6 +106,10 @@ Packages that use <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revis
 <TD>Common concepts for dealing with revision deltas and feature deltas.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.common.security"><B>org.eclipse.emf.cdo.common.security</B></A></TD>
+<TD>Common concepts for dealing with permissions and protectable entities.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.server"><B>org.eclipse.emf.cdo.server</B></A></TD>
 <TD>Server concepts for dealing with repositories and stores.&nbsp;</TD>
 </TR>
@@ -201,6 +205,16 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>CDODataOutput.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html#writeCDORevision(org.eclipse.emf.cdo.common.revision.CDORevision, int)">writeCDORevision</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A>&nbsp;revision,
                  int&nbsp;referenceChunk)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>CDODataOutput.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html#writeCDORevision(org.eclipse.emf.cdo.common.revision.CDORevision, int, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">writeCDORevision</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A>&nbsp;revision,
+                 int&nbsp;referenceChunk,
+                 <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;securityContext)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -573,6 +587,41 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
 </TABLE>
 &nbsp;
 <P>
+<A NAME="org.eclipse.emf.cdo.common.security"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/common/security/package-summary.html">org.eclipse.emf.cdo.common.security</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../../org/eclipse/emf/cdo/common/security/package-summary.html">org.eclipse.emf.cdo.common.security</A> with parameters of type <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</A></CODE></FONT></TD>
+<TD><CODE><B>CDOPermissionProvider.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/security/CDOPermissionProvider.html#getPermission(org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">getPermission</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A>&nbsp;revision,
+              <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;securityContext)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</A></CODE></FONT></TD>
+<TD><CODE><B>CDOPermissionProvider.Constant.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/security/CDOPermissionProvider.Constant.html#getPermission(org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">getPermission</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A>&nbsp;revision,
+              <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;securityContext)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
 <A NAME="org.eclipse.emf.cdo.server"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -657,6 +706,16 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
 <TD><CODE><B>CDOServerBrowser.RevisionsPage.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.RevisionsPage.html#getCDOIDLabel(org.eclipse.emf.cdo.common.revision.CDORevision)">getCDOIDLabel</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A>&nbsp;revision)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</A></CODE></FONT></TD>
+<TD><CODE><B>IPermissionManager.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/IPermissionManager.html#getPermission(org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, java.lang.String)">getPermission</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A>&nbsp;revision,
+              <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;securityContext,
+              <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>

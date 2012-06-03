@@ -68,6 +68,7 @@ Class description missing: org.eclipse.net4j.util.concurrent.TimerLifecycle.clas
 Class description missing: org.eclipse.net4j.util.concurrent.Worker$WorkContext.class(Worker.java:240)
 Class description missing: org.eclipse.net4j.util.concurrent.Worker.class(Worker.java:26)
 Class description missing: org.eclipse.net4j.util.container.IContainer$Modifiable.class(IContainer.java:41)
+Class description missing: org.eclipse.net4j.util.container.SetContainer.class(SetContainer.java:21)
 Class description missing: org.eclipse.net4j.util.container.delegate.IContainerBlockingQueue.class(IContainerBlockingQueue.java:18)
 Class description missing: org.eclipse.net4j.util.fsm.FiniteStateMachine$StateChangedEvent.class(FiniteStateMachine.java:355)
 Class description missing: org.eclipse.net4j.util.io.AsyncOutputStream.class(AsyncOutputStream.java:26)

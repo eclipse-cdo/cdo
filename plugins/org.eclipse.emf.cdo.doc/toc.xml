@@ -29,6 +29,9 @@
         <topic label="org.eclipse.emf.cdo.view" href="javadoc/org/eclipse/emf/cdo/view/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.internal.cdo" href="javadoc/org/eclipse/emf/internal/cdo/package-summary.html" icon="package" />
       </topic>
+      <topic label="CDO Model Repository Client Admin Support" href="javadoc/org/eclipse/emf/cdo/admin/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.admin" href="javadoc/org/eclipse/emf/cdo/admin/package-summary.html" icon="package" />
+      </topic>
       <topic label="CDO Model Repository Client Edit Support" href="javadoc/org/eclipse/emf/cdo/edit/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.edit" href="javadoc/org/eclipse/emf/cdo/edit/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.eresource.provider" href="javadoc/org/eclipse/emf/cdo/eresource/provider/package-summary.html" icon="package" />
@@ -58,6 +61,7 @@
       </topic>
       <topic label="CDO Model Repository Common" href="javadoc/org/eclipse/emf/cdo/common/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.common" href="javadoc/org/eclipse/emf/cdo/common/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.common.admin" href="javadoc/org/eclipse/emf/cdo/common/admin/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.common.branch" href="javadoc/org/eclipse/emf/cdo/common/branch/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.common.commit" href="javadoc/org/eclipse/emf/cdo/common/commit/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.common.commit.handler" href="javadoc/org/eclipse/emf/cdo/common/commit/handler/package-summary.html" icon="package" />
@@ -75,6 +79,9 @@
         <topic label="org.eclipse.emf.cdo.server" href="javadoc/org/eclipse/emf/cdo/server/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.server.embedded" href="javadoc/org/eclipse/emf/cdo/server/embedded/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.server.mem" href="javadoc/org/eclipse/emf/cdo/server/mem/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Server Admin Support" href="javadoc/org/eclipse/emf/cdo/server/admin/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.server.admin" href="javadoc/org/eclipse/emf/cdo/server/admin/package-summary.html" icon="package" />
       </topic>
       <topic label="CDO Model Repository Server DB" href="javadoc/org/eclipse/emf/cdo/server/db/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.server.db" href="javadoc/org/eclipse/emf/cdo/server/db/package-summary.html" icon="package" />
@@ -97,6 +104,9 @@
       </topic>
       <topic label="CDO Model Repository Server Objectivity" href="javadoc/org/eclipse/emf/cdo/server/objectivity/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.server.objectivity" href="javadoc/org/eclipse/emf/cdo/server/objectivity/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Server Security Support" href="javadoc/org/eclipse/emf/cdo/server/security/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.server.security" href="javadoc/org/eclipse/emf/cdo/server/security/package-summary.html" icon="package" />
       </topic>
     </topic>
     <topic label="Extension Point Reference" href="html/reference/schema/index.html">

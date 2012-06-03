@@ -89,7 +89,9 @@
 			</doclet>
 
 			<fileset dir="plugins" defaultexcludes="yes">
+				<include name="org.eclipse.emf.cdo.admin/src/org/eclipse/emf/cdo/admin/*.java" />
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/common/*.java" />
+				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/common/admin/*.java" />
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/common/branch/*.java" />
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/common/commit/*.java" />
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/common/commit/handler/*.java" />
@@ -107,6 +109,7 @@
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/etypes/provider/*.java" />
 				<include name="org.eclipse.emf.cdo.location/src/org/eclipse/emf/cdo/location/*.java" />
 				<include name="org.eclipse.emf.cdo.net4j/src/org/eclipse/emf/cdo/net4j/*.java" />
+				<include name="org.eclipse.emf.cdo.server.admin/src/org/eclipse/emf/cdo/server/admin/*.java" />
 				<include name="org.eclipse.emf.cdo.server.db/src/org/eclipse/emf/cdo/server/db/*.java" />
 				<include name="org.eclipse.emf.cdo.server.db/src/org/eclipse/emf/cdo/server/db/mapping/*.java" />
 				<include name="org.eclipse.emf.cdo.server.db4o/src/org/eclipse/emf/cdo/server/db4o/*.java" />
@@ -115,6 +118,7 @@
 				<include name="org.eclipse.emf.cdo.server.net4j/src/org/eclipse/emf/cdo/server/net4j/*.java" />
 				<include name="org.eclipse.emf.cdo.server.objectivity/src/org/eclipse/emf/cdo/server/objectivity/*.java" />
 				<include name="org.eclipse.emf.cdo.server.ocl/src/org/eclipse/emf/cdo/server/ocl/*.java" />
+				<include name="org.eclipse.emf.cdo.server.security/src/org/eclipse/emf/cdo/server/security/*.java" />
 				<include name="org.eclipse.emf.cdo.server/src/org/eclipse/emf/cdo/server/*.java" />
 				<include name="org.eclipse.emf.cdo.server/src/org/eclipse/emf/cdo/server/embedded/*.java" />
 				<include name="org.eclipse.emf.cdo.server/src/org/eclipse/emf/cdo/server/mem/*.java" />
@@ -154,6 +158,9 @@
 				<package name="org.eclipse.emf.cdo.view" />
 				<package name="org.eclipse.emf.internal.cdo" />
 			</group>
+			<group title="CDO Model Repository Client Admin Support">
+				<package name="org.eclipse.emf.cdo.admin" />
+			</group>
 			<group title="CDO Model Repository Client Edit Support">
 				<package name="org.eclipse.emf.cdo.edit" />
 				<package name="org.eclipse.emf.cdo.eresource.provider" />
@@ -183,6 +190,7 @@
 			</group>
 			<group title="CDO Model Repository Common">
 				<package name="org.eclipse.emf.cdo.common" />
+				<package name="org.eclipse.emf.cdo.common.admin" />
 				<package name="org.eclipse.emf.cdo.common.branch" />
 				<package name="org.eclipse.emf.cdo.common.commit" />
 				<package name="org.eclipse.emf.cdo.common.commit.handler" />
@@ -200,6 +208,9 @@
 				<package name="org.eclipse.emf.cdo.server" />
 				<package name="org.eclipse.emf.cdo.server.embedded" />
 				<package name="org.eclipse.emf.cdo.server.mem" />
+			</group>
+			<group title="CDO Model Repository Server Admin Support">
+				<package name="org.eclipse.emf.cdo.server.admin" />
 			</group>
 			<group title="CDO Model Repository Server DB">
 				<package name="org.eclipse.emf.cdo.server.db" />
@@ -222,6 +233,9 @@
 			</group>
 			<group title="CDO Model Repository Server Objectivity">
 				<package name="org.eclipse.emf.cdo.server.objectivity" />
+			</group>
+			<group title="CDO Model Repository Server Security Support">
+				<package name="org.eclipse.emf.cdo.server.security" />
 			</group>
 
 			<link href="${jdk.link}" />

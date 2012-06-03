@@ -10,12 +10,17 @@
  */
 package org.eclipse.emf.cdo.common.admin;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
+
 import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import java.util.Map;
 
 /**
+ * An administrative interface to a remote server with CDO {@link CDOCommonRepository repositories}.
+ *
  * @author Eike Stepper
  * @since 4.1
  * @noextend This interface is not intended to be extended by clients.
@@ -27,6 +32,13 @@ public interface CDOAdmin extends IContainer<CDOAdminRepository>, Closeable
 
   public CDOAdminRepository getRepository(String name);
 
+  /**
+   * Creates a new remote {@link CDOCommonRepository repository} and returns its administrative interface.
+   * <p>
+   * On the server-side the creation is delegated to an instance of <code>org.eclipse.emf.cdo.server.spi.admin.CDOAdminHandler</code>
+   * that is registered with the server's {@link IManagedContainer container} under the given <code>type</code> argument.
+   * The <code>name</code> and <code>properties</code> arguments are passed on to the registered handler.
+   */
   public CDOAdminRepository createRepository(String name, String type, Map<String, Object> properties);
 
   public CDOAdminRepository waitForRepository(String name);

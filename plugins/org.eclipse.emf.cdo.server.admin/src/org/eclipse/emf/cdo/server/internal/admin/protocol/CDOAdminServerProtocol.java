@@ -76,6 +76,14 @@ public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer>
     }
   }
 
+  public void sendRepositoryReplicationProgressed(String name, double totalWork, double work) throws Exception
+  {
+    if (LifecycleUtil.isActive(getChannel()))
+    {
+      new RepositoryReplicationPogressedRequest(this, name, totalWork, work).sendAsync();
+    }
+  }
+
   @Override
   protected SignalReactor createSignalReactor(short signalID)
   {

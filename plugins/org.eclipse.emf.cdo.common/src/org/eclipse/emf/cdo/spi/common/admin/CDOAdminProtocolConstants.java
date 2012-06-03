@@ -38,4 +38,6 @@ public interface CDOAdminProtocolConstants
   public static final short SIGNAL_REPOSITORY_TYPE_CHANGED = 6;
 
   public static final short SIGNAL_REPOSITORY_STATE_CHANGED = 7;
+
+  public static final short SIGNAL_REPOSITORY_REPLICATION_PROGRESSED = 8;
 }

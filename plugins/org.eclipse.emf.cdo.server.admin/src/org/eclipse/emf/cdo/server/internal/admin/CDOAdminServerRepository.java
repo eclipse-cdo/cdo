@@ -17,11 +17,15 @@ import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IRepositorySynchronizer;
+import org.eclipse.emf.cdo.server.ISynchronizableRepository;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.om.monitor.NotifyingMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitorProgress;
 
 import java.io.IOException;
 import java.util.Set;
@@ -60,11 +64,33 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     }
   };
 
+  private IListener delegateSynchronizerListener = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof OMMonitorProgress)
+      {
+        OMMonitorProgress e = (OMMonitorProgress)event;
+        double totalWork = e.getTotalWork();
+        double work = e.getWork();
+
+        fireEvent(new NotifyingMonitor.ProgressEvent(CDOAdminServerRepository.this, totalWork, work));
+        admin.repositoryReplicationProgressed(getName(), totalWork, work);
+      }
+    }
+  };
+
   public CDOAdminServerRepository(CDOAdminServer admin, IRepository delegate)
   {
     this.admin = admin;
     this.delegate = delegate;
+
     delegate.addListener(delegateListener);
+    if (delegate instanceof ISynchronizableRepository)
+    {
+      IRepositorySynchronizer synchronizer = ((ISynchronizableRepository)delegate).getSynchronizer();
+      synchronizer.addListener(delegateSynchronizerListener);
+    }
   }
 
   public final CDOAdmin getAdmin()
@@ -186,5 +212,10 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
   public void dispose()
   {
     delegate.removeListener(delegateListener);
+    if (delegate instanceof ISynchronizableRepository)
+    {
+      IRepositorySynchronizer synchronizer = ((ISynchronizableRepository)delegate).getSynchronizer();
+      synchronizer.removeListener(delegateSynchronizerListener);
+    }
   }
 }

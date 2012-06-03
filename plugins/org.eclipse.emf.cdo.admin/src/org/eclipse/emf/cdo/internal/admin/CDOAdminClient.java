@@ -58,6 +58,15 @@ public class CDOAdminClient extends AbstractCDOAdmin
     }
   }
 
+  public void repositoryReplicationProgressed(String name, double totalWork, double work)
+  {
+    CDOAdminClientRepository repository = (CDOAdminClientRepository)getRepository(name);
+    if (repository != null)
+    {
+      repository.replicationProgressed(totalWork, work);
+    }
+  }
+
   @Override
   protected boolean doCreateRepository(String name, String type, Map<String, Object> properties)
   {

@@ -79,14 +79,14 @@ public class NotifyingMonitor extends Monitor implements INotifier
     IListener[] listeners = getListeners();
     if (listeners != null)
     {
-      notifier.fireEvent(new ProgressEvent(getTotalWork(), getWork()), listeners);
+      notifier.fireEvent(new ProgressEvent(this, getTotalWork(), getWork()), listeners);
     }
   }
 
   /**
    * @author Eike Stepper
    */
-  public final class ProgressEvent extends Event implements OMMonitorProgress
+  public static class ProgressEvent extends Event implements OMMonitorProgress
   {
     private static final long serialVersionUID = 1L;
 
@@ -94,16 +94,26 @@ public class NotifyingMonitor extends Monitor implements INotifier
 
     private double work;
 
-    private ProgressEvent(double totalWork, double work)
+    /**
+     * @since 3.2
+     */
+    public ProgressEvent(INotifier notifier, double totalWork, double work)
     {
-      super(NotifyingMonitor.this);
+      super(notifier);
       this.totalWork = totalWork;
       this.work = work;
     }
 
     public String getTask()
     {
-      return NotifyingMonitor.this.getTask();
+      INotifier source = getSource();
+      if (source instanceof NotifyingMonitor)
+      {
+        NotifyingMonitor monitor = (NotifyingMonitor)source;
+        return monitor.getTask();
+      }
+
+      return null;
     }
 
     public double getTotalWork()

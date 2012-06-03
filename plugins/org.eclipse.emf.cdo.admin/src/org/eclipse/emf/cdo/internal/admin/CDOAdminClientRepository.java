@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.om.monitor.NotifyingMonitor;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -179,5 +180,10 @@ public class CDOAdminClientRepository extends Notifier implements CDOAdminReposi
   {
     state = newState;
     fireEvent(new RepositoryStateChangedEvent(this, oldState, newState));
+  }
+
+  public void replicationProgressed(double totalWork, double work)
+  {
+    fireEvent(new NotifyingMonitor.ProgressEvent(this, totalWork, work));
   }
 }

@@ -212,6 +212,21 @@ public class CDOAdminServer extends AbstractCDOAdmin
     }
   }
 
+  protected void repositoryReplicationProgressed(String name, double totalWork, double work)
+  {
+    for (CDOAdminServerProtocol protocol : getProtocols())
+    {
+      try
+      {
+        protocol.sendRepositoryReplicationProgressed(name, totalWork, work);
+      }
+      catch (Exception ex)
+      {
+        handleNotificationProblem(protocol, ex);
+      }
+    }
+  }
+
   protected void handleNotificationProblem(CDOAdminServerProtocol protocol, Exception ex)
   {
     OM.LOG.warn("A problem occured while notifying client " + protocol, ex);

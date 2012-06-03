@@ -66,6 +66,9 @@ public class CDOAdminClientProtocol extends SignalProtocol<CDOAdminClient>
     case CDOAdminProtocolConstants.SIGNAL_REPOSITORY_STATE_CHANGED:
       return new RepositoryStateChangedIndication(this);
 
+    case CDOAdminProtocolConstants.SIGNAL_REPOSITORY_REPLICATION_PROGRESSED:
+      return new RepositoryReplicationProgressedIndication(this);
+
     default:
       return super.createSignalReactor(signalID);
     }

@@ -90,6 +90,25 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     return CDOAdminUtil.openAdmin(connector);
   }
 
+  private void cleanup(CDOAdmin admin)
+  {
+    IOUtil.closeSilent(admin);
+  }
+
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    getRepositoryConfig().setAddRepository(true);
+    super.doSetUp();
+  }
+
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    getRepositoryConfig().setAddRepository(false);
+    super.doTearDown();
+  }
+
   public void testInitial() throws Exception
   {
     CDOAdmin admin = openAdmin(null);
@@ -102,7 +121,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     }
     finally
     {
-      IOUtil.closeSilent(admin);
+      cleanup(admin);
     }
   }
 
@@ -122,7 +141,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     }
     finally
     {
-      IOUtil.closeSilent(admin);
+      cleanup(admin);
     }
   }
 
@@ -160,7 +179,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     }
     finally
     {
-      IOUtil.closeSilent(admin);
+      cleanup(admin);
     }
   }
 
@@ -206,7 +225,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     }
     finally
     {
-      IOUtil.closeSilent(admin);
+      cleanup(admin);
     }
   }
 
@@ -252,7 +271,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     }
     finally
     {
-      IOUtil.closeSilent(admin);
+      cleanup(admin);
     }
   }
 
@@ -281,7 +300,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     }
     finally
     {
-      IOUtil.closeSilent(admin);
+      cleanup(admin);
     }
   }
 
@@ -307,7 +326,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     }
     finally
     {
-      IOUtil.closeSilent(admin);
+      cleanup(admin);
     }
   }
 
@@ -343,7 +362,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     }
     finally
     {
-      IOUtil.closeSilent(admin);
+      cleanup(admin);
     }
   }
 
@@ -380,7 +399,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     }
     finally
     {
-      IOUtil.closeSilent(admin);
+      cleanup(admin);
     }
   }
 
@@ -417,7 +436,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     }
     finally
     {
-      IOUtil.closeSilent(admin);
+      cleanup(admin);
     }
   }
 
@@ -448,7 +467,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     }
     finally
     {
-      IOUtil.closeSilent(admin);
+      cleanup(admin);
     }
   }
 
@@ -480,7 +499,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     }
     finally
     {
-      IOUtil.closeSilent(admin);
+      cleanup(admin);
     }
   }
 
@@ -514,7 +533,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     }
     finally
     {
-      IOUtil.closeSilent(admin);
+      cleanup(admin);
     }
   }
 
@@ -548,7 +567,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     }
     finally
     {
-      IOUtil.closeSilent(admin);
+      cleanup(admin);
     }
   }
 
@@ -567,7 +586,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     }
     finally
     {
-      IOUtil.closeSilent(admin);
+      cleanup(admin);
     }
   }
 
@@ -594,7 +613,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     }
     finally
     {
-      IOUtil.closeSilent(admin);
+      cleanup(admin);
     }
   }
 
@@ -614,7 +633,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     }
     finally
     {
-      IOUtil.closeSilent(admin);
+      cleanup(admin);
     }
   }
 }

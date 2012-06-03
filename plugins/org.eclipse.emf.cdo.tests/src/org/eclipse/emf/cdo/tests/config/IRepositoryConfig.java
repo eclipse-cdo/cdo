@@ -48,7 +48,9 @@ public interface IRepositoryConfig extends IConfig, IRepositoryProvider
 
   public void registerRepository(InternalRepository repository);
 
-  public void setRestarting(boolean b);
+  public void setRestarting(boolean on);
+
+  public void setAddRepository(boolean on);
 
   public IStore createStore(String repoName);
 }

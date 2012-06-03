@@ -118,6 +118,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
    */
   private transient boolean restarting;
 
+  /**
+   * Whether CDOServerUtil.addRepository() is to be called for repositories that are activated
+   */
+  private transient boolean addRepository;
+
   private transient String lastRepoProps;
 
   private transient CDOServerBrowser serverBrowser;
@@ -192,9 +197,14 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return "";
   }
 
-  public void setRestarting(boolean restarting)
+  public void setRestarting(boolean on)
   {
-    this.restarting = restarting;
+    restarting = on;
+  }
+
+  public void setAddRepository(boolean on)
+  {
+    addRepository = on;
   }
 
   public boolean isRestarting()
@@ -264,7 +274,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       if (activate)
       {
         LifecycleUtil.activate(repository);
-        // CDOServerUtil.addRepository(serverContainer, repository);
+
+        if (addRepository)
+        {
+          CDOServerUtil.addRepository(serverContainer, repository);
+        }
       }
     }
 

@@ -264,7 +264,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       if (activate)
       {
         LifecycleUtil.activate(repository);
-        CDOServerUtil.addRepository(serverContainer, repository);
+        // CDOServerUtil.addRepository(serverContainer, repository);
       }
     }
 

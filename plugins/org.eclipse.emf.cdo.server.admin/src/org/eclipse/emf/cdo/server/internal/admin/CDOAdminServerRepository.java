@@ -164,7 +164,6 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     out.writeString(getUUID());
     out.writeEnum(getType());
     out.writeEnum(getState());
-    out.writeLong(getCreationTime());
     out.writeString(getStoreType());
 
     Set<CDOID.ObjectType> objectIDTypes = getObjectIDTypes();
@@ -175,6 +174,8 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
       out.writeEnum(objectIDType);
     }
 
+    out.writeLong(getCreationTime());
+    out.writeObject(getRootResourceID());
     out.writeBoolean(isSupportingAudits());
     out.writeBoolean(isSupportingBranches());
     out.writeBoolean(isSupportingEcore());

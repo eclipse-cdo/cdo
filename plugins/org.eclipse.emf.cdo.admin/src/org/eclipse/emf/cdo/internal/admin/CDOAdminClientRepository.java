@@ -39,11 +39,13 @@ public class CDOAdminClientRepository extends Notifier implements CDOAdminReposi
 
   private State state;
 
-  private long creationTime;
-
   private String storeType;
 
   private Set<ObjectType> objectIDTypes;
+
+  private long creationTime;
+
+  private CDOID rootResourceID;
 
   private boolean supportingAudits;
 
@@ -62,7 +64,6 @@ public class CDOAdminClientRepository extends Notifier implements CDOAdminReposi
     uuid = in.readString();
     type = in.readEnum(Type.class);
     state = in.readEnum(State.class);
-    creationTime = in.readLong();
     storeType = in.readString();
 
     Set<CDOID.ObjectType> objectIDTypes = new HashSet<ObjectType>();
@@ -73,6 +74,8 @@ public class CDOAdminClientRepository extends Notifier implements CDOAdminReposi
       objectIDTypes.add(objectIDType);
     }
 
+    creationTime = in.readLong();
+    rootResourceID = (CDOID)in.readObject();
     supportingAudits = in.readBoolean();
     supportingBranches = in.readBoolean();
     supportingEcore = in.readBoolean();
@@ -105,11 +108,6 @@ public class CDOAdminClientRepository extends Notifier implements CDOAdminReposi
     return state;
   }
 
-  public long getCreationTime()
-  {
-    return creationTime;
-  }
-
   public String getStoreType()
   {
     return storeType;
@@ -118,6 +116,16 @@ public class CDOAdminClientRepository extends Notifier implements CDOAdminReposi
   public Set<ObjectType> getObjectIDTypes()
   {
     return objectIDTypes;
+  }
+
+  public long getCreationTime()
+  {
+    return creationTime;
+  }
+
+  public CDOID getRootResourceID()
+  {
+    return rootResourceID;
   }
 
   public boolean isSupportingAudits()
@@ -143,11 +151,6 @@ public class CDOAdminClientRepository extends Notifier implements CDOAdminReposi
   public IDGenerationLocation getIDGenerationLocation()
   {
     return idGenerationLocation;
-  }
-
-  public CDOID getRootResourceID()
-  {
-    throw new UnsupportedOperationException();
   }
 
   public long getTimeStamp() throws UnsupportedOperationException

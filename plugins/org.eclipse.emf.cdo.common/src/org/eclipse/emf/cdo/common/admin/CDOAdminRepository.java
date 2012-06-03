@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.common.admin;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
-import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.INotifier;
@@ -35,11 +34,6 @@ public interface CDOAdminRepository extends CDOCommonRepository, INotifier
    * that is registered with the server's {@link IManagedContainer container} under the given <code>type</code> argument.
    */
   public boolean delete(String type);
-
-  /**
-   * May be unsupported on the client side.
-   */
-  public CDOID getRootResourceID() throws UnsupportedOperationException;
 
   /**
    * May be unsupported on the client side.

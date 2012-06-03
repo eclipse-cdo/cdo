@@ -17,7 +17,7 @@
 		<factory
         	productGroup="org.eclipse.net4j.serverProtocols"
           type="cdo-admin"
-          class="org.eclipse.emf.cdo.server.internal.admin.CDOAdminServerProtocol$Factory$Plugin"/>
+          class="org.eclipse.emf.cdo.server.internal.admin.protocol.CDOAdminServerProtocol$Factory$Plugin"/>
 		<factory
         	productGroup="org.eclipse.emf.cdo.server.admin.adminServers"
           type="default"

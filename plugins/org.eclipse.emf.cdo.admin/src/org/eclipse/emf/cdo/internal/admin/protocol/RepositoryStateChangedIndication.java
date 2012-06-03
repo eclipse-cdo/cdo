@@ -8,9 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.admin;
+package org.eclipse.emf.cdo.internal.admin.protocol;
 
-import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
+import org.eclipse.emf.cdo.internal.admin.CDOAdminClient;
 import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
 
 import org.eclipse.net4j.signal.Indication;
@@ -19,11 +20,11 @@ import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 /**
  * @author Eike Stepper
  */
-public class RepositoryRemovedIndication extends Indication
+public class RepositoryStateChangedIndication extends Indication
 {
-  public RepositoryRemovedIndication(CDOAdminClientProtocol protocol)
+  public RepositoryStateChangedIndication(CDOAdminClientProtocol protocol)
   {
-    super(protocol, CDOAdminProtocolConstants.SIGNAL_REPOSITORY_REMOVED);
+    super(protocol, CDOAdminProtocolConstants.SIGNAL_REPOSITORY_STATE_CHANGED);
   }
 
   @Override
@@ -33,7 +34,8 @@ public class RepositoryRemovedIndication extends Indication
     CDOAdminClient admin = protocol.getInfraStructure();
 
     String name = in.readString();
-    CDOAdminRepository repository = admin.getRepository(name);
-    admin.removeElement(repository);
+    State oldState = in.readEnum(State.class);
+    State newState = in.readEnum(State.class);
+    admin.repositoryStateChanged(name, oldState, newState);
   }
 }

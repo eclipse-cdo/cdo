@@ -8,8 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.server.internal.admin;
+package org.eclipse.emf.cdo.server.internal.admin.protocol;
 
+import org.eclipse.emf.cdo.server.internal.admin.CDOAdminServerRepository;
 import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
 
 import org.eclipse.net4j.signal.Request;
@@ -18,19 +19,19 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 /**
  * @author Eike Stepper
  */
-public class RepositoryRemovedRequest extends Request
+public class RepositoryAddedRequest extends Request
 {
-  private String name;
+  private CDOAdminServerRepository repository;
 
-  public RepositoryRemovedRequest(CDOAdminServerProtocol serverProtocol, String name)
+  public RepositoryAddedRequest(CDOAdminServerProtocol serverProtocol, CDOAdminServerRepository repository)
   {
     super(serverProtocol, CDOAdminProtocolConstants.SIGNAL_REPOSITORY_ADDED);
-    this.name = name;
+    this.repository = repository;
   }
 
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
-    out.writeString(name);
+    repository.write(out);
   }
 }

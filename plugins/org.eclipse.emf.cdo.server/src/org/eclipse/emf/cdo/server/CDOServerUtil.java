@@ -55,7 +55,7 @@ import java.util.Map;
 
 /**
  * Various static methods that may help with CDO {@link IRepository repositories} and server-side {@link CDOView views}.
- * 
+ *
  * @author Eike Stepper
  * @apiviz.exclude
  */
@@ -200,7 +200,11 @@ public final class CDOServerUtil
 
   public static void addRepository(IManagedContainer container, IRepository repository)
   {
-    container.putElement(RepositoryFactory.PRODUCT_GROUP, RepositoryFactory.TYPE, repository.getName(), repository);
+    String productGroup = RepositoryFactory.PRODUCT_GROUP;
+    String type = RepositoryFactory.TYPE;
+    String name = repository.getName();
+
+    container.putElement(productGroup, type, name, repository);
     LifecycleUtil.activate(repository);
   }
 
@@ -238,7 +242,7 @@ public final class CDOServerUtil
   /**
    * An abstract {@link IRepository.ReadAccessHandler read-access handler} that grants or denies access to single
    * {@link CDORevision revisions}.
-   * 
+   *
    * @author Eike Stepper
    * @since 2.0
    * @apiviz.exclude

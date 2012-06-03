@@ -8,10 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.server.internal.admin;
+package org.eclipse.emf.cdo.server.internal.admin.protocol;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.Type;
+import org.eclipse.emf.cdo.server.internal.admin.CDOAdminServer;
+import org.eclipse.emf.cdo.server.internal.admin.CDOAdminServerRepository;
 import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
 
 import org.eclipse.net4j.signal.SignalProtocol;
@@ -83,10 +85,10 @@ public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer>
       return new QueryRepositoriesIndication(this);
 
     case CDOAdminProtocolConstants.SIGNAL_CREATE_REPOSITORY:
-      return new QueryRepositoriesIndication(this);
+      return new CreateRepositoryIndication(this);
 
     case CDOAdminProtocolConstants.SIGNAL_DELETE_REPOSITORY:
-      return new QueryRepositoriesIndication(this);
+      return new DeleteRepositoryIndication(this);
 
     default:
       return super.createSignalReactor(signalID);

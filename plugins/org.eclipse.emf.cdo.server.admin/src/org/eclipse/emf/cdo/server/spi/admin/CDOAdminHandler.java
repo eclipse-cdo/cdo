@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.server.admin;
+package org.eclipse.emf.cdo.server.spi.admin;
 
 import org.eclipse.emf.cdo.server.IRepository;
 

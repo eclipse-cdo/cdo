@@ -10,7 +10,8 @@
  */
 package org.eclipse.emf.cdo.server.admin;
 
-import org.eclipse.emf.cdo.server.internal.admin.CDOAdminServerProtocol;
+import org.eclipse.emf.cdo.server.internal.admin.CDOAdminServer;
+import org.eclipse.emf.cdo.server.internal.admin.protocol.CDOAdminServerProtocol;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 
@@ -27,6 +28,7 @@ public final class CDOAdminServerUtil
 
   public static void prepareContainer(IManagedContainer container, IManagedContainer repositoriesContainer)
   {
+    container.registerFactory(new CDOAdminServer.Factory(repositoriesContainer));
     container.registerFactory(new CDOAdminServerProtocol.Factory(repositoriesContainer));
   }
 

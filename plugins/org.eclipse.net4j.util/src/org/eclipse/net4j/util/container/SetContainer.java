@@ -56,7 +56,9 @@ public class SetContainer<E> extends Container<E>
     {
       @SuppressWarnings("unchecked")
       E[] a = (E[])Array.newInstance(componentType, set.size());
+
       array = set.toArray(a);
+      array = sortElements(array);
     }
 
     return array;
@@ -64,10 +66,14 @@ public class SetContainer<E> extends Container<E>
 
   public boolean addElement(E element)
   {
-    checkActive();
     boolean added;
     synchronized (this)
     {
+      if (!validateElement(element))
+      {
+        return false;
+      }
+
       added = set.add(element);
       if (added)
       {
@@ -87,7 +93,6 @@ public class SetContainer<E> extends Container<E>
 
   public boolean removeElement(E element)
   {
-    checkActive();
     boolean removed;
     synchronized (this)
     {
@@ -111,5 +116,15 @@ public class SetContainer<E> extends Container<E>
   protected Set<E> getSet()
   {
     return set;
+  }
+
+  protected E[] sortElements(E[] array)
+  {
+    return array;
+  }
+
+  protected boolean validateElement(E element)
+  {
+    return true;
   }
 }

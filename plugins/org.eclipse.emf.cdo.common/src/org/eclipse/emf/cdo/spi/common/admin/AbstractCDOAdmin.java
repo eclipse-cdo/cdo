@@ -14,9 +14,12 @@ import org.eclipse.emf.cdo.common.admin.CDOAdmin;
 import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.SetContainer;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Map;
 
 /**
@@ -66,17 +69,11 @@ public abstract class AbstractCDOAdmin extends SetContainer<CDOAdminRepository> 
     return null;
   }
 
-  public CDOAdminRepository createRepository(String name, String type, Map<String, Object> properties)
+  public CDOAdminRepository waitForRepository(String name)
   {
     checkActive();
-
     synchronized (this)
     {
-      if (!doCreateRepository(name, type, properties))
-      {
-        return null;
-      }
-
       long end = System.currentTimeMillis() + timeout;
       while (System.currentTimeMillis() < end)
       {
@@ -92,11 +89,25 @@ public abstract class AbstractCDOAdmin extends SetContainer<CDOAdminRepository> 
         }
         catch (InterruptedException ex)
         {
-          return null;
+          throw WrappedException.wrap(ex);
         }
       }
 
       throw new TimeoutRuntimeException();
+    }
+  }
+
+  public CDOAdminRepository createRepository(String name, String type, Map<String, Object> properties)
+  {
+    checkActive();
+    synchronized (this)
+    {
+      if (!doCreateRepository(name, type, properties))
+      {
+        return null;
+      }
+
+      return waitForRepository(name);
     }
   }
 
@@ -132,6 +143,26 @@ public abstract class AbstractCDOAdmin extends SetContainer<CDOAdminRepository> 
 
       throw new TimeoutRuntimeException();
     }
+  }
+
+  @Override
+  protected CDOAdminRepository[] sortElements(CDOAdminRepository[] array)
+  {
+    Arrays.sort(array, new Comparator<CDOAdminRepository>()
+    {
+      public int compare(CDOAdminRepository r1, CDOAdminRepository r2)
+      {
+        return r1.getName().compareTo(r2.getName());
+      }
+    });
+
+    return array;
+  }
+
+  @Override
+  protected boolean validateElement(CDOAdminRepository repository)
+  {
+    return getRepository(repository.getName()) == null;
   }
 
   protected abstract boolean doCreateRepository(String name, String type, Map<String, Object> properties);

@@ -28,4 +28,6 @@ public interface CDOAdmin extends IContainer<CDOAdminRepository>, Closeable
   public CDOAdminRepository getRepository(String name);
 
   public CDOAdminRepository createRepository(String name, String type, Map<String, Object> properties);
+
+  public CDOAdminRepository waitForRepository(String name);
 }

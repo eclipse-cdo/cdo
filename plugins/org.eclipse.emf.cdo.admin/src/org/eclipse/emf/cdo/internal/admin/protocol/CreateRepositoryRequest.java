@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.admin;
+package org.eclipse.emf.cdo.internal.admin.protocol;
 
 import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
 

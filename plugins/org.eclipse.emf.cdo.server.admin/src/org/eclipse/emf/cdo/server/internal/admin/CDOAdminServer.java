@@ -14,8 +14,9 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.Type;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.admin.CDOAdminHandler;
 import org.eclipse.emf.cdo.server.internal.admin.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.admin.protocol.CDOAdminServerProtocol;
+import org.eclipse.emf.cdo.server.spi.admin.CDOAdminHandler;
 import org.eclipse.emf.cdo.spi.common.admin.AbstractCDOAdmin;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 

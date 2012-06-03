@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.server.admin.CDOAdminServerUtil;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.server.ocl.OCLQueryHandler;
@@ -256,11 +257,14 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
         }
       }
 
-      repository.setQueryHandlerProvider(new ContainerQueryHandlerProvider(getCurrentTest().getServerContainer()));
+      IManagedContainer serverContainer = getCurrentTest().getServerContainer();
+
+      repository.setQueryHandlerProvider(new ContainerQueryHandlerProvider(serverContainer));
       registerRepository(repository);
       if (activate)
       {
         LifecycleUtil.activate(repository);
+        CDOServerUtil.addRepository(serverContainer, repository);
       }
     }
 
@@ -341,6 +345,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     IManagedContainer serverContainer = getCurrentTest().getServerContainer();
     OCLQueryHandler.prepareContainer(serverContainer);
+    CDOAdminServerUtil.prepareContainer(serverContainer);
     CDONet4jServerUtil.prepareContainer(serverContainer, new IRepositoryProvider()
     {
       public IRepository getRepository(String name)

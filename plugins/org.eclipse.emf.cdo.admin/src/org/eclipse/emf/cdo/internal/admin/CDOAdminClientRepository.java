@@ -160,6 +160,12 @@ public class CDOAdminClientRepository extends Notifier implements CDOAdminReposi
     return admin.deleteRepository(this, type);
   }
 
+  @Override
+  public String toString()
+  {
+    return name;
+  }
+
   public void typeChanged(Type oldType, Type newType)
   {
     type = newType;

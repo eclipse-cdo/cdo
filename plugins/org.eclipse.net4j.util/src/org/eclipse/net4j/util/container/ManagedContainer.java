@@ -44,7 +44,7 @@ import java.util.Set;
 
 /**
  * A default implementation of a {@link IManagedContainer managed container}.
- * 
+ *
  * @author Eike Stepper
  * @apiviz.exclude
  */
@@ -319,15 +319,19 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
       oldElement = elementRegistry.put(key, element);
     }
 
-    if (oldElement != null)
+    if (oldElement != element)
     {
-      EventUtil.removeListener(oldElement, elementListener);
-      event.addDelta(oldElement, IContainerDelta.Kind.REMOVED);
+      if (oldElement != null)
+      {
+        EventUtil.removeListener(oldElement, elementListener);
+        event.addDelta(oldElement, IContainerDelta.Kind.REMOVED);
+      }
+
+      event.addDelta(element, IContainerDelta.Kind.ADDED);
+      fireEvent(event);
+      EventUtil.addListener(element, elementListener);
     }
 
-    event.addDelta(element, IContainerDelta.Kind.ADDED);
-    fireEvent(event);
-    EventUtil.addListener(element, elementListener);
     return oldElement;
   }
 

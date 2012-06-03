@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.admin;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.Type;
+import org.eclipse.emf.cdo.internal.admin.protocol.CDOAdminClientProtocol;
 import org.eclipse.emf.cdo.spi.common.admin.AbstractCDOAdmin;
 
 import org.eclipse.net4j.connector.IConnector;

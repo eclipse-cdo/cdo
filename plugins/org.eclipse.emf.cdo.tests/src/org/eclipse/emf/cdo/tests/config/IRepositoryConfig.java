@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.config;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
+import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
@@ -19,7 +20,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public interface IRepositoryConfig extends IConfig
+public interface IRepositoryConfig extends IConfig, IRepositoryProvider
 {
   public static final String REPOSITORY_NAME = "repo1";
 

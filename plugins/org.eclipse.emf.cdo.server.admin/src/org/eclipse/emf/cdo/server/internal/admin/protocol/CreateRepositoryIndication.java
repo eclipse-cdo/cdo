@@ -8,33 +8,41 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.server.internal.admin;
+package org.eclipse.emf.cdo.server.internal.admin.protocol;
 
+import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
+import org.eclipse.emf.cdo.server.internal.admin.CDOAdminServer;
 import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
+import java.util.Map;
+
 /**
  * @author Eike Stepper
  */
-public class DeleteRepositoryIndication extends IndicationWithResponse
+public class CreateRepositoryIndication extends IndicationWithResponse
 {
   private String name;
 
   private String type;
 
-  public DeleteRepositoryIndication(CDOAdminServerProtocol protocol)
+  private Map<String, Object> properties;
+
+  public CreateRepositoryIndication(CDOAdminServerProtocol protocol)
   {
-    super(protocol, CDOAdminProtocolConstants.SIGNAL_DELETE_REPOSITORY);
+    super(protocol, CDOAdminProtocolConstants.SIGNAL_CREATE_REPOSITORY);
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   protected void indicating(ExtendedDataInputStream in) throws Exception
   {
     name = in.readString();
     type = in.readString();
+    properties = (Map<String, Object>)in.readObject();
   }
 
   @Override
@@ -43,16 +51,7 @@ public class DeleteRepositoryIndication extends IndicationWithResponse
     CDOAdminServerProtocol protocol = (CDOAdminServerProtocol)getProtocol();
     CDOAdminServer admin = protocol.getInfraStructure();
 
-    CDOAdminServerRepository repository = (CDOAdminServerRepository)admin.getRepository(name);
-    if (repository != null)
-    {
-      if (admin.deleteRepository(repository, type))
-      {
-        out.writeBoolean(true);
-        return;
-      }
-    }
-
-    out.writeBoolean(false);
+    CDOAdminRepository repository = admin.createRepository(name, type, properties);
+    out.writeBoolean(repository != null);
   }
 }

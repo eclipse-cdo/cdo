@@ -8,40 +8,39 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.admin;
+package org.eclipse.emf.cdo.server.internal.admin.protocol;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
 
-import org.eclipse.net4j.signal.RequestWithConfirmation;
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 /**
  * @author Eike Stepper
  */
-public class DeleteRepositoryRequest extends RequestWithConfirmation<Boolean>
+public class RepositoryStateChangedRequest extends Request
 {
   private String name;
 
-  private String type;
+  private State oldState;
 
-  public DeleteRepositoryRequest(CDOAdminClientProtocol protocol, String name, String type)
+  private State newState;
+
+  public RepositoryStateChangedRequest(CDOAdminServerProtocol serverProtocol, String name, State oldState,
+      State newState)
   {
-    super(protocol, CDOAdminProtocolConstants.SIGNAL_DELETE_REPOSITORY);
+    super(serverProtocol, CDOAdminProtocolConstants.SIGNAL_REPOSITORY_STATE_CHANGED);
     this.name = name;
-    this.type = type;
+    this.oldState = oldState;
+    this.newState = newState;
   }
 
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
     out.writeString(name);
-    out.writeString(type);
-  }
-
-  @Override
-  protected Boolean confirming(ExtendedDataInputStream in) throws Exception
-  {
-    return in.readBoolean();
+    out.writeEnum(oldState);
+    out.writeEnum(newState);
   }
 }

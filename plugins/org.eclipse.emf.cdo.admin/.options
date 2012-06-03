@@ -1,3 +1,4 @@
 # Debugging and tracing options
 
 org.eclipse.emf.cdo.admin/debug = true
+org.eclipse.emf.cdo.admin/debug.protocol = true

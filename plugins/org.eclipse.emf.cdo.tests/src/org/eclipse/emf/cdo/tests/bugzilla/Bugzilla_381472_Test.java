@@ -22,8 +22,10 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.spi.admin.CDOAdminHandler;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig.CallAddRepository;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.tests.util.TestListener;
@@ -50,7 +52,9 @@ import java.util.Map;
  * @author Eike Stepper
  */
 @Requires(ISessionConfig.CAPABILITY_NET4J)
+@CleanRepositoriesBefore
 @CleanRepositoriesAfter
+@CallAddRepository
 public class Bugzilla_381472_Test extends AbstractCDOTest
 {
   private static final String ADMIN_HANDLER_TYPE = "test";
@@ -95,19 +99,19 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     IOUtil.closeSilent(admin);
   }
 
-  @Override
-  protected void doSetUp() throws Exception
-  {
-    getRepositoryConfig().setAddRepository(true);
-    super.doSetUp();
-  }
-
-  @Override
-  protected void doTearDown() throws Exception
-  {
-    getRepositoryConfig().setAddRepository(false);
-    super.doTearDown();
-  }
+  // @Override
+  // protected void doSetUp() throws Exception
+  // {
+  // getRepositoryConfig().setAddRepository(true);
+  // super.doSetUp();
+  // }
+  //
+  // @Override
+  // protected void doTearDown() throws Exception
+  // {
+  // getRepositoryConfig().setAddRepository(false);
+  // super.doTearDown();
+  // }
 
   public void testInitial() throws Exception
   {

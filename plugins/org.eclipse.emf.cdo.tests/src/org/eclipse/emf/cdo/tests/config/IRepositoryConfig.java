@@ -15,6 +15,11 @@ import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.Map;
 
 /**
@@ -50,7 +55,15 @@ public interface IRepositoryConfig extends IConfig, IRepositoryProvider
 
   public void setRestarting(boolean on);
 
-  public void setAddRepository(boolean on);
-
   public IStore createStore(String repoName);
+
+  /**
+   * @author Eike Stepper
+   */
+  @Inherited
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target({ ElementType.TYPE, ElementType.METHOD })
+  public @interface CallAddRepository
+  {
+  }
 }

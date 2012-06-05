@@ -11,15 +11,18 @@
  */
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +32,32 @@ import java.util.StringTokenizer;
 
 /**
  * Various static methods that may help with CDO-specific {@link URI URIs}.
- * 
+ * <p>
+ * CDO URIs are in one of two different formats, either canonical or connection-aware. The canonical format is:
+ *
+ * <blockquote><b>cdo://</b> <i>RepositoryUUID</i> <b>/</b> <i>ResourcePath</i> [<b>?</b> <i>Param</i><b>=</b><i>Value</i>
+ * (<b>&</b> <i>Param</i><b>=</b><i>Value</i>)*]</blockquote>
+ *
+ * The non-terminals being:
+ * <p>
+ * <ul>
+ * <li><i>RepositoryUUID</i>: the {@link CDOCommonRepository#getUUID() UUID} of the repository. By default it's generated when a repository is first started.
+ * If the default format is not adequate the UUID value can be overridden in the repository setup with the <code>overrideUUID</code> property.
+ * <li><i>ResourcePath</i>: the full path of the {@link CDOResource resource} within the repository, segments separated by slashes, no leading slash.
+ * <li><i>Param</i>: one of the following
+ * <ul>
+ * <li><b>prefetch</b>: a boolean value. The value <b>true</b> attempts to load all objects contained by the resource in a single server-round trip and cache the results.
+ * </ul>
+ * </ul>
+ *
+ * URIs in the canonical form to resolve to {@link CDOResource resources} properly require the {@link ResourceSet resource set} to be
+ * configured <i>externally</i> so that the connection to the correct repository can be established, for example:
+ * <blockquote><code>session.openView(resourceSet);</code></blockquote>
+ *
+ * Note that resources preserve their original URI in the scope of the managing {@link CDOView view}, that is not necessarily in canonical format.
+ * <p>
+ * For a description of the connection-aware URI format refer to {@link CDOURIData}.
+ *
  * @author Simon McDuff
  * @since 2.0
  */
@@ -53,6 +81,10 @@ public final class CDOURIUtil
   {
   }
 
+  /**
+   * @deprecated
+   */
+  @Deprecated
   public static void validateURI(URI uri) throws InvalidURIException
   {
     // if (!CDOProtocolConstants.PROTOCOL_NAME.equals(uri.scheme()))
@@ -70,7 +102,6 @@ public final class CDOURIUtil
   {
     try
     {
-      validateURI(uri);
       if (!uri.hasAuthority())
       {
         throw new InvalidURIException(uri);
@@ -106,7 +137,6 @@ public final class CDOURIUtil
       return data.getResourcePath().toPortableString();
     }
 
-    validateURI(uri);
     String path = uri.path();
     if (path == null)
     {

@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.eresource;
 
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOURIData;
+import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -21,12 +23,14 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Resource</b></em>'.
- * 
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>CDO Resource</b></em>'.
+ *
  * @extends Resource
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark <!-- end-user-doc -->
+ * @apiviz.landmark
+ * <!-- end-user-doc -->
  *                  <p>
  *                  The following features are supported:
  *                  <ul>
@@ -67,13 +71,16 @@ public interface CDOResource extends CDOResourceLeaf, Resource
   public static final String OPTION_SAVE_BASE_URI = "OPTION_SAVE_BASE_URI";
 
   /**
-   * Returns the value of the '<em><b>Resource Set</b></em>' attribute. <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Resource Set</em>' attribute isn't clear, there really should be more of a description
-   * here...
-   * </p>
+   * @ADDED
+   * @since 4.1
+   */
+  public static final String PREFETCH_PARAMETER = "prefetch";
+
+  /**
+   * Returns the value of the '<em><b>Resource Set</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Resource Set</em>' attribute.
    * @see #setResourceSet(ResourceSet)
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_ResourceSet()
@@ -84,8 +91,10 @@ public interface CDOResource extends CDOResourceLeaf, Resource
 
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#getResourceSet <em>Resource Set</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   *
    * @param value
    *          the new value of the '<em>Resource Set</em>' attribute.
    * @see #getResourceSet()
@@ -94,12 +103,11 @@ public interface CDOResource extends CDOResourceLeaf, Resource
   void setResourceSet(ResourceSet value);
 
   /**
-   * Returns the value of the '<em><b>URI</b></em>' attribute. <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>URI</em>' attribute isn't clear, there really should be more of a description here...
-   * </p>
+   * Returns the value of the '<em><b>URI</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * The URI format is explained in {@link CDOURIUtil} and {@link CDOURIData}.
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>URI</em>' attribute.
    * @see #setURI(URI)
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_URI()
@@ -109,9 +117,11 @@ public interface CDOResource extends CDOResourceLeaf, Resource
   URI getURI();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#getURI <em>URI</em>}' attribute. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#getURI <em>URI</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * The URI format is explained in {@link CDOURIUtil} and {@link CDOURIData}.
+   * <!-- end-user-doc -->
+   *
    * @param value
    *          the new value of the '<em>URI</em>' attribute.
    * @see #getURI()
@@ -121,13 +131,10 @@ public interface CDOResource extends CDOResourceLeaf, Resource
 
   /**
    * Returns the value of the '<em><b>Contents</b></em>' containment reference list. The list contents are of type
-   * {@link org.eclipse.emf.ecore.EObject}. <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Contents</em>' containment reference list isn't clear, there really should be more of a
-   * description here...
-   * </p>
+   * {@link org.eclipse.emf.ecore.EObject}.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Contents</em>' containment reference list.
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_Contents()
    * @model containment="true"
@@ -136,13 +143,10 @@ public interface CDOResource extends CDOResourceLeaf, Resource
   EList<EObject> getContents();
 
   /**
-   * Returns the value of the '<em><b>Modified</b></em>' attribute. <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Modified</em>' attribute isn't clear, there really should be more of a description
-   * here...
-   * </p>
+   * Returns the value of the '<em><b>Modified</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Modified</em>' attribute.
    * @see #setModified(boolean)
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_Modified()
@@ -153,8 +157,9 @@ public interface CDOResource extends CDOResourceLeaf, Resource
 
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#isModified <em>Modified</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   *
    * @param value
    *          the new value of the '<em>Modified</em>' attribute.
    * @see #isModified()
@@ -163,13 +168,10 @@ public interface CDOResource extends CDOResourceLeaf, Resource
   void setModified(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Loaded</b></em>' attribute. The default value is <code>"true"</code>. <!--
-   * begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Loaded</em>' attribute isn't clear, there really should be more of a description here...
-   * </p>
+   * Returns the value of the '<em><b>Loaded</b></em>' attribute. The default value is <code>"true"</code>.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Loaded</em>' attribute.
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_Loaded()
    * @model default="true" transient="true" suppressedSetVisibility="true"
@@ -178,13 +180,10 @@ public interface CDOResource extends CDOResourceLeaf, Resource
   boolean isLoaded();
 
   /**
-   * Returns the value of the '<em><b>Tracking Modification</b></em>' attribute. <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Tracking Modification</em>' attribute isn't clear, there really should be more of a
-   * description here...
-   * </p>
+   * Returns the value of the '<em><b>Tracking Modification</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Tracking Modification</em>' attribute.
    * @see #setTrackingModification(boolean)
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_TrackingModification()
@@ -195,8 +194,10 @@ public interface CDOResource extends CDOResourceLeaf, Resource
 
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#isTrackingModification
-   * <em>Tracking Modification</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <em>Tracking Modification</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   *
    * @param value
    *          the new value of the '<em>Tracking Modification</em>' attribute.
    * @see #isTrackingModification()
@@ -206,13 +207,10 @@ public interface CDOResource extends CDOResourceLeaf, Resource
 
   /**
    * Returns the value of the '<em><b>Errors</b></em>' attribute list. The list contents are of type
-   * {@link org.eclipse.emf.ecore.resource.Resource.Diagnostic}. <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Errors</em>' attribute list isn't clear, there really should be more of a description
-   * here...
-   * </p>
+   * {@link org.eclipse.emf.ecore.resource.Resource.Diagnostic}.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Errors</em>' attribute list.
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_Errors()
    * @model dataType="org.eclipse.emf.cdo.eresource.Diagnostic" transient="true" changeable="false" volatile="true"
@@ -223,13 +221,10 @@ public interface CDOResource extends CDOResourceLeaf, Resource
 
   /**
    * Returns the value of the '<em><b>Warnings</b></em>' attribute list. The list contents are of type
-   * {@link org.eclipse.emf.ecore.resource.Resource.Diagnostic}. <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Warnings</em>' attribute list isn't clear, there really should be more of a description
-   * here...
-   * </p>
+   * {@link org.eclipse.emf.ecore.resource.Resource.Diagnostic}.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Warnings</em>' attribute list.
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_Warnings()
    * @model dataType="org.eclipse.emf.cdo.eresource.Diagnostic" transient="true" changeable="false" volatile="true"
@@ -239,13 +234,10 @@ public interface CDOResource extends CDOResourceLeaf, Resource
   EList<Diagnostic> getWarnings();
 
   /**
-   * Returns the value of the '<em><b>Time Stamp</b></em>' attribute. <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Time Stamp</em>' attribute isn't clear, there really should be more of a description
-   * here...
-   * </p>
+   * Returns the value of the '<em><b>Time Stamp</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Time Stamp</em>' attribute.
    * @see #setTimeStamp(long)
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_TimeStamp()
@@ -256,8 +248,10 @@ public interface CDOResource extends CDOResourceLeaf, Resource
 
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#getTimeStamp <em>Time Stamp</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   *
    * @param value
    *          the new value of the '<em>Time Stamp</em>' attribute.
    * @see #getTimeStamp()

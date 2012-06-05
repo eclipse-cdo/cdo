@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -1367,6 +1368,21 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
           view.attachResource(this);
 
           viewProvider = pair.getElement2();
+        }
+      }
+
+      String query = getURI().query();
+      if (query != null && query.length() != 0)
+      {
+        Map<String, String> parameters = CDOURIUtil.getParameters(query);
+        String value = parameters.get(CDOResource.PREFETCH_PARAMETER);
+        if (value != null)
+        {
+          boolean prefetch = Boolean.parseBoolean(value);
+          if (prefetch)
+          {
+            cdoPrefetch(CDORevision.DEPTH_INFINITE);
+          }
         }
       }
     }

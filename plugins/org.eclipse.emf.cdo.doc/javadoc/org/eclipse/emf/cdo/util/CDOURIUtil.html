@@ -111,6 +111,31 @@ Class CDOURIUtil</H2>
 
 <P>
 Various static methods that may help with CDO-specific <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><CODE>URIs</CODE></A>.
+ <p>
+ CDO URIs are in one of two different formats, either canonical or connection-aware. The canonical format is:
+
+ <blockquote><b>cdo://</b> <i>RepositoryUUID</i> <b>/</b> <i>ResourcePath</i> [<b>?</b> <i>Param</i><b>=</b><i>Value</i>
+ (<b>&</b> <i>Param</i><b>=</b><i>Value</i>)*]</blockquote>
+
+ The non-terminals being:
+ <p>
+ <ul>
+ <li><i>RepositoryUUID</i>: the <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getUUID()"><CODE>UUID</CODE></A> of the repository. By default it's generated when a repository is first started.
+ If the default format is not adequate the UUID value can be overridden in the repository setup with the <code>overrideUUID</code> property.
+ <li><i>ResourcePath</i>: the full path of the <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>resource</CODE></A> within the repository, segments separated by slashes, no leading slash.
+ <li><i>Param</i>: one of the following
+ <ul>
+ <li><b>prefetch</b>: a boolean value. The value <b>true</b> attempts to load all objects contained by the resource in a single server-round trip and cache the results.
+ </ul>
+ </ul>
+
+ URIs in the canonical form to resolve to <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>resources</CODE></A> properly require the <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><CODE>resource set</CODE></A> to be
+ configured <i>externally</i> so that the connection to the correct repository can be established, for example:
+ <blockquote><code>session.openView(resourceSet);</code></blockquote>
+
+ Note that resources preserve their original URI in the scope of the managing <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A>, that is not necessarily in canonical format.
+ <p>
+ For a description of the connection-aware URI format refer to <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util"><CODE>CDOURIData</CODE></A>.
 <P>
 
 <P>
@@ -260,7 +285,7 @@ Various static methods that may help with CDO-specific <A HREF="http://download.
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#validateURI(org.eclipse.emf.common.util.URI)">validateURI</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</A>&nbsp;uri)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I></I>&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -329,9 +354,12 @@ public static final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/ja
 <A NAME="validateURI(org.eclipse.emf.common.util.URI)"><!-- --></A><H3>
 validateURI</H3>
 <PRE>
-public static void <B>validateURI</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</A>&nbsp;uri)
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>public static void <B>validateURI</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</A>&nbsp;uri)
                         throws <A HREF="../../../../../org/eclipse/emf/cdo/util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</A></PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I></I>
+<P>
 <DD><DL>
 
 <DT><B>Throws:</B>

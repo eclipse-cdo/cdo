@@ -117,6 +117,12 @@ Interface CDOResourceFactory</H2>
 
 <P>
 Creates <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>CDOResource</CODE></A> instances.
+ <p>
+ Note that the only important task of this factory is to instantiate a <A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE>CDOResourceImpl</CODE></A> and mark it
+ <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html#isExisting()"><CODE>existing</CODE></A> or not. All further <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html#getURI()"><CODE>URI</CODE></A> processing
+ is done later on in the registration process, especially in <A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html#basicSetResourceSet(org.eclipse.emf.ecore.resource.ResourceSet, org.eclipse.emf.common.notify.NotificationChain)"><CODE>CDOResourceImpl.basicSetResourceSet()</CODE></A>.
+ <p>
+ The recognized URI formats are explained in <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html" title="class in org.eclipse.emf.cdo.util"><CODE>CDOURIUtil</CODE></A> and <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util"><CODE>CDOURIData</CODE></A>.
 <P>
 
 <P>

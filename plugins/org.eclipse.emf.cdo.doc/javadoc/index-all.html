@@ -1422,7 +1422,7 @@ Variable in class org.eclipse.emf.cdo.eresource.provider.<A HREF="./org/eclipse/
  <A HREF="./org/eclipse/emf/cdo/transaction/CDOTransaction.html#removeTransactionHandler(org.eclipse.emf.cdo.transaction.CDOTransactionHandlerBase)"><CODE>CDOTransaction.removeTransactionHandler()</CODE></A>.<DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOTransactionStartedEvent.html" title="interface in org.eclipse.emf.cdo.transaction"><B>CDOTransactionStartedEvent</B></A> - Interface in <A HREF="./org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</A><DD>A <A HREF="./org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view event</CODE></A> fired from a <A HREF="./org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A> when it first becomes
  <A HREF="./org/eclipse/emf/cdo/transaction/CDOTransaction.html#isDirty()"><CODE>dirty</CODE></A>.<DT><A HREF="./org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model"><B>CDOType</B></A> - Interface in <A HREF="./org/eclipse/emf/cdo/common/model/package-summary.html">org.eclipse.emf.cdo.common.model</A><DD>Provides access to all CDO-supported data types.<DT><A HREF="./org/eclipse/emf/cdo/common/revision/delta/CDOUnsetFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><B>CDOUnsetFeatureDelta</B></A> - Interface in <A HREF="./org/eclipse/emf/cdo/common/revision/delta/package-summary.html">org.eclipse.emf.cdo.common.revision.delta</A><DD>A <A HREF="./org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><CODE>feature delta</CODE></A> that represents the <em>unsetting</em> of the value of a
  <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>feature</CODE></A>.<DT><A HREF="./org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util"><B>CDOUpdatable</B></A> - Interface in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>Represents facilities that can receive
- <A HREF="./org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)"><CODE>passive updates</CODE></A>.<DT><A HREF="./org/eclipse/emf/cdo/util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util"><B>CDOURIData</B></A> - Class in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>Represents the CDO-specific URI data needed to access a resource in a repository.<DT><A HREF="./org/eclipse/emf/cdo/util/CDOURIData.html#CDOURIData()"><B>CDOURIData()</B></A> - 
+ <A HREF="./org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)"><CODE>passive updates</CODE></A>.<DT><A HREF="./org/eclipse/emf/cdo/util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util"><B>CDOURIData</B></A> - Class in <A HREF="./org/eclipse/emf/cdo/util/package-summary.html">org.eclipse.emf.cdo.util</A><DD>Represents a CDO-specific <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><CODE>URI</CODE></A> in connection-aware format.<DT><A HREF="./org/eclipse/emf/cdo/util/CDOURIData.html#CDOURIData()"><B>CDOURIData()</B></A> - 
 Constructor for class org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util">CDOURIData</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/util/CDOURIData.html#CDOURIData(java.lang.String)"><B>CDOURIData(String)</B></A> - 
@@ -4451,6 +4451,9 @@ Method in interface org.eclipse.emf.cdo.session.<A HREF="./org/eclipse/emf/cdo/s
 <DT><A HREF="./org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#getExceptionHandler()"><B>getExceptionHandler()</B></A> - 
 Method in interface org.eclipse.emf.cdo.session.<A HREF="./org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/util/CDOURIData.html#getExtraParameters()"><B>getExtraParameters()</B></A> - 
+Method in class org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util">CDOURIData</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.Descriptor.html#getFactoryType()"><B>getFactoryType()</B></A> - 
 Method in interface org.eclipse.emf.cdo.server.db.mapping.<A HREF="./org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.Descriptor.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Descriptor</A>
 <DD>The factoryType of the factory which can create the type mapping
@@ -5835,7 +5838,7 @@ Static method in class org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/u
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html#getResourceSet()"><B>getResourceSet()</B></A> - 
 Method in interface org.eclipse.emf.cdo.eresource.<A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A>
-<DD>Returns the value of the '<em><b>Resource Set</b></em>' attribute. <!
+<DD>Returns the value of the '<em><b>Resource Set</b></em>' attribute
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/EresourcePackage.html#getResourceSet()"><B>getResourceSet()</B></A> - 
 Method in interface org.eclipse.emf.cdo.eresource.<A HREF="./org/eclipse/emf/cdo/eresource/EresourcePackage.html" title="interface in org.eclipse.emf.cdo.eresource">EresourcePackage</A>
 <DD>Returns the meta object for data type '<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><CODE><em>Resource Set</em></CODE></A>'
@@ -6378,7 +6381,7 @@ Method in interface org.eclipse.emf.cdo.common.util.<A HREF="./org/eclipse/emf/c
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html#getTimeStamp()"><B>getTimeStamp()</B></A> - 
 Method in interface org.eclipse.emf.cdo.eresource.<A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A>
-<DD>Returns the value of the '<em><b>Time Stamp</b></em>' attribute. <!
+<DD>Returns the value of the '<em><b>Time Stamp</b></em>' attribute
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html#getTimeStamp()"><B>getTimeStamp()</B></A> - 
 Method in class org.eclipse.emf.cdo.eresource.impl.<A HREF="./org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</A>
 <DD>&nbsp;
@@ -6545,7 +6548,7 @@ Method in class org.eclipse.emf.cdo.common.model.<A HREF="./org/eclipse/emf/cdo/
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html#getURI()"><B>getURI()</B></A> - 
 Method in interface org.eclipse.emf.cdo.eresource.<A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A>
-<DD>Returns the value of the '<em><b>URI</b></em>' attribute. <!
+<DD>Returns the value of the '<em><b>URI</b></em>' attribute
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/CDOResourceNode.html#getURI()"><B>getURI()</B></A> - 
 Method in interface org.eclipse.emf.cdo.eresource.<A HREF="./org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</A>
 <DD>&nbsp;
@@ -7360,7 +7363,7 @@ Method in interface org.eclipse.emf.cdo.common.lock.<A HREF="./org/eclipse/emf/c
  master server.
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html#isModified()"><B>isModified()</B></A> - 
 Method in interface org.eclipse.emf.cdo.eresource.<A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A>
-<DD>Returns the value of the '<em><b>Modified</b></em>' attribute. <!
+<DD>Returns the value of the '<em><b>Modified</b></em>' attribute
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html#isModified()"><B>isModified()</B></A> - 
 Method in class org.eclipse.emf.cdo.eresource.impl.<A HREF="./org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</A>
 <DD>&nbsp;
@@ -7571,7 +7574,7 @@ Constructor for class org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server"><B>IStoreFactory</B></A> - Interface in <A HREF="./org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</A><DD>Creates <A HREF="./org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server"><CODE>stores</CODE></A>.<DT><A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html#isTrackingModification()"><B>isTrackingModification()</B></A> - 
 Method in interface org.eclipse.emf.cdo.eresource.<A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A>
-<DD>Returns the value of the '<em><b>Tracking Modification</b></em>' attribute. <!
+<DD>Returns the value of the '<em><b>Tracking Modification</b></em>' attribute
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html#isTrackingModification()"><B>isTrackingModification()</B></A> - 
 Method in class org.eclipse.emf.cdo.eresource.impl.<A HREF="./org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</A>
 <DD>&nbsp;
@@ -8359,6 +8362,9 @@ Static method in class org.eclipse.emf.cdo.common.model.<A HREF="./org/eclipse/e
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html#postTraverseFeature(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.ecore.EStructuralFeature, int, java.lang.Object)"><B>postTraverseFeature(CDOObject, EStructuralFeature, int, Object)</B></A> - 
 Method in interface org.eclipse.emf.cdo.view.<A HREF="./org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html#PREFETCH_PARAMETER"><B>PREFETCH_PARAMETER</B></A> - 
+Static variable in interface org.eclipse.emf.cdo.eresource.<A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/net4j/CDONet4jUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)"><B>prepareContainer(IManagedContainer)</B></A> - 
 Static method in class org.eclipse.emf.cdo.net4j.<A HREF="./org/eclipse/emf/cdo/net4j/CDONet4jUtil.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jUtil</A>
@@ -9715,7 +9721,7 @@ Method in class org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/CDO
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html#setResourceSet(org.eclipse.emf.ecore.resource.ResourceSet)"><B>setResourceSet(ResourceSet)</B></A> - 
 Method in interface org.eclipse.emf.cdo.eresource.<A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A>
 <DD>Sets the value of the '<A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html#getResourceSet()"><CODE><em>Resource Set</em></CODE></A>'
- attribute. <!
+ attribute
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html#setResourceSet(org.eclipse.emf.ecore.resource.ResourceSet)"><B>setResourceSet(ResourceSet)</B></A> - 
 Method in class org.eclipse.emf.cdo.eresource.impl.<A HREF="./org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</A>
 <DD>&nbsp;
@@ -9811,7 +9817,7 @@ Method in class org.eclipse.emf.cdo.server.net4j.<A HREF="./org/eclipse/emf/cdo/
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html#setTimeStamp(long)"><B>setTimeStamp(long)</B></A> - 
 Method in interface org.eclipse.emf.cdo.eresource.<A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A>
 <DD>Sets the value of the '<A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html#getTimeStamp()"><CODE><em>Time Stamp</em></CODE></A>'
- attribute. <!
+ attribute
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html#setTimeStamp(long)"><B>setTimeStamp(long)</B></A> - 
 Method in class org.eclipse.emf.cdo.eresource.impl.<A HREF="./org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</A>
 <DD>&nbsp;
@@ -9832,7 +9838,7 @@ Method in interface org.eclipse.emf.cdo.workspace.<A HREF="./org/eclipse/emf/cdo
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html#setTrackingModification(boolean)"><B>setTrackingModification(boolean)</B></A> - 
 Method in interface org.eclipse.emf.cdo.eresource.<A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A>
-<DD>Sets the value of the '<A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html#isTrackingModification()"><CODE><em>Tracking Modification</em></CODE></A>' attribute. <!
+<DD>Sets the value of the '<A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html#isTrackingModification()"><CODE><em>Tracking Modification</em></CODE></A>' attribute
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html#setTrackingModification(boolean)"><B>setTrackingModification(boolean)</B></A> - 
 Method in class org.eclipse.emf.cdo.eresource.impl.<A HREF="./org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</A>
 <DD>&nbsp;
@@ -9850,7 +9856,7 @@ Method in class org.eclipse.emf.cdo.ui.<A HREF="./org/eclipse/emf/cdo/ui/CDOEven
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html#setURI(org.eclipse.emf.common.util.URI)"><B>setURI(URI)</B></A> - 
 Method in interface org.eclipse.emf.cdo.eresource.<A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A>
-<DD>Sets the value of the '<A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html#getURI()"><CODE><em>URI</em></CODE></A>' attribute. <!
+<DD>Sets the value of the '<A HREF="./org/eclipse/emf/cdo/eresource/CDOResource.html#getURI()"><CODE><em>URI</em></CODE></A>' attribute
 <DT><A HREF="./org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html#setURI(org.eclipse.emf.common.util.URI)"><B>setURI(URI)</B></A> - 
 Method in class org.eclipse.emf.cdo.eresource.impl.<A HREF="./org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</A>
 <DD>&nbsp;
@@ -10380,7 +10386,7 @@ Method in interface org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/se
 <DD>Validates the given timeStamp against the repository time.
 <DT><A HREF="./org/eclipse/emf/cdo/util/CDOURIUtil.html#validateURI(org.eclipse.emf.common.util.URI)"><B>validateURI(URI)</B></A> - 
 Static method in class org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/CDOURIUtil.html" title="class in org.eclipse.emf.cdo.util">CDOURIUtil</A>
-<DD>&nbsp;
+<DD><B>Deprecated.</B>&nbsp;<I></I>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/CDOState.html#valueOf(java.lang.String)"><B>valueOf(String)</B></A> - 
 Static method in enum org.eclipse.emf.cdo.<A HREF="./org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</A>
 <DD>Returns the enum constant of this type with the specified name.

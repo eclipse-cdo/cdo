@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 /**
  * Capable of opening a <code>CDOView</code> on a target repository, defined by a URI. A regular expression and the
  * priority are used to determine the most suitable provider.
- * 
+ *
  * @since 2.0
  * @author Victor Roldan Betancort
  */
@@ -44,7 +44,7 @@ public interface CDOViewProvider
   /**
    * Receives a URI and returns an opened <code>CDOView</code> against the repository. The implementer is responsible to
    * do the UUID to physical host map in case necessary.
-   * 
+   *
    * @return a wired-up and opened <code>CDOView</code>
    */
   public CDOView getView(URI uri, ResourceSet resourceSet);

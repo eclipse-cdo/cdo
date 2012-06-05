@@ -28,8 +28,7 @@
    <extension
          point="org.eclipse.net4j.util.elementProcessors">
       <elementProcessor
-            class="org.eclipse.emf.cdo.internal.net4j.Net4jConnectorInjector">
-      </elementProcessor>
+            class="org.eclipse.emf.cdo.internal.net4j.Net4jConnectorInjector"/>
    </extension>
 
    <extension
@@ -37,6 +36,9 @@
       <parser
             class="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl"
             protocolName="cdo.net4j.tcp"/>
+      <parser
+            class="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl"
+            protocolName="cdo.net4j.ssl"/>
       <parser
             class="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl"
             protocolName="cdo.net4j.jvm"/>
@@ -48,6 +50,10 @@
             class="org.eclipse.emf.cdo.net4j.CDONet4jViewProvider$TCP"
             priority="500"
             regex="cdo\.net4j\.tcp://.*"/>
+      <viewProvider
+            class="org.eclipse.emf.cdo.net4j.CDONet4jViewProvider$SSL"
+            priority="500"
+            regex="cdo\.net4j\.ssl://.*"/>
       <viewProvider
             class="org.eclipse.emf.cdo.net4j.CDONet4jViewProvider$JVM"
             priority="500"

@@ -110,7 +110,42 @@ Class CDOURIData</H2>
 
 
 <P>
-Represents the CDO-specific URI data needed to access a resource in a repository.
+Represents a CDO-specific <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><CODE>URI</CODE></A> in connection-aware format.
+ <p>
+ CDO URIs are in one of two different formats, either canonical or connection-aware. The connection-aware format is:
+
+ <blockquote><b>cdo.net4j.</b> <i>ConnectorType</i> <b>://</b> [<i>User</i> [<b>:</b> <i>Password</i>] <b>@</b>]
+ <i>ConnectorSpecificAuthority</i> <b>/</b> <i>RepositoryName</i> <b>/</b> <i>ResourcePath</i> [<b>?</b> <i>Param</i><b>=</b><i>Value</i>
+ (<b>&</b> <i>Param</i><b>=</b><i>Value</i>)*]</blockquote>
+
+ The non-terminals being:
+ <p>
+ <ul>
+ <li><i>ConnectorType</i>: one of <b>tcp</b> | <b>ssl</b> | <b>jvm</b> | <b>http</b>
+ <li><i>User/Password</i>: to be provided if the repository is configured with an
+ <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserManager.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security"><CODE>IUserManager</CODE></A> and, hence, triggers authentication on the client. Note: the
+ password may be stored in resources in clear text!
+ <li><i>ConnectorSpecificAuthority</i>: examples are
+ <ul>
+ <li><i>Host</i> [<b>:</b> <i>Port</i>] (if <i>ConnectorType</i> is <b>tcp</b>)
+ <li><i>AcceptorName</i> (if <i>ConnectorType</i> is <b>jvm</b>)
+ </ul>
+ <li><i>RepositoryName</i>: the <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getName()"><CODE>name</CODE></A> of the repository (not the <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getUUID()"><CODE>UUID</CODE></A>!).
+ <li><i>ResourcePath</i>: the full path of the <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>resource</CODE></A> within the repository, segments separated by slashes, no leading slash.
+ <li><i>Param</i>: one of the following
+ <ul>
+ <li><b>branch</b>: the value must be a <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getPathName()"><CODE>branch path</CODE></A>, the full path of the branch in the branch tree, segments separated by slashes, no leading slash, defaults to <b>MAIN</b>.
+ <li><b>time</b>: the value must be the time at which the resource is supposed to be valid, parseable by SimpleDateFormat. The special value <b>HEAD</b> indicates a floating view/transaction that always shows the latest state in the chosen branch, the default if no <i>Time</i> parameter is specified.
+ <li><b>transactional</b>: a boolean value. The value <b>true</b> forces a the resource to be opened in a transaction rather than in a read-only view. This can not be combined with a <i>Time</i> other than <b>HEAD</b>.
+ <li><b>prefetch</b>: a boolean value. The value <b>true</b> attempts to load all objects contained by the resource in a single server-round trip and cache the results.
+ </ul>
+ </ul>
+ <p>
+ Note: With the current design and implementation of connection-aware URI
+ (mainly CDONet4jViewProvider) it is still unclear when and how the allocated
+ "resources" (aka IConnector, CDOSession, CDOView, etc) are supposed to be freed!
+ <p>
+ For a description of the canonical URI format refer to <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html" title="class in org.eclipse.emf.cdo.util"><CODE>CDOURIUtil</CODE></A>.
 <P>
 
 <P>
@@ -211,6 +246,14 @@ Represents the CDO-specific URI data needed to access a resource in a repository
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;org.eclipse.core.runtime.IPath</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#getBranchPath()">getBranchPath</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html#getExtraParameters()">getExtraParameters</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -711,6 +754,19 @@ setTransactional</H3>
 public void <B>setTransactional</B>(boolean&nbsp;transactional)</PRE>
 <DL>
 <DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getExtraParameters()"><!-- --></A><H3>
+getExtraParameters</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt; <B>getExtraParameters</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
 </DL>
 </DD>
 </DL>

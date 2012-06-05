@@ -29,17 +29,16 @@ import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.tests.util.TestListener;
+import org.eclipse.emf.cdo.tests.util.TestListener.EventAssertion;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -320,13 +319,14 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
       getRepository("repo2");
       admin.waitForRepository("repo2");
 
-      IEvent[] events = listener.getEvents();
-      assertEquals(1, events.length);
-
-      @SuppressWarnings("unchecked")
-      IContainerEvent<CDOAdminRepository> event = (IContainerEvent<CDOAdminRepository>)events[0];
-      assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
-      assertEquals("repo2", event.getDeltaElement().getName());
+      listener.assertEvent(new EventAssertion<IContainerEvent<CDOAdminRepository>>()
+      {
+        public void execute(IContainerEvent<CDOAdminRepository> event) throws Exception
+        {
+          assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
+          assertEquals("repo2", event.getDeltaElement().getName());
+        }
+      });
     }
     finally
     {
@@ -356,13 +356,14 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
         }
       }.assertNoTimeOut();
 
-      IEvent[] events = listener.getEvents();
-      assertEquals(1, events.length);
-
-      @SuppressWarnings("unchecked")
-      IContainerEvent<CDOAdminRepository> event = (IContainerEvent<CDOAdminRepository>)events[0];
-      assertEquals(IContainerDelta.Kind.REMOVED, event.getDeltaKind());
-      assertEquals("repo1", event.getDeltaElement().getName());
+      listener.assertEvent(new EventAssertion<IContainerEvent<CDOAdminRepository>>()
+      {
+        public void execute(IContainerEvent<CDOAdminRepository> event) throws Exception
+        {
+          assertEquals(IContainerDelta.Kind.REMOVED, event.getDeltaKind());
+          assertEquals("repo1", event.getDeltaElement().getName());
+        }
+      });
     }
     finally
     {
@@ -378,28 +379,19 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     {
       CDOAdminRepository repo1 = admin.getRepository("repo1");
 
-      final TestListener listener = new TestListener();
+      TestListener listener = new TestListener();
       repo1.addListener(listener);
 
       getRepository().setType(Type.BACKUP);
 
-      new PollingTimeOuter()
+      listener.assertEvent(new EventAssertion<RepositoryTypeChangedEvent>()
       {
-        @Override
-        protected boolean successful()
+        public void execute(RepositoryTypeChangedEvent event) throws Exception
         {
-          IEvent[] events = listener.getEvents();
-          if (events.length != 1)
-          {
-            return false;
-          }
-
-          RepositoryTypeChangedEvent event = (RepositoryTypeChangedEvent)events[0];
           assertEquals(Type.MASTER, event.getOldType());
           assertEquals(Type.BACKUP, event.getNewType());
-          return true;
         }
-      }.assertNoTimeOut();
+      });
     }
     finally
     {
@@ -420,23 +412,14 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
       getRepository().setState(State.OFFLINE);
 
-      new PollingTimeOuter()
+      listener.assertEvent(new EventAssertion<RepositoryStateChangedEvent>()
       {
-        @Override
-        protected boolean successful()
+        public void execute(RepositoryStateChangedEvent event) throws Exception
         {
-          IEvent[] events = listener.getEvents();
-          if (events.length != 1)
-          {
-            return false;
-          }
-
-          RepositoryStateChangedEvent event = (RepositoryStateChangedEvent)events[0];
           assertEquals(State.ONLINE, event.getOldState());
           assertEquals(State.OFFLINE, event.getNewState());
-          return true;
         }
-      }.assertNoTimeOut();
+      });
     }
     finally
     {
@@ -461,13 +444,14 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
       assertEquals(getRepository().getName(), repositories[0].getName());
       assertEquals(repo2.getName(), repositories[1].getName());
 
-      IEvent[] events = listener.getEvents();
-      assertEquals(Arrays.asList(events).toString(), 1, events.length);
-
-      @SuppressWarnings("unchecked")
-      IContainerEvent<CDOAdminRepository> event = (IContainerEvent<CDOAdminRepository>)events[0];
-      assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
-      assertEquals("repo2", event.getDeltaElement().getName());
+      listener.assertEvent(new EventAssertion<IContainerEvent<CDOAdminRepository>>()
+      {
+        public void execute(IContainerEvent<CDOAdminRepository> event) throws Exception
+        {
+          assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
+          assertEquals("repo2", event.getDeltaElement().getName());
+        }
+      });
     }
     finally
     {
@@ -493,13 +477,14 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
       assertEquals(getRepository().getName(), repositories[0].getName());
       assertEquals(repo2.getName(), repositories[1].getName());
 
-      IEvent[] events = listener.getEvents();
-      assertEquals(Arrays.asList(events).toString(), 1, events.length);
-
-      @SuppressWarnings("unchecked")
-      IContainerEvent<CDOAdminRepository> event = (IContainerEvent<CDOAdminRepository>)events[0];
-      assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
-      assertEquals("repo2", event.getDeltaElement().getName());
+      listener.assertEvent(new EventAssertion<IContainerEvent<CDOAdminRepository>>()
+      {
+        public void execute(IContainerEvent<CDOAdminRepository> event) throws Exception
+        {
+          assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
+          assertEquals("repo2", event.getDeltaElement().getName());
+        }
+      });
     }
     finally
     {
@@ -527,13 +512,14 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
       assertEquals(getRepository().getName(), repositories[0].getName());
       assertEquals(repo2.getName(), repositories[1].getName());
 
-      IEvent[] events = listener.getEvents();
-      assertEquals(Arrays.asList(events).toString(), 1, events.length);
-
-      @SuppressWarnings("unchecked")
-      IContainerEvent<CDOAdminRepository> event = (IContainerEvent<CDOAdminRepository>)events[0];
-      assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
-      assertEquals("repo2", event.getDeltaElement().getName());
+      listener.assertEvent(new EventAssertion<IContainerEvent<CDOAdminRepository>>()
+      {
+        public void execute(IContainerEvent<CDOAdminRepository> event) throws Exception
+        {
+          assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
+          assertEquals("repo2", event.getDeltaElement().getName());
+        }
+      });
     }
     finally
     {
@@ -561,13 +547,14 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
       assertEquals(getRepository().getName(), repositories[0].getName());
       assertEquals(repo2.getName(), repositories[1].getName());
 
-      IEvent[] events = listener.getEvents();
-      assertEquals(Arrays.asList(events).toString(), 1, events.length);
-
-      @SuppressWarnings("unchecked")
-      IContainerEvent<CDOAdminRepository> event = (IContainerEvent<CDOAdminRepository>)events[0];
-      assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
-      assertEquals("repo2", event.getDeltaElement().getName());
+      listener.assertEvent(new EventAssertion<IContainerEvent<CDOAdminRepository>>()
+      {
+        public void execute(IContainerEvent<CDOAdminRepository> event) throws Exception
+        {
+          assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
+          assertEquals("repo2", event.getDeltaElement().getName());
+        }
+      });
     }
     finally
     {
@@ -607,13 +594,14 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
       repo1.delete(ADMIN_HANDLER_TYPE);
       assertEquals(null, admin.getRepository("repo1"));
 
-      IEvent[] events = listener.getEvents();
-      assertEquals(Arrays.asList(events).toString(), 1, events.length);
-
-      @SuppressWarnings("unchecked")
-      IContainerEvent<CDOAdminRepository> event = (IContainerEvent<CDOAdminRepository>)events[0];
-      assertEquals(IContainerDelta.Kind.REMOVED, event.getDeltaKind());
-      assertEquals("repo1", event.getDeltaElement().getName());
+      listener.assertEvent(new EventAssertion<IContainerEvent<CDOAdminRepository>>()
+      {
+        public void execute(IContainerEvent<CDOAdminRepository> event) throws Exception
+        {
+          assertEquals(IContainerDelta.Kind.REMOVED, event.getDeltaKind());
+          assertEquals("repo1", event.getDeltaElement().getName());
+        }
+      });
     }
     finally
     {

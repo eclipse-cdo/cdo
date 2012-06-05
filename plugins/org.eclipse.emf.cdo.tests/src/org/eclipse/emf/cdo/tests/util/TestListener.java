@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.util;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,55 @@ public class TestListener implements IListener
 
   public TestListener()
   {
+  }
+
+  public void assertEvent(final EventAssertion assertion) throws Exception
+  {
+    final Exception[] exception = { null };
+    final Error[] error = { null };
+
+    new AbstractOMTest.PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        IEvent event;
+        synchronized (events)
+        {
+          if (events.size() != 1)
+          {
+            return false;
+          }
+
+          event = events.get(0);
+        }
+
+        try
+        {
+          assertion.execute(event);
+        }
+        catch (Exception ex)
+        {
+          exception[0] = ex;
+        }
+        catch (Error err)
+        {
+          error[0] = err;
+        }
+
+        return true;
+      }
+    }.assertNoTimeOut();
+
+    if (exception[0] != null)
+    {
+      throw exception[0];
+    }
+
+    if (error[0] != null)
+    {
+      throw error[0];
+    }
   }
 
   public IEvent[] getEvents()
@@ -49,5 +99,13 @@ public class TestListener implements IListener
     {
       events.add(event);
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface EventAssertion<T extends IEvent>
+  {
+    public void execute(T event) throws Exception;
   }
 }

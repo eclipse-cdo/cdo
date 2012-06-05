@@ -28,17 +28,18 @@ public class TestListener implements IListener
   {
   }
 
-  public void assertEvent(final EventAssertion assertion) throws Exception
+  public <T extends IEvent> void assertEvent(final EventAssertion<T> assertion) throws Exception
   {
     final Exception[] exception = { null };
     final Error[] error = { null };
 
     new AbstractOMTest.PollingTimeOuter()
     {
+      @SuppressWarnings("unchecked")
       @Override
       protected boolean successful()
       {
-        IEvent event;
+        T event;
         synchronized (events)
         {
           if (events.size() != 1)
@@ -46,7 +47,7 @@ public class TestListener implements IListener
             return false;
           }
 
-          event = events.get(0);
+          event = (T)events.get(0);
         }
 
         try

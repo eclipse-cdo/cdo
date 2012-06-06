@@ -60,7 +60,7 @@ public abstract class ElementWizardComposite extends Composite implements IListe
 
   private List<String> factoryTypes;
 
-  private Map<String, String> defaultDescriptions = new HashMap<String, String>();
+  private String defaultFactoryType;
 
   private List<IElementWizard> wizards;
 
@@ -85,9 +85,19 @@ public abstract class ElementWizardComposite extends Composite implements IListe
   public ElementWizardComposite(Composite parent, int style, String productGroup, String label,
       ValidationContext validationContext)
   {
+    this(parent, style, productGroup, label, validationContext, null);
+  }
+
+  /**
+   * @since 3.2
+   */
+  public ElementWizardComposite(Composite parent, int style, String productGroup, String label,
+      ValidationContext validationContext, String defaultFactoryType)
+  {
     super(parent, style);
     this.productGroup = productGroup;
     this.label = label;
+    this.defaultFactoryType = defaultFactoryType;
 
     setValidationContext(validationContext);
     create();
@@ -108,14 +118,29 @@ public abstract class ElementWizardComposite extends Composite implements IListe
     this.validationContext = validationContext;
   }
 
-  public String getDefaultDescription(String factoryType)
+  /**
+   * @since 3.2
+   */
+  public String getDefaultFactoryType()
   {
-    return defaultDescriptions.get(factoryType);
+    return defaultFactoryType;
   }
 
+  /**
+   * Can be overridden by subclasses.
+   */
+  public String getDefaultDescription(String factoryType)
+  {
+    return null;
+  }
+
+  /**
+   * @deprecated Override {@link #getDefaultDescription(String)} instead.
+   */
+  @Deprecated
   public void setDefaultDescription(String factoryType, String value)
   {
-    defaultDescriptions.put(factoryType, value);
+    // Do nothing
   }
 
   protected void init()
@@ -133,10 +158,9 @@ public abstract class ElementWizardComposite extends Composite implements IListe
 
       try
       {
-        String description = getDefaultDescription(factoryType);
-
         IElementWizard wizard = (IElementWizard)container.getElement(ElementWizardFactory.PRODUCT_GROUP,
-            getProductGroup() + ":" + factoryType, description);
+            getProductGroup() + ":" + factoryType, null);
+
         wizards.add(wizard);
         wizardControls.put(wizard, new ArrayList<Control>());
 
@@ -183,12 +207,18 @@ public abstract class ElementWizardComposite extends Composite implements IListe
     for (int i = 0; i < wizards.size(); i++)
     {
       String factoryType = factoryTypes.get(i);
+      String defaultDescription = getDefaultDescription(factoryType);
+
       IElementWizard wizard = wizards.get(i);
-      wizard.create(this, getContainer(), productGroup, factoryType, null, validationContext);
+      wizard.create(this, getContainer(), productGroup, factoryType, defaultDescription, validationContext);
       harvestControls(wizard);
     }
 
-    if (!factoryTypes.isEmpty())
+    if (defaultFactoryType != null)
+    {
+      setFactoryType(defaultFactoryType);
+    }
+    else if (!factoryTypes.isEmpty())
     {
       setFactoryType(factoryTypes.get(0));
     }
@@ -298,6 +328,23 @@ public abstract class ElementWizardComposite extends Composite implements IListe
       super(parent, style, productGroup, label);
     }
 
+    /**
+     * @since 3.2
+     */
+    public WithCombo(Composite parent, int style, String productGroup, String label, ValidationContext validationContext)
+    {
+      super(parent, style, productGroup, label, validationContext);
+    }
+
+    /**
+     * @since 3.2
+     */
+    public WithCombo(Composite parent, int style, String productGroup, String label,
+        ValidationContext validationContext, String defaultFactoryType)
+    {
+      super(parent, style, productGroup, label, validationContext, defaultFactoryType);
+    }
+
     public void widgetSelected(SelectionEvent e)
     {
       factoryTypeChanged();
@@ -353,6 +400,24 @@ public abstract class ElementWizardComposite extends Composite implements IListe
     public WithRadios(Composite parent, int style, String productGroup, String label)
     {
       super(parent, style, productGroup, label);
+    }
+
+    /**
+     * @since 3.2
+     */
+    public WithRadios(Composite parent, int style, String productGroup, String label,
+        ValidationContext validationContext)
+    {
+      super(parent, style, productGroup, label, validationContext);
+    }
+
+    /**
+     * @since 3.2
+     */
+    public WithRadios(Composite parent, int style, String productGroup, String label,
+        ValidationContext validationContext, String defaultFactoryType)
+    {
+      super(parent, style, productGroup, label, validationContext, defaultFactoryType);
     }
 
     public void widgetSelected(SelectionEvent e)

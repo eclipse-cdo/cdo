@@ -11,6 +11,8 @@
  */
 package org.eclipse.net4j.internal.ui.container;
 
+import org.eclipse.net4j.internal.tcp.TCPAcceptorFactory;
+import org.eclipse.net4j.internal.tcp.TCPAcceptorFactory.Data;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.ui.container.ElementWizard;
 import org.eclipse.net4j.util.ui.container.ElementWizardFactory;
@@ -44,6 +46,14 @@ public class TCPAcceptorWizard extends ElementWizard implements ModifyListener
 
     portText = addText(parent, "Port:");
     portText.addModifyListener(this);
+
+    String description = getDefaultDescription();
+    if (description != null)
+    {
+      Data data = new TCPAcceptorFactory.Data(description);
+      addressText.setText(data.getAddress());
+      portText.setText(Integer.toString(data.getPort()));
+    }
   }
 
   public void modifyText(ModifyEvent e)

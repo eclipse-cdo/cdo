@@ -27,8 +27,6 @@ public class TCPConnectorFactory extends ConnectorFactory
 {
   public static final String TYPE = "tcp"; //$NON-NLS-1$
 
-  private static final String URL_SCHEME = "http://"; //$NON-NLS-1$
-
   public TCPConnectorFactory()
   {
     super(TYPE);
@@ -48,7 +46,7 @@ public class TCPConnectorFactory extends ConnectorFactory
     {
       // TODO Don't use URL
       // Scheme "tcp://" would be rejected!
-      URL url = new URL(URL_SCHEME + description);
+      URL url = new URL("http://" + description);
       String userID = url.getUserInfo();
       String host = url.getHost();
       int port = url.getPort();

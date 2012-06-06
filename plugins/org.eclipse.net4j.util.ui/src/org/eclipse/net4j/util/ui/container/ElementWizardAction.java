@@ -20,38 +20,69 @@ public class ElementWizardAction extends LongRunningAction
 
   private String title;
 
+  private String toolTip;
+
   private String productGroup;
 
   private String factoryType;
 
   private String description;
 
-  private IManagedContainer container;
+  private String defaultFactoryType;
 
-  public ElementWizardAction(Shell shell, String title, String toolTip, ImageDescriptor image, String productGroup,
-      IManagedContainer container)
-  {
-    super(title, toolTip, image);
-    this.shell = shell;
-    this.title = title;
-    this.productGroup = productGroup;
-    this.container = container;
-  }
+  private IManagedContainer container;
 
   public ElementWizardAction(Shell shell, String title, String toolTip, ImageDescriptor image, String productGroup)
   {
     this(shell, title, toolTip, image, productGroup, IPluginContainer.INSTANCE);
   }
 
+  public ElementWizardAction(Shell shell, String title, String toolTip, ImageDescriptor image, String productGroup,
+      IManagedContainer container)
+  {
+    this(shell, title, toolTip, image, productGroup, container, null);
+  }
+
+  public ElementWizardAction(Shell shell, String title, String toolTip, ImageDescriptor image, String productGroup,
+      IManagedContainer container, String defaultFactoryType)
+  {
+    super(title, toolTip, image);
+    this.shell = shell;
+    this.title = title;
+    this.toolTip = toolTip;
+    this.productGroup = productGroup;
+    this.container = container;
+    this.defaultFactoryType = defaultFactoryType;
+  }
+
+  public String getDefaultFactoryType()
+  {
+    return defaultFactoryType;
+  }
+
+  /**
+   * Can be overridden by subclasses.
+   */
+  public String getDefaultDescription(String factoryType)
+  {
+    return null;
+  }
+
   @Override
   protected void preRun() throws Exception
   {
-    ElementWizardDialog dialog = new ElementWizardDialog(shell, title, productGroup)
+    ElementWizardDialog dialog = new ElementWizardDialog(shell, title, toolTip, productGroup, defaultFactoryType)
     {
       @Override
       protected IManagedContainer getContainer()
       {
         return container;
+      }
+
+      @Override
+      protected String getDefaultDescription(String factoryType)
+      {
+        return ElementWizardAction.this.getDefaultDescription(factoryType);
       }
     };
 

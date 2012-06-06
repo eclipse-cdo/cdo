@@ -11,6 +11,7 @@
  */
 package org.eclipse.net4j.internal.ui.container;
 
+import org.eclipse.net4j.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.ui.container.ElementWizard;
 import org.eclipse.net4j.util.ui.container.ElementWizardFactory;
@@ -20,6 +21,9 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * @author Eike Stepper
@@ -44,6 +48,28 @@ public class TCPConnectorWizard extends ElementWizard implements ModifyListener
 
     portText = addText(parent, "Port:");
     portText.addModifyListener(this);
+
+    String description = getDefaultDescription();
+    if (description != null)
+    {
+      try
+      {
+        // TODO Don't use URL
+        // Scheme "tcp://" would be rejected!
+        URL url = new URL("http://" + description);
+        // String userID = url.getUserInfo();
+        hostText.setText(url.getHost());
+        int port = url.getPort();
+        if (port != -1)
+        {
+          portText.setText(Integer.toString(port));
+        }
+      }
+      catch (MalformedURLException ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
   }
 
   public void modifyText(ModifyEvent e)

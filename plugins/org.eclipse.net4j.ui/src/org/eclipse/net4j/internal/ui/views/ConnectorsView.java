@@ -34,7 +34,19 @@ public class ConnectorsView extends ContainerView
 
   private IAction newConnectorAction = new ElementWizardAction(getShell(), "New Connector",
       "Open a new Net4j connector", SharedIcons.getDescriptor(SharedIcons.ETOOL_ADD_CONNECTOR),
-      ConnectorFactory.PRODUCT_GROUP, getContainer());
+      ConnectorFactory.PRODUCT_GROUP, getContainer(), "tcp")
+  {
+    @Override
+    public String getDefaultDescription(String factoryType)
+    {
+      if ("tcp".equals(factoryType))
+      {
+        return "localhost";
+      }
+
+      return null;
+    }
+  };
 
   public ConnectorsView()
   {

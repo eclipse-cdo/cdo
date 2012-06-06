@@ -33,7 +33,19 @@ public class AcceptorsView extends ContainerView
   public final static String ID = "org.eclipse.net4j.AcceptorsView"; //$NON-NLS-1$
 
   private IAction newAcceptorAction = new ElementWizardAction(getShell(), "New Acceptor", "Open a new Net4j acceptor",
-      SharedIcons.getDescriptor(SharedIcons.ETOOL_ADD_ACCEPTOR), AcceptorFactory.PRODUCT_GROUP, getContainer());
+      SharedIcons.getDescriptor(SharedIcons.ETOOL_ADD_ACCEPTOR), AcceptorFactory.PRODUCT_GROUP, getContainer(), "tcp")
+  {
+    @Override
+    public String getDefaultDescription(String factoryType)
+    {
+      if ("tcp".equals(factoryType))
+      {
+        return "0.0.0.0:2036";
+      }
+
+      return null;
+    }
+  };
 
   //  private Action addAcceptorAction2036 = new SafeAction(Messages.getString("AcceptorsView_0"), //$NON-NLS-1$
   //      Messages.getString("AcceptorsView_1"), //$NON-NLS-1$

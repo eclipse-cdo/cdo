@@ -40,26 +40,11 @@ public class TCPAcceptorFactory extends AcceptorFactory
 
   public TCPAcceptor create(String description)
   {
-    String address = ITCPAcceptor.DEFAULT_ADDRESS;
-    int port = ITCPAcceptor.DEFAULT_PORT;
-
-    if (!StringUtil.isEmpty(description))
-    {
-      String[] tokens = description.split(SEPARATOR);
-      if (!StringUtil.isEmpty(tokens[0]))
-      {
-        address = tokens[0];
-      }
-
-      if (tokens.length > 1 && !StringUtil.isEmpty(tokens[1]))
-      {
-        port = Integer.parseInt(tokens[1]);
-      }
-    }
+    Data data = new Data(description);
 
     TCPAcceptor acceptor = createAcceptor();
-    acceptor.setAddress(address);
-    acceptor.setPort(port);
+    acceptor.setAddress(data.getAddress());
+    acceptor.setPort(data.getPort());
     return acceptor;
   }
 
@@ -78,5 +63,58 @@ public class TCPAcceptorFactory extends AcceptorFactory
     }
 
     return null;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class Data
+  {
+    private String address = ITCPAcceptor.DEFAULT_ADDRESS;
+
+    private int port = ITCPAcceptor.DEFAULT_PORT;
+
+    public Data()
+    {
+    }
+
+    public Data(String address, int port)
+    {
+      this.address = address;
+      this.port = port;
+    }
+
+    public Data(String description)
+    {
+      if (!StringUtil.isEmpty(description))
+      {
+        String[] tokens = description.split(SEPARATOR);
+        if (!StringUtil.isEmpty(tokens[0]))
+        {
+          address = tokens[0];
+        }
+
+        if (tokens.length > 1 && !StringUtil.isEmpty(tokens[1]))
+        {
+          port = Integer.parseInt(tokens[1]);
+        }
+      }
+    }
+
+    public String getAddress()
+    {
+      return address == null ? "" : address;
+    }
+
+    public int getPort()
+    {
+      return port;
+    }
+
+    @Override
+    public String toString()
+    {
+      return address + SEPARATOR + port;
+    }
   }
 }

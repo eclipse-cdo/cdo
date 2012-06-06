@@ -54,7 +54,19 @@ public class CDOAdminView extends ContainerView
       "Open a new Net4j connector",
       org.eclipse.net4j.ui.shared.SharedIcons
           .getDescriptor(org.eclipse.net4j.ui.shared.SharedIcons.ETOOL_ADD_CONNECTOR), ConnectorFactory.PRODUCT_GROUP,
-      getContainer());
+      getContainer(), "tcp")
+  {
+    @Override
+    public String getDefaultDescription(String factoryType)
+    {
+      if ("tcp".equals(factoryType))
+      {
+        return "localhost";
+      }
+
+      return null;
+    }
+  };
 
   private IListener containerListener = new ContainerEventAdapter<Object>()
   {

@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
@@ -46,8 +47,6 @@ import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
-import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
-import org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -328,37 +327,7 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
 
   public void writeCDOID(CDOID id) throws IOException
   {
-    if (id == null)
-    {
-      id = CDOID.NULL;
-    }
-
-    if (id instanceof InternalCDOIDObject)
-    {
-      CDOID.ObjectType subType = ((InternalCDOIDObject)id).getSubType();
-      int ordinal = subType.ordinal();
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Writing CDOIDObject of subtype {0} ({1})", ordinal, subType); //$NON-NLS-1$
-      }
-
-      // Negated to distinguish between the subtypes and the maintypes.
-      // Note: Added 1 because ordinal start at 0
-      writeByte(-ordinal - 1);
-    }
-    else
-    {
-      CDOID.Type type = id.getType();
-      int ordinal = type.ordinal();
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Writing CDOID of type {0} ({1})", ordinal, type); //$NON-NLS-1$
-      }
-
-      writeByte(ordinal);
-    }
-
-    ((AbstractCDOID)id).write(this);
+    CDOIDUtil.write(this, id);
   }
 
   public void writeCDOIDReference(CDOIDReference idReference) throws IOException

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.admin.CDOAdmin;
 import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -201,7 +202,7 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     }
 
     out.writeLong(getCreationTime());
-    out.writeObject(getRootResourceID());
+    CDOIDUtil.write(out, getRootResourceID());
     out.writeBoolean(isSupportingAudits());
     out.writeBoolean(isSupportingBranches());
     out.writeBoolean(isSupportingEcore());

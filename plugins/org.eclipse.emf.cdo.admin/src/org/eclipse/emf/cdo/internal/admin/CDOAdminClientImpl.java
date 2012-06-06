@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.admin;
 
+import org.eclipse.emf.cdo.admin.CDOAdminClient;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.Type;
 import org.eclipse.emf.cdo.internal.admin.protocol.CDOAdminClientProtocol;
@@ -22,13 +23,13 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class CDOAdminClient extends AbstractCDOAdmin
+public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClient
 {
   private final IConnector connector;
 
   private CDOAdminClientProtocol protocol;
 
-  public CDOAdminClient(IConnector connector, long timeout)
+  public CDOAdminClientImpl(IConnector connector, long timeout)
   {
     super(timeout);
     this.connector = connector;

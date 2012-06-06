@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.id.CDOID.Type;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
+import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongWithClassifierImpl;
@@ -38,17 +39,23 @@ import org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.UUIDGenerator;
+import org.eclipse.net4j.util.io.ExtendedDataInput;
+import org.eclipse.net4j.util.io.ExtendedDataOutput;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 
 /**
  * Various static methods that may help with CDO {@link CDOID IDs}.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  */
 public final class CDOIDUtil
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CDOIDUtil.class);
+
   private CDOIDUtil()
   {
   }
@@ -296,7 +303,7 @@ public final class CDOIDUtil
 
   /**
    * Creates the correct implementation class for the passed {@link CDOID.ObjectType}.
-   * 
+   *
    * @param subType
    *          the subType for which to create an empty CDOID instance
    * @return the instance of CDOIDObject which represents the subtype.
@@ -351,7 +358,7 @@ public final class CDOIDUtil
    * Non-legacy: <code>&lt;ID TYPE>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>
    * <p>
    * Legacy: <code>&lt;ID TYPE>/&lt;PACKAGE URI>/&lt;CLASSIFIER ID>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>
-   * 
+   *
    * @since 2.0
    */
   public static void write(StringBuilder builder, CDOID id)
@@ -381,7 +388,7 @@ public final class CDOIDUtil
    * Non-legacy: <code>&lt;ID TYPE>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>
    * <p>
    * Legacy: <code>&lt;ID TYPE>/&lt;PACKAGE URI>/&lt;CLASSIFIER ID>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>
-   * 
+   *
    * @since 3.0
    */
   public static CDOID read(String uriFragment)
@@ -396,7 +403,7 @@ public final class CDOIDUtil
     String fragment = uriFragment.substring(1);
     if (literal instanceof ObjectType)
     {
-      return readCDOIDObject((ObjectType)literal, fragment);
+      return readCDOIDObject(fragment, (ObjectType)literal);
     }
 
     Type type = (Type)literal;
@@ -425,10 +432,132 @@ public final class CDOIDUtil
     }
   }
 
-  private static CDOID readCDOIDObject(CDOID.ObjectType subType, String fragment)
+  private static CDOID readCDOIDObject(String fragment, CDOID.ObjectType subType)
   {
     AbstractCDOID id = createCDOIDObject(subType);
     id.read(fragment);
+    return id;
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static void write(ExtendedDataOutput out, CDOID id) throws IOException
+  {
+    if (id == null)
+    {
+      id = CDOID.NULL;
+    }
+
+    if (id instanceof InternalCDOIDObject)
+    {
+      CDOID.ObjectType subType = ((InternalCDOIDObject)id).getSubType();
+      int ordinal = subType.ordinal();
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Writing CDOIDObject of subtype {0} ({1})", ordinal, subType); //$NON-NLS-1$
+      }
+
+      // Negated to distinguish between the subtypes and the maintypes.
+      // Note: Added 1 because ordinal start at 0
+      out.writeByte(-ordinal - 1);
+    }
+    else
+    {
+      CDOID.Type type = id.getType();
+      int ordinal = type.ordinal();
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Writing CDOID of type {0} ({1})", ordinal, type); //$NON-NLS-1$
+      }
+
+      out.writeByte(ordinal);
+    }
+
+    ((AbstractCDOID)id).write(out);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static CDOID read(ExtendedDataInput in) throws IOException
+  {
+    byte ordinal = in.readByte();
+
+    // A subtype of OBJECT
+    if (ordinal < 0)
+    {
+      // The ordinal value is negated in the stream to distinguish from the main type.
+      // Note: Added 1 because ordinal start at 0, so correct by minus 1.
+      return readCDOIDObject(in, -ordinal - 1);
+    }
+
+    if (TRACER.isEnabled())
+    {
+      String type;
+      try
+      {
+        type = Type.values()[ordinal].toString();
+      }
+      catch (RuntimeException ex)
+      {
+        type = ex.getMessage();
+      }
+
+      TRACER.format("Reading CDOID of type {0} ({1})", ordinal, type); //$NON-NLS-1$
+    }
+
+    Type type = Type.values()[ordinal];
+    switch (type)
+    {
+    case NULL:
+      return CDOID.NULL;
+
+    case TEMP_OBJECT:
+      return new CDOIDTempObjectImpl(in.readInt());
+
+    case EXTERNAL_OBJECT:
+      return new CDOIDExternalImpl(in.readString());
+
+    case EXTERNAL_TEMP_OBJECT:
+      return new CDOIDTempObjectExternalImpl(in.readString());
+
+    case OBJECT:
+    {
+      // should normally not occur is handled by
+      // readCDOIDObject, code remains here
+      // for backward compatibility
+      AbstractCDOID id = new CDOIDObjectLongImpl();
+      id.read(in);
+      return id;
+    }
+
+    default:
+      throw new IOException("Illegal type: " + type);
+    }
+  }
+
+  private static CDOID readCDOIDObject(ExtendedDataInput in, int subTypeOrdinal) throws IOException
+  {
+    if (TRACER.isEnabled())
+    {
+      String subType;
+
+      try
+      {
+        subType = CDOID.ObjectType.values()[subTypeOrdinal].toString();
+      }
+      catch (RuntimeException ex)
+      {
+        subType = ex.getMessage();
+      }
+
+      TRACER.format("Reading CDOIDObject of sub type {0} ({1})", subTypeOrdinal, subType); //$NON-NLS-1$
+    }
+
+    CDOID.ObjectType subType = CDOID.ObjectType.values()[subTypeOrdinal];
+    AbstractCDOID id = CDOIDUtil.createCDOIDObject(subType);
+    id.read(in);
     return id;
   }
 

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.admin.CDOAdmin;
 import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 
@@ -30,7 +31,7 @@ import java.util.Set;
  */
 public class CDOAdminClientRepository extends Notifier implements CDOAdminRepository
 {
-  private CDOAdminClient admin;
+  private CDOAdminClientImpl admin;
 
   private String name;
 
@@ -58,7 +59,7 @@ public class CDOAdminClientRepository extends Notifier implements CDOAdminReposi
 
   private IDGenerationLocation idGenerationLocation;
 
-  public CDOAdminClientRepository(CDOAdminClient admin, ExtendedDataInputStream in) throws IOException
+  public CDOAdminClientRepository(CDOAdminClientImpl admin, ExtendedDataInputStream in) throws IOException
   {
     this.admin = admin;
     name = in.readString();
@@ -76,7 +77,7 @@ public class CDOAdminClientRepository extends Notifier implements CDOAdminReposi
     }
 
     creationTime = in.readLong();
-    rootResourceID = (CDOID)in.readObject();
+    rootResourceID = CDOIDUtil.read(in);
     supportingAudits = in.readBoolean();
     supportingBranches = in.readBoolean();
     supportingEcore = in.readBoolean();

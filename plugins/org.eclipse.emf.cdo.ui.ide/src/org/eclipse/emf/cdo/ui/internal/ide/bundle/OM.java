@@ -21,12 +21,18 @@ import org.eclipse.jface.resource.ImageDescriptor;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
- * 
+ *
  * @author Eike Stepper
  */
 public abstract class OM
 {
   public static final String BUNDLE_ID = "org.eclipse.emf.cdo.ui.ide"; //$NON-NLS-1$
+
+  public static final OMBundle BUNDLE = OMPlatform.INSTANCE.bundle(BUNDLE_ID, OM.class);
+
+  public static final OMLogger LOG = BUNDLE.logger();
+
+  public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
 
   public static final String ERROR_ICON = "icons/full/elcl16/error.gif"; //$NON-NLS-1$
 
@@ -35,12 +41,6 @@ public abstract class OM
   public static final String INFO_ICON = "icons/full/elcl16/info.gif"; //$NON-NLS-1$
 
   public static final String BRANCH_ICON = "icons/full/obj16/branch.png"; //$NON-NLS-1$
-
-  public static final OMBundle BUNDLE = OMPlatform.INSTANCE.bundle(BUNDLE_ID, OM.class);
-
-  public static final OMLogger LOG = BUNDLE.logger();
-
-  public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
 
   public static ImageDescriptor getImageDescriptor(String imageFilePath)
   {

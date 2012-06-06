@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.admin" version="2">
-    <resource path="src/org/eclipse/emf/cdo/internal/admin/CDOAdminClient.java" type="org.eclipse.emf.cdo.internal.admin.CDOAdminClient">
-        <filter id="574619656">
+    <resource path="src/org/eclipse/emf/cdo/admin/CDOAdminClient.java" type="org.eclipse.emf.cdo.admin.CDOAdminClient">
+        <filter id="571473929">
             <message_arguments>
                 <message_argument value="CDOAdmin"/>
                 <message_argument value="CDOAdminClient"/>

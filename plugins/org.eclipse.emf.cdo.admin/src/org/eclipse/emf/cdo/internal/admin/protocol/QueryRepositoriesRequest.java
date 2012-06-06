@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.internal.admin.protocol;
 
 import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
-import org.eclipse.emf.cdo.internal.admin.CDOAdminClient;
+import org.eclipse.emf.cdo.internal.admin.CDOAdminClientImpl;
 import org.eclipse.emf.cdo.internal.admin.CDOAdminClientRepository;
 import org.eclipse.emf.cdo.internal.admin.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
@@ -48,7 +48,7 @@ public class QueryRepositoriesRequest extends RequestWithConfirmation<Object>
   protected Object confirming(ExtendedDataInputStream in) throws Exception
   {
     CDOAdminClientProtocol protocol = (CDOAdminClientProtocol)getProtocol();
-    CDOAdminClient admin = protocol.getInfraStructure();
+    CDOAdminClientImpl admin = protocol.getInfraStructure();
 
     int size = in.readInt();
     if (TRACER.isEnabled())

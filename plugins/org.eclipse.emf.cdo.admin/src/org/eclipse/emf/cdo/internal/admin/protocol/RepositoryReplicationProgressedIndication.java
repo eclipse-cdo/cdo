@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.admin.protocol;
 
-import org.eclipse.emf.cdo.internal.admin.CDOAdminClient;
+import org.eclipse.emf.cdo.internal.admin.CDOAdminClientImpl;
 import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
 
 import org.eclipse.net4j.signal.Indication;
@@ -30,7 +30,7 @@ public class RepositoryReplicationProgressedIndication extends Indication
   protected void indicating(ExtendedDataInputStream in) throws Exception
   {
     CDOAdminClientProtocol protocol = (CDOAdminClientProtocol)getProtocol();
-    CDOAdminClient admin = protocol.getInfraStructure();
+    CDOAdminClientImpl admin = protocol.getInfraStructure();
 
     String name = in.readString();
     double totalWork = in.readDouble();

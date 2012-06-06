@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.internal.admin.protocol;
 
 import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
 import org.eclipse.emf.cdo.common.util.TransportException;
-import org.eclipse.emf.cdo.internal.admin.CDOAdminClient;
+import org.eclipse.emf.cdo.internal.admin.CDOAdminClientImpl;
 import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
 
 import org.eclipse.net4j.signal.RequestWithConfirmation;
@@ -25,9 +25,9 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOAdminClientProtocol extends SignalProtocol<CDOAdminClient>
+public class CDOAdminClientProtocol extends SignalProtocol<CDOAdminClientImpl>
 {
-  public CDOAdminClientProtocol(CDOAdminClient admin)
+  public CDOAdminClientProtocol(CDOAdminClientImpl admin)
   {
     super(CDOAdminProtocolConstants.PROTOCOL_NAME);
     setInfraStructure(admin);

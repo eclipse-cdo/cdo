@@ -10,46 +10,52 @@
  */
 package org.eclipse.net4j.internal.ui.views;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
-import org.eclipse.net4j.internal.ui.messages.Messages;
+import org.eclipse.net4j.ui.Net4jItemProvider;
+import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
-import org.eclipse.net4j.util.ui.actions.SafeAction;
+import org.eclipse.net4j.util.ui.container.ElementWizardAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
-import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.spi.net4j.AcceptorFactory;
 
 /**
  * @author Eike Stepper
  */
 public class AcceptorsView extends ContainerView
 {
-  private Action addAcceptorAction2036 = new SafeAction(Messages.getString("AcceptorsView_0"), //$NON-NLS-1$
-      Messages.getString("AcceptorsView_1"), //$NON-NLS-1$
-      getAddImageDescriptor())
-  {
-    @Override
-    protected void safeRun() throws Exception
-    {
-      Net4jUtil.getAcceptor(IPluginContainer.INSTANCE, "tcp", "0.0.0.0:2036"); //$NON-NLS-1$ //$NON-NLS-2$
-    }
-  };
+  public final static String ID = "org.eclipse.net4j.AcceptorsView"; //$NON-NLS-1$
 
-  private Action addAcceptorAction2037 = new SafeAction(Messages.getString("AcceptorsView_4"),
-      Messages.getString("AcceptorsView_5"), //$NON-NLS-1$
-      getAddImageDescriptor())
-  {
-    @Override
-    protected void safeRun() throws Exception
-    {
-      Net4jUtil.getAcceptor(IPluginContainer.INSTANCE, "tcp", "0.0.0.0:2037"); //$NON-NLS-1$ //$NON-NLS-2$
-    }
-  };
+  private IAction newAcceptorAction = new ElementWizardAction(getShell(), "New Acceptor", "Open a new Net4j acceptor",
+      SharedIcons.getDescriptor(SharedIcons.ETOOL_ADD_ACCEPTOR), AcceptorFactory.PRODUCT_GROUP, getContainer());
+
+  //  private Action addAcceptorAction2036 = new SafeAction(Messages.getString("AcceptorsView_0"), //$NON-NLS-1$
+  //      Messages.getString("AcceptorsView_1"), //$NON-NLS-1$
+  // getAddImageDescriptor())
+  // {
+  // @Override
+  // protected void safeRun() throws Exception
+  // {
+  //      Net4jUtil.getAcceptor(IPluginContainer.INSTANCE, "tcp", "0.0.0.0:2036"); //$NON-NLS-1$ //$NON-NLS-2$
+  // }
+  // };
+  //
+  // private Action addAcceptorAction2037 = new SafeAction(Messages.getString("AcceptorsView_4"),
+  //      Messages.getString("AcceptorsView_5"), //$NON-NLS-1$
+  // getAddImageDescriptor())
+  // {
+  // @Override
+  // protected void safeRun() throws Exception
+  // {
+  //      Net4jUtil.getAcceptor(IPluginContainer.INSTANCE, "tcp", "0.0.0.0:2037"); //$NON-NLS-1$ //$NON-NLS-2$
+  // }
+  // };
 
   public AcceptorsView()
   {
@@ -76,8 +82,7 @@ public class AcceptorsView extends ContainerView
   @Override
   protected void fillLocalToolBar(IToolBarManager manager)
   {
-    manager.add(addAcceptorAction2036);
-    manager.add(addAcceptorAction2037);
+    manager.add(newAcceptorAction);
     super.fillLocalToolBar(manager);
   }
 }

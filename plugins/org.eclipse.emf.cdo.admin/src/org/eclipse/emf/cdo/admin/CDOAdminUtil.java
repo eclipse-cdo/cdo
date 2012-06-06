@@ -10,8 +10,7 @@
  */
 package org.eclipse.emf.cdo.admin;
 
-import org.eclipse.emf.cdo.common.admin.CDOAdmin;
-import org.eclipse.emf.cdo.internal.admin.CDOAdminClient;
+import org.eclipse.emf.cdo.internal.admin.CDOAdminClientImpl;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.ISignalProtocol;
@@ -29,13 +28,13 @@ public final class CDOAdminUtil
   {
   }
 
-  public static CDOAdmin openAdmin(IConnector connector)
+  public static CDOAdminClient openAdmin(IConnector connector)
   {
     return openAdmin(connector, DEFAULT_TIMEOUT);
   }
 
-  public static CDOAdmin openAdmin(IConnector connector, long timeout)
+  public static CDOAdminClient openAdmin(IConnector connector, long timeout)
   {
-    return new CDOAdminClient(connector, timeout);
+    return new CDOAdminClientImpl(connector, timeout);
   }
 }

@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.admin.protocol;
 
-import org.eclipse.emf.cdo.internal.admin.CDOAdminClient;
+import org.eclipse.emf.cdo.internal.admin.CDOAdminClientImpl;
 import org.eclipse.emf.cdo.internal.admin.CDOAdminClientRepository;
 import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
 
@@ -31,7 +31,7 @@ public class RepositoryAddedIndication extends Indication
   protected void indicating(ExtendedDataInputStream in) throws Exception
   {
     CDOAdminClientProtocol protocol = (CDOAdminClientProtocol)getProtocol();
-    CDOAdminClient admin = protocol.getInfraStructure();
+    CDOAdminClientImpl admin = protocol.getInfraStructure();
 
     CDOAdminClientRepository repository = new CDOAdminClientRepository(admin, in);
     admin.addElement(repository);

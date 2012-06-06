@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOID.Type;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
@@ -55,10 +54,6 @@ import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockAreaImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockChangeInfoImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockOwnerImpl;
@@ -76,7 +71,6 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
-import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -367,83 +361,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
   public CDOID readCDOID() throws IOException
   {
-    byte ordinal = readByte();
-
-    // A subtype of OBJECT
-    if (ordinal < 0)
-    {
-      // The ordinal value is negated in the stream to distinguish from the main type.
-      // Note: Added 1 because ordinal start at 0, so correct by minus 1.
-      return readCDOIDObject(-ordinal - 1);
-    }
-
-    if (TRACER.isEnabled())
-    {
-      String type;
-      try
-      {
-        type = Type.values()[ordinal].toString();
-      }
-      catch (RuntimeException ex)
-      {
-        type = ex.getMessage();
-      }
-
-      TRACER.format("Reading CDOID of type {0} ({1})", ordinal, type); //$NON-NLS-1$
-    }
-
-    Type type = Type.values()[ordinal];
-    switch (type)
-    {
-    case NULL:
-      return CDOID.NULL;
-
-    case TEMP_OBJECT:
-      return new CDOIDTempObjectImpl(readInt());
-
-    case EXTERNAL_OBJECT:
-      return new CDOIDExternalImpl(readString());
-
-    case EXTERNAL_TEMP_OBJECT:
-      return new CDOIDTempObjectExternalImpl(readString());
-
-    case OBJECT:
-    {
-      // should normally not occur is handled by
-      // readCDOIDObject, code remains here
-      // for backward compatibility
-      AbstractCDOID id = new CDOIDObjectLongImpl();
-      id.read(this);
-      return id;
-    }
-
-    default:
-      throw new IOException("Illegal type: " + type);
-    }
-  }
-
-  private CDOID readCDOIDObject(int subTypeOrdinal) throws IOException
-  {
-    if (TRACER.isEnabled())
-    {
-      String subType;
-
-      try
-      {
-        subType = CDOID.ObjectType.values()[subTypeOrdinal].toString();
-      }
-      catch (RuntimeException ex)
-      {
-        subType = ex.getMessage();
-      }
-
-      TRACER.format("Reading CDOIDObject of sub type {0} ({1})", subTypeOrdinal, subType); //$NON-NLS-1$
-    }
-
-    CDOID.ObjectType subType = CDOID.ObjectType.values()[subTypeOrdinal];
-    AbstractCDOID id = CDOIDUtil.createCDOIDObject(subType);
-    id.read(this);
-    return id;
+    return CDOIDUtil.read(this);
   }
 
   public CDOIDReference readCDOIDReference() throws IOException

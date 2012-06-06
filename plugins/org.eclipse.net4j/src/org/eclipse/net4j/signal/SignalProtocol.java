@@ -19,6 +19,7 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IStreamWrapper;
@@ -40,6 +41,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * The default implementation of a {@link ISignalProtocol signal protocol}.
+ * <p>
+ * On the {@link org.eclipse.net4j.ILocationAware.Location#SERVER receiver side(s)} of protocol the
+ * {@link #createSignalReactor(short) createSignalReactor()} method has to be overridden to
+ * create appropriate peer instances for incoming {@link Signal signals}.
+ *
  * @author Eike Stepper
  */
 public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> implements
@@ -344,7 +351,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
   /**
    * Returns <code>true</code> by default, override to change this behaviour.
-   * 
+   *
    * @since 4.1
    */
   protected boolean isSendingTimeoutChanges()
@@ -516,6 +523,9 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   }
 
   /**
+   * An {@link IEvent event} fired from a {@link ISignalProtocol signal protocol} when the protocol {@link ISignalProtocol#setTimeout(long) timeout}
+   * has been changed.
+   *
    * @author Eike Stepper
    * @since 4.1
    */

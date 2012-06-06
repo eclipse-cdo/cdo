@@ -17,7 +17,11 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
+ * A {@link IStoreAccessor store accessor} for CDO's Objecivity back-end integration.
+ *
  * @author Ibrahim Sallam
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IObjectivityStoreAccessor extends IStoreAccessor.Raw
 {

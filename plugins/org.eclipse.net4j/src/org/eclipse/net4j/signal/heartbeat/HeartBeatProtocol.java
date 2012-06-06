@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.signal.heartbeat;
 
+import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.Indication;
@@ -37,6 +38,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
+ * A {@link SignalProtocol signal protocol} that keeps the {@link IConnector connector} of its {@link IChannel channel} open
+ * or provides early deactivation feedback by exchanging periodic heart beats.
+ *
  * @author Eike Stepper
  * @since 2.0
  */
@@ -91,7 +95,7 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
 
   /**
    * Same as <code>start(rate, 2 * rate)</code>.
-   * 
+   *
    * @see #start(long, long)
    */
   public void start(final long rate)
@@ -190,6 +194,8 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
   }
 
   /**
+   * The server-side implementation of a {@link HeartBeatProtocol heart beat protocol}.
+   *
    * @author Eike Stepper
    */
   public static class Server extends SignalProtocol<Object>
@@ -304,6 +310,8 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
     }
 
     /**
+     * Creates server-side {@link Server heart beat protocol} instances.
+     *
      * @author Eike Stepper
      */
     public static class Factory extends ServerProtocolFactory
@@ -320,6 +328,9 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
     }
 
     /**
+     * An {@link IElementProcessor element post processor} that injects a {@link #getTimer(IManagedContainer) timer}
+     * into server-side {@link Server heart beat protocol} instances.
+     *
      * @author Eike Stepper
      */
     public static class TimerInjector implements IElementProcessor

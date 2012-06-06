@@ -11,8 +11,12 @@
 package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.event.IEvent;
 
 /**
+ * An {@link IEvent event} fired from a {@link ISignalProtocol signal protocol} when
+ * the local execution of a scheduled {@link #getSignal() signal} has finished.
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

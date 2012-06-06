@@ -91,8 +91,7 @@ Packages that use <A HREF="../../../../../org/eclipse/net4j/signal/ISignalProtoc
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.net4j.signal"><B>org.eclipse.net4j.signal</B></A></TD>
-<TD>A framework for request/response based communication on top of 
- the Net4j transport layer.&nbsp;</TD>
+<TD>A framework for request/response based communication on top of the Net4j transport layer.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.net4j.signal.heartbeat"><B>org.eclipse.net4j.signal.heartbeat</B></A></TD>
@@ -121,7 +120,7 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/signal/ISignalProtocol.html" t
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol&lt;INFRA_STRUCTURE&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The default implementation of a <A HREF="../../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><CODE>signal protocol</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -150,6 +149,20 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/signal/ISignalProtocol.html" t
 </TABLE>
 &nbsp;
 <P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Constructors in <A HREF="../../../../../org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</A> with parameters of type <A HREF="../../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal">ISignalProtocol</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/signal/SignalCounter.html#SignalCounter(org.eclipse.net4j.signal.ISignalProtocol)">SignalCounter</A></B>(<A HREF="../../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal">ISignalProtocol</A>&lt;?&gt;&nbsp;protocol)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
 <A NAME="org.eclipse.net4j.signal.heartbeat"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -170,7 +183,8 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/signal/ISignalProtocol.html" t
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/signal/heartbeat/HeartBeatProtocol.html" title="class in org.eclipse.net4j.signal.heartbeat">HeartBeatProtocol</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal"><CODE>signal protocol</CODE></A> that keeps the <A HREF="../../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><CODE>connector</CODE></A> of its <A HREF="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><CODE>channel</CODE></A> open
+ or provides early deactivation feedback by exchanging periodic heart beats.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -178,7 +192,7 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/signal/ISignalProtocol.html" t
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/signal/heartbeat/HeartBeatProtocol.Server.html" title="class in org.eclipse.net4j.signal.heartbeat">HeartBeatProtocol.Server</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The server-side implementation of a <A HREF="../../../../../org/eclipse/net4j/signal/heartbeat/HeartBeatProtocol.html" title="class in org.eclipse.net4j.signal.heartbeat"><CODE>heart beat protocol</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;

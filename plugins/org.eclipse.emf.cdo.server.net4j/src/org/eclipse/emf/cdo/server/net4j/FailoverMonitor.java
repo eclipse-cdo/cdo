@@ -10,8 +10,10 @@
  */
 package org.eclipse.emf.cdo.server.net4j;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.Type;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.server.net4j.FailoverMonitor.AgentProtocol;
+import org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant;
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.signal.Request;
@@ -32,6 +34,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A facility for monitoring a variable set of {@link InternalFailoverParticipant fail-over participant} repositories and electing,
+ * as well as promoting, a {@link Type#MASTER master} repository among them.
+ *
  * @author Eike Stepper
  * @since 4.0
  */
@@ -185,6 +190,8 @@ public class FailoverMonitor extends Container<AgentProtocol>
   }
 
   /**
+   * Provides a {@link FailoverMonitor fail-over monitor} for a given named fail-over group.
+   *
    * @author Eike Stepper
    */
   public interface Provider
@@ -193,6 +200,8 @@ public class FailoverMonitor extends Container<AgentProtocol>
   }
 
   /**
+   * Creates {@link FailoverMonitor fail-over monitor} instances.
+   *
    * @author Eike Stepper
    */
   public static class Factory extends org.eclipse.net4j.util.factory.Factory
@@ -213,6 +222,9 @@ public class FailoverMonitor extends Container<AgentProtocol>
   }
 
   /**
+   * An abstract base class for the {@link ServerProtocolFactory server-side protocol factories}
+   * required by a {@link FailoverMonitor fail-over monitor}.
+   *
    * @author Eike Stepper
    */
   public static abstract class AbstractServerProtocolFactory extends ServerProtocolFactory implements
@@ -238,6 +250,8 @@ public class FailoverMonitor extends Container<AgentProtocol>
   }
 
   /**
+   * The monitor-side implementation of the {@link FailoverMonitor fail-over monitor} agent protocol.
+   *
    * @author Eike Stepper
    */
   public static class AgentProtocol extends HeartBeatProtocol.Server
@@ -302,6 +316,8 @@ public class FailoverMonitor extends Container<AgentProtocol>
     }
 
     /**
+     * Creates {@link AgentProtocol fail-over agent protocol} instances.
+     *
      * @author Eike Stepper
      */
     public static class Factory extends AbstractServerProtocolFactory
@@ -324,6 +340,8 @@ public class FailoverMonitor extends Container<AgentProtocol>
   }
 
   /**
+   * The monitor-side implementation of the {@link FailoverMonitor fail-over monitor} client protocol.
+   *
    * @author Eike Stepper
    */
   public static class ClientProtocol extends SignalProtocol<Object>
@@ -390,6 +408,8 @@ public class FailoverMonitor extends Container<AgentProtocol>
     }
 
     /**
+     * Creates {@link ClientProtocol fail-over client protocol} instances.
+     *
      * @author Eike Stepper
      */
     public static class Factory extends AbstractServerProtocolFactory

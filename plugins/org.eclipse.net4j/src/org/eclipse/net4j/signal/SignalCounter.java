@@ -15,6 +15,9 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
 /**
+ * Provides {@link Signal signal} execution counts  when
+ * {@link SignalProtocol#addListener(IListener) attached} to a {@link ISignalProtocol signal protocol}.
+ *
  * @author Eike Stepper
  * @since 3.0
  */
@@ -24,6 +27,14 @@ public final class SignalCounter implements IListener
 
   public SignalCounter()
   {
+  }
+
+  /**
+   * @since 4.1
+   */
+  public SignalCounter(ISignalProtocol<?> protocol)
+  {
+    protocol.addListener(this);
   }
 
   public int getCountFor(Class<? extends Signal> signal)

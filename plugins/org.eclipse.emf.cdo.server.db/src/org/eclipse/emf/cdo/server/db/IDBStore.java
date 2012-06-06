@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.cdo.server.db;
 
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStore.CanHandleClientAssignedIDs;
@@ -63,7 +64,12 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
   public IDBStoreAccessor getWriter(ITransaction transaction);
 
   /**
+   * Contains symbolic constants that specifiy valid keys of {@link IRepository#getProperties() DB store properties}.
+   *
+   * @author Eike Stepper
    * @since 4.0
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface Props
   {

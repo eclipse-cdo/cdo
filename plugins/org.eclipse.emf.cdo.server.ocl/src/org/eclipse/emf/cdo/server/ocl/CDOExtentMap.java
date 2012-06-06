@@ -19,6 +19,10 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * Maps {@link EClass classes} to their extents.
+ * <p>
+ * The {@link #get(Object) extent} of a {@link EClass class} X is the set of all {@link EObject objects} with <code>object.getEClass() == X</code>.
+ *
  * @author Eike Stepper
  */
 public class CDOExtentMap implements Map<EClass, Set<? extends EObject>>

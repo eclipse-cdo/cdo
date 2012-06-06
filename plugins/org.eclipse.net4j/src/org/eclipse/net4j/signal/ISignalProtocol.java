@@ -18,6 +18,8 @@ import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 
 /**
+ * A {@link IProtocol protocol} that consists of a number of stream-based {@link Signal signals}.
+ *
  * @author Eike Stepper
  * @since 2.0
  */

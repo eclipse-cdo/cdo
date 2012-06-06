@@ -27,6 +27,8 @@ import java.io.OutputStream;
 import java.text.MessageFormat;
 
 /**
+ * Represents a single communications use-case in the scope of a {@link ISignalProtocol signal protocol}.
+ *
  * @author Eike Stepper
  */
 public abstract class Signal implements Runnable
@@ -55,7 +57,7 @@ public abstract class Signal implements Runnable
   /**
    * Both implementation classes of a logical signal must have the same signalID. The signalID of a user signals must be
    * equal to or greater than zero.
-   * 
+   *
    * @since 2.0
    */
   public Signal(SignalProtocol<?> protocol, short id, String name)
@@ -92,7 +94,7 @@ public abstract class Signal implements Runnable
   /**
    * Returns the short integer ID of this signal that is unique among all signals of the associated
    * {@link #getProtocol() protocol}.
-   * 
+   *
    * @since 2.0
    */
   public final short getID()

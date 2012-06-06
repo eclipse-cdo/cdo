@@ -24,6 +24,8 @@ import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 
 /**
+ * Represents the receiver side of a two-way {@link IndicationWithResponse signal} with additional support for remote progress monitoring.
+ *
  * @author Eike Stepper
  * @since 2.0
  */

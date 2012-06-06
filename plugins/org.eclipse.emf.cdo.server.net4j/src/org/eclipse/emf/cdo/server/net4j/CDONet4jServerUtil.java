@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.net4j;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOServerProtocolFactory;
 import org.eclipse.emf.cdo.spi.server.ContainerRepositoryProvider;
@@ -17,6 +18,8 @@ import org.eclipse.emf.cdo.spi.server.ContainerRepositoryProvider;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
+ * Various static methods that may help with the server-side setup to support Net4j-specific CDO {@link CDOCommonSession sessions}.
+ *
  * @author Eike Stepper
  */
 public final class CDONet4jServerUtil

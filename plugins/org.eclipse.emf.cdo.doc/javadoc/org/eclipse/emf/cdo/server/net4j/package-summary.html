@@ -118,7 +118,7 @@ Server concepts for dealing with Net4j-based repositories and fail-over infrastr
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverMonitor.Provider.html" title="interface in org.eclipse.emf.cdo.server.net4j">FailoverMonitor.Provider</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Provides a <A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverMonitor.html" title="class in org.eclipse.emf.cdo.server.net4j"><CODE>fail-over monitor</CODE></A> for a given named fail-over group.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -132,43 +132,45 @@ Server concepts for dealing with Net4j-based repositories and fail-over infrastr
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/CDONet4jServerUtil.html" title="class in org.eclipse.emf.cdo.server.net4j">CDONet4jServerUtil</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Various static methods that may help with the server-side setup to support Net4j-specific CDO <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common"><CODE>sessions</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverAgent.html" title="class in org.eclipse.emf.cdo.server.net4j">FailoverAgent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A repository-side agent for a <A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverMonitor.html" title="class in org.eclipse.emf.cdo.server.net4j"><CODE>fail-over monitor</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverAgent.Protocol.html" title="class in org.eclipse.emf.cdo.server.net4j">FailoverAgent.Protocol</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>The agent-side implementation of the <A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverMonitor.html" title="class in org.eclipse.emf.cdo.server.net4j"><CODE>fail-over monitor</CODE></A> protocol.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverMonitor.html" title="class in org.eclipse.emf.cdo.server.net4j">FailoverMonitor</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A facility for monitoring a variable set of <CODE>fail-over participant</CODE> repositories and electing,
+ as well as promoting, a <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html#MASTER"><CODE>master</CODE></A> repository among them.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverMonitor.AbstractServerProtocolFactory.html" title="class in org.eclipse.emf.cdo.server.net4j">FailoverMonitor.AbstractServerProtocolFactory</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An abstract base class for the <CODE>server-side protocol factories</CODE>
+ required by a <A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverMonitor.html" title="class in org.eclipse.emf.cdo.server.net4j"><CODE>fail-over monitor</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverMonitor.AgentProtocol.html" title="class in org.eclipse.emf.cdo.server.net4j">FailoverMonitor.AgentProtocol</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>The monitor-side implementation of the <A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverMonitor.html" title="class in org.eclipse.emf.cdo.server.net4j"><CODE>fail-over monitor</CODE></A> agent protocol.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverMonitor.AgentProtocol.Factory.html" title="class in org.eclipse.emf.cdo.server.net4j">FailoverMonitor.AgentProtocol.Factory</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Creates <A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverMonitor.AgentProtocol.html" title="class in org.eclipse.emf.cdo.server.net4j"><CODE>fail-over agent protocol</CODE></A> instances.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverMonitor.ClientProtocol.html" title="class in org.eclipse.emf.cdo.server.net4j">FailoverMonitor.ClientProtocol</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>The monitor-side implementation of the <A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverMonitor.html" title="class in org.eclipse.emf.cdo.server.net4j"><CODE>fail-over monitor</CODE></A> client protocol.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverMonitor.ClientProtocol.Factory.html" title="class in org.eclipse.emf.cdo.server.net4j">FailoverMonitor.ClientProtocol.Factory</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Creates <A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverMonitor.ClientProtocol.html" title="class in org.eclipse.emf.cdo.server.net4j"><CODE>fail-over client protocol</CODE></A> instances.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverMonitor.Factory.html" title="class in org.eclipse.emf.cdo.server.net4j">FailoverMonitor.Factory</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Creates <A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverMonitor.html" title="class in org.eclipse.emf.cdo.server.net4j"><CODE>fail-over monitor</CODE></A> instances.</TD>
 </TR>
 </TABLE>
 &nbsp;

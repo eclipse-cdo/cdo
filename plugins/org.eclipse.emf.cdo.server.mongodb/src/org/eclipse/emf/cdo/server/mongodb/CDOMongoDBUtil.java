@@ -20,6 +20,8 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import com.mongodb.MongoURI;
 
 /**
+ * Various static methods that may help in setting up and dealing with {@link IMongoDBStore MongoDB stores}.
+ *
  * @author Eike Stepper
  */
 public final class CDOMongoDBUtil

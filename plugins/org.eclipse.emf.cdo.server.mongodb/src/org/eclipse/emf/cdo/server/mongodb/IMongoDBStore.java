@@ -15,6 +15,8 @@ package org.eclipse.emf.cdo.server.mongodb;
 import org.eclipse.emf.cdo.server.IStore;
 
 /**
+ * The main entry point to the API of CDO's <a href="http://www.mongodb.org">MongoDB</a> back-end integration.
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

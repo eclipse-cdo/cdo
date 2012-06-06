@@ -66,6 +66,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /**
+ * A {@link IQueryHandler query handler} that evaluates OCL query expressions.
+ *
  * @author Eike Stepper
  */
 public class OCLQueryHandler implements IQueryHandler
@@ -373,6 +375,8 @@ public class OCLQueryHandler implements IQueryHandler
   }
 
   /**
+   * Creates {@link OCLQueryHandler} instances.
+   *
    * @author Eike Stepper
    */
   public static class Factory extends QueryHandlerFactory

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -20,6 +20,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 /**
+ * Represents the sender side of a two-way {@link SignalActor signal}, i.e., one with a response.
+ *
  * @author Eike Stepper
  */
 public abstract class RequestWithConfirmation<RESULT> extends SignalActor

@@ -15,6 +15,8 @@ import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 /**
+ * Represents the sender side of a one-way {@link Signal signal}, i.e., one with no response.
+ *
  * @author Eike Stepper
  */
 public abstract class Request extends SignalActor

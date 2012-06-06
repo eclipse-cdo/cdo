@@ -160,10 +160,13 @@
 		<copy todir="${javadoc.destdir}" verbose="true" failonerror="false">
 			<cutdirsmapper dirs="2" />
 			<fileset dir="plugins" defaultexcludes="true">
+				<include name="org.eclipse.net4j/src/org/eclipse/net4j/doc-files/**" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/acceptor/doc-files/**" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/buffer/doc-files/**" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/channel/doc-files/**" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/connector/doc-files/**" />
+				<include name="org.eclipse.net4j/src/org/eclipse/net4j/protocol/doc-files/**" />
+				<include name="org.eclipse.net4j/src/org/eclipse/net4j/signal/doc-files/**" />
 			</fileset>
 		</copy>
 

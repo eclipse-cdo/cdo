@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.server.mongodb;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 
 /**
+ * A {@link IStoreAccessor store accessor} for CDO's <a href="http://www.mongodb.org">MongoDB</a> back-end integration.
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

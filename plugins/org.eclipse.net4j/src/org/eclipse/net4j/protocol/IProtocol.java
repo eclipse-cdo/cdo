@@ -19,6 +19,8 @@ import org.eclipse.net4j.util.security.IUserAware;
 import java.util.concurrent.ExecutorService;
 
 /**
+ * A {@link #getType() typed} {@link IBufferHandler buffer handler} for a {@link #getChannel() channel}.
+ *
  * @author Eike Stepper
  */
 public interface IProtocol<INFRA_STRUCTURE> extends IUserAware, ILocationAware, IBufferHandler

@@ -35,6 +35,8 @@ import java.io.IOException;
 import java.util.Timer;
 
 /**
+ * A repository-side agent for a {@link FailoverMonitor fail-over monitor}.
+ *
  * @author Eike Stepper
  * @since 4.0
  */
@@ -227,6 +229,8 @@ public abstract class FailoverAgent extends Lifecycle implements CDOSessionConfi
   }
 
   /**
+   * The agent-side implementation of the {@link FailoverMonitor fail-over monitor} protocol.
+   *
    * @author Eike Stepper
    */
   public static class Protocol extends HeartBeatProtocol

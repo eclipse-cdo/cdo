@@ -83,8 +83,9 @@ function windowTitle()
 Package org.eclipse.net4j.signal
 </H2>
 <A NAME="package_description"><!-- --></A>
-A framework for request/response based communication on top of 
- the Net4j transport layer.
+A framework for request/response based communication on top of the Net4j transport layer.
+ <p>
+ <img src="doc-files/signals.png" title="Diagram Signals" border="0"/>
 
 <P>
 
@@ -123,7 +124,7 @@ A framework for request/response based communication on top of
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal">ISignalProtocol&lt;INFRA_STRUCTURE&gt;</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A <A HREF="../../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol"><CODE>protocol</CODE></A> that consists of a number of stream-based <A HREF="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal"><CODE>signals</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -137,59 +138,63 @@ A framework for request/response based communication on top of
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/signal/Indication.html" title="class in org.eclipse.net4j.signal">Indication</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Represents the receiver side of a one-way <A HREF="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal"><CODE>signal</CODE></A>, i.e., one with no response.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html" title="class in org.eclipse.net4j.signal">IndicationWithMonitoring</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Represents the receiver side of a two-way <A HREF="../../../../org/eclipse/net4j/signal/IndicationWithResponse.html" title="class in org.eclipse.net4j.signal"><CODE>signal</CODE></A> with additional support for remote progress monitoring.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/signal/IndicationWithResponse.html" title="class in org.eclipse.net4j.signal">IndicationWithResponse</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Represents the receiver side of a two-way <A HREF="../../../../org/eclipse/net4j/signal/SignalReactor.html" title="class in org.eclipse.net4j.signal"><CODE>signal</CODE></A>, i.e., one with a response.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/signal/Request.html" title="class in org.eclipse.net4j.signal">Request</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Represents the sender side of a one-way <A HREF="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal"><CODE>signal</CODE></A>, i.e., one with no response.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/signal/RequestWithConfirmation.html" title="class in org.eclipse.net4j.signal">RequestWithConfirmation&lt;RESULT&gt;</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Represents the sender side of a two-way <A HREF="../../../../org/eclipse/net4j/signal/SignalActor.html" title="class in org.eclipse.net4j.signal"><CODE>signal</CODE></A>, i.e., one with a response.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/signal/RequestWithMonitoring.html" title="class in org.eclipse.net4j.signal">RequestWithMonitoring&lt;RESULT&gt;</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Represents the sender side of a two-way <A HREF="../../../../org/eclipse/net4j/signal/IndicationWithResponse.html" title="class in org.eclipse.net4j.signal"><CODE>signal</CODE></A> with additional support for remote progress monitoring.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal">Signal</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Represents a single communications use-case in the scope of a <A HREF="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><CODE>signal protocol</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/signal/SignalActor.html" title="class in org.eclipse.net4j.signal">SignalActor</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Represents the sender side of a <A HREF="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal"><CODE>signal</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/signal/SignalCounter.html" title="class in org.eclipse.net4j.signal">SignalCounter</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Provides <A HREF="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal"><CODE>signal</CODE></A> execution counts  when
+ <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event"><CODE>attached</CODE></A> to a <A HREF="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><CODE>signal protocol</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/signal/SignalFinishedEvent.html" title="class in org.eclipse.net4j.signal">SignalFinishedEvent&lt;INFRA_STRUCTURE&gt;</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>event</CODE></A> fired from a <A HREF="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><CODE>signal protocol</CODE></A> when
+ the local execution of a scheduled <A HREF="../../../../org/eclipse/net4j/signal/SignalFinishedEvent.html#getSignal()"><CODE>signal</CODE></A> has finished.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol&lt;INFRA_STRUCTURE&gt;</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>The default implementation of a <A HREF="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><CODE>signal protocol</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/signal/SignalProtocol.TimeoutChangedEvent.html" title="class in org.eclipse.net4j.signal">SignalProtocol.TimeoutChangedEvent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>event</CODE></A> fired from a <A HREF="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><CODE>signal protocol</CODE></A> when the protocol <A HREF="../../../../org/eclipse/net4j/signal/ISignalProtocol.html#setTimeout(long)"><CODE>timeout</CODE></A>
+ has been changed.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/signal/SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Represents the receiver side of a <A HREF="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal"><CODE>signal</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/signal/SignalScheduledEvent.html" title="class in org.eclipse.net4j.signal">SignalScheduledEvent&lt;INFRA_STRUCTURE&gt;</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>event</CODE></A> fired from a <A HREF="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><CODE>signal protocol</CODE></A> when
+ a <A HREF="../../../../org/eclipse/net4j/signal/SignalScheduledEvent.html#getSignal()"><CODE>signal</CODE></A> has been scheduled for local execution.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -203,7 +208,7 @@ A framework for request/response based communication on top of
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/signal/RemoteException.html" title="class in org.eclipse.net4j.signal">RemoteException</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An exception that wraps an exception that has been thrown during the execution of a remote <A HREF="../../../../org/eclipse/net4j/signal/SignalReactor.html" title="class in org.eclipse.net4j.signal"><CODE>signal</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;

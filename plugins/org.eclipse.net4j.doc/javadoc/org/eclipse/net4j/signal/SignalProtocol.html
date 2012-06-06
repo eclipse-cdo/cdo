@@ -124,6 +124,14 @@ Class SignalProtocol&lt;INFRA_STRUCTURE&gt;</H2>
 
 
 <P>
+The default implementation of a <A HREF="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><CODE>signal protocol</CODE></A>.
+ <p>
+ On the <A HREF="../../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><CODE>receiver side(s)</CODE></A> of protocol the
+ <A HREF="../../../../org/eclipse/net4j/signal/SignalProtocol.html#createSignalReactor(short)"><CODE>createSignalReactor()</CODE></A> method has to be overridden to
+ create appropriate peer instances for incoming <A HREF="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal"><CODE>signals</CODE></A>.
+<P>
+
+<P>
 <HR>
 
 <P>
@@ -141,7 +149,8 @@ Class SignalProtocol&lt;INFRA_STRUCTURE&gt;</H2>
 <TD><CODE><B><A HREF="../../../../org/eclipse/net4j/signal/SignalProtocol.TimeoutChangedEvent.html" title="class in org.eclipse.net4j.signal">SignalProtocol.TimeoutChangedEvent</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>event</CODE></A> fired from a <A HREF="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><CODE>signal protocol</CODE></A> when the protocol <A HREF="../../../../org/eclipse/net4j/signal/ISignalProtocol.html#setTimeout(long)"><CODE>timeout</CODE></A>
+ has been changed.</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.ILocationAware"><!-- --></A>

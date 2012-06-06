@@ -17,6 +17,10 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * Creates extents of {@link EClass classes}.
+ * <p>
+ * The {@link #createExtent(EClass, AtomicBoolean) extent} of a {@link EClass class} X is the set of all {@link EObject objects} with <code>object.getEClass() == X</code>.
+ *
  * @author Eike Stepper
  */
 public interface OCLExtentCreator

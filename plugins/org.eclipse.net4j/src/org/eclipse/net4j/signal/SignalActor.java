@@ -14,6 +14,8 @@ import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
 
 /**
+ * Represents the sender side of a {@link Signal signal}.
+ *
  * @author Eike Stepper
  */
 public abstract class SignalActor extends Signal

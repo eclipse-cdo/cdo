@@ -25,6 +25,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 /**
+ * Represents the sender side of a two-way {@link IndicationWithResponse signal} with additional support for remote progress monitoring.
+ *
  * @author Eike Stepper
  * @since 2.0
  */

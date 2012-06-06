@@ -38,6 +38,10 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * An OCL {@link OCLExtentCreator extent creator} implementation for CDO.
+ * <p>
+ * The {@link #createExtent(EClass, AtomicBoolean) extent} of a {@link EClass class} X is the set of all {@link EObject objects} with <code>object.getEClass() == X</code>.
+ *
  * @author Eike Stepper
  */
 public class CDOExtentCreator implements OCLExtentCreator
@@ -156,6 +160,8 @@ public class CDOExtentCreator implements OCLExtentCreator
   }
 
   /**
+   * An {@link CDOExtentCreator extent creator} that creates extent sets which support a lazy populating iterator.
+   *
    * @author Eike Stepper
    */
   public static class Lazy extends CDOExtentCreator

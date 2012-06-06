@@ -37,6 +37,7 @@
     <packages name="org.eclipse.emf.cdo.ui"/>
     <packages name="org.eclipse.emf.cdo.ui.widgets"/>
   </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.ui.admin" label="CDO Model Repository Client UI Admin"/>
   <article:Plugin name="org.eclipse.emf.cdo.ui.ide" label="CDO Model Repository Client UI IDE">
     <packages name="org.eclipse.emf.cdo.ui.ide"/>
   </article:Plugin>

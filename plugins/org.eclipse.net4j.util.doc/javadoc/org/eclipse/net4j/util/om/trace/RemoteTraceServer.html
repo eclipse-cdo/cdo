@@ -102,12 +102,18 @@ Class RemoteTraceServer</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="RemoteTraceServer.html" title="RemoteTraceServer" alt="" coords="5,6,139,31"/>
+<area shape="rect" id="node1" href="RemoteTraceServer.Listener.html" title="&#171;interface&#187; RemoteTraceServer.Listener" alt="" coords="5,88,189,128"/>
+<area shape="rect" id="node2" href="RemoteTraceServer.html" title="RemoteTraceServer" alt="" coords="30,6,164,31"/>
 </map>
 
 <CENTER><IMG SRC="RemoteTraceServer.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
 
 
+
+<P>
+A server that <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceHandler.html" title="class in org.eclipse.net4j.util.om.trace"><CODE>agents</CODE></A> can connect to and that passes the received <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/OMTraceHandlerEvent.html" title="interface in org.eclipse.net4j.util.om.trace"><CODE>trace events</CODE></A>
+ to <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.html#addListener(org.eclipse.net4j.util.om.trace.RemoteTraceServer.Listener)"><CODE>registered</CODE></A> <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.Listener.html" title="interface in org.eclipse.net4j.util.om.trace"><CODE>listeners</CODE></A>.
+<P>
 
 <P>
 <HR>
@@ -123,11 +129,12 @@ Class RemoteTraceServer</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;class</CODE></FONT></TD>
+<CODE>static&nbsp;class</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.Event.html" title="class in org.eclipse.net4j.util.om.trace">RemoteTraceServer.Event</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A trace event being passed by a remote trace <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.html" title="class in org.eclipse.net4j.util.om.trace"><CODE>server</CODE></A> to
+ <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.html#addListener(org.eclipse.net4j.util.om.trace.RemoteTraceServer.Listener)"><CODE>registered</CODE></A> <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.Listener.html" title="interface in org.eclipse.net4j.util.om.trace"><CODE>listeners</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -135,7 +142,7 @@ Class RemoteTraceServer</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.Listener.html" title="interface in org.eclipse.net4j.util.om.trace">RemoteTraceServer.Listener</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Listens to <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.Event.html" title="class in org.eclipse.net4j.util.om.trace"><CODE>trace events</CODE></A> being passed by a remote trace <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.html" title="class in org.eclipse.net4j.util.om.trace"><CODE>server</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -143,7 +150,7 @@ Class RemoteTraceServer</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.PrintListener.html" title="class in org.eclipse.net4j.util.om.trace">RemoteTraceServer.PrintListener</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.Listener.html" title="interface in org.eclipse.net4j.util.om.trace"><CODE>listener</CODE></A> that appends <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.Event.html" title="class in org.eclipse.net4j.util.om.trace"><CODE>trace events</CODE></A> to a <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.PrintListener.html#getStream()"><CODE>print stream</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;<!-- =========== FIELD SUMMARY =========== -->

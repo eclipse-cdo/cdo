@@ -13,6 +13,9 @@ package org.eclipse.net4j.util.om.log;
 import org.eclipse.net4j.util.om.log.OMLogger.Level;
 
 /**
+ * An abstract base implementation of a {@link OMLogHandler log handler} that filters log events with a {@link Level log level}
+ * greater than a configurable {@link #setLogLevel(Level) maximum level}.
+ *
  * @author Eike Stepper
  * @since 2.0
  */

@@ -105,8 +105,9 @@ Class ContextTracer</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="PerfTracer.html" title="PerfTracer" alt="" coords="15,71,96,97"/>
-<area shape="rect" id="node2" href="ContextTracer.html" title="ContextTracer" alt="" coords="5,6,107,31"/>
+<area shape="rect" id="node1" href="OMTracer.html" title="&#171;interface&#187; OMTracer" alt="" coords="5,88,91,128"/>
+<area shape="rect" id="node2" href="PerfTracer.html" title="PerfTracer" alt="" coords="133,95,213,121"/>
+<area shape="rect" id="node3" href="ContextTracer.html" title="ContextTracer" alt="" coords="83,6,185,31"/>
 </map>
 
 <CENTER><IMG SRC="ContextTracer.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -114,6 +115,12 @@ Class ContextTracer</H2>
 
 
 <P>
+Encapsulates a tracing <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/ContextTracer.html#getContext()"><CODE>context</CODE></A> and delegates trace calls to a bundle <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/OMTracer.html" title="interface in org.eclipse.net4j.util.om.trace"><CODE>tracer</CODE></A>.
+<P>
+
+<P>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/net4j/util/om/trace/PerfTracer.html" title="class in org.eclipse.net4j.util.om.trace"><CODE>PerfTracer</CODE></A></DL>
 <HR>
 
 <P>
@@ -166,6 +173,14 @@ Class ContextTracer</H2>
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/om/OMBundle.html" title="interface in org.eclipse.net4j.util.om">OMBundle</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/om/trace/ContextTracer.html#getBundle()">getBundle</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</A>&lt;?&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/om/trace/ContextTracer.html#getContext()">getContext</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -283,6 +298,19 @@ public <B>ContextTracer</B>(<A HREF="../../../../../../org/eclipse/net4j/util/om
 <B>Method Detail</B></FONT></TH>
 </TR>
 </TABLE>
+
+<A NAME="getContext()"><!-- --></A><H3>
+getContext</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</A>&lt;?&gt; <B>getContext</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
 
 <A NAME="getBundle()"><!-- --></A><H3>
 getBundle</H3>

@@ -18,8 +18,13 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 /**
+ * A {@link OMLogHandler log handler} that appends log events to a {@link #getLogFile() file}.
+ * <p>
+ * The file is opened before and closed after each log event.
+ *
  * @author Eike Stepper
  * @since 2.0
+ * @see PrintLogHandler
  */
 public class FileLogHandler extends AbstractLogHandler
 {

@@ -111,16 +111,16 @@ Interfaces and classes for platform-independent logging.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/util/om/log/OMLogFilter.html" title="interface in org.eclipse.net4j.util.om.log">OMLogFilter</A></B></TD>
-<TD>Filters log events before they are being passed to <A HREF="../../../../../../org/eclipse/net4j/util/om/OMPlatform.html#addLogFilter(org.eclipse.net4j.util.om.log.OMLogFilter)"><CODE>registered</CODE></A>
- <A HREF="../../../../../../org/eclipse/net4j/util/om/log/OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log"><CODE>log handlers</CODE></A>.</TD>
+<TD>Filters log events before they are being passed to the registered <A HREF="../../../../../../org/eclipse/net4j/util/om/log/OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log"><CODE>log handlers</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>The <A HREF="../../../../../../org/eclipse/net4j/util/om/OMBundle.html#logger()"><CODE>logger</CODE></A> of a <A HREF="../../../../../../org/eclipse/net4j/util/om/OMBundle.html" title="interface in org.eclipse.net4j.util.om"><CODE>bundle</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/util/om/log/OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log">OMLogHandler</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Handles <A HREF="../../../../../../org/eclipse/net4j/util/om/log/OMLogFilter.html" title="interface in org.eclipse.net4j.util.om.log"><CODE>filtered</CODE></A> log events, for example appends them to a <A HREF="../../../../../../org/eclipse/net4j/util/om/log/PrintLogHandler.html" title="class in org.eclipse.net4j.util.om.log"><CODE>stream</CODE></A> or
+ the Eclipse <A HREF="../../../../../../org/eclipse/net4j/util/om/log/EclipseLoggingBridge.html" title="class in org.eclipse.net4j.util.om.log"><CODE>error log</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -134,27 +134,28 @@ Interfaces and classes for platform-independent logging.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHandler.html" title="class in org.eclipse.net4j.util.om.log">AbstractLogHandler</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An abstract base implementation of a <A HREF="../../../../../../org/eclipse/net4j/util/om/log/OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log"><CODE>log handler</CODE></A> that filters log events with a <A HREF="../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log"><CODE>log level</CODE></A>
+ greater than a configurable <CODE>maximum level</CODE>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/util/om/log/EclipseLoggingBridge.html" title="class in org.eclipse.net4j.util.om.log">EclipseLoggingBridge</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A <A HREF="../../../../../../org/eclipse/net4j/util/om/log/OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log"><CODE>log handler</CODE></A> that appends log events to the Eclipse <CODE>error log</CODE>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/util/om/log/FileLogHandler.html" title="class in org.eclipse.net4j.util.om.log">FileLogHandler</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A <A HREF="../../../../../../org/eclipse/net4j/util/om/log/OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log"><CODE>log handler</CODE></A> that appends log events to a <A HREF="../../../../../../org/eclipse/net4j/util/om/log/FileLogHandler.html#getLogFile()"><CODE>file</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/util/om/log/Logger.html" title="class in org.eclipse.net4j.util.om.log">Logger</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>The default <A HREF="../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html" title="interface in org.eclipse.net4j.util.om.log"><CODE>logger</CODE></A> implementation.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/util/om/log/OSGiLoggingBridge.html" title="class in org.eclipse.net4j.util.om.log">OSGiLoggingBridge</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A <A HREF="../../../../../../org/eclipse/net4j/util/om/log/OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log"><CODE>log handler</CODE></A> that appends log events to the OSGi <CODE>log service</CODE>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/util/om/log/PrintLogHandler.html" title="class in org.eclipse.net4j.util.om.log">PrintLogHandler</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A <A HREF="../../../../../../org/eclipse/net4j/util/om/log/OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log"><CODE>log handler</CODE></A> that appends log events to <A HREF="../../../../../../org/eclipse/net4j/util/om/log/PrintLogHandler.html#getErr()"><CODE>error</CODE></A> and <A HREF="../../../../../../org/eclipse/net4j/util/om/log/PrintLogHandler.html#getOut()"><CODE>output</CODE></A> streams.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -168,7 +169,7 @@ Interfaces and classes for platform-independent logging.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Enumerates the possible severity levels of log events.</TD>
 </TR>
 </TABLE>
 &nbsp;

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -18,8 +18,8 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import java.util.List;
 
 /**
- * A default {@link IContainer container} implementation with a {@link ILifecycle lifecycle}.
- * 
+ * An abstract base implementation of a {@link IContainer container} with a {@link ILifecycle lifecycle}.
+ *
  * @author Eike Stepper
  */
 public abstract class Container<E> extends Lifecycle implements IContainer<E>

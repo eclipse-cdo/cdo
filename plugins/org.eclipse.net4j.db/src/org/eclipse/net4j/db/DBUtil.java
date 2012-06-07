@@ -41,7 +41,7 @@ import java.util.Map;
 
 /**
  * A utility class with various static factory and convenience methods.
- * 
+ *
  * @author Eike Stepper
  */
 public final class DBUtil
@@ -54,7 +54,7 @@ public final class DBUtil
 
   /**
    * For debugging purposes ONLY!
-   * 
+   *
    * @deprecated Should only be used when debugging.
    * @since 3.0
    */
@@ -116,7 +116,7 @@ public final class DBUtil
 
   /**
    * For debugging purposes ONLY!
-   * 
+   *
    * @deprecated Should only be used when debugging.
    * @since 3.0
    */
@@ -580,7 +580,7 @@ public final class DBUtil
 
   /**
    * Execute update on the given prepared statement and handle common cases of return values.
-   * 
+   *
    * @param stmt
    *          the prepared statement
    * @param exactlyOne
@@ -755,7 +755,7 @@ public final class DBUtil
    * <p>
    * The {@link ResultSet#getStatement() statement} of the result set must have been created with
    * {@link ResultSet#TYPE_SCROLL_INSENSITIVE TYPE_SCROLL_INSENSITIVE}.
-   * 
+   *
    * @since 4.0
    */
   public static int getRowCount(ResultSet resultSet) throws DBException
@@ -1050,6 +1050,9 @@ public final class DBUtil
   }
 
   /**
+   * Call-back interface with a {@link #done(boolean) method} that is called <i>after</i>
+   * a number of table rows have been handled by one of the subtypes of this interface.
+   *
    * @author Eike Stepper
    * @since 4.1
    */
@@ -1059,6 +1062,9 @@ public final class DBUtil
   }
 
   /**
+   * A {@link RowHandler row handler} with a {@link #handleRow(ExtendedDataOutput, Connection, IDBField[], Object[]) method}
+   * that is called once per row serialized within {@link DBUtil#serializeTable(ExtendedDataOutput, Connection, IDBTable, String, String, SerializeRowHandler) DBUtil.serializeTable()}.
+   *
    * @author Eike Stepper
    * @since 4.1
    */
@@ -1069,6 +1075,9 @@ public final class DBUtil
   }
 
   /**
+   * A {@link RowHandler row handler} with a {@link #handleRow(ExtendedDataInput, Connection, IDBField[], Object[]) method}
+   * that is called once per row deserialized within {@link DBUtil#deserializeTable(ExtendedDataInput, Connection, IDBTable, OMMonitor, DeserializeRowHandler) DBUtil.deserializeTable()}.
+   *
    * @author Eike Stepper
    * @since 4.1
    */

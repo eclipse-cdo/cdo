@@ -16,6 +16,8 @@ import org.eclipse.net4j.util.om.log.OMLogger.Level;
 import java.io.PrintStream;
 
 /**
+ * A {@link OMLogHandler log handler} that appends log events to {@link #getErr() error} and {@link #getOut() output} streams.
+ *
  * @author Eike Stepper
  */
 public class PrintLogHandler extends AbstractLogHandler
@@ -35,6 +37,22 @@ public class PrintLogHandler extends AbstractLogHandler
   protected PrintLogHandler()
   {
     this(IOUtil.OUT(), IOUtil.ERR());
+  }
+
+  /**
+   * @since 3.2
+   */
+  public PrintStream getOut()
+  {
+    return out;
+  }
+
+  /**
+   * @since 3.2
+   */
+  public PrintStream getErr()
+  {
+    return err;
   }
 
   @Override

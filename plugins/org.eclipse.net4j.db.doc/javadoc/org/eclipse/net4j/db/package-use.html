@@ -151,19 +151,22 @@ Classes in <A HREF="../../../../org/eclipse/net4j/db/package-summary.html">org.e
 <TD><B><A HREF="../../../../org/eclipse/net4j/db/class-use/DBUtil.DeserializeRowHandler.html#org.eclipse.net4j.db"><B>DBUtil.DeserializeRowHandler</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../org/eclipse/net4j/db/DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db"><CODE>row handler</CODE></A> with a <A HREF="../../../../org/eclipse/net4j/db/DBUtil.DeserializeRowHandler.html#handleRow(org.eclipse.net4j.util.io.ExtendedDataInput, java.sql.Connection, org.eclipse.net4j.db.ddl.IDBField[], java.lang.Object[])"><CODE>method</CODE></A>
+ that is called once per row deserialized within <A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#deserializeTable(org.eclipse.net4j.util.io.ExtendedDataInput, java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, org.eclipse.net4j.util.om.monitor.OMMonitor, org.eclipse.net4j.db.DBUtil.DeserializeRowHandler)"><CODE>DBUtil.deserializeTable()</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../org/eclipse/net4j/db/class-use/DBUtil.RowHandler.html#org.eclipse.net4j.db"><B>DBUtil.RowHandler</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Call-back interface with a <A HREF="../../../../org/eclipse/net4j/db/DBUtil.RowHandler.html#done(boolean)"><CODE>method</CODE></A> that is called <i>after</i>
+ a number of table rows have been handled by one of the subtypes of this interface.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../org/eclipse/net4j/db/class-use/DBUtil.SerializeRowHandler.html#org.eclipse.net4j.db"><B>DBUtil.SerializeRowHandler</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../org/eclipse/net4j/db/DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db"><CODE>row handler</CODE></A> with a <A HREF="../../../../org/eclipse/net4j/db/DBUtil.SerializeRowHandler.html#handleRow(org.eclipse.net4j.util.io.ExtendedDataOutput, java.sql.Connection, org.eclipse.net4j.db.ddl.IDBField[], java.lang.Object[])"><CODE>method</CODE></A>
+ that is called once per row serialized within <A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput, java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String, java.lang.String, org.eclipse.net4j.db.DBUtil.SerializeRowHandler)"><CODE>DBUtil.serializeTable()</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../org/eclipse/net4j/db/class-use/IDBAdapter.html#org.eclipse.net4j.db"><B>IDBAdapter</B></A></B>

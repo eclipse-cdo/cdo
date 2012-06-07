@@ -11,10 +11,13 @@
 package org.eclipse.net4j.db.derby;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.spi.db.DBAdapter;
 
 /**
+ * A {@link IDBAdapter DB adapter} for <a href="http://db.apache.org/derby">Derby</a> databases.
+ *
  * @author Eike Stepper
  * @since 2.0
  */

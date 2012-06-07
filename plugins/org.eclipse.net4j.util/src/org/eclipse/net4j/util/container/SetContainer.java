@@ -10,13 +10,20 @@
  */
 package org.eclipse.net4j.util.container;
 
+import org.eclipse.net4j.util.container.delegate.IContainerSet;
+import org.eclipse.net4j.util.container.delegate.IContainerSortedSet;
+
 import java.lang.reflect.Array;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author Eike Stepper
+ * An implementation of a {@link Container container} that stores its {@link #getElements() elements} in a {@link #getSet() set}.
+ *
  * @since 3.2
+ * @author Eike Stepper
+ * @see IContainerSet
+ * @see IContainerSortedSet
  */
 public class SetContainer<E> extends Container<E>
 {

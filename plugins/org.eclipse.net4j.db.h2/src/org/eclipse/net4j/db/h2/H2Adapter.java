@@ -11,6 +11,7 @@
 package org.eclipse.net4j.db.h2;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.spi.db.DBAdapter;
 
@@ -22,6 +23,8 @@ import java.sql.Driver;
 import java.sql.SQLException;
 
 /**
+ * A {@link IDBAdapter DB adapter} for <a href="http://www.h2database.com/html/main.html">H2</a> databases.
+ *
  * @author Eike Stepper
  * @since 2.0
  */

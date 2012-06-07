@@ -106,13 +106,19 @@ Class PrintLogHandler</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="AbstractLogHandler.html" title="AbstractLogHandler" alt="" coords="5,6,141,31"/>
-<area shape="rect" id="node2" href="PrintLogHandler.html" title="PrintLogHandler" alt="" coords="16,71,131,97"/>
+<area shape="rect" id="node1" href="OMLogHandler.html" title="&#171;interface&#187; OMLogHandler" alt="" coords="5,5,112,45"/>
+<area shape="rect" id="node2" href="AbstractLogHandler.html" title="AbstractLogHandler" alt="" coords="142,13,279,38"/>
+<area shape="rect" id="node3" href="PrintLogHandler.html" title="PrintLogHandler" alt="" coords="153,102,268,127"/>
+<area shape="rect" id="node4" href="FileLogHandler.html" title="FileLogHandler" alt="" coords="309,13,416,38"/>
 </map>
 
 <CENTER><IMG SRC="PrintLogHandler.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
 
 
+
+<P>
+A <A HREF="../../../../../../org/eclipse/net4j/util/om/log/OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log"><CODE>log handler</CODE></A> that appends log events to <A HREF="../../../../../../org/eclipse/net4j/util/om/log/PrintLogHandler.html#getErr()"><CODE>error</CODE></A> and <A HREF="../../../../../../org/eclipse/net4j/util/om/log/PrintLogHandler.html#getOut()"><CODE>output</CODE></A> streams.
+<P>
 
 <P>
 <HR>
@@ -170,6 +176,22 @@ Class PrintLogHandler</H2>
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/om/log/PrintLogHandler.html#getErr()">getErr</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/om/log/PrintLogHandler.html#getOut()">getOut</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -258,6 +280,32 @@ protected <B>PrintLogHandler</B>()</PRE>
 <B>Method Detail</B></FONT></TH>
 </TR>
 </TABLE>
+
+<A NAME="getOut()"><!-- --></A><H3>
+getOut</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</A> <B>getOut</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getErr()"><!-- --></A><H3>
+getErr</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</A> <B>getErr</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
 
 <A NAME="writeLog(org.eclipse.net4j.util.om.log.OMLogger, org.eclipse.net4j.util.om.log.OMLogger.Level, java.lang.String, java.lang.Throwable)"><!-- --></A><H3>
 writeLog</H3>

@@ -18,6 +18,8 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.log.LogService;
 
 /**
+ * A {@link OMLogHandler log handler} that appends log events to the OSGi {@link LogService log service}.
+ *
  * @author Eike Stepper
  */
 public class OSGiLoggingBridge implements OMLogHandler

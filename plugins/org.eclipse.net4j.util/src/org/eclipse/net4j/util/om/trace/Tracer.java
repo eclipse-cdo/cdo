@@ -17,6 +17,8 @@ import org.eclipse.net4j.util.om.OMBundle.DebugSupport;
 import java.text.MessageFormat;
 
 /**
+ * The default implementation of a {@link OMTracer tracer}.
+ *
  * @author Eike Stepper
  */
 public class Tracer implements OMTracer

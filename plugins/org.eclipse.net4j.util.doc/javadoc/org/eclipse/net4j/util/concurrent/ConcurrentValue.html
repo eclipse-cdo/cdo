@@ -110,8 +110,8 @@ Class ConcurrentValue&lt;T&gt;</H2>
 
 
 <P>
-Allow synchronization between many threads for a specific value, e.g.:
- 
+Allow synchronization between many threads for a specific value.
+
  <pre>
  MainThread cv.set(1);
  Thread1 cv.acquire(3);
@@ -128,9 +128,9 @@ Allow synchronization between many threads for a specific value, e.g.:
  ...
  // Thread 1,2,3 and 4 are blocked
  // Thread 5 isn't blocked.
- 
+
  MainThread cv.set(3);
- 
+
  // Thread 1 and 4 are unblocked.
  // Thread 2 and 3 are still blocked.
  </pre>

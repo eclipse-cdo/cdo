@@ -14,8 +14,10 @@ package org.eclipse.net4j.util.options;
 import org.eclipse.net4j.util.event.Event;
 
 /**
- * @author Victor Roldan Betancort
+ * The default implementation of an {@link IOptionsEvent options event}.
+ *
  * @since 2.0
+ * @author Victor Roldan Betancort
  */
 public class OptionsEvent extends Event implements IOptionsEvent
 {

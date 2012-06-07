@@ -158,24 +158,7 @@ Utility interfaces and classes commonly useful in concurrent programming.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/ConcurrentValue.html" title="class in org.eclipse.net4j.util.concurrent">ConcurrentValue&lt;T&gt;</A></B></TD>
-<TD>Allow synchronization between many threads for a specific value, e.g.:
- 
- 
- MainThread cv.set(1);
- Thread1 cv.acquire(3);
- Thread2 cv.acquire(4);
- Thread3 cv.acquire(100);
- Thread4 cv.acquire(new Object()
-   {
-     public boolean equals(Object other)
-     {
-       return other.equals(2) || other.equals(3);
-     }
-   });
- Thread5 cv.acquire(1);
- ...
- // Thread 1,2,3 and 4 are blocked
- // Thread 5 isn't blocked.</TD>
+<TD>Allow synchronization between many threads for a specific value.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/ExecutorServiceFactory.html" title="class in org.eclipse.net4j.util.concurrent">ExecutorServiceFactory</A></B></TD>

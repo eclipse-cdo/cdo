@@ -26,6 +26,9 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
+ * A server that {@link RemoteTraceHandler agents} can connect to and that passes the received {@link OMTraceHandlerEvent trace events}
+ * to {@link #addListener(Listener) registered} {@link Listener listeners}.
+ *
  * @author Eike Stepper
  */
 public class RemoteTraceServer
@@ -160,7 +163,7 @@ public class RemoteTraceServer
 
   protected void handleTrace(DataInputStream in) throws IOException
   {
-    Event event = new Event();
+    Event event = new Event(this);
     event.timeStamp = in.readLong();
     event.agentID = in.readUTF();
     event.bundleID = in.readUTF();
@@ -201,9 +204,12 @@ public class RemoteTraceServer
   }
 
   /**
+   * A trace event being passed by a remote trace {@link RemoteTraceServer server} to
+   * {@link RemoteTraceServer#addListener(Listener) registered} {@link Listener listeners}.
+   *
    * @author Eike Stepper
    */
-  public class Event extends EventObject
+  public static class Event extends EventObject
   {
     private static final long serialVersionUID = 1L;
 
@@ -211,23 +217,47 @@ public class RemoteTraceServer
 
     long timeStamp;
 
-    String agentID;
+    /**
+     * @since 3.2
+     */
+    protected String agentID;
 
-    String bundleID;
+    /**
+     * @since 3.2
+     */
+    protected String bundleID;
 
-    String tracerName;
+    /**
+     * @since 3.2
+     */
+    protected String tracerName;
 
-    String context;
+    /**
+     * @since 3.2
+     */
+    protected String context;
 
-    String message;
+    /**
+     * @since 3.2
+     */
+    protected String message;
 
-    String throwable;
+    /**
+     * @since 3.2
+     */
+    protected String throwable;
 
-    StackTraceElement[] stackTrace;
+    /**
+     * @since 3.2
+     */
+    protected StackTraceElement[] stackTrace;
 
-    Event()
+    /**
+     * @since 3.2
+     */
+    protected Event(RemoteTraceServer server)
     {
-      super(RemoteTraceServer.this);
+      super(server);
       id = ++lastEventID;
     }
 
@@ -343,13 +373,23 @@ public class RemoteTraceServer
   }
 
   /**
+   * Listens to {@link Event trace events} being passed by a remote trace {@link RemoteTraceServer server}.
+   *
    * @author Eike Stepper
+   * @see RemoteTraceServer#addListener(Listener)
+   * @see RemoteTraceServer#removeListener(Listener)
+   * @see PrintListener
    */
   public interface Listener
   {
     public void notifyRemoteTrace(Event event);
   }
 
+  /**
+   * A {@link Listener listener} that appends {@link Event trace events} to a {@link #getStream() print stream}.
+   *
+   * @author Eike Stepper
+   */
   public static class PrintListener implements Listener
   {
     public static final PrintListener CONSOLE = new PrintListener();
@@ -364,6 +404,14 @@ public class RemoteTraceServer
     protected PrintListener()
     {
       this(IOUtil.OUT());
+    }
+
+    /**
+     * @since 3.2
+     */
+    public PrintStream getStream()
+    {
+      return stream;
     }
 
     public void notifyRemoteTrace(Event event)

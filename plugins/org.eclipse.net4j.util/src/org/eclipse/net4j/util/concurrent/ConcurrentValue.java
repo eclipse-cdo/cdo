@@ -12,8 +12,8 @@
 package org.eclipse.net4j.util.concurrent;
 
 /**
- * Allow synchronization between many threads for a specific value, e.g.:
- * 
+ * Allow synchronization between many threads for a specific value.
+ *
  * <pre>
  * MainThread cv.set(1);
  * Thread1 cv.acquire(3);
@@ -30,13 +30,13 @@ package org.eclipse.net4j.util.concurrent;
  * ...
  * // Thread 1,2,3 and 4 are blocked
  * // Thread 5 isn't blocked.
- * 
+ *
  * MainThread cv.set(3);
- * 
+ *
  * // Thread 1 and 4 are unblocked.
  * // Thread 2 and 3 are still blocked.
  * </pre>
- * 
+ *
  * @author Simon McDuff
  * @since 2.0
  */

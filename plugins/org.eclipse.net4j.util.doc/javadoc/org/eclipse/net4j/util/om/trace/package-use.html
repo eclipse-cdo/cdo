@@ -110,13 +110,14 @@ Classes in <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/package-su
 <TD><B><A HREF="../../../../../../org/eclipse/net4j/util/om/trace/class-use/OMTraceHandler.html#org.eclipse.net4j.util.om"><B>OMTraceHandler</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Handles <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/TraceHandlerEvent.html" title="class in org.eclipse.net4j.util.om.trace"><CODE>trace events</CODE></A>, for example appends them to a <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/PrintTraceHandler.html" title="class in org.eclipse.net4j.util.om.trace"><CODE>stream</CODE></A> sends them to a
+ <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceHandler.html" title="class in org.eclipse.net4j.util.om.trace"><CODE>remote</CODE></A> trace handler.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/net4j/util/om/trace/class-use/OMTracer.html#org.eclipse.net4j.util.om"><B>OMTracer</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/OMTracer.html#getName()"><CODE>named</CODE></A> <A HREF="../../../../../../org/eclipse/net4j/util/om/OMBundle.html#tracer(java.lang.String)"><CODE>tracer</CODE></A> within the <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/OMTracer.html#getParent()"><CODE>hierarchy</CODE></A> of tracers of a <A HREF="../../../../../../org/eclipse/net4j/util/om/OMBundle.html" title="interface in org.eclipse.net4j.util.om"><CODE>bundle</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -131,55 +132,59 @@ Classes in <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/package-su
 <TD><B><A HREF="../../../../../../org/eclipse/net4j/util/om/trace/class-use/ContextTracer.html#org.eclipse.net4j.util.om.trace"><B>ContextTracer</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Encapsulates a tracing <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/ContextTracer.html#getContext()"><CODE>context</CODE></A> and delegates trace calls to a bundle <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/OMTracer.html" title="interface in org.eclipse.net4j.util.om.trace"><CODE>tracer</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/net4j/util/om/trace/class-use/OMTraceHandler.html#org.eclipse.net4j.util.om.trace"><B>OMTraceHandler</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Handles <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/TraceHandlerEvent.html" title="class in org.eclipse.net4j.util.om.trace"><CODE>trace events</CODE></A>, for example appends them to a <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/PrintTraceHandler.html" title="class in org.eclipse.net4j.util.om.trace"><CODE>stream</CODE></A> sends them to a
+ <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceHandler.html" title="class in org.eclipse.net4j.util.om.trace"><CODE>remote</CODE></A> trace handler.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/net4j/util/om/trace/class-use/OMTraceHandlerEvent.html#org.eclipse.net4j.util.om.trace"><B>OMTraceHandlerEvent</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Encapsulates the information of a trace event.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/net4j/util/om/trace/class-use/OMTracer.html#org.eclipse.net4j.util.om.trace"><B>OMTracer</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/OMTracer.html#getName()"><CODE>named</CODE></A> <A HREF="../../../../../../org/eclipse/net4j/util/om/OMBundle.html#tracer(java.lang.String)"><CODE>tracer</CODE></A> within the <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/OMTracer.html#getParent()"><CODE>hierarchy</CODE></A> of tracers of a <A HREF="../../../../../../org/eclipse/net4j/util/om/OMBundle.html" title="interface in org.eclipse.net4j.util.om"><CODE>bundle</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/net4j/util/om/trace/class-use/PrintTraceHandler.html#org.eclipse.net4j.util.om.trace"><B>PrintTraceHandler</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/OMTraceHandler.html" title="interface in org.eclipse.net4j.util.om.trace"><CODE>trace handler</CODE></A> that appends <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/OMTraceHandlerEvent.html" title="interface in org.eclipse.net4j.util.om.trace"><CODE>trace events</CODE></A>
+ to a <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/PrintTraceHandler.html#getStream()"><CODE>print stream</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/net4j/util/om/trace/class-use/RemoteTraceServer.html#org.eclipse.net4j.util.om.trace"><B>RemoteTraceServer</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A server that <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceHandler.html" title="class in org.eclipse.net4j.util.om.trace"><CODE>agents</CODE></A> can connect to and that passes the received <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/OMTraceHandlerEvent.html" title="interface in org.eclipse.net4j.util.om.trace"><CODE>trace events</CODE></A>
+ to <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.html#addListener(org.eclipse.net4j.util.om.trace.RemoteTraceServer.Listener)"><CODE>registered</CODE></A> <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.Listener.html" title="interface in org.eclipse.net4j.util.om.trace"><CODE>listeners</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/net4j/util/om/trace/class-use/RemoteTraceServer.Event.html#org.eclipse.net4j.util.om.trace"><B>RemoteTraceServer.Event</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A trace event being passed by a remote trace <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.html" title="class in org.eclipse.net4j.util.om.trace"><CODE>server</CODE></A> to
+ <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.html#addListener(org.eclipse.net4j.util.om.trace.RemoteTraceServer.Listener)"><CODE>registered</CODE></A> <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.Listener.html" title="interface in org.eclipse.net4j.util.om.trace"><CODE>listeners</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/net4j/util/om/trace/class-use/RemoteTraceServer.Listener.html#org.eclipse.net4j.util.om.trace"><B>RemoteTraceServer.Listener</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Listens to <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.Event.html" title="class in org.eclipse.net4j.util.om.trace"><CODE>trace events</CODE></A> being passed by a remote trace <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.html" title="class in org.eclipse.net4j.util.om.trace"><CODE>server</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/net4j/util/om/trace/class-use/RemoteTraceServer.PrintListener.html#org.eclipse.net4j.util.om.trace"><B>RemoteTraceServer.PrintListener</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.Listener.html" title="interface in org.eclipse.net4j.util.om.trace"><CODE>listener</CODE></A> that appends <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.Event.html" title="class in org.eclipse.net4j.util.om.trace"><CODE>trace events</CODE></A> to a <A HREF="../../../../../../org/eclipse/net4j/util/om/trace/RemoteTraceServer.PrintListener.html#getStream()"><CODE>print stream</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;

@@ -15,6 +15,8 @@ import org.hsqldb.jdbc.JDBCDataSource;
 import java.text.MessageFormat;
 
 /**
+ * An {@link JDBCDataSource HSQLDB data source} with a nicer {@link #toString()} method.
+ *
  * @author Eike Stepper
  */
 public class HSQLDBDataSource extends JDBCDataSource

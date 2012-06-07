@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -16,6 +16,9 @@ import java.io.PrintStream;
 import java.text.MessageFormat;
 
 /**
+ * A {@link OMTraceHandler trace handler} that appends {@link OMTraceHandlerEvent trace events}
+ * to a {@link #getStream() print stream}.
+ *
  * @author Eike Stepper
  */
 public class PrintTraceHandler implements OMTraceHandler
@@ -36,6 +39,14 @@ public class PrintTraceHandler implements OMTraceHandler
   protected PrintTraceHandler()
   {
     this(IOUtil.OUT());
+  }
+
+  /**
+   * @since 3.2
+   */
+  public PrintStream getStream()
+  {
+    return stream;
   }
 
   public String getPattern()

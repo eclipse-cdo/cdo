@@ -14,6 +14,8 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 
 /**
+ * A {@link ContextTracer context tracer} that maintains a number of timers for performance measurements.
+ *
  * @author Eike Stepper
  */
 public class PerfTracer extends ContextTracer

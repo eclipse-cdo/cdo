@@ -11,10 +11,13 @@
 package org.eclipse.net4j.db.db2;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.spi.db.DBAdapter;
 
 /**
+ * A {@link IDBAdapter DB adapter} for <a href="http://www-01.ibm.com/software/data/db2">DB2</a> databases.
+ *
  * @author Eike Stepper
  * @since 4.0
  */

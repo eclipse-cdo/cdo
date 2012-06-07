@@ -15,6 +15,7 @@ package org.eclipse.net4j.db.postgresql;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.internal.postgresql.bundle.OM;
@@ -31,6 +32,8 @@ import java.sql.Savepoint;
 import java.sql.Statement;
 
 /**
+ * A {@link IDBAdapter DB adapter} for <a href="http://www.postgresql.org/">PostgreSQL</a> databases.
+ *
  * @author Victor Roldan Betancort
  */
 public class PostgreSQLAdapter extends DBAdapter

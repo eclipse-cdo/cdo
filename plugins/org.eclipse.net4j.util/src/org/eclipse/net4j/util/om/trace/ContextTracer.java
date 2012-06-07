@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -13,7 +13,10 @@ package org.eclipse.net4j.util.om.trace;
 import org.eclipse.net4j.util.om.OMBundle;
 
 /**
+ * Encapsulates a tracing {@link #getContext() context} and delegates trace calls to a bundle {@link OMTracer tracer}.
+ *
  * @author Eike Stepper
+ * @see PerfTracer
  */
 public class ContextTracer
 {
@@ -25,6 +28,14 @@ public class ContextTracer
   {
     this.delegate = delegate;
     this.context = context;
+  }
+
+  /**
+   * @since 3.2
+   */
+  public Class<?> getContext()
+  {
+    return context;
   }
 
   public OMBundle getBundle()

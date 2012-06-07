@@ -11,6 +11,7 @@
 package org.eclipse.net4j.db.hsqldb;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.spi.db.DBAdapter;
 
@@ -21,6 +22,8 @@ import javax.sql.DataSource;
 import java.sql.Driver;
 
 /**
+ * A {@link IDBAdapter DB adapter} for <a href="http://hsqldb.org/">HyperSQL</a> databases.
+ *
  * @author Eike Stepper
  * @since 2.0
  */

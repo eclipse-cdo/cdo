@@ -17,13 +17,11 @@ import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.ui.Net4jItemProvider;
-import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.ui.container.ElementWizardAction;
@@ -68,29 +66,8 @@ public class CDOAdminView extends ContainerView
     }
   };
 
-  private IListener containerListener = new ContainerEventAdapter<Object>()
-  {
-    @Override
-    protected void onAdded(org.eclipse.net4j.util.container.IContainer<Object> container, Object element)
-    {
-    }
-
-    @Override
-    protected void onRemoved(org.eclipse.net4j.util.container.IContainer<Object> container, Object element)
-    {
-    }
-  };
-
   public CDOAdminView()
   {
-    // getContainer().addListener(containerListener);
-  }
-
-  @Override
-  public void dispose()
-  {
-    // getContainer().removeListener(containerListener);
-    super.dispose();
   }
 
   @Override
@@ -146,6 +123,12 @@ public class CDOAdminView extends ContainerView
               admin.addListener(new LifecycleEventAdapter()
               {
                 @Override
+                protected void onActivated(ILifecycle lifecycle)
+                {
+                  refreshViewer(true);
+                }
+
+                @Override
                 protected void onDeactivated(ILifecycle lifecycle)
                 {
                   IConnector key = ((CDOAdminClient)lifecycle).getConnector();
@@ -153,6 +136,8 @@ public class CDOAdminView extends ContainerView
                   {
                     admins.remove(key);
                   }
+
+                  refreshViewer(true);
                 }
 
                 @Override

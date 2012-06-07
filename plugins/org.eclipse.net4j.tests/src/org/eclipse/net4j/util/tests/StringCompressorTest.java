@@ -118,7 +118,6 @@ public class StringCompressorTest extends AbstractOMTest
         str += Integer.toString(val, 36);
       }
 
-      System.out.println(str);
       result[i] = str;
     }
 

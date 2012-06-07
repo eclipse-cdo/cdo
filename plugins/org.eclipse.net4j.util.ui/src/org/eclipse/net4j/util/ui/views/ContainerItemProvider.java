@@ -69,20 +69,6 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     return rootElementFilter;
   }
 
-  @Override
-  public boolean hasChildren(Object element)
-  {
-    try
-    {
-      Node node = getNode(element);
-      return !node.getChildren().isEmpty();
-    }
-    catch (Exception ex)
-    {
-      return false;
-    }
-  }
-
   public Object[] getChildren(Object element)
   {
     try

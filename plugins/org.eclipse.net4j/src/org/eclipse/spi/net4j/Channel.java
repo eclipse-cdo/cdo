@@ -164,7 +164,7 @@ public class Channel extends Lifecycle implements InternalChannel
   /**
    * Handles the given buffer. Ensures it is in the PUTTING state (otherwise ignores it) and sends it on behalf of the
    * send queue.
-   * 
+   *
    * @see IBuffer#getState
    * @see BufferState#PUTTING
    * @see Channel#sendQueue
@@ -202,7 +202,7 @@ public class Channel extends Lifecycle implements InternalChannel
 
   /**
    * Handles a buffer sent by the multiplexer. Adds work to the receive queue or releases the buffer.
-   * 
+   *
    * @see InternalChannelMultiplexer#multiplexChannel
    * @see IWorkSerializer
    * @see ReceiverWork
@@ -277,21 +277,7 @@ public class Channel extends Lifecycle implements InternalChannel
     }
     else
     {
-      // CompletionWorkSerializer throws "One command already pending"
-      // receiveSerializer = new CompletionWorkSerializer();
-      // receiveSerializer = new AsynchronousWorkSerializer(receiveExecutor);
-      // receiveSerializer = new SynchronousWorkSerializer();
-
-      class ChannelReceiveSerializer extends QueueWorkerWorkSerializer
-      {
-        @Override
-        protected String getThreadName()
-        {
-          return "ReceiveSerializer-" + Channel.this; //$NON-NLS-1$
-        }
-      }
-
-      receiveSerializer = new ChannelReceiveSerializer();
+      receiveSerializer = new ReceiveSerializer();
     }
   }
 
@@ -331,6 +317,24 @@ public class Channel extends Lifecycle implements InternalChannel
 
   /**
    * @author Eike Stepper
+   * @since 4.1
+   */
+  protected class ReceiveSerializer extends QueueWorkerWorkSerializer
+  {
+    // CompletionWorkSerializer throws "One command already pending"
+    // CompletionWorkSerializer
+    // AsynchronousWorkSerializer
+    // SynchronousWorkSerializer
+
+    @Override
+    protected String getThreadName()
+    {
+      return "ReceiveSerializer-" + Channel.this; //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * @author Eike Stepper
    */
   protected class ReceiverWork implements Runnable
   {
@@ -363,7 +367,7 @@ public class Channel extends Lifecycle implements InternalChannel
    * A queue that holds buffers that shall be sent. This implementation notifies observers of enqueued and dequeued
    * buffers. The notification's deliberately not synchronized. It shall only be used by O&M tooling to offer (not 100%
    * accurate) statistical insights
-   * 
+   *
    * @author Eike Stepper
    * @since 3.0
    */

@@ -41,7 +41,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
 {
   public static final boolean DEFAULT_START_SYNCHRONOUSLY = true;
 
-  public static final long DEFAULT_SYNCHRONOUS_START_TIMEOUT = 2 * Worker.DEFAULT_TIMEOUT;
+  public static final long DEFAULT_SYNCHRONOUS_START_TIMEOUT = Worker.DEFAULT_TIMEOUT;
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, TCPAcceptor.class);
 
@@ -254,6 +254,11 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
   @Override
   protected void doDeactivate() throws Exception
   {
+    if (startLatch != null)
+    {
+      startLatch.countDown();
+    }
+
     cancelSelectionKey();
 
     IOUtil.closeSilent(serverSocketChannel);

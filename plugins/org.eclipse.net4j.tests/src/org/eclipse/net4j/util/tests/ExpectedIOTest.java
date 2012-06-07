@@ -57,7 +57,7 @@ public class ExpectedIOTest extends AbstractOMTest
           {
             out.writeInt(i);
             IOUtil.ERR().println(i);
-            ConcurrencyUtil.sleep(100);
+            ConcurrencyUtil.sleep(10);
           }
         }
         catch (Exception ex)
@@ -119,7 +119,7 @@ public class ExpectedIOTest extends AbstractOMTest
 
   public void testInputStreamEOF() throws Exception
   {
-    final File file = File.createTempFile("ExpectedIOTest", ".tmp");
+    final File file = createTempFile("ExpectedIOTest", ".tmp");
     final int LOOPS = 30;
 
     Thread producer = new Thread("PRODUCER")
@@ -136,7 +136,7 @@ public class ExpectedIOTest extends AbstractOMTest
           {
             out.writeInt(i);
             IOUtil.ERR().println(i);
-            ConcurrencyUtil.sleep(100);
+            ConcurrencyUtil.sleep(10);
           }
         }
         catch (Exception ex)
@@ -198,7 +198,7 @@ public class ExpectedIOTest extends AbstractOMTest
 
   public void testReader() throws Exception
   {
-    final File file = File.createTempFile("ExpectedIOTest", ".tmp");
+    final File file = createTempFile("ExpectedIOTest", ".tmp");
     final int LOOPS = 30;
 
     Thread producer = new Thread("PRODUCER")
@@ -219,7 +219,7 @@ public class ExpectedIOTest extends AbstractOMTest
 
             out.write(c + 1);
             IOUtil.ERR().println(c + 1);
-            ConcurrencyUtil.sleep(100);
+            ConcurrencyUtil.sleep(10);
           }
         }
         catch (Exception ex)
@@ -294,7 +294,7 @@ public class ExpectedIOTest extends AbstractOMTest
 
   public void testReaderEOF() throws Exception
   {
-    final File file = File.createTempFile("ExpectedIOTest", ".tmp");
+    final File file = createTempFile("ExpectedIOTest", ".tmp");
     final int LOOPS = 30;
 
     Thread producer = new Thread("PRODUCER")
@@ -315,7 +315,7 @@ public class ExpectedIOTest extends AbstractOMTest
 
             out.write(c + 1);
             IOUtil.ERR().println(c + 1);
-            ConcurrencyUtil.sleep(100);
+            ConcurrencyUtil.sleep(10);
           }
         }
         catch (Exception ex)

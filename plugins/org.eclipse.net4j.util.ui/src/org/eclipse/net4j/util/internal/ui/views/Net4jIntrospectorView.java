@@ -26,6 +26,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -45,6 +46,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPage;
@@ -61,7 +63,8 @@ import java.util.Stack;
 /**
  * @author Eike Stepper
  */
-public class Net4jIntrospectorView extends ViewPart implements ISelectionListener, IDoubleClickListener, IListener
+public class Net4jIntrospectorView extends ViewPart implements IPartListener, ISelectionListener, IDoubleClickListener,
+    IListener
 {
   public static final String VIEW_ID = "org.eclipse.net4j.util.Net4jIntrospectorView"; //$NON-NLS-1$
 
@@ -87,6 +90,8 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
 
   private IAction backAction = new BackAction();
 
+  private IAction modeAction = new ModeAction();
+
   private IAction containerAction = new ContainerAction();
 
   private IAction refreshAction = new RefreshAction();
@@ -95,6 +100,8 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
 
   private Composite stacked;
 
+  private IWorkbenchPart activePart;
+
   public Net4jIntrospectorView()
   {
   }
@@ -102,7 +109,9 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   @Override
   public void dispose()
   {
-    getSite().getPage().removeSelectionListener(this);
+    IWorkbenchPage page = getSite().getPage();
+    page.removePartListener(this);
+    page.removeSelectionListener(this);
     super.dispose();
   }
 
@@ -189,7 +198,11 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
     IActionBars bars = getViewSite().getActionBars();
     fillLocalPullDown(bars.getMenuManager());
     fillLocalToolBar(bars.getToolBarManager());
-    getSite().getPage().addSelectionListener(this);
+
+    IWorkbenchPage page = getSite().getPage();
+    page.addPartListener(this);
+    page.addSelectionListener(this);
+
     setCurrentViewer(objectViewer);
     instance = this;
   }
@@ -215,9 +228,53 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
     UIUtil.refreshViewer(currentViewer);
   }
 
+  public void partActivated(IWorkbenchPart part)
+  {
+    if (part == this)
+    {
+      return;
+    }
+
+    activePart = part;
+    if (modeAction.isChecked())
+    {
+      elements.clear();
+      setObject(activePart);
+    }
+  }
+
+  public void partBroughtToTop(IWorkbenchPart part)
+  {
+  }
+
+  public void partClosed(IWorkbenchPart part)
+  {
+  }
+
+  public void partDeactivated(IWorkbenchPart part)
+  {
+    if (modeAction.isChecked())
+    {
+      if (part == activePart)
+      {
+        activePart = null;
+        setObject(null);
+      }
+    }
+  }
+
+  public void partOpened(IWorkbenchPart part)
+  {
+  }
+
   public void selectionChanged(IWorkbenchPart part, ISelection sel)
   {
     if (part == this)
+    {
+      return;
+    }
+
+    if (modeAction.isChecked())
     {
       return;
     }
@@ -413,6 +470,9 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   {
     manager.add(backAction);
     manager.add(containerAction);
+    manager.add(new Separator());
+    manager.add(modeAction);
+    manager.add(new Separator());
     manager.add(refreshAction);
   }
 
@@ -439,6 +499,32 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
         {
           setObject(elements.peek());
         }
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  class ModeAction extends Action
+  {
+    private ModeAction()
+    {
+      super(Messages.getString("Net4jIntrospectorView_17b"), AS_CHECK_BOX); //$NON-NLS-1$
+      setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.ETOOL_PART_MODE));
+    }
+
+    @Override
+    public void run()
+    {
+      if (isChecked())
+      {
+        elements.clear();
+        setObject(activePart);
+      }
+      else
+      {
+        setObject(null);
       }
     }
   }

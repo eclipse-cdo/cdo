@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * A test for {@link QueueWorkerWorkSerializer}.
- * 
+ *
  * @author Andre Dietisheim
  */
 public class QueueWorkerWorkSerializerTest extends AbstractOMTest
@@ -49,8 +49,20 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
   /** The queue worker to submit the work units to. */
   private QueueWorkerWorkSerializer queueWorker;
 
-  public QueueWorkerWorkSerializerTest()
+  @Override
+  public void setUp()
   {
+    threadPool = Executors.newFixedThreadPool(NUM_WORKPRODUCER_THREADS);
+    workConsumedLatch = new CountDownLatch(NUM_WORK);
+    queueWorker = new QueueWorkerWorkSerializer();
+    workProduced = new AtomicInteger(0);
+  }
+
+  @Override
+  public void tearDown()
+  {
+    threadPool.shutdown();
+    queueWorker.dispose();
   }
 
   /**
@@ -108,7 +120,6 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
 
     waitForAllWorkExecuted();
     assertEquals(NUM_WORK, workProduced.get());
-    assertEquals(1, NUM_WORK - workConsumedLatch.getCount());
   }
 
   private void waitForAllWorkExecuted() throws InterruptedException
@@ -168,7 +179,7 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
 
     /**
      * Creates a working unit (runnable).
-     * 
+     *
      * @param id
      *          the id
      * @return the runnable
@@ -178,7 +189,7 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
 
   /**
    * A simple work unit to be executed in the queueWorker.
-   * 
+   *
    * @author Andre Dietisheim
    */
   class Work implements Runnable
@@ -196,21 +207,5 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
       workConsumedLatch.countDown();
       IOUtil.OUT().println("work unit " + id + " consumed");
     }
-  }
-
-  @Override
-  public void setUp()
-  {
-    threadPool = Executors.newFixedThreadPool(NUM_WORKPRODUCER_THREADS);
-    workConsumedLatch = new CountDownLatch(NUM_WORK);
-    queueWorker = new QueueWorkerWorkSerializer();
-    workProduced = new AtomicInteger(0);
-  }
-
-  @Override
-  public void tearDown()
-  {
-    threadPool.shutdown();
-    queueWorker.dispose();
   }
 }

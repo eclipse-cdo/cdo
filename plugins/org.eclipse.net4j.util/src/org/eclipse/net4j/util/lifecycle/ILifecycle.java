@@ -20,7 +20,7 @@ import org.eclipse.net4j.util.event.INotifier;
  * <ul>
  * <li> {@link ILifecycleEvent} before and after the {@link #getLifecycleState() state} of this lifecycle changes.
  * </ul>
- * 
+ *
  * @author Eike Stepper
  * @apiviz.landmark
  * @apiviz.has {@link LifecycleState}
@@ -42,4 +42,15 @@ public interface ILifecycle extends INotifier
    * @since 3.0
    */
   public boolean isActive();
+
+  /**
+   * A mix-in interface for {@link ILifecycle lifecycles} with deferrable activation.
+   *
+   * @author Eike Stepper
+   * @since 3.2
+   */
+  public interface DeferrableActivation
+  {
+    public boolean isDeferredActivation();
+  }
 }

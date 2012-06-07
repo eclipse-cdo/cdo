@@ -191,9 +191,6 @@ Method in class org.eclipse.net4j.ui.<A HREF="./org/eclipse/net4j/ui/AcceptorCon
 <DT><A HREF="./org/eclipse/net4j/ui/ConnectorContentProvider.html#connectInput(org.eclipse.net4j.util.container.IManagedContainer)"><B>connectInput(IManagedContainer)</B></A> - 
 Method in class org.eclipse.net4j.ui.<A HREF="./org/eclipse/net4j/ui/ConnectorContentProvider.html" title="class in org.eclipse.net4j.ui">ConnectorContentProvider</A>
 <DD>&nbsp;
-<DT><A HREF="./org/eclipse/net4j/ui/FactoryTypeContentProvider.html#connectInput(org.eclipse.net4j.util.container.IManagedContainer)"><B>connectInput(IManagedContainer)</B></A> - 
-Method in class org.eclipse.net4j.ui.<A HREF="./org/eclipse/net4j/ui/FactoryTypeContentProvider.html" title="class in org.eclipse.net4j.ui">FactoryTypeContentProvider</A>
-<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/ui/ConnectorContentProvider.html" title="class in org.eclipse.net4j.ui"><B>ConnectorContentProvider</B></A> - Class in <A HREF="./org/eclipse/net4j/ui/package-summary.html">org.eclipse.net4j.ui</A><DD>A <A HREF="../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui"><CODE>structured content provider</CODE></A> that shows <A HREF="./org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><CODE>connectors</CODE></A>.<DT><A HREF="./org/eclipse/net4j/ui/ConnectorContentProvider.html#ConnectorContentProvider()"><B>ConnectorContentProvider()</B></A> - 
 Constructor for class org.eclipse.net4j.ui.<A HREF="./org/eclipse/net4j/ui/ConnectorContentProvider.html" title="class in org.eclipse.net4j.ui">ConnectorContentProvider</A>
 <DD>&nbsp;
@@ -260,6 +257,9 @@ Method in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/Sig
 <DT><A HREF="./org/eclipse/net4j/tcp/ssl/SSLUtil.html#createSSLEngine(boolean, java.lang.String, int)"><B>createSSLEngine(boolean, String, int)</B></A> - 
 Static method in class org.eclipse.net4j.tcp.ssl.<A HREF="./org/eclipse/net4j/tcp/ssl/SSLUtil.html" title="class in org.eclipse.net4j.tcp.ssl">SSLUtil</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.html#CREDENTIALS_SEPARATOR"><B>CREDENTIALS_SEPARATOR</B></A> - 
+Static variable in class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.html" title="class in org.eclipse.net4j.tcp">TCPUtil</A>
+<DD>&nbsp;
 </DL>
 <HR>
 <A NAME="_D_"><!-- --></A><H2>
@@ -312,9 +312,6 @@ Method in class org.eclipse.net4j.ui.<A HREF="./org/eclipse/net4j/ui/AcceptorCon
 <DT><A HREF="./org/eclipse/net4j/ui/ConnectorContentProvider.html#disconnectInput(org.eclipse.net4j.util.container.IManagedContainer)"><B>disconnectInput(IManagedContainer)</B></A> - 
 Method in class org.eclipse.net4j.ui.<A HREF="./org/eclipse/net4j/ui/ConnectorContentProvider.html" title="class in org.eclipse.net4j.ui">ConnectorContentProvider</A>
 <DD>&nbsp;
-<DT><A HREF="./org/eclipse/net4j/ui/FactoryTypeContentProvider.html#disconnectInput(org.eclipse.net4j.util.container.IManagedContainer)"><B>disconnectInput(IManagedContainer)</B></A> - 
-Method in class org.eclipse.net4j.ui.<A HREF="./org/eclipse/net4j/ui/FactoryTypeContentProvider.html" title="class in org.eclipse.net4j.ui">FactoryTypeContentProvider</A>
-<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/signal/SignalProtocol.html#doAfterActivate()"><B>doAfterActivate()</B></A> - 
 Method in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</A>
 <DD>&nbsp;
@@ -347,6 +344,12 @@ Method in class org.eclipse.net4j.buffer.<A HREF="./org/eclipse/net4j/buffer/Buf
 <DT><A HREF="./org/eclipse/net4j/buffer/BufferOutputStream.html#ensureBuffer()"><B>ensureBuffer()</B></A> - 
 Method in class org.eclipse.net4j.buffer.<A HREF="./org/eclipse/net4j/buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</A>
 <DD>Ensures that this BufferOutputStream has a buffer.
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html#equals(java.lang.Object)"><B>equals(Object)</B></A> - 
+Method in class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.AcceptorData</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html#equals(java.lang.Object)"><B>equals(Object)</B></A> - 
+Method in class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.ConnectorData</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/buffer/IBufferPool.html#evict(int)"><B>evict(int)</B></A> - 
 Method in interface org.eclipse.net4j.buffer.<A HREF="./org/eclipse/net4j/buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</A>
 <DD>Tries to remove as many buffers from this <code>BufferPool</code> and <A HREF="./org/eclipse/net4j/buffer/IBuffer.html#release()"><CODE>release</CODE></A> them as are
@@ -383,10 +386,12 @@ Constructor for class org.eclipse.net4j.<A HREF="./org/eclipse/net4j/FactoriesPr
 <DT><A HREF="./org/eclipse/net4j/FactoriesProtocolProvider.html#FactoriesProtocolProvider(org.eclipse.net4j.util.factory.IFactory)"><B>FactoriesProtocolProvider(IFactory)</B></A> - 
 Constructor for class org.eclipse.net4j.<A HREF="./org/eclipse/net4j/FactoriesProtocolProvider.html" title="class in org.eclipse.net4j">FactoriesProtocolProvider</A>
 <DD>&nbsp;
-<DT><A HREF="./org/eclipse/net4j/ui/FactoryTypeContentProvider.html" title="class in org.eclipse.net4j.ui"><B>FactoryTypeContentProvider</B></A> - Class in <A HREF="./org/eclipse/net4j/ui/package-summary.html">org.eclipse.net4j.ui</A><DD>A <A HREF="../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui"><CODE>structured content provider</CODE></A> that shows the <A HREF="../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/factory/IFactoryKey.html?is-external=true#getType()" title="class or interface in org.eclipse.net4j.util.factory"><CODE>factory
- types</CODE></A> of the <A HREF="../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true#getInput()" title="class or interface in org.eclipse.net4j.util.ui"><CODE>input</CODE></A>.<DT><A HREF="./org/eclipse/net4j/ui/FactoryTypeContentProvider.html#FactoryTypeContentProvider(java.lang.String)"><B>FactoryTypeContentProvider(String)</B></A> - 
-Constructor for class org.eclipse.net4j.ui.<A HREF="./org/eclipse/net4j/ui/FactoryTypeContentProvider.html" title="class in org.eclipse.net4j.ui">FactoryTypeContentProvider</A>
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.html#FACTORY_TYPE"><B>FACTORY_TYPE</B></A> - 
+Static variable in class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.html" title="class in org.eclipse.net4j.tcp">TCPUtil</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/ui/FactoryTypeContentProvider.html" title="class in org.eclipse.net4j.ui"><B>FactoryTypeContentProvider</B></A> - Class in <A HREF="./org/eclipse/net4j/ui/package-summary.html">org.eclipse.net4j.ui</A><DD><B>Deprecated.</B>&nbsp;<I>As of 4.1 use <A HREF="../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/FactoryTypeContentProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui"><CODE>FactoryTypeContentProvider</CODE></A></I><DT><A HREF="./org/eclipse/net4j/ui/FactoryTypeContentProvider.html#FactoryTypeContentProvider(java.lang.String)"><B>FactoryTypeContentProvider(String)</B></A> - 
+Constructor for class org.eclipse.net4j.ui.<A HREF="./org/eclipse/net4j/ui/FactoryTypeContentProvider.html" title="class in org.eclipse.net4j.ui">FactoryTypeContentProvider</A>
+<DD><B>Deprecated.</B>&nbsp;&nbsp;
 <DT><A HREF="./org/eclipse/net4j/ui/Net4jItemProvider.html#fillContextMenu(org.eclipse.jface.action.IMenuManager, org.eclipse.jface.viewers.ITreeSelection)"><B>fillContextMenu(IMenuManager, ITreeSelection)</B></A> - 
 Method in class org.eclipse.net4j.ui.<A HREF="./org/eclipse/net4j/ui/Net4jItemProvider.html" title="class in org.eclipse.net4j.ui">Net4jItemProvider</A>
 <DD>&nbsp;
@@ -454,6 +459,9 @@ Method in interface org.eclipse.net4j.jvm.<A HREF="./org/eclipse/net4j/jvm/IJVMA
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/tcp/ITCPAcceptor.html#getAddress()"><B>getAddress()</B></A> - 
 Method in interface org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/ITCPAcceptor.html" title="interface in org.eclipse.net4j.tcp">ITCPAcceptor</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html#getAddress()"><B>getAddress()</B></A> - 
+Method in class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.AcceptorData</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/signal/RequestWithConfirmation.html#getAsyncExecutorService()"><B>getAsyncExecutorService()</B></A> - 
 Method in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/RequestWithConfirmation.html" title="class in org.eclipse.net4j.signal">RequestWithConfirmation</A>
@@ -570,9 +578,6 @@ Method in class org.eclipse.net4j.ui.<A HREF="./org/eclipse/net4j/ui/AcceptorCon
 <DT><A HREF="./org/eclipse/net4j/ui/ConnectorContentProvider.html#getElements(java.lang.Object)"><B>getElements(Object)</B></A> - 
 Method in class org.eclipse.net4j.ui.<A HREF="./org/eclipse/net4j/ui/ConnectorContentProvider.html" title="class in org.eclipse.net4j.ui">ConnectorContentProvider</A>
 <DD>&nbsp;
-<DT><A HREF="./org/eclipse/net4j/ui/FactoryTypeContentProvider.html#getElements(java.lang.Object)"><B>getElements(Object)</B></A> - 
-Method in class org.eclipse.net4j.ui.<A HREF="./org/eclipse/net4j/ui/FactoryTypeContentProvider.html" title="class in org.eclipse.net4j.ui">FactoryTypeContentProvider</A>
-<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/buffer/BufferOutputStream.html#getError()"><B>getError()</B></A> - 
 Method in class org.eclipse.net4j.buffer.<A HREF="./org/eclipse/net4j/buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</A>
 <DD>&nbsp;
@@ -608,6 +613,9 @@ Method in class org.eclipse.net4j.signal.heartbeat.<A HREF="./org/eclipse/net4j/
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/tcp/ITCPConnector.html#getHost()"><B>getHost()</B></A> - 
 Method in interface org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/ITCPConnector.html" title="interface in org.eclipse.net4j.tcp">ITCPConnector</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html#getHost()"><B>getHost()</B></A> - 
+Method in class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.ConnectorData</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/channel/IChannel.html#getID()"><B>getID()</B></A> - 
 Method in interface org.eclipse.net4j.channel.<A HREF="./org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</A>
@@ -704,11 +712,14 @@ Method in interface org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/ITCPA
 <DT><A HREF="./org/eclipse/net4j/tcp/ITCPConnector.html#getPort()"><B>getPort()</B></A> - 
 Method in interface org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/ITCPConnector.html" title="interface in org.eclipse.net4j.tcp">ITCPConnector</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html#getPort()"><B>getPort()</B></A> - 
+Method in class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.AcceptorData</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html#getPort()"><B>getPort()</B></A> - 
+Method in class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.ConnectorData</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/ContainerProtocolProvider.html#getProductGroup()"><B>getProductGroup()</B></A> - 
 Method in class org.eclipse.net4j.<A HREF="./org/eclipse/net4j/ContainerProtocolProvider.html" title="class in org.eclipse.net4j">ContainerProtocolProvider</A>
-<DD>&nbsp;
-<DT><A HREF="./org/eclipse/net4j/ui/FactoryTypeContentProvider.html#getProductGroup()"><B>getProductGroup()</B></A> - 
-Method in class org.eclipse.net4j.ui.<A HREF="./org/eclipse/net4j/ui/FactoryTypeContentProvider.html" title="class in org.eclipse.net4j.ui">FactoryTypeContentProvider</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/TransportConfigurator.html#getProperties(org.w3c.dom.Element, int)"><B>getProperties(Element, int)</B></A> - 
 Static method in class org.eclipse.net4j.<A HREF="./org/eclipse/net4j/TransportConfigurator.html" title="class in org.eclipse.net4j">TransportConfigurator</A>
@@ -824,6 +835,9 @@ Method in interface org.eclipse.net4j.protocol.<A HREF="./org/eclipse/net4j/prot
 <DT><A HREF="./org/eclipse/net4j/connector/IConnector.html#getURL()"><B>getURL()</B></A> - 
 Method in interface org.eclipse.net4j.connector.<A HREF="./org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html#getUserID()"><B>getUserID()</B></A> - 
+Method in class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.ConnectorData</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/signal/wrapping/GZIPStreamWrapperInjector.html" title="class in org.eclipse.net4j.signal.wrapping"><B>GZIPStreamWrapperInjector</B></A> - Class in <A HREF="./org/eclipse/net4j/signal/wrapping/package-summary.html">org.eclipse.net4j.signal.wrapping</A><DD>An <A HREF="./org/eclipse/net4j/signal/wrapping/StreamWrapperInjector.html" title="class in org.eclipse.net4j.signal.wrapping"><CODE>injector</CODE></A> that injects <A HREF="../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/GZIPStreamWrapper.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io"><CODE>GZIPStreamWrapper</CODE></A> instances.<DT><A HREF="./org/eclipse/net4j/signal/wrapping/GZIPStreamWrapperInjector.html#GZIPStreamWrapperInjector(java.lang.String)"><B>GZIPStreamWrapperInjector(String)</B></A> - 
 Constructor for class org.eclipse.net4j.signal.wrapping.<A HREF="./org/eclipse/net4j/signal/wrapping/GZIPStreamWrapperInjector.html" title="class in org.eclipse.net4j.signal.wrapping">GZIPStreamWrapperInjector</A>
 <DD>&nbsp;
@@ -876,6 +890,12 @@ Method in class org.eclipse.net4j.signal.heartbeat.<A HREF="./org/eclipse/net4j/
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/tcp/ITCPActiveSelectorListener.html#handleWrite(org.eclipse.net4j.tcp.ITCPSelector, java.nio.channels.SocketChannel)"><B>handleWrite(ITCPSelector, SocketChannel)</B></A> - 
 Method in interface org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/ITCPActiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp">ITCPActiveSelectorListener</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html#hashCode()"><B>hashCode()</B></A> - 
+Method in class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.AcceptorData</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html#hashCode()"><B>hashCode()</B></A> - 
+Method in class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.ConnectorData</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/buffer/IBuffer.html#HEADER_SIZE"><B>HEADER_SIZE</B></A> - 
 Static variable in interface org.eclipse.net4j.buffer.<A HREF="./org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A>
@@ -1078,6 +1098,9 @@ Method in interface org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/ITCPS
 <A NAME="_P_"><!-- --></A><H2>
 <B>P</B></H2>
 <DL>
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.html#PORT_SEPARATOR"><B>PORT_SEPARATOR</B></A> - 
+Static variable in class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.html" title="class in org.eclipse.net4j.tcp">TCPUtil</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/http/HTTPUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)"><B>prepareContainer(IManagedContainer)</B></A> - 
 Static method in class org.eclipse.net4j.http.<A HREF="./org/eclipse/net4j/http/HTTPUtil.html" title="class in org.eclipse.net4j.http">HTTPUtil</A>
 <DD>&nbsp;
@@ -1409,7 +1432,31 @@ Constructor for class org.eclipse.net4j.signal.wrapping.<A HREF="./org/eclipse/n
 <A NAME="_T_"><!-- --></A><H2>
 <B>T</B></H2>
 <DL>
-<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.html" title="class in org.eclipse.net4j.tcp"><B>TCPUtil</B></A> - Class in <A HREF="./org/eclipse/net4j/tcp/package-summary.html">org.eclipse.net4j.tcp</A><DD>A utility class with static convenience methods.<DT><A HREF="./org/eclipse/net4j/buffer/BufferInputStream.html#toString()"><B>toString()</B></A> - 
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.html" title="class in org.eclipse.net4j.tcp"><B>TCPUtil</B></A> - Class in <A HREF="./org/eclipse/net4j/tcp/package-summary.html">org.eclipse.net4j.tcp</A><DD>A utility class with static convenience methods.<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html" title="class in org.eclipse.net4j.tcp"><B>TCPUtil.AcceptorData</B></A> - Class in <A HREF="./org/eclipse/net4j/tcp/package-summary.html">org.eclipse.net4j.tcp</A><DD>Encapsulates the data needed to configure a <A HREF="./org/eclipse/net4j/tcp/ITCPAcceptor.html" title="interface in org.eclipse.net4j.tcp"><CODE>TCP acceptor</CODE></A>.<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html#TCPUtil.AcceptorData()"><B>TCPUtil.AcceptorData()</B></A> - 
+Constructor for class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.AcceptorData</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html#TCPUtil.AcceptorData(java.lang.String, int)"><B>TCPUtil.AcceptorData(String, int)</B></A> - 
+Constructor for class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.AcceptorData</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html#TCPUtil.AcceptorData(java.lang.String)"><B>TCPUtil.AcceptorData(String)</B></A> - 
+Constructor for class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.AcceptorData</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html#TCPUtil.AcceptorData(org.eclipse.net4j.tcp.ITCPAcceptor)"><B>TCPUtil.AcceptorData(ITCPAcceptor)</B></A> - 
+Constructor for class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.AcceptorData</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html" title="class in org.eclipse.net4j.tcp"><B>TCPUtil.ConnectorData</B></A> - Class in <A HREF="./org/eclipse/net4j/tcp/package-summary.html">org.eclipse.net4j.tcp</A><DD>Encapsulates the data needed to configure a <A HREF="./org/eclipse/net4j/tcp/ITCPConnector.html" title="interface in org.eclipse.net4j.tcp"><CODE>TCP connector</CODE></A>.<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html#TCPUtil.ConnectorData()"><B>TCPUtil.ConnectorData()</B></A> - 
+Constructor for class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.ConnectorData</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html#TCPUtil.ConnectorData(java.lang.String, int, java.lang.String)"><B>TCPUtil.ConnectorData(String, int, String)</B></A> - 
+Constructor for class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.ConnectorData</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html#TCPUtil.ConnectorData(java.lang.String)"><B>TCPUtil.ConnectorData(String)</B></A> - 
+Constructor for class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.ConnectorData</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html#TCPUtil.ConnectorData(org.eclipse.net4j.tcp.ITCPConnector)"><B>TCPUtil.ConnectorData(ITCPConnector)</B></A> - 
+Constructor for class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.ConnectorData</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/buffer/BufferInputStream.html#toString()"><B>toString()</B></A> - 
 Method in class org.eclipse.net4j.buffer.<A HREF="./org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/buffer/BufferOutputStream.html#toString()"><B>toString()</B></A> - 
@@ -1426,6 +1473,12 @@ Method in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/Sig
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/signal/SignalProtocol.html#toString()"><B>toString()</B></A> - 
 Method in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html#toString()"><B>toString()</B></A> - 
+Method in class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.AcceptorData</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html#toString()"><B>toString()</B></A> - 
+Method in class org.eclipse.net4j.tcp.<A HREF="./org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.ConnectorData</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/TransportConfigurator.html" title="class in org.eclipse.net4j"><B>TransportConfigurator</B></A> - Class in <A HREF="./org/eclipse/net4j/package-summary.html">org.eclipse.net4j</A><DD>Reads an XML config file and creates, wires and starts the configured <A HREF="./org/eclipse/net4j/acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><CODE>acceptors</CODE></A>.<DT><A HREF="./org/eclipse/net4j/TransportConfigurator.html#TransportConfigurator(org.eclipse.net4j.util.container.IManagedContainer)"><B>TransportConfigurator(IManagedContainer)</B></A> - 
 Constructor for class org.eclipse.net4j.<A HREF="./org/eclipse/net4j/TransportConfigurator.html" title="class in org.eclipse.net4j">TransportConfigurator</A>

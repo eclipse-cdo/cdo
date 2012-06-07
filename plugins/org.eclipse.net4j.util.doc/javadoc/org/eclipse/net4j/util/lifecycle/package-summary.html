@@ -91,13 +91,14 @@ A framework for components with a simple lifecycle.
 <P>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="../event/IEvent.html" title="&#171;interface&#187; IEvent (org.eclipse.net4j.util.event)" alt="" coords="6,70,186,125"/>
-<area shape="rect" id="node2" href="ILifecycle.html" title="&#171;interface&#187; ILifecycle" alt="" coords="496,145,581,185"/>
-<area shape="rect" id="node3" href="ILifecycleEvent.html" title="&#171;interface&#187; ILifecycleEvent" alt="" coords="255,77,363,117"/>
-<area shape="rect" id="node4" href="../event/INotifier.html" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="219,145,399,199"/>
-<area shape="rect" id="node5" href="LifecycleUtil.html" title="&#171;static&#187; LifecycleUtil" alt="" coords="50,5,142,45"/>
-<area shape="rect" id="node6" href="ILifecycleEvent.Kind.html" title="&#171;enum&#187; ILifecycleEvent.Kind" alt="" coords="469,73,608,113"/>
-<area shape="rect" id="node7" href="LifecycleState.html" title="&#171;enum&#187; LifecycleState" alt="" coords="640,145,744,185"/>
+<area shape="rect" id="node1" href="../event/IEvent.html" title="&#171;interface&#187; IEvent (org.eclipse.net4j.util.event)" alt="" coords="13,134,193,189"/>
+<area shape="rect" id="node2" href="ILifecycle.html" title="&#171;interface&#187; ILifecycle" alt="" coords="509,209,595,249"/>
+<area shape="rect" id="node3" href="ILifecycle.DeferrableActivation.html" title="&#171;interface&#187; ILifecycle.DeferrableActivation" alt="" coords="5,69,200,109"/>
+<area shape="rect" id="node4" href="ILifecycleEvent.html" title="&#171;interface&#187; ILifecycleEvent" alt="" coords="269,141,377,181"/>
+<area shape="rect" id="node5" href="../event/INotifier.html" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="233,209,413,263"/>
+<area shape="rect" id="node6" href="LifecycleUtil.html" title="&#171;static&#187; LifecycleUtil" alt="" coords="57,5,149,45"/>
+<area shape="rect" id="node7" href="ILifecycleEvent.Kind.html" title="&#171;enum&#187; ILifecycleEvent.Kind" alt="" coords="483,137,621,177"/>
+<area shape="rect" id="node8" href="LifecycleState.html" title="&#171;enum&#187; LifecycleState" alt="" coords="653,209,757,249"/>
 </map>
 
 <CENTER><IMG SRC="package-summary.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -111,6 +112,10 @@ A framework for components with a simple lifecycle.
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A></B></TD>
 <TD>An entity that has a well-defined <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#getLifecycleState()"><CODE>lifecycle</CODE></A> and can be <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#activate()"><CODE>activated</CODE></A> or
  <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#deactivate()"><CODE>deactivated</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</A></B></TD>
+<TD>A mix-in interface for <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle"><CODE>lifecycles</CODE></A> with deferrable activation.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEvent.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycleEvent</A></B></TD>

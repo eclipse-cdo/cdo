@@ -51,8 +51,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
 
   private long openChannelTimeout = IChannelMultiplexer.DEFAULT_OPEN_CHANNEL_TIMEOUT;
 
-  @ExcludeFromDump
-  private transient ConcurrentMap<Short, IChannel> channels = new ConcurrentHashMap<Short, IChannel>();
+  private ConcurrentMap<Short, IChannel> channels = new ConcurrentHashMap<Short, IChannel>();
 
   @ExcludeFromDump
   private transient Set<Short> channelIDs = new HashSet<Short>();

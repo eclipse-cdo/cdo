@@ -16,17 +16,18 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
+import org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.concurrent.Semaphore;
 
 /**
  * A default implementation of an entity with a {@link ILifecycle lifecycle}.
- * 
+ *
  * @author Eike Stepper
  * @apiviz.exclude
  */
-public class Lifecycle extends Notifier implements ILifecycle
+public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivation
 {
   public static boolean USE_LABEL = true;
 
@@ -257,7 +258,10 @@ public class Lifecycle extends Notifier implements ILifecycle
     }
   }
 
-  protected boolean isDeferredActivation()
+  /**
+   * @since 3.2
+   */
+  public boolean isDeferredActivation()
   {
     return false;
   }

@@ -346,8 +346,11 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
     return null;
   }
 
+  /**
+   * @since 4.1
+   */
   @Override
-  protected boolean isDeferredActivation()
+  public boolean isDeferredActivation()
   {
     return true;
   }

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -50,6 +50,11 @@ public class SharedIcons
   public static final String ETOOL_DELETE = ETOOL + "delete"; //$NON-NLS-1$
 
   public static final String ETOOL_REFRESH = ETOOL + "refresh"; //$NON-NLS-1$
+
+  /**
+   * @since 4.1
+   */
+  public static final String ETOOL_PART_MODE = ETOOL + "part_mode"; //$NON-NLS-1$
 
   private static final String TOOL = "etool16/"; //$NON-NLS-1$
 

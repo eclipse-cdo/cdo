@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.internal.admin.protocol.CDOAdminClientProtocol;
 import org.eclipse.emf.cdo.spi.common.admin.AbstractCDOAdmin;
 
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
 import java.util.Map;
 
@@ -87,6 +89,14 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
 
     protocol = new CDOAdminClientProtocol(this);
     protocol.queryRepositories(getSet());
+    protocol.addListener(new LifecycleEventAdapter()
+    {
+      @Override
+      protected void onDeactivated(ILifecycle lifecycle)
+      {
+        deactivate();
+      }
+    });
   }
 
   @Override

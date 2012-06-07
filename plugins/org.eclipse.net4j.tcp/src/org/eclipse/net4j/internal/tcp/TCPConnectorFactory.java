@@ -12,13 +12,9 @@
 package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.tcp.ITCPConnector;
-import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.factory.ProductCreationException;
+import org.eclipse.net4j.tcp.TCPUtil.ConnectorData;
 
 import org.eclipse.spi.net4j.ConnectorFactory;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * @author Eike Stepper
@@ -42,29 +38,14 @@ public class TCPConnectorFactory extends ConnectorFactory
 
   public TCPConnector create(String description)
   {
-    try
-    {
-      // TODO Don't use URL
-      // Scheme "tcp://" would be rejected!
-      URL url = new URL("http://" + description);
-      String userID = url.getUserInfo();
-      String host = url.getHost();
-      int port = url.getPort();
-      if (port == -1)
-      {
-        port = ITCPConnector.DEFAULT_PORT;
-      }
+    ConnectorData data = new ConnectorData(description);
 
-      TCPConnector connector = createConnector();
-      connector.setUserID(userID);
-      connector.setHost(host);
-      connector.setPort(port);
-      return connector;
-    }
-    catch (MalformedURLException ex)
-    {
-      throw new ProductCreationException(ex);
-    }
+    TCPConnector connector = createConnector();
+    connector.setHost(data.getHost());
+    connector.setPort(data.getPort());
+    connector.setUserID(data.getUserID());
+    return connector;
+
   }
 
   protected TCPConnector createConnector()
@@ -75,23 +56,10 @@ public class TCPConnectorFactory extends ConnectorFactory
   @Override
   public String getDescriptionFor(Object object)
   {
-    if (object instanceof TCPConnector)
+    if (object instanceof ITCPConnector)
     {
-      TCPConnector connector = (TCPConnector)object;
-      String description = connector.getHost();
-      String userID = connector.getUserID();
-      if (!StringUtil.isEmpty(userID))
-      {
-        description = userID + "@" + description; //$NON-NLS-1$
-      }
-
-      int port = connector.getPort();
-      if (port != ITCPConnector.DEFAULT_PORT)
-      {
-        description = description + ":" + port; //$NON-NLS-1$
-      }
-
-      return description;
+      ITCPConnector connector = (ITCPConnector)object;
+      return new ConnectorData(connector).toString();
     }
 
     return null;

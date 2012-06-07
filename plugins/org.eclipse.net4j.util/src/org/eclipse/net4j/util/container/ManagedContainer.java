@@ -23,6 +23,7 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
@@ -67,9 +68,11 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     {
       for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
       {
-        if (lifecycle == entry.getValue())
+        Object value = entry.getValue();
+        if (lifecycle == value)
         {
-          removeElement(entry.getKey());
+          ElementKey key = entry.getKey();
+          removeElement(key);
           return;
         }
       }
@@ -291,13 +294,38 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
       if (activate)
       {
-        LifecycleUtil.activate(element);
+        activateElement(element);
       }
 
       putElement(key, element);
     }
 
     return element;
+  }
+
+  /**
+   * @since 3.2
+   */
+  protected void activateElement(Object element)
+  {
+    EventUtil.addUniqueListener(element, elementListener);
+    LifecycleUtil.activate(element);
+
+    boolean active;
+    if (LifecycleUtil.isDeferredActivation(element))
+    {
+      active = LifecycleUtil.waitForActive(element, 10 * 1000);
+    }
+    else
+    {
+      active = LifecycleUtil.isActive(element);
+    }
+
+    if (!active)
+    {
+      EventUtil.removeListener(element, elementListener);
+      throw new LifecycleException("Could not activate " + element);
+    }
   }
 
   public Object putElement(String productGroup, String factoryType, String description, Object element)
@@ -321,6 +349,8 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
     if (oldElement != element)
     {
+      EventUtil.addUniqueListener(element, elementListener);
+
       if (oldElement != null)
       {
         EventUtil.removeListener(oldElement, elementListener);
@@ -329,7 +359,6 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
       event.addDelta(element, IContainerDelta.Kind.ADDED);
       fireEvent(event);
-      EventUtil.addListener(element, elementListener);
     }
 
     return oldElement;

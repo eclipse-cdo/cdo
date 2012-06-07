@@ -12,7 +12,8 @@
 package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.tcp.ITCPAcceptor;
-import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.tcp.TCPUtil;
+import org.eclipse.net4j.tcp.TCPUtil.AcceptorData;
 
 import org.eclipse.spi.net4j.AcceptorFactory;
 
@@ -21,13 +22,9 @@ import org.eclipse.spi.net4j.AcceptorFactory;
  */
 public class TCPAcceptorFactory extends AcceptorFactory
 {
-  public static final String TYPE = "tcp"; //$NON-NLS-1$
-
-  private static final String SEPARATOR = ":"; //$NON-NLS-1$
-
   public TCPAcceptorFactory()
   {
-    super(TYPE);
+    super(TCPUtil.FACTORY_TYPE);
   }
 
   /**
@@ -40,7 +37,7 @@ public class TCPAcceptorFactory extends AcceptorFactory
 
   public TCPAcceptor create(String description)
   {
-    Data data = new Data(description);
+    AcceptorData data = new AcceptorData(description);
 
     TCPAcceptor acceptor = createAcceptor();
     acceptor.setAddress(data.getAddress());
@@ -56,65 +53,12 @@ public class TCPAcceptorFactory extends AcceptorFactory
   @Override
   public String getDescriptionFor(Object object)
   {
-    if (object instanceof TCPAcceptor)
+    if (object instanceof ITCPAcceptor)
     {
-      TCPAcceptor acceptor = (TCPAcceptor)object;
-      return acceptor.getAddress() + SEPARATOR + acceptor.getPort();
+      ITCPAcceptor acceptor = (ITCPAcceptor)object;
+      return new AcceptorData(acceptor).toString();
     }
 
     return null;
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static class Data
-  {
-    private String address = ITCPAcceptor.DEFAULT_ADDRESS;
-
-    private int port = ITCPAcceptor.DEFAULT_PORT;
-
-    public Data()
-    {
-    }
-
-    public Data(String address, int port)
-    {
-      this.address = address;
-      this.port = port;
-    }
-
-    public Data(String description)
-    {
-      if (!StringUtil.isEmpty(description))
-      {
-        String[] tokens = description.split(SEPARATOR);
-        if (!StringUtil.isEmpty(tokens[0]))
-        {
-          address = tokens[0];
-        }
-
-        if (tokens.length > 1 && !StringUtil.isEmpty(tokens[1]))
-        {
-          port = Integer.parseInt(tokens[1]);
-        }
-      }
-    }
-
-    public String getAddress()
-    {
-      return address == null ? "" : address;
-    }
-
-    public int getPort()
-    {
-      return port;
-    }
-
-    @Override
-    public String toString()
-    {
-      return address + SEPARATOR + port;
-    }
   }
 }

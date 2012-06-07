@@ -13,7 +13,7 @@ package org.eclipse.net4j.util.event;
 /**
  * Various static helper methods for dealing with {@link IEvent events}, {@link INotifier notifiers} and
  * {@link IListener listeners}.
- * 
+ *
  * @author Eike Stepper
  */
 public final class EventUtil
@@ -25,6 +25,23 @@ public final class EventUtil
 
   private EventUtil()
   {
+  }
+
+  /**
+   * @since 3.2
+   */
+  public static boolean addUniqueListener(Object notifier, IListener listener)
+  {
+    if (notifier instanceof INotifier)
+    {
+      if (!hasListener(notifier, listener))
+      {
+        ((INotifier)notifier).addListener(listener);
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public static boolean addListener(Object notifier, IListener listener)
@@ -57,5 +74,25 @@ public final class EventUtil
     }
 
     return NO_LISTENERS;
+  }
+
+  /**
+   * @since 3.2
+   */
+  public static boolean hasListener(Object notifier, IListener listener)
+  {
+    if (notifier instanceof INotifier)
+    {
+      IListener[] listeners = ((INotifier)notifier).getListeners();
+      for (int i = 0; i < listeners.length; i++)
+      {
+        if (listeners[i] == listener)
+        {
+          return true;
+        }
+      }
+    }
+  
+    return false;
   }
 }

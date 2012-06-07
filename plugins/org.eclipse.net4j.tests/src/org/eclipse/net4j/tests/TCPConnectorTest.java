@@ -27,6 +27,7 @@ import org.eclipse.net4j.internal.tcp.ssl.SSLAcceptorFactory;
 import org.eclipse.net4j.internal.tcp.ssl.SSLClientConnector;
 import org.eclipse.net4j.internal.tcp.ssl.SSLConnectorFactory;
 import org.eclipse.net4j.tcp.ITCPSelector;
+import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.tests.bundle.OM;
 import org.eclipse.net4j.util.collection.RoundRobinBlockingQueue;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
@@ -176,7 +177,7 @@ public class TCPConnectorTest extends AbstractTransportTest
     else
     {
       acceptor = new TCPAcceptor();
-      container.putElement(TCPAcceptorFactory.PRODUCT_GROUP, TCPAcceptorFactory.TYPE, null, acceptor);
+      container.putElement(TCPAcceptorFactory.PRODUCT_GROUP, TCPUtil.FACTORY_TYPE, null, acceptor);
 
       connector = new TCPClientConnector();
       container.putElement(TCPConnectorFactory.PRODUCT_GROUP, TCPConnectorFactory.TYPE, null, acceptor);

@@ -55,7 +55,7 @@ public class BufferPoolTest extends AbstractOMTest
 
     while (Net4jUtil.getPooledBuffers(bufferPool) > 0 && allocate())
     {
-      sleep(100);
+      sleep(10);
       ReflectUtil.dump(bufferPool);
     }
 

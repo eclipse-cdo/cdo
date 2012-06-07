@@ -4,13 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.net4j.util.tests;
 
 import org.eclipse.net4j.util.UUIDGenerator;
+import org.eclipse.net4j.util.io.IOUtil;
 
 /**
  * @author Eike Stepper
@@ -25,9 +26,9 @@ public class UUIDGeneratorTest extends AbstractOMTest
 
     for (int b3 = Byte.MIN_VALUE; b3 <= Byte.MAX_VALUE; b3++)
     {
+      IOUtil.OUT().println(b3);
       for (int b2 = Byte.MIN_VALUE; b2 <= Byte.MAX_VALUE; b2++)
       {
-        // System.out.println(b3 + ", " + b2);
         for (int b1 = Byte.MIN_VALUE; b1 <= Byte.MAX_VALUE; b1++)
         {
           for (int off = 0; off < 13; off++)
@@ -38,8 +39,7 @@ public class UUIDGeneratorTest extends AbstractOMTest
       }
     }
 
-    long millis = System.currentTimeMillis() - start;
-    System.out.println("Millis: " + millis);
+    IOUtil.OUT().println("Millis: " + (System.currentTimeMillis() - start));
   }
 
   private static void check(byte[] uuid, int b1, int b2, int b3, int off)

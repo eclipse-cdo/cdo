@@ -26,6 +26,8 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.util.HashSet;
@@ -75,8 +77,17 @@ public class CDOAdminServer extends AbstractCDOAdmin
     return container;
   }
 
-  public void registerProtocol(CDOAdminServerProtocol protocol)
+  public void registerProtocol(final CDOAdminServerProtocol protocol)
   {
+    protocol.addListener(new LifecycleEventAdapter()
+    {
+      @Override
+      protected void onDeactivated(ILifecycle lifecycle)
+      {
+        protocol.deactivate();
+      }
+    });
+
     synchronized (protocols)
     {
       protocols.add(protocol);

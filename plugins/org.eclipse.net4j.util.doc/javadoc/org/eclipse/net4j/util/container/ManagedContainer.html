@@ -98,7 +98,7 @@ Class ManagedContainer</H2>
           <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.container.ManagedContainer</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;, <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;, <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</A></DD>
 </DL>
 <HR>
 <DL>
@@ -196,6 +196,14 @@ A default implementation of a <A HREF="../../../../../org/eclipse/net4j/util/con
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#activateElement(java.lang.Object)">activateElement</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -806,6 +814,22 @@ public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Objec
 <DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</A></CODE>
 <DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</A></CODE><DT><B>Since:</B></DT>
   <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="activateElement(java.lang.Object)"><!-- --></A><H3>
+activateElement</H3>
+<PRE>
+protected void <B>activateElement</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.2</DD>
 </DL>
 </DD>
 </DL>

@@ -22,6 +22,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Eike Stepper
  * @since 3.1
@@ -123,7 +126,10 @@ public abstract class ElementWizard extends Notifier implements IElementWizard, 
     return control;
   }
 
-  public static Combo addCombo(Composite parent, String label, String... choices)
+  /**
+   * @since 3.2
+   */
+  public static Combo addCombo(Composite parent, String label, List<String> choices)
   {
     addLabel(parent, label);
 
@@ -135,5 +141,10 @@ public abstract class ElementWizard extends Notifier implements IElementWizard, 
     }
 
     return control;
+  }
+
+  public static Combo addCombo(Composite parent, String label, String... choices)
+  {
+    return addCombo(parent, label, Arrays.asList(choices));
   }
 }

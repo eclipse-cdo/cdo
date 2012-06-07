@@ -32,12 +32,17 @@ public class AcceptorsView extends ContainerView
 {
   public final static String ID = "org.eclipse.net4j.AcceptorsView"; //$NON-NLS-1$
 
-  private IAction newAcceptorAction = new ElementWizardAction(getShell(), "New Acceptor", "Open a new Net4j acceptor",
+  private IAction newAcceptorAction = new ElementWizardAction(getShell(), "New Acceptor", "Open a new acceptor",
       SharedIcons.getDescriptor(SharedIcons.ETOOL_ADD_ACCEPTOR), AcceptorFactory.PRODUCT_GROUP, getContainer(), "tcp")
   {
     @Override
     public String getDefaultDescription(String factoryType)
     {
+      if ("jvm".equals(factoryType))
+      {
+        return "default";
+      }
+
       if ("tcp".equals(factoryType))
       {
         return "0.0.0.0:2036";

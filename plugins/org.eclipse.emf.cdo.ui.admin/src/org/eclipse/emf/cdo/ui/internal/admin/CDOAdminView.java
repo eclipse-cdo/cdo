@@ -48,8 +48,7 @@ public class CDOAdminView extends ContainerView
 
   private final Map<IConnector, CDOAdminClient> admins = new HashMap<IConnector, CDOAdminClient>();
 
-  private IAction newConnectorAction = new ElementWizardAction(getShell(), "New Connector",
-      "Open a new Net4j connector",
+  private IAction newConnectorAction = new ElementWizardAction(getShell(), "New Connector", "Open a new connector",
       org.eclipse.net4j.ui.shared.SharedIcons
           .getDescriptor(org.eclipse.net4j.ui.shared.SharedIcons.ETOOL_ADD_CONNECTOR), ConnectorFactory.PRODUCT_GROUP,
       getContainer(), "tcp")

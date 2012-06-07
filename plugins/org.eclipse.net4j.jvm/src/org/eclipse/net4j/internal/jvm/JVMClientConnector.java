@@ -12,6 +12,8 @@ package org.eclipse.net4j.internal.jvm;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  */
@@ -32,6 +34,17 @@ public class JVMClientConnector extends JVMConnector
   public JVMAcceptor getAcceptor()
   {
     return acceptor;
+  }
+
+  @Override
+  public String toString()
+  {
+    if (getUserID() == null)
+    {
+      return MessageFormat.format("JVMClientConnector[{0}]", getName()); //$NON-NLS-1$
+    }
+
+    return MessageFormat.format("JVMClientConnector[{1}@{0}]", getName(), getUserID()); //$NON-NLS-1$
   }
 
   @Override

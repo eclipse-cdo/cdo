@@ -32,13 +32,17 @@ public class ConnectorsView extends ContainerView
 {
   public final static String ID = "org.eclipse.net4j.ConnectorsView"; //$NON-NLS-1$
 
-  private IAction newConnectorAction = new ElementWizardAction(getShell(), "New Connector",
-      "Open a new Net4j connector", SharedIcons.getDescriptor(SharedIcons.ETOOL_ADD_CONNECTOR),
-      ConnectorFactory.PRODUCT_GROUP, getContainer(), "tcp")
+  private IAction newConnectorAction = new ElementWizardAction(getShell(), "New Connector", "Open a new connector",
+      SharedIcons.getDescriptor(SharedIcons.ETOOL_ADD_CONNECTOR), ConnectorFactory.PRODUCT_GROUP, getContainer(), "tcp")
   {
     @Override
     public String getDefaultDescription(String factoryType)
     {
+      if ("jvm".equals(factoryType))
+      {
+        return "default";
+      }
+
       if ("tcp".equals(factoryType))
       {
         return "localhost";

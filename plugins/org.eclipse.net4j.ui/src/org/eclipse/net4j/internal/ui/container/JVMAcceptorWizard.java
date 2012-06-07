@@ -39,6 +39,12 @@ public class JVMAcceptorWizard extends ElementWizard implements ModifyListener
   {
     acceptorNameText = addText(parent, "Acceptor Name:");
     acceptorNameText.addModifyListener(this);
+
+    String description = getDefaultDescription();
+    if (description != null)
+    {
+      acceptorNameText.setText(description);
+    }
   }
 
   public void modifyText(ModifyEvent e)

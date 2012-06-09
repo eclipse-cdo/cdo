@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.admin.CDOAdminClient;
 import org.eclipse.emf.cdo.admin.CDOAdminClientRepository;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.Type;
+import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
 import org.eclipse.emf.cdo.internal.admin.bundle.OM;
 import org.eclipse.emf.cdo.internal.admin.protocol.CDOAdminClientProtocol;
 import org.eclipse.emf.cdo.spi.common.admin.AbstractCDOAdmin;
@@ -28,6 +29,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.spi.net4j.ConnectorFactory;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -97,7 +99,8 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
   @Override
   public CDOAdminClientRepository[] getRepositories()
   {
-    return (CDOAdminClientRepository[])super.getRepositories();
+    CDOAdminRepository[] repositories = super.getRepositories();
+    return Arrays.copyOf(repositories, repositories.length, CDOAdminClientRepository[].class);
   }
 
   @Override

@@ -69,9 +69,73 @@ public class RealmItemProvider extends SecurityElementItemProvider implements IE
     {
       super.getPropertyDescriptors(object);
 
+      addAllUsersPropertyDescriptor(object);
+      addAllGroupsPropertyDescriptor(object);
+      addAllRolesPropertyDescriptor(object);
+      addAllChecksPropertyDescriptor(object);
       addNamePropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
+  }
+
+  /**
+   * This adds a property descriptor for the All Users feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addAllUsersPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Realm_allUsers_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Realm_allUsers_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.REALM__ALL_USERS, false, false, false, null, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the All Groups feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addAllGroupsPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Realm_allGroups_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Realm_allGroups_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.REALM__ALL_GROUPS, false, false, false, null, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the All Roles feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addAllRolesPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Realm_allRoles_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Realm_allRoles_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.REALM__ALL_ROLES, false, false, false, null, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the All Checks feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addAllChecksPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Realm_allChecks_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Realm_allChecks_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.REALM__ALL_CHECKS, false, false, false, null, null, null));
   }
 
   /**

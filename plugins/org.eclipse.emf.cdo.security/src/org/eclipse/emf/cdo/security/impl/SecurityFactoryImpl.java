@@ -11,9 +11,13 @@
 package org.eclipse.emf.cdo.security.impl;
 
 //import org.eclipse.emf.cdo.security.*;
+import org.eclipse.emf.cdo.security.ClassCheck;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.PackageCheck;
+import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
+import org.eclipse.emf.cdo.security.ResourceCheck;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.SecurityPackage;
@@ -21,6 +25,7 @@ import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.security.UserPassword;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
@@ -91,8 +96,48 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
       return (EObject)createUser();
     case SecurityPackage.USER_PASSWORD:
       return (EObject)createUserPassword();
+    case SecurityPackage.CLASS_CHECK:
+      return (EObject)createClassCheck();
+    case SecurityPackage.PACKAGE_CHECK:
+      return (EObject)createPackageCheck();
+    case SecurityPackage.RESOURCE_CHECK:
+      return (EObject)createResourceCheck();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object createFromString(EDataType eDataType, String initialValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+    case SecurityPackage.PERMISSION:
+      return createPermissionFromString(eDataType, initialValue);
+    default:
+      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String convertToString(EDataType eDataType, Object instanceValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+    case SecurityPackage.PERMISSION:
+      return convertPermissionToString(eDataType, instanceValue);
+    default:
+      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 
@@ -160,6 +205,63 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   {
     UserPasswordImpl userPassword = new UserPasswordImpl();
     return userPassword;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ClassCheck createClassCheck()
+  {
+    ClassCheckImpl classCheck = new ClassCheckImpl();
+    return classCheck;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PackageCheck createPackageCheck()
+  {
+    PackageCheckImpl packageCheck = new PackageCheckImpl();
+    return packageCheck;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ResourceCheck createResourceCheck()
+  {
+    ResourceCheckImpl resourceCheck = new ResourceCheckImpl();
+    return resourceCheck;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Permission createPermissionFromString(EDataType eDataType, String initialValue)
+  {
+    Permission result = Permission.get(initialValue);
+    if (result == null)
+      throw new IllegalArgumentException(
+          "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertPermissionToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**

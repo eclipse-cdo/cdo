@@ -12,9 +12,14 @@ package org.eclipse.emf.cdo.security.impl;
 
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.security.Assignee;
+import org.eclipse.emf.cdo.security.Check;
+import org.eclipse.emf.cdo.security.ClassCheck;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.PackageCheck;
+import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
+import org.eclipse.emf.cdo.security.ResourceCheck;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityElement;
 import org.eclipse.emf.cdo.security.SecurityFactory;
@@ -25,6 +30,7 @@ import org.eclipse.emf.cdo.security.UserPassword;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -100,6 +106,41 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * @generated
    */
   private EClass userPasswordEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass checkEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass classCheckEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass packageCheckEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass resourceCheckEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EEnum permissionEEnum = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -203,9 +244,49 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getRealm_AllUsers()
+  {
+    return (EReference)realmEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getRealm_AllGroups()
+  {
+    return (EReference)realmEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getRealm_AllRoles()
+  {
+    return (EReference)realmEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getRealm_AllChecks()
+  {
+    return (EReference)realmEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EAttribute getRealm_Name()
   {
-    return (EAttribute)realmEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)realmEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -283,9 +364,9 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getRole_Type()
+  public EReference getRole_Checks()
   {
-    return (EAttribute)roleEClass.getEStructuralFeatures().get(2);
+    return (EReference)roleEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -513,6 +594,106 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getCheck()
+  {
+    return checkEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCheck_Role()
+  {
+    return (EReference)checkEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCheck_Permission()
+  {
+    return (EAttribute)checkEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getClassCheck()
+  {
+    return classCheckEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getClassCheck_Classes()
+  {
+    return (EReference)classCheckEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getPackageCheck()
+  {
+    return packageCheckEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPackageCheck_Packages()
+  {
+    return (EReference)packageCheckEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getResourceCheck()
+  {
+    return resourceCheckEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getResourceCheck_Pattern()
+  {
+    return (EAttribute)resourceCheckEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EEnum getPermission()
+  {
+    return permissionEEnum;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public SecurityFactory getSecurityFactory()
   {
     return (SecurityFactory)getEFactoryInstance();
@@ -545,6 +726,10 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
 
     realmEClass = createEClass(REALM);
     createEReference(realmEClass, REALM__ITEMS);
+    createEReference(realmEClass, REALM__ALL_USERS);
+    createEReference(realmEClass, REALM__ALL_GROUPS);
+    createEReference(realmEClass, REALM__ALL_ROLES);
+    createEReference(realmEClass, REALM__ALL_CHECKS);
     createEAttribute(realmEClass, REALM__NAME);
 
     directoryEClass = createEClass(DIRECTORY);
@@ -554,7 +739,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     roleEClass = createEClass(ROLE);
     createEReference(roleEClass, ROLE__ASSIGNEES);
     createEAttribute(roleEClass, ROLE__ID);
-    createEAttribute(roleEClass, ROLE__TYPE);
+    createEReference(roleEClass, ROLE__CHECKS);
 
     assigneeEClass = createEClass(ASSIGNEE);
     createEReference(assigneeEClass, ASSIGNEE__ROLES);
@@ -581,6 +766,22 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
 
     userPasswordEClass = createEClass(USER_PASSWORD);
     createEAttribute(userPasswordEClass, USER_PASSWORD__ENCRYPTED);
+
+    checkEClass = createEClass(CHECK);
+    createEReference(checkEClass, CHECK__ROLE);
+    createEAttribute(checkEClass, CHECK__PERMISSION);
+
+    classCheckEClass = createEClass(CLASS_CHECK);
+    createEReference(classCheckEClass, CLASS_CHECK__CLASSES);
+
+    packageCheckEClass = createEClass(PACKAGE_CHECK);
+    createEReference(packageCheckEClass, PACKAGE_CHECK__PACKAGES);
+
+    resourceCheckEClass = createEClass(RESOURCE_CHECK);
+    createEAttribute(resourceCheckEClass, RESOURCE_CHECK__PATTERN);
+
+    // Create enums
+    permissionEEnum = createEEnum(PERMISSION);
   }
 
   /**
@@ -625,6 +826,9 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     assigneeEClass.getESuperTypes().add(this.getSecurityItem());
     groupEClass.getESuperTypes().add(this.getAssignee());
     userEClass.getESuperTypes().add(this.getAssignee());
+    classCheckEClass.getESuperTypes().add(this.getCheck());
+    packageCheckEClass.getESuperTypes().add(this.getCheck());
+    resourceCheckEClass.getESuperTypes().add(this.getCheck());
 
     // Initialize classes and features; add operations and parameters
     initEClass(securityElementEClass, SecurityElement.class,
@@ -641,6 +845,26 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
         this.getSecurityItem(),
         null,
         "items", null, 0, -1, Realm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEReference(
+        getRealm_AllUsers(),
+        this.getUser(),
+        null,
+        "allUsers", null, 0, -1, Realm.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEReference(
+        getRealm_AllGroups(),
+        this.getGroup(),
+        null,
+        "allGroups", null, 0, -1, Realm.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEReference(
+        getRealm_AllRoles(),
+        this.getRole(),
+        null,
+        "allRoles", null, 0, -1, Realm.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEReference(
+        getRealm_AllChecks(),
+        this.getCheck(),
+        null,
+        "allChecks", null, 0, -1, Realm.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEAttribute(
         getRealm_Name(),
         theEcorePackage.getEString(),
@@ -667,10 +891,11 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
         getRole_Id(),
         theEcorePackage.getEString(),
         "id", null, 0, 1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-    initEAttribute(
-        getRole_Type(),
-        theEcorePackage.getEString(),
-        "type", null, 0, 1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEReference(
+        getRole_Checks(),
+        this.getCheck(),
+        this.getCheck_Role(),
+        "checks", null, 0, -1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
     initEClass(assigneeEClass, Assignee.class, "Assignee", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEReference(
@@ -763,6 +988,45 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
         getUserPassword_Encrypted(),
         theEcorePackage.getEString(),
         "encrypted", null, 0, 1, UserPassword.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+    initEClass(checkEClass, Check.class, "Check", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEReference(
+        getCheck_Role(),
+        this.getRole(),
+        this.getRole_Checks(),
+        "role", null, 1, 1, Check.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEAttribute(
+        getCheck_Permission(),
+        this.getPermission(),
+        "permission", "WRITE", 0, 1, Check.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+    initEClass(classCheckEClass, ClassCheck.class,
+        "ClassCheck", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEReference(
+        getClassCheck_Classes(),
+        theEcorePackage.getEClass(),
+        null,
+        "classes", null, 1, -1, ClassCheck.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+    initEClass(packageCheckEClass, PackageCheck.class,
+        "PackageCheck", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEReference(
+        getPackageCheck_Packages(),
+        theEcorePackage.getEPackage(),
+        null,
+        "packages", null, 1, -1, PackageCheck.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+    initEClass(resourceCheckEClass, ResourceCheck.class,
+        "ResourceCheck", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEAttribute(
+        getResourceCheck_Pattern(),
+        theEcorePackage.getEString(),
+        "pattern", null, 0, 1, ResourceCheck.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+    // Initialize enums and add enum literals
+    initEEnum(permissionEEnum, Permission.class, "Permission"); //$NON-NLS-1$
+    addEEnumLiteral(permissionEEnum, Permission.READ);
+    addEEnumLiteral(permissionEEnum, Permission.WRITE);
 
     // Create resource
     createResource(eNS_URI);

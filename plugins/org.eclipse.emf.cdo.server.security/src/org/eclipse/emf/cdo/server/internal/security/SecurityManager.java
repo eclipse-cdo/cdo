@@ -414,19 +414,6 @@ public class SecurityManager implements ISecurityManager
    */
   private final class WriteAccessHandler implements IRepository.WriteAccessHandler
   {
-    private void handleRevisionsBeforeCommitting(CommitContext commitContext, CDOBranchPoint securityContext,
-        User user, InternalCDORevision[] revisions)
-    {
-      for (InternalCDORevision revision : revisions)
-      {
-        CDOPermission permission = getPermission(revision, commitContext, securityContext, user);
-        if (permission != CDOPermission.WRITE)
-        {
-          throw new SecurityException("User " + user + " is not allowed to write to " + revision);
-        }
-      }
-    }
-
     public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
         OMMonitor monitor) throws RuntimeException
     {
@@ -450,9 +437,25 @@ public class SecurityManager implements ISecurityManager
       handleRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getDirtyObjects());
     }
 
+    private void handleRevisionsBeforeCommitting(CommitContext commitContext, CDOBranchPoint securityContext,
+        User user, InternalCDORevision[] revisions)
+    {
+      for (InternalCDORevision revision : revisions)
+      {
+        CDOPermission permission = getPermission(revision, commitContext, securityContext, user);
+        if (permission != CDOPermission.WRITE)
+        {
+          throw new SecurityException("User " + user + " is not allowed to write to " + revision);
+        }
+      }
+    }
+
+    /**
+     * @deprecated Not used.
+     */
+    @Deprecated
     public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
     {
-      // Do nothing
     }
   }
 }

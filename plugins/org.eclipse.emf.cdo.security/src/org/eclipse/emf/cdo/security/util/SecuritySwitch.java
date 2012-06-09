@@ -12,9 +12,13 @@ package org.eclipse.emf.cdo.security.util;
 
 import org.eclipse.emf.cdo.etypes.ModelElement;
 import org.eclipse.emf.cdo.security.Assignee;
+import org.eclipse.emf.cdo.security.Check;
+import org.eclipse.emf.cdo.security.ClassCheck;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.PackageCheck;
 import org.eclipse.emf.cdo.security.Realm;
+import org.eclipse.emf.cdo.security.ResourceCheck;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityElement;
 import org.eclipse.emf.cdo.security.SecurityItem;
@@ -225,6 +229,44 @@ public class SecuritySwitch<T>
         result = defaultCase(theEObject);
       return result;
     }
+    case SecurityPackage.CHECK:
+    {
+      Check check = (Check)theEObject;
+      T result = caseCheck(check);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SecurityPackage.CLASS_CHECK:
+    {
+      ClassCheck classCheck = (ClassCheck)theEObject;
+      T result = caseClassCheck(classCheck);
+      if (result == null)
+        result = caseCheck(classCheck);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SecurityPackage.PACKAGE_CHECK:
+    {
+      PackageCheck packageCheck = (PackageCheck)theEObject;
+      T result = casePackageCheck(packageCheck);
+      if (result == null)
+        result = caseCheck(packageCheck);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case SecurityPackage.RESOURCE_CHECK:
+    {
+      ResourceCheck resourceCheck = (ResourceCheck)theEObject;
+      T result = caseResourceCheck(resourceCheck);
+      if (result == null)
+        result = caseCheck(resourceCheck);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
     default:
       return defaultCase(theEObject);
     }
@@ -370,6 +412,70 @@ public class SecuritySwitch<T>
    * @generated
    */
   public T caseUserPassword(UserPassword object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Check</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Check</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCheck(Check object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Class Check</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Class Check</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseClassCheck(ClassCheck object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Package Check</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Package Check</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePackageCheck(PackageCheck object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Resource Check</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Resource Check</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseResourceCheck(ResourceCheck object)
   {
     return null;
   }

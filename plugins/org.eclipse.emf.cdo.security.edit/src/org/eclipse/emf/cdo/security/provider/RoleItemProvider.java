@@ -11,10 +11,12 @@
 package org.eclipse.emf.cdo.security.provider;
 
 import org.eclipse.emf.cdo.security.Role;
+import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
@@ -69,7 +71,6 @@ public class RoleItemProvider extends SecurityItemItemProvider implements IEditi
 
       addAssigneesPropertyDescriptor(object);
       addIdPropertyDescriptor(object);
-      addTypePropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -105,20 +106,36 @@ public class RoleItemProvider extends SecurityItemItemProvider implements IEditi
   }
 
   /**
-   * This adds a property descriptor for the Type feature.
+   * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+   * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+   * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addTypePropertyDescriptor(Object object)
+  @Override
+  public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(),
-            getString("_UI_Role_type_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_Role_type_feature", "_UI_Role_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.ROLE__TYPE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
-            null));
+    if (childrenFeatures == null)
+    {
+      super.getChildrenFeatures(object);
+      childrenFeatures.add(SecurityPackage.Literals.ROLE__CHECKS);
+    }
+    return childrenFeatures;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EStructuralFeature getChildFeature(Object object, Object child)
+  {
+    // Check the type of the specified child object and return the proper feature to use for
+    // adding (see {@link AddCommand}) it as a child.
+
+    return super.getChildFeature(object, child);
   }
 
   /**
@@ -173,8 +190,10 @@ public class RoleItemProvider extends SecurityItemItemProvider implements IEditi
     switch (notification.getFeatureID(Role.class))
     {
     case SecurityPackage.ROLE__ID:
-    case SecurityPackage.ROLE__TYPE:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+      return;
+    case SecurityPackage.ROLE__CHECKS:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
     super.notifyChanged(notification);
@@ -191,6 +210,15 @@ public class RoleItemProvider extends SecurityItemItemProvider implements IEditi
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
+
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.ROLE__CHECKS,
+        SecurityFactory.eINSTANCE.createClassCheck()));
+
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.ROLE__CHECKS,
+        SecurityFactory.eINSTANCE.createPackageCheck()));
+
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.ROLE__CHECKS,
+        SecurityFactory.eINSTANCE.createResourceCheck()));
   }
 
 }

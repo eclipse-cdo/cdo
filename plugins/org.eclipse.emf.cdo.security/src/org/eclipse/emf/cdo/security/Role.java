@@ -22,7 +22,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.Role#getAssignees <em>Assignees</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Role#getId <em>Id</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.Role#getType <em>Type</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Role#getChecks <em>Checks</em>}</li>
  * </ul>
  * </p>
  *
@@ -77,29 +77,21 @@ public interface Role extends SecurityItem
   void setId(String value);
 
   /**
-   * Returns the value of the '<em><b>Type</b></em>' attribute.
+   * Returns the value of the '<em><b>Checks</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.security.Check}.
+   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.security.Check#getRole <em>Role</em>}'.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Type</em>' attribute isn't clear,
+   * If the meaning of the '<em>Checks</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Type</em>' attribute.
-   * @see #setType(String)
-   * @see org.eclipse.emf.cdo.security.SecurityPackage#getRole_Type()
-   * @model
+   * @return the value of the '<em>Checks</em>' containment reference list.
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getRole_Checks()
+   * @see org.eclipse.emf.cdo.security.Check#getRole
+   * @model opposite="role" containment="true"
    * @generated
    */
-  String getType();
-
-  /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.security.Role#getType <em>Type</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Type</em>' attribute.
-   * @see #getType()
-   * @generated
-   */
-  void setType(String value);
+  EList<Check> getChecks();
 
 } // Role

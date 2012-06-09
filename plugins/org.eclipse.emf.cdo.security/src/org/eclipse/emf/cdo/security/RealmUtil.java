@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.security;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -101,5 +102,101 @@ public final class RealmUtil
     }
 
     return null;
+  }
+
+  public static BasicEList<User> allUsers(EList<SecurityItem> items)
+  {
+    BasicEList<User> result = new BasicEList<User>();
+    allUsers(items, result);
+    return result;
+  }
+
+  public static BasicEList<Group> allGroups(EList<SecurityItem> items)
+  {
+    BasicEList<Group> result = new BasicEList<Group>();
+    allGroups(items, result);
+    return result;
+  }
+
+  public static BasicEList<Role> allRoles(EList<SecurityItem> items)
+  {
+    BasicEList<Role> result = new BasicEList<Role>();
+    allRoles(items, result);
+    return result;
+  }
+
+  public static BasicEList<Check> allChecks(EList<SecurityItem> items)
+  {
+    BasicEList<Check> result = new BasicEList<Check>();
+    allChecks(items, result);
+    return result;
+  }
+
+  private static void allUsers(EList<SecurityItem> items, EList<User> result)
+  {
+    for (SecurityItem item : items)
+    {
+      if (item instanceof User)
+      {
+        User user = (User)item;
+        result.add(user);
+      }
+      else if (item instanceof Directory)
+      {
+        Directory directory = (Directory)item;
+        allUsers(directory.getItems(), result);
+      }
+    }
+  }
+
+  private static void allGroups(EList<SecurityItem> items, EList<Group> result)
+  {
+    for (SecurityItem item : items)
+    {
+      if (item instanceof Group)
+      {
+        Group group = (Group)item;
+        result.add(group);
+      }
+      else if (item instanceof Directory)
+      {
+        Directory directory = (Directory)item;
+        allGroups(directory.getItems(), result);
+      }
+    }
+  }
+
+  private static void allRoles(EList<SecurityItem> items, EList<Role> result)
+  {
+    for (SecurityItem item : items)
+    {
+      if (item instanceof Role)
+      {
+        Role role = (Role)item;
+        result.add(role);
+      }
+      else if (item instanceof Directory)
+      {
+        Directory directory = (Directory)item;
+        allRoles(directory.getItems(), result);
+      }
+    }
+  }
+
+  private static void allChecks(EList<SecurityItem> items, EList<Check> result)
+  {
+    for (SecurityItem item : items)
+    {
+      if (item instanceof Role)
+      {
+        Role role = (Role)item;
+        result.addAll(role.getChecks());
+      }
+      else if (item instanceof Directory)
+      {
+        Directory directory = (Directory)item;
+        allChecks(directory.getItems(), result);
+      }
+    }
   }
 }

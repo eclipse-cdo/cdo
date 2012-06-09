@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.etypes.EtypesPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -161,13 +162,49 @@ public interface SecurityPackage extends EPackage
   int REALM__ITEMS = SECURITY_ELEMENT_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>All Users</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REALM__ALL_USERS = SECURITY_ELEMENT_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>All Groups</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REALM__ALL_GROUPS = SECURITY_ELEMENT_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>All Roles</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REALM__ALL_ROLES = SECURITY_ELEMENT_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>All Checks</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REALM__ALL_CHECKS = SECURITY_ELEMENT_FEATURE_COUNT + 4;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REALM__NAME = SECURITY_ELEMENT_FEATURE_COUNT + 1;
+  int REALM__NAME = SECURITY_ELEMENT_FEATURE_COUNT + 5;
 
   /**
    * The number of structural features of the '<em>Realm</em>' class.
@@ -176,7 +213,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REALM_FEATURE_COUNT = SECURITY_ELEMENT_FEATURE_COUNT + 2;
+  int REALM_FEATURE_COUNT = SECURITY_ELEMENT_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -252,13 +289,13 @@ public interface SecurityPackage extends EPackage
   int ROLE__ID = SECURITY_ITEM_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * The feature id for the '<em><b>Checks</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ROLE__TYPE = SECURITY_ITEM_FEATURE_COUNT + 2;
+  int ROLE__CHECKS = SECURITY_ITEM_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Role</em>' class.
@@ -571,6 +608,191 @@ public interface SecurityPackage extends EPackage
   int USER_PASSWORD_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.CheckImpl <em>Check</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.impl.CheckImpl
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getCheck()
+   * @generated
+   */
+  int CHECK = 9;
+
+  /**
+   * The feature id for the '<em><b>Role</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CHECK__ROLE = 0;
+
+  /**
+   * The feature id for the '<em><b>Permission</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CHECK__PERMISSION = 1;
+
+  /**
+   * The number of structural features of the '<em>Check</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CHECK_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.ClassCheckImpl <em>Class Check</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.impl.ClassCheckImpl
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getClassCheck()
+   * @generated
+   */
+  int CLASS_CHECK = 10;
+
+  /**
+   * The feature id for the '<em><b>Role</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLASS_CHECK__ROLE = CHECK__ROLE;
+
+  /**
+   * The feature id for the '<em><b>Permission</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLASS_CHECK__PERMISSION = CHECK__PERMISSION;
+
+  /**
+   * The feature id for the '<em><b>Classes</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLASS_CHECK__CLASSES = CHECK_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Class Check</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLASS_CHECK_FEATURE_COUNT = CHECK_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.PackageCheckImpl <em>Package Check</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.impl.PackageCheckImpl
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getPackageCheck()
+   * @generated
+   */
+  int PACKAGE_CHECK = 11;
+
+  /**
+   * The feature id for the '<em><b>Role</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PACKAGE_CHECK__ROLE = CHECK__ROLE;
+
+  /**
+   * The feature id for the '<em><b>Permission</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PACKAGE_CHECK__PERMISSION = CHECK__PERMISSION;
+
+  /**
+   * The feature id for the '<em><b>Packages</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PACKAGE_CHECK__PACKAGES = CHECK_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Package Check</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PACKAGE_CHECK_FEATURE_COUNT = CHECK_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.ResourceCheckImpl <em>Resource Check</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.impl.ResourceCheckImpl
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getResourceCheck()
+   * @generated
+   */
+  int RESOURCE_CHECK = 12;
+
+  /**
+   * The feature id for the '<em><b>Role</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_CHECK__ROLE = CHECK__ROLE;
+
+  /**
+   * The feature id for the '<em><b>Permission</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_CHECK__PERMISSION = CHECK__PERMISSION;
+
+  /**
+   * The feature id for the '<em><b>Pattern</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_CHECK__PATTERN = CHECK_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Resource Check</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_CHECK_FEATURE_COUNT = CHECK_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.Permission <em>Permission</em>}' enum.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.Permission
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getPermission()
+   * @generated
+   */
+  int PERMISSION = 13;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.SecurityElement <em>Element</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -600,6 +822,50 @@ public interface SecurityPackage extends EPackage
    * @generated
    */
   EReference getRealm_Items();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.security.Realm#getAllUsers <em>All Users</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>All Users</em>'.
+   * @see org.eclipse.emf.cdo.security.Realm#getAllUsers()
+   * @see #getRealm()
+   * @generated
+   */
+  EReference getRealm_AllUsers();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.security.Realm#getAllGroups <em>All Groups</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>All Groups</em>'.
+   * @see org.eclipse.emf.cdo.security.Realm#getAllGroups()
+   * @see #getRealm()
+   * @generated
+   */
+  EReference getRealm_AllGroups();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.security.Realm#getAllRoles <em>All Roles</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>All Roles</em>'.
+   * @see org.eclipse.emf.cdo.security.Realm#getAllRoles()
+   * @see #getRealm()
+   * @generated
+   */
+  EReference getRealm_AllRoles();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.security.Realm#getAllChecks <em>All Checks</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>All Checks</em>'.
+   * @see org.eclipse.emf.cdo.security.Realm#getAllChecks()
+   * @see #getRealm()
+   * @generated
+   */
+  EReference getRealm_AllChecks();
 
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.Realm#getName <em>Name</em>}'.
@@ -687,15 +953,15 @@ public interface SecurityPackage extends EPackage
   EAttribute getRole_Id();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.Role#getType <em>Type</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.security.Role#getChecks <em>Checks</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
-   * @see org.eclipse.emf.cdo.security.Role#getType()
+   * @return the meta object for the containment reference list '<em>Checks</em>'.
+   * @see org.eclipse.emf.cdo.security.Role#getChecks()
    * @see #getRole()
    * @generated
    */
-  EAttribute getRole_Type();
+  EReference getRole_Checks();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.Assignee <em>Assignee</em>}'.
@@ -936,6 +1202,111 @@ public interface SecurityPackage extends EPackage
   EAttribute getUserPassword_Encrypted();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.Check <em>Check</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Check</em>'.
+   * @see org.eclipse.emf.cdo.security.Check
+   * @generated
+   */
+  EClass getCheck();
+
+  /**
+   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.security.Check#getRole <em>Role</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the container reference '<em>Role</em>'.
+   * @see org.eclipse.emf.cdo.security.Check#getRole()
+   * @see #getCheck()
+   * @generated
+   */
+  EReference getCheck_Role();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.Check#getPermission <em>Permission</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Permission</em>'.
+   * @see org.eclipse.emf.cdo.security.Check#getPermission()
+   * @see #getCheck()
+   * @generated
+   */
+  EAttribute getCheck_Permission();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.ClassCheck <em>Class Check</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Class Check</em>'.
+   * @see org.eclipse.emf.cdo.security.ClassCheck
+   * @generated
+   */
+  EClass getClassCheck();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.security.ClassCheck#getClasses <em>Classes</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Classes</em>'.
+   * @see org.eclipse.emf.cdo.security.ClassCheck#getClasses()
+   * @see #getClassCheck()
+   * @generated
+   */
+  EReference getClassCheck_Classes();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.PackageCheck <em>Package Check</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Package Check</em>'.
+   * @see org.eclipse.emf.cdo.security.PackageCheck
+   * @generated
+   */
+  EClass getPackageCheck();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.security.PackageCheck#getPackages <em>Packages</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Packages</em>'.
+   * @see org.eclipse.emf.cdo.security.PackageCheck#getPackages()
+   * @see #getPackageCheck()
+   * @generated
+   */
+  EReference getPackageCheck_Packages();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.ResourceCheck <em>Resource Check</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Resource Check</em>'.
+   * @see org.eclipse.emf.cdo.security.ResourceCheck
+   * @generated
+   */
+  EClass getResourceCheck();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.ResourceCheck#getPattern <em>Pattern</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Pattern</em>'.
+   * @see org.eclipse.emf.cdo.security.ResourceCheck#getPattern()
+   * @see #getResourceCheck()
+   * @generated
+   */
+  EAttribute getResourceCheck_Pattern();
+
+  /**
+   * Returns the meta object for enum '{@link org.eclipse.emf.cdo.security.Permission <em>Permission</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for enum '<em>Permission</em>'.
+   * @see org.eclipse.emf.cdo.security.Permission
+   * @generated
+   */
+  EEnum getPermission();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -985,6 +1356,38 @@ public interface SecurityPackage extends EPackage
      * @generated
      */
     EReference REALM__ITEMS = eINSTANCE.getRealm_Items();
+
+    /**
+     * The meta object literal for the '<em><b>All Users</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REALM__ALL_USERS = eINSTANCE.getRealm_AllUsers();
+
+    /**
+     * The meta object literal for the '<em><b>All Groups</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REALM__ALL_GROUPS = eINSTANCE.getRealm_AllGroups();
+
+    /**
+     * The meta object literal for the '<em><b>All Roles</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REALM__ALL_ROLES = eINSTANCE.getRealm_AllRoles();
+
+    /**
+     * The meta object literal for the '<em><b>All Checks</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REALM__ALL_CHECKS = eINSTANCE.getRealm_AllChecks();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -1057,12 +1460,12 @@ public interface SecurityPackage extends EPackage
     EAttribute ROLE__ID = eINSTANCE.getRole_Id();
 
     /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Checks</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ROLE__TYPE = eINSTANCE.getRole_Type();
+    EReference ROLE__CHECKS = eINSTANCE.getRole_Checks();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.AssigneeImpl <em>Assignee</em>}' class.
@@ -1247,6 +1650,96 @@ public interface SecurityPackage extends EPackage
      * @generated
      */
     EAttribute USER_PASSWORD__ENCRYPTED = eINSTANCE.getUserPassword_Encrypted();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.CheckImpl <em>Check</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.impl.CheckImpl
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getCheck()
+     * @generated
+     */
+    EClass CHECK = eINSTANCE.getCheck();
+
+    /**
+     * The meta object literal for the '<em><b>Role</b></em>' container reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CHECK__ROLE = eINSTANCE.getCheck_Role();
+
+    /**
+     * The meta object literal for the '<em><b>Permission</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CHECK__PERMISSION = eINSTANCE.getCheck_Permission();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.ClassCheckImpl <em>Class Check</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.impl.ClassCheckImpl
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getClassCheck()
+     * @generated
+     */
+    EClass CLASS_CHECK = eINSTANCE.getClassCheck();
+
+    /**
+     * The meta object literal for the '<em><b>Classes</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CLASS_CHECK__CLASSES = eINSTANCE.getClassCheck_Classes();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.PackageCheckImpl <em>Package Check</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.impl.PackageCheckImpl
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getPackageCheck()
+     * @generated
+     */
+    EClass PACKAGE_CHECK = eINSTANCE.getPackageCheck();
+
+    /**
+     * The meta object literal for the '<em><b>Packages</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PACKAGE_CHECK__PACKAGES = eINSTANCE.getPackageCheck_Packages();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.ResourceCheckImpl <em>Resource Check</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.impl.ResourceCheckImpl
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getResourceCheck()
+     * @generated
+     */
+    EClass RESOURCE_CHECK = eINSTANCE.getResourceCheck();
+
+    /**
+     * The meta object literal for the '<em><b>Pattern</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RESOURCE_CHECK__PATTERN = eINSTANCE.getResourceCheck_Pattern();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.Permission <em>Permission</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.Permission
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getPermission()
+     * @generated
+     */
+    EEnum PERMISSION = eINSTANCE.getPermission();
 
   }
 

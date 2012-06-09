@@ -10,12 +10,19 @@
  */
 package org.eclipse.emf.cdo.security.impl;
 
+import org.eclipse.emf.cdo.security.Check;
+import org.eclipse.emf.cdo.security.Group;
 import org.eclipse.emf.cdo.security.Realm;
+import org.eclipse.emf.cdo.security.RealmUtil;
+import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityItem;
 import org.eclipse.emf.cdo.security.SecurityPackage;
+import org.eclipse.emf.cdo.security.User;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,6 +32,10 @@ import org.eclipse.emf.ecore.EClass;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getItems <em>Items</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getAllUsers <em>All Users</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getAllGroups <em>All Groups</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getAllRoles <em>All Roles</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getAllChecks <em>All Checks</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
@@ -33,6 +44,94 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class RealmImpl extends SecurityElementImpl implements Realm
 {
+  private EList<User> allUsers = new CachedList<User>()
+  {
+    @Override
+    protected InternalEObject getOwner()
+    {
+      return RealmImpl.this;
+    }
+
+    @Override
+    protected EStructuralFeature getFeature()
+    {
+      return SecurityPackage.Literals.REALM__ALL_USERS;
+    }
+
+    @Override
+    protected Object[] getData()
+    {
+      EList<SecurityItem> items = getItems();
+      return RealmUtil.allUsers(items).data();
+    }
+  };
+
+  private EList<Group> allGroups = new CachedList<Group>()
+  {
+    @Override
+    protected InternalEObject getOwner()
+    {
+      return RealmImpl.this;
+    }
+
+    @Override
+    protected EStructuralFeature getFeature()
+    {
+      return SecurityPackage.Literals.REALM__ALL_GROUPS;
+    }
+
+    @Override
+    protected Object[] getData()
+    {
+      EList<SecurityItem> items = getItems();
+      return RealmUtil.allGroups(items).data();
+    }
+  };
+
+  private EList<Role> allRoles = new CachedList<Role>()
+  {
+    @Override
+    protected InternalEObject getOwner()
+    {
+      return RealmImpl.this;
+    }
+
+    @Override
+    protected EStructuralFeature getFeature()
+    {
+      return SecurityPackage.Literals.REALM__ALL_ROLES;
+    }
+
+    @Override
+    protected Object[] getData()
+    {
+      EList<SecurityItem> items = getItems();
+      return RealmUtil.allRoles(items).data();
+    }
+  };
+
+  private EList<Check> allChecks = new CachedList<Check>()
+  {
+    @Override
+    protected InternalEObject getOwner()
+    {
+      return RealmImpl.this;
+    }
+
+    @Override
+    protected EStructuralFeature getFeature()
+    {
+      return SecurityPackage.Literals.REALM__ALL_CHECKS;
+    }
+
+    @Override
+    protected Object[] getData()
+    {
+      EList<SecurityItem> items = getItems();
+      return RealmUtil.allChecks(items).data();
+    }
+  };
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -63,6 +162,46 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   public EList<SecurityItem> getItems()
   {
     return (EList<SecurityItem>)eGet(SecurityPackage.Literals.REALM__ITEMS, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public EList<User> getAllUsers()
+  {
+    return allUsers;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public EList<Group> getAllGroups()
+  {
+    return allGroups;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public EList<Role> getAllRoles()
+  {
+    return allRoles;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public EList<Check> getAllChecks()
+  {
+    return allChecks;
   }
 
   /**

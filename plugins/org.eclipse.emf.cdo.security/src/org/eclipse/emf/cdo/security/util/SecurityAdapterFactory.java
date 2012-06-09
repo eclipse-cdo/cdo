@@ -12,9 +12,13 @@ package org.eclipse.emf.cdo.security.util;
 
 import org.eclipse.emf.cdo.etypes.ModelElement;
 import org.eclipse.emf.cdo.security.Assignee;
+import org.eclipse.emf.cdo.security.Check;
+import org.eclipse.emf.cdo.security.ClassCheck;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.PackageCheck;
 import org.eclipse.emf.cdo.security.Realm;
+import org.eclipse.emf.cdo.security.ResourceCheck;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityElement;
 import org.eclipse.emf.cdo.security.SecurityItem;
@@ -143,6 +147,30 @@ public class SecurityAdapterFactory extends AdapterFactoryImpl
     public Adapter caseUserPassword(UserPassword object)
     {
       return createUserPasswordAdapter();
+    }
+
+    @Override
+    public Adapter caseCheck(Check object)
+    {
+      return createCheckAdapter();
+    }
+
+    @Override
+    public Adapter caseClassCheck(ClassCheck object)
+    {
+      return createClassCheckAdapter();
+    }
+
+    @Override
+    public Adapter casePackageCheck(PackageCheck object)
+    {
+      return createPackageCheckAdapter();
+    }
+
+    @Override
+    public Adapter caseResourceCheck(ResourceCheck object)
+    {
+      return createResourceCheckAdapter();
     }
 
     @Override
@@ -303,6 +331,66 @@ public class SecurityAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createUserPasswordAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.Check <em>Check</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.security.Check
+   * @generated
+   */
+  public Adapter createCheckAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.ClassCheck <em>Class Check</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.security.ClassCheck
+   * @generated
+   */
+  public Adapter createClassCheckAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.PackageCheck <em>Package Check</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.security.PackageCheck
+   * @generated
+   */
+  public Adapter createPackageCheckAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.ResourceCheck <em>Resource Check</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.security.ResourceCheck
+   * @generated
+   */
+  public Adapter createResourceCheckAdapter()
   {
     return null;
   }

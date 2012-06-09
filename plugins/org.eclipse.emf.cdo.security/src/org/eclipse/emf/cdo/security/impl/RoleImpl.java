@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.security.impl;
 
 import org.eclipse.emf.cdo.security.Assignee;
+import org.eclipse.emf.cdo.security.Check;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
@@ -26,7 +27,7 @@ import org.eclipse.emf.ecore.EClass;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RoleImpl#getAssignees <em>Assignees</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RoleImpl#getId <em>Id</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.RoleImpl#getType <em>Type</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.RoleImpl#getChecks <em>Checks</em>}</li>
  * </ul>
  * </p>
  *
@@ -91,19 +92,10 @@ public class RoleImpl extends SecurityItemImpl implements Role
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getType()
+  @SuppressWarnings("unchecked")
+  public EList<Check> getChecks()
   {
-    return (String)eGet(SecurityPackage.Literals.ROLE__TYPE, true);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setType(String newType)
-  {
-    eSet(SecurityPackage.Literals.ROLE__TYPE, newType);
+    return (EList<Check>)eGet(SecurityPackage.Literals.ROLE__CHECKS, true);
   }
 
 } // RoleImpl

@@ -257,6 +257,81 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.ClassCheck} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ClassCheckItemProvider classCheckItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.ClassCheck}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createClassCheckAdapter()
+  {
+    if (classCheckItemProvider == null)
+    {
+      classCheckItemProvider = new ClassCheckItemProvider(this);
+    }
+
+    return classCheckItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.PackageCheck} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected PackageCheckItemProvider packageCheckItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.PackageCheck}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createPackageCheckAdapter()
+  {
+    if (packageCheckItemProvider == null)
+    {
+      packageCheckItemProvider = new PackageCheckItemProvider(this);
+    }
+
+    return packageCheckItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.ResourceCheck} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ResourceCheckItemProvider resourceCheckItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.ResourceCheck}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createResourceCheckAdapter()
+  {
+    if (resourceCheckItemProvider == null)
+    {
+      resourceCheckItemProvider = new ResourceCheckItemProvider(this);
+    }
+
+    return resourceCheckItemProvider;
+  }
+
+  /**
    * This returns the root adapter factory that contains this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -409,6 +484,12 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
       userItemProvider.dispose();
     if (userPasswordItemProvider != null)
       userPasswordItemProvider.dispose();
+    if (classCheckItemProvider != null)
+      classCheckItemProvider.dispose();
+    if (packageCheckItemProvider != null)
+      packageCheckItemProvider.dispose();
+    if (resourceCheckItemProvider != null)
+      resourceCheckItemProvider.dispose();
   }
 
 }

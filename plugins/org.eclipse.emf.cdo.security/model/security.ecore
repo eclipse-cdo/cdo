@@ -9,6 +9,14 @@
   <eClassifiers xsi:type="ecore:EClass" name="Realm" eSuperTypes="#//SecurityElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"
         eType="#//SecurityItem" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allUsers" upperBound="-1"
+        eType="#//User" changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allGroups" upperBound="-1"
+        eType="#//Group" changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allRoles" upperBound="-1"
+        eType="#//Role" changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allChecks" upperBound="-1"
+        eType="#//Check" changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Directory" eSuperTypes="#//SecurityItem">
@@ -20,7 +28,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="assignees" upperBound="-1"
         eType="#//Assignee" eOpposite="#//Assignee/roles"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="checks" upperBound="-1"
+        eType="#//Check" containment="true" eOpposite="#//Check/role"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Assignee" abstract="true" eSuperTypes="#//SecurityItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="roles" upperBound="-1"
@@ -59,5 +68,26 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="UserPassword">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="encrypted" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Check" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="role" lowerBound="1" eType="#//Role"
+        eOpposite="#//Role/checks"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="permission" eType="#//Permission"
+        defaultValueLiteral="WRITE"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClassCheck" eSuperTypes="#//Check">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="classes" lowerBound="1"
+        upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PackageCheck" eSuperTypes="#//Check">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="packages" lowerBound="1"
+        upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ResourceCheck" eSuperTypes="#//Check">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pattern" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Permission">
+    <eLiterals name="READ"/>
+    <eLiterals name="WRITE" value="1"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -21,6 +21,10 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.Realm#getItems <em>Items</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Realm#getAllUsers <em>All Users</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Realm#getAllGroups <em>All Groups</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Realm#getAllRoles <em>All Roles</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Realm#getAllChecks <em>All Checks</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Realm#getName <em>Name</em>}</li>
  * </ul>
  * </p>
@@ -46,6 +50,70 @@ public interface Realm extends SecurityElement
    * @generated
    */
   EList<SecurityItem> getItems();
+
+  /**
+   * Returns the value of the '<em><b>All Users</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.security.User}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>All Users</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>All Users</em>' reference list.
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getRealm_AllUsers()
+   * @model transient="true" changeable="false" volatile="true" derived="true"
+   * @generated
+   */
+  EList<User> getAllUsers();
+
+  /**
+   * Returns the value of the '<em><b>All Groups</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.security.Group}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>All Groups</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>All Groups</em>' reference list.
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getRealm_AllGroups()
+   * @model transient="true" changeable="false" volatile="true" derived="true"
+   * @generated
+   */
+  EList<Group> getAllGroups();
+
+  /**
+   * Returns the value of the '<em><b>All Roles</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.security.Role}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>All Roles</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>All Roles</em>' reference list.
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getRealm_AllRoles()
+   * @model transient="true" changeable="false" volatile="true" derived="true"
+   * @generated
+   */
+  EList<Role> getAllRoles();
+
+  /**
+   * Returns the value of the '<em><b>All Checks</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.security.Check}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>All Checks</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>All Checks</em>' reference list.
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getRealm_AllChecks()
+   * @model transient="true" changeable="false" volatile="true" derived="true"
+   * @generated
+   */
+  EList<Check> getAllChecks();
 
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.

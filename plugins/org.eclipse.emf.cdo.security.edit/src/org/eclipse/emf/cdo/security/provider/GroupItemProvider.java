@@ -66,10 +66,7 @@ public class GroupItemProvider extends AssigneeItemProvider implements IEditingD
       super.getPropertyDescriptors(object);
 
       addInheritedGroupsPropertyDescriptor(object);
-      addAllInheritedGroupsPropertyDescriptor(object);
       addInheritingGroupsPropertyDescriptor(object);
-      addAllInheritingGroupsPropertyDescriptor(object);
-      addAllRolesPropertyDescriptor(object);
       addUsersPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
@@ -118,51 +115,6 @@ public class GroupItemProvider extends AssigneeItemProvider implements IEditingD
         getString("_UI_Group_inheritingGroups_feature"), //$NON-NLS-1$
         getString("_UI_PropertyDescriptor_description", "_UI_Group_inheritingGroups_feature", "_UI_Group_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         SecurityPackage.Literals.GROUP__INHERITING_GROUPS, true, false, true, null, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the All Inheriting Groups feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addAllInheritingGroupsPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Group_allInheritingGroups_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_Group_allInheritingGroups_feature", "_UI_Group_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        SecurityPackage.Literals.GROUP__ALL_INHERITING_GROUPS, false, false, false, null, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the All Inherited Groups feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addAllInheritedGroupsPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Group_allInheritedGroups_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_Group_allInheritedGroups_feature", "_UI_Group_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        SecurityPackage.Literals.GROUP__ALL_INHERITED_GROUPS, false, false, false, null, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the All Roles feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addAllRolesPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Group_allRoles_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_Group_allRoles_feature", "_UI_Group_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        SecurityPackage.Literals.GROUP__ALL_ROLES, false, false, false, null, null, null));
   }
 
   /**

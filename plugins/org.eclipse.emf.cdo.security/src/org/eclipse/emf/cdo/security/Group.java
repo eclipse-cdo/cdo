@@ -21,8 +21,8 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.Group#getInheritedGroups <em>Inherited Groups</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.Group#getAllInheritedGroups <em>All Inherited Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Group#getInheritingGroups <em>Inheriting Groups</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Group#getAllInheritedGroups <em>All Inherited Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Group#getAllInheritingGroups <em>All Inheriting Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Group#getAllRoles <em>All Roles</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Group#getUsers <em>Users</em>}</li>

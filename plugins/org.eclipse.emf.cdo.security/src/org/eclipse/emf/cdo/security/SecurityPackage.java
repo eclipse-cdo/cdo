@@ -399,22 +399,22 @@ public interface SecurityPackage extends EPackage
   int GROUP__INHERITED_GROUPS = ASSIGNEE_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>All Inherited Groups</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GROUP__ALL_INHERITED_GROUPS = ASSIGNEE_FEATURE_COUNT + 1;
-
-  /**
    * The feature id for the '<em><b>Inheriting Groups</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GROUP__INHERITING_GROUPS = ASSIGNEE_FEATURE_COUNT + 2;
+  int GROUP__INHERITING_GROUPS = ASSIGNEE_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>All Inherited Groups</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GROUP__ALL_INHERITED_GROUPS = ASSIGNEE_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>All Inheriting Groups</b></em>' reference list.
@@ -517,13 +517,22 @@ public interface SecurityPackage extends EPackage
   int USER__ALL_ROLES = ASSIGNEE_FEATURE_COUNT + 2;
 
   /**
+   * The feature id for the '<em><b>Unassigned Roles</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int USER__UNASSIGNED_ROLES = ASSIGNEE_FEATURE_COUNT + 3;
+
+  /**
    * The feature id for the '<em><b>Label</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int USER__LABEL = ASSIGNEE_FEATURE_COUNT + 3;
+  int USER__LABEL = ASSIGNEE_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>First Name</b></em>' attribute.
@@ -532,7 +541,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__FIRST_NAME = ASSIGNEE_FEATURE_COUNT + 4;
+  int USER__FIRST_NAME = ASSIGNEE_FEATURE_COUNT + 5;
 
   /**
    * The feature id for the '<em><b>Last Name</b></em>' attribute.
@@ -541,7 +550,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__LAST_NAME = ASSIGNEE_FEATURE_COUNT + 5;
+  int USER__LAST_NAME = ASSIGNEE_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>Email</b></em>' attribute.
@@ -550,7 +559,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__EMAIL = ASSIGNEE_FEATURE_COUNT + 6;
+  int USER__EMAIL = ASSIGNEE_FEATURE_COUNT + 7;
 
   /**
    * The feature id for the '<em><b>Locked</b></em>' attribute.
@@ -559,7 +568,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__LOCKED = ASSIGNEE_FEATURE_COUNT + 7;
+  int USER__LOCKED = ASSIGNEE_FEATURE_COUNT + 8;
 
   /**
    * The feature id for the '<em><b>Password</b></em>' containment reference.
@@ -568,7 +577,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__PASSWORD = ASSIGNEE_FEATURE_COUNT + 8;
+  int USER__PASSWORD = ASSIGNEE_FEATURE_COUNT + 9;
 
   /**
    * The number of structural features of the '<em>User</em>' class.
@@ -577,7 +586,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER_FEATURE_COUNT = ASSIGNEE_FEATURE_COUNT + 9;
+  int USER_FEATURE_COUNT = ASSIGNEE_FEATURE_COUNT + 10;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.UserPasswordImpl <em>User Password</em>}' class.
@@ -1115,6 +1124,17 @@ public interface SecurityPackage extends EPackage
   EReference getUser_AllRoles();
 
   /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.security.User#getUnassignedRoles <em>Unassigned Roles</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Unassigned Roles</em>'.
+   * @see org.eclipse.emf.cdo.security.User#getUnassignedRoles()
+   * @see #getUser()
+   * @generated
+   */
+  EReference getUser_UnassignedRoles();
+
+  /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.User#getLabel <em>Label</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1584,6 +1604,14 @@ public interface SecurityPackage extends EPackage
      * @generated
      */
     EReference USER__ALL_ROLES = eINSTANCE.getUser_AllRoles();
+
+    /**
+     * The meta object literal for the '<em><b>Unassigned Roles</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference USER__UNASSIGNED_ROLES = eINSTANCE.getUser_UnassignedRoles();
 
     /**
      * The meta object literal for the '<em><b>Label</b></em>' attribute feature.

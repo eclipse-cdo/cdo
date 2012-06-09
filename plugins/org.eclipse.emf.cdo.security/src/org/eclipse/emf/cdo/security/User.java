@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.cdo.security.User#getGroups <em>Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getAllGroups <em>All Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getAllRoles <em>All Roles</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.User#getUnassignedRoles <em>Unassigned Roles</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getLabel <em>Label</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getFirstName <em>First Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getLastName <em>Last Name</em>}</li>
@@ -87,6 +88,22 @@ public interface User extends Assignee
    * @generated
    */
   EList<Role> getAllRoles();
+
+  /**
+   * Returns the value of the '<em><b>Unassigned Roles</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.security.Role}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Unassigned Roles</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Unassigned Roles</em>' reference list.
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getUser_UnassignedRoles()
+   * @model transient="true" changeable="false" volatile="true" derived="true"
+   * @generated
+   */
+  EList<Role> getUnassignedRoles();
 
   /**
    * Returns the value of the '<em><b>Label</b></em>' attribute.

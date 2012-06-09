@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.security.impl;
 
 import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
@@ -34,6 +35,7 @@ import java.util.Set;
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getGroups <em>Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getAllGroups <em>All Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getAllRoles <em>All Roles</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getUnassignedRoles <em>Unassigned Roles</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getFirstName <em>First Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getLastName <em>Last Name</em>}</li>
@@ -105,6 +107,36 @@ public class UserImpl extends AssigneeImpl implements User
     }
   };
 
+  private EList<Role> unassignedRoles = new CachedList<Role>()
+  {
+    @Override
+    protected InternalEObject getOwner()
+    {
+      return UserImpl.this;
+    }
+
+    @Override
+    protected EStructuralFeature getFeature()
+    {
+      return SecurityPackage.Literals.USER__UNASSIGNED_ROLES;
+    }
+
+    @Override
+    protected Object[] getData()
+    {
+      Set<Role> result = new HashSet<Role>();
+
+      Realm realm = getRealm();
+      if (realm != null)
+      {
+        result.addAll(realm.getAllRoles());
+        result.removeAll(getAllRoles());
+      }
+
+      return result.toArray();
+    }
+  };
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -155,6 +187,16 @@ public class UserImpl extends AssigneeImpl implements User
   public EList<Role> getAllRoles()
   {
     return allRoles;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public EList<Role> getUnassignedRoles()
+  {
+    return unassignedRoles;
   }
 
   /**

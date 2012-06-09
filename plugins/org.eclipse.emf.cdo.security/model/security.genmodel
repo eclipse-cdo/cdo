@@ -12,12 +12,20 @@
   <genPackages prefix="Security" basePackage="org.eclipse.emf.cdo" disposableProviderFactory="true"
       multipleEditorPages="false" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="security.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="security.ecore#//Permission">
+      <genEnumLiterals ecoreEnumLiteral="security.ecore#//Permission/READ"/>
+      <genEnumLiterals ecoreEnumLiteral="security.ecore#//Permission/WRITE"/>
+    </genEnums>
     <genClasses image="false" ecoreClass="security.ecore#//SecurityElement">
       <genOperations ecoreOperation="security.ecore#//SecurityElement/getRealm"/>
     </genClasses>
     <genClasses image="false" ecoreClass="security.ecore#//SecurityItem"/>
     <genClasses ecoreClass="security.ecore#//Realm">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference security.ecore#//Realm/items"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//Realm/allUsers"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//Realm/allGroups"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//Realm/allRoles"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//Realm/allChecks"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//Realm/name"/>
     </genClasses>
     <genClasses ecoreClass="security.ecore#//Directory">
@@ -27,19 +35,26 @@
     <genClasses ecoreClass="security.ecore#//Role">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//Role/assignees"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//Role/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//Role/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference security.ecore#//Role/checks"/>
     </genClasses>
     <genClasses image="false" ecoreClass="security.ecore#//Assignee">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//Assignee/roles"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//Assignee/id"/>
     </genClasses>
     <genClasses ecoreClass="security.ecore#//Group">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//Group/users"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//Group/inheritedGroups"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//Group/inheritingGroups"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//Group/allInheritedGroups"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//Group/allInheritingGroups"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//Group/allRoles"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//Group/users"/>
     </genClasses>
     <genClasses ecoreClass="security.ecore#//User">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//User/groups"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//User/allGroups"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//User/allRoles"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//User/unassignedRoles"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//User/label"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//User/firstName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//User/lastName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//User/email"/>
@@ -48,6 +63,19 @@
     </genClasses>
     <genClasses ecoreClass="security.ecore#//UserPassword">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//UserPassword/encrypted"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="security.ecore#//Check">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//Check/role"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//Check/permission"/>
+    </genClasses>
+    <genClasses ecoreClass="security.ecore#//ClassCheck">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//ClassCheck/classes"/>
+    </genClasses>
+    <genClasses ecoreClass="security.ecore#//PackageCheck">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//PackageCheck/packages"/>
+    </genClasses>
+    <genClasses ecoreClass="security.ecore#//ResourceCheck">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//ResourceCheck/pattern"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

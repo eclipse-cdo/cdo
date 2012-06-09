@@ -433,11 +433,11 @@ public class SecurityManager implements ISecurityManager
       String userID = commitContext.getUserID();
       User user = getUser(userID);
 
-      handleRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getNewObjects());
-      handleRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getDirtyObjects());
+      checkRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getNewObjects());
+      checkRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getDirtyObjects());
     }
 
-    private void handleRevisionsBeforeCommitting(CommitContext commitContext, CDOBranchPoint securityContext,
+    private void checkRevisionsBeforeCommitting(CommitContext commitContext, CDOBranchPoint securityContext,
         User user, InternalCDORevision[] revisions)
     {
       for (InternalCDORevision revision : revisions)

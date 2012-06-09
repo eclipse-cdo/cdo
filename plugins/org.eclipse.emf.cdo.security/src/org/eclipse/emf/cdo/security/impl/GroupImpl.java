@@ -30,8 +30,8 @@ import java.util.Set;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.GroupImpl#getInheritedGroups <em>Inherited Groups</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.GroupImpl#getAllInheritedGroups <em>All Inherited Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.GroupImpl#getInheritingGroups <em>Inheriting Groups</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.GroupImpl#getAllInheritedGroups <em>All Inherited Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.GroupImpl#getAllInheritingGroups <em>All Inheriting Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.GroupImpl#getAllRoles <em>All Roles</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.GroupImpl#getUsers <em>Users</em>}</li>

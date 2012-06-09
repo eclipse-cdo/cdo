@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 
+import org.eclipse.net4j.ui.Net4jItemProvider.RemoveAction;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
@@ -151,7 +152,7 @@ public class CDOAdminView extends ContainerView
       if (obj instanceof CDOAdminClient)
       {
         CDOAdminClient admin = (CDOAdminClient)obj;
-        manager.add(new RemoveAction(adminManager, admin));
+        manager.add(new RemoveConnectionAction(adminManager, admin));
       }
       else if (obj instanceof CDOAdminClientRepository)
       {
@@ -200,11 +201,11 @@ public class CDOAdminView extends ContainerView
   /**
    * @author Eike Stepper
    */
-  public static class RemoveAction extends org.eclipse.net4j.ui.Net4jItemProvider.RemoveAction
+  public static class RemoveConnectionAction extends RemoveAction
   {
     private CDOAdminClientManager adminManager;
 
-    public RemoveAction(CDOAdminClientManager adminManager, CDOAdminClient admin)
+    public RemoveConnectionAction(CDOAdminClientManager adminManager, CDOAdminClient admin)
     {
       super(admin);
       this.adminManager = adminManager;

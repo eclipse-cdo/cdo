@@ -14,11 +14,11 @@ import org.eclipse.emf.cdo.admin.CDOAdminClient;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.Type;
 import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
+import org.eclipse.emf.cdo.internal.admin.bundle.OM;
 import org.eclipse.emf.cdo.internal.admin.protocol.CDOAdminClientProtocol;
 import org.eclipse.emf.cdo.spi.common.admin.AbstractCDOAdmin;
 
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -38,8 +38,6 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
 {
   private static final String URL_SEPARATOR = "://";
 
-  private final CDOAdminClientManagerImpl manager;
-
   private final String url;
 
   private final IManagedContainer container;
@@ -48,24 +46,17 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
 
   private boolean connected;
 
+  private ConnectLock connectLock = new ConnectLock();
+
+  private long connectAttempt;
+
   private CDOAdminClientProtocol protocol;
 
   public CDOAdminClientImpl(String url, long timeout, IManagedContainer container)
   {
-    this(url, timeout, container, null);
-  }
-
-  protected CDOAdminClientImpl(String url, long timeout, CDOAdminClientManagerImpl manager)
-  {
-    this(url, timeout, manager.getContainer(), manager);
-  }
-
-  protected CDOAdminClientImpl(String url, long timeout, IManagedContainer container, CDOAdminClientManagerImpl manager)
-  {
     super(timeout);
     this.url = url;
     this.container = container;
-    this.manager = manager;
 
     executorService = ExecutorServiceFactory.get(container);
     activate();
@@ -79,11 +70,6 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
   public final IManagedContainer getContainer()
   {
     return container;
-  }
-
-  public CDOAdminClientManagerImpl getManager()
-  {
-    return manager;
   }
 
   public boolean isConnected()
@@ -197,11 +183,6 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
     super.doDeactivate();
   }
 
-  protected void connect()
-  {
-    executorService.submit(new ConnectRunnable());
-  }
-
   protected void setConnected(final boolean on)
   {
     connected = on;
@@ -230,15 +211,42 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
     });
   }
 
+  protected void connect()
+  {
+    if (LifecycleUtil.isActive(executorService))
+    {
+      synchronized (connectLock)
+      {
+        executorService.submit(new ConnectRunnable());
+      }
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
   protected class ConnectRunnable implements Runnable
   {
+    private void sleep() throws InterruptedException
+    {
+      long now = System.currentTimeMillis();
+      if (connectAttempt != 0)
+      {
+        long passed = now - connectAttempt;
+        long timeout = getTimeout();
+        long sleep = Math.max(timeout - passed, timeout);
+        Thread.sleep(sleep);
+      }
+
+      connectAttempt = now;
+    }
+
     public void run()
     {
       try
       {
+        sleep();
+
         int pos = url.indexOf(URL_SEPARATOR);
         String type = url.substring(0, pos);
         String description = url.substring(pos + URL_SEPARATOR.length());
@@ -254,7 +262,11 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
           {
             setConnected(false);
             protocol = null;
-            connect();
+
+            if (isActive())
+            {
+              connect();
+            }
           }
         });
 
@@ -266,20 +278,30 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
 
         setConnected(true);
       }
-      catch (Exception ex)
+      catch (InterruptedException ex)
+      {
+        OM.LOG.error(ex);
+        return;
+      }
+      catch (Throwable ex)
       {
         if (protocol != null)
         {
           LifecycleUtil.deactivate(protocol.getChannel());
           protocol = null;
-          ConcurrencyUtil.sleep(getTimeout());
         }
 
         connect();
       }
-      finally
-      {
-      }
     }
+  }
+
+  /**
+   * A separate class for better monitor debugging.
+   *
+   * @author Eike Stepper
+   */
+  private static final class ConnectLock
+  {
   }
 }

@@ -16,14 +16,17 @@ import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
 import org.eclipse.emf.cdo.ui.internal.admin.bundle.OM;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
+import org.eclipse.net4j.ui.Net4jItemProvider.RemoveAction;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -127,6 +130,21 @@ public class CDOAdminView extends ContainerView
         return false;
       }
     };
+  }
+
+  @Override
+  protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
+  {
+    super.fillContextMenu(manager, selection);
+
+    if (selection.size() == 1)
+    {
+      Object obj = selection.getFirstElement();
+      if (obj instanceof CDOAdminClient)
+      {
+        manager.add(new RemoveAction(obj));
+      }
+    }
   }
 
   @Override

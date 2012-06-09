@@ -95,7 +95,7 @@ public class CDOAdminClientManagerImpl extends SetContainer<CDOAdminClient> impl
 
   public boolean addConnection(String url)
   {
-    CDOAdminClient connection = new CDOAdminClientImpl(url, ISignalProtocol.DEFAULT_TIMEOUT, this);
+    CDOAdminClient connection = new CDOAdminClientImpl(url, ISignalProtocol.DEFAULT_TIMEOUT, container);
     return addElement(connection);
   }
 

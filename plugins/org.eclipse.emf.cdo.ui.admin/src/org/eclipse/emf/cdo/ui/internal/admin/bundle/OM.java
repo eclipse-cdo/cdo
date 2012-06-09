@@ -23,7 +23,6 @@ import org.eclipse.net4j.util.ui.UIActivator;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -48,6 +47,18 @@ public abstract class OM
     return adminManager;
   }
 
+  private static String lastURL;
+
+  public static String getLastURL()
+  {
+    return lastURL;
+  }
+
+  public static void setLastURL(String lastURL)
+  {
+    OM.lastURL = lastURL;
+  }
+
   public static ImageDescriptor getImageDescriptor(String imageFilePath)
   {
     return Activator.imageDescriptorFromPlugin(BUNDLE_ID, imageFilePath);
@@ -70,7 +81,12 @@ public abstract class OM
       if (state instanceof List<?>)
       {
         @SuppressWarnings("unchecked")
-        Collection<String> urls = (Collection<String>)state;
+        List<String> urls = (List<String>)state;
+        if (!urls.isEmpty())
+        {
+          lastURL = urls.remove(0);
+        }
+
         adminManager.addConnections(urls);
       }
     }
@@ -79,6 +95,8 @@ public abstract class OM
     protected Object doStopWithState() throws Exception
     {
       List<String> urls = adminManager.getConnectionURLs();
+      urls.add(0, lastURL);
+
       LifecycleUtil.deactivate(adminManager);
       return urls;
     }

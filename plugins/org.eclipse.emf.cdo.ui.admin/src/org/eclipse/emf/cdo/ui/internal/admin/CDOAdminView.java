@@ -139,10 +139,12 @@ public class CDOAdminView extends ContainerView
         @Override
         public void run()
         {
-          InputDialog dialog = new InputDialog(getShell(), getText(), "Enter the connection URL:", null, null);
+          String lastURL = OM.getLastURL();
+          InputDialog dialog = new InputDialog(getShell(), getText(), "Enter the connection URL:", lastURL, null);
           if (dialog.open() == InputDialog.OK)
           {
             String url = dialog.getValue();
+            OM.setLastURL(url);
             adminManager.addConnection(url);
           }
         }

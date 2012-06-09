@@ -88,9 +88,13 @@ Client side of the protocol to administer CDO repositories remotely.
 <P>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="../common/admin/CDOAdmin.html" title="&#171;interface&#187; CDOAdmin (org.eclipse.emf.cdo.common.admin)" alt="" coords="6,70,242,125"/>
-<area shape="rect" id="node2" href="CDOAdminClient.html" title="&#171;interface&#187; CDOAdminClient" alt="" coords="272,77,392,117"/>
-<area shape="rect" id="node3" href="CDOAdminUtil.html" title="&#171;static&#187; CDOAdminUtil" alt="" coords="71,5,177,45"/>
+<area shape="rect" id="node1" href="../common/admin/CDOAdmin.html" title="&#171;interface&#187; CDOAdmin (org.eclipse.emf.cdo.common.admin)" alt="" coords="6,227,242,282"/>
+<area shape="rect" id="node2" href="CDOAdminClient.html" title="&#171;interface&#187; CDOAdminClient" alt="" coords="364,235,484,275"/>
+<area shape="rect" id="node3" href="CDOAdminClient.ConnectionStateChangedEvent.html" title="&#171;interface&#187; CDOAdminClient.ConnectionStateChangedEvent" alt="" coords="273,156,575,196"/>
+<area shape="rect" id="node4" href="CDOAdminClientManager.html" title="&#171;interface&#187; CDOAdminClientManager" alt="" coords="339,77,509,117"/>
+<area shape="rect" id="node5" title="&#171;interface&#187; IContainer (org.eclipse.net4j.util.container)" alt="" coords="23,70,225,125"/>
+<area shape="rect" id="node6" title="&#171;interface&#187; IEvent (org.eclipse.net4j.util.event)" alt="" coords="34,149,214,203"/>
+<area shape="rect" id="node7" href="CDOAdminUtil.html" title="&#171;static&#187; CDOAdminUtil" alt="" coords="71,5,177,45"/>
 </map>
 
 <CENTER><IMG SRC="package-summary.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -103,6 +107,15 @@ Client side of the protocol to administer CDO repositories remotely.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A></B></TD>
 <TD>A client-side <A HREF="../../../../../org/eclipse/emf/cdo/common/admin/CDOAdmin.html" title="interface in org.eclipse.emf.cdo.common.admin"><CODE>administrative interface</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.ConnectionStateChangedEvent.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient.ConnectionStateChangedEvent</A></B></TD>
+<TD>An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>event</CODE></A> fired from a client-side <A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin"><CODE>administrative interface</CODE></A>
+ after the connection <A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html#isConnected()"><CODE>state</CODE></A> has changed.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClientManager.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClientManager</A></B></TD>
+<TD>Manages multiple <A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin"><CODE>remote administration connections</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;

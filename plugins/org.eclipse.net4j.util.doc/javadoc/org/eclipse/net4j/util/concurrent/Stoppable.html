@@ -4,7 +4,7 @@
 <HEAD>
 
 <TITLE>
-OnePendingExecutor (Net4j Utilities Documentation)
+Stoppable (Net4j Utilities Documentation)
 </TITLE>
 
 <META NAME="date" CONTENT="">
@@ -16,7 +16,7 @@ OnePendingExecutor (Net4j Utilities Documentation)
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="OnePendingExecutor (Net4j Utilities Documentation)";
+        parent.document.title="Stoppable (Net4j Utilities Documentation)";
     }
 }
 </SCRIPT>
@@ -41,7 +41,7 @@ function windowTitle()
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/OnePendingExecutor.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/Stoppable.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
@@ -55,11 +55,11 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/NonBlockingLongCounter.html" title="class in org.eclipse.net4j.util.concurrent"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/ParallelRunner.html" title="class in org.eclipse.net4j.util.concurrent"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/Sleeper.html" title="class in org.eclipse.net4j.util.concurrent"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="class in org.eclipse.net4j.util.concurrent"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/net4j/util/concurrent/OnePendingExecutor.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="OnePendingExecutor.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+  <A HREF="../../../../../index.html?org/eclipse/net4j/util/concurrent/Stoppable.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="Stoppable.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
 &nbsp;<SCRIPT type="text/javascript">
   <!--
   if(window==top) {
@@ -90,31 +90,39 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&n
 <FONT SIZE="-1">
 org.eclipse.net4j.util.concurrent</FONT>
 <BR>
-Class OnePendingExecutor</H2>
+Class Stoppable</H2>
 <PRE>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
-  <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.concurrent.OnePendingExecutor</B>
+  <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.concurrent.Stoppable</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</A></DD>
 </DL>
 <HR>
 <DL>
-  <DT>public class <B>OnePendingExecutor</B>
+  <DT>public abstract class <B>Stoppable</B>
   <DD>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>
-  <DD>implements <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</A>
+  <DD>implements <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</A>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" title="&#171;interface&#187; Executor (java.util.concurrent)" alt="" coords="8,6,147,61"/>
-<area shape="rect" id="node2" href="OnePendingExecutor.html" title="OnePendingExecutor" alt="" coords="5,101,149,126"/>
+<area shape="rect" id="node1" title="&#171;interface&#187; Runnable (java.lang)" alt="" coords="5,6,91,61"/>
+<area shape="rect" id="node2" href="Stoppable.html" title="Stoppable" alt="" coords="7,101,88,126"/>
 </map>
 
-<CENTER><IMG SRC="OnePendingExecutor.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+<CENTER><IMG SRC="Stoppable.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
 
 
 
 <P>
+A <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang"><CODE>runnable</CODE></A> that can be <A HREF="../../../../../org/eclipse/net4j/util/concurrent/Stoppable.html#stop()"><CODE>stopped</CODE></A>.
+<P>
+
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>3.2</DD>
+</DL>
 <HR>
 
 <P>
@@ -128,7 +136,7 @@ Class OnePendingExecutor</H2>
 <B>Constructor Summary</B></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/OnePendingExecutor.html#OnePendingExecutor()">OnePendingExecutor</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/Stoppable.html#Stoppable()">Stoppable</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -145,8 +153,32 @@ Class OnePendingExecutor</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected abstract &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/Stoppable.html#doRun()">doRun</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/Stoppable.html#isStopped()">isStopped</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/OnePendingExecutor.html#execute(java.lang.Runnable)">execute</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</A>&nbsp;command)</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/Stoppable.html#run()">run</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/Stoppable.html#stop()">stop</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -174,10 +206,10 @@ Class OnePendingExecutor</H2>
 </TR>
 </TABLE>
 
-<A NAME="OnePendingExecutor()"><!-- --></A><H3>
-OnePendingExecutor</H3>
+<A NAME="Stoppable()"><!-- --></A><H3>
+Stoppable</H3>
 <PRE>
-public <B>OnePendingExecutor</B>()</PRE>
+public <B>Stoppable</B>()</PRE>
 <DL>
 </DL>
 
@@ -191,16 +223,61 @@ public <B>OnePendingExecutor</B>()</PRE>
 </TR>
 </TABLE>
 
-<A NAME="execute(java.lang.Runnable)"><!-- --></A><H3>
-execute</H3>
+<A NAME="isStopped()"><!-- --></A><H3>
+isStopped</H3>
 <PRE>
-public void <B>execute</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</A>&nbsp;command)</PRE>
+public final boolean <B>isStopped</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/Executor.html?is-external=true#execute(java.lang.Runnable)" title="class or interface in java.util.concurrent">execute</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/Executor.html?is-external=true" title="class or interface in java.util.concurrent">Executor</A></CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="stop()"><!-- --></A><H3>
+stop</H3>
+<PRE>
+public final void <B>stop</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="run()"><!-- --></A><H3>
+run</H3>
+<PRE>
+public final void <B>run</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runnable.html?is-external=true#run()" title="class or interface in java.lang">run</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="doRun()"><!-- --></A><H3>
+doRun</H3>
+<PRE>
+protected abstract void <B>doRun</B>()
+                       throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</A></PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</A></CODE></DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->
@@ -219,7 +296,7 @@ public void <B>execute</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/OnePendingExecutor.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/Stoppable.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
@@ -233,11 +310,11 @@ public void <B>execute</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/NonBlockingLongCounter.html" title="class in org.eclipse.net4j.util.concurrent"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/ParallelRunner.html" title="class in org.eclipse.net4j.util.concurrent"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/Sleeper.html" title="class in org.eclipse.net4j.util.concurrent"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" title="class in org.eclipse.net4j.util.concurrent"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/net4j/util/concurrent/OnePendingExecutor.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="OnePendingExecutor.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+  <A HREF="../../../../../index.html?org/eclipse/net4j/util/concurrent/Stoppable.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="Stoppable.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
 &nbsp;<SCRIPT type="text/javascript">
   <!--
   if(window==top) {

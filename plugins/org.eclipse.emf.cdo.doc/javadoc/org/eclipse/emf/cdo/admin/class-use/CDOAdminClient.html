@@ -112,8 +112,24 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A></CODE></FONT></TD>
-<TD><CODE><B>CDOAdminUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminUtil.html#openAdmin(org.eclipse.net4j.connector.IConnector)">openAdmin</A></B>(<A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</A>&nbsp;connector)</CODE>
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A></CODE></FONT></TD>
+<TD><CODE><B>CDOAdminClientManager.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminClientManager.html#getConnection(java.lang.String)">getConnection</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;url)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A>[]</CODE></FONT></TD>
+<TD><CODE><B>CDOAdminClientManager.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminClientManager.html#getConnections()">getConnections</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A></CODE></FONT></TD>
+<TD><CODE><B>CDOAdminClient.ConnectionStateChangedEvent.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.ConnectionStateChangedEvent.html#getSource()">getSource</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -121,8 +137,42 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A></CODE></FONT></TD>
-<TD><CODE><B>CDOAdminUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminUtil.html#openAdmin(org.eclipse.net4j.connector.IConnector, long)">openAdmin</A></B>(<A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</A>&nbsp;connector,
+<TD><CODE><B>CDOAdminUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminUtil.html#openAdmin(java.lang.String)">openAdmin</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;url)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A></CODE></FONT></TD>
+<TD><CODE><B>CDOAdminUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminUtil.html#openAdmin(java.lang.String, long)">openAdmin</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;url,
           long&nbsp;timeout)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A></CODE></FONT></TD>
+<TD><CODE><B>CDOAdminUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminUtil.html#openAdmin(java.lang.String, long, org.eclipse.net4j.util.container.IManagedContainer)">openAdmin</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;url,
+          long&nbsp;timeout,
+          <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</A>&nbsp;container)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/emf/cdo/admin/package-summary.html">org.eclipse.emf.cdo.admin</A> with parameters of type <A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>CDOAdminClientManager.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminClientManager.html#removeConnection(org.eclipse.emf.cdo.admin.CDOAdminClient)">removeConnection</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A>&nbsp;connection)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>

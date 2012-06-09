@@ -4,7 +4,7 @@
 <HEAD>
 
 <TITLE>
-CDOAdminClient (CDO Model Repository Documentation)
+CDOAdminClientManager (CDO Model Repository Documentation)
 </TITLE>
 
 <META NAME="date" CONTENT="">
@@ -16,7 +16,7 @@ CDOAdminClient (CDO Model Repository Documentation)
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="CDOAdminClient (CDO Model Repository Documentation)";
+        parent.document.title="CDOAdminClientManager (CDO Model Repository Documentation)";
     }
 }
 </SCRIPT>
@@ -41,7 +41,7 @@ function windowTitle()
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CDOAdminClient.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CDOAdminClientManager.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
@@ -55,11 +55,11 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;PREV CLASS&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.ConnectionStateChangedEvent.html" title="interface in org.eclipse.emf.cdo.admin"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.ConnectionStateChangedEvent.html" title="interface in org.eclipse.emf.cdo.admin"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminUtil.html" title="class in org.eclipse.emf.cdo.admin"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/emf/cdo/admin/CDOAdminClient.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="CDOAdminClient.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+  <A HREF="../../../../../index.html?org/eclipse/emf/cdo/admin/CDOAdminClientManager.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="CDOAdminClientManager.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
 &nbsp;<SCRIPT type="text/javascript">
   <!--
   if(window==top) {
@@ -76,7 +76,7 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
 DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
@@ -90,32 +90,27 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHO
 <FONT SIZE="-1">
 org.eclipse.emf.cdo.admin</FONT>
 <BR>
-Interface CDOAdminClient</H2>
+Interface CDOAdminClientManager</H2>
 <DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/common/admin/CDOAdmin.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdmin</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/admin/CDOAdminRepository.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdminRepository</A>&gt;, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></DD>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A>&gt;, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></DD>
 </DL>
 <HR>
 <DL>
-  <DT>public interface <B>CDOAdminClient</B>
-  <DD>extends <A HREF="../../../../../org/eclipse/emf/cdo/common/admin/CDOAdmin.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdmin</A>
+  <DT>public interface <B>CDOAdminClientManager</B>
+  <DD>extends <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A>&gt;
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="CDOAdminClient.html" title="&#171;interface&#187; CDOAdminClient" alt="" coords="63,100,183,140"/>
-<area shape="rect" id="node2" href="../common/admin/CDOAdmin.html" title="&#171;interface&#187; CDOAdmin (org.eclipse.emf.cdo.common.admin)" alt="" coords="5,6,240,61"/>
+<area shape="rect" id="node1" title="&#171;interface&#187; IContainer (org.eclipse.net4j.util.container)" alt="" coords="5,6,208,61"/>
+<area shape="rect" id="node2" href="CDOAdminClientManager.html" title="&#171;interface&#187; CDOAdminClientManager" alt="" coords="21,100,192,140"/>
 </map>
 
-<CENTER><IMG SRC="CDOAdminClient.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+<CENTER><IMG SRC="CDOAdminClientManager.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
 
 
 
 <P>
-A client-side <A HREF="../../../../../org/eclipse/emf/cdo/common/admin/CDOAdmin.html" title="interface in org.eclipse.emf.cdo.common.admin"><CODE>administrative interface</CODE></A>.
- <p>
- It can fire the following events:
- <ul>
- <li> <A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.ConnectionStateChangedEvent.html" title="interface in org.eclipse.emf.cdo.admin"><CODE>CDOAdminClient.ConnectionStateChangedEvent</CODE></A> after the connection <A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html#isConnected()"><CODE>state</CODE></A> has changed.
- </ul>
+Manages multiple <A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin"><CODE>remote administration connections</CODE></A>.
 <P>
 
 <P>
@@ -129,15 +124,6 @@ A client-side <A HREF="../../../../../org/eclipse/emf/cdo/common/admin/CDOAdmin.
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Nested Class Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;interface</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.ConnectionStateChangedEvent.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient.ConnectionStateChangedEvent</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>event</CODE></A> fired from a client-side <A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin"><CODE>administrative interface</CODE></A>
- after the connection <A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html#isConnected()"><CODE>state</CODE></A> has changed.</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
@@ -161,8 +147,48 @@ A client-side <A HREF="../../../../../org/eclipse/emf/cdo/common/admin/CDOAdmin.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html#getURL()">getURL</A></B>()</CODE>
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClientManager.html#addConnection(java.lang.String)">addConnection</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;url)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClientManager.html#addConnections(java.util.Collection)">addConnections</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;urls)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClientManager.html#getConnection(java.lang.String)">getConnection</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;url)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A>[]</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClientManager.html#getConnections()">getConnections</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClientManager.html#getConnectionURLs()">getConnectionURLs</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClientManager.html#getContainer()">getContainer</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -170,19 +196,10 @@ A client-side <A HREF="../../../../../org/eclipse/emf/cdo/common/admin/CDOAdmin.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html#isConnected()">isConnected</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClientManager.html#removeConnection(org.eclipse.emf.cdo.admin.CDOAdminClient)">removeConnection</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A>&nbsp;connection)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.admin.CDOAdmin"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.common.admin.<A HREF="../../../../../org/eclipse/emf/cdo/common/admin/CDOAdmin.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdmin</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/admin/CDOAdmin.html#createRepository(java.lang.String, java.lang.String, java.util.Map)">createRepository</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/admin/CDOAdmin.html#getRepositories()">getRepositories</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/admin/CDOAdmin.html#getRepository(java.lang.String)">getRepository</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/admin/CDOAdmin.html#waitForRepository(java.lang.String)">waitForRepository</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
@@ -203,15 +220,6 @@ A client-side <A HREF="../../../../../org/eclipse/emf/cdo/common/admin/CDOAdmin.
 <TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</A></CODE></TD>
 </TR>
 </TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.collection.Closeable"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.collection.<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close()" title="class or interface in org.eclipse.net4j.util.collection">close</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#isClosed()" title="class or interface in org.eclipse.net4j.util.collection">isClosed</A></CODE></TD>
-</TR>
-</TABLE>
 &nbsp;
 <P>
 
@@ -225,10 +233,10 @@ A client-side <A HREF="../../../../../org/eclipse/emf/cdo/common/admin/CDOAdmin.
 </TR>
 </TABLE>
 
-<A NAME="getURL()"><!-- --></A><H3>
-getURL</H3>
+<A NAME="getContainer()"><!-- --></A><H3>
+getContainer</H3>
 <PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getURL</B>()</PRE>
+<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</A> <B>getContainer</B>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -239,10 +247,80 @@ getURL</H3>
 </DL>
 <HR>
 
-<A NAME="isConnected()"><!-- --></A><H3>
-isConnected</H3>
+<A NAME="getConnections()"><!-- --></A><H3>
+getConnections</H3>
 <PRE>
-boolean <B>isConnected</B>()</PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A>[] <B>getConnections</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getConnectionURLs()"><!-- --></A><H3>
+getConnectionURLs</H3>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt; <B>getConnectionURLs</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getConnection(java.lang.String)"><!-- --></A><H3>
+getConnection</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A> <B>getConnection</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;url)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="addConnections(java.util.Collection)"><!-- --></A><H3>
+addConnections</H3>
+<PRE>
+int <B>addConnections</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;urls)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="addConnection(java.lang.String)"><!-- --></A><H3>
+addConnection</H3>
+<PRE>
+boolean <B>addConnection</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;url)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="removeConnection(org.eclipse.emf.cdo.admin.CDOAdminClient)"><!-- --></A><H3>
+removeConnection</H3>
+<PRE>
+boolean <B>removeConnection</B>(<A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClient</A>&nbsp;connection)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -267,7 +345,7 @@ boolean <B>isConnected</B>()</PRE>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CDOAdminClient.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CDOAdminClientManager.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
@@ -281,11 +359,11 @@ boolean <B>isConnected</B>()</PRE>
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;PREV CLASS&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.ConnectionStateChangedEvent.html" title="interface in org.eclipse.emf.cdo.admin"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClient.ConnectionStateChangedEvent.html" title="interface in org.eclipse.emf.cdo.admin"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/admin/CDOAdminUtil.html" title="class in org.eclipse.emf.cdo.admin"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/emf/cdo/admin/CDOAdminClient.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="CDOAdminClient.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+  <A HREF="../../../../../index.html?org/eclipse/emf/cdo/admin/CDOAdminClientManager.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="CDOAdminClientManager.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
 &nbsp;<SCRIPT type="text/javascript">
   <!--
   if(window==top) {
@@ -302,7 +380,7 @@ boolean <B>isConnected</B>()</PRE>
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
 DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>

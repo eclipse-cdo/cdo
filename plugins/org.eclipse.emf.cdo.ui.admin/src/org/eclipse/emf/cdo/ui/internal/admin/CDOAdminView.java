@@ -12,11 +12,14 @@ package org.eclipse.emf.cdo.ui.internal.admin;
 
 import org.eclipse.emf.cdo.admin.CDOAdminClient;
 import org.eclipse.emf.cdo.admin.CDOAdminClientManager;
+import org.eclipse.emf.cdo.admin.CDOAdminClientRepository;
 import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.ui.internal.admin.bundle.OM;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
@@ -142,7 +145,13 @@ public class CDOAdminView extends ContainerView
       Object obj = selection.getFirstElement();
       if (obj instanceof CDOAdminClient)
       {
-        manager.add(new RemoveAction(adminManager, (CDOAdminClient)obj));
+        CDOAdminClient admin = (CDOAdminClient)obj;
+        manager.add(new RemoveAction(adminManager, admin));
+      }
+      else if (obj instanceof CDOAdminClientRepository)
+      {
+        CDOAdminClientRepository repository = (CDOAdminClientRepository)obj;
+        manager.add(new OpenSessionAction(adminManager, repository));
       }
     }
   }
@@ -206,6 +215,39 @@ public class CDOAdminView extends ContainerView
     protected void doRun(IProgressMonitor progressMonitor) throws Exception
     {
       adminManager.removeConnection(getObject());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class OpenSessionAction extends LongRunningAction
+  {
+    private CDOAdminClientManager adminManager;
+
+    private CDOAdminClientRepository repository;
+
+    public OpenSessionAction(CDOAdminClientManager adminManager, CDOAdminClientRepository repository)
+    {
+      super("Open Session", "Open a new session to this repository", SharedIcons
+          .getDescriptor(SharedIcons.ETOOL_OPEN_SESSION));
+      this.adminManager = adminManager;
+      this.repository = repository;
+    }
+
+    public CDOAdminClientRepository getRepository()
+    {
+      return repository;
+    }
+
+    @Override
+    protected void doRun(IProgressMonitor progressMonitor) throws Exception
+    {
+      CDONet4jSession session = repository.openSession();
+      if (session != null)
+      {
+        adminManager.getContainer().putElement(NSFieldE)
+      }
     }
   }
 }

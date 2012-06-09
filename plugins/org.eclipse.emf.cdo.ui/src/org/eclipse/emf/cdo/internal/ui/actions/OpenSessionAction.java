@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
 import org.eclipse.emf.cdo.ui.widgets.SessionComposite;
 
+import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
+
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
@@ -65,7 +67,7 @@ public final class OpenSessionAction extends LongRunningAction
     try
     {
       String description = sessionComposite.getSessionDescription();
-      final InternalCDOSession session = (InternalCDOSession)getContainer().getElement("org.eclipse.emf.cdo.sessions", //$NON-NLS-1$
+      final InternalCDOSession session = (InternalCDOSession)getContainer().getElement(CDOSessionFactory.PRODUCT_GROUP,
           "cdo", description); //$NON-NLS-1$
 
       if (sessionComposite.isAutomaticRegistry())

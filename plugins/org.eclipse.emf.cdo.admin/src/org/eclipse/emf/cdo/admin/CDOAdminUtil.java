@@ -11,9 +11,11 @@
 package org.eclipse.emf.cdo.admin;
 
 import org.eclipse.emf.cdo.internal.admin.CDOAdminClientImpl;
+import org.eclipse.emf.cdo.internal.admin.CDOAdminClientManagerImpl;
 
-import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
 
 /**
  * Various static methods that may help with CDO remote administration.
@@ -28,13 +30,28 @@ public final class CDOAdminUtil
   {
   }
 
-  public static CDOAdminClient openAdmin(IConnector connector)
+  public static CDOAdminClient openAdmin(String url)
   {
-    return openAdmin(connector, DEFAULT_TIMEOUT);
+    return openAdmin(url, DEFAULT_TIMEOUT);
   }
 
-  public static CDOAdminClient openAdmin(IConnector connector, long timeout)
+  public static CDOAdminClient openAdmin(String url, long timeout)
   {
-    return new CDOAdminClientImpl(connector, timeout);
+    return openAdmin(url, timeout, IPluginContainer.INSTANCE);
+  }
+
+  public static CDOAdminClient openAdmin(String url, long timeout, IManagedContainer container)
+  {
+    return new CDOAdminClientImpl(url, timeout, container);
+  }
+
+  public static CDOAdminClientManager createAdminManager()
+  {
+    return createAdminManager(IPluginContainer.INSTANCE);
+  }
+
+  public static CDOAdminClientManager createAdminManager(IManagedContainer container)
+  {
+    return new CDOAdminClientManagerImpl(container);
   }
 }

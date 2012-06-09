@@ -11,6 +11,10 @@
  */
 package org.eclipse.emf.cdo.ui.internal.admin.bundle;
 
+import org.eclipse.emf.cdo.admin.CDOAdminClientManager;
+import org.eclipse.emf.cdo.admin.CDOAdminUtil;
+
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
@@ -18,6 +22,9 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
 import org.eclipse.net4j.util.ui.UIActivator;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
@@ -34,6 +41,13 @@ public abstract class OM
 
   public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
 
+  private static CDOAdminClientManager adminManager = CDOAdminUtil.createAdminManager();
+
+  public static CDOAdminClientManager getAdminManager()
+  {
+    return adminManager;
+  }
+
   public static ImageDescriptor getImageDescriptor(String imageFilePath)
   {
     return Activator.imageDescriptorFromPlugin(BUNDLE_ID, imageFilePath);
@@ -42,11 +56,31 @@ public abstract class OM
   /**
    * @author Eike Stepper
    */
-  public static final class Activator extends UIActivator
+  public static final class Activator extends UIActivator.WithState
   {
     public Activator()
     {
       super(BUNDLE);
+    }
+
+    @Override
+    protected void doStartWithState(Object state) throws Exception
+    {
+      LifecycleUtil.activate(adminManager);
+      if (state instanceof List<?>)
+      {
+        @SuppressWarnings("unchecked")
+        Collection<String> urls = (Collection<String>)state;
+        adminManager.addConnections(urls);
+      }
+    }
+
+    @Override
+    protected Object doStopWithState() throws Exception
+    {
+      List<String> urls = adminManager.getConnectionURLs();
+      LifecycleUtil.deactivate(adminManager);
+      return urls;
     }
   }
 }

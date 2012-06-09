@@ -24,6 +24,7 @@ import org.eclipse.net4j.util.ui.views.IElementFilter;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.spi.net4j.AcceptorFactory;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author Eike Stepper
@@ -32,47 +33,7 @@ public class AcceptorsView extends ContainerView
 {
   public final static String ID = "org.eclipse.net4j.AcceptorsView"; //$NON-NLS-1$
 
-  private IAction newAcceptorAction = new ElementWizardAction(getShell(), "New Acceptor", "Open a new acceptor",
-      SharedIcons.getDescriptor(SharedIcons.ETOOL_ADD_ACCEPTOR), AcceptorFactory.PRODUCT_GROUP, getContainer(), "tcp")
-  {
-    @Override
-    public String getDefaultDescription(String factoryType)
-    {
-      if ("jvm".equals(factoryType))
-      {
-        return "default";
-      }
-
-      if ("tcp".equals(factoryType))
-      {
-        return "0.0.0.0:2036";
-      }
-
-      return null;
-    }
-  };
-
-  //  private Action addAcceptorAction2036 = new SafeAction(Messages.getString("AcceptorsView_0"), //$NON-NLS-1$
-  //      Messages.getString("AcceptorsView_1"), //$NON-NLS-1$
-  // getAddImageDescriptor())
-  // {
-  // @Override
-  // protected void safeRun() throws Exception
-  // {
-  //      Net4jUtil.getAcceptor(IPluginContainer.INSTANCE, "tcp", "0.0.0.0:2036"); //$NON-NLS-1$ //$NON-NLS-2$
-  // }
-  // };
-  //
-  // private Action addAcceptorAction2037 = new SafeAction(Messages.getString("AcceptorsView_4"),
-  //      Messages.getString("AcceptorsView_5"), //$NON-NLS-1$
-  // getAddImageDescriptor())
-  // {
-  // @Override
-  // protected void safeRun() throws Exception
-  // {
-  //      Net4jUtil.getAcceptor(IPluginContainer.INSTANCE, "tcp", "0.0.0.0:2037"); //$NON-NLS-1$ //$NON-NLS-2$
-  // }
-  // };
+  private IAction newAcceptorAction;
 
   public AcceptorsView()
   {
@@ -99,7 +60,35 @@ public class AcceptorsView extends ContainerView
   @Override
   protected void fillLocalToolBar(IToolBarManager manager)
   {
+    if (newAcceptorAction == null)
+    {
+      newAcceptorAction = createNewAcceptorAction(getShell(), getContainer());
+    }
+
     manager.add(newAcceptorAction);
     super.fillLocalToolBar(manager);
+  }
+
+  public static ElementWizardAction createNewAcceptorAction(Shell shell, IManagedContainer container)
+  {
+    return new ElementWizardAction(shell, "New Acceptor", "Open a new acceptor",
+        SharedIcons.getDescriptor(SharedIcons.ETOOL_ADD_ACCEPTOR), AcceptorFactory.PRODUCT_GROUP, container, "tcp")
+    {
+      @Override
+      public String getDefaultDescription(String factoryType)
+      {
+        if ("jvm".equals(factoryType))
+        {
+          return "default";
+        }
+
+        if ("tcp".equals(factoryType))
+        {
+          return "0.0.0.0:2036";
+        }
+
+        return null;
+      }
+    };
   }
 }

@@ -24,6 +24,7 @@ import org.eclipse.net4j.util.ui.views.IElementFilter;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.spi.net4j.ConnectorFactory;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author Eike Stepper
@@ -32,25 +33,7 @@ public class ConnectorsView extends ContainerView
 {
   public final static String ID = "org.eclipse.net4j.ConnectorsView"; //$NON-NLS-1$
 
-  private IAction newConnectorAction = new ElementWizardAction(getShell(), "New Connector", "Open a new connector",
-      SharedIcons.getDescriptor(SharedIcons.ETOOL_ADD_CONNECTOR), ConnectorFactory.PRODUCT_GROUP, getContainer(), "tcp")
-  {
-    @Override
-    public String getDefaultDescription(String factoryType)
-    {
-      if ("jvm".equals(factoryType))
-      {
-        return "default";
-      }
-
-      if ("tcp".equals(factoryType))
-      {
-        return "localhost";
-      }
-
-      return null;
-    }
-  };
+  private IAction newConnectorAction;
 
   public ConnectorsView()
   {
@@ -77,7 +60,35 @@ public class ConnectorsView extends ContainerView
   @Override
   protected void fillLocalToolBar(IToolBarManager manager)
   {
+    if (newConnectorAction == null)
+    {
+      newConnectorAction = createNewConnectorAction(getShell(), getContainer());
+    }
+
     manager.add(newConnectorAction);
     super.fillLocalToolBar(manager);
+  }
+
+  public static ElementWizardAction createNewConnectorAction(Shell shell, IManagedContainer container)
+  {
+    return new ElementWizardAction(shell, "New Connector", "Open a new connector",
+        SharedIcons.getDescriptor(SharedIcons.ETOOL_ADD_CONNECTOR), ConnectorFactory.PRODUCT_GROUP, container, "tcp")
+    {
+      @Override
+      public String getDefaultDescription(String factoryType)
+      {
+        if ("jvm".equals(factoryType))
+        {
+          return "default";
+        }
+
+        if ("tcp".equals(factoryType))
+        {
+          return "localhost";
+        }
+
+        return null;
+      }
+    };
   }
 }

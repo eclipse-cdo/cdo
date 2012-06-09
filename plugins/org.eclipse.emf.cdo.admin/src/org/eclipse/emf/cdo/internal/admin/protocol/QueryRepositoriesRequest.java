@@ -21,21 +21,19 @@ import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public class QueryRepositoriesRequest extends RequestWithConfirmation<Object>
+public class QueryRepositoriesRequest extends RequestWithConfirmation<Set<CDOAdminRepository>>
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, QueryRepositoriesRequest.class);
 
-  private Set<CDOAdminRepository> result;
-
-  public QueryRepositoriesRequest(CDOAdminClientProtocol protocol, Set<CDOAdminRepository> result)
+  public QueryRepositoriesRequest(CDOAdminClientProtocol protocol)
   {
     super(protocol, CDOAdminProtocolConstants.SIGNAL_QUERY_REPOSITORIES);
-    this.result = result;
   }
 
   @Override
@@ -45,7 +43,7 @@ public class QueryRepositoriesRequest extends RequestWithConfirmation<Object>
   }
 
   @Override
-  protected Object confirming(ExtendedDataInputStream in) throws Exception
+  protected Set<CDOAdminRepository> confirming(ExtendedDataInputStream in) throws Exception
   {
     CDOAdminClientProtocol protocol = (CDOAdminClientProtocol)getProtocol();
     CDOAdminClientImpl admin = protocol.getInfraStructure();
@@ -56,6 +54,7 @@ public class QueryRepositoriesRequest extends RequestWithConfirmation<Object>
       TRACER.format("Reading {0} repository infos...", size); //$NON-NLS-1$
     }
 
+    Set<CDOAdminRepository> result = new HashSet<CDOAdminRepository>();
     for (int i = 0; i < size; i++)
     {
       CDOAdminClientRepository repository = new CDOAdminClientRepository(admin, in);
@@ -66,6 +65,6 @@ public class QueryRepositoriesRequest extends RequestWithConfirmation<Object>
       }
     }
 
-    return null;
+    return result;
   }
 }

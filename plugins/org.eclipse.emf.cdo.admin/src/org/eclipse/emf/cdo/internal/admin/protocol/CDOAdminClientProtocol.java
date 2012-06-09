@@ -31,12 +31,11 @@ public class CDOAdminClientProtocol extends SignalProtocol<CDOAdminClientImpl>
   {
     super(CDOAdminProtocolConstants.PROTOCOL_NAME);
     setInfraStructure(admin);
-    open(admin.getConnector());
   }
 
-  public void queryRepositories(Set<CDOAdminRepository> result)
+  public Set<CDOAdminRepository> queryRepositories()
   {
-    send(new QueryRepositoriesRequest(this, result));
+    return send(new QueryRepositoriesRequest(this));
   }
 
   public boolean createRepository(String name, String type, Map<String, Object> properties)

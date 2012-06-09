@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.container;
 
+import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.container.delegate.IContainerSet;
 import org.eclipse.net4j.util.container.delegate.IContainerSortedSet;
 
@@ -30,8 +31,6 @@ public class SetContainer<E> extends Container<E>
   private final Class<E> componentType;
 
   private final Set<E> set;
-
-  private E[] array;
 
   public SetContainer(Class<E> componentType)
   {
@@ -59,16 +58,33 @@ public class SetContainer<E> extends Container<E>
   public synchronized E[] getElements()
   {
     checkActive();
-    if (array == null)
-    {
-      @SuppressWarnings("unchecked")
-      E[] a = (E[])Array.newInstance(componentType, set.size());
 
-      array = set.toArray(a);
-      array = sortElements(array);
-    }
+    @SuppressWarnings("unchecked")
+    E[] a = (E[])Array.newInstance(componentType, set.size());
+
+    E[] array = set.toArray(a);
+    array = sortElements(array);
 
     return array;
+  }
+
+  public void clear()
+  {
+    ContainerEvent<E> event = new ContainerEvent<E>(this);
+    synchronized (this)
+    {
+      for (E element : set)
+      {
+        if (set.remove(element))
+        {
+          event.addDelta(element, Kind.REMOVED);
+        }
+      }
+
+      notifyAll();
+    }
+
+    fireEvent(event);
   }
 
   public boolean addElement(E element)
@@ -82,11 +98,6 @@ public class SetContainer<E> extends Container<E>
       }
 
       added = set.add(element);
-      if (added)
-      {
-        array = null;
-      }
-
       notifyAll();
     }
 
@@ -104,11 +115,6 @@ public class SetContainer<E> extends Container<E>
     synchronized (this)
     {
       removed = set.remove(element);
-      if (removed)
-      {
-        array = null;
-      }
-
       notifyAll();
     }
 

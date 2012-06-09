@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
+import org.eclipse.emf.cdo.admin.CDOAdminClient;
 import org.eclipse.emf.cdo.admin.CDOAdminUtil;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.Type;
@@ -58,7 +59,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 {
   private static final String ADMIN_HANDLER_TYPE = "test";
 
-  private CDOAdmin openAdmin(final Map<String, Object> expectedProperties)
+  private CDOAdmin openAdmin(final Map<String, Object> expectedProperties) throws InterruptedException
   {
     IManagedContainer serverContainer = getContainerConfig().getServerContainer();
     serverContainer.registerFactory(new CDOAdminHandler.Factory(ADMIN_HANDLER_TYPE)
@@ -88,29 +89,29 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
       }
     });
 
+    IManagedContainer clientContainer = getClientContainer();
     SessionConfig.Net4j sessionConfig = (SessionConfig.Net4j)getSessionConfig();
     IConnector connector = sessionConfig.getConnector();
-    return CDOAdminUtil.openAdmin(connector);
+    String url = connector.getURL();
+
+    final CDOAdminClient admin = CDOAdminUtil.openAdmin(url, DEFAULT_TIMEOUT, clientContainer);
+
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return admin.isConnected();
+      }
+    }.assertNoTimeOut();
+
+    return admin;
   }
 
   private void cleanup(CDOAdmin admin)
   {
     IOUtil.closeSilent(admin);
   }
-
-  // @Override
-  // protected void doSetUp() throws Exception
-  // {
-  // getRepositoryConfig().setAddRepository(true);
-  // super.doSetUp();
-  // }
-  //
-  // @Override
-  // protected void doTearDown() throws Exception
-  // {
-  // getRepositoryConfig().setAddRepository(false);
-  // super.doTearDown();
-  // }
 
   public void testInitial() throws Exception
   {

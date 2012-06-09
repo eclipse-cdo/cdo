@@ -153,8 +153,11 @@ public class ControlChannel extends Channel
         }
         catch (Exception ex)
         {
-          OM.LOG.error(ex);
           success = false;
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace("Problem during channel registration", ex); //$NON-NLS-1$
+          }
         }
 
         sendStatus(OPCODE_REGISTRATION_ACK, channelID, success);
@@ -176,7 +179,10 @@ public class ControlChannel extends Channel
         }
         catch (Exception ex)
         {
-          OM.LOG.error(ex);
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace("Problem during channel deregistration", ex); //$NON-NLS-1$
+          }
         }
 
         break;

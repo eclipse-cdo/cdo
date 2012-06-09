@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.admin.CDOAdminClient;
-import org.eclipse.emf.cdo.admin.CDOAdminUtil;
+import org.eclipse.emf.cdo.admin.CDOAdminClientUtil;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.Type;
 import org.eclipse.emf.cdo.common.admin.CDOAdmin;
@@ -94,7 +94,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     IConnector connector = sessionConfig.getConnector();
     String url = connector.getURL();
 
-    final CDOAdminClient admin = CDOAdminUtil.openAdmin(url, DEFAULT_TIMEOUT, clientContainer);
+    final CDOAdminClient admin = CDOAdminClientUtil.openAdmin(url, DEFAULT_TIMEOUT, clientContainer);
 
     new PollingTimeOuter()
     {

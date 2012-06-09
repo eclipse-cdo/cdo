@@ -12,7 +12,7 @@
 package org.eclipse.emf.cdo.ui.internal.admin.bundle;
 
 import org.eclipse.emf.cdo.admin.CDOAdminClientManager;
-import org.eclipse.emf.cdo.admin.CDOAdminUtil;
+import org.eclipse.emf.cdo.admin.CDOAdminClientUtil;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMBundle;
@@ -40,7 +40,7 @@ public abstract class OM
 
   public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
 
-  private static CDOAdminClientManager adminManager = CDOAdminUtil.createAdminManager();
+  private static CDOAdminClientManager adminManager = CDOAdminClientUtil.createAdminManager();
 
   public static CDOAdminClientManager getAdminManager()
   {

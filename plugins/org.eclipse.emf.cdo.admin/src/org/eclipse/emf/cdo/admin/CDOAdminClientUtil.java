@@ -22,11 +22,11 @@ import org.eclipse.net4j.util.container.IPluginContainer;
  *
  * @author Eike Stepper
  */
-public final class CDOAdminUtil
+public final class CDOAdminClientUtil
 {
   public static final long DEFAULT_TIMEOUT = ISignalProtocol.DEFAULT_TIMEOUT;
 
-  private CDOAdminUtil()
+  private CDOAdminClientUtil()
   {
   }
 

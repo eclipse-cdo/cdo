@@ -27,9 +27,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="Role" eSuperTypes="#//SecurityItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="assignees" upperBound="-1"
         eType="#//Assignee" eOpposite="#//Assignee/roles"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="checks" upperBound="-1"
         eType="#//Check" containment="true" eOpposite="#//Check/role"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Assignee" abstract="true" eSuperTypes="#//SecurityItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="roles" upperBound="-1"

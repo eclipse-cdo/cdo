@@ -280,22 +280,22 @@ public interface SecurityPackage extends EPackage
   int ROLE__ASSIGNEES = SECURITY_ITEM_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ROLE__ID = SECURITY_ITEM_FEATURE_COUNT + 1;
-
-  /**
    * The feature id for the '<em><b>Checks</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ROLE__CHECKS = SECURITY_ITEM_FEATURE_COUNT + 2;
+  int ROLE__CHECKS = SECURITY_ITEM_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ROLE__ID = SECURITY_ITEM_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Role</em>' class.

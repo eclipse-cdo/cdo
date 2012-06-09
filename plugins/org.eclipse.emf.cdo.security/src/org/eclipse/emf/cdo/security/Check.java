@@ -3,6 +3,9 @@
 package org.eclipse.emf.cdo.security;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 
 /**
  * <!-- begin-user-doc -->
@@ -81,5 +84,7 @@ public interface Check extends CDOObject
    * @generated
    */
   void setPermission(Permission value);
+
+  boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext);
 
 } // Check

@@ -2,6 +2,9 @@
  */
 package org.eclipse.emf.cdo.security.impl;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.security.PackageCheck;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
@@ -54,6 +57,11 @@ public class PackageCheckImpl extends CheckImpl implements PackageCheck
   public EList<EPackage> getPackages()
   {
     return (EList<EPackage>)eGet(SecurityPackage.Literals.PACKAGE_CHECK__PACKAGES, true);
+  }
+
+  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
+  {
+    return false;
   }
 
 } // PackageCheckImpl

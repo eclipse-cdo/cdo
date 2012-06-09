@@ -21,8 +21,8 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.Role#getAssignees <em>Assignees</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.Role#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Role#getChecks <em>Checks</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Role#getId <em>Id</em>}</li>
  * </ul>
  * </p>
  *

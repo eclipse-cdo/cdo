@@ -356,7 +356,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    */
   public EAttribute getRole_Id()
   {
-    return (EAttribute)roleEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)roleEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -366,7 +366,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    */
   public EReference getRole_Checks()
   {
-    return (EReference)roleEClass.getEStructuralFeatures().get(2);
+    return (EReference)roleEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -748,8 +748,8 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
 
     roleEClass = createEClass(ROLE);
     createEReference(roleEClass, ROLE__ASSIGNEES);
-    createEAttribute(roleEClass, ROLE__ID);
     createEReference(roleEClass, ROLE__CHECKS);
+    createEAttribute(roleEClass, ROLE__ID);
 
     assigneeEClass = createEClass(ASSIGNEE);
     createEReference(assigneeEClass, ASSIGNEE__ROLES);
@@ -898,15 +898,15 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
         this.getAssignee(),
         this.getAssignee_Roles(),
         "assignees", null, 0, -1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-    initEAttribute(
-        getRole_Id(),
-        theEcorePackage.getEString(),
-        "id", null, 0, 1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEReference(
         getRole_Checks(),
         this.getCheck(),
         this.getCheck_Role(),
         "checks", null, 0, -1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEAttribute(
+        getRole_Id(),
+        theEcorePackage.getEString(),
+        "id", null, 0, 1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
     initEClass(assigneeEClass, Assignee.class, "Assignee", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEReference(

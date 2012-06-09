@@ -2,6 +2,9 @@
  */
 package org.eclipse.emf.cdo.security.impl;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.security.ClassCheck;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
@@ -53,6 +56,11 @@ public class ClassCheckImpl extends CheckImpl implements ClassCheck
   public EList<EClass> getClasses()
   {
     return (EList<EClass>)eGet(SecurityPackage.Literals.CLASS_CHECK__CLASSES, true);
+  }
+
+  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
+  {
+    return false;
   }
 
 } // ClassCheckImpl

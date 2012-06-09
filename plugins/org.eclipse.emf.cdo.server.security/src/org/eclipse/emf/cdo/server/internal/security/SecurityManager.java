@@ -18,7 +18,9 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.security.Check;
 import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.RealmUtil;
 import org.eclipse.emf.cdo.security.Role;
@@ -248,40 +250,70 @@ public class SecurityManager implements ISecurityManager
   protected CDOPermission getPermission(CDORevision revision, CDORevisionProvider revisionProvider,
       CDOBranchPoint securityContext, User user)
   {
-    EList<Role> userRoles = null;
+    CDOPermission result = CDOPermission.WRITE;
 
-    Set<Role> readRoles = getNeededRoles(revision, revisionProvider, securityContext, CDOPermission.READ);
-    if (readRoles == null || !readRoles.isEmpty())
+    for (Role role : user.getUnassignedRoles())
     {
-      userRoles = user.getAllRoles();
-
-      for (Role readRole : readRoles)
+      for (Check check : role.getChecks())
       {
-        if (!userRoles.contains(readRole))
+        if (result == CDOPermission.WRITE)
         {
-          return CDOPermission.NONE;
+          if (check.isApplicable(revision, revisionProvider, securityContext))
+          {
+            if (check.getPermission() == Permission.READ)
+            {
+              result = CDOPermission.READ;
+            }
+          }
+        }
+        else
+        {
+          // --> result == CDOPermission.READ
+          if (check.isApplicable(revision, revisionProvider, securityContext))
+          {
+            if (check.getPermission() == Permission.READ)
+            {
+              result = CDOPermission.READ;
+            }
+          }
         }
       }
     }
 
-    Set<Role> writeRoles = getNeededRoles(revision, revisionProvider, securityContext, CDOPermission.WRITE);
-    if (writeRoles == null || !writeRoles.isEmpty())
-    {
-      if (userRoles == null)
-      {
-        userRoles = user.getAllRoles();
-      }
-
-      for (Role writeRole : writeRoles)
-      {
-        if (!userRoles.contains(writeRole))
-        {
-          return CDOPermission.READ;
-        }
-      }
-    }
-
-    return CDOPermission.WRITE;
+    // EList<Role> userRoles = null;
+    //
+    // Set<Role> readRoles = getNeededRoles(revision, revisionProvider, securityContext, CDOPermission.READ);
+    // if (readRoles == null || !readRoles.isEmpty())
+    // {
+    // userRoles = user.getAllRoles();
+    //
+    // for (Role readRole : readRoles)
+    // {
+    // if (!userRoles.contains(readRole))
+    // {
+    // return CDOPermission.NONE;
+    // }
+    // }
+    // }
+    //
+    // Set<Role> writeRoles = getNeededRoles(revision, revisionProvider, securityContext, CDOPermission.WRITE);
+    // if (writeRoles == null || !writeRoles.isEmpty())
+    // {
+    // if (userRoles == null)
+    // {
+    // userRoles = user.getAllRoles();
+    // }
+    //
+    // for (Role writeRole : writeRoles)
+    // {
+    // if (!userRoles.contains(writeRole))
+    // {
+    // return CDOPermission.READ;
+    // }
+    // }
+    // }
+    //
+    return result;
   }
 
   protected Set<Role> getNeededRoles(CDORevision revision, CDORevisionProvider revisionProvider,
@@ -437,8 +469,8 @@ public class SecurityManager implements ISecurityManager
       checkRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getDirtyObjects());
     }
 
-    private void checkRevisionsBeforeCommitting(CommitContext commitContext, CDOBranchPoint securityContext,
-        User user, InternalCDORevision[] revisions)
+    private void checkRevisionsBeforeCommitting(CommitContext commitContext, CDOBranchPoint securityContext, User user,
+        InternalCDORevision[] revisions)
     {
       for (InternalCDORevision revision : revisions)
       {

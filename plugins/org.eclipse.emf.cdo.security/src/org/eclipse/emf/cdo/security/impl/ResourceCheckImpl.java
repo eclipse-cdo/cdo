@@ -2,6 +2,9 @@
  */
 package org.eclipse.emf.cdo.security.impl;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.security.ResourceCheck;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
@@ -61,6 +64,11 @@ public class ResourceCheckImpl extends CheckImpl implements ResourceCheck
   public void setPattern(String newPattern)
   {
     eSet(SecurityPackage.Literals.RESOURCE_CHECK__PATTERN, newPattern);
+  }
+
+  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
+  {
+    return false;
   }
 
 } // ResourceCheckImpl

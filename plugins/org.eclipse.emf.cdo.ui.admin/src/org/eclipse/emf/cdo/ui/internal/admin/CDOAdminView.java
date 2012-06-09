@@ -54,7 +54,7 @@ public class CDOAdminView extends ContainerView
 
   private IAction addConnectionAction;
 
-  private int lastSessionNumber;
+  private static int lastSessionNumber;
 
   public CDOAdminView()
   {
@@ -64,11 +64,6 @@ public class CDOAdminView extends ContainerView
   protected IContainer<?> getContainer()
   {
     return adminManager;
-  }
-
-  protected int getNextSessionNumber()
-  {
-    return ++lastSessionNumber;
   }
 
   @Override
@@ -195,6 +190,11 @@ public class CDOAdminView extends ContainerView
 
     manager.add(addConnectionAction);
     super.fillLocalToolBar(manager);
+  }
+
+  public static int getNextSessionNumber()
+  {
+    return ++lastSessionNumber;
   }
 
   /**

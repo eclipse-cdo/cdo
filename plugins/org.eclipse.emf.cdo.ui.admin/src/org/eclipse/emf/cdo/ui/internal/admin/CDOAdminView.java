@@ -16,11 +16,11 @@ import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
 import org.eclipse.emf.cdo.ui.internal.admin.bundle.OM;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
-import org.eclipse.net4j.ui.Net4jItemProvider.RemoveAction;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
@@ -142,7 +142,7 @@ public class CDOAdminView extends ContainerView
       Object obj = selection.getFirstElement();
       if (obj instanceof CDOAdminClient)
       {
-        manager.add(new RemoveAction(obj));
+        manager.add(new RemoveAction(adminManager, (CDOAdminClient)obj));
       }
     }
   }
@@ -176,5 +176,36 @@ public class CDOAdminView extends ContainerView
 
     manager.add(addConnectionAction);
     super.fillLocalToolBar(manager);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class RemoveAction extends org.eclipse.net4j.ui.Net4jItemProvider.RemoveAction
+  {
+    private CDOAdminClientManager adminManager;
+
+    public RemoveAction(CDOAdminClientManager adminManager, CDOAdminClient admin)
+    {
+      super(admin);
+      this.adminManager = adminManager;
+    }
+
+    public CDOAdminClientManager getAdminManager()
+    {
+      return adminManager;
+    }
+
+    @Override
+    public CDOAdminClient getObject()
+    {
+      return (CDOAdminClient)super.getObject();
+    }
+
+    @Override
+    protected void doRun(IProgressMonitor progressMonitor) throws Exception
+    {
+      adminManager.removeConnection(getObject());
+    }
   }
 }

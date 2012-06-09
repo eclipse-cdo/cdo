@@ -90,6 +90,11 @@ public class Net4jItemProvider extends ContainerItemProvider<IContainer<Object>>
       this.object = object;
     }
 
+    public Object getObject()
+    {
+      return object;
+    }
+
     @Override
     protected void doRun(IProgressMonitor progressMonitor) throws Exception
     {

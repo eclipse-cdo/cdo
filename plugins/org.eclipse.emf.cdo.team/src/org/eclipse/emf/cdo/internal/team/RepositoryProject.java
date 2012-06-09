@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
+
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
@@ -82,7 +84,7 @@ public class RepositoryProject extends PlatformObject implements IRepositoryProj
   protected CDOView openView()
   {
     String description = RepositoryTeamProvider.getSessionDescription(project);
-    CDOSession session = (CDOSession)getContainer().getElement("org.eclipse.emf.cdo.sessions", "cdo", description); //$NON-NLS-1$ //$NON-NLS-2$
+    CDOSession session = (CDOSession)getContainer().getElement(CDOSessionFactory.PRODUCT_GROUP, "cdo", description); //$NON-NLS-1$ 
     return session.openView();
   }
 

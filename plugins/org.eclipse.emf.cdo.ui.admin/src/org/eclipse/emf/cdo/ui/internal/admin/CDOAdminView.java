@@ -18,7 +18,10 @@ import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.ui.internal.admin.bundle.OM;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
+import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
+
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
@@ -51,6 +54,8 @@ public class CDOAdminView extends ContainerView
 
   private IAction addConnectionAction;
 
+  private int lastSessionNumber;
+
   public CDOAdminView()
   {
   }
@@ -59,6 +64,11 @@ public class CDOAdminView extends ContainerView
   protected IContainer<?> getContainer()
   {
     return adminManager;
+  }
+
+  protected int getNextSessionNumber()
+  {
+    return ++lastSessionNumber;
   }
 
   @Override
@@ -151,7 +161,7 @@ public class CDOAdminView extends ContainerView
       else if (obj instanceof CDOAdminClientRepository)
       {
         CDOAdminClientRepository repository = (CDOAdminClientRepository)obj;
-        manager.add(new OpenSessionAction(adminManager, repository));
+        manager.add(new OpenSessionAction(repository));
       }
     }
   }
@@ -221,17 +231,14 @@ public class CDOAdminView extends ContainerView
   /**
    * @author Eike Stepper
    */
-  public static class OpenSessionAction extends LongRunningAction
+  public class OpenSessionAction extends LongRunningAction
   {
-    private CDOAdminClientManager adminManager;
-
     private CDOAdminClientRepository repository;
 
-    public OpenSessionAction(CDOAdminClientManager adminManager, CDOAdminClientRepository repository)
+    public OpenSessionAction(CDOAdminClientRepository repository)
     {
       super("Open Session", "Open a new session to this repository", SharedIcons
           .getDescriptor(SharedIcons.ETOOL_OPEN_SESSION));
-      this.adminManager = adminManager;
       this.repository = repository;
     }
 
@@ -246,7 +253,9 @@ public class CDOAdminView extends ContainerView
       CDONet4jSession session = repository.openSession();
       if (session != null)
       {
-        adminManager.getContainer().putElement(NSFieldE)
+        IManagedContainer container = adminManager.getContainer();
+        String description = "session" + getNextSessionNumber();
+        container.putElement(CDOSessionFactory.PRODUCT_GROUP, "admin", description, session);
       }
     }
   }

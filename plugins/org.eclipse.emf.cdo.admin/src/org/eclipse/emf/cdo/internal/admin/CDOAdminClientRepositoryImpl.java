@@ -10,14 +10,18 @@
  */
 package org.eclipse.emf.cdo.internal.admin;
 
-import org.eclipse.emf.cdo.common.admin.CDOAdmin;
-import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
+import org.eclipse.emf.cdo.admin.CDOAdminClient;
+import org.eclipse.emf.cdo.admin.CDOAdminClientRepository;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
+import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.om.monitor.NotifyingMonitor;
@@ -29,7 +33,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOAdminClientRepository extends Notifier implements CDOAdminRepository
+public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminClientRepository
 {
   private CDOAdminClientImpl admin;
 
@@ -59,7 +63,7 @@ public class CDOAdminClientRepository extends Notifier implements CDOAdminReposi
 
   private IDGenerationLocation idGenerationLocation;
 
-  public CDOAdminClientRepository(CDOAdminClientImpl admin, ExtendedDataInputStream in) throws IOException
+  public CDOAdminClientRepositoryImpl(CDOAdminClientImpl admin, ExtendedDataInputStream in) throws IOException
   {
     this.admin = admin;
     name = in.readString();
@@ -85,7 +89,7 @@ public class CDOAdminClientRepository extends Notifier implements CDOAdminReposi
     idGenerationLocation = in.readEnum(IDGenerationLocation.class);
   }
 
-  public CDOAdmin getAdmin()
+  public CDOAdminClient getAdmin()
   {
     return admin;
   }
@@ -163,6 +167,21 @@ public class CDOAdminClientRepository extends Notifier implements CDOAdminReposi
   public boolean delete(String type)
   {
     return admin.deleteRepository(this, type);
+  }
+
+  public CDONet4jSession openSession()
+  {
+    IConnector connector = admin.getConnector();
+    if (connector == null)
+    {
+      return null;
+    }
+
+    CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
+    configuration.setConnector(connector);
+    configuration.setRepositoryName(name);
+
+    return configuration.openNet4jSession();
   }
 
   @Override

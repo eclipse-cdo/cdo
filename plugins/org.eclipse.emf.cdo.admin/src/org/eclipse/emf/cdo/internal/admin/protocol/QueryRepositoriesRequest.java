@@ -10,9 +10,9 @@
  */
 package org.eclipse.emf.cdo.internal.admin.protocol;
 
-import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
+import org.eclipse.emf.cdo.admin.CDOAdminClientRepository;
 import org.eclipse.emf.cdo.internal.admin.CDOAdminClientImpl;
-import org.eclipse.emf.cdo.internal.admin.CDOAdminClientRepository;
+import org.eclipse.emf.cdo.internal.admin.CDOAdminClientRepositoryImpl;
 import org.eclipse.emf.cdo.internal.admin.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
 
@@ -27,7 +27,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class QueryRepositoriesRequest extends RequestWithConfirmation<Set<CDOAdminRepository>>
+public class QueryRepositoriesRequest extends RequestWithConfirmation<Set<CDOAdminClientRepository>>
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, QueryRepositoriesRequest.class);
 
@@ -43,7 +43,7 @@ public class QueryRepositoriesRequest extends RequestWithConfirmation<Set<CDOAdm
   }
 
   @Override
-  protected Set<CDOAdminRepository> confirming(ExtendedDataInputStream in) throws Exception
+  protected Set<CDOAdminClientRepository> confirming(ExtendedDataInputStream in) throws Exception
   {
     CDOAdminClientProtocol protocol = (CDOAdminClientProtocol)getProtocol();
     CDOAdminClientImpl admin = protocol.getInfraStructure();
@@ -54,10 +54,10 @@ public class QueryRepositoriesRequest extends RequestWithConfirmation<Set<CDOAdm
       TRACER.format("Reading {0} repository infos...", size); //$NON-NLS-1$
     }
 
-    Set<CDOAdminRepository> result = new HashSet<CDOAdminRepository>();
+    Set<CDOAdminClientRepository> result = new HashSet<CDOAdminClientRepository>();
     for (int i = 0; i < size; i++)
     {
-      CDOAdminClientRepository repository = new CDOAdminClientRepository(admin, in);
+      CDOAdminClientRepositoryImpl repository = new CDOAdminClientRepositoryImpl(admin, in);
       result.add(repository);
       if (TRACER.isEnabled())
       {

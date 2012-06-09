@@ -11,13 +11,14 @@
 package org.eclipse.emf.cdo.internal.admin;
 
 import org.eclipse.emf.cdo.admin.CDOAdminClient;
+import org.eclipse.emf.cdo.admin.CDOAdminClientRepository;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.Type;
-import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
 import org.eclipse.emf.cdo.internal.admin.bundle.OM;
 import org.eclipse.emf.cdo.internal.admin.protocol.CDOAdminClientProtocol;
 import org.eclipse.emf.cdo.spi.common.admin.AbstractCDOAdmin;
 
+import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -77,9 +78,49 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
     return connected;
   }
 
+  public IConnector getConnector()
+  {
+    if (!connected)
+    {
+      return null;
+    }
+
+    IChannelMultiplexer multiplexer = protocol.getChannel().getMultiplexer();
+    if (multiplexer instanceof IConnector)
+    {
+      return (IConnector)multiplexer;
+    }
+
+    return null;
+  }
+
+  @Override
+  public CDOAdminClientRepository[] getRepositories()
+  {
+    return (CDOAdminClientRepository[])super.getRepositories();
+  }
+
+  @Override
+  public synchronized CDOAdminClientRepository getRepository(String name)
+  {
+    return (CDOAdminClientRepository)super.getRepository(name);
+  }
+
+  @Override
+  public CDOAdminClientRepository createRepository(String name, String type, Map<String, Object> properties)
+  {
+    return (CDOAdminClientRepository)super.createRepository(name, type, properties);
+  }
+
+  @Override
+  public CDOAdminClientRepository waitForRepository(String name)
+  {
+    return (CDOAdminClientRepository)super.waitForRepository(name);
+  }
+
   public void repositoryTypeChanged(String name, Type oldType, Type newType)
   {
-    CDOAdminClientRepository repository = (CDOAdminClientRepository)getRepository(name);
+    CDOAdminClientRepositoryImpl repository = (CDOAdminClientRepositoryImpl)getRepository(name);
     if (repository != null)
     {
       repository.typeChanged(oldType, newType);
@@ -88,7 +129,7 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
 
   public void repositoryStateChanged(String name, State oldState, State newState)
   {
-    CDOAdminClientRepository repository = (CDOAdminClientRepository)getRepository(name);
+    CDOAdminClientRepositoryImpl repository = (CDOAdminClientRepositoryImpl)getRepository(name);
     if (repository != null)
     {
       repository.stateChanged(oldState, newState);
@@ -97,7 +138,7 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
 
   public void repositoryReplicationProgressed(String name, double totalWork, double work)
   {
-    CDOAdminClientRepository repository = (CDOAdminClientRepository)getRepository(name);
+    CDOAdminClientRepositoryImpl repository = (CDOAdminClientRepositoryImpl)getRepository(name);
     if (repository != null)
     {
       repository.replicationProgressed(totalWork, work);
@@ -270,8 +311,8 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
           }
         });
 
-        Set<CDOAdminRepository> repositories = protocol.queryRepositories();
-        for (CDOAdminRepository repository : repositories)
+        Set<CDOAdminClientRepository> repositories = protocol.queryRepositories();
+        for (CDOAdminClientRepository repository : repositories)
         {
           addElement(repository);
         }

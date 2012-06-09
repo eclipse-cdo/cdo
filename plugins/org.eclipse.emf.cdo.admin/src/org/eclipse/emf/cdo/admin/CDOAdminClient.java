@@ -12,7 +12,10 @@ package org.eclipse.emf.cdo.admin;
 
 import org.eclipse.emf.cdo.common.admin.CDOAdmin;
 
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.event.IEvent;
+
+import java.util.Map;
 
 /**
  * A client-side {@link CDOAdmin administrative interface}.
@@ -29,6 +32,16 @@ public interface CDOAdminClient extends CDOAdmin
   public String getURL();
 
   public boolean isConnected();
+
+  public IConnector getConnector();
+
+  public CDOAdminClientRepository[] getRepositories();
+
+  public CDOAdminClientRepository getRepository(String name);
+
+  public CDOAdminClientRepository createRepository(String name, String type, Map<String, Object> properties);
+
+  public CDOAdminClientRepository waitForRepository(String name);
 
   /**
    * An {@link IEvent event} fired from a client-side {@link CDOAdminClient administrative interface}

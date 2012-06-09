@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.admin.protocol;
 
-import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
+import org.eclipse.emf.cdo.admin.CDOAdminClientRepository;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.admin.CDOAdminClientImpl;
 import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
@@ -33,7 +33,7 @@ public class CDOAdminClientProtocol extends SignalProtocol<CDOAdminClientImpl>
     setInfraStructure(admin);
   }
 
-  public Set<CDOAdminRepository> queryRepositories()
+  public Set<CDOAdminClientRepository> queryRepositories()
   {
     return send(new QueryRepositoriesRequest(this));
   }

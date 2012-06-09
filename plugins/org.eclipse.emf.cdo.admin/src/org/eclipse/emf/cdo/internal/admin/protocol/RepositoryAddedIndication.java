@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.internal.admin.protocol;
 
 import org.eclipse.emf.cdo.internal.admin.CDOAdminClientImpl;
-import org.eclipse.emf.cdo.internal.admin.CDOAdminClientRepository;
+import org.eclipse.emf.cdo.internal.admin.CDOAdminClientRepositoryImpl;
 import org.eclipse.emf.cdo.spi.common.admin.CDOAdminProtocolConstants;
 
 import org.eclipse.net4j.signal.Indication;
@@ -33,7 +33,7 @@ public class RepositoryAddedIndication extends Indication
     CDOAdminClientProtocol protocol = (CDOAdminClientProtocol)getProtocol();
     CDOAdminClientImpl admin = protocol.getInfraStructure();
 
-    CDOAdminClientRepository repository = new CDOAdminClientRepository(admin, in);
+    CDOAdminClientRepositoryImpl repository = new CDOAdminClientRepositoryImpl(admin, in);
     admin.addElement(repository);
   }
 }

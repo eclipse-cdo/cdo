@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.security.Realm;
+import org.eclipse.emf.cdo.security.RealmUtil;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.SecurityItem;
@@ -108,7 +110,7 @@ public class AnnotationRoleProvider implements IRoleProvider
       String token = tokenizer.nextToken();
       if (token != null && token.length() != 0)
       {
-        Role role = securityManager.getRole(token);
+        Role role = getRole(securityManager.getRealm(), token);
         if (role == null)
         {
           role = SecurityFactory.eINSTANCE.createRole();
@@ -186,12 +188,24 @@ public class AnnotationRoleProvider implements IRoleProvider
       String token = tokenizer.nextToken();
       if (token != null && token.length() != 0)
       {
-        Role role = securityManager.getRole(token);
+        Role role = getRole(securityManager.getRealm(), token);
         result.add(role);
       }
     }
 
     return result;
+  }
+
+  private Role getRole(Realm realm, String roleID)
+  {
+    EList<SecurityItem> items = realm.getItems();
+    Role role = RealmUtil.findRole(items, roleID);
+    if (role == null)
+    {
+      throw new SecurityException("Role " + roleID + " not found");
+    }
+
+    return role;
   }
 
   /**

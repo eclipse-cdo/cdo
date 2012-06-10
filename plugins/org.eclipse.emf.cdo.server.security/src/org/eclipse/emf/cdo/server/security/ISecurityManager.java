@@ -10,9 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.security;
 
-import org.eclipse.emf.cdo.security.Group;
 import org.eclipse.emf.cdo.security.Realm;
-import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.server.IRepository;
 
@@ -26,19 +24,15 @@ import org.eclipse.net4j.util.container.IManagedContainer;
  */
 public interface ISecurityManager
 {
+  public IManagedContainer getContainer();
+
   public IRepository getRepository();
 
   public String getRealmPath();
 
-  public IManagedContainer getContainer();
-
   public Realm getRealm();
 
-  public User getUser(String userID) throws SecurityException;
-
-  public Group getGroup(String groupID) throws SecurityException;
-
-  public Role getRole(String roleID) throws SecurityException;
+  public User getUser(String userID);
 
   public void modify(RealmOperation operation);
 

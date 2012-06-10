@@ -294,6 +294,16 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getRealm_DefaultPermission()
+  {
+    return (EAttribute)realmEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getDirectory()
   {
     return directoryEClass;
@@ -564,7 +574,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getUser_Locked()
+  public EAttribute getUser_DefaultPermissionOverride()
   {
     return (EAttribute)userEClass.getEStructuralFeatures().get(8);
   }
@@ -574,9 +584,29 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getUser_DefaultPermission()
+  {
+    return (EAttribute)userEClass.getEStructuralFeatures().get(9);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUser_Locked()
+  {
+    return (EAttribute)userEClass.getEStructuralFeatures().get(10);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getUser_Password()
   {
-    return (EReference)userEClass.getEStructuralFeatures().get(9);
+    return (EReference)userEClass.getEStructuralFeatures().get(11);
   }
 
   /**
@@ -741,6 +771,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     createEReference(realmEClass, REALM__ALL_ROLES);
     createEReference(realmEClass, REALM__ALL_CHECKS);
     createEAttribute(realmEClass, REALM__NAME);
+    createEAttribute(realmEClass, REALM__DEFAULT_PERMISSION);
 
     directoryEClass = createEClass(DIRECTORY);
     createEReference(directoryEClass, DIRECTORY__ITEMS);
@@ -772,6 +803,8 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     createEAttribute(userEClass, USER__FIRST_NAME);
     createEAttribute(userEClass, USER__LAST_NAME);
     createEAttribute(userEClass, USER__EMAIL);
+    createEAttribute(userEClass, USER__DEFAULT_PERMISSION_OVERRIDE);
+    createEAttribute(userEClass, USER__DEFAULT_PERMISSION);
     createEAttribute(userEClass, USER__LOCKED);
     createEReference(userEClass, USER__PASSWORD);
 
@@ -880,6 +913,10 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
         getRealm_Name(),
         theEcorePackage.getEString(),
         "name", null, 0, 1, Realm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEAttribute(
+        getRealm_DefaultPermission(),
+        this.getPermission(),
+        "defaultPermission", null, 0, 1, Realm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
     initEClass(directoryEClass, Directory.class, "Directory", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEReference(
@@ -989,6 +1026,14 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
         theEcorePackage.getEString(),
         "email", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEAttribute(
+        getUser_DefaultPermissionOverride(),
+        this.getPermission(),
+        "defaultPermissionOverride", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEAttribute(
+        getUser_DefaultPermission(),
+        this.getPermission(),
+        "defaultPermission", null, 0, 1, User.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEAttribute(
         getUser_Locked(),
         theEcorePackage.getEBoolean(),
         "locked", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -1014,7 +1059,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     initEAttribute(
         getCheck_Permission(),
         this.getPermission(),
-        "permission", "WRITE", 0, 1, Check.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+        "permission", "WRITE", 1, 1, Check.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
     initEClass(classCheckEClass, ClassCheck.class,
         "ClassCheck", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

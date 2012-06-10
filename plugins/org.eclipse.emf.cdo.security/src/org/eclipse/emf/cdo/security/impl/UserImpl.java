@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.security.impl;
 
 import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityPackage;
@@ -40,6 +41,8 @@ import java.util.Set;
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getFirstName <em>First Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getLastName <em>Last Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getEmail <em>Email</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getDefaultPermissionOverride <em>Default Permission Override</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getDefaultPermission <em>Default Permission</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#isLocked <em>Locked</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getPassword <em>Password</em>}</li>
  * </ul>
@@ -267,6 +270,48 @@ public class UserImpl extends AssigneeImpl implements User
   public void setEmail(String newEmail)
   {
     eSet(SecurityPackage.Literals.USER__EMAIL, newEmail);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Permission getDefaultPermissionOverride()
+  {
+    return (Permission)eGet(SecurityPackage.Literals.USER__DEFAULT_PERMISSION_OVERRIDE, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDefaultPermissionOverride(Permission newDefaultPermissionOverride)
+  {
+    eSet(SecurityPackage.Literals.USER__DEFAULT_PERMISSION_OVERRIDE, newDefaultPermissionOverride);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public Permission getDefaultPermission()
+  {
+    Permission defaultPermissionOverride = getDefaultPermissionOverride();
+    if (defaultPermissionOverride != null)
+    {
+      return defaultPermissionOverride;
+    }
+
+    Realm realm = getRealm();
+    if (realm != null)
+    {
+      return realm.getDefaultPermission();
+    }
+
+    return null;
   }
 
   /**

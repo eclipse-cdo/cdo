@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.security.Check;
-import org.eclipse.emf.cdo.security.Group;
 import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.RealmUtil;
@@ -32,7 +31,6 @@ import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
 import org.eclipse.emf.cdo.server.spi.security.IRoleProvider;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -60,12 +58,8 @@ import org.eclipse.net4j.util.security.SecurityUtil;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -206,30 +200,6 @@ public class SecurityManager implements ISecurityManager
     }
   }
 
-  public Group getGroup(String groupID)
-  {
-    EList<SecurityItem> items = realm.getItems();
-    Group group = RealmUtil.findGroup(items, groupID);
-    if (group == null)
-    {
-      throw new SecurityException("Group " + groupID + " not found");
-    }
-
-    return group;
-  }
-
-  public Role getRole(String roleID)
-  {
-    EList<SecurityItem> items = realm.getItems();
-    Role role = RealmUtil.findRole(items, roleID);
-    if (role == null)
-    {
-      throw new SecurityException("Role " + roleID + " not found");
-    }
-
-    return role;
-  }
-
   public void modify(RealmOperation operation)
   {
     synchronized (transaction)
@@ -252,7 +222,7 @@ public class SecurityManager implements ISecurityManager
   {
     CDOPermission result = CDOPermission.WRITE;
 
-    for (Role role : user.getUnassignedRoles())
+    for (Role role : user.getRoles())
     {
       for (Check check : role.getChecks())
       {
@@ -316,52 +286,52 @@ public class SecurityManager implements ISecurityManager
     return result;
   }
 
-  protected Set<Role> getNeededRoles(CDORevision revision, CDORevisionProvider revisionProvider,
-      CDOBranchPoint securityContext, CDOPermission permission)
-  {
-    Set<Role> result = null;
-    for (IRoleProvider roleProvider : getRoleProviders())
-    {
-      try
-      {
-        Set<Role> roles = roleProvider.getRoles(this, securityContext, revisionProvider, revision, permission);
-        if (roles != null && !roles.isEmpty())
-        {
-          if (result == null)
-          {
-            result = new HashSet<Role>();
-          }
-
-          result.addAll(roles);
-        }
-      }
-      catch (Exception ex)
-      {
-        OM.LOG.error(ex);
-      }
-    }
-
-    return result;
-  }
-
-  protected IRoleProvider[] getRoleProviders()
-  {
-    synchronized (containerListener)
-    {
-      if (roleProviders == null)
-      {
-        List<IRoleProvider> result = new ArrayList<IRoleProvider>();
-        for (String factoryType : container.getFactoryTypes(IRoleProvider.Factory.PRODUCT_GROUP))
-        {
-          result.add((IRoleProvider)container.getElement(IRoleProvider.Factory.PRODUCT_GROUP, factoryType, null));
-        }
-
-        roleProviders = result.toArray(new IRoleProvider[result.size()]);
-      }
-    }
-
-    return roleProviders;
-  }
+  // protected Set<Role> getNeededRoles(CDORevision revision, CDORevisionProvider revisionProvider,
+  // CDOBranchPoint securityContext, CDOPermission permission)
+  // {
+  // Set<Role> result = null;
+  // for (IRoleProvider roleProvider : getRoleProviders())
+  // {
+  // try
+  // {
+  // Set<Role> roles = roleProvider.getRoles(this, securityContext, revisionProvider, revision, permission);
+  // if (roles != null && !roles.isEmpty())
+  // {
+  // if (result == null)
+  // {
+  // result = new HashSet<Role>();
+  // }
+  //
+  // result.addAll(roles);
+  // }
+  // }
+  // catch (Exception ex)
+  // {
+  // OM.LOG.error(ex);
+  // }
+  // }
+  //
+  // return result;
+  // }
+  //
+  // protected IRoleProvider[] getRoleProviders()
+  // {
+  // synchronized (containerListener)
+  // {
+  // if (roleProviders == null)
+  // {
+  // List<IRoleProvider> result = new ArrayList<IRoleProvider>();
+  // for (String factoryType : container.getFactoryTypes(IRoleProvider.Factory.PRODUCT_GROUP))
+  // {
+  // result.add((IRoleProvider)container.getElement(IRoleProvider.Factory.PRODUCT_GROUP, factoryType, null));
+  // }
+  //
+  // roleProviders = result.toArray(new IRoleProvider[result.size()]);
+  // }
+  // }
+  //
+  // return roleProviders;
+  // }
 
   /**
    * @author Eike Stepper
@@ -449,17 +419,17 @@ public class SecurityManager implements ISecurityManager
     public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
         OMMonitor monitor) throws RuntimeException
     {
-      for (IRoleProvider roleProvider : getRoleProviders())
-      {
-        try
-        {
-          roleProvider.handleCommit(SecurityManager.this, commitContext);
-        }
-        catch (Exception ex)
-        {
-          OM.LOG.error(ex);
-        }
-      }
+      // for (IRoleProvider roleProvider : getRoleProviders())
+      // {
+      // try
+      // {
+      // roleProvider.handleCommit(SecurityManager.this, commitContext);
+      // }
+      // catch (Exception ex)
+      // {
+      // OM.LOG.error(ex);
+      // }
+      // }
 
       CDOBranchPoint securityContext = commitContext.getBranchPoint();
       String userID = commitContext.getUserID();

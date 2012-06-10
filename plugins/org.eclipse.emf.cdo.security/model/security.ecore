@@ -18,6 +18,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="allChecks" upperBound="-1"
         eType="#//Check" changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultPermission" eType="#//Permission"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Directory" eSuperTypes="#//SecurityItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"
@@ -64,6 +65,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstName" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastName" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultPermissionOverride"
+        eType="#//Permission"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultPermission" eType="#//Permission"
+        changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="locked" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="password" eType="#//UserPassword"
         containment="true"/>
@@ -74,8 +79,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Check" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="role" lowerBound="1" eType="#//Role"
         eOpposite="#//Role/checks"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="permission" eType="#//Permission"
-        defaultValueLiteral="WRITE"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="permission" lowerBound="1"
+        eType="#//Permission" defaultValueLiteral="WRITE"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ClassCheck" eSuperTypes="#//Check">
     <eStructuralFeatures xsi:type="ecore:EReference" name="classes" lowerBound="1"

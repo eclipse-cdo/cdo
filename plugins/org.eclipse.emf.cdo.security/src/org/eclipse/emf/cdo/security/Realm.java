@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.cdo.security.Realm#getAllRoles <em>All Roles</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Realm#getAllChecks <em>All Checks</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Realm#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Realm#getDefaultPermission <em>Default Permission</em>}</li>
  * </ul>
  * </p>
  *
@@ -140,5 +141,34 @@ public interface Realm extends SecurityElement
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Default Permission</b></em>' attribute.
+   * The literals are from the enumeration {@link org.eclipse.emf.cdo.security.Permission}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Default Permission</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Default Permission</em>' attribute.
+   * @see org.eclipse.emf.cdo.security.Permission
+   * @see #setDefaultPermission(Permission)
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getRealm_DefaultPermission()
+   * @model
+   * @generated
+   */
+  Permission getDefaultPermission();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.security.Realm#getDefaultPermission <em>Default Permission</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Default Permission</em>' attribute.
+   * @see org.eclipse.emf.cdo.security.Permission
+   * @see #getDefaultPermission()
+   * @generated
+   */
+  void setDefaultPermission(Permission value);
 
 } // SecurityRealm

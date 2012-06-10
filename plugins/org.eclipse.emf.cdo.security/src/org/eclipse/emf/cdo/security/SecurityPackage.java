@@ -207,13 +207,22 @@ public interface SecurityPackage extends EPackage
   int REALM__NAME = SECURITY_ELEMENT_FEATURE_COUNT + 5;
 
   /**
+   * The feature id for the '<em><b>Default Permission</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REALM__DEFAULT_PERMISSION = SECURITY_ELEMENT_FEATURE_COUNT + 6;
+
+  /**
    * The number of structural features of the '<em>Realm</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REALM_FEATURE_COUNT = SECURITY_ELEMENT_FEATURE_COUNT + 6;
+  int REALM_FEATURE_COUNT = SECURITY_ELEMENT_FEATURE_COUNT + 7;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -562,13 +571,31 @@ public interface SecurityPackage extends EPackage
   int USER__EMAIL = ASSIGNEE_FEATURE_COUNT + 7;
 
   /**
+   * The feature id for the '<em><b>Default Permission Override</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int USER__DEFAULT_PERMISSION_OVERRIDE = ASSIGNEE_FEATURE_COUNT + 8;
+
+  /**
+   * The feature id for the '<em><b>Default Permission</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int USER__DEFAULT_PERMISSION = ASSIGNEE_FEATURE_COUNT + 9;
+
+  /**
    * The feature id for the '<em><b>Locked</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int USER__LOCKED = ASSIGNEE_FEATURE_COUNT + 8;
+  int USER__LOCKED = ASSIGNEE_FEATURE_COUNT + 10;
 
   /**
    * The feature id for the '<em><b>Password</b></em>' containment reference.
@@ -577,7 +604,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__PASSWORD = ASSIGNEE_FEATURE_COUNT + 9;
+  int USER__PASSWORD = ASSIGNEE_FEATURE_COUNT + 11;
 
   /**
    * The number of structural features of the '<em>User</em>' class.
@@ -586,7 +613,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER_FEATURE_COUNT = ASSIGNEE_FEATURE_COUNT + 10;
+  int USER_FEATURE_COUNT = ASSIGNEE_FEATURE_COUNT + 12;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.UserPasswordImpl <em>User Password</em>}' class.
@@ -888,6 +915,17 @@ public interface SecurityPackage extends EPackage
   EAttribute getRealm_Name();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.Realm#getDefaultPermission <em>Default Permission</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Default Permission</em>'.
+   * @see org.eclipse.emf.cdo.security.Realm#getDefaultPermission()
+   * @see #getRealm()
+   * @generated
+   */
+  EAttribute getRealm_DefaultPermission();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.Directory <em>Directory</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1179,6 +1217,28 @@ public interface SecurityPackage extends EPackage
   EAttribute getUser_Email();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.User#getDefaultPermissionOverride <em>Default Permission Override</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Default Permission Override</em>'.
+   * @see org.eclipse.emf.cdo.security.User#getDefaultPermissionOverride()
+   * @see #getUser()
+   * @generated
+   */
+  EAttribute getUser_DefaultPermissionOverride();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.User#getDefaultPermission <em>Default Permission</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Default Permission</em>'.
+   * @see org.eclipse.emf.cdo.security.User#getDefaultPermission()
+   * @see #getUser()
+   * @generated
+   */
+  EAttribute getUser_DefaultPermission();
+
+  /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.User#isLocked <em>Locked</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1418,6 +1478,14 @@ public interface SecurityPackage extends EPackage
     EAttribute REALM__NAME = eINSTANCE.getRealm_Name();
 
     /**
+     * The meta object literal for the '<em><b>Default Permission</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute REALM__DEFAULT_PERMISSION = eINSTANCE.getRealm_DefaultPermission();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.DirectoryImpl <em>Directory</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1644,6 +1712,22 @@ public interface SecurityPackage extends EPackage
      * @generated
      */
     EAttribute USER__EMAIL = eINSTANCE.getUser_Email();
+
+    /**
+     * The meta object literal for the '<em><b>Default Permission Override</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute USER__DEFAULT_PERMISSION_OVERRIDE = eINSTANCE.getUser_DefaultPermissionOverride();
+
+    /**
+     * The meta object literal for the '<em><b>Default Permission</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute USER__DEFAULT_PERMISSION = eINSTANCE.getUser_DefaultPermission();
 
     /**
      * The meta object literal for the '<em><b>Locked</b></em>' attribute feature.

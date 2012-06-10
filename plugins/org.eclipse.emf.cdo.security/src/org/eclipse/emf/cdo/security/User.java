@@ -28,6 +28,8 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.cdo.security.User#getFirstName <em>First Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getLastName <em>Last Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getEmail <em>Email</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.User#getDefaultPermissionOverride <em>Default Permission Override</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.User#getDefaultPermission <em>Default Permission</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#isLocked <em>Locked</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getPassword <em>Password</em>}</li>
  * </ul>
@@ -197,6 +199,52 @@ public interface User extends Assignee
    * @generated
    */
   void setEmail(String value);
+
+  /**
+   * Returns the value of the '<em><b>Default Permission Override</b></em>' attribute.
+   * The literals are from the enumeration {@link org.eclipse.emf.cdo.security.Permission}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Default Permission Override</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Default Permission Override</em>' attribute.
+   * @see org.eclipse.emf.cdo.security.Permission
+   * @see #setDefaultPermissionOverride(Permission)
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getUser_DefaultPermissionOverride()
+   * @model
+   * @generated
+   */
+  Permission getDefaultPermissionOverride();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.security.User#getDefaultPermissionOverride <em>Default Permission Override</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Default Permission Override</em>' attribute.
+   * @see org.eclipse.emf.cdo.security.Permission
+   * @see #getDefaultPermissionOverride()
+   * @generated
+   */
+  void setDefaultPermissionOverride(Permission value);
+
+  /**
+   * Returns the value of the '<em><b>Default Permission</b></em>' attribute.
+   * The literals are from the enumeration {@link org.eclipse.emf.cdo.security.Permission}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Default Permission</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Default Permission</em>' attribute.
+   * @see org.eclipse.emf.cdo.security.Permission
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getUser_DefaultPermission()
+   * @model transient="true" changeable="false" volatile="true" derived="true"
+   * @generated
+   */
+  Permission getDefaultPermission();
 
   /**
    * Returns the value of the '<em><b>Locked</b></em>' attribute.

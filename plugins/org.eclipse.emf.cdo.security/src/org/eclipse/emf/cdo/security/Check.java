@@ -69,7 +69,7 @@ public interface Check extends CDOObject
    * @see org.eclipse.emf.cdo.security.Permission
    * @see #setPermission(Permission)
    * @see org.eclipse.emf.cdo.security.SecurityPackage#getCheck_Permission()
-   * @model default="WRITE"
+   * @model default="WRITE" required="true"
    * @generated
    */
   Permission getPermission();

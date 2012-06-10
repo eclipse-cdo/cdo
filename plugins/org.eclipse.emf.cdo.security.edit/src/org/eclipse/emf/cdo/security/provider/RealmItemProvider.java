@@ -70,6 +70,7 @@ public class RealmItemProvider extends SecurityElementItemProvider implements IE
       super.getPropertyDescriptors(object);
 
       addNamePropertyDescriptor(object);
+      addDefaultPermissionPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -89,6 +90,23 @@ public class RealmItemProvider extends SecurityElementItemProvider implements IE
         getString("_UI_PropertyDescriptor_description", "_UI_Realm_name_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         SecurityPackage.Literals.REALM__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
         null));
+  }
+
+  /**
+   * This adds a property descriptor for the Default Permission feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addDefaultPermissionPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_Realm_defaultPermission_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Realm_defaultPermission_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.REALM__DEFAULT_PERMISSION, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -176,6 +194,7 @@ public class RealmItemProvider extends SecurityElementItemProvider implements IE
     switch (notification.getFeatureID(Realm.class))
     {
     case SecurityPackage.REALM__NAME:
+    case SecurityPackage.REALM__DEFAULT_PERMISSION:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     case SecurityPackage.REALM__ITEMS:

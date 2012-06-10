@@ -27,6 +27,7 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//Realm/allRoles"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//Realm/allChecks"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//Realm/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//Realm/defaultPermission"/>
     </genClasses>
     <genClasses ecoreClass="security.ecore#//Directory">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference security.ecore#//Directory/items"/>
@@ -34,8 +35,8 @@
     </genClasses>
     <genClasses ecoreClass="security.ecore#//Role">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//Role/assignees"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//Role/id"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference security.ecore#//Role/checks"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//Role/id"/>
     </genClasses>
     <genClasses image="false" ecoreClass="security.ecore#//Assignee">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//Assignee/roles"/>
@@ -58,6 +59,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//User/firstName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//User/lastName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//User/email"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//User/defaultPermissionOverride"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//User/defaultPermission"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//User/locked"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference security.ecore#//User/password"/>
     </genClasses>

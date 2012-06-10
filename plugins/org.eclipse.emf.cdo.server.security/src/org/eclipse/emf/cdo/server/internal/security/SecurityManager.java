@@ -187,6 +187,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   public void addCommitHandler(CommitHandler handler)
   {
+    checkInactive();
     synchronized (commitHandlers)
     {
       if (!commitHandlers.contains(handler))
@@ -198,6 +199,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   public void removeCommitHandler(CommitHandler handler)
   {
+    checkInactive();
     synchronized (commitHandlers)
     {
       commitHandlers.remove(handler);

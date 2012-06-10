@@ -499,15 +499,13 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    if (userManager != null)
-    {
-      if (randomizer == null)
-      {
-        randomizer = new Randomizer();
-      }
 
-      LifecycleUtil.activate(randomizer);
+    if (randomizer == null)
+    {
+      randomizer = new Randomizer();
     }
+
+    LifecycleUtil.activate(randomizer);
   }
 
   @Override

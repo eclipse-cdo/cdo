@@ -11,9 +11,9 @@
 package org.eclipse.emf.cdo.server.spi.security;
 
 import org.eclipse.emf.cdo.security.User;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 
@@ -24,7 +24,7 @@ public interface InternalSecurityManager extends ISecurityManager
 {
   public IManagedContainer getContainer();
 
-  public IRepository getRepository();
+  public void setRepository(InternalRepository repository);
 
   public String getRealmPath();
 

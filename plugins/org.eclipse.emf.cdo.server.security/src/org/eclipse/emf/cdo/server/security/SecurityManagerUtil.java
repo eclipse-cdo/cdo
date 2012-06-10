@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.security;
 
-import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -26,14 +26,19 @@ public final class SecurityManagerUtil
   {
   }
 
-  public static ISecurityManager createSecurityManager(IRepository repository, String realmPath)
+  public static ISecurityManager createSecurityManager(String realmPath)
   {
-    return createSecurityManager(repository, realmPath, IPluginContainer.INSTANCE);
+    return createSecurityManager(realmPath, IPluginContainer.INSTANCE);
   }
 
-  public static ISecurityManager createSecurityManager(IRepository repository, String realmPath,
-      IManagedContainer container)
+  public static ISecurityManager createSecurityManager(String realmPath, IManagedContainer container)
   {
-    return new org.eclipse.emf.cdo.server.internal.security.SecurityManager(repository, realmPath, container);
+    return new org.eclipse.emf.cdo.server.internal.security.SecurityManager(realmPath, container);
+  }
+
+  public static void prepareContainer(IManagedContainer container)
+  {
+    container.registerFactory(new SecurityManagerFactory.Default());
+    container.registerFactory(new SecurityManagerFactory.Annotation());
   }
 }

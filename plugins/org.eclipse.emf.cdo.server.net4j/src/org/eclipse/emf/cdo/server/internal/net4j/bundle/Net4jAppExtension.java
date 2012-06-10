@@ -33,6 +33,7 @@ public class Net4jAppExtension implements IAppExtension
   public void start(File configFile) throws Exception
   {
     OM.LOG.info("Net4j extension starting"); //$NON-NLS-1$
+
     TransportConfigurator net4jConfigurator = new TransportConfigurator(getContainer());
     acceptors = net4jConfigurator.configure(configFile);
     if (acceptors == null || acceptors.length == 0)
@@ -46,6 +47,7 @@ public class Net4jAppExtension implements IAppExtension
   public void stop() throws Exception
   {
     OM.LOG.info("Net4j extension stopping"); //$NON-NLS-1$
+
     if (acceptors != null)
     {
       for (IAcceptor acceptor : acceptors)

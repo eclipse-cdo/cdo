@@ -17,11 +17,13 @@ import org.eclipse.emf.cdo.server.IRepository;
 /**
  * Protects a given {@link IRepository repository}.
  *
- * @see SecurityManagerUtil#createSecurityManager(org.eclipse.emf.cdo.server.IRepository, String)
+ * @see SecurityManagerUtil#createSecurityManager(String)
  * @author Eike Stepper
  */
 public interface ISecurityManager
 {
+  public IRepository getRepository();
+
   public Realm getRealm();
 
   public User getUser(String userID);

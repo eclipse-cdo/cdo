@@ -130,6 +130,14 @@ Packages that use <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision
 <TD>Client concepts for dealing with Net4j-based sessions to remote repositories.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.security"><B>org.eclipse.emf.cdo.security</B></A></TD>
+<TD>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.security.impl"><B>org.eclipse.emf.cdo.security.impl</B></A></TD>
+<TD>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.server"><B>org.eclipse.emf.cdo.server</B></A></TD>
 <TD>Server concepts for dealing with repositories and stores.&nbsp;</TD>
 </TR>
@@ -500,6 +508,54 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/packag
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides access to <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A> in a CDO <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><CODE>repository</CODE></A> by demand loading
  and caching them.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.security"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/package-summary.html">org.eclipse.emf.cdo.common.revision</A> used by <A HREF="../../../../../../org/eclipse/emf/cdo/security/package-summary.html">org.eclipse.emf.cdo.security</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDORevision.html#org.eclipse.emf.cdo.security"><B>CDORevision</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Encapsulates the immutable system information of a <b>single</b> CDO <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>object</CODE></A> between two
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commits</CODE></A> in a <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch</CODE></A> and provides access to its modeled
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>data</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDORevisionProvider.html#org.eclipse.emf.cdo.security"><B>CDORevisionProvider</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides consumers with the <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A> of <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><CODE>identifiable</CODE></A> CDO objects by selecting a
+ particular one from several possible <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch points</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.security.impl"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/package-summary.html">org.eclipse.emf.cdo.common.revision</A> used by <A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/package-summary.html">org.eclipse.emf.cdo.security.impl</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDORevision.html#org.eclipse.emf.cdo.security.impl"><B>CDORevision</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Encapsulates the immutable system information of a <b>single</b> CDO <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>object</CODE></A> between two
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commits</CODE></A> in a <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch</CODE></A> and provides access to its modeled
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>data</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDORevisionProvider.html#org.eclipse.emf.cdo.security.impl"><B>CDORevisionProvider</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides consumers with the <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A> of <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><CODE>identifiable</CODE></A> CDO objects by selecting a
+ particular one from several possible <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch points</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;

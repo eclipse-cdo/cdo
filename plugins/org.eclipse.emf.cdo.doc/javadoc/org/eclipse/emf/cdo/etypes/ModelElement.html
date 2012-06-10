@@ -95,10 +95,10 @@ Interface ModelElement</H2>
 <DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</A></DD>
 </DL>
 <DL>
-<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html" title="interface in org.eclipse.emf.cdo.etypes">Annotation</A></DD>
+<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html" title="interface in org.eclipse.emf.cdo.etypes">Annotation</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/Assignee.html" title="interface in org.eclipse.emf.cdo.security">Assignee</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/Group.html" title="interface in org.eclipse.emf.cdo.security">Group</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security">Role</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityElement.html" title="interface in org.eclipse.emf.cdo.security">SecurityElement</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security">SecurityItem</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</A></DD>
 </DL>
 <DL>
-<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/etypes/impl/AnnotationImpl.html" title="class in org.eclipse.emf.cdo.etypes.impl">AnnotationImpl</A>, <A HREF="../../../../../org/eclipse/emf/cdo/etypes/impl/ModelElementImpl.html" title="class in org.eclipse.emf.cdo.etypes.impl">ModelElementImpl</A></DD>
+<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/etypes/impl/AnnotationImpl.html" title="class in org.eclipse.emf.cdo.etypes.impl">AnnotationImpl</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/impl/AssigneeImpl.html" title="class in org.eclipse.emf.cdo.security.impl">AssigneeImpl</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/impl/DirectoryImpl.html" title="class in org.eclipse.emf.cdo.security.impl">DirectoryImpl</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/impl/GroupImpl.html" title="class in org.eclipse.emf.cdo.security.impl">GroupImpl</A>, <A HREF="../../../../../org/eclipse/emf/cdo/etypes/impl/ModelElementImpl.html" title="class in org.eclipse.emf.cdo.etypes.impl">ModelElementImpl</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html" title="class in org.eclipse.emf.cdo.security.impl">RealmImpl</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/impl/RoleImpl.html" title="class in org.eclipse.emf.cdo.security.impl">RoleImpl</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/impl/SecurityElementImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityElementImpl</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/impl/SecurityItemImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityItemImpl</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html" title="class in org.eclipse.emf.cdo.security.impl">UserImpl</A></DD>
 </DL>
 <HR>
 <DL>
@@ -107,11 +107,12 @@ Interface ModelElement</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="ModelElement.html" title="&#171;interface&#187; ModelElement" alt="" coords="89,117,193,157"/>
-<area shape="rect" id="node2" href="EtypesPackage.html" title="&#171;interface&#187; EtypesPackage" alt="" coords="5,13,120,53"/>
-<area shape="rect" id="node3" href="../CDOObject.html" title="&#171;interface&#187; CDOObject (org.eclipse.emf.cdo)" alt="" coords="150,6,292,61"/>
-<area shape="rect" id="node4" href="Annotation.html" title="&#171;interface&#187; Annotation" alt="" coords="9,200,95,240"/>
-<area shape="rect" id="node5" href="impl/ModelElementImpl.html" title="ModelElementImpl (org.eclipse.emf.cdo.etypes.impl)" alt="" coords="125,200,339,240"/>
+<area shape="rect" id="node1" href="../security/SecurityElement.html" title="&#171;interface&#187; SecurityElement (org.eclipse.emf.cdo.security)" alt="" coords="5,201,197,255"/>
+<area shape="rect" id="node2" href="ModelElement.html" title="&#171;interface&#187; ModelElement" alt="" coords="218,117,323,157"/>
+<area shape="rect" id="node3" href="EtypesPackage.html" title="&#171;interface&#187; EtypesPackage" alt="" coords="135,13,249,53"/>
+<area shape="rect" id="node4" href="../CDOObject.html" title="&#171;interface&#187; CDOObject (org.eclipse.emf.cdo)" alt="" coords="279,6,421,61"/>
+<area shape="rect" id="node5" href="Annotation.html" title="&#171;interface&#187; Annotation" alt="" coords="228,208,313,248"/>
+<area shape="rect" id="node6" href="impl/ModelElementImpl.html" title="ModelElementImpl (org.eclipse.emf.cdo.etypes.impl)" alt="" coords="343,208,557,248"/>
 </map>
 
 <CENTER><IMG SRC="ModelElement.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>

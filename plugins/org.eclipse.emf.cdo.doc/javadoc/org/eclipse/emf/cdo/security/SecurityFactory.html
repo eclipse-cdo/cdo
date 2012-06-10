@@ -1,0 +1,583 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+SecurityFactory (CDO Model Repository Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="SecurityFactory (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/SecurityFactory.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityElement.html" title="interface in org.eclipse.emf.cdo.security"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/emf/cdo/security/SecurityFactory.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="SecurityFactory.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.emf.cdo.security</FONT>
+<BR>
+Interface SecurityFactory</H2>
+<DL>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EFactory.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EFactory</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EModelElement</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</A></DD>
+</DL>
+<DL>
+<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html" title="class in org.eclipse.emf.cdo.security.impl">SecurityFactoryImpl</A></DD>
+</DL>
+<HR>
+<DL>
+  <DT>public interface <B>SecurityFactory</B>
+  <DD>extends <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EFactory.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EFactory</A>
+</DL>
+
+<map id="APIVIZ" name="APIVIZ">
+<area shape="rect" id="node1" href="SecurityPackage.html" title="&#171;interface&#187; SecurityPackage" alt="" coords="5,200,125,240"/>
+<area shape="rect" id="node2" href="SecurityFactory.html" title="&#171;interface&#187; SecurityFactory" alt="" coords="108,104,223,144"/>
+<area shape="rect" id="node3" title="&#171;interface&#187; EFactory (org.eclipse.emf.ecore)" alt="" coords="88,6,243,61"/>
+<area shape="rect" id="node4" href="impl/SecurityFactoryImpl.html" title="SecurityFactoryImpl (org.eclipse.emf.cdo.security.impl)" alt="" coords="156,200,377,240"/>
+</map>
+
+<CENTER><IMG SRC="SecurityFactory.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+
+
+
+<P>
+<!-- begin-user-doc -->
+ The <b>Factory</b> for the model.
+ It provides a create method for each non-abstract class of the model.
+ <!-- end-user-doc -->
+<P>
+
+<P>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html" title="interface in org.eclipse.emf.cdo.security"><CODE>SecurityPackage</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+<HR>
+
+<P>
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html" title="interface in org.eclipse.emf.cdo.security">SecurityFactory</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#eINSTANCE">eINSTANCE</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The singleton instance of the factory</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/ClassCheck.html" title="interface in org.eclipse.emf.cdo.security">ClassCheck</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createClassCheck()">createClassCheck</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a new object of class '<em>Class Check</em>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createDirectory()">createDirectory</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a new object of class '<em>Directory</em>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/Group.html" title="interface in org.eclipse.emf.cdo.security">Group</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createGroup()">createGroup</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a new object of class '<em>Group</em>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/PackageCheck.html" title="interface in org.eclipse.emf.cdo.security">PackageCheck</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createPackageCheck()">createPackageCheck</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a new object of class '<em>Package Check</em>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createRealm()">createRealm</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a new object of class '<em>Realm</em>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/ResourceCheck.html" title="interface in org.eclipse.emf.cdo.security">ResourceCheck</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createResourceCheck()">createResourceCheck</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a new object of class '<em>Resource Check</em>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security">Role</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createRole()">createRole</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a new object of class '<em>Role</em>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createUser()">createUser</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a new object of class '<em>User</em>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/UserPassword.html" title="interface in org.eclipse.emf.cdo.security">UserPassword</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createUserPassword()">createUserPassword</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a new object of class '<em>User Password</em>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html" title="interface in org.eclipse.emf.cdo.security">SecurityPackage</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#getSecurityPackage()">getSecurityPackage</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the package supported by this factory</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.ecore.EFactory"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.ecore.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EFactory.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EFactory</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EFactory.html?is-external=true#convertToString(org.eclipse.emf.ecore.EDataType, java.lang.Object)" title="class or interface in org.eclipse.emf.ecore">convertToString</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EFactory.html?is-external=true#create(org.eclipse.emf.ecore.EClass)" title="class or interface in org.eclipse.emf.ecore">create</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EFactory.html?is-external=true#createFromString(org.eclipse.emf.ecore.EDataType, java.lang.String)" title="class or interface in org.eclipse.emf.ecore">createFromString</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EFactory.html?is-external=true#getEPackage()" title="class or interface in org.eclipse.emf.ecore">getEPackage</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EFactory.html?is-external=true#setEPackage(org.eclipse.emf.ecore.EPackage)" title="class or interface in org.eclipse.emf.ecore">setEPackage</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.ecore.EModelElement"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.ecore.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EModelElement</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EModelElement.html?is-external=true#getEAnnotation(java.lang.String)" title="class or interface in org.eclipse.emf.ecore">getEAnnotation</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EModelElement.html?is-external=true#getEAnnotations()" title="class or interface in org.eclipse.emf.ecore">getEAnnotations</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.ecore.EObject"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.ecore.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore">eAllContents</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eClass()" title="class or interface in org.eclipse.emf.ecore">eClass</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainer()" title="class or interface in org.eclipse.emf.ecore">eContainer</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainingFeature()" title="class or interface in org.eclipse.emf.ecore">eContainingFeature</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainmentFeature()" title="class or interface in org.eclipse.emf.ecore">eContainmentFeature</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContents()" title="class or interface in org.eclipse.emf.ecore">eContents</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eCrossReferences()" title="class or interface in org.eclipse.emf.ecore">eCrossReferences</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore">eGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature, boolean)" title="class or interface in org.eclipse.emf.ecore">eGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eInvoke(org.eclipse.emf.ecore.EOperation, org.eclipse.emf.common.util.EList)" title="class or interface in org.eclipse.emf.ecore">eInvoke</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsProxy()" title="class or interface in org.eclipse.emf.ecore">eIsProxy</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsSet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore">eIsSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eResource()" title="class or interface in org.eclipse.emf.ecore">eResource</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eSet(org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object)" title="class or interface in org.eclipse.emf.ecore">eSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eUnset(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore">eUnset</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.common.notify.Notifier"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.common.notify.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eAdapters()" title="class or interface in org.eclipse.emf.common.notify">eAdapters</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eDeliver()" title="class or interface in org.eclipse.emf.common.notify">eDeliver</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eNotify(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify">eNotify</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eSetDeliver(boolean)" title="class or interface in org.eclipse.emf.common.notify">eSetDeliver</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ FIELD DETAIL =========== -->
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Field Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="eINSTANCE"><!-- --></A><H3>
+eINSTANCE</H3>
+<PRE>
+static final <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html" title="interface in org.eclipse.emf.cdo.security">SecurityFactory</A> <B>eINSTANCE</B></PRE>
+<DL>
+<DD>The singleton instance of the factory.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DL>
+<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="createRealm()"><!-- --></A><H3>
+createRealm</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</A> <B>createRealm</B>()</PRE>
+<DL>
+<DD>Returns a new object of class '<em>Realm</em>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a new object of class '<em>Realm</em>'.<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createDirectory()"><!-- --></A><H3>
+createDirectory</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</A> <B>createDirectory</B>()</PRE>
+<DL>
+<DD>Returns a new object of class '<em>Directory</em>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a new object of class '<em>Directory</em>'.<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createRole()"><!-- --></A><H3>
+createRole</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security">Role</A> <B>createRole</B>()</PRE>
+<DL>
+<DD>Returns a new object of class '<em>Role</em>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a new object of class '<em>Role</em>'.<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createGroup()"><!-- --></A><H3>
+createGroup</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/security/Group.html" title="interface in org.eclipse.emf.cdo.security">Group</A> <B>createGroup</B>()</PRE>
+<DL>
+<DD>Returns a new object of class '<em>Group</em>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a new object of class '<em>Group</em>'.<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createUser()"><!-- --></A><H3>
+createUser</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</A> <B>createUser</B>()</PRE>
+<DL>
+<DD>Returns a new object of class '<em>User</em>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a new object of class '<em>User</em>'.<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createUserPassword()"><!-- --></A><H3>
+createUserPassword</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/security/UserPassword.html" title="interface in org.eclipse.emf.cdo.security">UserPassword</A> <B>createUserPassword</B>()</PRE>
+<DL>
+<DD>Returns a new object of class '<em>User Password</em>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a new object of class '<em>User Password</em>'.<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createClassCheck()"><!-- --></A><H3>
+createClassCheck</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/security/ClassCheck.html" title="interface in org.eclipse.emf.cdo.security">ClassCheck</A> <B>createClassCheck</B>()</PRE>
+<DL>
+<DD>Returns a new object of class '<em>Class Check</em>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a new object of class '<em>Class Check</em>'.<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createPackageCheck()"><!-- --></A><H3>
+createPackageCheck</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/security/PackageCheck.html" title="interface in org.eclipse.emf.cdo.security">PackageCheck</A> <B>createPackageCheck</B>()</PRE>
+<DL>
+<DD>Returns a new object of class '<em>Package Check</em>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a new object of class '<em>Package Check</em>'.<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createResourceCheck()"><!-- --></A><H3>
+createResourceCheck</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/security/ResourceCheck.html" title="interface in org.eclipse.emf.cdo.security">ResourceCheck</A> <B>createResourceCheck</B>()</PRE>
+<DL>
+<DD>Returns a new object of class '<em>Resource Check</em>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a new object of class '<em>Resource Check</em>'.<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getSecurityPackage()"><!-- --></A><H3>
+getSecurityPackage</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html" title="interface in org.eclipse.emf.cdo.security">SecurityPackage</A> <B>getSecurityPackage</B>()</PRE>
+<DL>
+<DD>Returns the package supported by this factory.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the package supported by this factory.<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/SecurityFactory.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityElement.html" title="interface in org.eclipse.emf.cdo.security"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/emf/cdo/security/SecurityFactory.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="SecurityFactory.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

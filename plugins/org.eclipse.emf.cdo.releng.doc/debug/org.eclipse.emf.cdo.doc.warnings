@@ -1,3 +1,4 @@
+Class description missing: org.eclipse.emf.cdo.security.presentation.SecurityEditor$ReverseAdapterFactoryContentProvider.class(SecurityEditor.java:776)
 Class description missing: org.eclipse.emf.cdo.server.hibernate.CDOHibernateUtil.class(CDOHibernateUtil.java:21)
 Class description missing: org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider$Factory.class(IHibernateMappingProvider.java:38)
 Class description missing: org.eclipse.emf.cdo.server.hibernate.IHibernateStore.class(IHibernateStore.java:27)
@@ -5,3 +6,8 @@ Class description missing: org.eclipse.emf.cdo.server.hibernate.IHibernateStoreA
 Class description missing: org.eclipse.emf.cdo.server.hibernate.IHibernateStoreChunkReader.class(IHibernateStoreChunkReader.java:20)
 Class description missing: org.eclipse.emf.internal.cdo.CDOObjectImpl$CDOStoreEcoreEMap.class(CDOObjectImpl.java:1306)
 Class description missing: org.eclipse.emf.internal.cdo.CDOObjectImpl$CDOStoreUnorderedEList.class(CDOObjectImpl.java:1435)
+Package description missing: org.eclipse.emf.cdo.security
+Package description missing: org.eclipse.emf.cdo.security.impl
+Package description missing: org.eclipse.emf.cdo.security.presentation
+Package description missing: org.eclipse.emf.cdo.security.provider
+Package description missing: org.eclipse.emf.cdo.security.util

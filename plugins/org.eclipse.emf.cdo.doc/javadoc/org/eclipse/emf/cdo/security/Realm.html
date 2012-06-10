@@ -1,0 +1,585 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+Realm (CDO Model Repository Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Realm (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/Realm.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/RealmUtil.html" title="class in org.eclipse.emf.cdo.security"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/emf/cdo/security/Realm.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="Realm.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.emf.cdo.security</FONT>
+<BR>
+Interface Realm</H2>
+<DL>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>, <A HREF="../../../../../org/eclipse/emf/cdo/etypes/ModelElement.html" title="interface in org.eclipse.emf.cdo.etypes">ModelElement</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityElement.html" title="interface in org.eclipse.emf.cdo.security">SecurityElement</A></DD>
+</DL>
+<DL>
+<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html" title="class in org.eclipse.emf.cdo.security.impl">RealmImpl</A></DD>
+</DL>
+<HR>
+<DL>
+  <DT>public interface <B>Realm</B>
+  <DD>extends <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityElement.html" title="interface in org.eclipse.emf.cdo.security">SecurityElement</A>
+</DL>
+
+<map id="APIVIZ" name="APIVIZ">
+<area shape="rect" id="node1" href="SecurityPackage.html" title="&#171;interface&#187; SecurityPackage" alt="" coords="5,184,125,224"/>
+<area shape="rect" id="node2" href="SecurityElement.html" title="&#171;interface&#187; SecurityElement" alt="" coords="106,5,224,45"/>
+<area shape="rect" id="node3" href="Realm.html" title="&#171;interface&#187; Realm" alt="" coords="123,88,208,128"/>
+<area shape="rect" id="node4" href="impl/RealmImpl.html" title="RealmImpl (org.eclipse.emf.cdo.security.impl)" alt="" coords="156,184,377,224"/>
+</map>
+
+<CENTER><IMG SRC="Realm.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+
+
+
+<P>
+<!-- begin-user-doc -->
+ A representation of the model object '<em><b>Realm</b></em>'.
+ <!-- end-user-doc -->
+
+ <p>
+ The following features are supported:
+ <ul>
+   <li><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getItems()"><CODE><em>Items</em></CODE></A></li>
+   <li><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllUsers()"><CODE><em>All Users</em></CODE></A></li>
+   <li><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllGroups()"><CODE><em>All Groups</em></CODE></A></li>
+   <li><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllRoles()"><CODE><em>All Roles</em></CODE></A></li>
+   <li><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllChecks()"><CODE><em>All Checks</em></CODE></A></li>
+   <li><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getName()"><CODE><em>Name</em></CODE></A></li>
+   <li><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultPermission()"><CODE><em>Default Permission</em></CODE></A></li>
+ </ul>
+ </p>
+<P>
+
+<P>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm()"><CODE>SecurityPackage.getRealm()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Model</B></DT>
+  <DD></DD>
+</DL>
+<HR>
+
+<P>
+
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/Check.html" title="interface in org.eclipse.emf.cdo.security">Check</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllChecks()">getAllChecks</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the value of the '<em><b>All Checks</b></em>' reference list.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/Group.html" title="interface in org.eclipse.emf.cdo.security">Group</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllGroups()">getAllGroups</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the value of the '<em><b>All Groups</b></em>' reference list.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security">Role</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllRoles()">getAllRoles</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the value of the '<em><b>All Roles</b></em>' reference list.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllUsers()">getAllUsers</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the value of the '<em><b>All Users</b></em>' reference list.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultPermission()">getDefaultPermission</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the value of the '<em><b>Default Permission</b></em>' attribute.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security">SecurityItem</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getItems()">getItems</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the value of the '<em><b>Items</b></em>' containment reference list.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getName()">getName</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the value of the '<em><b>Name</b></em>' attribute</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#setDefaultPermission(org.eclipse.emf.cdo.security.Permission)">setDefaultPermission</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A>&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the value of the '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultPermission()"><CODE><em>Default Permission</em></CODE></A>' attribute</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#setName(java.lang.String)">setName</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the value of the '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getName()"><CODE><em>Name</em></CODE></A>' attribute</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.security.SecurityElement"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.security.<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityElement.html" title="interface in org.eclipse.emf.cdo.security">SecurityElement</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityElement.html#getRealm()">getRealm</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.etypes.ModelElement"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.etypes.<A HREF="../../../../../org/eclipse/emf/cdo/etypes/ModelElement.html" title="interface in org.eclipse.emf.cdo.etypes">ModelElement</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/etypes/ModelElement.html#getAnnotation(java.lang.String)">getAnnotation</A>, <A HREF="../../../../../org/eclipse/emf/cdo/etypes/ModelElement.html#getAnnotations()">getAnnotations</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.CDOObject"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.<A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoConflict()">cdoConflict</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoDirectResource()">cdoDirectResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoID()">cdoID</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoInvalid()">cdoInvalid</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoLockState()">cdoLockState</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoPrefetch(int)">cdoPrefetch</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoReadLock()">cdoReadLock</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoReload()">cdoReload</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoResource()">cdoResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoRevision()">cdoRevision</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoState()">cdoState</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoView()">cdoView</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoWriteLock()">cdoWriteLock</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoWriteOption()">cdoWriteOption</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.ecore.EObject"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.ecore.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore">eAllContents</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eClass()" title="class or interface in org.eclipse.emf.ecore">eClass</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainer()" title="class or interface in org.eclipse.emf.ecore">eContainer</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainingFeature()" title="class or interface in org.eclipse.emf.ecore">eContainingFeature</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainmentFeature()" title="class or interface in org.eclipse.emf.ecore">eContainmentFeature</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContents()" title="class or interface in org.eclipse.emf.ecore">eContents</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eCrossReferences()" title="class or interface in org.eclipse.emf.ecore">eCrossReferences</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore">eGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature, boolean)" title="class or interface in org.eclipse.emf.ecore">eGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eInvoke(org.eclipse.emf.ecore.EOperation, org.eclipse.emf.common.util.EList)" title="class or interface in org.eclipse.emf.ecore">eInvoke</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsProxy()" title="class or interface in org.eclipse.emf.ecore">eIsProxy</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsSet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore">eIsSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eResource()" title="class or interface in org.eclipse.emf.ecore">eResource</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eSet(org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object)" title="class or interface in org.eclipse.emf.ecore">eSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eUnset(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore">eUnset</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.common.notify.Notifier"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.common.notify.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eAdapters()" title="class or interface in org.eclipse.emf.common.notify">eAdapters</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eDeliver()" title="class or interface in org.eclipse.emf.common.notify">eDeliver</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eNotify(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify">eNotify</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eSetDeliver(boolean)" title="class or interface in org.eclipse.emf.common.notify">eSetDeliver</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="getItems()"><!-- --></A><H3>
+getItems</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security">SecurityItem</A>&gt; <B>getItems</B>()</PRE>
+<DL>
+<DD>Returns the value of the '<em><b>Items</b></em>' containment reference list.
+ The list contents are of type <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><CODE>SecurityItem</CODE></A>.
+ <!-- begin-user-doc -->
+ <p>
+ If the meaning of the '<em>Items</em>' containment reference list isn't clear,
+ there really should be more of a description here...
+ </p>
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the value of the '<em>Items</em>' containment reference list.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_Items()"><CODE>SecurityPackage.getRealm_Items()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Model</B></DT>
+  <DD>containment="true"</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getAllUsers()"><!-- --></A><H3>
+getAllUsers</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</A>&gt; <B>getAllUsers</B>()</PRE>
+<DL>
+<DD>Returns the value of the '<em><b>All Users</b></em>' reference list.
+ The list contents are of type <A HREF="../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security"><CODE>User</CODE></A>.
+ <!-- begin-user-doc -->
+ <p>
+ If the meaning of the '<em>All Users</em>' reference list isn't clear,
+ there really should be more of a description here...
+ </p>
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the value of the '<em>All Users</em>' reference list.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_AllUsers()"><CODE>SecurityPackage.getRealm_AllUsers()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Model</B></DT>
+  <DD>transient="true" changeable="false" volatile="true" derived="true"</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getAllGroups()"><!-- --></A><H3>
+getAllGroups</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/Group.html" title="interface in org.eclipse.emf.cdo.security">Group</A>&gt; <B>getAllGroups</B>()</PRE>
+<DL>
+<DD>Returns the value of the '<em><b>All Groups</b></em>' reference list.
+ The list contents are of type <A HREF="../../../../../org/eclipse/emf/cdo/security/Group.html" title="interface in org.eclipse.emf.cdo.security"><CODE>Group</CODE></A>.
+ <!-- begin-user-doc -->
+ <p>
+ If the meaning of the '<em>All Groups</em>' reference list isn't clear,
+ there really should be more of a description here...
+ </p>
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the value of the '<em>All Groups</em>' reference list.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_AllGroups()"><CODE>SecurityPackage.getRealm_AllGroups()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Model</B></DT>
+  <DD>transient="true" changeable="false" volatile="true" derived="true"</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getAllRoles()"><!-- --></A><H3>
+getAllRoles</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security">Role</A>&gt; <B>getAllRoles</B>()</PRE>
+<DL>
+<DD>Returns the value of the '<em><b>All Roles</b></em>' reference list.
+ The list contents are of type <A HREF="../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security"><CODE>Role</CODE></A>.
+ <!-- begin-user-doc -->
+ <p>
+ If the meaning of the '<em>All Roles</em>' reference list isn't clear,
+ there really should be more of a description here...
+ </p>
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the value of the '<em>All Roles</em>' reference list.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_AllRoles()"><CODE>SecurityPackage.getRealm_AllRoles()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Model</B></DT>
+  <DD>transient="true" changeable="false" volatile="true" derived="true"</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getAllChecks()"><!-- --></A><H3>
+getAllChecks</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/Check.html" title="interface in org.eclipse.emf.cdo.security">Check</A>&gt; <B>getAllChecks</B>()</PRE>
+<DL>
+<DD>Returns the value of the '<em><b>All Checks</b></em>' reference list.
+ The list contents are of type <A HREF="../../../../../org/eclipse/emf/cdo/security/Check.html" title="interface in org.eclipse.emf.cdo.security"><CODE>Check</CODE></A>.
+ <!-- begin-user-doc -->
+ <p>
+ If the meaning of the '<em>All Checks</em>' reference list isn't clear,
+ there really should be more of a description here...
+ </p>
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the value of the '<em>All Checks</em>' reference list.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_AllChecks()"><CODE>SecurityPackage.getRealm_AllChecks()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Model</B></DT>
+  <DD>transient="true" changeable="false" volatile="true" derived="true"</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getName()"><!-- --></A><H3>
+getName</H3>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getName</B>()</PRE>
+<DL>
+<DD>Returns the value of the '<em><b>Name</b></em>' attribute.
+ <!-- begin-user-doc -->
+ <p>
+ If the meaning of the '<em>Name</em>' attribute isn't clear,
+ there really should be more of a description here...
+ </p>
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the value of the '<em>Name</em>' attribute.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#setName(java.lang.String)"><CODE>setName(String)</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_Name()"><CODE>SecurityPackage.getRealm_Name()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Model</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setName(java.lang.String)"><!-- --></A><H3>
+setName</H3>
+<PRE>
+void <B>setName</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;value)</PRE>
+<DL>
+<DD>Sets the value of the '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getName()"><CODE><em>Name</em></CODE></A>' attribute.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>value</CODE> - the new value of the '<em>Name</em>' attribute.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getName()"><CODE>getName()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getDefaultPermission()"><!-- --></A><H3>
+getDefaultPermission</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A> <B>getDefaultPermission</B>()</PRE>
+<DL>
+<DD>Returns the value of the '<em><b>Default Permission</b></em>' attribute.
+ The literals are from the enumeration <A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security"><CODE>Permission</CODE></A>.
+ <!-- begin-user-doc -->
+ <p>
+ If the meaning of the '<em>Default Permission</em>' attribute isn't clear,
+ there really should be more of a description here...
+ </p>
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the value of the '<em>Default Permission</em>' attribute.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security"><CODE>Permission</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#setDefaultPermission(org.eclipse.emf.cdo.security.Permission)"><CODE>setDefaultPermission(Permission)</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_DefaultPermission()"><CODE>SecurityPackage.getRealm_DefaultPermission()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Model</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setDefaultPermission(org.eclipse.emf.cdo.security.Permission)"><!-- --></A><H3>
+setDefaultPermission</H3>
+<PRE>
+void <B>setDefaultPermission</B>(<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A>&nbsp;value)</PRE>
+<DL>
+<DD>Sets the value of the '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultPermission()"><CODE><em>Default Permission</em></CODE></A>' attribute.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>value</CODE> - the new value of the '<em>Default Permission</em>' attribute.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security"><CODE>Permission</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultPermission()"><CODE>getDefaultPermission()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/Realm.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/RealmUtil.html" title="class in org.eclipse.emf.cdo.security"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/emf/cdo/security/Realm.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="Realm.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

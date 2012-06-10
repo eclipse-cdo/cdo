@@ -63,6 +63,17 @@
     <packages name="org.eclipse.emf.cdo.common.security"/>
     <packages name="org.eclipse.emf.cdo.common.util"/>
   </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.security.edit" label="CDO Model Repository Security Edit Support">
+    <packages name="org.eclipse.emf.cdo.security.provider"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.security.editor" label="CDO Model Repository Security Editor">
+    <packages name="org.eclipse.emf.cdo.security.presentation"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.security" label="CDO Model Repository Security Model">
+    <packages name="org.eclipse.emf.cdo.security"/>
+    <packages name="org.eclipse.emf.cdo.security.impl"/>
+    <packages name="org.eclipse.emf.cdo.security.util"/>
+  </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server" label="CDO Model Repository Server">
     <packages name="org.eclipse.emf.cdo.server"/>
     <packages name="org.eclipse.emf.cdo.server.embedded"/>

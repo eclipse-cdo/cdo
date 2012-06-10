@@ -75,6 +75,17 @@
         <topic label="org.eclipse.emf.cdo.common.security" href="javadoc/org/eclipse/emf/cdo/common/security/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.common.util" href="javadoc/org/eclipse/emf/cdo/common/util/package-summary.html" icon="package" />
       </topic>
+      <topic label="CDO Model Repository Security Edit Support" href="javadoc/org/eclipse/emf/cdo/security/provider/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.security.provider" href="javadoc/org/eclipse/emf/cdo/security/provider/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Security Editor" href="javadoc/org/eclipse/emf/cdo/security/presentation/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.security.presentation" href="javadoc/org/eclipse/emf/cdo/security/presentation/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Security Model" href="javadoc/org/eclipse/emf/cdo/security/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.security" href="javadoc/org/eclipse/emf/cdo/security/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.security.impl" href="javadoc/org/eclipse/emf/cdo/security/impl/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.security.util" href="javadoc/org/eclipse/emf/cdo/security/util/package-summary.html" icon="package" />
+      </topic>
       <topic label="CDO Model Repository Server" href="javadoc/org/eclipse/emf/cdo/server/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.server" href="javadoc/org/eclipse/emf/cdo/server/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.server.embedded" href="javadoc/org/eclipse/emf/cdo/server/embedded/package-summary.html" icon="package" />

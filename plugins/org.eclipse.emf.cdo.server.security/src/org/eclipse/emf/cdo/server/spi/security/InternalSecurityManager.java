@@ -39,6 +39,8 @@ public interface InternalSecurityManager extends ISecurityManager
    */
   public interface CommitHandler
   {
+    public void init(InternalSecurityManager securityManager, boolean firstTime);
+
     public void handleCommit(InternalSecurityManager securityManager, CommitContext commitContext, User user);
   }
 }

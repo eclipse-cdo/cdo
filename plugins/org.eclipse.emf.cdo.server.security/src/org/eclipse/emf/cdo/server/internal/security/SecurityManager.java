@@ -46,7 +46,9 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.IUserManager;
 import org.eclipse.net4j.util.security.SecurityUtil;
@@ -62,7 +64,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class SecurityManager implements InternalSecurityManager
+public class SecurityManager extends Lifecycle implements InternalSecurityManager
 {
   private final Map<String, User> users = new HashMap<String, User>();
 
@@ -90,59 +92,31 @@ public class SecurityManager implements InternalSecurityManager
 
   public SecurityManager(IRepository repository, String realmPath, IManagedContainer container)
   {
+    LifecycleUtil.checkInactive(repository);
+
     this.repository = (InternalRepository)repository;
     this.realmPath = realmPath;
     this.container = container;
 
-    init();
-  }
-
-  protected void init()
-  {
-    String repositoryName = repository.getName();
-    String acceptorName = repositoryName + "_security";
-
-    acceptor = Net4jUtil.getAcceptor(container, "jvm", acceptorName);
-    connector = Net4jUtil.getConnector(container, "jvm", acceptorName);
-
-    CDONet4jSessionConfiguration config = CDONet4jUtil.createNet4jSessionConfiguration();
-    config.setConnector(connector);
-    config.setRepositoryName(repositoryName);
-
-    CDONet4jSession session = config.openNet4jSession();
-    transaction = session.openTransaction();
-
-    CDOResource resource = transaction.getResource(realmPath);
-    realm = (Realm)resource.getContents().get(0);
-
     // Wire up with repository
-    InternalSessionManager sessionManager = repository.getSessionManager();
+    InternalSessionManager sessionManager = this.repository.getSessionManager();
     sessionManager.setUserManager(userManager);
     sessionManager.setPermissionManager(permissionManager);
     repository.addHandler(writeAccessHandler);
     repository.addListener(new LifecycleEventAdapter()
     {
       @Override
+      protected void onActivated(ILifecycle lifecycle)
+      {
+        activate();
+      }
+
+      @Override
       protected void onDeactivated(ILifecycle lifecycle)
       {
-        dispose();
+        deactivate();
       }
     });
-  }
-
-  protected void dispose()
-  {
-    users.clear();
-    realm = null;
-
-    transaction.getSession().close();
-    transaction = null;
-
-    connector.close();
-    connector = null;
-
-    acceptor.close();
-    acceptor = null;
   }
 
   public final IManagedContainer getContainer()
@@ -230,6 +204,21 @@ public class SecurityManager implements InternalSecurityManager
     }
   }
 
+  protected void initCommitHandlers(boolean firstTime)
+  {
+    for (CommitHandler handler : getCommitHandlers())
+    {
+      try
+      {
+        handler.init(this, firstTime);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
+  }
+
   protected void handleCommit(CommitContext commitContext, User user)
   {
     for (CommitHandler handler : getCommitHandlers())
@@ -243,6 +232,11 @@ public class SecurityManager implements InternalSecurityManager
         OM.LOG.error(ex);
       }
     }
+  }
+
+  protected Realm createRealm()
+  {
+    return SecurityFactory.eINSTANCE.createRealm();
   }
 
   protected CDOPermission getPermission(Permission permission)
@@ -289,6 +283,59 @@ public class SecurityManager implements InternalSecurityManager
     }
 
     return result;
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+
+    String repositoryName = repository.getName();
+    String acceptorName = repositoryName + "_security";
+
+    acceptor = Net4jUtil.getAcceptor(container, "jvm", acceptorName);
+    connector = Net4jUtil.getConnector(container, "jvm", acceptorName);
+
+    CDONet4jSessionConfiguration config = CDONet4jUtil.createNet4jSessionConfiguration();
+    config.setConnector(connector);
+    config.setRepositoryName(repositoryName);
+
+    CDONet4jSession session = config.openNet4jSession();
+    transaction = session.openTransaction();
+
+    boolean firstTime = !transaction.hasResource(realmPath);
+    if (firstTime)
+    {
+      CDOResource resource = transaction.createResource(realmPath);
+      realm = createRealm();
+      resource.getContents().add(realm);
+    }
+    else
+    {
+      CDOResource resource = transaction.getResource(realmPath);
+      realm = (Realm)resource.getContents().get(0);
+    }
+
+    initCommitHandlers(firstTime);
+    transaction.commit();
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    users.clear();
+    realm = null;
+
+    transaction.getSession().close();
+    transaction = null;
+
+    connector.close();
+    connector = null;
+
+    acceptor.close();
+    acceptor = null;
+
+    super.doDeactivate();
   }
 
   /**

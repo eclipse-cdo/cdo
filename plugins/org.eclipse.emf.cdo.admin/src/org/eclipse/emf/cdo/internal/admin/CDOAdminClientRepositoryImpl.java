@@ -171,6 +171,11 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
 
   public CDONet4jSession openSession()
   {
+    return openSession(null);
+  }
+
+  public CDONet4jSession openSession(SessionConfigurator configurator)
+  {
     IConnector connector = admin.getConnector();
     if (connector == null)
     {
@@ -180,6 +185,11 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
     CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setConnector(connector);
     configuration.setRepositoryName(name);
+
+    if (configurator != null)
+    {
+      configurator.prepare(configuration);
+    }
 
     return configuration.openNet4jSession();
   }

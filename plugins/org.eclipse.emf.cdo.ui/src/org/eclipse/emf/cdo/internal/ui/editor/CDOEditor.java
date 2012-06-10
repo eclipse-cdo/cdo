@@ -168,9 +168,11 @@ import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.views.contentoutline.ContentOutline;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
+import org.eclipse.ui.views.properties.IPropertySheetEntry;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheet;
 import org.eclipse.ui.views.properties.PropertySheetPage;
+import org.eclipse.ui.views.properties.PropertySheetSorter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -1719,10 +1721,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * This accesses a cached version of the property sheet. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
-  public IPropertySheetPage getPropertySheetPage()
+  public IPropertySheetPage getPropertySheetPageGen()
   {
     if (propertySheetPage == null)
     {
@@ -1744,7 +1745,47 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       };
       propertySheetPage.setPropertySourceProvider(new AdapterFactoryContentProvider(adapterFactory));
     }
+    return propertySheetPage;
+  }
 
+  /**
+   * This accesses a cached version of the property sheet. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
+   * @generated NOT
+   */
+  public IPropertySheetPage getPropertySheetPage()
+  {
+    if (propertySheetPage == null)
+    {
+      propertySheetPage = new ExtendedPropertySheetPage(editingDomain)
+      {
+        {
+          setSorter(new PropertySheetSorter()
+          {
+            @Override
+            public void sort(IPropertySheetEntry[] entries)
+            {
+              // Intentionally left empty
+            }
+          });
+        }
+
+        @Override
+        public void setSelectionToViewer(List<?> selection)
+        {
+          CDOEditor.this.setSelectionToViewer(selection);
+          CDOEditor.this.setFocus();
+        }
+
+        @Override
+        public void setActionBars(IActionBars actionBars)
+        {
+          super.setActionBars(actionBars);
+          getActionBarContributor().shareGlobalActions(this, actionBars);
+        }
+      };
+      propertySheetPage.setPropertySourceProvider(new AdapterFactoryContentProvider(adapterFactory));
+    }
     return propertySheetPage;
   }
 

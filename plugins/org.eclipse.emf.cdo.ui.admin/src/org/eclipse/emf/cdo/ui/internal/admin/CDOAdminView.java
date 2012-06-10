@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.admin.CDOAdminClientManager;
 import org.eclipse.emf.cdo.admin.CDOAdminClientRepository;
 import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.ui.internal.admin.bundle.OM;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
@@ -23,6 +24,9 @@ import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 import org.eclipse.net4j.ui.Net4jItemProvider.RemoveAction;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.security.CredentialsProviderFactory;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
@@ -193,6 +197,22 @@ public class CDOAdminView extends ContainerView
     super.fillLocalToolBar(manager);
   }
 
+  protected IPasswordCredentialsProvider getCredentialsProvider()
+  {
+    IManagedContainer container = adminManager.getContainer();
+    String productGroup = CredentialsProviderFactory.PRODUCT_GROUP;
+    String factoryType = "interactive";
+    IPasswordCredentialsProvider credentialsProvider = (IPasswordCredentialsProvider)container.getElement(productGroup,
+        factoryType, null);
+
+    if (credentialsProvider == null)
+    {
+      credentialsProvider = UIUtil.createInteractiveCredentialsProvider();
+    }
+
+    return credentialsProvider;
+  }
+
   public static int getNextSessionNumber()
   {
     return ++lastSessionNumber;
@@ -232,7 +252,7 @@ public class CDOAdminView extends ContainerView
   /**
    * @author Eike Stepper
    */
-  public class OpenSessionAction extends LongRunningAction
+  public class OpenSessionAction extends LongRunningAction implements CDOAdminClientRepository.SessionConfigurator
   {
     private CDOAdminClientRepository repository;
 
@@ -251,13 +271,19 @@ public class CDOAdminView extends ContainerView
     @Override
     protected void doRun(IProgressMonitor progressMonitor) throws Exception
     {
-      CDONet4jSession session = repository.openSession();
+      CDONet4jSession session = repository.openSession(this);
       if (session != null)
       {
         IManagedContainer container = adminManager.getContainer();
         String description = "session" + getNextSessionNumber();
         container.putElement(CDOSessionFactory.PRODUCT_GROUP, "admin", description, session);
       }
+    }
+
+    public void prepare(CDONet4jSessionConfiguration configuration)
+    {
+      IPasswordCredentialsProvider credentialsProvider = getCredentialsProvider();
+      configuration.getAuthenticator().setCredentialsProvider(credentialsProvider);
     }
   }
 }

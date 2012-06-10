@@ -46,8 +46,6 @@
 
       <mappingStrategy type="horizontal"> <!-- callout -->
         <property name="qualifiedNames" value="true"/>
-        <property name="toManyReferences" value="ONE_TABLE_PER_REFERENCE"/>
-        <property name="toOneReferences" value="LIKE_ATTRIBUTES"/>
 
         <!--
           Per default, the objectTypeCache is in-memory and contains

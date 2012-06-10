@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.security.Check;
 import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.RealmUtil;
-import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.SecurityItem;
 import org.eclipse.emf.cdo.security.User;
@@ -31,8 +30,8 @@ import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.server.security.ISecurityManager;
-import org.eclipse.emf.cdo.server.spi.security.IRoleProvider;
+import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
+import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
@@ -45,10 +44,7 @@ import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.container.ContainerEventAdapter;
-import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -58,13 +54,15 @@ import org.eclipse.net4j.util.security.SecurityUtil;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public class SecurityManager implements ISecurityManager
+public class SecurityManager implements InternalSecurityManager
 {
   private final Map<String, User> users = new HashMap<String, User>();
 
@@ -80,20 +78,6 @@ public class SecurityManager implements ISecurityManager
 
   private final IManagedContainer container;
 
-  private final IListener containerListener = new ContainerEventAdapter<Object>()
-  {
-    @Override
-    protected void notifyContainerEvent(IContainerEvent<Object> event)
-    {
-      synchronized (containerListener)
-      {
-        roleProviders = null;
-      }
-    }
-  };
-
-  private IRoleProvider[] roleProviders;
-
   private IAcceptor acceptor;
 
   private IConnector connector;
@@ -101,6 +85,8 @@ public class SecurityManager implements ISecurityManager
   private CDOTransaction transaction;
 
   private Realm realm;
+
+  private List<CommitHandler> commitHandlers = new ArrayList<CommitHandler>();
 
   public SecurityManager(IRepository repository, String realmPath, IManagedContainer container)
   {
@@ -159,6 +145,11 @@ public class SecurityManager implements ISecurityManager
     acceptor = null;
   }
 
+  public final IManagedContainer getContainer()
+  {
+    return container;
+  }
+
   public final IRepository getRepository()
   {
     return repository;
@@ -167,11 +158,6 @@ public class SecurityManager implements ISecurityManager
   public final String getRealmPath()
   {
     return realmPath;
-  }
-
-  public final IManagedContainer getContainer()
-  {
-    return container;
   }
 
   public Realm getRealm()
@@ -217,121 +203,93 @@ public class SecurityManager implements ISecurityManager
     }
   }
 
+  public CommitHandler[] getCommitHandlers()
+  {
+    synchronized (commitHandlers)
+    {
+      return commitHandlers.toArray(new CommitHandler[commitHandlers.size()]);
+    }
+  }
+
+  public void addCommitHandler(CommitHandler handler)
+  {
+    synchronized (commitHandlers)
+    {
+      if (!commitHandlers.contains(handler))
+      {
+        commitHandlers.add(handler);
+      }
+    }
+  }
+
+  public void removeCommitHandler(CommitHandler handler)
+  {
+    synchronized (commitHandlers)
+    {
+      commitHandlers.remove(handler);
+    }
+  }
+
+  protected void handleCommit(CommitContext commitContext, User user)
+  {
+    for (CommitHandler handler : getCommitHandlers())
+    {
+      try
+      {
+        handler.handleCommit(this, commitContext, user);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
+  }
+
+  protected CDOPermission getPermission(Permission permission)
+  {
+    switch (permission)
+    {
+    case READ:
+      return CDOPermission.READ;
+
+    case WRITE:
+      return CDOPermission.WRITE;
+
+    default:
+      return CDOPermission.NONE;
+    }
+  }
+
   protected CDOPermission getPermission(CDORevision revision, CDORevisionProvider revisionProvider,
       CDOBranchPoint securityContext, User user)
   {
-    CDOPermission result = CDOPermission.WRITE;
-
-    for (Role role : user.getRoles())
+    CDOPermission result = getPermission(user.getDefaultPermission());
+    if (result == CDOPermission.WRITE)
     {
-      for (Check check : role.getChecks())
+      return result;
+    }
+
+    for (Check check : user.getAllChecks())
+    {
+      CDOPermission permission = getPermission(check.getPermission());
+      if (permission.ordinal() <= result.ordinal())
       {
+        // Avoid expensive calls to Check.isApplicable() if the permission wouldn't increase
+        continue;
+      }
+
+      if (check.isApplicable(revision, revisionProvider, securityContext))
+      {
+        result = permission;
         if (result == CDOPermission.WRITE)
         {
-          if (check.isApplicable(revision, revisionProvider, securityContext))
-          {
-            if (check.getPermission() == Permission.READ)
-            {
-              result = CDOPermission.READ;
-            }
-          }
-        }
-        else
-        {
-          // --> result == CDOPermission.READ
-          if (check.isApplicable(revision, revisionProvider, securityContext))
-          {
-            if (check.getPermission() == Permission.READ)
-            {
-              result = CDOPermission.READ;
-            }
-          }
+          return result;
         }
       }
     }
 
-    // EList<Role> userRoles = null;
-    //
-    // Set<Role> readRoles = getNeededRoles(revision, revisionProvider, securityContext, CDOPermission.READ);
-    // if (readRoles == null || !readRoles.isEmpty())
-    // {
-    // userRoles = user.getAllRoles();
-    //
-    // for (Role readRole : readRoles)
-    // {
-    // if (!userRoles.contains(readRole))
-    // {
-    // return CDOPermission.NONE;
-    // }
-    // }
-    // }
-    //
-    // Set<Role> writeRoles = getNeededRoles(revision, revisionProvider, securityContext, CDOPermission.WRITE);
-    // if (writeRoles == null || !writeRoles.isEmpty())
-    // {
-    // if (userRoles == null)
-    // {
-    // userRoles = user.getAllRoles();
-    // }
-    //
-    // for (Role writeRole : writeRoles)
-    // {
-    // if (!userRoles.contains(writeRole))
-    // {
-    // return CDOPermission.READ;
-    // }
-    // }
-    // }
-    //
     return result;
   }
-
-  // protected Set<Role> getNeededRoles(CDORevision revision, CDORevisionProvider revisionProvider,
-  // CDOBranchPoint securityContext, CDOPermission permission)
-  // {
-  // Set<Role> result = null;
-  // for (IRoleProvider roleProvider : getRoleProviders())
-  // {
-  // try
-  // {
-  // Set<Role> roles = roleProvider.getRoles(this, securityContext, revisionProvider, revision, permission);
-  // if (roles != null && !roles.isEmpty())
-  // {
-  // if (result == null)
-  // {
-  // result = new HashSet<Role>();
-  // }
-  //
-  // result.addAll(roles);
-  // }
-  // }
-  // catch (Exception ex)
-  // {
-  // OM.LOG.error(ex);
-  // }
-  // }
-  //
-  // return result;
-  // }
-  //
-  // protected IRoleProvider[] getRoleProviders()
-  // {
-  // synchronized (containerListener)
-  // {
-  // if (roleProviders == null)
-  // {
-  // List<IRoleProvider> result = new ArrayList<IRoleProvider>();
-  // for (String factoryType : container.getFactoryTypes(IRoleProvider.Factory.PRODUCT_GROUP))
-  // {
-  // result.add((IRoleProvider)container.getElement(IRoleProvider.Factory.PRODUCT_GROUP, factoryType, null));
-  // }
-  //
-  // roleProviders = result.toArray(new IRoleProvider[result.size()]);
-  // }
-  // }
-  //
-  // return roleProviders;
-  // }
 
   /**
    * @author Eike Stepper
@@ -419,21 +377,11 @@ public class SecurityManager implements ISecurityManager
     public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
         OMMonitor monitor) throws RuntimeException
     {
-      // for (IRoleProvider roleProvider : getRoleProviders())
-      // {
-      // try
-      // {
-      // roleProvider.handleCommit(SecurityManager.this, commitContext);
-      // }
-      // catch (Exception ex)
-      // {
-      // OM.LOG.error(ex);
-      // }
-      // }
-
       CDOBranchPoint securityContext = commitContext.getBranchPoint();
       String userID = commitContext.getUserID();
       User user = getUser(userID);
+
+      handleCommit(commitContext, user);
 
       checkRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getNewObjects());
       checkRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getDirtyObjects());

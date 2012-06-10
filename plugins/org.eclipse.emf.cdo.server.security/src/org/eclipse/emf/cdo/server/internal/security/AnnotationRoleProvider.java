@@ -22,11 +22,9 @@ import org.eclipse.emf.cdo.security.RealmUtil;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.SecurityItem;
+import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
-import org.eclipse.emf.cdo.server.security.ISecurityManager;
-import org.eclipse.emf.cdo.server.spi.security.IRoleProvider;
-
-import org.eclipse.net4j.util.factory.ProductCreationException;
+import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -44,7 +42,7 @@ import java.util.WeakHashMap;
 /**
  * @author Eike Stepper
  */
-public class AnnotationRoleProvider implements IRoleProvider
+public class AnnotationRoleProvider implements InternalSecurityManager.CommitHandler
 {
   public static final String SOURCE_URI = "http://www.eclipse.org/CDO/Security";
 
@@ -54,7 +52,7 @@ public class AnnotationRoleProvider implements IRoleProvider
 
   public static final String DELIMITERS = " ,;|";
 
-  private final Set<ISecurityManager> initialized = new HashSet<ISecurityManager>();
+  private final Set<InternalSecurityManager> initialized = new HashSet<InternalSecurityManager>();
 
   private final Map<EClass, EClassRoles> cache = new WeakHashMap<EClass, EClassRoles>();
 
@@ -62,7 +60,7 @@ public class AnnotationRoleProvider implements IRoleProvider
   {
   }
 
-  private void initialize(ISecurityManager securityManager)
+  private void initialize(InternalSecurityManager securityManager)
   {
     if (initialized.add(securityManager))
     {
@@ -71,7 +69,7 @@ public class AnnotationRoleProvider implements IRoleProvider
     }
   }
 
-  private void initialize(ISecurityManager securityManager, CDOPackageUnit[] packageUnits)
+  private void initialize(InternalSecurityManager securityManager, CDOPackageUnit[] packageUnits)
   {
     if (packageUnits != null && packageUnits.length != 0)
     {
@@ -94,7 +92,7 @@ public class AnnotationRoleProvider implements IRoleProvider
     }
   }
 
-  private void initialize(ISecurityManager securityManager, EClass eClass, String key)
+  private void initialize(InternalSecurityManager securityManager, EClass eClass, String key)
   {
     String annotation = EcoreUtil.getAnnotation(eClass, SOURCE_URI, key);
     if (annotation == null || annotation.length() == 0)
@@ -122,13 +120,13 @@ public class AnnotationRoleProvider implements IRoleProvider
     }
   }
 
-  public void handleCommit(ISecurityManager securityManager, CommitContext commitContext)
+  public void handleCommit(InternalSecurityManager securityManager, CommitContext commitContext, User user)
   {
     initialize(securityManager);
     initialize(securityManager, commitContext.getNewPackageUnits());
   }
 
-  public Set<Role> getRoles(ISecurityManager securityManager, CDOBranchPoint securityContext,
+  private Set<Role> getRoles(InternalSecurityManager securityManager, CDOBranchPoint securityContext,
       CDORevisionProvider revisionProvider, CDORevision revision, CDOPermission permission)
   {
     initialize(securityManager);
@@ -137,7 +135,7 @@ public class AnnotationRoleProvider implements IRoleProvider
     return getRoles(securityManager, eClass, permission);
   }
 
-  private Set<Role> getRoles(ISecurityManager securityManager, EClass eClass, CDOPermission permission)
+  private Set<Role> getRoles(InternalSecurityManager securityManager, EClass eClass, CDOPermission permission)
   {
     EClassRoles eClassRoles = cache.get(eClass);
     if (eClassRoles == null)
@@ -173,7 +171,7 @@ public class AnnotationRoleProvider implements IRoleProvider
     }
   }
 
-  private Set<Role> getRoles(ISecurityManager securityManager, EClass eClass, String key)
+  private Set<Role> getRoles(InternalSecurityManager securityManager, EClass eClass, String key)
   {
     String annotation = EcoreUtil.getAnnotation(eClass, SOURCE_URI, key);
     if (annotation == null || annotation.length() == 0)
@@ -239,25 +237,6 @@ public class AnnotationRoleProvider implements IRoleProvider
     public void setWriteRoles(Set<Role> writeRoles)
     {
       this.writeRoles = writeRoles;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static class Factory extends IRoleProvider.Factory
-  {
-    public static final String TYPE = "annotation";
-
-    public Factory()
-    {
-      super(TYPE);
-    }
-
-    @Override
-    public AnnotationRoleProvider create(String description) throws ProductCreationException
-    {
-      return new AnnotationRoleProvider();
     }
   }
 }

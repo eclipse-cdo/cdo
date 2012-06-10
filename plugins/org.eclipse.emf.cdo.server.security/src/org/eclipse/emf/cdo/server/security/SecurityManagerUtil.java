@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.server.security;
 
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.internal.security.AnnotationRoleProvider;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -36,10 +35,5 @@ public final class SecurityManagerUtil
       IManagedContainer container)
   {
     return new org.eclipse.emf.cdo.server.internal.security.SecurityManager(repository, realmPath, container);
-  }
-
-  public static void prepareContainer(IManagedContainer container)
-  {
-    container.registerFactory(new AnnotationRoleProvider.Factory());
   }
 }

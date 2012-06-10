@@ -5,10 +5,16 @@ package org.eclipse.emf.cdo.security.impl;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.security.ResourceCheck;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,6 +31,8 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class ResourceCheckImpl extends CheckImpl implements ResourceCheck
 {
+  private Pattern pattern;
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -66,9 +74,50 @@ public class ResourceCheckImpl extends CheckImpl implements ResourceCheck
     eSet(SecurityPackage.Literals.RESOURCE_CHECK__PATTERN, newPattern);
   }
 
+  @Override
+  public void eSet(EStructuralFeature eFeature, Object newValue)
+  {
+    super.eSet(eFeature, newValue);
+    if (eFeature == SecurityPackage.Literals.RESOURCE_CHECK__PATTERN)
+    {
+      String value = (String)newValue;
+      pattern = compilePattern(value);
+    }
+  }
+
+  private Pattern compilePattern(String value)
+  {
+    if (value == null)
+    {
+      return null;
+    }
+
+    try
+    {
+      return Pattern.compile(value);
+    }
+    catch (PatternSyntaxException ex)
+    {
+      return null;
+    }
+  }
+
   public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
-    return false;
+    if (pattern == null)
+    {
+      return false;
+    }
+
+    if (revisionProvider == null)
+    {
+      return false;
+    }
+
+    String path = CDORevisionUtil.getResourceNodePath(revision, revisionProvider);
+
+    Matcher matcher = pattern.matcher(path);
+    return matcher.matches();
   }
 
 } // ResourceCheckImpl

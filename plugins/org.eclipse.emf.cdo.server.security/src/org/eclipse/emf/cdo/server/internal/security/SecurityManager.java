@@ -19,11 +19,16 @@ import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.security.Check;
+import org.eclipse.emf.cdo.security.ClassCheck;
+import org.eclipse.emf.cdo.security.Directory;
+import org.eclipse.emf.cdo.security.Group;
 import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.RealmUtil;
+import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.SecurityItem;
+import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.security.UserPassword;
 import org.eclipse.emf.cdo.server.IPermissionManager;
@@ -54,6 +59,8 @@ import org.eclipse.net4j.util.security.IUserManager;
 import org.eclipse.net4j.util.security.SecurityUtil;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.ArrayList;
@@ -76,6 +83,8 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   private final InternalRepository repository;
 
+  private final List<CommitHandler> commitHandlers = new ArrayList<CommitHandler>();
+
   private final String realmPath;
 
   private final IManagedContainer container;
@@ -88,7 +97,11 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   private Realm realm;
 
-  private List<CommitHandler> commitHandlers = new ArrayList<CommitHandler>();
+  private EList<SecurityItem> newUsers;
+
+  private EList<SecurityItem> newGroups;
+
+  private EList<SecurityItem> newRoles;
 
   public SecurityManager(IRepository repository, String realmPath, IManagedContainer container)
   {
@@ -238,7 +251,63 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   protected Realm createRealm()
   {
-    return SecurityFactory.eINSTANCE.createRealm();
+    Realm realm = SecurityFactory.eINSTANCE.createRealm();
+
+    // Create directories
+
+    Directory users = SecurityFactory.eINSTANCE.createDirectory();
+    users.setName("Users");
+    realm.getItems().add(users);
+    newUsers = users.getItems();
+
+    Directory groups = SecurityFactory.eINSTANCE.createDirectory();
+    groups.setName("Groups");
+    realm.getItems().add(groups);
+    newGroups = groups.getItems();
+
+    Directory roles = SecurityFactory.eINSTANCE.createDirectory();
+    roles.setName("Roles");
+    realm.getItems().add(roles);
+    newRoles = roles.getItems();
+
+    // Create items
+
+    User admin = SecurityFactory.eINSTANCE.createUser();
+    admin.setId("Administrator");
+    newUsers.add(admin);
+
+    Group admins = SecurityFactory.eINSTANCE.createGroup();
+    admins.setId("Administrators");
+    admins.getUsers().add(admin);
+    newGroups.add(admins);
+
+    // Create administration role
+
+    Role administration = SecurityFactory.eINSTANCE.createRole();
+    administration.setId("Administration");
+    administration.getAssignees().add(admins);
+    newRoles.add(administration);
+
+    ClassCheck check = SecurityFactory.eINSTANCE.createClassCheck();
+    check.setPermission(Permission.WRITE);
+    administration.getChecks().add(check);
+    EList<EClass> classes = check.getClasses();
+
+    for (EClassifier eClassifier : SecurityPackage.eINSTANCE.getEClassifiers())
+    {
+      if (eClassifier instanceof EClass)
+      {
+        EClass eClass = (EClass)eClassifier;
+        if (eClass.isInterface() || eClass.isAbstract() || eClass == SecurityPackage.Literals.USER_PASSWORD)
+        {
+          continue;
+        }
+
+        classes.add(eClass);
+      }
+    }
+
+    return realm;
   }
 
   protected CDOPermission getPermission(Permission permission)

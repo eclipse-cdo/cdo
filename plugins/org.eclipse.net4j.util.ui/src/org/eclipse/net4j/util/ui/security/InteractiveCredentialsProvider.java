@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbenchWindow;
 
 /**
  * @author Eike Stepper
@@ -40,7 +41,19 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
     {
       public void run()
       {
-        CredentialsDialog dialog = new CredentialsDialog(new Shell(display));
+        Shell shell;
+
+        try
+        {
+          IWorkbenchWindow window = UIUtil.getActiveWorkbenchWindow();
+          shell = window.getShell();
+        }
+        catch (Exception ex)
+        {
+          shell = new Shell(display);
+        }
+
+        CredentialsDialog dialog = new CredentialsDialog(shell);
         if (dialog.open() == CredentialsDialog.OK)
         {
           credentials[0] = dialog.getCredentials();

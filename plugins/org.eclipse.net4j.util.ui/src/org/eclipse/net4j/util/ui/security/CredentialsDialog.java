@@ -19,6 +19,7 @@ import org.eclipse.net4j.util.ui.widgets.BaseDialog;
 
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -35,6 +36,10 @@ public class CredentialsDialog extends BaseDialog<Viewer>
 
   private static final String MESSAGE = Messages.getString("CredentialsDialog_1"); //$NON-NLS-1$
 
+  private static final int WIDTH = 300;
+
+  private static final int HEIGHT = 220;
+
   private Text userIDControl;
 
   private Text passwordControl;
@@ -50,7 +55,14 @@ public class CredentialsDialog extends BaseDialog<Viewer>
   protected void configureShell(Shell newShell)
   {
     super.configureShell(newShell);
-    newShell.setSize(300, 220);
+
+    Composite parent = newShell.getParent();
+    Rectangle bounds = parent.getBounds();
+
+    int x = bounds.x + (bounds.width >> 1) - (WIDTH >> 1);
+    int y = bounds.y + (bounds.height >> 1) - (HEIGHT >> 1);
+
+    newShell.setBounds(x, y, WIDTH, HEIGHT);
   }
 
   public IPasswordCredentials getCredentials()

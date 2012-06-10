@@ -22,10 +22,9 @@
     <property name="allowInterruptRunningQueries" value="true"/>
     <property name="idGenerationLocation" value="STORE"/> <!-- Possible values: STORE | CLIENT -->
 
-		<securityManager type="default" realmPath="admins/security"/>
-
     <!-- Example http://bugs.eclipse.org/380629
-			<securityManager type="annotation" realmPath="security"/>
+			<securityManager type="default" realmPath="/security"/>
+			<securityManager type="annotation" realmPath="/security"/>
     -->
 
     <!-- Example http://bugs.eclipse.org/302775

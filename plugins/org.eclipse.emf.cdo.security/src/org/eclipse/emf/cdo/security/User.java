@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.security.User#getGroups <em>Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getLabel <em>Label</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getFirstName <em>First Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getLastName <em>Last Name</em>}</li>
@@ -28,7 +29,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.cdo.security.User#getDefaultPermission <em>Default Permission</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#isLocked <em>Locked</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getPassword <em>Password</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.User#getGroups <em>Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getAllGroups <em>All Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getAllRoles <em>All Roles</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getAllChecks <em>All Checks</em>}</li>

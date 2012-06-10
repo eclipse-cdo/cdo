@@ -69,13 +69,13 @@ public class UserItemProvider extends AssigneeItemProvider implements IEditingDo
     {
       super.getPropertyDescriptors(object);
 
+      addGroupsPropertyDescriptor(object);
       addLabelPropertyDescriptor(object);
       addFirstNamePropertyDescriptor(object);
       addLastNamePropertyDescriptor(object);
       addEmailPropertyDescriptor(object);
       addDefaultPermissionOverridePropertyDescriptor(object);
       addLockedPropertyDescriptor(object);
-      addGroupsPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -201,18 +201,32 @@ public class UserItemProvider extends AssigneeItemProvider implements IEditingDo
    * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
    * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
    * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
+  public Collection<? extends EStructuralFeature> getChildrenFeaturesGen(Object object)
   {
     if (childrenFeatures == null)
     {
       super.getChildrenFeatures(object);
       childrenFeatures.add(SecurityPackage.Literals.USER__PASSWORD);
     }
+    return childrenFeatures;
+  }
+
+  /**
+   * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+   * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+   * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  @Override
+  public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
+  {
+    Collection<? extends EStructuralFeature> childrenFeatures = getChildrenFeaturesGen(object);
+    childrenFeatures.remove(SecurityPackage.Literals.USER__PASSWORD);
     return childrenFeatures;
   }
 

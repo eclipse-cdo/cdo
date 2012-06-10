@@ -496,7 +496,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    */
   public EReference getUser_Groups()
   {
-    return (EReference)userEClass.getEStructuralFeatures().get(8);
+    return (EReference)userEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -546,7 +546,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    */
   public EAttribute getUser_Label()
   {
-    return (EAttribute)userEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)userEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -556,7 +556,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    */
   public EAttribute getUser_FirstName()
   {
-    return (EAttribute)userEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)userEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -566,7 +566,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    */
   public EAttribute getUser_LastName()
   {
-    return (EAttribute)userEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)userEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -576,7 +576,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    */
   public EAttribute getUser_Email()
   {
-    return (EAttribute)userEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)userEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -586,7 +586,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    */
   public EAttribute getUser_DefaultPermissionOverride()
   {
-    return (EAttribute)userEClass.getEStructuralFeatures().get(4);
+    return (EAttribute)userEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -596,7 +596,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    */
   public EAttribute getUser_DefaultPermission()
   {
-    return (EAttribute)userEClass.getEStructuralFeatures().get(5);
+    return (EAttribute)userEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -606,7 +606,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    */
   public EAttribute getUser_Locked()
   {
-    return (EAttribute)userEClass.getEStructuralFeatures().get(6);
+    return (EAttribute)userEClass.getEStructuralFeatures().get(7);
   }
 
   /**
@@ -616,7 +616,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    */
   public EReference getUser_Password()
   {
-    return (EReference)userEClass.getEStructuralFeatures().get(7);
+    return (EReference)userEClass.getEStructuralFeatures().get(8);
   }
 
   /**
@@ -805,6 +805,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     createEReference(groupEClass, GROUP__ALL_ROLES);
 
     userEClass = createEClass(USER);
+    createEReference(userEClass, USER__GROUPS);
     createEAttribute(userEClass, USER__LABEL);
     createEAttribute(userEClass, USER__FIRST_NAME);
     createEAttribute(userEClass, USER__LAST_NAME);
@@ -813,7 +814,6 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     createEAttribute(userEClass, USER__DEFAULT_PERMISSION);
     createEAttribute(userEClass, USER__LOCKED);
     createEReference(userEClass, USER__PASSWORD);
-    createEReference(userEClass, USER__GROUPS);
     createEReference(userEClass, USER__ALL_GROUPS);
     createEReference(userEClass, USER__ALL_ROLES);
     createEReference(userEClass, USER__ALL_CHECKS);
@@ -1000,6 +1000,11 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
         "allRoles", null, 0, -1, Group.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
     initEClass(userEClass, User.class, "User", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEReference(
+        getUser_Groups(),
+        this.getGroup(),
+        this.getGroup_Users(),
+        "groups", null, 0, -1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEAttribute(
         getUser_Label(),
         theEcorePackage.getEString(),
@@ -1033,11 +1038,6 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
         this.getUserPassword(),
         null,
         "password", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-    initEReference(
-        getUser_Groups(),
-        this.getGroup(),
-        this.getGroup_Users(),
-        "groups", null, 0, -1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEReference(
         getUser_AllGroups(),
         this.getGroup(),

@@ -499,13 +499,22 @@ public interface SecurityPackage extends EPackage
   int USER__ROLES = ASSIGNEE__ROLES;
 
   /**
+   * The feature id for the '<em><b>Groups</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int USER__GROUPS = ASSIGNEE_FEATURE_COUNT + 0;
+
+  /**
    * The feature id for the '<em><b>Label</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int USER__LABEL = ASSIGNEE_FEATURE_COUNT + 0;
+  int USER__LABEL = ASSIGNEE_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>First Name</b></em>' attribute.
@@ -514,7 +523,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__FIRST_NAME = ASSIGNEE_FEATURE_COUNT + 1;
+  int USER__FIRST_NAME = ASSIGNEE_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Last Name</b></em>' attribute.
@@ -523,7 +532,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__LAST_NAME = ASSIGNEE_FEATURE_COUNT + 2;
+  int USER__LAST_NAME = ASSIGNEE_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Email</b></em>' attribute.
@@ -532,7 +541,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__EMAIL = ASSIGNEE_FEATURE_COUNT + 3;
+  int USER__EMAIL = ASSIGNEE_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Default Permission Override</b></em>' attribute.
@@ -541,7 +550,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__DEFAULT_PERMISSION_OVERRIDE = ASSIGNEE_FEATURE_COUNT + 4;
+  int USER__DEFAULT_PERMISSION_OVERRIDE = ASSIGNEE_FEATURE_COUNT + 5;
 
   /**
    * The feature id for the '<em><b>Default Permission</b></em>' attribute.
@@ -550,7 +559,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__DEFAULT_PERMISSION = ASSIGNEE_FEATURE_COUNT + 5;
+  int USER__DEFAULT_PERMISSION = ASSIGNEE_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>Locked</b></em>' attribute.
@@ -559,7 +568,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__LOCKED = ASSIGNEE_FEATURE_COUNT + 6;
+  int USER__LOCKED = ASSIGNEE_FEATURE_COUNT + 7;
 
   /**
    * The feature id for the '<em><b>Password</b></em>' containment reference.
@@ -568,16 +577,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__PASSWORD = ASSIGNEE_FEATURE_COUNT + 7;
-
-  /**
-   * The feature id for the '<em><b>Groups</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int USER__GROUPS = ASSIGNEE_FEATURE_COUNT + 8;
+  int USER__PASSWORD = ASSIGNEE_FEATURE_COUNT + 8;
 
   /**
    * The feature id for the '<em><b>All Groups</b></em>' reference list.

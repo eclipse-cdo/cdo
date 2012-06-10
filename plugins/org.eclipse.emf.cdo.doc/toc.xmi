@@ -14,6 +14,7 @@
     <packages name="org.eclipse.emf.cdo.util"/>
     <packages name="org.eclipse.emf.cdo.view"/>
     <packages name="org.eclipse.emf.internal.cdo"/>
+    <packages name="org.eclipse.emf.spi.cdo"/>
     <extensionPoints name="viewProviders"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.admin" label="CDO Model Repository Client Admin Support">
@@ -42,6 +43,7 @@
     <packages name="org.eclipse.emf.cdo.ui.ide"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.workspace" label="CDO Model Repository Client Workspace">
+    <packages name="org.eclipse.emf.cdo.spi.workspace"/>
     <packages name="org.eclipse.emf.cdo.workspace"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.workspace.efs" label="CDO Model Repository Client Workspace EFS">
@@ -62,6 +64,14 @@
     <packages name="org.eclipse.emf.cdo.common.revision.delta"/>
     <packages name="org.eclipse.emf.cdo.common.security"/>
     <packages name="org.eclipse.emf.cdo.common.util"/>
+    <packages name="org.eclipse.emf.cdo.spi.common"/>
+    <packages name="org.eclipse.emf.cdo.spi.common.admin"/>
+    <packages name="org.eclipse.emf.cdo.spi.common.branch"/>
+    <packages name="org.eclipse.emf.cdo.spi.common.commit"/>
+    <packages name="org.eclipse.emf.cdo.spi.common.id"/>
+    <packages name="org.eclipse.emf.cdo.spi.common.lock"/>
+    <packages name="org.eclipse.emf.cdo.spi.common.model"/>
+    <packages name="org.eclipse.emf.cdo.spi.common.revision"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.security.edit" label="CDO Model Repository Security Edit Support">
     <packages name="org.eclipse.emf.cdo.security.provider"/>
@@ -78,12 +88,14 @@
     <packages name="org.eclipse.emf.cdo.server"/>
     <packages name="org.eclipse.emf.cdo.server.embedded"/>
     <packages name="org.eclipse.emf.cdo.server.mem"/>
+    <packages name="org.eclipse.emf.cdo.spi.server"/>
     <extensionPoints name="appExtensions"/>
     <extensionPoints name="repositoryFactories"/>
     <extensionPoints name="storeFactories"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.admin" label="CDO Model Repository Server Admin Support">
     <packages name="org.eclipse.emf.cdo.server.admin"/>
+    <packages name="org.eclipse.emf.cdo.server.spi.admin"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.db" label="CDO Model Repository Server DB">
     <packages name="org.eclipse.emf.cdo.server.db"/>
@@ -111,5 +123,6 @@
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.security" label="CDO Model Repository Server Security Support">
     <packages name="org.eclipse.emf.cdo.server.security"/>
+    <packages name="org.eclipse.emf.cdo.server.spi.security"/>
   </article:Plugin>
 </xmi:XMI>

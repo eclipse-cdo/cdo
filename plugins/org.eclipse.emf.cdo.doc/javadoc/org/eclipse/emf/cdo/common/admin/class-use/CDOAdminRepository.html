@@ -97,6 +97,10 @@ Packages that use <A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin
 <TD><A HREF="#org.eclipse.emf.cdo.common.admin"><B>org.eclipse.emf.cdo.common.admin</B></A></TD>
 <TD>Common concepts for the protocol to administer CDO repositories remotely.&nbsp;</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.common.admin"><B>org.eclipse.emf.cdo.spi.common.admin</B></A></TD>
+<TD>Common concepts for dealing with protocols and CDO administration-specific I/O.&nbsp;</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -169,6 +173,98 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin/CDOAdminR
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin/CDOAdminRepository.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdminRepository</A></CODE></FONT></TD>
 <TD><CODE><B>CDOAdmin.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin/CDOAdmin.html#waitForRepository(java.lang.String)">waitForRepository</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.spi.common.admin"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin/CDOAdminRepository.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdminRepository</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/admin/package-summary.html">org.eclipse.emf.cdo.spi.common.admin</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/admin/package-summary.html">org.eclipse.emf.cdo.spi.common.admin</A> that return <A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin/CDOAdminRepository.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdminRepository</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin/CDOAdminRepository.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdminRepository</A></CODE></FONT></TD>
+<TD><CODE><B>AbstractCDOAdmin.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/admin/AbstractCDOAdmin.html#createRepository(java.lang.String, java.lang.String, java.util.Map)">createRepository</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;type,
+                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;properties)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin/CDOAdminRepository.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdminRepository</A>[]</CODE></FONT></TD>
+<TD><CODE><B>AbstractCDOAdmin.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/admin/AbstractCDOAdmin.html#getRepositories()">getRepositories</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin/CDOAdminRepository.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdminRepository</A></CODE></FONT></TD>
+<TD><CODE><B>AbstractCDOAdmin.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/admin/AbstractCDOAdmin.html#getRepository(java.lang.String)">getRepository</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin/CDOAdminRepository.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdminRepository</A>[]</CODE></FONT></TD>
+<TD><CODE><B>AbstractCDOAdmin.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/admin/AbstractCDOAdmin.html#sortElements(org.eclipse.emf.cdo.common.admin.CDOAdminRepository[])">sortElements</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin/CDOAdminRepository.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdminRepository</A>[]&nbsp;array)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin/CDOAdminRepository.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdminRepository</A></CODE></FONT></TD>
+<TD><CODE><B>AbstractCDOAdmin.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/admin/AbstractCDOAdmin.html#waitForRepository(java.lang.String)">waitForRepository</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/admin/package-summary.html">org.eclipse.emf.cdo.spi.common.admin</A> with parameters of type <A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin/CDOAdminRepository.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdminRepository</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>AbstractCDOAdmin.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/admin/AbstractCDOAdmin.html#deleteRepository(org.eclipse.emf.cdo.common.admin.CDOAdminRepository, java.lang.String)">deleteRepository</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin/CDOAdminRepository.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdminRepository</A>&nbsp;repository,
+                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;type)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin/CDOAdminRepository.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdminRepository</A>[]</CODE></FONT></TD>
+<TD><CODE><B>AbstractCDOAdmin.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/admin/AbstractCDOAdmin.html#sortElements(org.eclipse.emf.cdo.common.admin.CDOAdminRepository[])">sortElements</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin/CDOAdminRepository.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdminRepository</A>[]&nbsp;array)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>AbstractCDOAdmin.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/admin/AbstractCDOAdmin.html#validateElement(org.eclipse.emf.cdo.common.admin.CDOAdminRepository)">validateElement</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin/CDOAdminRepository.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdminRepository</A>&nbsp;repository)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>

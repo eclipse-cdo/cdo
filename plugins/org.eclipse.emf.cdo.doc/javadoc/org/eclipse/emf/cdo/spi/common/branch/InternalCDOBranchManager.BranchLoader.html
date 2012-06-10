@@ -1,0 +1,382 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+InternalCDOBranchManager.BranchLoader (CDO Model Repository Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../../../html/book.css" TITLE="Style">
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="InternalCDOBranchManager.BranchLoader (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/InternalCDOBranchManager.BranchLoader.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.html" title="interface in org.eclipse.emf.cdo.spi.common.branch"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.BranchInfo.html" title="class in org.eclipse.emf.cdo.spi.common.branch"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../../index.html?org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="InternalCDOBranchManager.BranchLoader.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.emf.cdo.spi.common.branch</FONT>
+<BR>
+Interface InternalCDOBranchManager.BranchLoader</H2>
+<DL>
+<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/server/hibernate/IHibernateStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.hibernate">IHibernateStoreAccessor</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/server/mongodb/IMongoDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.mongodb">IMongoDBStoreAccessor</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalFailoverParticipant.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalFailoverParticipant</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSynchronizableRepository</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/server/objectivity/IObjectivityStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.objectivity">IObjectivityStoreAccessor</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.Raw</A></DD>
+</DL>
+<DL>
+<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/LongIDStoreAccessor.html" title="class in org.eclipse.emf.cdo.spi.server">LongIDStoreAccessor</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessor.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessor</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorBase.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorBase</A></DD>
+</DL>
+<DL>
+<DT><B>Enclosing interface:</B><DD><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager</A></DD>
+</DL>
+<HR>
+<DL>
+  <DT>public static interface <B>InternalCDOBranchManager.BranchLoader</B>
+</DL>
+
+<map id="APIVIZ" name="APIVIZ">
+<area shape="rect" id="node1" href="../../server/InternalRepository.html" title="&#171;interface&#187; InternalRepository (org.eclipse.emf.cdo.spi.server)" alt="" coords="5,85,208,139"/>
+<area shape="rect" id="node2" href="InternalCDOBranchManager.BranchLoader.html" title="&#171;interface&#187; InternalCDOBranchManager.BranchLoader" alt="" coords="195,5,461,45"/>
+<area shape="rect" id="node3" href="../../../server/IStoreAccessor.html" title="&#171;interface&#187; IStoreAccessor (org.eclipse.emf.cdo.server)" alt="" coords="237,85,419,139"/>
+<area shape="rect" id="node4" href="../../../../spi/cdo/CDOSessionProtocol.html" title="&#171;interface&#187; CDOSessionProtocol (org.eclipse.emf.spi.cdo)" alt="" coords="449,85,612,139"/>
+</map>
+
+<CENTER><IMG SRC="InternalCDOBranchManager.BranchLoader.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+
+
+
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.BranchInfo.html" title="class in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader.BranchInfo</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.SubBranchInfo.html" title="class in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader.SubBranchInfo</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#NEW_BRANCH">NEW_BRANCH</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Passed as the branchID in <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#createBranch(int, org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo)"><CODE>createBranch(int, BranchInfo)</CODE></A> causes a new non-local branch to be created.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#NEW_LOCAL_BRANCH">NEW_LOCAL_BRANCH</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Passed as the branchID in <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#createBranch(int, org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo)"><CODE>createBranch(int, BranchInfo)</CODE></A> causes a new local branch to be created.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#createBranch(int, org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo)">createBranch</A></B>(int&nbsp;branchID,
+             <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.BranchInfo.html" title="class in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader.BranchInfo</A>&nbsp;branchInfo)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a new branch with the given id and branch info.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.BranchInfo.html" title="class in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader.BranchInfo</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#loadBranch(int)">loadBranch</A></B>(int&nbsp;branchID)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#loadBranches(int, int, org.eclipse.emf.cdo.common.branch.CDOBranchHandler)">loadBranches</A></B>(int&nbsp;startID,
+             int&nbsp;endID,
+             <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchHandler.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchHandler</A>&nbsp;branchHandler)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.SubBranchInfo.html" title="class in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader.SubBranchInfo</A>[]</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#loadSubBranches(int)">loadSubBranches</A></B>(int&nbsp;branchID)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ FIELD DETAIL =========== -->
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Field Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="NEW_BRANCH"><!-- --></A><H3>
+NEW_BRANCH</H3>
+<PRE>
+static final int <B>NEW_BRANCH</B></PRE>
+<DL>
+<DD>Passed as the branchID in <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#createBranch(int, org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo)"><CODE>createBranch(int, BranchInfo)</CODE></A> causes a new non-local branch to be created.
+<P>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../../constant-values.html#org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.NEW_BRANCH">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="NEW_LOCAL_BRANCH"><!-- --></A><H3>
+NEW_LOCAL_BRANCH</H3>
+<PRE>
+static final int <B>NEW_LOCAL_BRANCH</B></PRE>
+<DL>
+<DD>Passed as the branchID in <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#createBranch(int, org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo)"><CODE>createBranch(int, BranchInfo)</CODE></A> causes a new local branch to be created.
+<P>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../../constant-values.html#org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.NEW_LOCAL_BRANCH">Constant Field Values</A></DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="createBranch(int, org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo)"><!-- --></A><H3>
+createBranch</H3>
+<PRE>
+<A HREF="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Long.html?is-external=true" title="class or interface in java.lang">Long</A>&gt; <B>createBranch</B>(int&nbsp;branchID,
+                                <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.BranchInfo.html" title="class in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader.BranchInfo</A>&nbsp;branchInfo)</PRE>
+<DL>
+<DD>Creates a new branch with the given id and branch info. If the id is equal to <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#NEW_BRANCH"><CODE>NEW_BRANCH</CODE></A> the implementor
+ of this method will determine a new positive unique branch id. If the id is equal to <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#NEW_LOCAL_BRANCH"><CODE>NEW_LOCAL_BRANCH</CODE></A>
+ the implementor of this method will determine a new negative unique branch id, so that the new branch becomes a
+ local branch. In either case the used branch id is returned to the caller.
+<P>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="loadBranch(int)"><!-- --></A><H3>
+loadBranch</H3>
+<PRE>
+<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.BranchInfo.html" title="class in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader.BranchInfo</A> <B>loadBranch</B>(int&nbsp;branchID)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="loadSubBranches(int)"><!-- --></A><H3>
+loadSubBranches</H3>
+<PRE>
+<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.SubBranchInfo.html" title="class in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader.SubBranchInfo</A>[] <B>loadSubBranches</B>(int&nbsp;branchID)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="loadBranches(int, int, org.eclipse.emf.cdo.common.branch.CDOBranchHandler)"><!-- --></A><H3>
+loadBranches</H3>
+<PRE>
+int <B>loadBranches</B>(int&nbsp;startID,
+                 int&nbsp;endID,
+                 <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchHandler.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchHandler</A>&nbsp;branchHandler)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/InternalCDOBranchManager.BranchLoader.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.html" title="interface in org.eclipse.emf.cdo.spi.common.branch"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.BranchInfo.html" title="class in org.eclipse.emf.cdo.spi.common.branch"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../../index.html?org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="InternalCDOBranchManager.BranchLoader.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

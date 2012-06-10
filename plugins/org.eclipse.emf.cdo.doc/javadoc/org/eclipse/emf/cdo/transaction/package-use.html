@@ -98,6 +98,10 @@ Packages that use <A HREF="../../../../../org/eclipse/emf/cdo/transaction/packag
 <TD>Client concepts for dealing with sessions to CDO repositories.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.workspace"><B>org.eclipse.emf.cdo.spi.workspace</B></A></TD>
+<TD>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.transaction"><B>org.eclipse.emf.cdo.transaction</B></A></TD>
 <TD>Client concepts for dealing with transactions, distributed transactions and their save points.&nbsp;</TD>
 </TR>
@@ -108,6 +112,10 @@ Packages that use <A HREF="../../../../../org/eclipse/emf/cdo/transaction/packag
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.workspace"><B>org.eclipse.emf.cdo.workspace</B></A></TD>
 <TD>Concepts to checkout, open and further operate CDO <A HREF="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><CODE>workspaces</CODE></A>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.spi.cdo"><B>org.eclipse.emf.spi.cdo</B></A></TD>
+<TD>Client service provider interfaces and useful base implementations.&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -144,6 +152,21 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/transaction/package-summa
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Can open new <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transactions</CODE></A> and provide access to openend transactions.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.spi.workspace"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</A> used by <A HREF="../../../../../org/eclipse/emf/cdo/spi/workspace/package-summary.html">org.eclipse.emf.cdo.spi.workspace</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/class-use/CDOTransaction.html#org.eclipse.emf.cdo.spi.workspace"><B>CDOTransaction</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A read-write view to the <em>current</em> (i.e. latest) state of the object graph in the repository.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -314,6 +337,91 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/transaction/package-summa
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A read-write view to the <em>current</em> (i.e. latest) state of the object graph in the repository.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.spi.cdo"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</A> used by <A HREF="../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/class-use/CDOCommitContext.html#org.eclipse.emf.spi.cdo"><B>CDOCommitContext</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides a context for commit operations.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/class-use/CDOConflictResolver.html#org.eclipse.emf.spi.cdo"><B>CDOConflictResolver</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A strategy used to customize the default conflict resolution behaviour of <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transactions</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/class-use/CDOConflictResolver2.html#org.eclipse.emf.spi.cdo"><B>CDOConflictResolver2</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A strategy used to customize the default conflict resolution behaviour of <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transactions</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/class-use/CDOMerger.html#org.eclipse.emf.spi.cdo"><B>CDOMerger</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Calculates the changes between a source <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change set</CODE></A> and a target <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change set</CODE></A>
+ and returns the result relative to their common ancestor.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/class-use/CDOMerger.ConflictException.html#org.eclipse.emf.spi.cdo"><B>CDOMerger.ConflictException</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thrown from a <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>merger</CODE></A> in case of conflicting changes in the a source and target
+ <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change sets</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/class-use/CDOSavepoint.html#org.eclipse.emf.spi.cdo"><B>CDOSavepoint</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;One in a sequence of possibly several points in time of a <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A> that encapsulates the
+ changes to transactional objects and that later changes can be <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserSavepoint.html#rollback()"><CODE>rolled back</CODE></A> to.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/class-use/CDOTransaction.html#org.eclipse.emf.spi.cdo"><B>CDOTransaction</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A read-write view to the <em>current</em> (i.e. latest) state of the object graph in the repository.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/class-use/CDOTransactionContainer.html#org.eclipse.emf.spi.cdo"><B>CDOTransactionContainer</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Can open new <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transactions</CODE></A> and provide access to openend transactions.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/class-use/CDOUserSavepoint.html#org.eclipse.emf.spi.cdo"><B>CDOUserSavepoint</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a save point in a <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>CDOUserTransaction</CODE></A> that can be used to roll back a part of the transaction.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/class-use/CDOUserTransaction.html#org.eclipse.emf.spi.cdo"><B>CDOUserTransaction</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides functionality that is common to both <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>single</CODE></A> transactions and <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOXATransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>distributed</CODE></A> (XA) transactions.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/class-use/CDOXASavepoint.html#org.eclipse.emf.spi.cdo"><B>CDOXASavepoint</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a save point in a <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOXATransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>CDOXATransaction</CODE></A> that can be used to roll back a part of the transaction.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/class-use/CDOXATransaction.html#org.eclipse.emf.spi.cdo"><B>CDOXATransaction</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A distributed (XA) transaction that can atomically commit the changes to multiple <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><CODE>resource sets</CODE></A>,
+ each represented by a registered <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view set</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;

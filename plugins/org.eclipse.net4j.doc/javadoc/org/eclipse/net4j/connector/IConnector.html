@@ -95,7 +95,10 @@ Interface IConnector</H2>
 <DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>, <A HREF="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</A>&gt;, <A HREF="../../../../org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserAware</A></DD>
 </DL>
 <DL>
-<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../org/eclipse/net4j/http/common/IHTTPConnector.html" title="interface in org.eclipse.net4j.http.common">IHTTPConnector</A>, <A HREF="../../../../org/eclipse/net4j/jvm/IJVMConnector.html" title="interface in org.eclipse.net4j.jvm">IJVMConnector</A>, <A HREF="../../../../org/eclipse/net4j/tcp/ITCPConnector.html" title="interface in org.eclipse.net4j.tcp">ITCPConnector</A></DD>
+<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../org/eclipse/net4j/http/common/IHTTPConnector.html" title="interface in org.eclipse.net4j.http.common">IHTTPConnector</A>, <A HREF="../../../../org/eclipse/net4j/jvm/IJVMConnector.html" title="interface in org.eclipse.net4j.jvm">IJVMConnector</A>, <A HREF="../../../../org/eclipse/spi/net4j/InternalConnector.html" title="interface in org.eclipse.spi.net4j">InternalConnector</A>, <A HREF="../../../../org/eclipse/net4j/tcp/ITCPConnector.html" title="interface in org.eclipse.net4j.tcp">ITCPConnector</A></DD>
+</DL>
+<DL>
+<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../org/eclipse/spi/net4j/Connector.html" title="class in org.eclipse.spi.net4j">Connector</A></DD>
 </DL>
 <HR>
 <DL>
@@ -105,13 +108,14 @@ Interface IConnector</H2>
 
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="ConnectorState.html" title="&#171;enum&#187; ConnectorState" alt="" coords="5,13,117,53"/>
-<area shape="rect" id="node2" title="&#171;interface&#187; IUserAware (org.eclipse.net4j.util.security)" alt="" coords="147,6,343,61"/>
-<area shape="rect" id="node3" href="../tcp/ITCPConnector.html" title="&#171;interface&#187; ITCPConnector (org.eclipse.net4j.tcp)" alt="" coords="101,201,248,255"/>
-<area shape="rect" id="node4" href="../jvm/IJVMConnector.html" title="&#171;interface&#187; IJVMConnector (org.eclipse.net4j.jvm)" alt="" coords="278,201,425,255"/>
-<area shape="rect" id="node5" href="../http/common/IHTTPConnector.html" title="&#171;interface&#187; IHTTPConnector (org.eclipse.net4j.http.common)" alt="" coords="456,201,661,255"/>
-<area shape="rect" id="node6" href="IConnector.html" title="&#171;interface&#187; IConnector" alt="" coords="309,117,395,157"/>
-<area shape="rect" id="node7" href="../channel/IChannelMultiplexer.html" title="&#171;interface&#187; IChannelMultiplexer (org.eclipse.net4j.channel)" alt="" coords="373,6,547,61"/>
-<area shape="rect" id="node8" title="&#171;interface&#187; Closeable (org.eclipse.net4j.util.collection)" alt="" coords="577,6,783,61"/>
+<area shape="rect" id="node2" href="../../spi/net4j/InternalConnector.html" title="&#171;interface&#187; InternalConnector (org.eclipse.spi.net4j)" alt="" coords="15,201,161,255"/>
+<area shape="rect" id="node3" title="&#171;interface&#187; IUserAware (org.eclipse.net4j.util.security)" alt="" coords="147,6,343,61"/>
+<area shape="rect" id="node4" href="../tcp/ITCPConnector.html" title="&#171;interface&#187; ITCPConnector (org.eclipse.net4j.tcp)" alt="" coords="191,201,337,255"/>
+<area shape="rect" id="node5" href="../jvm/IJVMConnector.html" title="&#171;interface&#187; IJVMConnector (org.eclipse.net4j.jvm)" alt="" coords="367,201,515,255"/>
+<area shape="rect" id="node6" href="../http/common/IHTTPConnector.html" title="&#171;interface&#187; IHTTPConnector (org.eclipse.net4j.http.common)" alt="" coords="545,201,751,255"/>
+<area shape="rect" id="node7" href="IConnector.html" title="&#171;interface&#187; IConnector" alt="" coords="309,117,395,157"/>
+<area shape="rect" id="node8" href="../channel/IChannelMultiplexer.html" title="&#171;interface&#187; IChannelMultiplexer (org.eclipse.net4j.channel)" alt="" coords="373,6,547,61"/>
+<area shape="rect" id="node9" title="&#171;interface&#187; Closeable (org.eclipse.net4j.util.collection)" alt="" coords="577,6,783,61"/>
 </map>
 
 <CENTER><IMG SRC="IConnector.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>

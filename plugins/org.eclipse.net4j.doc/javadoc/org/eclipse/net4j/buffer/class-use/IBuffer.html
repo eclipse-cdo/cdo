@@ -101,6 +101,10 @@ Packages that use <A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html"
 <TD><A HREF="#org.eclipse.net4j.signal"><B>org.eclipse.net4j.signal</B></A></TD>
 <TD>A framework for request/response based communication on top of the Net4j transport layer.&nbsp;</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.spi.net4j"><B>org.eclipse.spi.net4j</B></A></TD>
+<TD>Server service provider interfaces and useful base implementations for the Net4j transport layer.&nbsp;</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -207,6 +211,189 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="in
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Handles a given (incoming) buffer.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.spi.net4j"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A> in <A HREF="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A> in <A HREF="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/spi/net4j/InternalBuffer.html" title="interface in org.eclipse.spi.net4j">InternalBuffer</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</A> that return <A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A></CODE></FONT></TD>
+<TD><CODE><B>Channel.SendQueue.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Channel.SendQueue.html#poll()">poll</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A></CODE></FONT></TD>
+<TD><CODE><B>Channel.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Channel.html#provideBuffer()">provideBuffer</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A></CODE></FONT></TD>
+<TD><CODE><B>Connector.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Connector.html#provideBuffer()">provideBuffer</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A></CODE></FONT></TD>
+<TD><CODE><B>Channel.SendQueue.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Channel.SendQueue.html#remove()">remove</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</A> that return types with arguments of type <A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B>Channel.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Channel.html#getSendQueue()">getSendQueue</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B>InternalChannel.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/InternalChannel.html#getSendQueue()">getSendQueue</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</A> with parameters of type <A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>Channel.SendQueue.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Channel.SendQueue.html#add(org.eclipse.net4j.buffer.IBuffer)">add</A></B>(<A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A>&nbsp;o)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j">Channel.ReceiverWork</A></CODE></FONT></TD>
+<TD><CODE><B>Channel.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Channel.html#createReceiverWork(org.eclipse.net4j.buffer.IBuffer)">createReceiverWork</A></B>(<A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A>&nbsp;buffer)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>Channel.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Channel.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)">handleBuffer</A></B>(<A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A>&nbsp;buffer)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Handles the given buffer.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>Channel.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Channel.html#handleBufferFromMultiplexer(org.eclipse.net4j.buffer.IBuffer)">handleBufferFromMultiplexer</A></B>(<A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A>&nbsp;buffer)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Handles a buffer sent by the multiplexer.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>InternalChannel.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/InternalChannel.html#handleBufferFromMultiplexer(org.eclipse.net4j.buffer.IBuffer)">handleBufferFromMultiplexer</A></B>(<A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A>&nbsp;buffer)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>Channel.SendQueue.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Channel.SendQueue.html#offer(org.eclipse.net4j.buffer.IBuffer)">offer</A></B>(<A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A>&nbsp;o)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>Channel.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Channel.html#retainBuffer(org.eclipse.net4j.buffer.IBuffer)">retainBuffer</A></B>(<A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A>&nbsp;buffer)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>Connector.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Connector.html#retainBuffer(org.eclipse.net4j.buffer.IBuffer)">retainBuffer</A></B>(<A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A>&nbsp;buffer)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>Channel.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Channel.html#sendBuffer(org.eclipse.net4j.buffer.IBuffer)">sendBuffer</A></B>(<A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A>&nbsp;buffer)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Constructors in <A HREF="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</A> with parameters of type <A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html#Channel.ReceiverWork(org.eclipse.net4j.buffer.IBuffer)">Channel.ReceiverWork</A></B>(<A HREF="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A>&nbsp;buffer)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;

@@ -10,6 +10,7 @@
     <packages name="org.eclipse.net4j.signal"/>
     <packages name="org.eclipse.net4j.signal.heartbeat"/>
     <packages name="org.eclipse.net4j.signal.wrapping"/>
+    <packages name="org.eclipse.spi.net4j"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.net4j.http" label="Net4j Signalling Platform Transport HTTP">
     <packages name="org.eclipse.net4j.http"/>

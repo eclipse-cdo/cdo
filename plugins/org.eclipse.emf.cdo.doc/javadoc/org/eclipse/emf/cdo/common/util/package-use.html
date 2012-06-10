@@ -118,12 +118,28 @@ Packages that use <A HREF="../../../../../../org/eclipse/emf/cdo/common/util/pac
 <TD>Client concepts for dealing with sessions to CDO repositories.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.common"><B>org.eclipse.emf.cdo.spi.common</B></A></TD>
+<TD>Common service provider interfaces and useful base implementations.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.common.branch"><B>org.eclipse.emf.cdo.spi.common.branch</B></A></TD>
+<TD>Common service provider interfaces and useful base implementations for dealing with branches.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.server"><B>org.eclipse.emf.cdo.spi.server</B></A></TD>
+<TD>Server service provider interfaces and useful base implementations.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.util"><B>org.eclipse.emf.cdo.util</B></A></TD>
 <TD>Client utility classes, some common interfaces and exceptions.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.view"><B>org.eclipse.emf.cdo.view</B></A></TD>
 <TD>Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.spi.cdo"><B>org.eclipse.emf.spi.cdo</B></A></TD>
+<TD>Client service provider interfaces and useful base implementations.&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -254,6 +270,85 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/util/package-su
 </TABLE>
 &nbsp;
 <P>
+<A NAME="org.eclipse.emf.cdo.spi.common"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/util/package-summary.html">org.eclipse.emf.cdo.common.util</A> used by <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/package-summary.html">org.eclipse.emf.cdo.spi.common</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/class-use/BlockingCloseableIterator.html#org.eclipse.emf.cdo.spi.common"><B>BlockingCloseableIterator</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A closeable iterator that blocks on <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true#hasNext()" title="class or interface in java.util"><CODE>Iterator.hasNext()</CODE></A> until the next element is available or the end of the
+ iteration is reached.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/class-use/CDOQueryInfo.html#org.eclipse.emf.cdo.spi.common"><B>CDOQueryInfo</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Encapsulates all the transferrable information that fully specifies a query from a <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common"><CODE>view</CODE></A> to a
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><CODE>repository</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/class-use/CDOQueryQueue.html#org.eclipse.emf.cdo.spi.common"><B>CDOQueryQueue</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util"><CODE>queue</CODE></A> that represents the result of a CDOQuery.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.spi.common.branch"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/util/package-summary.html">org.eclipse.emf.cdo.common.util</A> used by <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/branch/package-summary.html">org.eclipse.emf.cdo.spi.common.branch</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/class-use/CDOTimeProvider.html#org.eclipse.emf.cdo.spi.common.branch"><B>CDOTimeProvider</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides the consumer with a long-valued time stamp.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.spi.server"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/util/package-summary.html">org.eclipse.emf.cdo.common.util</A> used by <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/class-use/BlockingCloseableIterator.html#org.eclipse.emf.cdo.spi.server"><B>BlockingCloseableIterator</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A closeable iterator that blocks on <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true#hasNext()" title="class or interface in java.util"><CODE>Iterator.hasNext()</CODE></A> until the next element is available or the end of the
+ iteration is reached.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/class-use/CDOQueryInfo.html#org.eclipse.emf.cdo.spi.server"><B>CDOQueryInfo</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Encapsulates all the transferrable information that fully specifies a query from a <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common"><CODE>view</CODE></A> to a
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><CODE>repository</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/class-use/CDOQueryQueue.html#org.eclipse.emf.cdo.spi.server"><B>CDOQueryQueue</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util"><CODE>queue</CODE></A> that represents the result of a CDOQuery.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/class-use/CDOTimeProvider.html#org.eclipse.emf.cdo.spi.server"><B>CDOTimeProvider</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides the consumer with a long-valued time stamp.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
 <A NAME="org.eclipse.emf.cdo.util"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -289,6 +384,29 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/util/package-su
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/class-use/CDOQueryInfo.html#org.eclipse.emf.cdo.view"><B>CDOQueryInfo</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Encapsulates all the transferrable information that fully specifies a query from a <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common"><CODE>view</CODE></A> to a
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><CODE>repository</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.spi.cdo"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/util/package-summary.html">org.eclipse.emf.cdo.common.util</A> used by <A HREF="../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/class-use/BlockingCloseableIterator.html#org.eclipse.emf.spi.cdo"><B>BlockingCloseableIterator</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A closeable iterator that blocks on <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true#hasNext()" title="class or interface in java.util"><CODE>Iterator.hasNext()</CODE></A> until the next element is available or the end of the
+ iteration is reached.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/class-use/CDOQueryInfo.html#org.eclipse.emf.spi.cdo"><B>CDOQueryInfo</B></A></B>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Encapsulates all the transferrable information that fully specifies a query from a <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common"><CODE>view</CODE></A> to a

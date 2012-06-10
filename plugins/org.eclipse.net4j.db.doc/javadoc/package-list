@@ -6,3 +6,4 @@ org.eclipse.net4j.db.h2
 org.eclipse.net4j.db.hsqldb
 org.eclipse.net4j.db.mysql
 org.eclipse.net4j.db.postgresql
+org.eclipse.net4j.spi.db

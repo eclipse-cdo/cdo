@@ -227,7 +227,7 @@ Basic interface for class mappings.
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment[])">readChangeSet</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-              org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment[]&nbsp;segments)</CODE>
+              <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</A>[]&nbsp;segments)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.</TD>
@@ -236,7 +236,7 @@ Basic interface for class mappings.
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;boolean</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html#readRevision(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, int)">readRevision</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-             org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision,
+             <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision,
              int&nbsp;listChunk)</CODE>
 
 <BR>
@@ -246,7 +246,7 @@ Basic interface for class mappings.
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html#writeRevision(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, boolean, boolean, org.eclipse.net4j.util.om.monitor.OMMonitor)">writeRevision</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-              org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision,
+              <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision,
               boolean&nbsp;mapType,
               boolean&nbsp;revise,
               <A HREF="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</CODE>
@@ -342,7 +342,7 @@ getValueMappings</H3>
 readRevision</H3>
 <PRE>
 boolean <B>readRevision</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-                     org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision,
+                     <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision,
                      int&nbsp;listChunk)</PRE>
 <DL>
 <DD>Read a revision. The branch and timestamp to be read are derived from the branchPoint which is set to the Revision.
@@ -363,7 +363,7 @@ boolean <B>readRevision</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/se
 writeRevision</H3>
 <PRE>
 void <B>writeRevision</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-                   org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision,
+                   <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision,
                    boolean&nbsp;mapType,
                    boolean&nbsp;revise,
                    <A HREF="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</PRE>
@@ -469,7 +469,7 @@ void <B>handleRevisions</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/se
 readChangeSet</H3>
 <PRE>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt; <B>readChangeSet</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-                         org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment[]&nbsp;segments)</PRE>
+                         <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</A>[]&nbsp;segments)</PRE>
 <DL>
 <DD>Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.
  DetachedCDORevisions must also be considered!

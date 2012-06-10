@@ -110,6 +110,10 @@ Packages that use <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summa
 <TD>Client concepts for dealing with sessions to CDO repositories.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.server"><B>org.eclipse.emf.cdo.spi.server</B></A></TD>
+<TD>Server service provider interfaces and useful base implementations.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.team"><B>org.eclipse.emf.cdo.team</B></A></TD>
 <TD>Concepts to represent and manage <CODE>projects</CODE> that are mapped
  to CDO repositories by the CDO <CODE>team provider</CODE>&nbsp;</TD>
@@ -137,6 +141,10 @@ Packages that use <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summa
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.internal.cdo"><B>org.eclipse.emf.internal.cdo</B></A></TD>
 <TD>Exposes <A HREF="../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo"><CODE>CDOObjectImpl</CODE></A> for extension in generated EMF models.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.spi.cdo"><B>org.eclipse.emf.spi.cdo</B></A></TD>
+<TD>Client service provider interfaces and useful base implementations.&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -248,6 +256,22 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summary.html
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Can open new <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>views</CODE></A> and provide access to openend views.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.spi.server"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</A> used by <A HREF="../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.spi.server"><B>CDOView</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A read-only view to the state of the object graph in the repository of the underlying <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> at a
+ specific <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><CODE>time</CODE></A> at a specific <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><CODE>branch</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -510,6 +534,53 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summary.html
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A read-only view to the state of the object graph in the repository of the underlying <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> at a
  specific <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><CODE>time</CODE></A> at a specific <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><CODE>branch</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.spi.cdo"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</A> used by <A HREF="../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOAdapterPolicy.html#org.eclipse.emf.spi.cdo"><B>CDOAdapterPolicy</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A policy that allows to specify valid <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><CODE>Adapter</CODE></A> / <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>EObject</CODE></A> combinations.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOFeatureAnalyzer.html#org.eclipse.emf.spi.cdo"><B>CDOFeatureAnalyzer</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface that is called by a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> on each model read access.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOFetchRuleManager.html#org.eclipse.emf.spi.cdo"><B>CDOFetchRuleManager</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Collects and updates <A HREF="../../../../../org/eclipse/emf/cdo/common/util/CDOFetchRule.html" title="class in org.eclipse.emf.cdo.common.util"><CODE>fetch rules</CODE></A> for <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A>, usually based on
+ <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view"><CODE>feature analyzer</CODE></A> statistics.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.spi.cdo"><B>CDOView</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A read-only view to the state of the object graph in the repository of the underlying <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> at a
+ specific <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><CODE>time</CODE></A> at a specific <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><CODE>branch</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewContainer.html#org.eclipse.emf.spi.cdo"><B>CDOViewContainer</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Can open new <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>views</CODE></A> and provide access to openend views.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewSet.html#org.eclipse.emf.spi.cdo"><B>CDOViewSet</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><CODE>ResourceSet</CODE></A> adapter to associate a set of <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>CDOView</CODE></A> instances.</TD>
 </TR>
 </TABLE>
 &nbsp;

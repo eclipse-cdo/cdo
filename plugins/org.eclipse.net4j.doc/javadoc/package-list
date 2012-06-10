@@ -14,3 +14,4 @@ org.eclipse.net4j.signal.wrapping
 org.eclipse.net4j.tcp
 org.eclipse.net4j.tcp.ssl
 org.eclipse.net4j.ui
+org.eclipse.spi.net4j

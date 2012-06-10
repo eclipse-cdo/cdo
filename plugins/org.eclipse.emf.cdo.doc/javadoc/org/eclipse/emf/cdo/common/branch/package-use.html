@@ -158,6 +158,26 @@ Packages that use <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/p
 <TD>Client concepts for dealing with sessions to CDO repositories.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.common"><B>org.eclipse.emf.cdo.spi.common</B></A></TD>
+<TD>Common service provider interfaces and useful base implementations.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.common.branch"><B>org.eclipse.emf.cdo.spi.common.branch</B></A></TD>
+<TD>Common service provider interfaces and useful base implementations for dealing with branches.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.common.commit"><B>org.eclipse.emf.cdo.spi.common.commit</B></A></TD>
+<TD>Common service provider interfaces and useful base implementations for dealing with commits and change sets.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.common.revision"><B>org.eclipse.emf.cdo.spi.common.revision</B></A></TD>
+<TD>Common service provider interfaces and useful base implementations for dealing with revisions and deltas.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.server"><B>org.eclipse.emf.cdo.spi.server</B></A></TD>
+<TD>Server service provider interfaces and useful base implementations.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.transaction"><B>org.eclipse.emf.cdo.transaction</B></A></TD>
 <TD>Client concepts for dealing with transactions, distributed transactions and their save points.&nbsp;</TD>
 </TR>
@@ -176,6 +196,10 @@ Packages that use <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/p
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.view"><B>org.eclipse.emf.cdo.view</B></A></TD>
 <TD>Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.spi.cdo"><B>org.eclipse.emf.spi.cdo</B></A></TD>
+<TD>Client service provider interfaces and useful base implementations.&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -539,6 +563,143 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/package-
 </TABLE>
 &nbsp;
 <P>
+<A NAME="org.eclipse.emf.cdo.spi.common"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/package-summary.html">org.eclipse.emf.cdo.common.branch</A> used by <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/package-summary.html">org.eclipse.emf.cdo.spi.common</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchHandler.html#org.eclipse.emf.cdo.spi.common"><B>CDOBranchHandler</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface that indicates the ability to <i>handle</i> branches that are passed from other entities.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.spi.common.branch"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/package-summary.html">org.eclipse.emf.cdo.common.branch</A> used by <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/branch/package-summary.html">org.eclipse.emf.cdo.spi.common.branch</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranch.html#org.eclipse.emf.cdo.spi.common.branch"><B>CDOBranch</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents a <i>stream of changes</i> that is isolated from other streams of changes.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchHandler.html#org.eclipse.emf.cdo.spi.common.branch"><B>CDOBranchHandler</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface that indicates the ability to <i>handle</i> branches that are passed from other entities.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchManager.html#org.eclipse.emf.cdo.spi.common.branch"><B>CDOBranchManager</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Manages a tree of <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branches</CODE></A> and notifies about changes in this branch tree.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchPoint.html#org.eclipse.emf.cdo.spi.common.branch"><B>CDOBranchPoint</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><CODE>point in time</CODE></A> in a particular <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><CODE>branch</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchPointRange.html#org.eclipse.emf.cdo.spi.common.branch"><B>CDOBranchPointRange</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A range between the <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase()"><CODE>base</CODE></A> of the <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getMainBranch()"><CODE>main branch</CODE></A> and
+ the <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getHead()"><CODE>head</CODE></A> of any branch that is demarkated by a <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html#getStartPoint()"><CODE>start point</CODE></A> and
+ an <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html#getEndPoint()"><CODE>end point</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchVersion.html#org.eclipse.emf.cdo.spi.common.branch"><B>CDOBranchVersion</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A pair of a <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getBranch()"><CODE>branch</CODE></A> and an integer <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getVersion()"><CODE>version</CODE></A> number.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.spi.common.commit"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/package-summary.html">org.eclipse.emf.cdo.common.branch</A> used by <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/commit/package-summary.html">org.eclipse.emf.cdo.spi.common.commit</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranch.html#org.eclipse.emf.cdo.spi.common.commit"><B>CDOBranch</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents a <i>stream of changes</i> that is isolated from other streams of changes.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchPoint.html#org.eclipse.emf.cdo.spi.common.commit"><B>CDOBranchPoint</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><CODE>point in time</CODE></A> in a particular <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><CODE>branch</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.spi.common.revision"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/package-summary.html">org.eclipse.emf.cdo.common.branch</A> used by <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranch.html#org.eclipse.emf.cdo.spi.common.revision"><B>CDOBranch</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents a <i>stream of changes</i> that is isolated from other streams of changes.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchPoint.html#org.eclipse.emf.cdo.spi.common.revision"><B>CDOBranchPoint</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><CODE>point in time</CODE></A> in a particular <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><CODE>branch</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchVersion.html#org.eclipse.emf.cdo.spi.common.revision"><B>CDOBranchVersion</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A pair of a <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getBranch()"><CODE>branch</CODE></A> and an integer <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getVersion()"><CODE>version</CODE></A> number.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.spi.server"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/package-summary.html">org.eclipse.emf.cdo.common.branch</A> used by <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranch.html#org.eclipse.emf.cdo.spi.server"><B>CDOBranch</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents a <i>stream of changes</i> that is isolated from other streams of changes.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchHandler.html#org.eclipse.emf.cdo.spi.server"><B>CDOBranchHandler</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface that indicates the ability to <i>handle</i> branches that are passed from other entities.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchPoint.html#org.eclipse.emf.cdo.spi.server"><B>CDOBranchPoint</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><CODE>point in time</CODE></A> in a particular <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><CODE>branch</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
 <A NAME="org.eclipse.emf.cdo.transaction"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -634,6 +795,35 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/package-
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><CODE>point in time</CODE></A> in a particular <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><CODE>branch</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.spi.cdo"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/package-summary.html">org.eclipse.emf.cdo.common.branch</A> used by <A HREF="../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranch.html#org.eclipse.emf.spi.cdo"><B>CDOBranch</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents a <i>stream of changes</i> that is isolated from other streams of changes.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchPoint.html#org.eclipse.emf.spi.cdo"><B>CDOBranchPoint</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><CODE>point in time</CODE></A> in a particular <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><CODE>branch</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchPointRange.html#org.eclipse.emf.spi.cdo"><B>CDOBranchPointRange</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A range between the <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase()"><CODE>base</CODE></A> of the <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getMainBranch()"><CODE>main branch</CODE></A> and
+ the <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getHead()"><CODE>head</CODE></A> of any branch that is demarkated by a <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html#getStartPoint()"><CODE>start point</CODE></A> and
+ an <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html#getEndPoint()"><CODE>end point</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;

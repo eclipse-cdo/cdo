@@ -1,0 +1,1344 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+Store (CDO Model Repository Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../../html/book.css" TITLE="Style">
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Store (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/Store.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.RepositoryUserManagerFactory.html" title="class in org.eclipse.emf.cdo.spi.server"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessor.html" title="class in org.eclipse.emf.cdo.spi.server"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/spi/server/Store.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="Store.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.emf.cdo.spi.server</FONT>
+<BR>
+Class Store</H2>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
+  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</A>
+      <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.Lifecycle</A>
+          <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.emf.cdo.spi.server.Store</B>
+</PRE>
+<DL>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</A></DD>
+</DL>
+<DL>
+<DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/LongIDStore.html" title="class in org.eclipse.emf.cdo.spi.server">LongIDStore</A></DD>
+</DL>
+<HR>
+<DL>
+  <DT>public abstract class <B>Store</B>
+  <DD>extends <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</A>
+  <DD>implements <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</A>
+</DL>
+
+<map id="APIVIZ" name="APIVIZ">
+<area shape="rect" id="node1" href="InternalStore.html" title="&#171;interface&#187; InternalStore" alt="" coords="5,5,99,45"/>
+<area shape="rect" id="node2" href="Store.html" title="Store" alt="" coords="113,85,167,110"/>
+<area shape="rect" id="node3" href="LongIDStore.html" title="LongIDStore" alt="" coords="93,150,187,175"/>
+<area shape="rect" id="node4" title="Lifecycle (org.eclipse.net4j.util.lifecycle)" alt="" coords="129,5,327,45"/>
+</map>
+
+<CENTER><IMG SRC="Store.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+
+
+
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.cdo.spi.server.InternalStore"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.emf.cdo.spi.server.<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.NoExternalReferences.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoExternalReferences</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.NoFeatureMaps.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoFeatureMaps</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.NoHandleRevisions.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoHandleRevisions</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.NoLargeObjects.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoLargeObjects</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.NoQueryXRefs.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoQueryXRefs</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.NoRawAccess.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoRawAccess</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.cdo.server.IStore"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.emf.cdo.server.<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.CanHandleClientAssignedIDs.html" title="interface in org.eclipse.emf.cdo.server">IStore.CanHandleClientAssignedIDs</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.ChangeFormat.html" title="enum in org.eclipse.emf.cdo.server">IStore.ChangeFormat</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionParallelism.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionTemporality.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.util.lifecycle.<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;long</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#UNSPECIFIED_DATE">UNSPECIFIED_DATE</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Use CDOBranchPoint.UNSPECIFIED_DATE</I></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.net4j.util.lifecycle.Lifecycle"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from class org.eclipse.net4j.util.lifecycle.<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#USE_LABEL" title="class or interface in org.eclipse.net4j.util.lifecycle">USE_LABEL</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#Store(java.lang.String, java.util.Set, java.util.Set, java.util.Set, java.util.Set)">Store</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;type,
+      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</A>&gt;&nbsp;objectIDTypes,
+      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.ChangeFormat.html" title="enum in org.eclipse.emf.cdo.server">IStore.ChangeFormat</A>&gt;&nbsp;supportedChangeFormats,
+      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionTemporality.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</A>&gt;&nbsp;supportedRevisionTemporalities,
+      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionParallelism.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</A>&gt;&nbsp;supportedRevisionParallelisms)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryResourcesContext.ExactMatch.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryResourcesContext.ExactMatch</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#createExactMatchContext(org.eclipse.emf.cdo.common.id.CDOID, java.lang.String, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">createExactMatchContext</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;folderID,
+                        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                        <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected abstract &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#createReader(org.eclipse.emf.cdo.server.ISession)">createReader</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A>&nbsp;session)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates and returns a <b>new</b> <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><CODE>IStoreAccessor</CODE></A> instance.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#createRevision(org.eclipse.emf.ecore.EClass, org.eclipse.emf.cdo.common.id.CDOID)">createRevision</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A>&nbsp;eClass,
+               <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected abstract &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#createWriter(org.eclipse.emf.cdo.server.ITransaction)">createWriter</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</A>&nbsp;transaction)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates and returns a <b>new</b> <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><CODE>IStoreAccessor</CODE></A> instance.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/ProgressDistributor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">ProgressDistributor</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getIndicatingCommitDistributor()">getIndicatingCommitDistributor</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getLastBranchID()">getLastBranchID</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the id of the last branch that has been created in this store.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getLastCommitTime()">getLastCommitTime</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the time stamp of the last successful commit operation.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getLastLocalBranchID()">getLastLocalBranchID</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the id of the last local branch that has been created in this store.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getLastNonLocalCommitTime()">getLastNonLocalCommitTime</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the time stamp of the last successful commit operation to a non-local <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getNextBranchID()">getNextBranchID</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getNextLocalBranchID()">getNextLocalBranchID</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getObjectIDTypes()">getObjectIDTypes</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getReader(org.eclipse.emf.cdo.server.ISession)">getReader</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A>&nbsp;session)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a reader that can be used to read from this store in the context of the given session.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected abstract &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorPool.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorPool</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getReaderPool(org.eclipse.emf.cdo.server.ISession, boolean)">getReaderPool</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A>&nbsp;session,
+              boolean&nbsp;forReleasing)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorPool.html" title="class in org.eclipse.emf.cdo.spi.server"><CODE>pool</CODE></A> that may contain <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><CODE>IStoreAccessor</CODE></A> instances that are compatible with
+ the given session.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getRepository()">getRepository</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionParallelism.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getRevisionParallelism()">getRevisionParallelism</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionTemporality.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getRevisionTemporality()">getRevisionTemporality</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.ChangeFormat.html" title="enum in org.eclipse.emf.cdo.server">IStore.ChangeFormat</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getSupportedChangeFormats()">getSupportedChangeFormats</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionParallelism.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getSupportedRevisionParallelisms()">getSupportedRevisionParallelisms</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionTemporality.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getSupportedRevisionTemporalities()">getSupportedRevisionTemporalities</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getType()">getType</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getWriter(org.eclipse.emf.cdo.server.ITransaction)">getWriter</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</A>&nbsp;transaction)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a writer that can be used to write to this store in the context of the given view.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected abstract &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorPool.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorPool</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getWriterPool(org.eclipse.emf.cdo.server.IView, boolean)">getWriterPool</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</A>&nbsp;view,
+              boolean&nbsp;forReleasing)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorPool.html" title="class in org.eclipse.emf.cdo.spi.server"><CODE>pool</CODE></A> that may contain <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><CODE>IStoreAccessor</CODE></A> instances that are compatible with
+ the given session.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#idToString(org.eclipse.emf.cdo.common.id.CDOID)">idToString</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#isDropAllDataOnActivate()">isDropAllDataOnActivate</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#releaseAccessor(org.eclipse.emf.cdo.spi.server.StoreAccessorBase)">releaseAccessor</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorBase.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorBase</A>&nbsp;accessor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T&gt; <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;T&gt;</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#set(T...)">set</A></B>(T...&nbsp;elements)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#setDropAllDataOnActivate(boolean)">setDropAllDataOnActivate</A></B>(boolean&nbsp;dropAllDataOnActivate)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#setLastBranchID(int)">setLastBranchID</A></B>(int&nbsp;lastBranchID)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#setLastCommitTime(long)">setLastCommitTime</A></B>(long&nbsp;lastCommitTime)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#setLastLocalBranchID(int)">setLastLocalBranchID</A></B>(int&nbsp;lastLocalBranchID)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#setLastNonLocalCommitTime(long)">setLastNonLocalCommitTime</A></B>(long&nbsp;lastNonLocalCommitTime)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#setObjectIDTypes(java.util.Set)">setObjectIDTypes</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</A>&gt;&nbsp;objectIDTypes)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#setRepository(org.eclipse.emf.cdo.server.IRepository)">setRepository</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A>&nbsp;repository)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#setRevisionParallelism(org.eclipse.emf.cdo.server.IStore.RevisionParallelism)">setRevisionParallelism</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionParallelism.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</A>&nbsp;revisionParallelism)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#setRevisionTemporality(org.eclipse.emf.cdo.server.IStore.RevisionTemporality)">setRevisionTemporality</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionTemporality.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</A>&nbsp;revisionTemporality)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#stringToID(java.lang.String)">stringToID</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;string)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.lifecycle.Lifecycle"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.net4j.util.lifecycle.<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#activate()" title="class or interface in org.eclipse.net4j.util.lifecycle">activate</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkActive()" title="class or interface in org.eclipse.net4j.util.lifecycle">checkActive</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkArg(boolean, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkArg</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkArg(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkArg</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkInactive()" title="class or interface in org.eclipse.net4j.util.lifecycle">checkInactive</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkNull(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkNull</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkState(boolean, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkState</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkState(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkState</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#deactivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">deactivate</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#deferredActivate(boolean)" title="class or interface in org.eclipse.net4j.util.lifecycle">deferredActivate</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doActivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doActivate</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doAfterActivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doAfterActivate</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doBeforeActivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doBeforeActivate</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doBeforeDeactivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doBeforeDeactivate</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doDeactivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doDeactivate</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#dump()" title="class or interface in org.eclipse.net4j.util.lifecycle">dump</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#getLifecycleState()" title="class or interface in org.eclipse.net4j.util.lifecycle">getLifecycleState</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#isActive()" title="class or interface in org.eclipse.net4j.util.lifecycle">isActive</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#isDeferredActivation()" title="class or interface in org.eclipse.net4j.util.lifecycle">isDeferredActivation</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#toString()" title="class or interface in org.eclipse.net4j.util.lifecycle">toString</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.Notifier"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.net4j.util.event.<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">Notifier</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent()" title="class or interface in org.eclipse.net4j.util.event">fireEvent</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent(org.eclipse.net4j.util.event.IEvent)" title="class or interface in org.eclipse.net4j.util.event">fireEvent</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent(org.eclipse.net4j.util.event.IEvent, org.eclipse.net4j.util.event.IListener[])" title="class or interface in org.eclipse.net4j.util.event">fireEvent</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#firstListenerAdded()" title="class or interface in org.eclipse.net4j.util.event">firstListenerAdded</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#getNotificationService()" title="class or interface in org.eclipse.net4j.util.event">getNotificationService</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#lastListenerRemoved()" title="class or interface in org.eclipse.net4j.util.event">lastListenerRemoved</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.spi.server.InternalStore"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.spi.server.<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html#isLocal(org.eclipse.emf.cdo.common.id.CDOID)">isLocal</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html#setCreationTime(long)">setCreationTime</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.server.IStore"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.server.<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#createObjectID(java.lang.String)">createObjectID</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getCreationTime()">getCreationTime</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getPersistentProperties(java.util.Set)">getPersistentProperties</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#isFirstStart()">isFirstStart</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#removePersistentProperties(java.util.Set)">removePersistentProperties</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#setPersistentProperties(java.util.Map)">setPersistentProperties</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.lifecycle.<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#activate()" title="class or interface in org.eclipse.net4j.util.lifecycle">activate</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#deactivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">deactivate</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#getLifecycleState()" title="class or interface in org.eclipse.net4j.util.lifecycle">getLifecycleState</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive()" title="class or interface in org.eclipse.net4j.util.lifecycle">isActive</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.event.<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ FIELD DETAIL =========== -->
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Field Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="UNSPECIFIED_DATE"><!-- --></A><H3>
+UNSPECIFIED_DATE</H3>
+<PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>public static final long <B>UNSPECIFIED_DATE</B></PRE>
+<DL>
+<DD><B>Deprecated.</B>&nbsp;<I>Use CDOBranchPoint.UNSPECIFIED_DATE</I><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../constant-values.html#org.eclipse.emf.cdo.spi.server.Store.UNSPECIFIED_DATE">Constant Field Values</A></DL>
+</DL>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="Store(java.lang.String, java.util.Set, java.util.Set, java.util.Set, java.util.Set)"><!-- --></A><H3>
+Store</H3>
+<PRE>
+public <B>Store</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;type,
+             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</A>&gt;&nbsp;objectIDTypes,
+             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.ChangeFormat.html" title="enum in org.eclipse.emf.cdo.server">IStore.ChangeFormat</A>&gt;&nbsp;supportedChangeFormats,
+             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionTemporality.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</A>&gt;&nbsp;supportedRevisionTemporalities,
+             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionParallelism.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</A>&gt;&nbsp;supportedRevisionParallelisms)</PRE>
+<DL>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="getType()"><!-- --></A><H3>
+getType</H3>
+<PRE>
+public final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getType</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getType()">getType</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getObjectIDTypes()"><!-- --></A><H3>
+getObjectIDTypes</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</A>&gt; <B>getObjectIDTypes</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getObjectIDTypes()">getObjectIDTypes</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setObjectIDTypes(java.util.Set)"><!-- --></A><H3>
+setObjectIDTypes</H3>
+<PRE>
+protected void <B>setObjectIDTypes</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</A>&gt;&nbsp;objectIDTypes)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getSupportedChangeFormats()"><!-- --></A><H3>
+getSupportedChangeFormats</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.ChangeFormat.html" title="enum in org.eclipse.emf.cdo.server">IStore.ChangeFormat</A>&gt; <B>getSupportedChangeFormats</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getSupportedChangeFormats()">getSupportedChangeFormats</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getSupportedRevisionTemporalities()"><!-- --></A><H3>
+getSupportedRevisionTemporalities</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionTemporality.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</A>&gt; <B>getSupportedRevisionTemporalities</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getSupportedRevisionTemporalities()">getSupportedRevisionTemporalities</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getSupportedRevisionParallelisms()"><!-- --></A><H3>
+getSupportedRevisionParallelisms</H3>
+<PRE>
+public final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionParallelism.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</A>&gt; <B>getSupportedRevisionParallelisms</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getSupportedRevisionParallelisms()">getSupportedRevisionParallelisms</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getRevisionTemporality()"><!-- --></A><H3>
+getRevisionTemporality</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionTemporality.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</A> <B>getRevisionTemporality</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getRevisionTemporality()">getRevisionTemporality</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setRevisionTemporality(org.eclipse.emf.cdo.server.IStore.RevisionTemporality)"><!-- --></A><H3>
+setRevisionTemporality</H3>
+<PRE>
+public void <B>setRevisionTemporality</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionTemporality.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</A>&nbsp;revisionTemporality)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html#setRevisionTemporality(org.eclipse.emf.cdo.server.IStore.RevisionTemporality)">setRevisionTemporality</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getRevisionParallelism()"><!-- --></A><H3>
+getRevisionParallelism</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionParallelism.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</A> <B>getRevisionParallelism</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getRevisionParallelism()">getRevisionParallelism</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setRevisionParallelism(org.eclipse.emf.cdo.server.IStore.RevisionParallelism)"><!-- --></A><H3>
+setRevisionParallelism</H3>
+<PRE>
+public void <B>setRevisionParallelism</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionParallelism.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</A>&nbsp;revisionParallelism)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html#setRevisionParallelism(org.eclipse.emf.cdo.server.IStore.RevisionParallelism)">setRevisionParallelism</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getRepository()"><!-- --></A><H3>
+getRepository</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</A> <B>getRepository</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getRepository()">getRepository</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A></CODE><DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html#getRepository()">getRepository</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setRepository(org.eclipse.emf.cdo.server.IRepository)"><!-- --></A><H3>
+setRepository</H3>
+<PRE>
+public void <B>setRepository</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A>&nbsp;repository)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html#setRepository(org.eclipse.emf.cdo.server.IRepository)">setRepository</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isDropAllDataOnActivate()"><!-- --></A><H3>
+isDropAllDataOnActivate</H3>
+<PRE>
+public boolean <B>isDropAllDataOnActivate</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html#isDropAllDataOnActivate()">isDropAllDataOnActivate</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setDropAllDataOnActivate(boolean)"><!-- --></A><H3>
+setDropAllDataOnActivate</H3>
+<PRE>
+public void <B>setDropAllDataOnActivate</B>(boolean&nbsp;dropAllDataOnActivate)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html#setDropAllDataOnActivate(boolean)">setDropAllDataOnActivate</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getLastBranchID()"><!-- --></A><H3>
+getLastBranchID</H3>
+<PRE>
+public int <B>getLastBranchID</B>()</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getLastBranchID()">IStore</A></CODE></B></DD>
+<DD>Returns the id of the last branch that has been created in this store.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getLastBranchID()">getLastBranchID</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setLastBranchID(int)"><!-- --></A><H3>
+setLastBranchID</H3>
+<PRE>
+public void <B>setLastBranchID</B>(int&nbsp;lastBranchID)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html#setLastBranchID(int)">setLastBranchID</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getNextBranchID()"><!-- --></A><H3>
+getNextBranchID</H3>
+<PRE>
+public int <B>getNextBranchID</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html#getNextBranchID()">getNextBranchID</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getLastLocalBranchID()"><!-- --></A><H3>
+getLastLocalBranchID</H3>
+<PRE>
+public int <B>getLastLocalBranchID</B>()</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getLastLocalBranchID()">IStore</A></CODE></B></DD>
+<DD>Returns the id of the last local branch that has been created in this store.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getLastLocalBranchID()">getLastLocalBranchID</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setLastLocalBranchID(int)"><!-- --></A><H3>
+setLastLocalBranchID</H3>
+<PRE>
+public void <B>setLastLocalBranchID</B>(int&nbsp;lastLocalBranchID)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html#setLastLocalBranchID(int)">setLastLocalBranchID</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getNextLocalBranchID()"><!-- --></A><H3>
+getNextLocalBranchID</H3>
+<PRE>
+public int <B>getNextLocalBranchID</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html#getNextLocalBranchID()">getNextLocalBranchID</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getLastCommitTime()"><!-- --></A><H3>
+getLastCommitTime</H3>
+<PRE>
+public long <B>getLastCommitTime</B>()</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getLastCommitTime()">IStore</A></CODE></B></DD>
+<DD>Returns the time stamp of the last successful commit operation.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getLastCommitTime()">getLastCommitTime</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setLastCommitTime(long)"><!-- --></A><H3>
+setLastCommitTime</H3>
+<PRE>
+public void <B>setLastCommitTime</B>(long&nbsp;lastCommitTime)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html#setLastCommitTime(long)">setLastCommitTime</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getLastNonLocalCommitTime()"><!-- --></A><H3>
+getLastNonLocalCommitTime</H3>
+<PRE>
+public long <B>getLastNonLocalCommitTime</B>()</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getLastNonLocalCommitTime()">IStore</A></CODE></B></DD>
+<DD>Returns the time stamp of the last successful commit operation to a non-local <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch</CODE></A>.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getLastNonLocalCommitTime()">getLastNonLocalCommitTime</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setLastNonLocalCommitTime(long)"><!-- --></A><H3>
+setLastNonLocalCommitTime</H3>
+<PRE>
+public void <B>setLastNonLocalCommitTime</B>(long&nbsp;lastNonLocalCommitTime)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html#setLastNonLocalCommitTime(long)">setLastNonLocalCommitTime</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getReader(org.eclipse.emf.cdo.server.ISession)"><!-- --></A><H3>
+getReader</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</A> <B>getReader</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A>&nbsp;session)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getReader(org.eclipse.emf.cdo.server.ISession)">IStore</A></CODE></B></DD>
+<DD>Returns a reader that can be used to read from this store in the context of the given session.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getReader(org.eclipse.emf.cdo.server.ISession)">getReader</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>session</CODE> - The session that should be used as a context for read access or <code>null</code>. The store implementor
+          is free to interpret and use the session in a manner suitable for him or ignore it at all. It is meant
+          only as a hint. Implementor can use it as a key into a cache and/or register a
+          <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/LifecycleEventAdapter.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle"><CODE>LifecycleEventAdapter</CODE></A> with it to intercept
+          cleanup on session close. Note however that the session can be <code>null</code>, for example during
+          startup of the server while the repositories are initialized but before any user session has been opened.
+<DT><B>Returns:</B><DD>a reader that can be used to read from this store in the context of the given session, never
+         <code>null</code>.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getWriter(org.eclipse.emf.cdo.server.ITransaction)"><!-- --></A><H3>
+getWriter</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</A> <B>getWriter</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</A>&nbsp;transaction)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getWriter(org.eclipse.emf.cdo.server.ITransaction)">IStore</A></CODE></B></DD>
+<DD>Returns a writer that can be used to write to this store in the context of the given view. The given view is always
+ marked as a transaction.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getWriter(org.eclipse.emf.cdo.server.ITransaction)">getWriter</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>transaction</CODE> - The view that must be used as a context for write access. The store implementor is free to interpret and
+          use the view in a manner suitable for him or ignore it at all. It is meant only as a hint. Implementor can
+          use it as a key into a cache and/or register a
+          <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/LifecycleEventAdapter.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle"><CODE>LifecycleEventAdapter</CODE></A> with it to intercept
+          cleanup on view close.
+<DT><B>Returns:</B><DD>a writer that can be used to write to this store in the context of the given view, never <code>null</code>.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getIndicatingCommitDistributor()"><!-- --></A><H3>
+getIndicatingCommitDistributor</H3>
+<PRE>
+public <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/ProgressDistributor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">ProgressDistributor</A> <B>getIndicatingCommitDistributor</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html#getIndicatingCommitDistributor()">getIndicatingCommitDistributor</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createRevision(org.eclipse.emf.ecore.EClass, org.eclipse.emf.cdo.common.id.CDOID)"><!-- --></A><H3>
+createRevision</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A> <B>createRevision</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A>&nbsp;eClass,
+                                          <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="releaseAccessor(org.eclipse.emf.cdo.spi.server.StoreAccessorBase)"><!-- --></A><H3>
+releaseAccessor</H3>
+<PRE>
+protected void <B>releaseAccessor</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorBase.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorBase</A>&nbsp;accessor)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getReaderPool(org.eclipse.emf.cdo.server.ISession, boolean)"><!-- --></A><H3>
+getReaderPool</H3>
+<PRE>
+protected abstract <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorPool.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorPool</A> <B>getReaderPool</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A>&nbsp;session,
+                                                   boolean&nbsp;forReleasing)</PRE>
+<DL>
+<DD>Returns a <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorPool.html" title="class in org.eclipse.emf.cdo.spi.server"><CODE>pool</CODE></A> that may contain <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><CODE>IStoreAccessor</CODE></A> instances that are compatible with
+ the given session. The implementor may return <code>null</code> to indicate that no pooling occurs. It's also left
+ to the implementors choice how to determine the appropriate pool instance to be used for the given session, for
+ example it could always return the same pool instance, regardless of the given session.
+ <p>
+ If the implementor of this method decides to create pools that are only compatible with certain sessions or views,
+ then it is his responsibility to listen to <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainerDelta.Kind.html?is-external=true#REMOVED" title="class or interface in org.eclipse.net4j.util.container"><CODE>REMOVED</CODE></A> events sent by either the
+ <A HREF="../../../../../../org/eclipse/emf/cdo/server/ISessionManager.html" title="interface in org.eclipse.emf.cdo.server"><CODE>ISessionManager</CODE></A> (indicating that a session is closed) or any of its sessions (indicating that a view is
+ closed). <b>Note:</b> Closing a session <em>implies</em> that all contained views are closed sliently without
+ firing respective events!
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>session</CODE> - The context which the pool must be compatible with. Must not be <code>null</code>.<DD><CODE>forReleasing</CODE> - Enables lazy pool creation. The implementor is not supposed to create a new pool if <code>false</code> is
+          passed. If <code>true</code> is passed it's up to the implementor whether to create a new pool or not.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getWriterPool(org.eclipse.emf.cdo.server.IView, boolean)"><!-- --></A><H3>
+getWriterPool</H3>
+<PRE>
+protected abstract <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorPool.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorPool</A> <B>getWriterPool</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</A>&nbsp;view,
+                                                   boolean&nbsp;forReleasing)</PRE>
+<DL>
+<DD>Returns a <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorPool.html" title="class in org.eclipse.emf.cdo.spi.server"><CODE>pool</CODE></A> that may contain <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><CODE>IStoreAccessor</CODE></A> instances that are compatible with
+ the given session. The implementor may return <code>null</code> to indicate that no pooling occurs. It's also left
+ to the implementors choice how to determine the appropriate pool instance to be used for the given session, for
+ example it could always return the same pool instance, regardless of the given session.
+ <p>
+ If the implementor of this method decides to create pools that are only compatible with certain sessions or views,
+ then it is his responsibility to listen to <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainerDelta.Kind.html?is-external=true#REMOVED" title="class or interface in org.eclipse.net4j.util.container"><CODE>REMOVED</CODE></A> events sent by either the
+ <A HREF="../../../../../../org/eclipse/emf/cdo/server/ISessionManager.html" title="interface in org.eclipse.emf.cdo.server"><CODE>ISessionManager</CODE></A> (indicating that a session is closed) or any of its sessions (indicating that a view is
+ closed). <b>Note:</b> Closing a session <em>implies</em> that all contained views are closed sliently without
+ firing respective events!
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>view</CODE> - The context which the pool must be compatible with. Must not be <code>null</code>.<DD><CODE>forReleasing</CODE> - Enables lazy pool creation. The implementor is not supposed to create a new pool if <code>false</code> is
+          passed. If <code>true</code> is passed it's up to the implementor whether to create a new pool or not.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createReader(org.eclipse.emf.cdo.server.ISession)"><!-- --></A><H3>
+createReader</H3>
+<PRE>
+protected abstract <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</A> <B>createReader</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A>&nbsp;session)</PRE>
+<DL>
+<DD>Creates and returns a <b>new</b> <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><CODE>IStoreAccessor</CODE></A> instance. The caller of this method is responsible for
+ <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#activate()" title="class or interface in org.eclipse.net4j.util.lifecycle"><CODE>activating</CODE></A> the new instance.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createWriter(org.eclipse.emf.cdo.server.ITransaction)"><!-- --></A><H3>
+createWriter</H3>
+<PRE>
+protected abstract <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</A> <B>createWriter</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</A>&nbsp;transaction)</PRE>
+<DL>
+<DD>Creates and returns a <b>new</b> <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><CODE>IStoreAccessor</CODE></A> instance. The caller of this method is responsible for
+ <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#activate()" title="class or interface in org.eclipse.net4j.util.lifecycle"><CODE>activating</CODE></A> the new instance.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="set(java.lang.Object[])"><!-- --></A><A NAME="set(T...)"><!-- --></A><H3>
+set</H3>
+<PRE>
+protected static &lt;T&gt; <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;T&gt; <B>set</B>(T...&nbsp;elements)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="idToString(org.eclipse.emf.cdo.common.id.CDOID)"><!-- --></A><H3>
+idToString</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>idToString</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="stringToID(java.lang.String)"><!-- --></A><H3>
+stringToID</H3>
+<PRE>
+public static <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A> <B>stringToID</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;string)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createExactMatchContext(org.eclipse.emf.cdo.common.id.CDOID, java.lang.String, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><!-- --></A><H3>
+createExactMatchContext</H3>
+<PRE>
+public static <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryResourcesContext.ExactMatch.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryResourcesContext.ExactMatch</A> <B>createExactMatchContext</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;folderID,
+                                                                                      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                                                                                      <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/Store.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.RepositoryUserManagerFactory.html" title="class in org.eclipse.emf.cdo.spi.server"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessor.html" title="class in org.eclipse.emf.cdo.spi.server"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/spi/server/Store.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="Store.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

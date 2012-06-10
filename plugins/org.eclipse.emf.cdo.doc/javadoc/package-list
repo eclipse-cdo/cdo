@@ -43,8 +43,20 @@ org.eclipse.emf.cdo.server.net4j
 org.eclipse.emf.cdo.server.objectivity
 org.eclipse.emf.cdo.server.ocl
 org.eclipse.emf.cdo.server.security
+org.eclipse.emf.cdo.server.spi.admin
+org.eclipse.emf.cdo.server.spi.security
 org.eclipse.emf.cdo.session
 org.eclipse.emf.cdo.session.remote
+org.eclipse.emf.cdo.spi.common
+org.eclipse.emf.cdo.spi.common.admin
+org.eclipse.emf.cdo.spi.common.branch
+org.eclipse.emf.cdo.spi.common.commit
+org.eclipse.emf.cdo.spi.common.id
+org.eclipse.emf.cdo.spi.common.lock
+org.eclipse.emf.cdo.spi.common.model
+org.eclipse.emf.cdo.spi.common.revision
+org.eclipse.emf.cdo.spi.server
+org.eclipse.emf.cdo.spi.workspace
 org.eclipse.emf.cdo.team
 org.eclipse.emf.cdo.transaction
 org.eclipse.emf.cdo.ui
@@ -55,3 +67,4 @@ org.eclipse.emf.cdo.view
 org.eclipse.emf.cdo.workspace
 org.eclipse.emf.cdo.workspace.efs
 org.eclipse.emf.internal.cdo
+org.eclipse.emf.spi.cdo

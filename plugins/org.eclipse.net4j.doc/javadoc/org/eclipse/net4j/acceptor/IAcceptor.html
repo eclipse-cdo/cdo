@@ -95,7 +95,10 @@ Interface IAcceptor</H2>
 <DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</A>&gt;, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></DD>
 </DL>
 <DL>
-<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../org/eclipse/net4j/http/server/IHTTPAcceptor.html" title="interface in org.eclipse.net4j.http.server">IHTTPAcceptor</A>, <A HREF="../../../../org/eclipse/net4j/jvm/IJVMAcceptor.html" title="interface in org.eclipse.net4j.jvm">IJVMAcceptor</A>, <A HREF="../../../../org/eclipse/net4j/tcp/ITCPAcceptor.html" title="interface in org.eclipse.net4j.tcp">ITCPAcceptor</A></DD>
+<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../org/eclipse/net4j/http/server/IHTTPAcceptor.html" title="interface in org.eclipse.net4j.http.server">IHTTPAcceptor</A>, <A HREF="../../../../org/eclipse/net4j/jvm/IJVMAcceptor.html" title="interface in org.eclipse.net4j.jvm">IJVMAcceptor</A>, <A HREF="../../../../org/eclipse/spi/net4j/InternalAcceptor.html" title="interface in org.eclipse.spi.net4j">InternalAcceptor</A>, <A HREF="../../../../org/eclipse/net4j/tcp/ITCPAcceptor.html" title="interface in org.eclipse.net4j.tcp">ITCPAcceptor</A></DD>
+</DL>
+<DL>
+<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../org/eclipse/spi/net4j/Acceptor.html" title="class in org.eclipse.spi.net4j">Acceptor</A></DD>
 </DL>
 <HR>
 <DL>
@@ -104,12 +107,13 @@ Interface IAcceptor</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="../tcp/ITCPAcceptor.html" title="&#171;interface&#187; ITCPAcceptor (org.eclipse.net4j.tcp)" alt="" coords="5,179,152,234"/>
-<area shape="rect" id="node2" href="../jvm/IJVMAcceptor.html" title="&#171;interface&#187; IJVMAcceptor (org.eclipse.net4j.jvm)" alt="" coords="182,179,329,234"/>
-<area shape="rect" id="node3" href="../http/server/IHTTPAcceptor.html" title="&#171;interface&#187; IHTTPAcceptor (org.eclipse.net4j.http.server)" alt="" coords="360,179,549,234"/>
-<area shape="rect" id="node4" title="&#171;interface&#187; IContainer (org.eclipse.net4j.util.container)" alt="" coords="39,6,241,61"/>
-<area shape="rect" id="node5" href="IAcceptor.html" title="&#171;interface&#187; IAcceptor" alt="" coords="213,100,299,140"/>
-<area shape="rect" id="node6" title="&#171;interface&#187; Closeable (org.eclipse.net4j.util.collection)" alt="" coords="271,6,476,61"/>
+<area shape="rect" id="node1" href="../../spi/net4j/InternalAcceptor.html" title="&#171;interface&#187; InternalAcceptor (org.eclipse.spi.net4j)" alt="" coords="5,179,152,234"/>
+<area shape="rect" id="node2" href="../tcp/ITCPAcceptor.html" title="&#171;interface&#187; ITCPAcceptor (org.eclipse.net4j.tcp)" alt="" coords="181,179,328,234"/>
+<area shape="rect" id="node3" href="../jvm/IJVMAcceptor.html" title="&#171;interface&#187; IJVMAcceptor (org.eclipse.net4j.jvm)" alt="" coords="358,179,505,234"/>
+<area shape="rect" id="node4" href="../http/server/IHTTPAcceptor.html" title="&#171;interface&#187; IHTTPAcceptor (org.eclipse.net4j.http.server)" alt="" coords="536,179,725,234"/>
+<area shape="rect" id="node5" title="&#171;interface&#187; IContainer (org.eclipse.net4j.util.container)" alt="" coords="125,6,328,61"/>
+<area shape="rect" id="node6" href="IAcceptor.html" title="&#171;interface&#187; IAcceptor" alt="" coords="300,100,385,140"/>
+<area shape="rect" id="node7" title="&#171;interface&#187; Closeable (org.eclipse.net4j.util.collection)" alt="" coords="357,6,563,61"/>
 </map>
 
 <CENTER><IMG SRC="IAcceptor.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -124,7 +128,7 @@ Accepts incoming connection requests from <A HREF="../../../../org/eclipse/net4j
  connectors the only public API is introspection and notification.
  <p>
  This interface is <b>not</b> intended to be implemented by clients. Service providers <b>must</b> extend the abstract
- <CODE>Acceptor</CODE> class.
+ <A HREF="../../../../org/eclipse/spi/net4j/Acceptor.html" title="class in org.eclipse.spi.net4j"><CODE>Acceptor</CODE></A> class.
  <p>
  <dt><b>Class Diagram:</b></dt>
  <dd><img src="doc-files/IAcceptor-1.gif" title="Diagram Acceptors" border="0" usemap="#IAcceptor-1.gif"/></dd>

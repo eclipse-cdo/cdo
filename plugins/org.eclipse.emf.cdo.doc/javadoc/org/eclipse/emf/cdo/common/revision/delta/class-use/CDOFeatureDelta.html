@@ -98,8 +98,16 @@ Packages that use <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/re
 <TD>Common concepts for dealing with revision deltas and feature deltas.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.common.revision"><B>org.eclipse.emf.cdo.spi.common.revision</B></A></TD>
+<TD>Common service provider interfaces and useful base implementations for dealing with revisions and deltas.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.transaction"><B>org.eclipse.emf.cdo.transaction</B></A></TD>
 <TD>Client concepts for dealing with transactions, distributed transactions and their save points.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.spi.cdo"><B>org.eclipse.emf.spi.cdo</B></A></TD>
+<TD>Client service provider interfaces and useful base implementations.&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -280,6 +288,63 @@ Uses of <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/del
 </TABLE>
 &nbsp;
 <P>
+<A NAME="org.eclipse.emf.cdo.spi.common.revision"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A> in <A HREF="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A> in <A HREF="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOFeatureDelta</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</A> that return types with arguments of type <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>,<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B>InternalCDORevisionDelta.</B><B><A HREF="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html#getFeatureDeltaMap()">getFeatureDeltaMap</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</A> with parameters of type <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>InternalCDORevisionDelta.</B><B><A HREF="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html#addFeatureDelta(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">addFeatureDelta</A></B>(<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;delta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
 <A NAME="org.eclipse.emf.cdo.transaction"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -343,6 +408,291 @@ Uses of <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/del
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Called by a <code>CDOTransaction</code> <b>before</b> an object is modified.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.spi.cdo"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A> in <A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</A> that return <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A></CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.html#changedInSource(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">changedInSource</A></B>(<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;featureDelta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A></CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.html#changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">changedInSourceAndTarget</A></B>(<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;targetFeatureDelta,
+                         <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;sourceFeatureDelta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A></CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.html#changedInSourceAndTargetManyValued(org.eclipse.emf.ecore.EStructuralFeature, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">changedInSourceAndTargetManyValued</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature,
+                                   <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;targetFeatureDelta,
+                                   <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;sourceFeatureDelta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A></CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.ManyValued.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#changedInSourceAndTargetManyValued(org.eclipse.emf.ecore.EStructuralFeature, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">changedInSourceAndTargetManyValued</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature,
+                                   <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;targetFeatureDelta,
+                                   <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;sourceFeatureDelta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A></CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.html#changedInSourceAndTargetSingleValued(org.eclipse.emf.ecore.EStructuralFeature, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">changedInSourceAndTargetSingleValued</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature,
+                                     <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;targetFeatureDelta,
+                                     <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;sourceFeatureDelta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A></CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.html#changedInTarget(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">changedInTarget</A></B>(<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;featureDelta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</A> with parameters of type <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A></CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.html#changedInSource(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">changedInSource</A></B>(<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;featureDelta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A></CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.html#changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">changedInSourceAndTarget</A></B>(<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;targetFeatureDelta,
+                         <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;sourceFeatureDelta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A></CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.html#changedInSourceAndTargetManyValued(org.eclipse.emf.ecore.EStructuralFeature, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">changedInSourceAndTargetManyValued</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature,
+                                   <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;targetFeatureDelta,
+                                   <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;sourceFeatureDelta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A></CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.ManyValued.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#changedInSourceAndTargetManyValued(org.eclipse.emf.ecore.EStructuralFeature, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">changedInSourceAndTargetManyValued</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature,
+                                   <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;targetFeatureDelta,
+                                   <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;sourceFeatureDelta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A></CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.html#changedInSourceAndTargetSingleValued(org.eclipse.emf.ecore.EStructuralFeature, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">changedInSourceAndTargetSingleValued</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature,
+                                     <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;targetFeatureDelta,
+                                     <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;sourceFeatureDelta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A></CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.html#changedInTarget(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">changedInTarget</A></B>(<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;featureDelta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>InternalCDOTransaction.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#registerDirty(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">registerDirty</A></B>(<A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</A>&nbsp;object,
+              <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;featureDelta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>InternalCDOTransaction.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#registerFeatureDelta(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">registerFeatureDelta</A></B>(<A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</A>&nbsp;object,
+                     <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;featureDelta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Method parameters in <A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</A> with type arguments of type <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.ManyValued.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#adjustAfterAddition(java.util.List, int)">adjustAfterAddition</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;list,
+                    int&nbsp;index)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.ManyValued.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#adjustAfterMove(java.util.List, int, int)">adjustAfterMove</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;list,
+                int&nbsp;oldPosition,
+                int&nbsp;newPosition)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.ManyValued.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#adjustAfterRemoval(java.util.List, int)">adjustAfterRemoval</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;list,
+                   int&nbsp;index)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.ManyValued.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#handleListDelta(java.util.List, java.util.List, java.util.List)">handleListDelta</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;resultList,
+                <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;listToHandle,
+                <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;listToAdjust)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.ManyValued.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#handleListDelta(java.util.List, java.util.List, java.util.List)">handleListDelta</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;resultList,
+                <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;listToHandle,
+                <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;listToAdjust)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.ManyValued.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#handleListDelta(java.util.List, java.util.List, java.util.List)">handleListDelta</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;resultList,
+                <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;listToHandle,
+                <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;listToAdjust)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.ManyValued.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#handleListDeltaAdd(java.util.List, org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta, java.util.List)">handleListDeltaAdd</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;resultList,
+                   <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOAddFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOAddFeatureDelta</A>&nbsp;addDelta,
+                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;listToAdjust)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Decides whether an ADD delta is to be taken (added to the result list) and returns <code>true</code> if it was
+ taken, <code>false</code> otherwise.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.ManyValued.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#handleListDeltaAdd(java.util.List, org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta, java.util.List)">handleListDeltaAdd</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;resultList,
+                   <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOAddFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOAddFeatureDelta</A>&nbsp;addDelta,
+                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;listToAdjust)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Decides whether an ADD delta is to be taken (added to the result list) and returns <code>true</code> if it was
+ taken, <code>false</code> otherwise.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.ManyValued.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#handleListDeltaMove(java.util.List, org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta, java.util.List)">handleListDeltaMove</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;resultList,
+                    <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOMoveFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOMoveFeatureDelta</A>&nbsp;moveDelta,
+                    <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;listToAdjust)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Decides whether a MOVE delta is to be taken (added to the result list) and returns <code>true</code> if it was
+ taken, <code>false</code> otherwise.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.ManyValued.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#handleListDeltaMove(java.util.List, org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta, java.util.List)">handleListDeltaMove</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;resultList,
+                    <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOMoveFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOMoveFeatureDelta</A>&nbsp;moveDelta,
+                    <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;listToAdjust)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Decides whether a MOVE delta is to be taken (added to the result list) and returns <code>true</code> if it was
+ taken, <code>false</code> otherwise.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.ManyValued.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#handleListDeltaRemove(java.util.List, org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta, java.util.List)">handleListDeltaRemove</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;resultList,
+                      <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORemoveFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORemoveFeatureDelta</A>&nbsp;removeDelta,
+                      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;listToAdjust)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Decides whether a REMOVE delta is to be taken (added to the result list) and returns <code>true</code> if it
+ was taken, <code>false</code> otherwise.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>DefaultCDOMerger.PerFeature.ManyValued.</B><B><A HREF="../../../../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html#handleListDeltaRemove(java.util.List, org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta, java.util.List)">handleListDeltaRemove</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;resultList,
+                      <A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORemoveFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORemoveFeatureDelta</A>&nbsp;removeDelta,
+                      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&gt;&nbsp;listToAdjust)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Decides whether a REMOVE delta is to be taken (added to the result list) and returns <code>true</code> if it
+ was taken, <code>false</code> otherwise.</TD>
 </TR>
 </TABLE>
 &nbsp;

@@ -1,0 +1,1277 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+Connector (Net4j Signalling Platform Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../html/book.css" TITLE="Style">
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Connector (Net4j Signalling Platform Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/Connector.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../org/eclipse/spi/net4j/ClientProtocolFactory.html" title="class in org.eclipse.spi.net4j"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../org/eclipse/spi/net4j/ConnectorFactory.html" title="class in org.eclipse.spi.net4j"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?org/eclipse/spi/net4j/Connector.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="Connector.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.eclipse.net4j.util.lifecycle.Lifecycle">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.spi.net4j</FONT>
+<BR>
+Class Connector</H2>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
+  <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</A>
+      <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.Lifecycle</A>
+          <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/Container.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">org.eclipse.net4j.util.container.Container</A>&lt;<A HREF="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</A>&gt;
+              <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">org.eclipse.spi.net4j.ChannelMultiplexer</A>
+                  <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.spi.net4j.Connector</B>
+</PRE>
+<DL>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</A>, <A HREF="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</A>, <A HREF="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</A>, <A HREF="../../../../org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</A>, <A HREF="../../../../org/eclipse/net4j/ITransportConfigAware.html" title="interface in org.eclipse.net4j">ITransportConfigAware</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</A>&gt;, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiatorAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">INegotiatorAware</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserAware</A>, <A HREF="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</A>, <A HREF="../../../../org/eclipse/spi/net4j/InternalConnector.html" title="interface in org.eclipse.spi.net4j">InternalConnector</A></DD>
+</DL>
+<HR>
+<DL>
+  <DT>public abstract class <B>Connector</B>
+  <DD>extends <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</A>
+  <DD>implements <A HREF="../../../../org/eclipse/spi/net4j/InternalConnector.html" title="interface in org.eclipse.spi.net4j">InternalConnector</A>
+</DL>
+
+<map id="APIVIZ" name="APIVIZ">
+<area shape="rect" id="node1" href="InternalConnector.html" title="&#171;interface&#187; InternalConnector" alt="" coords="5,5,128,45"/>
+<area shape="rect" id="node2" href="Connector.html" title="Connector" alt="" coords="103,85,184,110"/>
+<area shape="rect" id="node3" href="ChannelMultiplexer.html" title="ChannelMultiplexer" alt="" coords="157,13,288,38"/>
+</map>
+
+<CENTER><IMG SRC="Connector.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+
+
+
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.ILocationAware"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.<A HREF="../../../../org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j">ILocationAware.Location</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</A>&lt;<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</A>&gt;</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.buffer.IBufferProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.buffer.<A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.Introspection.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider.Introspection</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.util.lifecycle.<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.net4j.util.lifecycle.Lifecycle"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from class org.eclipse.net4j.util.lifecycle.<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#USE_LABEL" title="class or interface in org.eclipse.net4j.util.lifecycle">USE_LABEL</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.net4j.connector.IConnector"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from interface org.eclipse.net4j.connector.<A HREF="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#NO_TIMEOUT">NO_TIMEOUT</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.spi.net4j.InternalChannelMultiplexer"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from interface org.eclipse.spi.net4j.<A HREF="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer.html#RESERVED_CHANNEL">RESERVED_CHANNEL</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.net4j.channel.IChannelMultiplexer"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from interface org.eclipse.net4j.channel.<A HREF="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html#DEFAULT_OPEN_CHANNEL_TIMEOUT">DEFAULT_OPEN_CHANNEL_TIMEOUT</A>, <A HREF="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html#NO_CHANNEL_TIMEOUT">NO_CHANNEL_TIMEOUT</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#Connector()">Connector</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#close()">close</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#connect()">connect</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Synchronous connect with infinite timeout value.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#connect(long)">connect</A></B>(long&nbsp;timeout)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Synchronous connect.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#connectAsync()">connectAsync</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Asynchronous connect.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected abstract &nbsp;<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiationContext.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">INegotiationContext</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#createNegotiationContext()">createNegotiationContext</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#deregisterChannelFromPeer(org.eclipse.spi.net4j.InternalChannel)">deregisterChannelFromPeer</A></B>(<A HREF="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</A>&nbsp;channel)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#doActivate()">doActivate</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#doBeforeActivate()">doBeforeActivate</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#doBeforeOpenChannel(org.eclipse.net4j.protocol.IProtocol)">doBeforeOpenChannel</A></B>(<A HREF="../../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</A>&lt;?&gt;&nbsp;protocol)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#doDeactivate()">doDeactivate</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;short</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#getBufferCapacity()">getBufferCapacity</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the capacity of the buffers provided by <A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#provideBuffer()"><CODE>IBufferProvider.provideBuffer()</CODE></A> .</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j">ILocationAware.Location</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#getLocation()">getLocation</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the location of this object in a <A HREF="../../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><CODE>client</CODE></A>/<A HREF="../../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><CODE>server</CODE></A> scenario.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiationContext.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">INegotiationContext</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#getNegotiationContext()">getNegotiationContext</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/NegotiationException.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">NegotiationException</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#getNegotiationException()">getNegotiationException</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">INegotiator</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#getNegotiator()">getNegotiator</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../org/eclipse/net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#getState()">getState</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the current state of this connector.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#getURL()">getURL</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#getUserID()">getUserID</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#initChannel(org.eclipse.spi.net4j.InternalChannel, org.eclipse.net4j.protocol.IProtocol)">initChannel</A></B>(<A HREF="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</A>&nbsp;channel,
+            <A HREF="../../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</A>&lt;?&gt;&nbsp;protocol)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#isClient()">isClient</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Same as <code><A HREF="../../../../org/eclipse/net4j/ILocationAware.html#getLocation()"><CODE>ILocationAware.getLocation()</CODE></A> == <A HREF="../../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><CODE>ILocationAware.Location.CLIENT</CODE></A></code>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#isClosed()">isClosed</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#isConnected()">isConnected</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Same as <code><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#getState()"><CODE>IConnector.getState()</CODE></A> == <A HREF="../../../../org/eclipse/net4j/connector/ConnectorState.html#CONNECTED"><CODE>ConnectorState.CONNECTED</CODE></A></code>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#isConnecting()">isConnecting</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#isDeferredActivation()">isDeferredActivation</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#isDisconnected()">isDisconnected</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#isNegotiating()">isNegotiating</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#isServer()">isServer</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Same as <code><A HREF="../../../../org/eclipse/net4j/ILocationAware.html#getLocation()"><CODE>ILocationAware.getLocation()</CODE></A> == <A HREF="../../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><CODE>ILocationAware.Location.SERVER</CODE></A></code>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#leaveConnecting()">leaveConnecting</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#provideBuffer()">provideBuffer</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides a buffer from this <code>BufferProvider</code>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#retainBuffer(org.eclipse.net4j.buffer.IBuffer)">retainBuffer</A></B>(<A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A>&nbsp;buffer)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Retains a buffer to this <code>BufferProvider</code>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#setNegotiationException(org.eclipse.net4j.util.security.NegotiationException)">setNegotiationException</A></B>(<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/NegotiationException.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">NegotiationException</A>&nbsp;negotiationException)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#setNegotiator(org.eclipse.net4j.util.security.INegotiator)">setNegotiator</A></B>(<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">INegotiator</A>&nbsp;negotiator)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#setState(org.eclipse.net4j.connector.ConnectorState)">setState</A></B>(<A HREF="../../../../org/eclipse/net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</A>&nbsp;newState)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#setUserID(java.lang.String)">setUserID</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/spi/net4j/Connector.html#waitForConnection(long)">waitForConnection</A></B>(long&nbsp;timeout)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Blocks until <code><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#isConnected()"><CODE>IConnector.isConnected()</CODE></A> == true</code> or the given timeout expired.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.spi.net4j.ChannelMultiplexer"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.spi.net4j.<A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#closeChannel(org.eclipse.spi.net4j.InternalChannel)">closeChannel</A>, <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#createChannel()">createChannel</A>, <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#createProtocol(java.lang.String, INFRA_STRUCTURE)">createProtocol</A>, <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#createProtocolFactoryKey(java.lang.String)">createProtocolFactoryKey</A>, <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#getChannel(short)">getChannel</A>, <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#getChannels()">getChannels</A>, <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#getConfig()">getConfig</A>, <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#getElements()">getElements</A>, <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#getOpenChannelTimeout()">getOpenChannelTimeout</A>, <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#inverseCloseChannel(short)">inverseCloseChannel</A>, <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#inverseOpenChannel(short, java.lang.String)">inverseOpenChannel</A>, <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#isEmpty()">isEmpty</A>, <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#openChannel()">openChannel</A>, <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#openChannel(org.eclipse.net4j.protocol.IProtocol)">openChannel</A>, <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#openChannel(java.lang.String, java.lang.Object)">openChannel</A>, <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#registerChannelWithPeer(short, long, org.eclipse.net4j.protocol.IProtocol)">registerChannelWithPeer</A>, <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#setConfig(org.eclipse.net4j.ITransportConfig)">setConfig</A>, <A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#setOpenChannelTimeout(long)">setOpenChannelTimeout</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.container.Container"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.net4j.util.container.<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/Container.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">Container</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/Container.html?is-external=true#fireContainerEvent(E[], org.eclipse.net4j.util.container.IContainerDelta.Kind)" title="class or interface in org.eclipse.net4j.util.container">fireContainerEvent</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/Container.html?is-external=true#fireContainerEvent(E, org.eclipse.net4j.util.container.IContainerDelta.Kind)" title="class or interface in org.eclipse.net4j.util.container">fireContainerEvent</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/Container.html?is-external=true#fireContainerEvent(java.util.List)" title="class or interface in org.eclipse.net4j.util.container">fireContainerEvent</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/Container.html?is-external=true#fireElementAddedEvent(E)" title="class or interface in org.eclipse.net4j.util.container">fireElementAddedEvent</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/Container.html?is-external=true#fireElementRemovedEvent(E)" title="class or interface in org.eclipse.net4j.util.container">fireElementRemovedEvent</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/Container.html?is-external=true#fireElementsAddedEvent(E[])" title="class or interface in org.eclipse.net4j.util.container">fireElementsAddedEvent</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/Container.html?is-external=true#fireElementsRemovedEvent(E[])" title="class or interface in org.eclipse.net4j.util.container">fireElementsRemovedEvent</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/Container.html?is-external=true#fireEvent(org.eclipse.net4j.util.event.IEvent)" title="class or interface in org.eclipse.net4j.util.container">fireEvent</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/Container.html?is-external=true#newContainerEvent()" title="class or interface in org.eclipse.net4j.util.container">newContainerEvent</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/Container.html?is-external=true#newContainerEvent(E, org.eclipse.net4j.util.container.IContainerDelta.Kind)" title="class or interface in org.eclipse.net4j.util.container">newContainerEvent</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.lifecycle.Lifecycle"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.net4j.util.lifecycle.<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#activate()" title="class or interface in org.eclipse.net4j.util.lifecycle">activate</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkActive()" title="class or interface in org.eclipse.net4j.util.lifecycle">checkActive</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkArg(boolean, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkArg</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkArg(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkArg</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkInactive()" title="class or interface in org.eclipse.net4j.util.lifecycle">checkInactive</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkNull(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkNull</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkState(boolean, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkState</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkState(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkState</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#deactivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">deactivate</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#deferredActivate(boolean)" title="class or interface in org.eclipse.net4j.util.lifecycle">deferredActivate</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doAfterActivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doAfterActivate</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doBeforeDeactivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doBeforeDeactivate</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#dump()" title="class or interface in org.eclipse.net4j.util.lifecycle">dump</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#getLifecycleState()" title="class or interface in org.eclipse.net4j.util.lifecycle">getLifecycleState</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#isActive()" title="class or interface in org.eclipse.net4j.util.lifecycle">isActive</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#toString()" title="class or interface in org.eclipse.net4j.util.lifecycle">toString</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.Notifier"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.net4j.util.event.<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">Notifier</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent()" title="class or interface in org.eclipse.net4j.util.event">fireEvent</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent(org.eclipse.net4j.util.event.IEvent, org.eclipse.net4j.util.event.IListener[])" title="class or interface in org.eclipse.net4j.util.event">fireEvent</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#firstListenerAdded()" title="class or interface in org.eclipse.net4j.util.event">firstListenerAdded</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#getNotificationService()" title="class or interface in org.eclipse.net4j.util.event">getNotificationService</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#lastListenerRemoved()" title="class or interface in org.eclipse.net4j.util.event">lastListenerRemoved</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.spi.net4j.InternalChannelMultiplexer"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.spi.net4j.<A HREF="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer.html#closeChannel(org.eclipse.spi.net4j.InternalChannel)">closeChannel</A>, <A HREF="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer.html#multiplexChannel(org.eclipse.spi.net4j.InternalChannel)">multiplexChannel</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.channel.IChannelMultiplexer"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.channel.<A HREF="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html#getChannels()">getChannels</A>, <A HREF="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html#getOpenChannelTimeout()">getOpenChannelTimeout</A>, <A HREF="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html#openChannel()">openChannel</A>, <A HREF="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html#openChannel(org.eclipse.net4j.protocol.IProtocol)">openChannel</A>, <A HREF="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html#openChannel(java.lang.String, java.lang.Object)">openChannel</A>, <A HREF="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html#setOpenChannelTimeout(long)">setOpenChannelTimeout</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements()" title="class or interface in org.eclipse.net4j.util.container">getElements</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#isEmpty()" title="class or interface in org.eclipse.net4j.util.container">isEmpty</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.event.<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</A>, <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.ITransportConfigAware"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.<A HREF="../../../../org/eclipse/net4j/ITransportConfigAware.html" title="interface in org.eclipse.net4j">ITransportConfigAware</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../org/eclipse/net4j/ITransportConfigAware.html#getConfig()">getConfig</A>, <A HREF="../../../../org/eclipse/net4j/ITransportConfigAware.html#setConfig(org.eclipse.net4j.ITransportConfig)">setConfig</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="Connector()"><!-- --></A><H3>
+Connector</H3>
+<PRE>
+public <B>Connector</B>()</PRE>
+<DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="getNegotiator()"><!-- --></A><H3>
+getNegotiator</H3>
+<PRE>
+public <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">INegotiator</A> <B>getNegotiator</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiatorAware.html?is-external=true#getNegotiator()" title="class or interface in org.eclipse.net4j.util.security">getNegotiator</A></CODE> in interface <CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiatorAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">INegotiatorAware</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setNegotiator(org.eclipse.net4j.util.security.INegotiator)"><!-- --></A><H3>
+setNegotiator</H3>
+<PRE>
+public void <B>setNegotiator</B>(<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">INegotiator</A>&nbsp;negotiator)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiatorAware.html?is-external=true#setNegotiator(org.eclipse.net4j.util.security.INegotiator)" title="class or interface in org.eclipse.net4j.util.security">setNegotiator</A></CODE> in interface <CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiatorAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">INegotiatorAware</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getNegotiationContext()"><!-- --></A><H3>
+getNegotiationContext</H3>
+<PRE>
+public <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiationContext.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">INegotiationContext</A> <B>getNegotiationContext</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isClient()"><!-- --></A><H3>
+isClient</H3>
+<PRE>
+public boolean <B>isClient</B>()</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../org/eclipse/net4j/ILocationAware.html#isClient()">ILocationAware</A></CODE></B></DD>
+<DD>Same as <code><A HREF="../../../../org/eclipse/net4j/ILocationAware.html#getLocation()"><CODE>ILocationAware.getLocation()</CODE></A> == <A HREF="../../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><CODE>ILocationAware.Location.CLIENT</CODE></A></code>.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../org/eclipse/net4j/ILocationAware.html#isClient()">isClient</A></CODE> in interface <CODE><A HREF="../../../../org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isServer()"><!-- --></A><H3>
+isServer</H3>
+<PRE>
+public boolean <B>isServer</B>()</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../org/eclipse/net4j/ILocationAware.html#isServer()">ILocationAware</A></CODE></B></DD>
+<DD>Same as <code><A HREF="../../../../org/eclipse/net4j/ILocationAware.html#getLocation()"><CODE>ILocationAware.getLocation()</CODE></A> == <A HREF="../../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><CODE>ILocationAware.Location.SERVER</CODE></A></code>.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../org/eclipse/net4j/ILocationAware.html#isServer()">isServer</A></CODE> in interface <CODE><A HREF="../../../../org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getUserID()"><!-- --></A><H3>
+getUserID</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getUserID</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true#getUserID()" title="class or interface in org.eclipse.net4j.util.security">getUserID</A></CODE> in interface <CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserAware</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setUserID(java.lang.String)"><!-- --></A><H3>
+setUserID</H3>
+<PRE>
+public void <B>setUserID</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getState()"><!-- --></A><H3>
+getState</H3>
+<PRE>
+public <A HREF="../../../../org/eclipse/net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</A> <B>getState</B>()</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#getState()">IConnector</A></CODE></B></DD>
+<DD>Returns the current state of this connector.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#getState()">getState</A></CODE> in interface <CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setState(org.eclipse.net4j.connector.ConnectorState)"><!-- --></A><H3>
+setState</H3>
+<PRE>
+public void <B>setState</B>(<A HREF="../../../../org/eclipse/net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</A>&nbsp;newState)
+              throws <A HREF="../../../../org/eclipse/net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</A></PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../org/eclipse/net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isDisconnected()"><!-- --></A><H3>
+isDisconnected</H3>
+<PRE>
+public boolean <B>isDisconnected</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isConnecting()"><!-- --></A><H3>
+isConnecting</H3>
+<PRE>
+public boolean <B>isConnecting</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isNegotiating()"><!-- --></A><H3>
+isNegotiating</H3>
+<PRE>
+public boolean <B>isNegotiating</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isConnected()"><!-- --></A><H3>
+isConnected</H3>
+<PRE>
+public boolean <B>isConnected</B>()</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#isConnected()">IConnector</A></CODE></B></DD>
+<DD>Same as <code><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#getState()"><CODE>IConnector.getState()</CODE></A> == <A HREF="../../../../org/eclipse/net4j/connector/ConnectorState.html#CONNECTED"><CODE>ConnectorState.CONNECTED</CODE></A></code>.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#isConnected()">isConnected</A></CODE> in interface <CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="connectAsync()"><!-- --></A><H3>
+connectAsync</H3>
+<PRE>
+public void <B>connectAsync</B>()
+                  throws <A HREF="../../../../org/eclipse/net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</A></PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#connectAsync()">IConnector</A></CODE></B></DD>
+<DD>Asynchronous connect. May leave this <A HREF="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><CODE>IConnector</CODE></A> in a state where <code><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#isConnected()"><CODE>IConnector.isConnected()</CODE></A> == false
+ </code>.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#connectAsync()">connectAsync</A></CODE> in interface <CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</A></CODE></DL>
+</DD>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../org/eclipse/net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</A></CODE><DT><B>See Also:</B><DD><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#waitForConnection(long)"><CODE>IConnector.waitForConnection(long)</CODE></A>, 
+<A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#connect(long)"><CODE>IConnector.connect(long)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="waitForConnection(long)"><!-- --></A><H3>
+waitForConnection</H3>
+<PRE>
+public void <B>waitForConnection</B>(long&nbsp;timeout)
+                       throws <A HREF="../../../../org/eclipse/net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</A></PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#waitForConnection(long)">IConnector</A></CODE></B></DD>
+<DD>Blocks until <code><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#isConnected()"><CODE>IConnector.isConnected()</CODE></A> == true</code> or the given timeout expired.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#waitForConnection(long)">waitForConnection</A></CODE> in interface <CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>timeout</CODE> - The maximum number of milli seconds to block or <A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#NO_TIMEOUT"><CODE>IConnector.NO_TIMEOUT</CODE></A> to block indefinetely in case no
+          connection occurs.
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../org/eclipse/net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</A></CODE><DT><B>Since:</B></DT>
+  <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="connect(long)"><!-- --></A><H3>
+connect</H3>
+<PRE>
+public void <B>connect</B>(long&nbsp;timeout)
+             throws <A HREF="../../../../org/eclipse/net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</A></PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#connect(long)">IConnector</A></CODE></B></DD>
+<DD>Synchronous connect. Blocks until <code><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#isConnected()"><CODE>IConnector.isConnected()</CODE></A> == true</code> or the given timeout expired.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#connect(long)">connect</A></CODE> in interface <CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>timeout</CODE> - The maximum number of milli seconds to block or <A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#NO_TIMEOUT"><CODE>IConnector.NO_TIMEOUT</CODE></A> to block indefinetely in case no
+          connection occurs.
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../org/eclipse/net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</A></CODE><DT><B>Since:</B></DT>
+  <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="connect()"><!-- --></A><H3>
+connect</H3>
+<PRE>
+public void <B>connect</B>()
+             throws <A HREF="../../../../org/eclipse/net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</A></PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#connect()">IConnector</A></CODE></B></DD>
+<DD>Synchronous connect with infinite timeout value. Same as <A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#connect()"><CODE>connect(NO_TIMEOUT)</CODE></A>.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#connect()">connect</A></CODE> in interface <CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</A></CODE></DL>
+</DD>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../org/eclipse/net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</A></CODE><DT><B>Since:</B></DT>
+  <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="close()"><!-- --></A><H3>
+close</H3>
+<PRE>
+public void <B>close</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close()" title="class or interface in org.eclipse.net4j.util.collection">close</A></CODE> in interface <CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isClosed()"><!-- --></A><H3>
+isClosed</H3>
+<PRE>
+public boolean <B>isClosed</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#isClosed()" title="class or interface in org.eclipse.net4j.util.collection">isClosed</A></CODE> in interface <CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getBufferCapacity()"><!-- --></A><H3>
+getBufferCapacity</H3>
+<PRE>
+public short <B>getBufferCapacity</B>()</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#getBufferCapacity()">IBufferProvider</A></CODE></B></DD>
+<DD>Returns the capacity of the buffers provided by <A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#provideBuffer()"><CODE>IBufferProvider.provideBuffer()</CODE></A> .
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#getBufferCapacity()">getBufferCapacity</A></CODE> in interface <CODE><A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="provideBuffer()"><!-- --></A><H3>
+provideBuffer</H3>
+<PRE>
+public <A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A> <B>provideBuffer</B>()</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#provideBuffer()">IBufferProvider</A></CODE></B></DD>
+<DD>Provides a buffer from this <code>BufferProvider</code>.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#provideBuffer()">provideBuffer</A></CODE> in interface <CODE><A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="retainBuffer(org.eclipse.net4j.buffer.IBuffer)"><!-- --></A><H3>
+retainBuffer</H3>
+<PRE>
+public void <B>retainBuffer</B>(<A HREF="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A>&nbsp;buffer)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#retainBuffer(org.eclipse.net4j.buffer.IBuffer)">IBufferProvider</A></CODE></B></DD>
+<DD>Retains a buffer to this <code>BufferProvider</code>.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#retainBuffer(org.eclipse.net4j.buffer.IBuffer)">retainBuffer</A></CODE> in interface <CODE><A HREF="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="leaveConnecting()"><!-- --></A><H3>
+leaveConnecting</H3>
+<PRE>
+protected void <B>leaveConnecting</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createNegotiationContext()"><!-- --></A><H3>
+createNegotiationContext</H3>
+<PRE>
+protected abstract <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiationContext.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">INegotiationContext</A> <B>createNegotiationContext</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#createNegotiationContext()">createNegotiationContext</A></CODE> in class <CODE><A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getNegotiationException()"><!-- --></A><H3>
+getNegotiationException</H3>
+<PRE>
+protected <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/NegotiationException.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">NegotiationException</A> <B>getNegotiationException</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setNegotiationException(org.eclipse.net4j.util.security.NegotiationException)"><!-- --></A><H3>
+setNegotiationException</H3>
+<PRE>
+protected void <B>setNegotiationException</B>(<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/NegotiationException.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">NegotiationException</A>&nbsp;negotiationException)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="initChannel(org.eclipse.spi.net4j.InternalChannel, org.eclipse.net4j.protocol.IProtocol)"><!-- --></A><H3>
+initChannel</H3>
+<PRE>
+protected void <B>initChannel</B>(<A HREF="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</A>&nbsp;channel,
+                           <A HREF="../../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</A>&lt;?&gt;&nbsp;protocol)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#initChannel(org.eclipse.spi.net4j.InternalChannel, org.eclipse.net4j.protocol.IProtocol)">initChannel</A></CODE> in class <CODE><A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="deregisterChannelFromPeer(org.eclipse.spi.net4j.InternalChannel)"><!-- --></A><H3>
+deregisterChannelFromPeer</H3>
+<PRE>
+protected void <B>deregisterChannelFromPeer</B>(<A HREF="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</A>&nbsp;channel)
+                                  throws <A HREF="../../../../org/eclipse/net4j/channel/ChannelException.html" title="class in org.eclipse.net4j.channel">ChannelException</A></PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#deregisterChannelFromPeer(org.eclipse.spi.net4j.InternalChannel)">deregisterChannelFromPeer</A></CODE> in class <CODE><A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</A></CODE></DL>
+</DD>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../org/eclipse/net4j/channel/ChannelException.html" title="class in org.eclipse.net4j.channel">ChannelException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getLocation()"><!-- --></A><H3>
+getLocation</H3>
+<PRE>
+public <A HREF="../../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j">ILocationAware.Location</A> <B>getLocation</B>()</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../org/eclipse/net4j/ILocationAware.html#getLocation()">ILocationAware</A></CODE></B></DD>
+<DD>Returns the location of this object in a <A HREF="../../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><CODE>client</CODE></A>/<A HREF="../../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><CODE>server</CODE></A> scenario.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../org/eclipse/net4j/ILocationAware.html#getLocation()">getLocation</A></CODE> in interface <CODE><A HREF="../../../../org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getURL()"><!-- --></A><H3>
+getURL</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getURL</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#getURL()">getURL</A></CODE> in interface <CODE><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isDeferredActivation()"><!-- --></A><H3>
+isDeferredActivation</H3>
+<PRE>
+public boolean <B>isDeferredActivation</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html?is-external=true#isDeferredActivation()" title="class or interface in org.eclipse.net4j.util.lifecycle">isDeferredActivation</A></CODE> in interface <CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#isDeferredActivation()" title="class or interface in org.eclipse.net4j.util.lifecycle">isDeferredActivation</A></CODE> in class <CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="doBeforeOpenChannel(org.eclipse.net4j.protocol.IProtocol)"><!-- --></A><H3>
+doBeforeOpenChannel</H3>
+<PRE>
+protected void <B>doBeforeOpenChannel</B>(<A HREF="../../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</A>&lt;?&gt;&nbsp;protocol)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#doBeforeOpenChannel(org.eclipse.net4j.protocol.IProtocol)">doBeforeOpenChannel</A></CODE> in class <CODE><A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="doBeforeActivate()"><!-- --></A><H3>
+doBeforeActivate</H3>
+<PRE>
+protected void <B>doBeforeActivate</B>()
+                         throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doBeforeActivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doBeforeActivate</A></CODE> in class <CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</A></CODE></DL>
+</DD>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="doActivate()"><!-- --></A><H3>
+doActivate</H3>
+<PRE>
+protected void <B>doActivate</B>()
+                   throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doActivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doActivate</A></CODE> in class <CODE><A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</A></CODE></DL>
+</DD>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="doDeactivate()"><!-- --></A><H3>
+doDeactivate</H3>
+<PRE>
+protected void <B>doDeactivate</B>()
+                     throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#doDeactivate()">doDeactivate</A></CODE> in class <CODE><A HREF="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</A></CODE></DL>
+</DD>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE></DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/Connector.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../org/eclipse/spi/net4j/ClientProtocolFactory.html" title="class in org.eclipse.spi.net4j"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../org/eclipse/spi/net4j/ConnectorFactory.html" title="class in org.eclipse.spi.net4j"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?org/eclipse/spi/net4j/Connector.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="Connector.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.eclipse.net4j.util.lifecycle.Lifecycle">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

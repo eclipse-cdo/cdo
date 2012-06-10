@@ -93,6 +93,10 @@ Packages that use <A HREF="../../../../../org/eclipse/net4j/connector/ConnectorE
 <TD><A HREF="#org.eclipse.net4j.connector"><B>org.eclipse.net4j.connector</B></A></TD>
 <TD>The Net4j transport layer concepts for dealing with connectors.&nbsp;</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.spi.net4j"><B>org.eclipse.spi.net4j</B></A></TD>
+<TD>Server service provider interfaces and useful base implementations for the Net4j transport layer.&nbsp;</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -141,6 +145,63 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/connector/ConnectorException.h
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Blocks until <code><A HREF="../../../../../org/eclipse/net4j/connector/IConnector.html#isConnected()"><CODE>IConnector.isConnected()</CODE></A> == true</code> or the given timeout expired.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.spi.net4j"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../org/eclipse/net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</A> in <A HREF="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</A> that throw <A HREF="../../../../../org/eclipse/net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>Connector.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Connector.html#connect()">connect</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>Connector.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Connector.html#connect(long)">connect</A></B>(long&nbsp;timeout)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>Connector.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Connector.html#connectAsync()">connectAsync</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>Connector.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Connector.html#setState(org.eclipse.net4j.connector.ConnectorState)">setState</A></B>(<A HREF="../../../../../org/eclipse/net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</A>&nbsp;newState)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>Connector.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Connector.html#waitForConnection(long)">waitForConnection</A></B>(long&nbsp;timeout)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;

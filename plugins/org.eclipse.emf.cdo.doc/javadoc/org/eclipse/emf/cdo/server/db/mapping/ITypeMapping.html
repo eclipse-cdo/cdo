@@ -224,7 +224,7 @@ Mapping of single values to and from the database.
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#readValueToRevision(java.sql.ResultSet, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">readValueToRevision</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</A>&nbsp;resultSet,
-                    org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision)</CODE>
+                    <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Read a value from a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql"><CODE>ResultSet</CODE></A>, convert it from the DB to the CDO representation and set it to the feature
@@ -288,7 +288,7 @@ Mapping of single values to and from the database.
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setValueFromRevision(java.sql.PreparedStatement, int, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">setValueFromRevision</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</A>&nbsp;stmt,
                      int&nbsp;index,
-                     org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;value)</CODE>
+                     <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;value)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set a value of the given revision to the JDBC <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql"><CODE>PreparedStatement</CODE></A> using an appropriate <code>setXxx</code>
@@ -472,7 +472,7 @@ setValueFromRevision</H3>
 <PRE>
 void <B>setValueFromRevision</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</A>&nbsp;stmt,
                           int&nbsp;index,
-                          org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;value)
+                          <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;value)
                           throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></PRE>
 <DL>
 <DD>Set a value of the given revision to the JDBC <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql"><CODE>PreparedStatement</CODE></A> using an appropriate <code>setXxx</code>
@@ -510,7 +510,7 @@ readValue</H3>
 readValueToRevision</H3>
 <PRE>
 void <B>readValueToRevision</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</A>&nbsp;resultSet,
-                         org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision)
+                         <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision)
                          throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></PRE>
 <DL>
 <DD>Read a value from a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql"><CODE>ResultSet</CODE></A>, convert it from the DB to the CDO representation and set it to the feature

@@ -57,6 +57,8 @@ import java.util.regex.Pattern;
  */
 public class AssembleScripts
 {
+  public static final boolean INCLUDE_SPI = true;
+
   private static final String EXPORT_PACKAGE = "Export-Package";
 
   private static final AntLib ANTLIB = new AntLib();
@@ -196,12 +198,12 @@ public class AssembleScripts
   {
     if (packageName.endsWith(".spi"))
     {
-      return false;
+      return INCLUDE_SPI;
     }
 
     if (packageName.indexOf(".spi.") != -1)
     {
-      return false;
+      return INCLUDE_SPI;
     }
 
     if (excludedPackages.contains(packageName))

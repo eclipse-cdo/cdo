@@ -263,7 +263,7 @@ This is a default implementation for the <A HREF="../../../../../../../org/eclip
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/AbstractTypeMapping.html#getRevisionValue(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">getRevisionValue</A></B>(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision)</CODE>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/AbstractTypeMapping.html#getRevisionValue(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">getRevisionValue</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -288,7 +288,7 @@ This is a default implementation for the <A HREF="../../../../../../../org/eclip
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/AbstractTypeMapping.html#readValueToRevision(java.sql.ResultSet, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">readValueToRevision</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</A>&nbsp;resultSet,
-                    org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision)</CODE>
+                    <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Read a value from a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql"><CODE>ResultSet</CODE></A>, convert it from the DB to the CDO representation and set it to the feature
@@ -352,7 +352,7 @@ This is a default implementation for the <A HREF="../../../../../../../org/eclip
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/AbstractTypeMapping.html#setValueFromRevision(java.sql.PreparedStatement, int, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">setValueFromRevision</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</A>&nbsp;stmt,
                      int&nbsp;index,
-                     org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision)</CODE>
+                     <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set a value of the given revision to the JDBC <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql"><CODE>PreparedStatement</CODE></A> using an appropriate <code>setXxx</code>
@@ -462,7 +462,7 @@ setValueFromRevision</H3>
 <PRE>
 public final void <B>setValueFromRevision</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</A>&nbsp;stmt,
                                        int&nbsp;index,
-                                       org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision)
+                                       <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision)
                                 throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></PRE>
 <DL>
 <DD><B>Description copied from interface: <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setValueFromRevision(java.sql.PreparedStatement, int, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">ITypeMapping</A></CODE></B></DD>
@@ -597,7 +597,7 @@ public final <A HREF="../../../../../../../../../org.eclipse.net4j.db.doc/javado
 readValueToRevision</H3>
 <PRE>
 public final void <B>readValueToRevision</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</A>&nbsp;resultSet,
-                                      org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision)
+                                      <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision)
                                throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></PRE>
 <DL>
 <DD><B>Description copied from interface: <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#readValueToRevision(java.sql.ResultSet, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">ITypeMapping</A></CODE></B></DD>
@@ -655,7 +655,7 @@ protected <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Ob
 <A NAME="getRevisionValue(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)"><!-- --></A><H3>
 getRevisionValue</H3>
 <PRE>
-protected final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>getRevisionValue</B>(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision)</PRE>
+protected final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>getRevisionValue</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision)</PRE>
 <DL>
 <DD><DL>
 </DL>

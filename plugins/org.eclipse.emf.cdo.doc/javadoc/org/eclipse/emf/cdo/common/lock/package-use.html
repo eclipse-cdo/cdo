@@ -114,6 +114,18 @@ Packages that use <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/pac
 <TD>Client concepts for dealing with sessions to CDO repositories.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.common"><B>org.eclipse.emf.cdo.spi.common</B></A></TD>
+<TD>Common service provider interfaces and useful base implementations.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.common.lock"><B>org.eclipse.emf.cdo.spi.common.lock</B></A></TD>
+<TD>Common service provider interfaces and useful base implementations for dealing with object locks.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.server"><B>org.eclipse.emf.cdo.spi.server</B></A></TD>
+<TD>Server service provider interfaces and useful base implementations.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.transaction"><B>org.eclipse.emf.cdo.transaction</B></A></TD>
 <TD>Client concepts for dealing with transactions, distributed transactions and their save points.&nbsp;</TD>
 </TR>
@@ -124,6 +136,10 @@ Packages that use <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/pac
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.internal.cdo"><B>org.eclipse.emf.internal.cdo</B></A></TD>
 <TD>Exposes <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo"><CODE>CDOObjectImpl</CODE></A> for extension in generated EMF models.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.spi.cdo"><B>org.eclipse.emf.spi.cdo</B></A></TD>
+<TD>Client service provider interfaces and useful base implementations.&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -311,6 +327,101 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/package-su
 </TABLE>
 &nbsp;
 <P>
+<A NAME="org.eclipse.emf.cdo.spi.common"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/package-summary.html">org.eclipse.emf.cdo.common.lock</A> used by <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/package-summary.html">org.eclipse.emf.cdo.spi.common</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/class-use/IDurableLockingManager.LockArea.Handler.html#org.eclipse.emf.cdo.spi.common"><B>IDurableLockingManager.LockArea.Handler</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface for <em>handling</em> <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock"><CODE>lock area</CODE></A> objects.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.spi.common.lock"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/package-summary.html">org.eclipse.emf.cdo.common.lock</A> used by <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/lock/package-summary.html">org.eclipse.emf.cdo.spi.common.lock</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/class-use/CDOLockOwner.html#org.eclipse.emf.cdo.spi.common.lock"><B>CDOLockOwner</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A client-side representation of a view owning locks.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/class-use/CDOLockState.html#org.eclipse.emf.cdo.spi.common.lock"><B>CDOLockState</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A client-side representation of <i>all</i> the locks on a single CDOObject.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.spi.server"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/package-summary.html">org.eclipse.emf.cdo.common.lock</A> used by <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/class-use/CDOLockChangeInfo.html#org.eclipse.emf.cdo.spi.server"><B>CDOLockChangeInfo</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents a change in the lock state of a set of objects.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/class-use/CDOLockChangeInfoHandler.html#org.eclipse.emf.cdo.spi.server"><B>CDOLockChangeInfoHandler</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface that indicates the ability to <i>handle</i> <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock"><CODE>lock-change infos</CODE></A> that
+ are passed from other entities.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/class-use/CDOLockOwner.html#org.eclipse.emf.cdo.spi.server"><B>CDOLockOwner</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A client-side representation of a view owning locks.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/class-use/CDOLockState.html#org.eclipse.emf.cdo.spi.server"><B>CDOLockState</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A client-side representation of <i>all</i> the locks on a single CDOObject.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/class-use/IDurableLockingManager.html#org.eclipse.emf.cdo.spi.server"><B>IDurableLockingManager</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Manages all persistent aspects of durable CDO views such as <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch point</CODE></A> and acquired locks.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/class-use/IDurableLockingManager.LockArea.html#org.eclipse.emf.cdo.spi.server"><B>IDurableLockingManager.LockArea</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Encapsulates the persistable information about a single durable CDO view like <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch point</CODE></A>
+ and acquired locks.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/class-use/IDurableLockingManager.LockArea.Handler.html#org.eclipse.emf.cdo.spi.server"><B>IDurableLockingManager.LockArea.Handler</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface for <em>handling</em> <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock"><CODE>lock area</CODE></A> objects.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/class-use/IDurableLockingManager.LockGrade.html#org.eclipse.emf.cdo.spi.server"><B>IDurableLockingManager.LockGrade</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible combinations of read and write locks on a single CDO object.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
 <A NAME="org.eclipse.emf.cdo.transaction"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -361,6 +472,33 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/package-su
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/class-use/CDOLockState.html#org.eclipse.emf.internal.cdo"><B>CDOLockState</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A client-side representation of <i>all</i> the locks on a single CDOObject.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.spi.cdo"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/package-summary.html">org.eclipse.emf.cdo.common.lock</A> used by <A HREF="../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/class-use/CDOLockChangeInfo.html#org.eclipse.emf.spi.cdo"><B>CDOLockChangeInfo</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents a change in the lock state of a set of objects.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/class-use/CDOLockOwner.html#org.eclipse.emf.spi.cdo"><B>CDOLockOwner</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A client-side representation of a view owning locks.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/class-use/CDOLockState.html#org.eclipse.emf.spi.cdo"><B>CDOLockState</B></A></B>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A client-side representation of <i>all</i> the locks on a single CDOObject.</TD>

@@ -106,6 +106,7 @@
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/signal/*.java" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/signal/heartbeat/*.java" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/signal/wrapping/*.java" />
+				<include name="org.eclipse.net4j/src/org/eclipse/spi/net4j/*.java" />
 			</fileset>
 
 			<group title="Net4j Signalling Platform Transport">
@@ -118,6 +119,7 @@
 				<package name="org.eclipse.net4j.signal" />
 				<package name="org.eclipse.net4j.signal.heartbeat" />
 				<package name="org.eclipse.net4j.signal.wrapping" />
+				<package name="org.eclipse.spi.net4j" />
 			</group>
 			<group title="Net4j Signalling Platform Transport HTTP">
 				<package name="org.eclipse.net4j.http" />

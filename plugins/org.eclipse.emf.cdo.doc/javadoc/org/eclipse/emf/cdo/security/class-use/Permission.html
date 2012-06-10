@@ -97,6 +97,10 @@ Packages that use <A HREF="../../../../../../org/eclipse/emf/cdo/security/Permis
 <TD><A HREF="#org.eclipse.emf.cdo.security.impl"><B>org.eclipse.emf.cdo.security.impl</B></A></TD>
 <TD>&nbsp;&nbsp;</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.server.spi.security"><B>org.eclipse.emf.cdo.server.spi.security</B></A></TD>
+<TD>&nbsp;&nbsp;</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -321,6 +325,58 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html"
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>CheckImpl.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/CheckImpl.html#setPermission(org.eclipse.emf.cdo.security.Permission)">setPermission</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A>&nbsp;newPermission)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.server.spi.security"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A> in <A HREF="../../../../../../org/eclipse/emf/cdo/server/spi/security/package-summary.html">org.eclipse.emf.cdo.server.spi.security</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/emf/cdo/server/spi/security/package-summary.html">org.eclipse.emf.cdo.server.spi.security</A> with parameters of type <A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>AnnotationHandler.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html#handleClassPermission(org.eclipse.emf.cdo.security.Realm, org.eclipse.emf.ecore.EClass, java.lang.String, org.eclipse.emf.cdo.security.Permission)">handleClassPermission</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</A>&nbsp;realm,
+                      <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A>&nbsp;eClass,
+                      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;key,
+                      <A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A>&nbsp;permission)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>AnnotationHandler.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html#handlePackagePermission(org.eclipse.emf.cdo.security.Realm, org.eclipse.emf.ecore.EPackage, java.lang.String, org.eclipse.emf.cdo.security.Permission)">handlePackagePermission</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</A>&nbsp;realm,
+                        <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A>&nbsp;ePackage,
+                        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;key,
+                        <A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A>&nbsp;permission)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>AnnotationHandler.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html#handlePermission(org.eclipse.emf.cdo.security.Realm, org.eclipse.emf.ecore.EModelElement, java.lang.String, org.eclipse.emf.cdo.security.Permission, org.eclipse.emf.ecore.EClass, org.eclipse.emf.ecore.EReference)">handlePermission</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</A>&nbsp;realm,
+                 <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EModelElement</A>&nbsp;modelElement,
+                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;key,
+                 <A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A>&nbsp;permission,
+                 <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A>&nbsp;checkClass,
+                 <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A>&nbsp;checkFeature)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>

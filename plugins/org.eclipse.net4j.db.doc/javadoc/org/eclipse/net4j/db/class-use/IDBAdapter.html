@@ -119,7 +119,7 @@ Packages that use <A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" 
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.net4j.spi.db"><B>org.eclipse.net4j.spi.db</B></A></TD>
-<TD>&nbsp;&nbsp;</TD>
+<TD>Server service provider interfaces and useful base implementations for the Net4j DB framework.&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -373,7 +373,7 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="int
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-Uses of <A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A> in org.eclipse.net4j.spi.db</FONT></TH>
+Uses of <A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A> in <A HREF="../../../../../org/eclipse/net4j/spi/db/package-summary.html">org.eclipse.net4j.spi.db</A></FONT></TH>
 </TR>
 </TABLE>
 &nbsp;
@@ -381,12 +381,74 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="int
 
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2">Classes in org.eclipse.net4j.spi.db that implement <A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A></FONT></TH>
+<TH ALIGN="left" COLSPAN="2">Classes in <A HREF="../../../../../org/eclipse/net4j/spi/db/package-summary.html">org.eclipse.net4j.spi.db</A> that implement <A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;class</CODE></FONT></TD>
-<TD><CODE><B>org.eclipse.net4j.spi.db.DBAdapter</B></CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A useful base class for implementing custom <A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db"><CODE>DB adapters</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../org/eclipse/net4j/spi/db/package-summary.html">org.eclipse.net4j.spi.db</A> with parameters of type <A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B>DBSchema.</B><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#create(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection)">create</A></B>(<A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;dbAdapter,
+       <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B>DBSchema.</B><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#create(org.eclipse.net4j.db.IDBAdapter, javax.sql.DataSource)">create</A></B>(<A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;dbAdapter,
+       <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</A>&nbsp;dataSource)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B>DBSchema.</B><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#create(org.eclipse.net4j.db.IDBAdapter, org.eclipse.net4j.db.IDBConnectionProvider)">create</A></B>(<A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;dbAdapter,
+       <A HREF="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</A>&nbsp;connectionProvider)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DBSchema.</B><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection)">drop</A></B>(<A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;dbAdapter,
+     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DBSchema.</B><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter, javax.sql.DataSource)">drop</A></B>(<A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;dbAdapter,
+     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</A>&nbsp;dataSource)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DBSchema.</B><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter, org.eclipse.net4j.db.IDBConnectionProvider)">drop</A></B>(<A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;dbAdapter,
+     <A HREF="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</A>&nbsp;connectionProvider)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>

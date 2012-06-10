@@ -128,7 +128,7 @@ Class ClassCheckImpl</H2>
  <p>
  The following features are implemented:
  <ul>
-   <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ClassCheckImpl.html#getClasses()"><CODE><em>Classes</em></CODE></A></li>
+   <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ClassCheckImpl.html#getApplicableClass()"><CODE><em>Applicable Class</em></CODE></A></li>
  </ul>
  </p>
 <P>
@@ -291,8 +291,8 @@ Class ClassCheckImpl</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ClassCheckImpl.html#getClasses()">getClasses</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ClassCheckImpl.html#getApplicableClass()">getApplicableClass</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -303,6 +303,14 @@ Class ClassCheckImpl</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ClassCheckImpl.html#isApplicable(org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">isApplicable</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A>&nbsp;revision,
              <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;revisionProvider,
              <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;securityContext)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ClassCheckImpl.html#setApplicableClass(org.eclipse.emf.ecore.EClass)">setApplicableClass</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A>&nbsp;newApplicableClass)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -472,20 +480,40 @@ protected <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/or
 </DL>
 <HR>
 
-<A NAME="getClasses()"><!-- --></A><H3>
-getClasses</H3>
+<A NAME="getApplicableClass()"><!-- --></A><H3>
+getApplicableClass</H3>
 <PRE>
-public <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A>&gt; <B>getClasses</B>()</PRE>
+public <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A> <B>getApplicableClass</B>()</PRE>
 <DL>
 <DD><!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/ClassCheck.html#getClasses()">getClasses</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/ClassCheck.html" title="interface in org.eclipse.emf.cdo.security">ClassCheck</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/ClassCheck.html#getApplicableClass()">getApplicableClass</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/ClassCheck.html" title="interface in org.eclipse.emf.cdo.security">ClassCheck</A></CODE></DL>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>the value of the '<em>Classes</em>' reference list.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getClassCheck_Classes()"><CODE>SecurityPackage.getClassCheck_Classes()</CODE></A><DT><B>Generated</B></DT>
+<DT><B>Returns:</B><DD>the value of the '<em>Applicable Class</em>' reference.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/ClassCheck.html#setApplicableClass(org.eclipse.emf.ecore.EClass)"><CODE>ClassCheck.setApplicableClass(EClass)</CODE></A>, 
+<A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getClassCheck_ApplicableClass()"><CODE>SecurityPackage.getClassCheck_ApplicableClass()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setApplicableClass(org.eclipse.emf.ecore.EClass)"><!-- --></A><H3>
+setApplicableClass</H3>
+<PRE>
+public void <B>setApplicableClass</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A>&nbsp;newApplicableClass)</PRE>
+<DL>
+<DD><!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/ClassCheck.html#setApplicableClass(org.eclipse.emf.ecore.EClass)">setApplicableClass</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/ClassCheck.html" title="interface in org.eclipse.emf.cdo.security">ClassCheck</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>newApplicableClass</CODE> - the new value of the '<em>Applicable Class</em>' reference.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/ClassCheck.html#getApplicableClass()"><CODE>ClassCheck.getApplicableClass()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DD>

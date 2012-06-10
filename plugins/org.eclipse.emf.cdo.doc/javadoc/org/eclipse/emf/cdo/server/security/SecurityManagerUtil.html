@@ -130,8 +130,7 @@ Static factory methods for creating <A HREF="../../../../../../org/eclipse/emf/c
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/security/ISecurityManager.html" title="interface in org.eclipse.emf.cdo.server.security">ISecurityManager</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/security/SecurityManagerUtil.html#createSecurityManager(org.eclipse.emf.cdo.server.IRepository, java.lang.String)">createSecurityManager</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A>&nbsp;repository,
-                      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;realmPath)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/security/SecurityManagerUtil.html#createSecurityManager(java.lang.String)">createSecurityManager</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;realmPath)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -139,9 +138,16 @@ Static factory methods for creating <A HREF="../../../../../../org/eclipse/emf/c
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/security/ISecurityManager.html" title="interface in org.eclipse.emf.cdo.server.security">ISecurityManager</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/security/SecurityManagerUtil.html#createSecurityManager(org.eclipse.emf.cdo.server.IRepository, java.lang.String, org.eclipse.net4j.util.container.IManagedContainer)">createSecurityManager</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A>&nbsp;repository,
-                      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;realmPath,
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/security/SecurityManagerUtil.html#createSecurityManager(java.lang.String, org.eclipse.net4j.util.container.IManagedContainer)">createSecurityManager</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;realmPath,
                       <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</A>&nbsp;container)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/security/SecurityManagerUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">prepareContainer</A></B>(<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</A>&nbsp;container)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -169,11 +175,10 @@ Static factory methods for creating <A HREF="../../../../../../org/eclipse/emf/c
 </TR>
 </TABLE>
 
-<A NAME="createSecurityManager(org.eclipse.emf.cdo.server.IRepository, java.lang.String)"><!-- --></A><H3>
+<A NAME="createSecurityManager(java.lang.String)"><!-- --></A><H3>
 createSecurityManager</H3>
 <PRE>
-public static <A HREF="../../../../../../org/eclipse/emf/cdo/server/security/ISecurityManager.html" title="interface in org.eclipse.emf.cdo.server.security">ISecurityManager</A> <B>createSecurityManager</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A>&nbsp;repository,
-                                                     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;realmPath)</PRE>
+public static <A HREF="../../../../../../org/eclipse/emf/cdo/server/security/ISecurityManager.html" title="interface in org.eclipse.emf.cdo.server.security">ISecurityManager</A> <B>createSecurityManager</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;realmPath)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -181,12 +186,22 @@ public static <A HREF="../../../../../../org/eclipse/emf/cdo/server/security/ISe
 </DL>
 <HR>
 
-<A NAME="createSecurityManager(org.eclipse.emf.cdo.server.IRepository, java.lang.String, org.eclipse.net4j.util.container.IManagedContainer)"><!-- --></A><H3>
+<A NAME="createSecurityManager(java.lang.String, org.eclipse.net4j.util.container.IManagedContainer)"><!-- --></A><H3>
 createSecurityManager</H3>
 <PRE>
-public static <A HREF="../../../../../../org/eclipse/emf/cdo/server/security/ISecurityManager.html" title="interface in org.eclipse.emf.cdo.server.security">ISecurityManager</A> <B>createSecurityManager</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A>&nbsp;repository,
-                                                     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;realmPath,
+public static <A HREF="../../../../../../org/eclipse/emf/cdo/server/security/ISecurityManager.html" title="interface in org.eclipse.emf.cdo.server.security">ISecurityManager</A> <B>createSecurityManager</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;realmPath,
                                                      <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</A>&nbsp;container)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)"><!-- --></A><H3>
+prepareContainer</H3>
+<PRE>
+public static void <B>prepareContainer</B>(<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</A>&nbsp;container)</PRE>
 <DL>
 <DD><DL>
 </DL>

@@ -330,6 +330,16 @@ This is the item provider adapter for a <A HREF="../../../../../../org/eclipse/e
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/UserItemProvider.html#getChildrenFeaturesGen(java.lang.Object)">getChildrenFeaturesGen</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This specifies how to implement <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getChildren(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider"><CODE>ItemProviderAdapter.getChildren(java.lang.Object)</CODE></A> and is used to deduce an appropriate feature for an
+ <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/command/AddCommand.html?is-external=true" title="class or interface in org.eclipse.emf.edit.command"><CODE>AddCommand</CODE></A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/command/RemoveCommand.html?is-external=true" title="class or interface in org.eclipse.emf.edit.command"><CODE>RemoveCommand</CODE></A> or
+ <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/command/MoveCommand.html?is-external=true" title="class or interface in org.eclipse.emf.edit.command"><CODE>MoveCommand</CODE></A> in <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createCommand(java.lang.Object, org.eclipse.emf.edit.domain.EditingDomain, java.lang.Class, org.eclipse.emf.edit.command.CommandParameter)" title="class or interface in org.eclipse.emf.edit.provider"><CODE>ItemProviderAdapter.createCommand(java.lang.Object, org.eclipse.emf.edit.domain.EditingDomain, java.lang.Class<? extends org.eclipse.emf.common.command.Command>, org.eclipse.emf.edit.command.CommandParameter)</CODE></A></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/provider/UserItemProvider.html#getImage(java.lang.Object)">getImage</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object)</CODE>
 
@@ -694,6 +704,27 @@ protected void <B>addLockedPropertyDescriptor</B>(<A HREF="http://download.oracl
 </DL>
 <HR>
 
+<A NAME="getChildrenFeaturesGen(java.lang.Object)"><!-- --></A><H3>
+getChildrenFeaturesGen</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&gt; <B>getChildrenFeaturesGen</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object)</PRE>
+<DL>
+<DD>This specifies how to implement <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#getChildren(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.provider"><CODE>ItemProviderAdapter.getChildren(java.lang.Object)</CODE></A> and is used to deduce an appropriate feature for an
+ <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/command/AddCommand.html?is-external=true" title="class or interface in org.eclipse.emf.edit.command"><CODE>AddCommand</CODE></A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/command/RemoveCommand.html?is-external=true" title="class or interface in org.eclipse.emf.edit.command"><CODE>RemoveCommand</CODE></A> or
+ <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/command/MoveCommand.html?is-external=true" title="class or interface in org.eclipse.emf.edit.command"><CODE>MoveCommand</CODE></A> in <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/provider/ItemProviderAdapter.html?is-external=true#createCommand(java.lang.Object, org.eclipse.emf.edit.domain.EditingDomain, java.lang.Class, org.eclipse.emf.edit.command.CommandParameter)" title="class or interface in org.eclipse.emf.edit.provider"><CODE>ItemProviderAdapter.createCommand(java.lang.Object, org.eclipse.emf.edit.domain.EditingDomain, java.lang.Class<? extends org.eclipse.emf.common.command.Command>, org.eclipse.emf.edit.command.CommandParameter)</CODE></A>.
+ <!-- begin-user-doc --> <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="getChildrenFeatures(java.lang.Object)"><!-- --></A><H3>
 getChildrenFeatures</H3>
 <PRE>
@@ -710,7 +741,7 @@ public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Colle
 </DD>
 <DD><DL>
 <DT><B>Generated</B></DT>
-  <DD></DD>
+  <DD>NOT</DD>
 </DL>
 </DD>
 </DL>
@@ -789,7 +820,7 @@ public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Strin
 </DD>
 <DD><DL>
 <DT><B>Generated</B></DT>
-  <DD></DD>
+  <DD>NOT</DD>
 </DL>
 </DD>
 </DL>

@@ -128,7 +128,7 @@ Class PackageCheckImpl</H2>
  <p>
  The following features are implemented:
  <ul>
-   <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PackageCheckImpl.html#getPackages()"><CODE><em>Packages</em></CODE></A></li>
+   <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PackageCheckImpl.html#getApplicablePackage()"><CODE><em>Applicable Package</em></CODE></A></li>
  </ul>
  </p>
 <P>
@@ -291,8 +291,8 @@ Class PackageCheckImpl</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PackageCheckImpl.html#getPackages()">getPackages</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PackageCheckImpl.html#getApplicablePackage()">getApplicablePackage</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -303,6 +303,14 @@ Class PackageCheckImpl</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PackageCheckImpl.html#isApplicable(org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">isApplicable</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A>&nbsp;revision,
              <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;revisionProvider,
              <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;securityContext)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PackageCheckImpl.html#setApplicablePackage(org.eclipse.emf.ecore.EPackage)">setApplicablePackage</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A>&nbsp;newApplicablePackage)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -472,20 +480,40 @@ protected <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/or
 </DL>
 <HR>
 
-<A NAME="getPackages()"><!-- --></A><H3>
-getPackages</H3>
+<A NAME="getApplicablePackage()"><!-- --></A><H3>
+getApplicablePackage</H3>
 <PRE>
-public <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A>&gt; <B>getPackages</B>()</PRE>
+public <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A> <B>getApplicablePackage</B>()</PRE>
 <DL>
 <DD><!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/PackageCheck.html#getPackages()">getPackages</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/PackageCheck.html" title="interface in org.eclipse.emf.cdo.security">PackageCheck</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/PackageCheck.html#getApplicablePackage()">getApplicablePackage</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/PackageCheck.html" title="interface in org.eclipse.emf.cdo.security">PackageCheck</A></CODE></DL>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>the value of the '<em>Packages</em>' reference list.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getPackageCheck_Packages()"><CODE>SecurityPackage.getPackageCheck_Packages()</CODE></A><DT><B>Generated</B></DT>
+<DT><B>Returns:</B><DD>the value of the '<em>Applicable Package</em>' reference.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/PackageCheck.html#setApplicablePackage(org.eclipse.emf.ecore.EPackage)"><CODE>PackageCheck.setApplicablePackage(EPackage)</CODE></A>, 
+<A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getPackageCheck_ApplicablePackage()"><CODE>SecurityPackage.getPackageCheck_ApplicablePackage()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setApplicablePackage(org.eclipse.emf.ecore.EPackage)"><!-- --></A><H3>
+setApplicablePackage</H3>
+<PRE>
+public void <B>setApplicablePackage</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A>&nbsp;newApplicablePackage)</PRE>
+<DL>
+<DD><!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/PackageCheck.html#setApplicablePackage(org.eclipse.emf.ecore.EPackage)">setApplicablePackage</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/PackageCheck.html" title="interface in org.eclipse.emf.cdo.security">PackageCheck</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>newApplicablePackage</CODE> - the new value of the '<em>Applicable Package</em>' reference.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/PackageCheck.html#getApplicablePackage()"><CODE>PackageCheck.getApplicablePackage()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DD>

@@ -78,16 +78,22 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="allowInterruptRunningQueries"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="idGenerationLocation"</font>&nbsp;value<font color="#000080">="STORE"</font>/&gt;</font>&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Possible&nbsp;values:&nbsp;STORE&nbsp;|&nbsp;CLIENT&nbsp;--&gt;</font><br/>
 <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example&nbsp;(see&nbsp;https://bugs.eclipse.org/bugs/show_bug.cgi?id=302775):<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;userManager&nbsp;type="file"&nbsp;description="_database/repo1.users"/&gt;<br/>
+		<font color="#0000e1">&lt;securityManager&nbsp;type<font color="#000080">="default"</font>&nbsp;realmPath<font color="#000080">="admins/security"</font>/&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example&nbsp;http://bugs.eclipse.org/380629<br/>
+			&lt;securityManager&nbsp;type="annotation"&nbsp;realmPath="security"/&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
 <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example&nbsp;(see&nbsp;https://bugs.eclipse.org/bugs/show_bug.cgi?id=345835):<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;userManager&nbsp;type="TestRepository"&nbsp;description="repo1"/&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example&nbsp;http://bugs.eclipse.org/302775<br/>
+			&lt;userManager&nbsp;type="file"&nbsp;description="_database/repo1.users"/&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
 <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example&nbsp;(see&nbsp;https://bugs.eclipse.org/bugs/show_bug.cgi?id=345431):<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;initialPackage&nbsp;nsURI="http://www.eclipse.org/emf/CDO/examples/company/1.0.0"/&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example&nbsp;http://bugs.eclipse.org/34583<br/>
+			&lt;userManager&nbsp;type="TestRepository"&nbsp;description="repo1"/&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example&nbsp;http://bugs.eclipse.org/345431<br/>
+			&lt;initialPackage&nbsp;nsURI="http://www.eclipse.org/emf/CDO/examples/company/1.0.0"/&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;store&nbsp;type<font color="#000080">="db"</font>&gt;</font><br/>
@@ -109,7 +115,7 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;cache&nbsp;can&nbsp;be&nbsp;disabled&nbsp;by&nbsp;setting&nbsp;a&nbsp;size&nbsp;of&nbsp;0.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
 <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Optional:&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Optional:<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&nbsp;name="objectTypeCacheSize"&nbsp;value="100000"&nbsp;/&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
 <br/>
@@ -171,7 +177,7 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&nbsp;name="port"&nbsp;value="50032"/&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/store&gt;<br/>
 &nbsp;&nbsp;&lt;/repository&gt;<br/>
-&nbsp;&nbsp;--&gt;</font>&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;--&gt;</font><br/>
 <br/>
 <font color="#0000e1">&lt;/cdoServer&gt;</font>
           </code>

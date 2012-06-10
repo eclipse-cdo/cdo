@@ -122,7 +122,7 @@ Interface PackageCheck</H2>
  <p>
  The following features are supported:
  <ul>
-   <li><A HREF="../../../../../org/eclipse/emf/cdo/security/PackageCheck.html#getPackages()"><CODE><em>Packages</em></CODE></A></li>
+   <li><A HREF="../../../../../org/eclipse/emf/cdo/security/PackageCheck.html#getApplicablePackage()"><CODE><em>Applicable Package</em></CODE></A></li>
  </ul>
  </p>
 <P>
@@ -148,11 +148,19 @@ Interface PackageCheck</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/PackageCheck.html#getPackages()">getPackages</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/PackageCheck.html#getApplicablePackage()">getApplicablePackage</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the value of the '<em><b>Packages</b></em>' reference list.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the value of the '<em><b>Applicable Package</b></em>' reference</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/PackageCheck.html#setApplicablePackage(org.eclipse.emf.ecore.EPackage)">setApplicablePackage</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A>&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the value of the '<A HREF="../../../../../org/eclipse/emf/cdo/security/PackageCheck.html#getApplicablePackage()"><CODE><em>Applicable Package</em></CODE></A>' reference</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.security.Check"><!-- --></A>
@@ -204,16 +212,15 @@ Interface PackageCheck</H2>
 </TR>
 </TABLE>
 
-<A NAME="getPackages()"><!-- --></A><H3>
-getPackages</H3>
+<A NAME="getApplicablePackage()"><!-- --></A><H3>
+getApplicablePackage</H3>
 <PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A>&gt; <B>getPackages</B>()</PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A> <B>getApplicablePackage</B>()</PRE>
 <DL>
-<DD>Returns the value of the '<em><b>Packages</b></em>' reference list.
- The list contents are of type <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>EPackage</CODE></A>.
+<DD>Returns the value of the '<em><b>Applicable Package</b></em>' reference.
  <!-- begin-user-doc -->
  <p>
- If the meaning of the '<em>Packages</em>' reference list isn't clear,
+ If the meaning of the '<em>Applicable Package</em>' reference isn't clear,
  there really should be more of a description here...
  </p>
  <!-- end-user-doc -->
@@ -223,10 +230,31 @@ getPackages</H3>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>the value of the '<em>Packages</em>' reference list.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getPackageCheck_Packages()"><CODE>SecurityPackage.getPackageCheck_Packages()</CODE></A><DT><B>Generated</B></DT>
+<DT><B>Returns:</B><DD>the value of the '<em>Applicable Package</em>' reference.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/PackageCheck.html#setApplicablePackage(org.eclipse.emf.ecore.EPackage)"><CODE>setApplicablePackage(EPackage)</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getPackageCheck_ApplicablePackage()"><CODE>SecurityPackage.getPackageCheck_ApplicablePackage()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Model</B></DT>
   <DD>required="true"</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setApplicablePackage(org.eclipse.emf.ecore.EPackage)"><!-- --></A><H3>
+setApplicablePackage</H3>
+<PRE>
+void <B>setApplicablePackage</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A>&nbsp;value)</PRE>
+<DL>
+<DD>Sets the value of the '<A HREF="../../../../../org/eclipse/emf/cdo/security/PackageCheck.html#getApplicablePackage()"><CODE><em>Applicable Package</em></CODE></A>' reference.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>value</CODE> - the new value of the '<em>Applicable Package</em>' reference.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/PackageCheck.html#getApplicablePackage()"><CODE>getApplicablePackage()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
 </DL>
 </DD>
 </DL>

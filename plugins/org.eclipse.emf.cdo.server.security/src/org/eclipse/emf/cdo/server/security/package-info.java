@@ -10,7 +10,7 @@
  */
 
 /**
- * Server integration of the {@link org.eclipse.emf.cdo.security.Realm Security} model
+ * Server integration of the {@link org.eclipse.emf.cdo.security.Realm Security} model.
  */
 package org.eclipse.emf.cdo.server.security;
 

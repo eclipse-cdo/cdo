@@ -553,7 +553,7 @@ public class AssembleScripts
             List<String> sortedPackageNames = sourcePlugin.getSortedPackageNames();
             if (sortedPackageNames.isEmpty())
             {
-              break;
+              continue;
             }
 
             writer.write("<b><a href=\"../../" + javaDoc.getProject().getName() + "/javadoc/"

@@ -27,7 +27,6 @@ org.eclipse.emf.cdo.location
 org.eclipse.emf.cdo.net4j
 org.eclipse.emf.cdo.security
 org.eclipse.emf.cdo.security.impl
-org.eclipse.emf.cdo.security.presentation
 org.eclipse.emf.cdo.security.provider
 org.eclipse.emf.cdo.security.util
 org.eclipse.emf.cdo.server

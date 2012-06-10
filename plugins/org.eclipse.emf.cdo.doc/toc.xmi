@@ -73,17 +73,15 @@
     <packages name="org.eclipse.emf.cdo.spi.common.model"/>
     <packages name="org.eclipse.emf.cdo.spi.common.revision"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.security.edit" label="CDO Model Repository Security Edit Support">
-    <packages name="org.eclipse.emf.cdo.security.provider"/>
-  </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.security.editor" label="CDO Model Repository Security Editor">
-    <packages name="org.eclipse.emf.cdo.security.presentation"/>
-  </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.security" label="CDO Model Repository Security Model">
+  <article:Plugin name="org.eclipse.emf.cdo.security" label="CDO Model Repository Security">
     <packages name="org.eclipse.emf.cdo.security"/>
     <packages name="org.eclipse.emf.cdo.security.impl"/>
     <packages name="org.eclipse.emf.cdo.security.util"/>
   </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.security.edit" label="CDO Model Repository Security Edit Support">
+    <packages name="org.eclipse.emf.cdo.security.provider"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.security.editor" label="CDO Model Repository Security Editor"/>
   <article:Plugin name="org.eclipse.emf.cdo.server" label="CDO Model Repository Server">
     <packages name="org.eclipse.emf.cdo.server"/>
     <packages name="org.eclipse.emf.cdo.server.embedded"/>
@@ -97,19 +95,19 @@
     <packages name="org.eclipse.emf.cdo.server.admin"/>
     <packages name="org.eclipse.emf.cdo.server.spi.admin"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.server.db" label="CDO Model Repository Server DB">
+  <article:Plugin name="org.eclipse.emf.cdo.server.db4o" label="CDO Model Repository Server DB4O Support">
+    <packages name="org.eclipse.emf.cdo.server.db4o"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.server.hibernate" label="CDO Model Repository Server Hibernate Support">
+    <packages name="org.eclipse.emf.cdo.server.hibernate"/>
+    <extensionPoints name="mappingProviderFactories"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.server.db" label="CDO Model Repository Server JDBC Support">
     <packages name="org.eclipse.emf.cdo.server.db"/>
     <packages name="org.eclipse.emf.cdo.server.db.mapping"/>
     <extensionPoints name="mappingStrategies"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.server.db4o" label="CDO Model Repository Server DB4O">
-    <packages name="org.eclipse.emf.cdo.server.db4o"/>
-  </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.server.hibernate" label="CDO Model Repository Server Hibernate">
-    <packages name="org.eclipse.emf.cdo.server.hibernate"/>
-    <extensionPoints name="mappingProviderFactories"/>
-  </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.server.mongodb" label="CDO Model Repository Server MongoDB">
+  <article:Plugin name="org.eclipse.emf.cdo.server.mongodb" label="CDO Model Repository Server MongoDB Support">
     <packages name="org.eclipse.emf.cdo.server.mongodb"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.net4j" label="CDO Model Repository Server Net4j Support">
@@ -118,7 +116,7 @@
   <article:Plugin name="org.eclipse.emf.cdo.server.ocl" label="CDO Model Repository Server OCL Support">
     <packages name="org.eclipse.emf.cdo.server.ocl"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.server.objectivity" label="CDO Model Repository Server Objectivity">
+  <article:Plugin name="org.eclipse.emf.cdo.server.objectivity" label="CDO Model Repository Server Objectivity Support">
     <packages name="org.eclipse.emf.cdo.server.objectivity"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.security" label="CDO Model Repository Server Security Support">

@@ -10,7 +10,7 @@
  */
 
 /**
- * Concepts to checkout, open and further operate CDO {@link org.eclipse.emf.cdo.workspace.CDOWorkspace workspaces}
+ * Concepts to checkout, open and further operate CDO {@link org.eclipse.emf.cdo.workspace.CDOWorkspace workspaces}.
  */
 package org.eclipse.emf.cdo.workspace;
 

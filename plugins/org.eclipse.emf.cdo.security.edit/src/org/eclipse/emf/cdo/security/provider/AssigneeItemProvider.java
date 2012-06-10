@@ -67,8 +67,8 @@ public class AssigneeItemProvider extends SecurityItemItemProvider implements IE
     {
       super.getPropertyDescriptors(object);
 
-      addRolesPropertyDescriptor(object);
       addIdPropertyDescriptor(object);
+      addRolesPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }

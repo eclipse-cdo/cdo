@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.security.ClassCheck;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 /**
@@ -26,7 +25,7 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.ClassCheckImpl#getClasses <em>Classes</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.ClassCheckImpl#getApplicableClass <em>Applicable Class</em>}</li>
  * </ul>
  * </p>
  *
@@ -60,24 +59,26 @@ public class ClassCheckImpl extends CheckImpl implements ClassCheck
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
-  public EList<EClass> getClasses()
+  public EClass getApplicableClass()
   {
-    return (EList<EClass>)eGet(SecurityPackage.Literals.CLASS_CHECK__CLASSES, true);
+    return (EClass)eGet(SecurityPackage.Literals.CLASS_CHECK__APPLICABLE_CLASS, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setApplicableClass(EClass newApplicableClass)
+  {
+    eSet(SecurityPackage.Literals.CLASS_CHECK__APPLICABLE_CLASS, newApplicableClass);
   }
 
   public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
     EClass actualClass = revision.getEClass();
-    for (EClass applicableClass : getClasses())
-    {
-      if (actualClass == applicableClass)
-      {
-        return true;
-      }
-    }
-
-    return false;
+    EClass applicableClass = getApplicableClass();
+    return actualClass == applicableClass;
   }
 
 } // ClassCheckImpl

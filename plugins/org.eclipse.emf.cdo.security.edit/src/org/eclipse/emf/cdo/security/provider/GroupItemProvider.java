@@ -65,9 +65,9 @@ public class GroupItemProvider extends AssigneeItemProvider implements IEditingD
     {
       super.getPropertyDescriptors(object);
 
+      addUsersPropertyDescriptor(object);
       addInheritedGroupsPropertyDescriptor(object);
       addInheritingGroupsPropertyDescriptor(object);
-      addUsersPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -144,14 +144,14 @@ public class GroupItemProvider extends AssigneeItemProvider implements IEditingD
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
     String label = ((Group)object).getId();
     return label == null || label.length() == 0 ? getString("_UI_Group_type") : //$NON-NLS-1$
-        getString("_UI_Group_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+        label;
   }
 
   /**

@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.security.UserPassword;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
@@ -29,7 +28,6 @@ import org.eclipse.emf.edit.provider.ITableItemColorProvider;
 import org.eclipse.emf.edit.provider.ITableItemFontProvider;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -70,26 +68,8 @@ public class UserPasswordItemProvider extends ItemProviderAdapter implements IEd
     {
       super.getPropertyDescriptors(object);
 
-      addEncryptedPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
-  }
-
-  /**
-   * This adds a property descriptor for the Encrypted feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addEncryptedPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_UserPassword_encrypted_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_UserPassword_encrypted_feature", "_UI_UserPassword_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        SecurityPackage.Literals.USER_PASSWORD__ENCRYPTED, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -130,14 +110,12 @@ public class UserPasswordItemProvider extends ItemProviderAdapter implements IEd
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
-    String label = ((UserPassword)object).getEncrypted();
-    return label == null || label.length() == 0 ? getString("_UI_UserPassword_type") : //$NON-NLS-1$
-        getString("_UI_UserPassword_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+    return getString("_UI_UserPassword_type"); //$NON-NLS-1$
   }
 
   /**

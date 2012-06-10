@@ -58,24 +58,26 @@ public class PackageCheckItemProvider extends CheckItemProvider implements IEdit
     {
       super.getPropertyDescriptors(object);
 
-      addPackagesPropertyDescriptor(object);
+      addApplicablePackagePropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Packages feature.
+   * This adds a property descriptor for the Applicable Package feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addPackagesPropertyDescriptor(Object object)
+  protected void addApplicablePackagePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_PackageCheck_packages_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_PackageCheck_packages_feature", "_UI_PackageCheck_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        SecurityPackage.Literals.PACKAGE_CHECK__PACKAGES, true, false, true, null, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(),
+            getString("_UI_PackageCheck_applicablePackage_feature"), //$NON-NLS-1$
+            getString(
+                "_UI_PropertyDescriptor_description", "_UI_PackageCheck_applicablePackage_feature", "_UI_PackageCheck_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            SecurityPackage.Literals.PACKAGE_CHECK__APPLICABLE_PACKAGE, true, false, true, null, null, null));
   }
 
   /**

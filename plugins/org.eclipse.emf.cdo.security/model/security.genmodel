@@ -66,7 +66,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference security.ecore#//User/password"/>
     </genClasses>
     <genClasses ecoreClass="security.ecore#//UserPassword">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//UserPassword/encrypted"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//UserPassword/encrypted"/>
     </genClasses>
     <genClasses image="false" ecoreClass="security.ecore#//Check">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//Check/role"/>

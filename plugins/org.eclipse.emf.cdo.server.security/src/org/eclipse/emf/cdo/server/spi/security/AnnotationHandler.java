@@ -106,14 +106,14 @@ public class AnnotationHandler implements InternalSecurityManager.CommitHandler
   protected void handlePackagePermission(Realm realm, EPackage ePackage, String key, Permission permission)
   {
     EClass checkClass = SecurityPackage.Literals.PACKAGE_CHECK;
-    EReference checkFeature = SecurityPackage.Literals.PACKAGE_CHECK__PACKAGES;
+    EReference checkFeature = SecurityPackage.Literals.PACKAGE_CHECK__APPLICABLE_PACKAGE;
     handlePermission(realm, ePackage, key, permission, checkClass, checkFeature);
   }
 
   protected void handleClassPermission(Realm realm, EClass eClass, String key, Permission permission)
   {
     EClass checkClass = SecurityPackage.Literals.CLASS_CHECK;
-    EReference checkFeature = SecurityPackage.Literals.CLASS_CHECK__CLASSES;
+    EReference checkFeature = SecurityPackage.Literals.CLASS_CHECK__APPLICABLE_CLASS;
     handlePermission(realm, eClass, key, permission, checkClass, checkFeature);
   }
 
@@ -136,10 +136,7 @@ public class AnnotationHandler implements InternalSecurityManager.CommitHandler
       {
         Check check = (Check)EcoreUtil.create(checkClass);
         check.setPermission(permission);
-
-        @SuppressWarnings("unchecked")
-        EList<EModelElement> list = (EList<EModelElement>)check.eGet(checkFeature);
-        list.add(modelElement);
+        check.eSet(checkFeature, modelElement);
 
         Role role = RealmUtil.findRole(items, token);
         if (role == null)

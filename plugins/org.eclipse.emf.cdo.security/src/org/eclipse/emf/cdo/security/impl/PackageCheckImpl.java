@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.security.PackageCheck;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -27,7 +26,7 @@ import org.eclipse.emf.ecore.EPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.PackageCheckImpl#getPackages <em>Packages</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.PackageCheckImpl#getApplicablePackage <em>Applicable Package</em>}</li>
  * </ul>
  * </p>
  *
@@ -61,24 +60,26 @@ public class PackageCheckImpl extends CheckImpl implements PackageCheck
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
-  public EList<EPackage> getPackages()
+  public EPackage getApplicablePackage()
   {
-    return (EList<EPackage>)eGet(SecurityPackage.Literals.PACKAGE_CHECK__PACKAGES, true);
+    return (EPackage)eGet(SecurityPackage.Literals.PACKAGE_CHECK__APPLICABLE_PACKAGE, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setApplicablePackage(EPackage newApplicablePackage)
+  {
+    eSet(SecurityPackage.Literals.PACKAGE_CHECK__APPLICABLE_PACKAGE, newApplicablePackage);
   }
 
   public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
     EPackage actualPackage = revision.getEClass().getEPackage();
-    for (EPackage applicablePackage : getPackages())
-    {
-      if (actualPackage == applicablePackage)
-      {
-        return true;
-      }
-    }
-
-    return false;
+    EPackage applicablePackage = getApplicablePackage();
+    return actualPackage == applicablePackage;
   }
 
 } // PackageCheckImpl

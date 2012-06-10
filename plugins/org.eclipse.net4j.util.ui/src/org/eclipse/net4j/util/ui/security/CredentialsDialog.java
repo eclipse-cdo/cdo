@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -46,6 +46,13 @@ public class CredentialsDialog extends BaseDialog<Viewer>
     super(shell, DEFAULT_SHELL_STYLE | SWT.APPLICATION_MODAL, TITLE, MESSAGE, OM.Activator.INSTANCE.getDialogSettings());
   }
 
+  @Override
+  protected void configureShell(Shell newShell)
+  {
+    super.configureShell(newShell);
+    newShell.setSize(300, 220);
+  }
+
   public IPasswordCredentials getCredentials()
   {
     return credentials;
@@ -55,14 +62,16 @@ public class CredentialsDialog extends BaseDialog<Viewer>
   protected void createUI(Composite parent)
   {
     Composite composite = new Composite(parent, SWT.NONE);
-    composite.setLayout(new GridLayout(2, false));
     composite.setLayoutData(UIUtil.createGridData());
+    composite.setLayout(new GridLayout(2, false));
 
     new Label(composite, SWT.NONE).setText(Messages.getString("CredentialsDialog_2")); //$NON-NLS-1$
     userIDControl = new Text(composite, SWT.BORDER);
+    userIDControl.setLayoutData(UIUtil.createGridData(true, false));
 
     new Label(composite, SWT.NONE).setText(Messages.getString("CredentialsDialog_3")); //$NON-NLS-1$
     passwordControl = new Text(composite, SWT.BORDER | SWT.PASSWORD);
+    passwordControl.setLayoutData(UIUtil.createGridData(true, false));
   }
 
   @Override

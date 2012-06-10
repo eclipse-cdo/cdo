@@ -69,8 +69,8 @@ public class RoleItemProvider extends SecurityItemItemProvider implements IEditi
     {
       super.getPropertyDescriptors(object);
 
-      addAssigneesPropertyDescriptor(object);
       addIdPropertyDescriptor(object);
+      addAssigneesPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -165,14 +165,14 @@ public class RoleItemProvider extends SecurityItemItemProvider implements IEditi
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
     String label = ((Role)object).getId();
     return label == null || label.length() == 0 ? getString("_UI_Role_type") : //$NON-NLS-1$
-        getString("_UI_Role_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+        label;
   }
 
   /**

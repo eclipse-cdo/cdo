@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.security;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EPackage;
 
 /**
@@ -21,7 +20,7 @@ import org.eclipse.emf.ecore.EPackage;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.security.PackageCheck#getPackages <em>Packages</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.PackageCheck#getApplicablePackage <em>Applicable Package</em>}</li>
  * </ul>
  * </p>
  *
@@ -32,19 +31,29 @@ import org.eclipse.emf.ecore.EPackage;
 public interface PackageCheck extends Check
 {
   /**
-   * Returns the value of the '<em><b>Packages</b></em>' reference list.
-   * The list contents are of type {@link org.eclipse.emf.ecore.EPackage}.
+   * Returns the value of the '<em><b>Applicable Package</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Packages</em>' reference list isn't clear,
+   * If the meaning of the '<em>Applicable Package</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Packages</em>' reference list.
-   * @see org.eclipse.emf.cdo.security.SecurityPackage#getPackageCheck_Packages()
+   * @return the value of the '<em>Applicable Package</em>' reference.
+   * @see #setApplicablePackage(EPackage)
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getPackageCheck_ApplicablePackage()
    * @model required="true"
    * @generated
    */
-  EList<EPackage> getPackages();
+  EPackage getApplicablePackage();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.security.PackageCheck#getApplicablePackage <em>Applicable Package</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Applicable Package</em>' reference.
+   * @see #getApplicablePackage()
+   * @generated
+   */
+  void setApplicablePackage(EPackage value);
 
 } // PackageCheck

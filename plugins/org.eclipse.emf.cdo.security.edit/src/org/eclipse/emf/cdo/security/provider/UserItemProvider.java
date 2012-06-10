@@ -69,13 +69,13 @@ public class UserItemProvider extends AssigneeItemProvider implements IEditingDo
     {
       super.getPropertyDescriptors(object);
 
-      addGroupsPropertyDescriptor(object);
       addLabelPropertyDescriptor(object);
       addFirstNamePropertyDescriptor(object);
       addLastNamePropertyDescriptor(object);
       addEmailPropertyDescriptor(object);
       addDefaultPermissionOverridePropertyDescriptor(object);
       addLockedPropertyDescriptor(object);
+      addGroupsPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -257,14 +257,14 @@ public class UserItemProvider extends AssigneeItemProvider implements IEditingDo
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
     String label = ((User)object).getId();
     return label == null || label.length() == 0 ? getString("_UI_User_type") : //$NON-NLS-1$
-        getString("_UI_User_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+        label;
   }
 
   /**

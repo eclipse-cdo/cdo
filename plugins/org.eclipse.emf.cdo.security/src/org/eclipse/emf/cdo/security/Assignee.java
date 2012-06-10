@@ -20,8 +20,8 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.security.Assignee#getRoles <em>Roles</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Assignee#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Assignee#getRoles <em>Roles</em>}</li>
  * </ul>
  * </p>
  *

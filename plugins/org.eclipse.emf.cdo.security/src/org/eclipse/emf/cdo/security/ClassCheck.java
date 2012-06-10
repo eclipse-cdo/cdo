@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.security;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 /**
@@ -21,7 +20,7 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.security.ClassCheck#getClasses <em>Classes</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.ClassCheck#getApplicableClass <em>Applicable Class</em>}</li>
  * </ul>
  * </p>
  *
@@ -32,19 +31,29 @@ import org.eclipse.emf.ecore.EClass;
 public interface ClassCheck extends Check
 {
   /**
-   * Returns the value of the '<em><b>Classes</b></em>' reference list.
-   * The list contents are of type {@link org.eclipse.emf.ecore.EClass}.
+   * Returns the value of the '<em><b>Applicable Class</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Classes</em>' reference list isn't clear,
+   * If the meaning of the '<em>Applicable Class</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Classes</em>' reference list.
-   * @see org.eclipse.emf.cdo.security.SecurityPackage#getClassCheck_Classes()
+   * @return the value of the '<em>Applicable Class</em>' reference.
+   * @see #setApplicableClass(EClass)
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getClassCheck_ApplicableClass()
    * @model required="true"
    * @generated
    */
-  EList<EClass> getClasses();
+  EClass getApplicableClass();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.security.ClassCheck#getApplicableClass <em>Applicable Class</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Applicable Class</em>' reference.
+   * @see #getApplicableClass()
+   * @generated
+   */
+  void setApplicableClass(EClass value);
 
 } // ClassCheck

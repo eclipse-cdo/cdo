@@ -8,6 +8,7 @@ import org.eclipse.emf.cdo.security.SecurityPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
@@ -58,24 +59,26 @@ public class ClassCheckItemProvider extends CheckItemProvider implements IEditin
     {
       super.getPropertyDescriptors(object);
 
-      addClassesPropertyDescriptor(object);
+      addApplicableClassPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Classes feature.
+   * This adds a property descriptor for the Applicable Class feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addClassesPropertyDescriptor(Object object)
+  protected void addApplicableClassPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_ClassCheck_classes_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ClassCheck_classes_feature", "_UI_ClassCheck_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        SecurityPackage.Literals.CLASS_CHECK__CLASSES, true, false, true, null, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(),
+            getString("_UI_ClassCheck_applicableClass_feature"), //$NON-NLS-1$
+            getString(
+                "_UI_PropertyDescriptor_description", "_UI_ClassCheck_applicableClass_feature", "_UI_ClassCheck_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            SecurityPackage.Literals.CLASS_CHECK__APPLICABLE_CLASS, true, false, true, null, null, null));
   }
 
   /**
@@ -105,15 +108,22 @@ public class ClassCheckItemProvider extends CheckItemProvider implements IEditin
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
     Permission labelValue = ((ClassCheck)object).getPermission();
+    EClass applicableClass = ((ClassCheck)object).getApplicableClass();
     String label = labelValue == null ? null : labelValue.toString();
+
+    if (applicableClass != null)
+    {
+      label += " " + applicableClass.getName();
+    }
+
     return label == null || label.length() == 0 ? getString("_UI_ClassCheck_type") : //$NON-NLS-1$
-        getString("_UI_ClassCheck_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+        label;
   }
 
   /**

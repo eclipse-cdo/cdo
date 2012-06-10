@@ -280,13 +280,13 @@ public interface SecurityPackage extends EPackage
   int ROLE__ANNOTATIONS = SECURITY_ITEM__ANNOTATIONS;
 
   /**
-   * The feature id for the '<em><b>Assignees</b></em>' reference list.
+   * The feature id for the '<em><b>Id</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ROLE__ASSIGNEES = SECURITY_ITEM_FEATURE_COUNT + 0;
+  int ROLE__ID = SECURITY_ITEM_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Checks</b></em>' containment reference list.
@@ -298,13 +298,13 @@ public interface SecurityPackage extends EPackage
   int ROLE__CHECKS = SECURITY_ITEM_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * The feature id for the '<em><b>Assignees</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ROLE__ID = SECURITY_ITEM_FEATURE_COUNT + 2;
+  int ROLE__ASSIGNEES = SECURITY_ITEM_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Role</em>' class.
@@ -335,22 +335,22 @@ public interface SecurityPackage extends EPackage
   int ASSIGNEE__ANNOTATIONS = SECURITY_ITEM__ANNOTATIONS;
 
   /**
-   * The feature id for the '<em><b>Roles</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ASSIGNEE__ROLES = SECURITY_ITEM_FEATURE_COUNT + 0;
-
-  /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ASSIGNEE__ID = SECURITY_ITEM_FEATURE_COUNT + 1;
+  int ASSIGNEE__ID = SECURITY_ITEM_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Roles</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNEE__ROLES = SECURITY_ITEM_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Assignee</em>' class.
@@ -381,15 +381,6 @@ public interface SecurityPackage extends EPackage
   int GROUP__ANNOTATIONS = ASSIGNEE__ANNOTATIONS;
 
   /**
-   * The feature id for the '<em><b>Roles</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GROUP__ROLES = ASSIGNEE__ROLES;
-
-  /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -399,49 +390,13 @@ public interface SecurityPackage extends EPackage
   int GROUP__ID = ASSIGNEE__ID;
 
   /**
-   * The feature id for the '<em><b>Inherited Groups</b></em>' reference list.
+   * The feature id for the '<em><b>Roles</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GROUP__INHERITED_GROUPS = ASSIGNEE_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Inheriting Groups</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GROUP__INHERITING_GROUPS = ASSIGNEE_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>All Inherited Groups</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GROUP__ALL_INHERITED_GROUPS = ASSIGNEE_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>All Inheriting Groups</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GROUP__ALL_INHERITING_GROUPS = ASSIGNEE_FEATURE_COUNT + 3;
-
-  /**
-   * The feature id for the '<em><b>All Roles</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GROUP__ALL_ROLES = ASSIGNEE_FEATURE_COUNT + 4;
+  int GROUP__ROLES = ASSIGNEE__ROLES;
 
   /**
    * The feature id for the '<em><b>Users</b></em>' reference list.
@@ -450,7 +405,52 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int GROUP__USERS = ASSIGNEE_FEATURE_COUNT + 5;
+  int GROUP__USERS = ASSIGNEE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Inherited Groups</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GROUP__INHERITED_GROUPS = ASSIGNEE_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Inheriting Groups</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GROUP__INHERITING_GROUPS = ASSIGNEE_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>All Inherited Groups</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GROUP__ALL_INHERITED_GROUPS = ASSIGNEE_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>All Inheriting Groups</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GROUP__ALL_INHERITING_GROUPS = ASSIGNEE_FEATURE_COUNT + 4;
+
+  /**
+   * The feature id for the '<em><b>All Roles</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GROUP__ALL_ROLES = ASSIGNEE_FEATURE_COUNT + 5;
 
   /**
    * The number of structural features of the '<em>Group</em>' class.
@@ -481,15 +481,6 @@ public interface SecurityPackage extends EPackage
   int USER__ANNOTATIONS = ASSIGNEE__ANNOTATIONS;
 
   /**
-   * The feature id for the '<em><b>Roles</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int USER__ROLES = ASSIGNEE__ROLES;
-
-  /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -499,49 +490,13 @@ public interface SecurityPackage extends EPackage
   int USER__ID = ASSIGNEE__ID;
 
   /**
-   * The feature id for the '<em><b>Groups</b></em>' reference list.
+   * The feature id for the '<em><b>Roles</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int USER__GROUPS = ASSIGNEE_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>All Groups</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int USER__ALL_GROUPS = ASSIGNEE_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>All Roles</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int USER__ALL_ROLES = ASSIGNEE_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>All Checks</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int USER__ALL_CHECKS = ASSIGNEE_FEATURE_COUNT + 3;
-
-  /**
-   * The feature id for the '<em><b>Unassigned Roles</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int USER__UNASSIGNED_ROLES = ASSIGNEE_FEATURE_COUNT + 4;
+  int USER__ROLES = ASSIGNEE__ROLES;
 
   /**
    * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -550,7 +505,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__LABEL = ASSIGNEE_FEATURE_COUNT + 5;
+  int USER__LABEL = ASSIGNEE_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>First Name</b></em>' attribute.
@@ -559,7 +514,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__FIRST_NAME = ASSIGNEE_FEATURE_COUNT + 6;
+  int USER__FIRST_NAME = ASSIGNEE_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Last Name</b></em>' attribute.
@@ -568,7 +523,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__LAST_NAME = ASSIGNEE_FEATURE_COUNT + 7;
+  int USER__LAST_NAME = ASSIGNEE_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Email</b></em>' attribute.
@@ -577,7 +532,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__EMAIL = ASSIGNEE_FEATURE_COUNT + 8;
+  int USER__EMAIL = ASSIGNEE_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Default Permission Override</b></em>' attribute.
@@ -586,7 +541,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__DEFAULT_PERMISSION_OVERRIDE = ASSIGNEE_FEATURE_COUNT + 9;
+  int USER__DEFAULT_PERMISSION_OVERRIDE = ASSIGNEE_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Default Permission</b></em>' attribute.
@@ -595,7 +550,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__DEFAULT_PERMISSION = ASSIGNEE_FEATURE_COUNT + 10;
+  int USER__DEFAULT_PERMISSION = ASSIGNEE_FEATURE_COUNT + 5;
 
   /**
    * The feature id for the '<em><b>Locked</b></em>' attribute.
@@ -604,7 +559,7 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__LOCKED = ASSIGNEE_FEATURE_COUNT + 11;
+  int USER__LOCKED = ASSIGNEE_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>Password</b></em>' containment reference.
@@ -613,7 +568,52 @@ public interface SecurityPackage extends EPackage
    * @generated
    * @ordered
    */
-  int USER__PASSWORD = ASSIGNEE_FEATURE_COUNT + 12;
+  int USER__PASSWORD = ASSIGNEE_FEATURE_COUNT + 7;
+
+  /**
+   * The feature id for the '<em><b>Groups</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int USER__GROUPS = ASSIGNEE_FEATURE_COUNT + 8;
+
+  /**
+   * The feature id for the '<em><b>All Groups</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int USER__ALL_GROUPS = ASSIGNEE_FEATURE_COUNT + 9;
+
+  /**
+   * The feature id for the '<em><b>All Roles</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int USER__ALL_ROLES = ASSIGNEE_FEATURE_COUNT + 10;
+
+  /**
+   * The feature id for the '<em><b>All Checks</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int USER__ALL_CHECKS = ASSIGNEE_FEATURE_COUNT + 11;
+
+  /**
+   * The feature id for the '<em><b>Unassigned Roles</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int USER__UNASSIGNED_ROLES = ASSIGNEE_FEATURE_COUNT + 12;
 
   /**
    * The number of structural features of the '<em>User</em>' class.
@@ -718,13 +718,13 @@ public interface SecurityPackage extends EPackage
   int CLASS_CHECK__PERMISSION = CHECK__PERMISSION;
 
   /**
-   * The feature id for the '<em><b>Classes</b></em>' reference list.
+   * The feature id for the '<em><b>Applicable Class</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CLASS_CHECK__CLASSES = CHECK_FEATURE_COUNT + 0;
+  int CLASS_CHECK__APPLICABLE_CLASS = CHECK_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Class Check</em>' class.
@@ -764,13 +764,13 @@ public interface SecurityPackage extends EPackage
   int PACKAGE_CHECK__PERMISSION = CHECK__PERMISSION;
 
   /**
-   * The feature id for the '<em><b>Packages</b></em>' reference list.
+   * The feature id for the '<em><b>Applicable Package</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PACKAGE_CHECK__PACKAGES = CHECK_FEATURE_COUNT + 0;
+  int PACKAGE_CHECK__APPLICABLE_PACKAGE = CHECK_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Package Check</em>' class.
@@ -1344,15 +1344,15 @@ public interface SecurityPackage extends EPackage
   EClass getClassCheck();
 
   /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.security.ClassCheck#getClasses <em>Classes</em>}'.
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.security.ClassCheck#getApplicableClass <em>Applicable Class</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Classes</em>'.
-   * @see org.eclipse.emf.cdo.security.ClassCheck#getClasses()
+   * @return the meta object for the reference '<em>Applicable Class</em>'.
+   * @see org.eclipse.emf.cdo.security.ClassCheck#getApplicableClass()
    * @see #getClassCheck()
    * @generated
    */
-  EReference getClassCheck_Classes();
+  EReference getClassCheck_ApplicableClass();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.PackageCheck <em>Package Check</em>}'.
@@ -1365,15 +1365,15 @@ public interface SecurityPackage extends EPackage
   EClass getPackageCheck();
 
   /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.security.PackageCheck#getPackages <em>Packages</em>}'.
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.security.PackageCheck#getApplicablePackage <em>Applicable Package</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Packages</em>'.
-   * @see org.eclipse.emf.cdo.security.PackageCheck#getPackages()
+   * @return the meta object for the reference '<em>Applicable Package</em>'.
+   * @see org.eclipse.emf.cdo.security.PackageCheck#getApplicablePackage()
    * @see #getPackageCheck()
    * @generated
    */
-  EReference getPackageCheck_Packages();
+  EReference getPackageCheck_ApplicablePackage();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.ResourceCheck <em>Resource Check</em>}'.
@@ -1828,12 +1828,12 @@ public interface SecurityPackage extends EPackage
     EClass CLASS_CHECK = eINSTANCE.getClassCheck();
 
     /**
-     * The meta object literal for the '<em><b>Classes</b></em>' reference list feature.
+     * The meta object literal for the '<em><b>Applicable Class</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference CLASS_CHECK__CLASSES = eINSTANCE.getClassCheck_Classes();
+    EReference CLASS_CHECK__APPLICABLE_CLASS = eINSTANCE.getClassCheck_ApplicableClass();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.PackageCheckImpl <em>Package Check</em>}' class.
@@ -1846,12 +1846,12 @@ public interface SecurityPackage extends EPackage
     EClass PACKAGE_CHECK = eINSTANCE.getPackageCheck();
 
     /**
-     * The meta object literal for the '<em><b>Packages</b></em>' reference list feature.
+     * The meta object literal for the '<em><b>Applicable Package</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PACKAGE_CHECK__PACKAGES = eINSTANCE.getPackageCheck_Packages();
+    EReference PACKAGE_CHECK__APPLICABLE_PACKAGE = eINSTANCE.getPackageCheck_ApplicablePackage();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.ResourceCheckImpl <em>Resource Check</em>}' class.

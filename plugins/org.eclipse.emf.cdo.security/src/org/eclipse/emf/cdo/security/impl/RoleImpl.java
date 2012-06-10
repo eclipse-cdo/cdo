@@ -25,9 +25,9 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.RoleImpl#getAssignees <em>Assignees</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.RoleImpl#getChecks <em>Checks</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RoleImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.RoleImpl#getChecks <em>Checks</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.RoleImpl#getAssignees <em>Assignees</em>}</li>
  * </ul>
  * </p>
  *

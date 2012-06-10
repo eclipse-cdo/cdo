@@ -64,7 +64,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
     protected Object[] getData()
     {
       EList<SecurityItem> items = getItems();
-      return RealmUtil.allUsers(items).data();
+      return RealmUtil.allUsers(items).toArray();
     }
   };
 
@@ -86,7 +86,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
     protected Object[] getData()
     {
       EList<SecurityItem> items = getItems();
-      return RealmUtil.allGroups(items).data();
+      return RealmUtil.allGroups(items).toArray();
     }
   };
 
@@ -108,7 +108,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
     protected Object[] getData()
     {
       EList<SecurityItem> items = getItems();
-      return RealmUtil.allRoles(items).data();
+      return RealmUtil.allRoles(items).toArray();
     }
   };
 
@@ -130,7 +130,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
     protected Object[] getData()
     {
       EList<SecurityItem> items = getItems();
-      return RealmUtil.allChecks(items).data();
+      return RealmUtil.allChecks(items).toArray();
     }
   };
 

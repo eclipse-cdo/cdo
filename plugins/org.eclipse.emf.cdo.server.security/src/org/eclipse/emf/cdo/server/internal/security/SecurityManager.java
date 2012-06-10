@@ -307,6 +307,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   protected Realm createRealm()
   {
     Realm realm = SecurityFactory.eINSTANCE.createRealm();
+    realm.setName("Security Realm");
 
     // Create directories
 
@@ -331,6 +332,10 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     admin.setId("Administrator");
     newUsers.add(admin);
 
+    UserPassword adminPassword = SecurityFactory.eINSTANCE.createUserPassword();
+    adminPassword.setEncrypted("0000");
+    admin.setPassword(adminPassword);
+
     Group admins = SecurityFactory.eINSTANCE.createGroup();
     admins.setId("Administrators");
     admins.getUsers().add(admin);
@@ -343,11 +348,6 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     administration.getAssignees().add(admins);
     newRoles.add(administration);
 
-    ClassCheck check = SecurityFactory.eINSTANCE.createClassCheck();
-    check.setPermission(Permission.WRITE);
-    administration.getChecks().add(check);
-    EList<EClass> classes = check.getClasses();
-
     for (EClassifier eClassifier : SecurityPackage.eINSTANCE.getEClassifiers())
     {
       if (eClassifier instanceof EClass)
@@ -358,14 +358,17 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
           continue;
         }
 
-        classes.add(eClass);
+        ClassCheck check = SecurityFactory.eINSTANCE.createClassCheck();
+        check.setPermission(Permission.WRITE);
+        administration.getChecks().add(check);
+        check.setApplicableClass(eClass);
       }
     }
 
     return realm;
   }
 
-  protected CDOPermission getPermission(Permission permission)
+  protected CDOPermission convertPermission(Permission permission)
   {
     switch (permission)
     {
@@ -383,7 +386,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   protected CDOPermission getPermission(CDORevision revision, CDORevisionProvider revisionProvider,
       CDOBranchPoint securityContext, User user)
   {
-    CDOPermission result = getPermission(user.getDefaultPermission());
+    CDOPermission result = convertPermission(user.getDefaultPermission());
     if (result == CDOPermission.WRITE)
     {
       return result;
@@ -391,7 +394,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
     for (Check check : user.getAllChecks())
     {
-      CDOPermission permission = getPermission(check.getPermission());
+      CDOPermission permission = convertPermission(check.getPermission());
       if (permission.ordinal() <= result.ordinal())
       {
         // Avoid expensive calls to Check.isApplicable() if the permission wouldn't increase

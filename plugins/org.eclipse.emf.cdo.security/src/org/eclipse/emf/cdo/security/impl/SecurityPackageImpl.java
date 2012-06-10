@@ -524,7 +524,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getUser_UnassignedRoles()
+  public EReference getUser_AllChecks()
   {
     return (EReference)userEClass.getEStructuralFeatures().get(3);
   }
@@ -534,9 +534,9 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getUser_Label()
+  public EReference getUser_UnassignedRoles()
   {
-    return (EAttribute)userEClass.getEStructuralFeatures().get(4);
+    return (EReference)userEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -544,7 +544,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getUser_FirstName()
+  public EAttribute getUser_Label()
   {
     return (EAttribute)userEClass.getEStructuralFeatures().get(5);
   }
@@ -554,7 +554,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getUser_LastName()
+  public EAttribute getUser_FirstName()
   {
     return (EAttribute)userEClass.getEStructuralFeatures().get(6);
   }
@@ -564,7 +564,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getUser_Email()
+  public EAttribute getUser_LastName()
   {
     return (EAttribute)userEClass.getEStructuralFeatures().get(7);
   }
@@ -574,7 +574,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getUser_DefaultPermissionOverride()
+  public EAttribute getUser_Email()
   {
     return (EAttribute)userEClass.getEStructuralFeatures().get(8);
   }
@@ -584,7 +584,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getUser_DefaultPermission()
+  public EAttribute getUser_DefaultPermissionOverride()
   {
     return (EAttribute)userEClass.getEStructuralFeatures().get(9);
   }
@@ -594,7 +594,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getUser_Locked()
+  public EAttribute getUser_DefaultPermission()
   {
     return (EAttribute)userEClass.getEStructuralFeatures().get(10);
   }
@@ -604,9 +604,19 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getUser_Locked()
+  {
+    return (EAttribute)userEClass.getEStructuralFeatures().get(11);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getUser_Password()
   {
-    return (EReference)userEClass.getEStructuralFeatures().get(11);
+    return (EReference)userEClass.getEStructuralFeatures().get(12);
   }
 
   /**
@@ -798,6 +808,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     createEReference(userEClass, USER__GROUPS);
     createEReference(userEClass, USER__ALL_GROUPS);
     createEReference(userEClass, USER__ALL_ROLES);
+    createEReference(userEClass, USER__ALL_CHECKS);
     createEReference(userEClass, USER__UNASSIGNED_ROLES);
     createEAttribute(userEClass, USER__LABEL);
     createEAttribute(userEClass, USER__FIRST_NAME);
@@ -1004,6 +1015,11 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
         this.getRole(),
         null,
         "allRoles", null, 0, -1, User.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEReference(
+        getUser_AllChecks(),
+        this.getCheck(),
+        null,
+        "allChecks", null, 0, -1, User.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEReference(
         getUser_UnassignedRoles(),
         this.getRole(),

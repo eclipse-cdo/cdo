@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.security.impl;
 
+import org.eclipse.emf.cdo.security.Check;
 import org.eclipse.emf.cdo.security.Group;
 import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
@@ -18,6 +19,7 @@ import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.security.UserPassword;
 
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -36,6 +38,7 @@ import java.util.Set;
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getGroups <em>Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getAllGroups <em>All Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getAllRoles <em>All Roles</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getAllChecks <em>All Checks</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getUnassignedRoles <em>Unassigned Roles</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getFirstName <em>First Name</em>}</li>
@@ -107,6 +110,34 @@ public class UserImpl extends AssigneeImpl implements User
       }
 
       return result.toArray();
+    }
+  };
+
+  private EList<Check> allChecks = new CachedList<Check>()
+  {
+    @Override
+    protected InternalEObject getOwner()
+    {
+      return UserImpl.this;
+    }
+
+    @Override
+    protected EStructuralFeature getFeature()
+    {
+      return SecurityPackage.Literals.USER__ALL_CHECKS;
+    }
+
+    @Override
+    protected Object[] getData()
+    {
+      BasicEList<Check> result = new BasicEList<Check>();
+
+      for (Role role : getAllRoles())
+      {
+        result.addAll(role.getChecks());
+      }
+
+      return result.data();
     }
   };
 
@@ -190,6 +221,16 @@ public class UserImpl extends AssigneeImpl implements User
   public EList<Role> getAllRoles()
   {
     return allRoles;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public EList<Check> getAllChecks()
+  {
+    return allChecks;
   }
 
   /**

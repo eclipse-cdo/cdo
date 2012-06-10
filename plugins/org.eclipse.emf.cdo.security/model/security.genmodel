@@ -54,6 +54,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//User/groups"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//User/allGroups"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//User/allRoles"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//User/allChecks"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference security.ecore#//User/unassignedRoles"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//User/label"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//User/firstName"/>

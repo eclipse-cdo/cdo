@@ -60,6 +60,15 @@ public class ClassCheckImpl extends CheckImpl implements ClassCheck
 
   public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
+    EClass actualClass = revision.getEClass();
+    for (EClass applicableClass : getClasses())
+    {
+      if (actualClass == applicableClass)
+      {
+        return true;
+      }
+    }
+
     return false;
   }
 

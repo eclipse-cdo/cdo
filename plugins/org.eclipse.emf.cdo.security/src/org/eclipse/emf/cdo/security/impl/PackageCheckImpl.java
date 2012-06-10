@@ -61,6 +61,15 @@ public class PackageCheckImpl extends CheckImpl implements PackageCheck
 
   public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
+    EPackage actualPackage = revision.getEClass().getEPackage();
+    for (EPackage applicablePackage : getPackages())
+    {
+      if (actualPackage == applicablePackage)
+      {
+        return true;
+      }
+    }
+
     return false;
   }
 

@@ -11,6 +11,10 @@
 -->
 <project name="ExampleClient" default="ExampleClient" basedir="..">
 
+	<!--
+		Called by /org.eclipse.emf.cdo.examples.installer/update.ant
+	-->
+
 	<property name="example.name" value="client" />
 
 	<target name="ExampleClient">

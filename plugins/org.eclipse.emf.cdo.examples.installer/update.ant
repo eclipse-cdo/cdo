@@ -12,9 +12,11 @@
 <project name="UpdateExamplesInstaller" default="main" basedir="..">
 
 	<target name="main">
-		<ant antfile="org.eclipse.emf.cdo.examples.installer.client/update.ant" />
-		<ant antfile="org.eclipse.emf.cdo.examples.installer.clone/update.ant" />
 		<ant antfile="org.eclipse.emf.cdo.examples.installer.master/update.ant" />
+		<ant antfile="org.eclipse.emf.cdo.examples.installer.clone/update.ant" />
+		<ant antfile="org.eclipse.emf.cdo.examples.installer.client/update.ant" />
+		<ant antfile="org.eclipse.emf.cdo.examples.company/update.ant" />
+		<ant antfile="org.eclipse.emf.cdo.examples.company.edit/update.ant" />
 	</target>
 
 </project>

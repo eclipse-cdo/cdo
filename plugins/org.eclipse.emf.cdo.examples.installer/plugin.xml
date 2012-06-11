@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+	Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+	All rights reserved. This program and the accompanying materials
+	are made available under the terms of the Eclipse Public License v1.0
+	which accompanies this distribution, and is available at
+	http://www.eclipse.org/legal/epl-v10.html
+
+	Contributors:
+	  Eike Stepper - initial API and implementation
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <category
+            id="org.eclipse.emf.cdo.examples"
+            name="%CDOExampleCategory_name"
+            parentCategory="org.eclipse.ui.Examples">
+      </category>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.ui.Examples/org.eclipse.emf.cdo.examples"
+            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
+            icon="icons/full/ctool16/NewEMFExample.gif"
+            id="org.eclipse.emf.cdo.examples.ExampleMasterWizard"
+            name="%ExampleMasterWizard_name"
+            project="true">
+         <description>%ExampleMasterWizard_desc</description>
+      </wizard>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.ui.Examples/org.eclipse.emf.cdo.examples"
+            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
+            icon="icons/full/ctool16/NewEMFExample.gif"
+            id="org.eclipse.emf.cdo.examples.ExampleCloneWizard"
+            name="%ExampleCloneWizard_name"
+            project="true">
+         <description>%ExampleCloneWizard_desc</description>
+      </wizard>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.ui.Examples/org.eclipse.emf.cdo.examples"
+            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
+            icon="icons/full/ctool16/NewEMFExample.gif"
+            id="org.eclipse.emf.cdo.examples.ExampleClientWizard"
+            name="%ExampleClientWizard_name"
+            project="true">
+         <description>%ExampleClientWizard_desc</description>
+      </wizard>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.ui.Examples/org.eclipse.emf.cdo.examples"
+            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
+            icon="icons/full/ctool16/NewEMFExample.gif"
+            id="org.eclipse.emf.cdo.examples.ExampleModelWizard"
+            name="%ExampleModelWizard_name"
+            project="true">
+         <description>%ExampleModelWizard_desc</description>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.emf.common.ui.examples">
+      <example
+            id="org.eclipse.emf.cdo.examples.ExampleMasterServer"
+            wizardID="org.eclipse.emf.cdo.examples.ExampleMasterWizard"
+            pageImage="icons/full/wizban/NewEMFExample.gif">
+         <fileToOpen editorID="org.eclipse.ui.browser.editor" location="cdo.example.master/README.html"/>
+         <projectDescriptor
+               name="cdo.example.master"
+               contentURI="examples/master/"
+               description="%ExampleMasterProject_desc"/>
+      </example>
+      <example
+            id="org.eclipse.emf.cdo.examples.ExampleCloneServer"
+            wizardID="org.eclipse.emf.cdo.examples.ExampleCloneWizard"
+            pageImage="icons/full/wizban/NewEMFExample.gif">
+         <fileToOpen editorID="org.eclipse.ui.browser.editor" location="cdo.example.clone/README.html"/>
+         <projectDescriptor
+               name="cdo.example.clone"
+               contentURI="examples/clone/"
+               description="%ExampleCloneProject_desc"/>
+      </example>
+      <example
+            id="org.eclipse.emf.cdo.examples.ExampleClient"
+            wizardID="org.eclipse.emf.cdo.examples.ExampleClientWizard"
+            pageImage="icons/full/wizban/NewEMFExample.gif">
+         <fileToOpen editorID="org.eclipse.ui.browser.editor" location="cdo.example.client/README.html"/>
+         <projectDescriptor
+               name="cdo.example.client"
+               contentURI="examples/client/"
+               description="%ExampleClientProject_desc"/>
+         <projectDescriptor
+               name="org.eclipse.emf.cdo.examples.company"
+               contentURI="examples/model/"
+               description="%ExampleModelProject_desc"/>
+         <projectDescriptor
+               name="org.eclipse.emf.cdo.examples.company.edit"
+               contentURI="examples/model.edit/"
+               description="%ExampleEditProject_desc"/>
+      </example>
+      <example
+            id="org.eclipse.emf.cdo.examples.ExampleModel"
+            wizardID="org.eclipse.emf.cdo.examples.ExampleModelWizard"
+            pageImage="icons/full/wizban/NewEMFExample.gif">
+         <projectDescriptor
+               name="org.eclipse.emf.cdo.examples.company"
+               contentURI="examples/model/"
+               description="%ExampleModelProject_desc"/>
+         <projectDescriptor
+               name="org.eclipse.emf.cdo.examples.company.edit"
+               contentURI="examples/model.edit/"
+               description="%ExampleEditProject_desc"/>
+      </example>
+    </extension>
+
+</plugin>

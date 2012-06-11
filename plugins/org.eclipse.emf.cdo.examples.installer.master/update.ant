@@ -11,6 +11,10 @@
 -->
 <project name="ExampleMasterServer" default="ExampleMasterServer" basedir="..">
 
+	<!--
+		Called by /org.eclipse.emf.cdo.examples.installer/update.ant
+	-->
+
 	<property name="example.name" value="master" />
 
 	<target name="ExampleMasterServer">

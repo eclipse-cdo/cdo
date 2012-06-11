@@ -11,6 +11,10 @@
 -->
 <project name="ExampleCloneServer" default="ExampleCloneServer" basedir="..">
 
+	<!--
+		Called by /org.eclipse.emf.cdo.examples.installer/update.ant
+	-->
+
 	<property name="example.name" value="clone" />
 
 	<target name="ExampleCloneServer">

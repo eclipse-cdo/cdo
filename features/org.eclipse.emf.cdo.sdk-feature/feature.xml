@@ -79,6 +79,10 @@
          id="org.eclipse.emf.cdo.migrator"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.cdo.examples.installer"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.emf.cdo.sdk"
          download-size="0"

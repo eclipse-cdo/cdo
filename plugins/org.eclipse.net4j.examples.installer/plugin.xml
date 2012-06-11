@@ -60,16 +60,16 @@
                description="%ExampleProject_buddies.chat.ui_desc"/>
          <projectDescriptor
                name="org.eclipse.net4j.examples.buddies.common"
-               contentURI="examples/buddies.buddies.common/"
-               description="%ExampleProject_buddies.buddies.common_desc"/>
+               contentURI="examples/buddies.common/"
+               description="%ExampleProject_buddies.common_desc"/>
          <projectDescriptor
                name="org.eclipse.net4j.examples.buddies.server"
-               contentURI="examples/buddies.buddies.server/"
-               description="%ExampleProject_buddies.buddies.server_desc"/>
+               contentURI="examples/buddies.server/"
+               description="%ExampleProject_buddies.server_desc"/>
          <projectDescriptor
                name="org.eclipse.net4j.examples.buddies.ui"
-               contentURI="examples/buddies.buddies.ui/"
-               description="%ExampleProject_buddies.buddies.ui_desc"/>
+               contentURI="examples/buddies.ui/"
+               description="%ExampleProject_buddies.ui_desc"/>
       </example>
       <example
             id="org.eclipse.net4j.examples.ExampleJMS"

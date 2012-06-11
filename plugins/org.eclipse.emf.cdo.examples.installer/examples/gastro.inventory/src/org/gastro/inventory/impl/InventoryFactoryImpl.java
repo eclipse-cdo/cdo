@@ -1,0 +1,256 @@
+/*
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ *    
+ *  Initial Publication:
+ *    Eclipse Magazin - http://www.eclipse-magazin.de
+ */
+package org.gastro.inventory.impl;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.impl.EFactoryImpl;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
+import org.gastro.inventory.Department;
+import org.gastro.inventory.Employee;
+import org.gastro.inventory.Ingredient;
+import org.gastro.inventory.InventoryFactory;
+import org.gastro.inventory.InventoryPackage;
+import org.gastro.inventory.MenuCard;
+import org.gastro.inventory.Offering;
+import org.gastro.inventory.Recipe;
+import org.gastro.inventory.Restaurant;
+import org.gastro.inventory.Section;
+import org.gastro.inventory.Stock;
+import org.gastro.inventory.StockProduct;
+import org.gastro.inventory.Table;
+
+/**
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
+ * 
+ * @generated
+ */
+public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFactory
+{
+  /**
+   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public static InventoryFactory init()
+  {
+    try
+    {
+      InventoryFactory theInventoryFactory = (InventoryFactory)EPackage.Registry.INSTANCE
+          .getEFactory("http://www.gastro.org/inventory/1.0");
+      if (theInventoryFactory != null)
+      {
+        return theInventoryFactory;
+      }
+    }
+    catch (Exception exception)
+    {
+      EcorePlugin.INSTANCE.log(exception);
+    }
+    return new InventoryFactoryImpl();
+  }
+
+  /**
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public InventoryFactoryImpl()
+  {
+    super();
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public EObject create(EClass eClass)
+  {
+    switch (eClass.getClassifierID())
+    {
+    case InventoryPackage.STOCK:
+      return (EObject)createStock();
+    case InventoryPackage.STOCK_PRODUCT:
+      return (EObject)createStockProduct();
+    case InventoryPackage.RECIPE:
+      return (EObject)createRecipe();
+    case InventoryPackage.INGREDIENT:
+      return (EObject)createIngredient();
+    case InventoryPackage.MENU_CARD:
+      return (EObject)createMenuCard();
+    case InventoryPackage.RESTAURANT:
+      return (EObject)createRestaurant();
+    case InventoryPackage.DEPARTMENT:
+      return (EObject)createDepartment();
+    case InventoryPackage.OFFERING:
+      return (EObject)createOffering();
+    case InventoryPackage.TABLE:
+      return (EObject)createTable();
+    case InventoryPackage.EMPLOYEE:
+      return (EObject)createEmployee();
+    case InventoryPackage.SECTION:
+      return (EObject)createSection();
+    default:
+      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Stock createStock()
+  {
+    StockImpl stock = new StockImpl();
+    return stock;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public StockProduct createStockProduct()
+  {
+    StockProductImpl stockProduct = new StockProductImpl();
+    return stockProduct;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Recipe createRecipe()
+  {
+    RecipeImpl recipe = new RecipeImpl();
+    return recipe;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Ingredient createIngredient()
+  {
+    IngredientImpl ingredient = new IngredientImpl();
+    return ingredient;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public MenuCard createMenuCard()
+  {
+    MenuCardImpl menuCard = new MenuCardImpl();
+    return menuCard;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Restaurant createRestaurant()
+  {
+    RestaurantImpl restaurant = new RestaurantImpl();
+    return restaurant;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Department createDepartment()
+  {
+    DepartmentImpl department = new DepartmentImpl();
+    return department;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Offering createOffering()
+  {
+    OfferingImpl offering = new OfferingImpl();
+    return offering;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Table createTable()
+  {
+    TableImpl table = new TableImpl();
+    return table;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Employee createEmployee()
+  {
+    EmployeeImpl employee = new EmployeeImpl();
+    return employee;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Section createSection()
+  {
+    SectionImpl section = new SectionImpl();
+    return section;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public InventoryPackage getInventoryPackage()
+  {
+    return (InventoryPackage)getEPackage();
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @deprecated
+   * @generated
+   */
+  @Deprecated
+  public static InventoryPackage getPackage()
+  {
+    return InventoryPackage.eINSTANCE;
+  }
+
+} // InventoryFactoryImpl

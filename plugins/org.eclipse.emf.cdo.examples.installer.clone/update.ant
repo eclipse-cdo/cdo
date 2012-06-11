@@ -25,21 +25,6 @@
 				<include name="**/OfflineExampleUtil.java" />
 			</fileset>
 		</copy>
-
-		<delete includeemptydirs="true" failonerror="false">
-			<fileset dir="org.eclipse.emf.cdo.examples.installer/examples/${example.name}">
-				<include name="**" />
-			</fileset>
-		</delete>
-
-		<copy todir="org.eclipse.emf.cdo.examples.installer/examples/${example.name}" overwrite="true">
-			<fileset dir="org.eclipse.emf.cdo.examples.installer.${example.name}">
-				<exclude name="update.ant" />
-				<exclude name="database/" />
-				<exclude name="bin/" />
-				<include name="**" />
-			</fileset>
-		</copy>
 	</target>
 
 </project>

@@ -11,12 +11,29 @@
 -->
 <project name="UpdateExamplesInstaller" default="main" basedir="..">
 
+	<import file="../org.eclipse.emf.cdo.examples.installer/updateLib.ant"/>
+
 	<target name="main">
 		<ant antfile="org.eclipse.emf.cdo.examples.installer.master/update.ant" />
 		<ant antfile="org.eclipse.emf.cdo.examples.installer.clone/update.ant" />
-		<ant antfile="org.eclipse.emf.cdo.examples.installer.client/update.ant" />
-		<ant antfile="org.eclipse.emf.cdo.examples.company/update.ant" />
-		<ant antfile="org.eclipse.emf.cdo.examples.company.edit/update.ant" />
+
+		<update-example example="org.eclipse.emf.cdo.examples.installer.master" target="master"/>
+		<update-example example="org.eclipse.emf.cdo.examples.installer.clone" target="clone"/>
+		<update-example example="org.eclipse.emf.cdo.examples.installer.client" target="client"/>
+
+		<update-example example="org.eclipse.emf.cdo.examples.company" target="model"/>
+		<update-example example="org.eclipse.emf.cdo.examples.company.edit" target="model.edit"/>
+
+		<update-example example="org.gastro.business" target="gastro.business"/>
+		<update-example example="org.gastro.business.edit" target="gastro.business.edit"/>
+		<update-example example="org.gastro.inventory" target="gastro.inventory"/>
+		<update-example example="org.gastro.inventory.edit" target="gastro.inventory.edit"/>
+		<update-example example="org.gastro.rcp" target="gastro.rcp"/>
+		<update-example example="org.gastro.rcp.department" target="gastro.rcp.department"/>
+		<update-example example="org.gastro.rcp.table" target="gastro.rcp.table"/>
+		<update-example example="org.gastro.server" target="gastro.server"/>
+		<update-example example="org.gastro.server.web" target="gastro.server.web"/>
+		<update-example example="org.gastro.testclient" target="gastro.testclient"/>
 	</target>
 
 </project>

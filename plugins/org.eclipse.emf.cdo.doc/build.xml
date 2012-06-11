@@ -10,8 +10,10 @@
 	<property name="path.supplemental" value="${user.home}/git/local/org.eclipse.emf.cdo.releng.doc.supplemental" />
 
 	<property name="jdk.link" value="http://download.oracle.com/javase/1.5.0/docs/api" />
-	<property name="platform.link" value="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api" />
 	<property name="emf.link" value="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0" />
+	<property name="platform.link" value="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api" />
+	<property name="platform.api" location="plugins/org.eclipse.emf.cdo.releng.doc/package-lists/platform" />
+
 
 	<property name="project.path" value="plugins/org.eclipse.emf.cdo.doc" />
 	<property file="${project.path}/plugin.properties" />
@@ -276,8 +278,8 @@
 			</group>
 
 			<link href="${jdk.link}" />
-			<link href="${platform.link}" />
 			<link href="${emf.link}" />
+			<link href="${platform.link}" offline="true" packagelistloc="${platform.api}" />
 			<link href="MAKE-RELATIVE/org.eclipse.net4j.db.doc/javadoc" offline="true" packagelistloc="plugins/org.eclipse.net4j.db.doc/javadoc" />
 			<link href="MAKE-RELATIVE/org.eclipse.net4j.doc/javadoc" offline="true" packagelistloc="plugins/org.eclipse.net4j.doc/javadoc" />
 			<link href="MAKE-RELATIVE/org.eclipse.net4j.util.doc/javadoc" offline="true" packagelistloc="plugins/org.eclipse.net4j.util.doc/javadoc" />

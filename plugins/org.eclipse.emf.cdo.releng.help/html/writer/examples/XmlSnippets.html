@@ -78,10 +78,9 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="allowInterruptRunningQueries"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="idGenerationLocation"</font>&nbsp;value<font color="#000080">="STORE"</font>/&gt;</font>&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Possible&nbsp;values:&nbsp;STORE&nbsp;|&nbsp;CLIENT&nbsp;--&gt;</font><br/>
 <br/>
-		<font color="#0000e1">&lt;securityManager&nbsp;type<font color="#000080">="default"</font>&nbsp;realmPath<font color="#000080">="admins/security"</font>/&gt;</font><br/>
-<br/>
+			<font color="#0000e1">&lt;securityManager&nbsp;type<font color="#000080">="default"</font>&nbsp;realmPath<font color="#000080">="/security"</font>/&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example&nbsp;http://bugs.eclipse.org/380629<br/>
-			&lt;securityManager&nbsp;type="annotation"&nbsp;realmPath="security"/&gt;<br/>
+			&lt;securityManager&nbsp;type="annotation"&nbsp;realmPath="/security"/&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example&nbsp;http://bugs.eclipse.org/302775<br/>
@@ -105,8 +104,6 @@ function windowTitle()
           properties supportingAudits and supportingBranches." title="The mapping strategy &quot;horizontal&quot; delegates to a mapping strategy chosen to match the repository
           properties supportingAudits and supportingBranches."><img src="../../../images/callout-1.png" width="16" height="16" border="0" align="top"></a>&nbsp;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="qualifiedNames"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="toManyReferences"</font>&nbsp;value<font color="#000080">="ONE_TABLE_PER_REFERENCE"</font>/&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="toOneReferences"</font>&nbsp;value<font color="#000080">="LIKE_ATTRIBUTES"</font>/&gt;</font><br/>
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Per&nbsp;default,&nbsp;the&nbsp;objectTypeCache&nbsp;is&nbsp;in-memory&nbsp;and&nbsp;contains<br/>

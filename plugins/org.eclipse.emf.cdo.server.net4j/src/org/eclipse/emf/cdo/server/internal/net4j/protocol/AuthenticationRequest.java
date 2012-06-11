@@ -11,8 +11,10 @@
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
 import org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult;
 
+import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.RequestWithMonitoring;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -40,12 +42,37 @@ public class AuthenticationRequest extends RequestWithMonitoring<CDOAuthenticati
   @Override
   protected CDOAuthenticationResult confirming(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
   {
-    boolean authenticated = in.readBoolean();
-    if (!authenticated)
+    try
     {
-      return null;
+      boolean authenticated = in.readBoolean();
+      if (authenticated)
+      {
+        return new CDOAuthenticationResult(in);
+      }
+    }
+    catch (RemoteException ex)
+    {
+      if (ex.getCause() instanceof NotAuthenticatedException)
+      {
+        // Skip silently because user has canceled the authentication
+      }
+      else
+      {
+        throw ex;
+      }
+    }
+    catch (Exception ex)
+    {
+      if (ex instanceof NotAuthenticatedException)
+      {
+        // Skip silently because user has canceled the authentication
+      }
+      else
+      {
+        throw ex;
+      }
     }
 
-    return new CDOAuthenticationResult(in);
+    return null;
   }
 }

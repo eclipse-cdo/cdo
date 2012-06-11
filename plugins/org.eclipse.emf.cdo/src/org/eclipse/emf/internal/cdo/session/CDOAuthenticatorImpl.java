@@ -82,9 +82,14 @@ public class CDOAuthenticatorImpl implements CDOAuthenticator
     }
 
     IPasswordCredentials credentials = credentialsProvider.getCredentials();
-    String userID = credentials.getUserID();
-    byte[] cryptedToken = encryptToken(credentials.getPassword(), randomToken);
-    return new CDOAuthenticationResult(userID, cryptedToken);
+    if (credentials != null)
+    {
+      String userID = credentials.getUserID();
+      byte[] cryptedToken = encryptToken(credentials.getPassword(), randomToken);
+      return new CDOAuthenticationResult(userID, cryptedToken);
+    }
+
+    return null;
   }
 
   protected byte[] encryptToken(char[] password, byte[] token)

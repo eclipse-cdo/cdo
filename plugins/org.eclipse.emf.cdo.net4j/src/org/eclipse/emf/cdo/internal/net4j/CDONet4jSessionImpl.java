@@ -17,6 +17,7 @@
 package org.eclipse.emf.cdo.internal.net4j;
 
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl.RepositoryInfo;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol;
@@ -123,6 +124,10 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   protected void doActivate() throws Exception
   {
     OpenSessionResult result = openSession();
+    if (result == null)
+    {
+      throw new NotAuthenticatedException();
+    }
 
     super.doActivate();
 
@@ -222,6 +227,12 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     // TODO (CD) The next call is on the CDOClientProtocol; shouldn't it be on the DelegatingSessionProtocol instead?
     OpenSessionResult result = protocol.openSession(repositoryName, options().isPassiveUpdateEnabled(), options()
         .getPassiveUpdateMode(), options().getLockNotificationMode());
+
+    if (result == null)
+    {
+      // Skip to response because the user has canceled the authentication
+      return null;
+    }
 
     setSessionID(result.getSessionID());
     setUserID(result.getUserID());

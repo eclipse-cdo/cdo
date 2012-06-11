@@ -69,7 +69,8 @@ public class AuthenticationIndication extends IndicationWithMonitoring
       CDOAuthenticationResult result = authenticator.authenticate(randomToken);
       if (result == null)
       {
-        throw new SecurityException("Not authenticated"); //$NON-NLS-1$
+        out.writeBoolean(false);
+        return;
       }
 
       String userID = result.getUserID();

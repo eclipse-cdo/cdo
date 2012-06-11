@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.ISession;
@@ -453,6 +454,11 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     {
       byte[] randomToken = createRandomToken();
       CDOAuthenticationResult result = protocol.sendAuthenticationChallenge(randomToken);
+      if (result == null)
+      {
+        throw new NotAuthenticatedException();
+      }
+
       String userID = result.getUserID();
 
       byte[] cryptedToken = encryptToken(userID, randomToken);
@@ -462,7 +468,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
         return userID;
       }
 
-      throw new SecurityException("User not authenticated"); //$NON-NLS-1$
+      throw new SecurityException("Access denied"); //$NON-NLS-1$
     }
     catch (SecurityException ex)
     {
@@ -470,6 +476,12 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
     catch (Exception ex)
     {
+      Throwable cause = ex.getCause();
+      if (cause instanceof SecurityException)
+      {
+        throw (SecurityException)cause;
+      }
+
       throw new SecurityException(ex);
     }
   }

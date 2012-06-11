@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.RepositoryNotFoundException;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
@@ -110,8 +111,18 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
         throw new RepositoryNotFoundException(repositoryName);
       }
 
-      InternalSessionManager sessionManager = repository.getSessionManager();
-      session = sessionManager.openSession(protocol);
+      try
+      {
+        InternalSessionManager sessionManager = repository.getSessionManager();
+        session = sessionManager.openSession(protocol);
+      }
+      catch (NotAuthenticatedException ex)
+      {
+        // Skip response because the user has canceled the authentication
+        out.writeInt(0);
+        return;
+      }
+
       session.setPassiveUpdateEnabled(passiveUpdateEnabled);
       session.setPassiveUpdateMode(passiveUpdateMode);
       session.setLockNotificationMode(lockNotificationMode);

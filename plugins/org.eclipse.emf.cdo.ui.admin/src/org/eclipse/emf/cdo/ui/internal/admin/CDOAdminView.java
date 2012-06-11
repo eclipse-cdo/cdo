@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.admin.CDOAdminClient;
 import org.eclipse.emf.cdo.admin.CDOAdminClientManager;
 import org.eclipse.emf.cdo.admin.CDOAdminClientRepository;
 import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
+import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.ui.internal.admin.bundle.OM;
@@ -21,6 +22,7 @@ import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 
+import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.ui.Net4jItemProvider.RemoveAction;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -271,12 +273,37 @@ public class CDOAdminView extends ContainerView
     @Override
     protected void doRun(IProgressMonitor progressMonitor) throws Exception
     {
-      CDONet4jSession session = repository.openSession(this);
-      if (session != null)
+      try
       {
-        IManagedContainer container = adminManager.getContainer();
-        String description = "session" + getNextSessionNumber();
-        container.putElement(CDOSessionFactory.PRODUCT_GROUP, "admin", description, session);
+        CDONet4jSession session = repository.openSession(this);
+        if (session != null)
+        {
+          IManagedContainer container = adminManager.getContainer();
+          String description = "session" + getNextSessionNumber();
+          container.putElement(CDOSessionFactory.PRODUCT_GROUP, "admin", description, session);
+        }
+      }
+      catch (RemoteException ex)
+      {
+        if (ex.getCause() instanceof NotAuthenticatedException)
+        {
+          // Skip silently because user has canceled the authentication
+        }
+        else
+        {
+          throw ex;
+        }
+      }
+      catch (Exception ex)
+      {
+        if (ex instanceof NotAuthenticatedException)
+        {
+          // Skip silently because user has canceled the authentication
+        }
+        else
+        {
+          throw ex;
+        }
       }
     }
 

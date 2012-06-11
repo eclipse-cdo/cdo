@@ -97,6 +97,12 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
   protected OpenSessionResult confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
     int sessionID = in.readInt();
+    if (sessionID == 0)
+    {
+      // The user has canceled the authentication
+      return null;
+    }
+
     if (TRACER.isEnabled())
     {
       TRACER.format("Read sessionID: {0}", sessionID); //$NON-NLS-1$

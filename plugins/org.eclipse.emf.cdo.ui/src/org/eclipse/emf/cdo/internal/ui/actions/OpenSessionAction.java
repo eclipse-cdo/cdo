@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
+import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.OpenSessionDialog;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
@@ -20,6 +21,7 @@ import org.eclipse.emf.cdo.ui.widgets.SessionComposite;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 
+import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
@@ -66,27 +68,52 @@ public final class OpenSessionAction extends LongRunningAction
   {
     try
     {
+      IManagedContainer container = getContainer();
+      String productGroup = CDOSessionFactory.PRODUCT_GROUP;
       String description = sessionComposite.getSessionDescription();
-      final InternalCDOSession session = (InternalCDOSession)getContainer().getElement(CDOSessionFactory.PRODUCT_GROUP,
-          "cdo", description); //$NON-NLS-1$
+      InternalCDOSession session = (InternalCDOSession)container.getElement(productGroup, "cdo", description); //$NON-NLS-1$
 
       if (sessionComposite.isAutomaticRegistry())
       {
         CDOPackageRegistryPopulator.populate(session.getPackageRegistry());
       }
     }
-    catch (final RuntimeException ex)
+    catch (RemoteException ex)
     {
-      OM.LOG.error(ex);
-      getDisplay().asyncExec(new Runnable()
+      Throwable cause = ex.getCause();
+      if (cause instanceof NotAuthenticatedException)
       {
-        public void run()
-        {
-          MessageDialog.openError(getShell(), getText(), Messages.getString("OpenSessionAction.3") //$NON-NLS-1$
-              + ex.getMessage());
-        }
-      });
+        // Skip silently because user has canceled the authentication
+      }
+      else
+      {
+        showError(cause);
+      }
     }
+    catch (Exception ex)
+    {
+      if (ex instanceof NotAuthenticatedException)
+      {
+        // Skip silently because user has canceled the authentication
+      }
+      else
+      {
+        showError(ex);
+      }
+    }
+  }
+
+  protected void showError(final Throwable ex)
+  {
+    OM.LOG.error(ex);
+    getDisplay().asyncExec(new Runnable()
+    {
+      public void run()
+      {
+        MessageDialog.openError(getShell(), getText(), Messages.getString("OpenSessionAction.3") //$NON-NLS-1$
+            + ex.getMessage());
+      }
+    });
   }
 
   protected IManagedContainer getContainer()

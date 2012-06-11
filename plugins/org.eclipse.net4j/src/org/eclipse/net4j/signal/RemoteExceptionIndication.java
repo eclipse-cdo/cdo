@@ -60,7 +60,11 @@ class RemoteExceptionIndication extends Indication
       t = new RemoteException(message, responding);
     }
 
-    getProtocol().handleRemoteException(correlationID, t, responding);
+    SignalProtocol<?> protocol = getProtocol();
+    if (protocol != null)
+    {
+      protocol.handleRemoteException(correlationID, t, responding);
+    }
   }
 
   public static Throwable deserializeThrowable(byte[] bytes)

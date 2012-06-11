@@ -36,9 +36,9 @@ public class CredentialsDialog extends BaseDialog<Viewer>
 
   private static final String MESSAGE = Messages.getString("CredentialsDialog_1"); //$NON-NLS-1$
 
-  private static final int WIDTH = 300;
+  private static final int WIDTH = 310;
 
-  private static final int HEIGHT = 220;
+  private static final int HEIGHT = 225;
 
   private Text userIDControl;
 
@@ -57,12 +57,19 @@ public class CredentialsDialog extends BaseDialog<Viewer>
     super.configureShell(newShell);
 
     Composite parent = newShell.getParent();
-    Rectangle bounds = parent.getBounds();
+    if (parent != null)
+    {
+      Rectangle bounds = parent.getBounds();
 
-    int x = bounds.x + (bounds.width >> 1) - (WIDTH >> 1);
-    int y = bounds.y + (bounds.height >> 1) - (HEIGHT >> 1);
+      int x = bounds.x + (bounds.width >> 1) - (WIDTH >> 1);
+      int y = bounds.y + (bounds.height >> 1) - (HEIGHT >> 1);
 
-    newShell.setBounds(x, y, WIDTH, HEIGHT);
+      newShell.setBounds(x, y, WIDTH, HEIGHT);
+    }
+    else
+    {
+      newShell.setSize(WIDTH, HEIGHT);
+    }
   }
 
   public IPasswordCredentials getCredentials()

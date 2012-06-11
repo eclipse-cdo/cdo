@@ -35,7 +35,7 @@
    </url>
 
    <includes
-         id="org.eclipse.emf.cdo.examples.source"
+         id="org.eclipse.emf.cdo.examples.installer.source"
          version="0.0.0"/>
 
    <plugin

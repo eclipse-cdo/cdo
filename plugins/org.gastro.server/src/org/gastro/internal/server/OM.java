@@ -72,7 +72,7 @@ public abstract class OM
     {
       OM.LOG.info("Gastro server starting");
       JdbcDataSource dataSource = new JdbcDataSource();
-      dataSource.setURL("jdbc:h2:_database/gastro");
+      dataSource.setURL("jdbc:h2:database/gastro");
 
       IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(true);
       IDBAdapter dbAdapter = new H2Adapter();

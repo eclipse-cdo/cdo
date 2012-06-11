@@ -59,6 +59,16 @@
             project="true">
          <description>%ExampleModelWizard_desc</description>
       </wizard>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.ui.Examples/org.eclipse.emf.cdo.examples"
+            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
+            icon="icons/full/ctool16/NewEMFExample.gif"
+            id="org.eclipse.emf.cdo.examples.ExampleGastroWizard"
+            name="%ExampleGastroWizard_name"
+            project="true">
+         <description>%ExampleGastroWizard_desc</description>
+      </wizard>
    </extension>
 
    <extension point="org.eclipse.emf.common.ui.examples">
@@ -112,6 +122,52 @@
                name="org.eclipse.emf.cdo.examples.company.edit"
                contentURI="examples/model.edit/"
                description="%ExampleEditProject_desc"/>
+      </example>
+      <example
+            id="org.eclipse.emf.cdo.examples.ExampleGastro"
+            wizardID="org.eclipse.emf.cdo.examples.ExampleGastroWizard"
+            pageImage="icons/full/wizban/NewEMFExample.gif">
+         <fileToOpen editorID="org.eclipse.ui.browser.editor" location="org.gastro.server/README.html"/>
+         <projectDescriptor
+               name="org.gastro.inventory"
+               contentURI="examples/gastro.inventory/"
+               description="%ExampleProject_gastro.inventory_desc"/>
+         <projectDescriptor
+               name="org.gastro.inventory.edit"
+               contentURI="examples/gastro.inventory.edit/"
+               description="%ExampleProject_gastro.inventory.edit_desc"/>
+         <projectDescriptor
+               name="org.gastro.business"
+               contentURI="examples/gastro.business/"
+               description="%ExampleProject_gastro.business_desc"/>
+         <projectDescriptor
+               name="org.gastro.business.edit"
+               contentURI="examples/gastro.business.edit/"
+               description="%ExampleProject_gastro.business.edit_desc"/>
+         <projectDescriptor
+               name="org.gastro.rcp"
+               contentURI="examples/gastro.rcp/"
+               description="%ExampleProject_gastro.rcp_desc"/>
+         <projectDescriptor
+               name="org.gastro.rcp.department"
+               contentURI="examples/gastro.rcp.department/"
+               description="%ExampleProject_gastro.rcp.department_desc"/>
+         <projectDescriptor
+               name="org.gastro.rcp.table"
+               contentURI="examples/gastro.rcp.table/"
+               description="%ExampleProject_gastro.rcp.table_desc"/>
+         <projectDescriptor
+               name="org.gastro.server"
+               contentURI="examples/gastro.server/"
+               description="%ExampleProject_gastro.server_desc"/>
+         <projectDescriptor
+               name="org.gastro.server.web"
+               contentURI="examples/gastro.server.web/"
+               description="%ExampleProject_gastro.server.web_desc"/>
+         <projectDescriptor
+               name="org.gastro.testclient"
+               contentURI="examples/gastro.testclient/"
+               description="%ExampleProject_gastro.testclient_desc"/>
       </example>
     </extension>
 

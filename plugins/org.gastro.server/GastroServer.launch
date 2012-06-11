@@ -24,6 +24,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl}&#13;&#10;-debug&#13;&#10;-console"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx1024m&#13;&#10;-Ddebug=true&#13;&#10;-Dorg.osgi.service.http.port=9090&#13;&#10;-Dservlet.config=${workspace_loc:/org.gastro.server.web/config/gastro.properties}"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:/org.gastro.server}"/>
 <stringAttribute key="pde.version" value="3.3"/>
 <stringAttribute key="product" value="org.eclipse.platform.ide"/>
 <stringAttribute key="selectedPlugin" value="org.eclipse.equinox.registry"/>

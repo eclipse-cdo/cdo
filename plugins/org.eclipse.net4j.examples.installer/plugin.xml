@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+	Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+	All rights reserved. This program and the accompanying materials
+	are made available under the terms of the Eclipse Public License v1.0
+	which accompanies this distribution, and is available at
+	http://www.eclipse.org/legal/epl-v10.html
+
+	Contributors:
+	  Eike Stepper - initial API and implementation
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <category
+            id="org.eclipse.net4j.examples"
+            name="%Net4jExampleCategory_name"
+            parentCategory="org.eclipse.ui.Examples">
+      </category>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.ui.Examples/org.eclipse.net4j.examples"
+            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
+            icon="icons/full/ctool16/NewEMFExample.gif"
+            id="org.eclipse.net4j.examples.ExampleBuddiesWizard"
+            name="%ExampleBuddiesWizard_name"
+            project="true">
+         <description>%ExampleBuddiesWizard_desc</description>
+      </wizard>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.ui.Examples/org.eclipse.net4j.examples"
+            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
+            icon="icons/full/ctool16/NewEMFExample.gif"
+            id="org.eclipse.net4j.examples.ExampleJMSWizard"
+            name="%ExampleJMSWizard_name"
+            project="true">
+         <description>%ExampleJMSWizard_desc</description>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.emf.common.ui.examples">
+      <example
+            id="org.eclipse.net4j.examples.ExampleBuddies"
+            wizardID="org.eclipse.net4j.examples.ExampleBuddiesWizard"
+            pageImage="icons/full/wizban/NewEMFExample.gif">
+         <projectDescriptor
+               name="org.eclipse.net4j.examples.buddies"
+               contentURI="examples/buddies/"
+               description="%ExampleProject_buddies_desc"/>
+         <projectDescriptor
+               name="org.eclipse.net4j.examples.buddies.chat"
+               contentURI="examples/buddies.chat/"
+               description="%ExampleProject_buddies.chat_desc"/>
+         <projectDescriptor
+               name="org.eclipse.net4j.examples.buddies.chat.ui"
+               contentURI="examples/buddies.chat.ui/"
+               description="%ExampleProject_buddies.chat.ui_desc"/>
+         <projectDescriptor
+               name="org.eclipse.net4j.examples.buddies.common"
+               contentURI="examples/buddies.buddies.common/"
+               description="%ExampleProject_buddies.buddies.common_desc"/>
+         <projectDescriptor
+               name="org.eclipse.net4j.examples.buddies.server"
+               contentURI="examples/buddies.buddies.server/"
+               description="%ExampleProject_buddies.buddies.server_desc"/>
+         <projectDescriptor
+               name="org.eclipse.net4j.examples.buddies.ui"
+               contentURI="examples/buddies.buddies.ui/"
+               description="%ExampleProject_buddies.buddies.ui_desc"/>
+      </example>
+      <example
+            id="org.eclipse.net4j.examples.ExampleJMS"
+            wizardID="org.eclipse.net4j.examples.ExampleJMSWizard"
+            pageImage="icons/full/wizban/NewEMFExample.gif">
+         <projectDescriptor
+               name="org.eclipse.net4j.jms"
+               contentURI="examples/jms/"
+               description="%ExampleProject_jms_desc"/>
+         <projectDescriptor
+               name="org.eclipse.net4j.jms.admin"
+               contentURI="examples/jms.admin/"
+               description="%ExampleProject_jms.admin_desc"/>
+         <projectDescriptor
+               name="org.eclipse.net4j.jms.api"
+               contentURI="examples/jms.api/"
+               description="%ExampleProject_jms.api_desc"/>
+         <projectDescriptor
+               name="org.eclipse.net4j.jms.server"
+               contentURI="examples/jms.server/"
+               description="%ExampleProject_jms.server_desc"/>
+         <projectDescriptor
+               name="org.eclipse.net4j.jms.server.jdbc"
+               contentURI="examples/jms.server.jdbc/"
+               description="%ExampleProject_jms.server.jdbc_desc"/>
+         <projectDescriptor
+               name="org.eclipse.net4j.jms.tests"
+               contentURI="examples/jms.tests/"
+               description="%ExampleProject_jms.tests_desc"/>
+      </example>
+    </extension>
+
+</plugin>

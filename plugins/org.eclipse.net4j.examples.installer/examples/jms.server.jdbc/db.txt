@@ -1,0 +1,61 @@
+SYSTEM_DATA
+===========
+  id                     bigint
+  version                varchar(20)
+  creationdate           date
+
+
+
+SEEDS
+=====
+  name                   varchar(20)
+  seed                   bigint
+
+
+
+DESTINATIONS
+============
+  name                   varchar(255)
+  isqueue                int
+  destination_id         bigint
+
+
+
+MESSAGES
+========
+  message_id            varchar(64)
+  destination_id        bigint
+  priority              int
+  createtime            bigint
+  expirytime            bigint
+  processed             int
+  messageblob           longblob
+
+
+
+MESSAGE_HANDLES
+===============
+   message_id           varchar(64)
+   destination_id       bigint
+   consumer_id          bigint
+   priority             int
+   acceptedtime         bigint
+   sequencenumber       bigint
+   expirytime           bigint
+   delivered            int
+
+
+
+CONSUMERS
+=========
+  name                 varchar(255)
+  destination_id       bigint
+  consumer_id          bigint
+  created              bigint
+
+
+
+USERS
+=====
+  username             varchar(50)
+  password             varchar(50)

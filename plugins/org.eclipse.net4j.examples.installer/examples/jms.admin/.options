@@ -1,0 +1,5 @@
+# Debugging and tracing options
+
+org.eclipse.net4j.jms.admin/debug = true
+
+org.eclipse.net4j.jms.admin/debug.protocol = true

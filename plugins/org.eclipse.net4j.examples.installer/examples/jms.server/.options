@@ -1,0 +1,6 @@
+# Debugging and tracing options
+
+org.eclipse.net4j.jms.server/debug = true
+
+org.eclipse.net4j.jms.server/debug.protocol = true
+org.eclipse.net4j.jms.server/debug.store = true

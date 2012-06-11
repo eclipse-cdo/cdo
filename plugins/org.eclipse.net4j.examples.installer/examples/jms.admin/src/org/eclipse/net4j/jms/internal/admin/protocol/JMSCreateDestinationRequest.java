@@ -1,0 +1,46 @@
+/*
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
+package org.eclipse.net4j.jms.internal.admin.protocol;
+
+import org.eclipse.net4j.jms.JMSAdminProtocolConstants;
+import org.eclipse.net4j.signal.RequestWithConfirmation;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+
+/**
+ * @author Eike Stepper
+ */
+public class JMSCreateDestinationRequest extends RequestWithConfirmation<Boolean>
+{
+  private byte type;
+
+  private String name;
+
+  public JMSCreateDestinationRequest(JMSAdminProtocol protocol, byte type, String name)
+  {
+    super(protocol, JMSAdminProtocolConstants.SIGNAL_CREATE_DESTINATION);
+    this.type = type;
+    this.name = name;
+  }
+
+  @Override
+  protected void requesting(ExtendedDataOutputStream out) throws Exception
+  {
+    out.writeByte(type);
+    out.writeString(name);
+  }
+
+  @Override
+  protected Boolean confirming(ExtendedDataInputStream in) throws Exception
+  {
+    return in.readBoolean();
+  }
+}

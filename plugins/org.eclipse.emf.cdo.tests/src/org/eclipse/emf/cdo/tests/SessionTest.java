@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
@@ -318,11 +319,11 @@ public class SessionTest extends AbstractCDOTest
     try
     {
       openSession("authrepo4");
-      fail("RemoteException expected");
+      fail("NotAuthenticatedException expected");
     }
-    catch (RemoteException success)
+    catch (NotAuthenticatedException success)
     {
-      assertEquals(SecurityException.class, success.getCause().getClass());
+      // Success
     }
   }
 

@@ -184,7 +184,7 @@ public class OfflineExampleClient
 
     CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setConnector(connector);
-    configuration.setRepositoryName(OfflineExampleClone.NAME);
+    configuration.setRepositoryName(OfflineExampleUtil.CLONE_NAME);
 
     CDONet4jSession session = configuration.openNet4jSession();
     CDORepositoryInfo repositoryInfo = session.getRepositoryInfo();

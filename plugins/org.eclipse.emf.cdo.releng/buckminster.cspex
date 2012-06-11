@@ -4,6 +4,9 @@
 		<cs:dependency name="org.eclipse.emf.cdo.site" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.cdo.efs" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.emf.cdo.ui.efs" componentType="osgi.bundle"/>
+		<cs:dependency name="org.eclipse.emf.cdo.examples.installer.client" componentType="osgi.bundle"/>
+		<cs:dependency name="org.eclipse.emf.cdo.examples.installer.clone" componentType="osgi.bundle"/>
+		<cs:dependency name="org.eclipse.emf.cdo.examples.installer.master" componentType="osgi.bundle"/>
 
 		<cs:dependency name="org.eclipse.equinox.executable" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.platform" componentType="eclipse.feature"/>

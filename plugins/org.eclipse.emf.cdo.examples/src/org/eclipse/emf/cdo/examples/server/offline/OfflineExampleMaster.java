@@ -23,15 +23,11 @@ import java.util.Map;
  */
 public class OfflineExampleMaster extends AbstractOfflineExampleServer
 {
-  public static final String NAME = "master";
-
-  public static final int PORT = 2036;
-
   private static final int BROWSER_PORT = 7777;
 
   public OfflineExampleMaster()
   {
-    super(NAME, PORT, BROWSER_PORT);
+    super(OfflineExampleUtil.MASTER_NAME, OfflineExampleUtil.MASTER_PORT, BROWSER_PORT);
   }
 
   @Override

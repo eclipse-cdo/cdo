@@ -294,8 +294,17 @@ Class SecurityFactoryImpl</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#convertPermissionToString(org.eclipse.emf.ecore.EDataType, java.lang.Object)">convertPermissionToString</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</A>&nbsp;eDataType,
-                          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;instanceValue)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#convertAccessObjectToString(org.eclipse.emf.ecore.EDataType, java.lang.Object)">convertAccessObjectToString</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</A>&nbsp;eDataType,
+                            <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;instanceValue)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#convertAccessToString(org.eclipse.emf.ecore.EDataType, java.lang.Object)">convertAccessToString</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</A>&nbsp;eDataType,
+                      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;instanceValue)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -319,8 +328,26 @@ Class SecurityFactoryImpl</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/ClassCheck.html" title="interface in org.eclipse.emf.cdo.security">ClassCheck</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#createClassCheck()">createClassCheck</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#createAccessFromString(org.eclipse.emf.ecore.EDataType, java.lang.String)">createAccessFromString</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</A>&nbsp;eDataType,
+                       <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;initialValue)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#createAccessObjectFromString(org.eclipse.emf.ecore.EDataType, java.lang.String)">createAccessObjectFromString</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</A>&nbsp;eDataType,
+                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;initialValue)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/ClassPermission.html" title="interface in org.eclipse.emf.cdo.security">ClassPermission</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#createClassPermission()">createClassPermission</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -352,17 +379,8 @@ Class SecurityFactoryImpl</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/PackageCheck.html" title="interface in org.eclipse.emf.cdo.security">PackageCheck</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#createPackageCheck()">createPackageCheck</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#createPermissionFromString(org.eclipse.emf.ecore.EDataType, java.lang.String)">createPermissionFromString</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</A>&nbsp;eDataType,
-                           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;initialValue)</CODE>
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/PackagePermission.html" title="interface in org.eclipse.emf.cdo.security">PackagePermission</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#createPackagePermission()">createPackagePermission</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -377,8 +395,8 @@ Class SecurityFactoryImpl</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/ResourceCheck.html" title="interface in org.eclipse.emf.cdo.security">ResourceCheck</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#createResourceCheck()">createResourceCheck</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#createResourcePermission()">createResourcePermission</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -777,71 +795,71 @@ public <A HREF="../../../../../../org/eclipse/emf/cdo/security/UserPassword.html
 </DL>
 <HR>
 
-<A NAME="createClassCheck()"><!-- --></A><H3>
-createClassCheck</H3>
+<A NAME="createClassPermission()"><!-- --></A><H3>
+createClassPermission</H3>
 <PRE>
-public <A HREF="../../../../../../org/eclipse/emf/cdo/security/ClassCheck.html" title="interface in org.eclipse.emf.cdo.security">ClassCheck</A> <B>createClassCheck</B>()</PRE>
+public <A HREF="../../../../../../org/eclipse/emf/cdo/security/ClassPermission.html" title="interface in org.eclipse.emf.cdo.security">ClassPermission</A> <B>createClassPermission</B>()</PRE>
 <DL>
 <DD><!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createClassCheck()">createClassCheck</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html" title="interface in org.eclipse.emf.cdo.security">SecurityFactory</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createClassPermission()">createClassPermission</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html" title="interface in org.eclipse.emf.cdo.security">SecurityFactory</A></CODE></DL>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>a new object of class '<em>Class Check</em>'.<DT><B>Generated</B></DT>
+<DT><B>Returns:</B><DD>a new object of class '<em>Class Permission</em>'.<DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="createPackageCheck()"><!-- --></A><H3>
-createPackageCheck</H3>
+<A NAME="createPackagePermission()"><!-- --></A><H3>
+createPackagePermission</H3>
 <PRE>
-public <A HREF="../../../../../../org/eclipse/emf/cdo/security/PackageCheck.html" title="interface in org.eclipse.emf.cdo.security">PackageCheck</A> <B>createPackageCheck</B>()</PRE>
+public <A HREF="../../../../../../org/eclipse/emf/cdo/security/PackagePermission.html" title="interface in org.eclipse.emf.cdo.security">PackagePermission</A> <B>createPackagePermission</B>()</PRE>
 <DL>
 <DD><!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createPackageCheck()">createPackageCheck</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html" title="interface in org.eclipse.emf.cdo.security">SecurityFactory</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createPackagePermission()">createPackagePermission</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html" title="interface in org.eclipse.emf.cdo.security">SecurityFactory</A></CODE></DL>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>a new object of class '<em>Package Check</em>'.<DT><B>Generated</B></DT>
+<DT><B>Returns:</B><DD>a new object of class '<em>Package Permission</em>'.<DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="createResourceCheck()"><!-- --></A><H3>
-createResourceCheck</H3>
+<A NAME="createResourcePermission()"><!-- --></A><H3>
+createResourcePermission</H3>
 <PRE>
-public <A HREF="../../../../../../org/eclipse/emf/cdo/security/ResourceCheck.html" title="interface in org.eclipse.emf.cdo.security">ResourceCheck</A> <B>createResourceCheck</B>()</PRE>
+public <A HREF="../../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</A> <B>createResourcePermission</B>()</PRE>
 <DL>
 <DD><!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createResourceCheck()">createResourceCheck</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html" title="interface in org.eclipse.emf.cdo.security">SecurityFactory</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createResourcePermission()">createResourcePermission</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html" title="interface in org.eclipse.emf.cdo.security">SecurityFactory</A></CODE></DL>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>a new object of class '<em>Resource Check</em>'.<DT><B>Generated</B></DT>
+<DT><B>Returns:</B><DD>a new object of class '<em>Resource Permission</em>'.<DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="createPermissionFromString(org.eclipse.emf.ecore.EDataType, java.lang.String)"><!-- --></A><H3>
-createPermissionFromString</H3>
+<A NAME="createAccessFromString(org.eclipse.emf.ecore.EDataType, java.lang.String)"><!-- --></A><H3>
+createAccessFromString</H3>
 <PRE>
-public <A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A> <B>createPermissionFromString</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</A>&nbsp;eDataType,
-                                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;initialValue)</PRE>
+public <A HREF="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</A> <B>createAccessFromString</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</A>&nbsp;eDataType,
+                                     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;initialValue)</PRE>
 <DL>
 <DD><!-- begin-user-doc -->
  <!-- end-user-doc -->
@@ -857,11 +875,51 @@ public <A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" 
 </DL>
 <HR>
 
-<A NAME="convertPermissionToString(org.eclipse.emf.ecore.EDataType, java.lang.Object)"><!-- --></A><H3>
-convertPermissionToString</H3>
+<A NAME="convertAccessToString(org.eclipse.emf.ecore.EDataType, java.lang.Object)"><!-- --></A><H3>
+convertAccessToString</H3>
 <PRE>
-public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>convertPermissionToString</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</A>&nbsp;eDataType,
-                                        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;instanceValue)</PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>convertAccessToString</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</A>&nbsp;eDataType,
+                                    <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;instanceValue)</PRE>
+<DL>
+<DD><!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createAccessObjectFromString(org.eclipse.emf.ecore.EDataType, java.lang.String)"><!-- --></A><H3>
+createAccessObjectFromString</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</A> <B>createAccessObjectFromString</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</A>&nbsp;eDataType,
+                                           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;initialValue)</PRE>
+<DL>
+<DD><!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="convertAccessObjectToString(org.eclipse.emf.ecore.EDataType, java.lang.Object)"><!-- --></A><H3>
+convertAccessObjectToString</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>convertAccessObjectToString</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</A>&nbsp;eDataType,
+                                          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;instanceValue)</PRE>
 <DL>
 <DD><!-- begin-user-doc -->
  <!-- end-user-doc -->

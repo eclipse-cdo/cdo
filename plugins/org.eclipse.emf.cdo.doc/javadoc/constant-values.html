@@ -1492,18 +1492,18 @@ org.eclipse.*</FONT></TH>
 
 <TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="3">org.eclipse.emf.cdo.security.<A HREF="org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A></TH>
+<TH ALIGN="left" COLSPAN="3">org.eclipse.emf.cdo.security.<A HREF="org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</A></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.Permission.READ_VALUE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.security.Access.READ_VALUE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/Permission.html#READ_VALUE">READ_VALUE</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/Access.html#READ_VALUE">READ_VALUE</A></CODE></TD>
 <TD ALIGN="right"><CODE>0</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.Permission.WRITE_VALUE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.security.Access.WRITE_VALUE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/Permission.html#WRITE_VALUE">WRITE_VALUE</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/Access.html#WRITE_VALUE">WRITE_VALUE</A></CODE></TD>
 <TD ALIGN="right"><CODE>1</CODE></TD>
 </TR>
 </FONT></TD>
@@ -1517,6 +1517,18 @@ org.eclipse.*</FONT></TH>
 <TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
 <TH ALIGN="left" COLSPAN="3">org.eclipse.emf.cdo.security.<A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html" title="interface in org.eclipse.emf.cdo.security">SecurityPackage</A></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.ACCESS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#ACCESS">ACCESS</A></CODE></TD>
+<TD ALIGN="right"><CODE>13</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.ACCESS_OBJECT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#ACCESS_OBJECT">ACCESS_OBJECT</A></CODE></TD>
+<TD ALIGN="right"><CODE>14</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <A NAME="org.eclipse.emf.cdo.security.SecurityPackage.ASSIGNEE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
@@ -1549,57 +1561,33 @@ org.eclipse.*</FONT></TH>
 <TD ALIGN="right"><CODE>3</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.CHECK"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.CLASS_PERMISSION"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#CHECK">CHECK</A></CODE></TD>
-<TD ALIGN="right"><CODE>9</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.CHECK__PERMISSION"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#CHECK__PERMISSION">CHECK__PERMISSION</A></CODE></TD>
-<TD ALIGN="right"><CODE>1</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.CHECK__ROLE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#CHECK__ROLE">CHECK__ROLE</A></CODE></TD>
-<TD ALIGN="right"><CODE>0</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.CHECK_FEATURE_COUNT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#CHECK_FEATURE_COUNT">CHECK_FEATURE_COUNT</A></CODE></TD>
-<TD ALIGN="right"><CODE>2</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.CLASS_CHECK"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_CHECK">CLASS_CHECK</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_PERMISSION">CLASS_PERMISSION</A></CODE></TD>
 <TD ALIGN="right"><CODE>10</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.CLASS_CHECK__APPLICABLE_CLASS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.CLASS_PERMISSION__ACCESS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_CHECK__APPLICABLE_CLASS">CLASS_CHECK__APPLICABLE_CLASS</A></CODE></TD>
-<TD ALIGN="right"><CODE>2</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.CLASS_CHECK__PERMISSION"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_CHECK__PERMISSION">CLASS_CHECK__PERMISSION</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_PERMISSION__ACCESS">CLASS_PERMISSION__ACCESS</A></CODE></TD>
 <TD ALIGN="right"><CODE>1</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.CLASS_CHECK__ROLE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.CLASS_PERMISSION__APPLICABLE_CLASS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_CHECK__ROLE">CLASS_CHECK__ROLE</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_PERMISSION__APPLICABLE_CLASS">CLASS_PERMISSION__APPLICABLE_CLASS</A></CODE></TD>
+<TD ALIGN="right"><CODE>2</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.CLASS_PERMISSION__ROLE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_PERMISSION__ROLE">CLASS_PERMISSION__ROLE</A></CODE></TD>
 <TD ALIGN="right"><CODE>0</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.CLASS_CHECK_FEATURE_COUNT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.CLASS_PERMISSION_FEATURE_COUNT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_CHECK_FEATURE_COUNT">CLASS_CHECK_FEATURE_COUNT</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_PERMISSION_FEATURE_COUNT">CLASS_PERMISSION_FEATURE_COUNT</A></CODE></TD>
 <TD ALIGN="right"><CODE>3</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -1717,40 +1705,58 @@ org.eclipse.*</FONT></TH>
 <TD ALIGN="right"><CODE>9</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_CHECK"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_PERMISSION"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_CHECK">PACKAGE_CHECK</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_PERMISSION">PACKAGE_PERMISSION</A></CODE></TD>
 <TD ALIGN="right"><CODE>11</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_CHECK__APPLICABLE_PACKAGE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_PERMISSION__ACCESS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_CHECK__APPLICABLE_PACKAGE">PACKAGE_CHECK__APPLICABLE_PACKAGE</A></CODE></TD>
-<TD ALIGN="right"><CODE>2</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_CHECK__PERMISSION"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_CHECK__PERMISSION">PACKAGE_CHECK__PERMISSION</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_PERMISSION__ACCESS">PACKAGE_PERMISSION__ACCESS</A></CODE></TD>
 <TD ALIGN="right"><CODE>1</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_CHECK__ROLE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_PERMISSION__APPLICABLE_PACKAGE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_CHECK__ROLE">PACKAGE_CHECK__ROLE</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_PERMISSION__APPLICABLE_PACKAGE">PACKAGE_PERMISSION__APPLICABLE_PACKAGE</A></CODE></TD>
+<TD ALIGN="right"><CODE>2</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_PERMISSION__ROLE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_PERMISSION__ROLE">PACKAGE_PERMISSION__ROLE</A></CODE></TD>
 <TD ALIGN="right"><CODE>0</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_CHECK_FEATURE_COUNT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_PERMISSION_FEATURE_COUNT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_CHECK_FEATURE_COUNT">PACKAGE_CHECK_FEATURE_COUNT</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_PERMISSION_FEATURE_COUNT">PACKAGE_PERMISSION_FEATURE_COUNT</A></CODE></TD>
 <TD ALIGN="right"><CODE>3</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <A NAME="org.eclipse.emf.cdo.security.SecurityPackage.PERMISSION"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
 <TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#PERMISSION">PERMISSION</A></CODE></TD>
-<TD ALIGN="right"><CODE>13</CODE></TD>
+<TD ALIGN="right"><CODE>9</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.PERMISSION__ACCESS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#PERMISSION__ACCESS">PERMISSION__ACCESS</A></CODE></TD>
+<TD ALIGN="right"><CODE>1</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.PERMISSION__ROLE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#PERMISSION__ROLE">PERMISSION__ROLE</A></CODE></TD>
+<TD ALIGN="right"><CODE>0</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.PERMISSION_FEATURE_COUNT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#PERMISSION_FEATURE_COUNT">PERMISSION_FEATURE_COUNT</A></CODE></TD>
+<TD ALIGN="right"><CODE>2</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <A NAME="org.eclipse.emf.cdo.security.SecurityPackage.REALM"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
@@ -1759,16 +1765,16 @@ org.eclipse.*</FONT></TH>
 <TD ALIGN="right"><CODE>2</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.REALM__ALL_CHECKS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#REALM__ALL_CHECKS">REALM__ALL_CHECKS</A></CODE></TD>
-<TD ALIGN="right"><CODE>5</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
 <A NAME="org.eclipse.emf.cdo.security.SecurityPackage.REALM__ALL_GROUPS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
 <TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#REALM__ALL_GROUPS">REALM__ALL_GROUPS</A></CODE></TD>
 <TD ALIGN="right"><CODE>3</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.REALM__ALL_PERMISSIONS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#REALM__ALL_PERMISSIONS">REALM__ALL_PERMISSIONS</A></CODE></TD>
+<TD ALIGN="right"><CODE>5</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <A NAME="org.eclipse.emf.cdo.security.SecurityPackage.REALM__ALL_ROLES"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
@@ -1789,9 +1795,9 @@ org.eclipse.*</FONT></TH>
 <TD ALIGN="right"><CODE>0</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.REALM__DEFAULT_PERMISSION"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.REALM__DEFAULT_ACCESS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#REALM__DEFAULT_PERMISSION">REALM__DEFAULT_PERMISSION</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#REALM__DEFAULT_ACCESS">REALM__DEFAULT_ACCESS</A></CODE></TD>
 <TD ALIGN="right"><CODE>7</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -1813,33 +1819,33 @@ org.eclipse.*</FONT></TH>
 <TD ALIGN="right"><CODE>8</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_CHECK"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_PERMISSION"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_CHECK">RESOURCE_CHECK</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_PERMISSION">RESOURCE_PERMISSION</A></CODE></TD>
 <TD ALIGN="right"><CODE>12</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_CHECK__PATTERN"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_PERMISSION__ACCESS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_CHECK__PATTERN">RESOURCE_CHECK__PATTERN</A></CODE></TD>
-<TD ALIGN="right"><CODE>2</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_CHECK__PERMISSION"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_CHECK__PERMISSION">RESOURCE_CHECK__PERMISSION</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_PERMISSION__ACCESS">RESOURCE_PERMISSION__ACCESS</A></CODE></TD>
 <TD ALIGN="right"><CODE>1</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_CHECK__ROLE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_PERMISSION__PATTERN"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_CHECK__ROLE">RESOURCE_CHECK__ROLE</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_PERMISSION__PATTERN">RESOURCE_PERMISSION__PATTERN</A></CODE></TD>
+<TD ALIGN="right"><CODE>2</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_PERMISSION__ROLE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_PERMISSION__ROLE">RESOURCE_PERMISSION__ROLE</A></CODE></TD>
 <TD ALIGN="right"><CODE>0</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_CHECK_FEATURE_COUNT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_PERMISSION_FEATURE_COUNT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_CHECK_FEATURE_COUNT">RESOURCE_CHECK_FEATURE_COUNT</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_PERMISSION_FEATURE_COUNT">RESOURCE_PERMISSION_FEATURE_COUNT</A></CODE></TD>
 <TD ALIGN="right"><CODE>3</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -1861,16 +1867,16 @@ org.eclipse.*</FONT></TH>
 <TD ALIGN="right"><CODE>3</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.ROLE__CHECKS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#ROLE__CHECKS">ROLE__CHECKS</A></CODE></TD>
-<TD ALIGN="right"><CODE>2</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
 <A NAME="org.eclipse.emf.cdo.security.SecurityPackage.ROLE__ID"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
 <TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#ROLE__ID">ROLE__ID</A></CODE></TD>
 <TD ALIGN="right"><CODE>1</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.ROLE__PERMISSIONS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#ROLE__PERMISSIONS">ROLE__PERMISSIONS</A></CODE></TD>
+<TD ALIGN="right"><CODE>2</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <A NAME="org.eclipse.emf.cdo.security.SecurityPackage.ROLE_FEATURE_COUNT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
@@ -1921,16 +1927,16 @@ org.eclipse.*</FONT></TH>
 <TD ALIGN="right"><CODE>7</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.USER__ALL_CHECKS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#USER__ALL_CHECKS">USER__ALL_CHECKS</A></CODE></TD>
-<TD ALIGN="right"><CODE>14</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
 <A NAME="org.eclipse.emf.cdo.security.SecurityPackage.USER__ALL_GROUPS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
 <TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#USER__ALL_GROUPS">USER__ALL_GROUPS</A></CODE></TD>
 <TD ALIGN="right"><CODE>12</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.USER__ALL_PERMISSIONS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#USER__ALL_PERMISSIONS">USER__ALL_PERMISSIONS</A></CODE></TD>
+<TD ALIGN="right"><CODE>14</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <A NAME="org.eclipse.emf.cdo.security.SecurityPackage.USER__ALL_ROLES"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
@@ -1945,15 +1951,15 @@ org.eclipse.*</FONT></TH>
 <TD ALIGN="right"><CODE>0</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.USER__DEFAULT_PERMISSION"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.USER__DEFAULT_ACCESS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#USER__DEFAULT_PERMISSION">USER__DEFAULT_PERMISSION</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#USER__DEFAULT_ACCESS">USER__DEFAULT_ACCESS</A></CODE></TD>
 <TD ALIGN="right"><CODE>9</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.USER__DEFAULT_PERMISSION_OVERRIDE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.security.SecurityPackage.USER__DEFAULT_ACCESS_OVERRIDE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#USER__DEFAULT_PERMISSION_OVERRIDE">USER__DEFAULT_PERMISSION_OVERRIDE</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/security/SecurityPackage.html#USER__DEFAULT_ACCESS_OVERRIDE">USER__DEFAULT_ACCESS_OVERRIDE</A></CODE></TD>
 <TD ALIGN="right"><CODE>8</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">

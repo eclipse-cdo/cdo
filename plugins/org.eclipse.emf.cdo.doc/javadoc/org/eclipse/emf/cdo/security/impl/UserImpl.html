@@ -136,13 +136,13 @@ Class UserImpl</H2>
    <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getFirstName()"><CODE><em>First Name</em></CODE></A></li>
    <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getLastName()"><CODE><em>Last Name</em></CODE></A></li>
    <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getEmail()"><CODE><em>Email</em></CODE></A></li>
-   <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getDefaultPermissionOverride()"><CODE><em>Default Permission Override</em></CODE></A></li>
-   <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getDefaultPermission()"><CODE><em>Default Permission</em></CODE></A></li>
+   <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getDefaultAccessOverride()"><CODE><em>Default Access Override</em></CODE></A></li>
+   <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getDefaultAccess()"><CODE><em>Default Access</em></CODE></A></li>
    <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#isLocked()"><CODE><em>Locked</em></CODE></A></li>
    <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getPassword()"><CODE><em>Password</em></CODE></A></li>
    <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getAllGroups()"><CODE><em>All Groups</em></CODE></A></li>
    <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getAllRoles()"><CODE><em>All Roles</em></CODE></A></li>
-   <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getAllChecks()"><CODE><em>All Checks</em></CODE></A></li>
+   <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getAllPermissions()"><CODE><em>All Permissions</em></CODE></A></li>
    <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getUnassignedRoles()"><CODE><em>Unassigned Roles</em></CODE></A></li>
  </ul>
  </p>
@@ -306,16 +306,16 @@ Class UserImpl</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Check.html" title="interface in org.eclipse.emf.cdo.security">Check</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getAllChecks()">getAllChecks</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Group.html" title="interface in org.eclipse.emf.cdo.security">Group</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getAllGroups()">getAllGroups</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Group.html" title="interface in org.eclipse.emf.cdo.security">Group</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getAllGroups()">getAllGroups</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getAllPermissions()">getAllPermissions</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -330,16 +330,16 @@ Class UserImpl</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getDefaultPermission()">getDefaultPermission</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getDefaultAccess()">getDefaultAccess</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getDefaultPermissionOverride()">getDefaultPermissionOverride</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#getDefaultAccessOverride()">getDefaultAccessOverride</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -411,7 +411,7 @@ Class UserImpl</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#setDefaultPermissionOverride(org.eclipse.emf.cdo.security.Permission)">setDefaultPermissionOverride</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A>&nbsp;newDefaultPermissionOverride)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/UserImpl.html#setDefaultAccessOverride(org.eclipse.emf.cdo.security.Access)">setDefaultAccessOverride</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</A>&nbsp;newDefaultAccessOverride)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -718,20 +718,20 @@ public <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/ecl
 </DL>
 <HR>
 
-<A NAME="getAllChecks()"><!-- --></A><H3>
-getAllChecks</H3>
+<A NAME="getAllPermissions()"><!-- --></A><H3>
+getAllPermissions</H3>
 <PRE>
-public <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Check.html" title="interface in org.eclipse.emf.cdo.security">Check</A>&gt; <B>getAllChecks</B>()</PRE>
+public <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</A>&gt; <B>getAllPermissions</B>()</PRE>
 <DL>
 <DD><!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html#getAllChecks()">getAllChecks</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html#getAllPermissions()">getAllPermissions</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</A></CODE></DL>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>the value of the '<em>All Checks</em>' reference list.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getUser_AllChecks()"><CODE>SecurityPackage.getUser_AllChecks()</CODE></A><DT><B>Generated</B></DT>
+<DT><B>Returns:</B><DD>the value of the '<em>All Permissions</em>' reference list.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getUser_AllPermissions()"><CODE>SecurityPackage.getUser_AllPermissions()</CODE></A><DT><B>Generated</B></DT>
   <DD>NOT</DD>
 </DL>
 </DD>
@@ -898,63 +898,60 @@ public void <B>setEmail</B>(<A HREF="http://download.oracle.com/javase/1.5.0/doc
 </DL>
 <HR>
 
-<A NAME="getDefaultPermissionOverride()"><!-- --></A><H3>
-getDefaultPermissionOverride</H3>
+<A NAME="getDefaultAccessOverride()"><!-- --></A><H3>
+getDefaultAccessOverride</H3>
 <PRE>
-public <A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A> <B>getDefaultPermissionOverride</B>()</PRE>
+public <A HREF="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</A> <B>getDefaultAccessOverride</B>()</PRE>
 <DL>
 <DD><!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultPermissionOverride()">getDefaultPermissionOverride</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultAccessOverride()">getDefaultAccessOverride</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</A></CODE></DL>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>the value of the '<em>Default Permission Override</em>' attribute.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security"><CODE>Permission</CODE></A>, 
-<A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html#setDefaultPermissionOverride(org.eclipse.emf.cdo.security.Permission)"><CODE>User.setDefaultPermissionOverride(Permission)</CODE></A>, 
-<A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getUser_DefaultPermissionOverride()"><CODE>SecurityPackage.getUser_DefaultPermissionOverride()</CODE></A><DT><B>Generated</B></DT>
+<DT><B>Returns:</B><DD>the value of the '<em>Default Access Override</em>' attribute.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html#setDefaultAccessOverride(org.eclipse.emf.cdo.security.Access)"><CODE>User.setDefaultAccessOverride(Access)</CODE></A>, 
+<A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getUser_DefaultAccessOverride()"><CODE>SecurityPackage.getUser_DefaultAccessOverride()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="setDefaultPermissionOverride(org.eclipse.emf.cdo.security.Permission)"><!-- --></A><H3>
-setDefaultPermissionOverride</H3>
+<A NAME="setDefaultAccessOverride(org.eclipse.emf.cdo.security.Access)"><!-- --></A><H3>
+setDefaultAccessOverride</H3>
 <PRE>
-public void <B>setDefaultPermissionOverride</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A>&nbsp;newDefaultPermissionOverride)</PRE>
+public void <B>setDefaultAccessOverride</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</A>&nbsp;newDefaultAccessOverride)</PRE>
 <DL>
 <DD><!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html#setDefaultPermissionOverride(org.eclipse.emf.cdo.security.Permission)">setDefaultPermissionOverride</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html#setDefaultAccessOverride(org.eclipse.emf.cdo.security.Access)">setDefaultAccessOverride</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</A></CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>newDefaultPermissionOverride</CODE> - the new value of the '<em>Default Permission Override</em>' attribute.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security"><CODE>Permission</CODE></A>, 
-<A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultPermissionOverride()"><CODE>User.getDefaultPermissionOverride()</CODE></A><DT><B>Generated</B></DT>
+<DT><B>Parameters:</B><DD><CODE>newDefaultAccessOverride</CODE> - the new value of the '<em>Default Access Override</em>' attribute.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultAccessOverride()"><CODE>User.getDefaultAccessOverride()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="getDefaultPermission()"><!-- --></A><H3>
-getDefaultPermission</H3>
+<A NAME="getDefaultAccess()"><!-- --></A><H3>
+getDefaultAccess</H3>
 <PRE>
-public <A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A> <B>getDefaultPermission</B>()</PRE>
+public <A HREF="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</A> <B>getDefaultAccess</B>()</PRE>
 <DL>
 <DD><!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultPermission()">getDefaultPermission</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultAccess()">getDefaultAccess</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</A></CODE></DL>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>the value of the '<em>Default Permission</em>' attribute.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security"><CODE>Permission</CODE></A>, 
-<A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getUser_DefaultPermission()"><CODE>SecurityPackage.getUser_DefaultPermission()</CODE></A><DT><B>Generated</B></DT>
+<DT><B>Returns:</B><DD>the value of the '<em>Default Access</em>' attribute.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getUser_DefaultAccess()"><CODE>SecurityPackage.getUser_DefaultAccess()</CODE></A><DT><B>Generated</B></DT>
   <DD>NOT</DD>
 </DL>
 </DD>

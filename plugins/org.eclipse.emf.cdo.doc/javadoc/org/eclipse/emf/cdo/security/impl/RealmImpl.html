@@ -55,8 +55,8 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PackageCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ResourceCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/security/impl/RealmImpl.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="RealmImpl.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -133,9 +133,9 @@ Class RealmImpl</H2>
    <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html#getAllUsers()"><CODE><em>All Users</em></CODE></A></li>
    <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html#getAllGroups()"><CODE><em>All Groups</em></CODE></A></li>
    <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html#getAllRoles()"><CODE><em>All Roles</em></CODE></A></li>
-   <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html#getAllChecks()"><CODE><em>All Checks</em></CODE></A></li>
+   <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html#getAllPermissions()"><CODE><em>All Permissions</em></CODE></A></li>
    <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html#getName()"><CODE><em>Name</em></CODE></A></li>
-   <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html#getDefaultPermission()"><CODE><em>Default Permission</em></CODE></A></li>
+   <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html#getDefaultAccess()"><CODE><em>Default Access</em></CODE></A></li>
  </ul>
  </p>
 <P>
@@ -298,16 +298,16 @@ Class RealmImpl</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Check.html" title="interface in org.eclipse.emf.cdo.security">Check</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html#getAllChecks()">getAllChecks</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Group.html" title="interface in org.eclipse.emf.cdo.security">Group</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html#getAllGroups()">getAllGroups</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Group.html" title="interface in org.eclipse.emf.cdo.security">Group</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html#getAllGroups()">getAllGroups</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html#getAllPermissions()">getAllPermissions</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -330,8 +330,8 @@ Class RealmImpl</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html#getDefaultPermission()">getDefaultPermission</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html#getDefaultAccess()">getDefaultAccess</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -363,7 +363,7 @@ Class RealmImpl</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html#setDefaultPermission(org.eclipse.emf.cdo.security.Permission)">setDefaultPermission</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A>&nbsp;newDefaultPermission)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html#setDefaultAccess(org.eclipse.emf.cdo.security.Access)">setDefaultAccess</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</A>&nbsp;newDefaultAccess)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -621,20 +621,20 @@ public <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/ecl
 </DL>
 <HR>
 
-<A NAME="getAllChecks()"><!-- --></A><H3>
-getAllChecks</H3>
+<A NAME="getAllPermissions()"><!-- --></A><H3>
+getAllPermissions</H3>
 <PRE>
-public <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Check.html" title="interface in org.eclipse.emf.cdo.security">Check</A>&gt; <B>getAllChecks</B>()</PRE>
+public <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</A>&gt; <B>getAllPermissions</B>()</PRE>
 <DL>
 <DD><!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllChecks()">getAllChecks</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllPermissions()">getAllPermissions</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</A></CODE></DL>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>the value of the '<em>All Checks</em>' reference list.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_AllChecks()"><CODE>SecurityPackage.getRealm_AllChecks()</CODE></A><DT><B>Generated</B></DT>
+<DT><B>Returns:</B><DD>the value of the '<em>All Permissions</em>' reference list.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_AllPermissions()"><CODE>SecurityPackage.getRealm_AllPermissions()</CODE></A><DT><B>Generated</B></DT>
   <DD>NOT</DD>
 </DL>
 </DD>
@@ -681,42 +681,40 @@ public void <B>setName</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs
 </DL>
 <HR>
 
-<A NAME="getDefaultPermission()"><!-- --></A><H3>
-getDefaultPermission</H3>
+<A NAME="getDefaultAccess()"><!-- --></A><H3>
+getDefaultAccess</H3>
 <PRE>
-public <A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A> <B>getDefaultPermission</B>()</PRE>
+public <A HREF="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</A> <B>getDefaultAccess</B>()</PRE>
 <DL>
 <DD><!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultPermission()">getDefaultPermission</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultAccess()">getDefaultAccess</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</A></CODE></DL>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>the value of the '<em>Default Permission</em>' attribute.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security"><CODE>Permission</CODE></A>, 
-<A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html#setDefaultPermission(org.eclipse.emf.cdo.security.Permission)"><CODE>Realm.setDefaultPermission(Permission)</CODE></A>, 
-<A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_DefaultPermission()"><CODE>SecurityPackage.getRealm_DefaultPermission()</CODE></A><DT><B>Generated</B></DT>
+<DT><B>Returns:</B><DD>the value of the '<em>Default Access</em>' attribute.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html#setDefaultAccess(org.eclipse.emf.cdo.security.Access)"><CODE>Realm.setDefaultAccess(Access)</CODE></A>, 
+<A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_DefaultAccess()"><CODE>SecurityPackage.getRealm_DefaultAccess()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="setDefaultPermission(org.eclipse.emf.cdo.security.Permission)"><!-- --></A><H3>
-setDefaultPermission</H3>
+<A NAME="setDefaultAccess(org.eclipse.emf.cdo.security.Access)"><!-- --></A><H3>
+setDefaultAccess</H3>
 <PRE>
-public void <B>setDefaultPermission</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security">Permission</A>&nbsp;newDefaultPermission)</PRE>
+public void <B>setDefaultAccess</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</A>&nbsp;newDefaultAccess)</PRE>
 <DL>
 <DD><!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html#setDefaultPermission(org.eclipse.emf.cdo.security.Permission)">setDefaultPermission</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html#setDefaultAccess(org.eclipse.emf.cdo.security.Access)">setDefaultAccess</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</A></CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>newDefaultPermission</CODE> - the new value of the '<em>Default Permission</em>' attribute.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security"><CODE>Permission</CODE></A>, 
-<A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultPermission()"><CODE>Realm.getDefaultPermission()</CODE></A><DT><B>Generated</B></DT>
+<DT><B>Parameters:</B><DD><CODE>newDefaultAccess</CODE> - the new value of the '<em>Default Access</em>' attribute.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultAccess()"><CODE>Realm.getDefaultAccess()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DD>
@@ -769,8 +767,8 @@ public <A HREF="../../../../../../org/eclipse/emf/cdo/security/Realm.html" title
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PackageCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ResourceCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/security/impl/RealmImpl.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="RealmImpl.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

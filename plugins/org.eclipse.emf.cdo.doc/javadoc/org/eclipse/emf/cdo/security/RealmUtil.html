@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/ResourceCheck.html" title="interface in org.eclipse.emf.cdo.security"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/security/RealmUtil.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="RealmUtil.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -128,16 +128,16 @@ Various static helper methods for dealing with <A HREF="../../../../../org/eclip
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/BasicEList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">BasicEList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/Check.html" title="interface in org.eclipse.emf.cdo.security">Check</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/RealmUtil.html#allChecks(org.eclipse.emf.common.util.EList)">allChecks</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security">SecurityItem</A>&gt;&nbsp;items)</CODE>
+<CODE>static&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/BasicEList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">BasicEList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/Group.html" title="interface in org.eclipse.emf.cdo.security">Group</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/RealmUtil.html#allGroups(org.eclipse.emf.common.util.EList)">allGroups</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security">SecurityItem</A>&gt;&nbsp;items)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/BasicEList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">BasicEList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/Group.html" title="interface in org.eclipse.emf.cdo.security">Group</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/RealmUtil.html#allGroups(org.eclipse.emf.common.util.EList)">allGroups</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security">SecurityItem</A>&gt;&nbsp;items)</CODE>
+<CODE>static&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/BasicEList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">BasicEList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/RealmUtil.html#allPermissions(org.eclipse.emf.common.util.EList)">allPermissions</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security">SecurityItem</A>&gt;&nbsp;items)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -277,10 +277,10 @@ public static <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/
 </DL>
 <HR>
 
-<A NAME="allChecks(org.eclipse.emf.common.util.EList)"><!-- --></A><H3>
-allChecks</H3>
+<A NAME="allPermissions(org.eclipse.emf.common.util.EList)"><!-- --></A><H3>
+allPermissions</H3>
 <PRE>
-public static <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/BasicEList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">BasicEList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/Check.html" title="interface in org.eclipse.emf.cdo.security">Check</A>&gt; <B>allChecks</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security">SecurityItem</A>&gt;&nbsp;items)</PRE>
+public static <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/BasicEList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">BasicEList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</A>&gt; <B>allPermissions</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security">SecurityItem</A>&gt;&nbsp;items)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -317,7 +317,7 @@ public static <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/ResourceCheck.html" title="interface in org.eclipse.emf.cdo.security"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/security/RealmUtil.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="RealmUtil.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

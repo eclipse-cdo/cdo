@@ -60,6 +60,8 @@ All Classes (CDO Model Repository Documentation)
 <BR>
 <A HREF="org/eclipse/emf/cdo/server/db/mapping/AbstractTypeMappingFactory.html" title="class in org.eclipse.emf.cdo.server.db.mapping" target="classFrame">AbstractTypeMappingFactory</A>
 <BR>
+<A HREF="org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security" target="classFrame">Access</A>
+<BR>
 <A HREF="org/eclipse/emf/cdo/etypes/Annotation.html" title="interface in org.eclipse.emf.cdo.etypes" target="classFrame"><I>Annotation</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/server/spi/security/AnnotationHandler.html" title="class in org.eclipse.emf.cdo.server.spi.security" target="classFrame">AnnotationHandler</A>
@@ -830,17 +832,11 @@ All Classes (CDO Model Repository Documentation)
 <BR>
 <A HREF="org/eclipse/emf/cdo/transaction/CDOXATransaction.html" title="interface in org.eclipse.emf.cdo.transaction" target="classFrame"><I>CDOXATransaction</I></A>
 <BR>
-<A HREF="org/eclipse/emf/cdo/security/Check.html" title="interface in org.eclipse.emf.cdo.security" target="classFrame"><I>Check</I></A>
+<A HREF="org/eclipse/emf/cdo/security/ClassPermission.html" title="interface in org.eclipse.emf.cdo.security" target="classFrame"><I>ClassPermission</I></A>
 <BR>
-<A HREF="org/eclipse/emf/cdo/security/impl/CheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl" target="classFrame">CheckImpl</A>
+<A HREF="org/eclipse/emf/cdo/security/impl/ClassPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl" target="classFrame">ClassPermissionImpl</A>
 <BR>
-<A HREF="org/eclipse/emf/cdo/security/provider/CheckItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider" target="classFrame">CheckItemProvider</A>
-<BR>
-<A HREF="org/eclipse/emf/cdo/security/ClassCheck.html" title="interface in org.eclipse.emf.cdo.security" target="classFrame"><I>ClassCheck</I></A>
-<BR>
-<A HREF="org/eclipse/emf/cdo/security/impl/ClassCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl" target="classFrame">ClassCheckImpl</A>
-<BR>
-<A HREF="org/eclipse/emf/cdo/security/provider/ClassCheckItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider" target="classFrame">ClassCheckItemProvider</A>
+<A HREF="org/eclipse/emf/cdo/security/provider/ClassPermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider" target="classFrame">ClassPermissionItemProvider</A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util" target="classFrame">CommitException</A>
 <BR>
@@ -1316,15 +1312,19 @@ All Classes (CDO Model Repository Documentation)
 <BR>
 <A HREF="org/eclipse/emf/cdo/server/ocl/OCLQueryHandler.Factory.html" title="class in org.eclipse.emf.cdo.server.ocl" target="classFrame">OCLQueryHandler.Factory</A>
 <BR>
-<A HREF="org/eclipse/emf/cdo/security/PackageCheck.html" title="interface in org.eclipse.emf.cdo.security" target="classFrame"><I>PackageCheck</I></A>
+<A HREF="org/eclipse/emf/cdo/security/PackagePermission.html" title="interface in org.eclipse.emf.cdo.security" target="classFrame"><I>PackagePermission</I></A>
 <BR>
-<A HREF="org/eclipse/emf/cdo/security/impl/PackageCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl" target="classFrame">PackageCheckImpl</A>
+<A HREF="org/eclipse/emf/cdo/security/impl/PackagePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl" target="classFrame">PackagePermissionImpl</A>
 <BR>
-<A HREF="org/eclipse/emf/cdo/security/provider/PackageCheckItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider" target="classFrame">PackageCheckItemProvider</A>
+<A HREF="org/eclipse/emf/cdo/security/provider/PackagePermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider" target="classFrame">PackagePermissionItemProvider</A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/common/util/PartialCollectionLoadingNotSupportedException.html" title="class in org.eclipse.emf.cdo.common.util" target="classFrame">PartialCollectionLoadingNotSupportedException</A>
 <BR>
-<A HREF="org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security" target="classFrame">Permission</A>
+<A HREF="org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security" target="classFrame"><I>Permission</I></A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/security/impl/PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl" target="classFrame">PermissionImpl</A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/security/provider/PermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider" target="classFrame">PermissionItemProvider</A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/spi/server/PluginRepositoryProvider.html" title="class in org.eclipse.emf.cdo.spi.server" target="classFrame">PluginRepositoryProvider</A>
 <BR>
@@ -1368,11 +1368,11 @@ All Classes (CDO Model Repository Documentation)
 <BR>
 <A HREF="org/eclipse/emf/cdo/spi/server/RepositoryUserManager.RepositoryUserManagerFactory.html" title="class in org.eclipse.emf.cdo.spi.server" target="classFrame">RepositoryUserManager.RepositoryUserManagerFactory</A>
 <BR>
-<A HREF="org/eclipse/emf/cdo/security/ResourceCheck.html" title="interface in org.eclipse.emf.cdo.security" target="classFrame"><I>ResourceCheck</I></A>
+<A HREF="org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security" target="classFrame"><I>ResourcePermission</I></A>
 <BR>
-<A HREF="org/eclipse/emf/cdo/security/impl/ResourceCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl" target="classFrame">ResourceCheckImpl</A>
+<A HREF="org/eclipse/emf/cdo/security/impl/ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl" target="classFrame">ResourcePermissionImpl</A>
 <BR>
-<A HREF="org/eclipse/emf/cdo/security/provider/ResourceCheckItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider" target="classFrame">ResourceCheckItemProvider</A>
+<A HREF="org/eclipse/emf/cdo/security/provider/ResourcePermissionItemProvider.html" title="class in org.eclipse.emf.cdo.security.provider" target="classFrame">ResourcePermissionItemProvider</A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/spi/common/revision/RevisionInfo.html" title="class in org.eclipse.emf.cdo.spi.common.revision" target="classFrame">RevisionInfo</A>
 <BR>

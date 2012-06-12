@@ -108,14 +108,14 @@ Interface SecurityPackage</H2>
 <area shape="rect" id="node2" href="impl/SecurityPackageImpl.html" title="SecurityPackageImpl (org.eclipse.emf.cdo.security.impl)" alt="" coords="603,344,824,384"/>
 <area shape="rect" id="node3" href="util/SecuritySwitch.html" title="SecuritySwitch (org.eclipse.emf.cdo.security.util)" alt="" coords="606,403,821,443"/>
 <area shape="rect" id="node4" href="Assignee.html" title="&#171;interface&#187; Assignee" alt="" coords="40,5,125,45"/>
-<area shape="rect" id="node5" href="Check.html" title="&#171;interface&#187; Check" alt="" coords="40,64,125,104"/>
-<area shape="rect" id="node6" href="ClassCheck.html" title="&#171;interface&#187; ClassCheck" alt="" coords="37,123,129,163"/>
-<area shape="rect" id="node7" href="Directory.html" title="&#171;interface&#187; Directory" alt="" coords="40,181,125,221"/>
-<area shape="rect" id="node8" title="&#171;interface&#187; EPackage (org.eclipse.emf.ecore)" alt="" coords="5,241,160,295"/>
-<area shape="rect" id="node9" href="Group.html" title="&#171;interface&#187; Group" alt="" coords="40,315,125,355"/>
-<area shape="rect" id="node10" href="PackageCheck.html" title="&#171;interface&#187; PackageCheck" alt="" coords="27,373,138,413"/>
+<area shape="rect" id="node5" href="ClassPermission.html" title="&#171;interface&#187; ClassPermission" alt="" coords="23,64,143,104"/>
+<area shape="rect" id="node6" href="Directory.html" title="&#171;interface&#187; Directory" alt="" coords="40,123,125,163"/>
+<area shape="rect" id="node7" title="&#171;interface&#187; EPackage (org.eclipse.emf.ecore)" alt="" coords="5,182,160,237"/>
+<area shape="rect" id="node8" href="Group.html" title="&#171;interface&#187; Group" alt="" coords="40,256,125,296"/>
+<area shape="rect" id="node9" href="PackagePermission.html" title="&#171;interface&#187; PackagePermission" alt="" coords="13,315,152,355"/>
+<area shape="rect" id="node10" href="Permission.html" title="&#171;interface&#187; Permission" alt="" coords="39,373,126,413"/>
 <area shape="rect" id="node11" href="Realm.html" title="&#171;interface&#187; Realm" alt="" coords="40,432,125,472"/>
-<area shape="rect" id="node12" href="ResourceCheck.html" title="&#171;interface&#187; ResourceCheck" alt="" coords="25,491,140,531"/>
+<area shape="rect" id="node12" href="ResourcePermission.html" title="&#171;interface&#187; ResourcePermission" alt="" coords="11,491,154,531"/>
 <area shape="rect" id="node13" href="Role.html" title="&#171;interface&#187; Role" alt="" coords="40,549,125,589"/>
 <area shape="rect" id="node14" href="SecurityElement.html" title="&#171;interface&#187; SecurityElement" alt="" coords="23,608,142,648"/>
 <area shape="rect" id="node15" href="SecurityFactory.html" title="&#171;interface&#187; SecurityFactory" alt="" coords="25,667,140,707"/>
@@ -123,7 +123,7 @@ Interface SecurityPackage</H2>
 <area shape="rect" id="node17" href="SecurityPackage.html" title="&#171;interface&#187; SecurityPackage" alt="" coords="321,403,442,443"/>
 <area shape="rect" id="node18" href="User.html" title="&#171;interface&#187; User" alt="" coords="671,461,756,501"/>
 <area shape="rect" id="node19" href="UserPassword.html" title="&#171;interface&#187; UserPassword" alt="" coords="660,520,767,560"/>
-<area shape="rect" id="node20" href="Permission.html" title="&#171;enum&#187; Permission" alt="" coords="39,784,126,824"/>
+<area shape="rect" id="node20" href="Access.html" title="&#171;enum&#187; Access" alt="" coords="49,784,117,824"/>
 </map>
 
 <CENTER><IMG SRC="SecurityPackage.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -198,6 +198,22 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#ACCESS">ACCESS</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security"><CODE><em>Access</em></CODE></A>' enum</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#ACCESS_OBJECT">ACCESS_OBJECT</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The meta object id for the '<em>Access Object</em>' data type</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#ASSIGNEE">ASSIGNEE</A></B></CODE>
 
 <BR>
@@ -238,47 +254,23 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#CHECK">CHECK</A></B></CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_PERMISSION">CLASS_PERMISSION</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/CheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE><em>Check</em></CODE></A>' class</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/ClassPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE><em>Class Permission</em></CODE></A>' class</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#CHECK__PERMISSION">CHECK__PERMISSION</A></B></CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_PERMISSION__ACCESS">CLASS_PERMISSION__ACCESS</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Permission</b></em>' attribute</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Access</b></em>' attribute</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#CHECK__ROLE">CHECK__ROLE</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Role</b></em>' container reference</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#CHECK_FEATURE_COUNT">CHECK_FEATURE_COUNT</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of structural features of the '<em>Check</em>' class</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_CHECK">CLASS_CHECK</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/ClassCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE><em>Class Check</em></CODE></A>' class</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_CHECK__APPLICABLE_CLASS">CLASS_CHECK__APPLICABLE_CLASS</A></B></CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_PERMISSION__APPLICABLE_CLASS">CLASS_PERMISSION__APPLICABLE_CLASS</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Applicable Class</b></em>' reference</TD>
@@ -286,15 +278,7 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_CHECK__PERMISSION">CLASS_CHECK__PERMISSION</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Permission</b></em>' attribute</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_CHECK__ROLE">CLASS_CHECK__ROLE</A></B></CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_PERMISSION__ROLE">CLASS_PERMISSION__ROLE</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Role</b></em>' container reference</TD>
@@ -302,10 +286,10 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_CHECK_FEATURE_COUNT">CLASS_CHECK_FEATURE_COUNT</A></B></CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#CLASS_PERMISSION_FEATURE_COUNT">CLASS_PERMISSION_FEATURE_COUNT</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of structural features of the '<em>Class Check</em>' class</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of structural features of the '<em>Class Permission</em>' class</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -470,15 +454,23 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_CHECK">PACKAGE_CHECK</A></B></CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_PERMISSION">PACKAGE_PERMISSION</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/PackageCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE><em>Package Check</em></CODE></A>' class</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/PackagePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE><em>Package Permission</em></CODE></A>' class</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_CHECK__APPLICABLE_PACKAGE">PACKAGE_CHECK__APPLICABLE_PACKAGE</A></B></CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_PERMISSION__ACCESS">PACKAGE_PERMISSION__ACCESS</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Access</b></em>' attribute</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_PERMISSION__APPLICABLE_PACKAGE">PACKAGE_PERMISSION__APPLICABLE_PACKAGE</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Applicable Package</b></em>' reference</TD>
@@ -486,15 +478,7 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_CHECK__PERMISSION">PACKAGE_CHECK__PERMISSION</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Permission</b></em>' attribute</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_CHECK__ROLE">PACKAGE_CHECK__ROLE</A></B></CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_PERMISSION__ROLE">PACKAGE_PERMISSION__ROLE</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Role</b></em>' container reference</TD>
@@ -502,10 +486,10 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_CHECK_FEATURE_COUNT">PACKAGE_CHECK_FEATURE_COUNT</A></B></CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#PACKAGE_PERMISSION_FEATURE_COUNT">PACKAGE_PERMISSION_FEATURE_COUNT</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of structural features of the '<em>Package Check</em>' class</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of structural features of the '<em>Package Permission</em>' class</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -513,7 +497,31 @@ Interface SecurityPackage</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#PERMISSION">PERMISSION</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security"><CODE><em>Permission</em></CODE></A>' enum</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE><em>Permission</em></CODE></A>' class</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#PERMISSION__ACCESS">PERMISSION__ACCESS</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Access</b></em>' attribute</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#PERMISSION__ROLE">PERMISSION__ROLE</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Role</b></em>' container reference</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#PERMISSION_FEATURE_COUNT">PERMISSION_FEATURE_COUNT</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of structural features of the '<em>Permission</em>' class</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -526,18 +534,18 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#REALM__ALL_CHECKS">REALM__ALL_CHECKS</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>All Checks</b></em>' reference list</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#REALM__ALL_GROUPS">REALM__ALL_GROUPS</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>All Groups</b></em>' reference list</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#REALM__ALL_PERMISSIONS">REALM__ALL_PERMISSIONS</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>All Permissions</b></em>' reference list</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -566,10 +574,10 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#REALM__DEFAULT_PERMISSION">REALM__DEFAULT_PERMISSION</A></B></CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#REALM__DEFAULT_ACCESS">REALM__DEFAULT_ACCESS</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Default Permission</b></em>' attribute</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Default Access</b></em>' attribute</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -598,15 +606,23 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_CHECK">RESOURCE_CHECK</A></B></CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_PERMISSION">RESOURCE_PERMISSION</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/ResourceCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE><em>Resource Check</em></CODE></A>' class</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE><em>Resource Permission</em></CODE></A>' class</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_CHECK__PATTERN">RESOURCE_CHECK__PATTERN</A></B></CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_PERMISSION__ACCESS">RESOURCE_PERMISSION__ACCESS</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Access</b></em>' attribute</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_PERMISSION__PATTERN">RESOURCE_PERMISSION__PATTERN</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Pattern</b></em>' attribute</TD>
@@ -614,15 +630,7 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_CHECK__PERMISSION">RESOURCE_CHECK__PERMISSION</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Permission</b></em>' attribute</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_CHECK__ROLE">RESOURCE_CHECK__ROLE</A></B></CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_PERMISSION__ROLE">RESOURCE_PERMISSION__ROLE</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Role</b></em>' container reference</TD>
@@ -630,10 +638,10 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_CHECK_FEATURE_COUNT">RESOURCE_CHECK_FEATURE_COUNT</A></B></CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#RESOURCE_PERMISSION_FEATURE_COUNT">RESOURCE_PERMISSION_FEATURE_COUNT</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of structural features of the '<em>Resource Check</em>' class</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of structural features of the '<em>Resource Permission</em>' class</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -662,18 +670,18 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#ROLE__CHECKS">ROLE__CHECKS</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Checks</b></em>' containment reference list</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#ROLE__ID">ROLE__ID</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Id</b></em>' attribute</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#ROLE__PERMISSIONS">ROLE__PERMISSIONS</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Permissions</b></em>' containment reference list</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -742,18 +750,18 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#USER__ALL_CHECKS">USER__ALL_CHECKS</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>All Checks</b></em>' reference list</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#USER__ALL_GROUPS">USER__ALL_GROUPS</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>All Groups</b></em>' reference list</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#USER__ALL_PERMISSIONS">USER__ALL_PERMISSIONS</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>All Permissions</b></em>' reference list</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -774,18 +782,18 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#USER__DEFAULT_PERMISSION">USER__DEFAULT_PERMISSION</A></B></CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#USER__DEFAULT_ACCESS">USER__DEFAULT_ACCESS</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Default Permission</b></em>' attribute</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Default Access</b></em>' attribute</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#USER__DEFAULT_PERMISSION_OVERRIDE">USER__DEFAULT_PERMISSION_OVERRIDE</A></B></CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#USER__DEFAULT_ACCESS_OVERRIDE">USER__DEFAULT_ACCESS_OVERRIDE</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Default Permission Override</b></em>' attribute</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Default Access Override</b></em>' attribute</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -911,6 +919,22 @@ Interface SecurityPackage</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EEnum.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EEnum</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getAccess()">getAccess</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for enum '<A HREF="../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security"><CODE><em>Access</em></CODE></A>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getAccessObject()">getAccessObject</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for data type '<A HREF="../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security"><CODE><em>Access Object</em></CODE></A>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getAssignee_Id()">getAssignee_Id</A></B>()</CODE>
 
@@ -935,43 +959,19 @@ Interface SecurityPackage</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getCheck_Permission()">getCheck_Permission</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/Check.html#getPermission()"><CODE><em>Permission</em></CODE></A>'</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getCheck_Role()">getCheck_Role</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getClassPermission_ApplicableClass()">getClassPermission_ApplicableClass</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the container reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/Check.html#getRole()"><CODE><em>Role</em></CODE></A>'</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/ClassPermission.html#getApplicableClass()"><CODE><em>Applicable Class</em></CODE></A>'</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getCheck()">getCheck</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getClassPermission()">getClassPermission</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/security/Check.html" title="interface in org.eclipse.emf.cdo.security"><CODE><em>Check</em></CODE></A>'</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getClassCheck_ApplicableClass()">getClassCheck_ApplicableClass</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/ClassCheck.html#getApplicableClass()"><CODE><em>Applicable Class</em></CODE></A>'</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getClassCheck()">getClassCheck</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/security/ClassCheck.html" title="interface in org.eclipse.emf.cdo.security"><CODE><em>Class Check</em></CODE></A>'</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/security/ClassPermission.html" title="interface in org.eclipse.emf.cdo.security"><CODE><em>Class Permission</em></CODE></A>'</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -1056,34 +1056,42 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getPackageCheck_ApplicablePackage()">getPackageCheck_ApplicablePackage</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getPackagePermission_ApplicablePackage()">getPackagePermission_ApplicablePackage</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/PackageCheck.html#getApplicablePackage()"><CODE><em>Applicable Package</em></CODE></A>'</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/PackagePermission.html#getApplicablePackage()"><CODE><em>Applicable Package</em></CODE></A>'</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getPackageCheck()">getPackageCheck</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getPackagePermission()">getPackagePermission</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/security/PackageCheck.html" title="interface in org.eclipse.emf.cdo.security"><CODE><em>Package Check</em></CODE></A>'</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/security/PackagePermission.html" title="interface in org.eclipse.emf.cdo.security"><CODE><em>Package Permission</em></CODE></A>'</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EEnum.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EEnum</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getPermission()">getPermission</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getPermission_Access()">getPermission_Access</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for enum '<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security"><CODE><em>Permission</em></CODE></A>'</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html#getAccess()"><CODE><em>Access</em></CODE></A>'</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_AllChecks()">getRealm_AllChecks</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getPermission_Role()">getPermission_Role</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the reference list '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllChecks()"><CODE><em>All Checks</em></CODE></A>'</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the container reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html#getRole()"><CODE><em>Role</em></CODE></A>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getPermission()">getPermission</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security"><CODE><em>Permission</em></CODE></A>'</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -1092,6 +1100,14 @@ Interface SecurityPackage</H2>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the reference list '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllGroups()"><CODE><em>All Groups</em></CODE></A>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_AllPermissions()">getRealm_AllPermissions</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the reference list '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllPermissions()"><CODE><em>All Permissions</em></CODE></A>'</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -1112,10 +1128,10 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_DefaultPermission()">getRealm_DefaultPermission</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_DefaultAccess()">getRealm_DefaultAccess</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultPermission()"><CODE><em>Default Permission</em></CODE></A>'</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultAccess()"><CODE><em>Default Access</em></CODE></A>'</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -1144,18 +1160,18 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getResourceCheck_Pattern()">getResourceCheck_Pattern</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getResourcePermission_Pattern()">getResourcePermission_Pattern</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/ResourceCheck.html#getPattern()"><CODE><em>Pattern</em></CODE></A>'</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html#getPattern()"><CODE><em>Pattern</em></CODE></A>'</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getResourceCheck()">getResourceCheck</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getResourcePermission()">getResourcePermission</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/security/ResourceCheck.html" title="interface in org.eclipse.emf.cdo.security"><CODE><em>Resource Check</em></CODE></A>'</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security"><CODE><em>Resource Permission</em></CODE></A>'</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -1167,19 +1183,19 @@ Interface SecurityPackage</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRole_Checks()">getRole_Checks</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the containment reference list '<A HREF="../../../../../org/eclipse/emf/cdo/security/Role.html#getChecks()"><CODE><em>Checks</em></CODE></A>'</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRole_Id()">getRole_Id</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/Role.html#getId()"><CODE><em>Id</em></CODE></A>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRole_Permissions()">getRole_Permissions</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the containment reference list '<A HREF="../../../../../org/eclipse/emf/cdo/security/Role.html#getPermissions()"><CODE><em>Permissions</em></CODE></A>'</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -1216,18 +1232,18 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getUser_AllChecks()">getUser_AllChecks</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the reference list '<A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getAllChecks()"><CODE><em>All Checks</em></CODE></A>'</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getUser_AllGroups()">getUser_AllGroups</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the reference list '<A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getAllGroups()"><CODE><em>All Groups</em></CODE></A>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getUser_AllPermissions()">getUser_AllPermissions</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the reference list '<A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getAllPermissions()"><CODE><em>All Permissions</em></CODE></A>'</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -1240,18 +1256,18 @@ Interface SecurityPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getUser_DefaultPermission()">getUser_DefaultPermission</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getUser_DefaultAccess()">getUser_DefaultAccess</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultPermission()"><CODE><em>Default Permission</em></CODE></A>'</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultAccess()"><CODE><em>Default Access</em></CODE></A>'</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getUser_DefaultPermissionOverride()">getUser_DefaultPermissionOverride</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getUser_DefaultAccessOverride()">getUser_DefaultAccessOverride</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultPermissionOverride()"><CODE><em>Default Permission Override</em></CODE></A>'</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultAccessOverride()"><CODE><em>Default Access Override</em></CODE></A>'</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -1698,17 +1714,17 @@ static final int <B>REALM__ALL_ROLES</B></PRE>
 </DL>
 <HR>
 
-<A NAME="REALM__ALL_CHECKS"><!-- --></A><H3>
-REALM__ALL_CHECKS</H3>
+<A NAME="REALM__ALL_PERMISSIONS"><!-- --></A><H3>
+REALM__ALL_PERMISSIONS</H3>
 <PRE>
-static final int <B>REALM__ALL_CHECKS</B></PRE>
+static final int <B>REALM__ALL_PERMISSIONS</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>All Checks</b></em>' reference list.
+<DD>The feature id for the '<em><b>All Permissions</b></em>' reference list.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.REALM__ALL_CHECKS">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.REALM__ALL_PERMISSIONS">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -1734,17 +1750,17 @@ static final int <B>REALM__NAME</B></PRE>
 </DL>
 <HR>
 
-<A NAME="REALM__DEFAULT_PERMISSION"><!-- --></A><H3>
-REALM__DEFAULT_PERMISSION</H3>
+<A NAME="REALM__DEFAULT_ACCESS"><!-- --></A><H3>
+REALM__DEFAULT_ACCESS</H3>
 <PRE>
-static final int <B>REALM__DEFAULT_PERMISSION</B></PRE>
+static final int <B>REALM__DEFAULT_ACCESS</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>Default Permission</b></em>' attribute.
+<DD>The feature id for the '<em><b>Default Access</b></em>' attribute.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.REALM__DEFAULT_PERMISSION">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.REALM__DEFAULT_ACCESS">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -1896,17 +1912,17 @@ static final int <B>ROLE__ID</B></PRE>
 </DL>
 <HR>
 
-<A NAME="ROLE__CHECKS"><!-- --></A><H3>
-ROLE__CHECKS</H3>
+<A NAME="ROLE__PERMISSIONS"><!-- --></A><H3>
+ROLE__PERMISSIONS</H3>
 <PRE>
-static final int <B>ROLE__CHECKS</B></PRE>
+static final int <B>ROLE__PERMISSIONS</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>Checks</b></em>' containment reference list.
+<DD>The feature id for the '<em><b>Permissions</b></em>' containment reference list.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.ROLE__CHECKS">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.ROLE__PERMISSIONS">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2400,17 +2416,17 @@ static final int <B>USER__EMAIL</B></PRE>
 </DL>
 <HR>
 
-<A NAME="USER__DEFAULT_PERMISSION_OVERRIDE"><!-- --></A><H3>
-USER__DEFAULT_PERMISSION_OVERRIDE</H3>
+<A NAME="USER__DEFAULT_ACCESS_OVERRIDE"><!-- --></A><H3>
+USER__DEFAULT_ACCESS_OVERRIDE</H3>
 <PRE>
-static final int <B>USER__DEFAULT_PERMISSION_OVERRIDE</B></PRE>
+static final int <B>USER__DEFAULT_ACCESS_OVERRIDE</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>Default Permission Override</b></em>' attribute.
+<DD>The feature id for the '<em><b>Default Access Override</b></em>' attribute.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.USER__DEFAULT_PERMISSION_OVERRIDE">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.USER__DEFAULT_ACCESS_OVERRIDE">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2418,17 +2434,17 @@ static final int <B>USER__DEFAULT_PERMISSION_OVERRIDE</B></PRE>
 </DL>
 <HR>
 
-<A NAME="USER__DEFAULT_PERMISSION"><!-- --></A><H3>
-USER__DEFAULT_PERMISSION</H3>
+<A NAME="USER__DEFAULT_ACCESS"><!-- --></A><H3>
+USER__DEFAULT_ACCESS</H3>
 <PRE>
-static final int <B>USER__DEFAULT_PERMISSION</B></PRE>
+static final int <B>USER__DEFAULT_ACCESS</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>Default Permission</b></em>' attribute.
+<DD>The feature id for the '<em><b>Default Access</b></em>' attribute.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.USER__DEFAULT_PERMISSION">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.USER__DEFAULT_ACCESS">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2508,17 +2524,17 @@ static final int <B>USER__ALL_ROLES</B></PRE>
 </DL>
 <HR>
 
-<A NAME="USER__ALL_CHECKS"><!-- --></A><H3>
-USER__ALL_CHECKS</H3>
+<A NAME="USER__ALL_PERMISSIONS"><!-- --></A><H3>
+USER__ALL_PERMISSIONS</H3>
 <PRE>
-static final int <B>USER__ALL_CHECKS</B></PRE>
+static final int <B>USER__ALL_PERMISSIONS</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>All Checks</b></em>' reference list.
+<DD>The feature id for the '<em><b>All Permissions</b></em>' reference list.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.USER__ALL_CHECKS">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.USER__ALL_PERMISSIONS">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2616,35 +2632,35 @@ static final int <B>USER_PASSWORD_FEATURE_COUNT</B></PRE>
 </DL>
 <HR>
 
-<A NAME="CHECK"><!-- --></A><H3>
-CHECK</H3>
+<A NAME="PERMISSION"><!-- --></A><H3>
+PERMISSION</H3>
 <PRE>
-static final int <B>CHECK</B></PRE>
+static final int <B>PERMISSION</B></PRE>
 <DL>
-<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/CheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE><em>Check</em></CODE></A>' class.
+<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE><em>Permission</em></CODE></A>' class.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/impl/CheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE>CheckImpl</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/SecurityPackageImpl.html#getCheck()"><CODE>SecurityPackageImpl.getCheck()</CODE></A>, 
-<A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.CHECK">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE>PermissionImpl</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/SecurityPackageImpl.html#getPermission()"><CODE>SecurityPackageImpl.getPermission()</CODE></A>, 
+<A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.PERMISSION">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DL>
 <HR>
 
-<A NAME="CHECK__ROLE"><!-- --></A><H3>
-CHECK__ROLE</H3>
+<A NAME="PERMISSION__ROLE"><!-- --></A><H3>
+PERMISSION__ROLE</H3>
 <PRE>
-static final int <B>CHECK__ROLE</B></PRE>
+static final int <B>PERMISSION__ROLE</B></PRE>
 <DL>
 <DD>The feature id for the '<em><b>Role</b></em>' container reference.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.CHECK__ROLE">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.PERMISSION__ROLE">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2652,17 +2668,17 @@ static final int <B>CHECK__ROLE</B></PRE>
 </DL>
 <HR>
 
-<A NAME="CHECK__PERMISSION"><!-- --></A><H3>
-CHECK__PERMISSION</H3>
+<A NAME="PERMISSION__ACCESS"><!-- --></A><H3>
+PERMISSION__ACCESS</H3>
 <PRE>
-static final int <B>CHECK__PERMISSION</B></PRE>
+static final int <B>PERMISSION__ACCESS</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>Permission</b></em>' attribute.
+<DD>The feature id for the '<em><b>Access</b></em>' attribute.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.CHECK__PERMISSION">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.PERMISSION__ACCESS">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2670,17 +2686,17 @@ static final int <B>CHECK__PERMISSION</B></PRE>
 </DL>
 <HR>
 
-<A NAME="CHECK_FEATURE_COUNT"><!-- --></A><H3>
-CHECK_FEATURE_COUNT</H3>
+<A NAME="PERMISSION_FEATURE_COUNT"><!-- --></A><H3>
+PERMISSION_FEATURE_COUNT</H3>
 <PRE>
-static final int <B>CHECK_FEATURE_COUNT</B></PRE>
+static final int <B>PERMISSION_FEATURE_COUNT</B></PRE>
 <DL>
-<DD>The number of structural features of the '<em>Check</em>' class.
+<DD>The number of structural features of the '<em>Permission</em>' class.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.CHECK_FEATURE_COUNT">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.PERMISSION_FEATURE_COUNT">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2688,35 +2704,35 @@ static final int <B>CHECK_FEATURE_COUNT</B></PRE>
 </DL>
 <HR>
 
-<A NAME="CLASS_CHECK"><!-- --></A><H3>
-CLASS_CHECK</H3>
+<A NAME="CLASS_PERMISSION"><!-- --></A><H3>
+CLASS_PERMISSION</H3>
 <PRE>
-static final int <B>CLASS_CHECK</B></PRE>
+static final int <B>CLASS_PERMISSION</B></PRE>
 <DL>
-<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/ClassCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE><em>Class Check</em></CODE></A>' class.
+<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/ClassPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE><em>Class Permission</em></CODE></A>' class.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/impl/ClassCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE>ClassCheckImpl</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/SecurityPackageImpl.html#getClassCheck()"><CODE>SecurityPackageImpl.getClassCheck()</CODE></A>, 
-<A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.CLASS_CHECK">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/impl/ClassPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE>ClassPermissionImpl</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/SecurityPackageImpl.html#getClassPermission()"><CODE>SecurityPackageImpl.getClassPermission()</CODE></A>, 
+<A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.CLASS_PERMISSION">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DL>
 <HR>
 
-<A NAME="CLASS_CHECK__ROLE"><!-- --></A><H3>
-CLASS_CHECK__ROLE</H3>
+<A NAME="CLASS_PERMISSION__ROLE"><!-- --></A><H3>
+CLASS_PERMISSION__ROLE</H3>
 <PRE>
-static final int <B>CLASS_CHECK__ROLE</B></PRE>
+static final int <B>CLASS_PERMISSION__ROLE</B></PRE>
 <DL>
 <DD>The feature id for the '<em><b>Role</b></em>' container reference.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.CLASS_CHECK__ROLE">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.CLASS_PERMISSION__ROLE">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2724,17 +2740,17 @@ static final int <B>CLASS_CHECK__ROLE</B></PRE>
 </DL>
 <HR>
 
-<A NAME="CLASS_CHECK__PERMISSION"><!-- --></A><H3>
-CLASS_CHECK__PERMISSION</H3>
+<A NAME="CLASS_PERMISSION__ACCESS"><!-- --></A><H3>
+CLASS_PERMISSION__ACCESS</H3>
 <PRE>
-static final int <B>CLASS_CHECK__PERMISSION</B></PRE>
+static final int <B>CLASS_PERMISSION__ACCESS</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>Permission</b></em>' attribute.
+<DD>The feature id for the '<em><b>Access</b></em>' attribute.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.CLASS_CHECK__PERMISSION">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.CLASS_PERMISSION__ACCESS">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2742,17 +2758,17 @@ static final int <B>CLASS_CHECK__PERMISSION</B></PRE>
 </DL>
 <HR>
 
-<A NAME="CLASS_CHECK__APPLICABLE_CLASS"><!-- --></A><H3>
-CLASS_CHECK__APPLICABLE_CLASS</H3>
+<A NAME="CLASS_PERMISSION__APPLICABLE_CLASS"><!-- --></A><H3>
+CLASS_PERMISSION__APPLICABLE_CLASS</H3>
 <PRE>
-static final int <B>CLASS_CHECK__APPLICABLE_CLASS</B></PRE>
+static final int <B>CLASS_PERMISSION__APPLICABLE_CLASS</B></PRE>
 <DL>
 <DD>The feature id for the '<em><b>Applicable Class</b></em>' reference.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.CLASS_CHECK__APPLICABLE_CLASS">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.CLASS_PERMISSION__APPLICABLE_CLASS">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2760,17 +2776,17 @@ static final int <B>CLASS_CHECK__APPLICABLE_CLASS</B></PRE>
 </DL>
 <HR>
 
-<A NAME="CLASS_CHECK_FEATURE_COUNT"><!-- --></A><H3>
-CLASS_CHECK_FEATURE_COUNT</H3>
+<A NAME="CLASS_PERMISSION_FEATURE_COUNT"><!-- --></A><H3>
+CLASS_PERMISSION_FEATURE_COUNT</H3>
 <PRE>
-static final int <B>CLASS_CHECK_FEATURE_COUNT</B></PRE>
+static final int <B>CLASS_PERMISSION_FEATURE_COUNT</B></PRE>
 <DL>
-<DD>The number of structural features of the '<em>Class Check</em>' class.
+<DD>The number of structural features of the '<em>Class Permission</em>' class.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.CLASS_CHECK_FEATURE_COUNT">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.CLASS_PERMISSION_FEATURE_COUNT">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2778,35 +2794,35 @@ static final int <B>CLASS_CHECK_FEATURE_COUNT</B></PRE>
 </DL>
 <HR>
 
-<A NAME="PACKAGE_CHECK"><!-- --></A><H3>
-PACKAGE_CHECK</H3>
+<A NAME="PACKAGE_PERMISSION"><!-- --></A><H3>
+PACKAGE_PERMISSION</H3>
 <PRE>
-static final int <B>PACKAGE_CHECK</B></PRE>
+static final int <B>PACKAGE_PERMISSION</B></PRE>
 <DL>
-<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/PackageCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE><em>Package Check</em></CODE></A>' class.
+<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/PackagePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE><em>Package Permission</em></CODE></A>' class.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/impl/PackageCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE>PackageCheckImpl</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/SecurityPackageImpl.html#getPackageCheck()"><CODE>SecurityPackageImpl.getPackageCheck()</CODE></A>, 
-<A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_CHECK">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/impl/PackagePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE>PackagePermissionImpl</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/SecurityPackageImpl.html#getPackagePermission()"><CODE>SecurityPackageImpl.getPackagePermission()</CODE></A>, 
+<A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_PERMISSION">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DL>
 <HR>
 
-<A NAME="PACKAGE_CHECK__ROLE"><!-- --></A><H3>
-PACKAGE_CHECK__ROLE</H3>
+<A NAME="PACKAGE_PERMISSION__ROLE"><!-- --></A><H3>
+PACKAGE_PERMISSION__ROLE</H3>
 <PRE>
-static final int <B>PACKAGE_CHECK__ROLE</B></PRE>
+static final int <B>PACKAGE_PERMISSION__ROLE</B></PRE>
 <DL>
 <DD>The feature id for the '<em><b>Role</b></em>' container reference.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_CHECK__ROLE">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_PERMISSION__ROLE">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2814,17 +2830,17 @@ static final int <B>PACKAGE_CHECK__ROLE</B></PRE>
 </DL>
 <HR>
 
-<A NAME="PACKAGE_CHECK__PERMISSION"><!-- --></A><H3>
-PACKAGE_CHECK__PERMISSION</H3>
+<A NAME="PACKAGE_PERMISSION__ACCESS"><!-- --></A><H3>
+PACKAGE_PERMISSION__ACCESS</H3>
 <PRE>
-static final int <B>PACKAGE_CHECK__PERMISSION</B></PRE>
+static final int <B>PACKAGE_PERMISSION__ACCESS</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>Permission</b></em>' attribute.
+<DD>The feature id for the '<em><b>Access</b></em>' attribute.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_CHECK__PERMISSION">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_PERMISSION__ACCESS">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2832,17 +2848,17 @@ static final int <B>PACKAGE_CHECK__PERMISSION</B></PRE>
 </DL>
 <HR>
 
-<A NAME="PACKAGE_CHECK__APPLICABLE_PACKAGE"><!-- --></A><H3>
-PACKAGE_CHECK__APPLICABLE_PACKAGE</H3>
+<A NAME="PACKAGE_PERMISSION__APPLICABLE_PACKAGE"><!-- --></A><H3>
+PACKAGE_PERMISSION__APPLICABLE_PACKAGE</H3>
 <PRE>
-static final int <B>PACKAGE_CHECK__APPLICABLE_PACKAGE</B></PRE>
+static final int <B>PACKAGE_PERMISSION__APPLICABLE_PACKAGE</B></PRE>
 <DL>
 <DD>The feature id for the '<em><b>Applicable Package</b></em>' reference.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_CHECK__APPLICABLE_PACKAGE">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_PERMISSION__APPLICABLE_PACKAGE">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2850,17 +2866,17 @@ static final int <B>PACKAGE_CHECK__APPLICABLE_PACKAGE</B></PRE>
 </DL>
 <HR>
 
-<A NAME="PACKAGE_CHECK_FEATURE_COUNT"><!-- --></A><H3>
-PACKAGE_CHECK_FEATURE_COUNT</H3>
+<A NAME="PACKAGE_PERMISSION_FEATURE_COUNT"><!-- --></A><H3>
+PACKAGE_PERMISSION_FEATURE_COUNT</H3>
 <PRE>
-static final int <B>PACKAGE_CHECK_FEATURE_COUNT</B></PRE>
+static final int <B>PACKAGE_PERMISSION_FEATURE_COUNT</B></PRE>
 <DL>
-<DD>The number of structural features of the '<em>Package Check</em>' class.
+<DD>The number of structural features of the '<em>Package Permission</em>' class.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_CHECK_FEATURE_COUNT">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.PACKAGE_PERMISSION_FEATURE_COUNT">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2868,35 +2884,35 @@ static final int <B>PACKAGE_CHECK_FEATURE_COUNT</B></PRE>
 </DL>
 <HR>
 
-<A NAME="RESOURCE_CHECK"><!-- --></A><H3>
-RESOURCE_CHECK</H3>
+<A NAME="RESOURCE_PERMISSION"><!-- --></A><H3>
+RESOURCE_PERMISSION</H3>
 <PRE>
-static final int <B>RESOURCE_CHECK</B></PRE>
+static final int <B>RESOURCE_PERMISSION</B></PRE>
 <DL>
-<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/ResourceCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE><em>Resource Check</em></CODE></A>' class.
+<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE><em>Resource Permission</em></CODE></A>' class.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/impl/ResourceCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE>ResourceCheckImpl</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/SecurityPackageImpl.html#getResourceCheck()"><CODE>SecurityPackageImpl.getResourceCheck()</CODE></A>, 
-<A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_CHECK">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/impl/ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><CODE>ResourcePermissionImpl</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/SecurityPackageImpl.html#getResourcePermission()"><CODE>SecurityPackageImpl.getResourcePermission()</CODE></A>, 
+<A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_PERMISSION">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DL>
 <HR>
 
-<A NAME="RESOURCE_CHECK__ROLE"><!-- --></A><H3>
-RESOURCE_CHECK__ROLE</H3>
+<A NAME="RESOURCE_PERMISSION__ROLE"><!-- --></A><H3>
+RESOURCE_PERMISSION__ROLE</H3>
 <PRE>
-static final int <B>RESOURCE_CHECK__ROLE</B></PRE>
+static final int <B>RESOURCE_PERMISSION__ROLE</B></PRE>
 <DL>
 <DD>The feature id for the '<em><b>Role</b></em>' container reference.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_CHECK__ROLE">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_PERMISSION__ROLE">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2904,17 +2920,17 @@ static final int <B>RESOURCE_CHECK__ROLE</B></PRE>
 </DL>
 <HR>
 
-<A NAME="RESOURCE_CHECK__PERMISSION"><!-- --></A><H3>
-RESOURCE_CHECK__PERMISSION</H3>
+<A NAME="RESOURCE_PERMISSION__ACCESS"><!-- --></A><H3>
+RESOURCE_PERMISSION__ACCESS</H3>
 <PRE>
-static final int <B>RESOURCE_CHECK__PERMISSION</B></PRE>
+static final int <B>RESOURCE_PERMISSION__ACCESS</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>Permission</b></em>' attribute.
+<DD>The feature id for the '<em><b>Access</b></em>' attribute.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_CHECK__PERMISSION">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_PERMISSION__ACCESS">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2922,17 +2938,17 @@ static final int <B>RESOURCE_CHECK__PERMISSION</B></PRE>
 </DL>
 <HR>
 
-<A NAME="RESOURCE_CHECK__PATTERN"><!-- --></A><H3>
-RESOURCE_CHECK__PATTERN</H3>
+<A NAME="RESOURCE_PERMISSION__PATTERN"><!-- --></A><H3>
+RESOURCE_PERMISSION__PATTERN</H3>
 <PRE>
-static final int <B>RESOURCE_CHECK__PATTERN</B></PRE>
+static final int <B>RESOURCE_PERMISSION__PATTERN</B></PRE>
 <DL>
 <DD>The feature id for the '<em><b>Pattern</b></em>' attribute.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_CHECK__PATTERN">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_PERMISSION__PATTERN">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2940,17 +2956,17 @@ static final int <B>RESOURCE_CHECK__PATTERN</B></PRE>
 </DL>
 <HR>
 
-<A NAME="RESOURCE_CHECK_FEATURE_COUNT"><!-- --></A><H3>
-RESOURCE_CHECK_FEATURE_COUNT</H3>
+<A NAME="RESOURCE_PERMISSION_FEATURE_COUNT"><!-- --></A><H3>
+RESOURCE_PERMISSION_FEATURE_COUNT</H3>
 <PRE>
-static final int <B>RESOURCE_CHECK_FEATURE_COUNT</B></PRE>
+static final int <B>RESOURCE_PERMISSION_FEATURE_COUNT</B></PRE>
 <DL>
-<DD>The number of structural features of the '<em>Resource Check</em>' class.
+<DD>The number of structural features of the '<em>Resource Permission</em>' class.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_CHECK_FEATURE_COUNT">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.RESOURCE_PERMISSION_FEATURE_COUNT">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -2958,19 +2974,37 @@ static final int <B>RESOURCE_CHECK_FEATURE_COUNT</B></PRE>
 </DL>
 <HR>
 
-<A NAME="PERMISSION"><!-- --></A><H3>
-PERMISSION</H3>
+<A NAME="ACCESS"><!-- --></A><H3>
+ACCESS</H3>
 <PRE>
-static final int <B>PERMISSION</B></PRE>
+static final int <B>ACCESS</B></PRE>
 <DL>
-<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security"><CODE><em>Permission</em></CODE></A>' enum.
+<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security"><CODE><em>Access</em></CODE></A>' enum.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security"><CODE>Permission</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/SecurityPackageImpl.html#getPermission()"><CODE>SecurityPackageImpl.getPermission()</CODE></A>, 
-<A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.PERMISSION">Constant Field Values</A><DT><B>Generated</B></DT>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security"><CODE>Access</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/SecurityPackageImpl.html#getAccess()"><CODE>SecurityPackageImpl.getAccess()</CODE></A>, 
+<A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.ACCESS">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="ACCESS_OBJECT"><!-- --></A><H3>
+ACCESS_OBJECT</H3>
+<PRE>
+static final int <B>ACCESS_OBJECT</B></PRE>
+<DL>
+<DD>The meta object id for the '<em>Access Object</em>' data type.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security"><CODE>Access</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/impl/SecurityPackageImpl.html#getAccessObject()"><CODE>SecurityPackageImpl.getAccessObject()</CODE></A>, 
+<A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.ACCESS_OBJECT">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DL>
@@ -3115,12 +3149,12 @@ getRealm_AllRoles</H3>
 </DL>
 <HR>
 
-<A NAME="getRealm_AllChecks()"><!-- --></A><H3>
-getRealm_AllChecks</H3>
+<A NAME="getRealm_AllPermissions()"><!-- --></A><H3>
+getRealm_AllPermissions</H3>
 <PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A> <B>getRealm_AllChecks</B>()</PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A> <B>getRealm_AllPermissions</B>()</PRE>
 <DL>
-<DD>Returns the meta object for the reference list '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllChecks()"><CODE><em>All Checks</em></CODE></A>'.
+<DD>Returns the meta object for the reference list '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllPermissions()"><CODE><em>All Permissions</em></CODE></A>'.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
@@ -3129,7 +3163,7 @@ getRealm_AllChecks</H3>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>the meta object for the reference list '<em>All Checks</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllChecks()"><CODE>Realm.getAllChecks()</CODE></A>, 
+<DT><B>Returns:</B><DD>the meta object for the reference list '<em>All Permissions</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllPermissions()"><CODE>Realm.getAllPermissions()</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm()"><CODE>getRealm()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
@@ -3159,12 +3193,12 @@ getRealm_Name</H3>
 </DL>
 <HR>
 
-<A NAME="getRealm_DefaultPermission()"><!-- --></A><H3>
-getRealm_DefaultPermission</H3>
+<A NAME="getRealm_DefaultAccess()"><!-- --></A><H3>
+getRealm_DefaultAccess</H3>
 <PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A> <B>getRealm_DefaultPermission</B>()</PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A> <B>getRealm_DefaultAccess</B>()</PRE>
 <DL>
-<DD>Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultPermission()"><CODE><em>Default Permission</em></CODE></A>'.
+<DD>Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultAccess()"><CODE><em>Default Access</em></CODE></A>'.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
@@ -3173,7 +3207,7 @@ getRealm_DefaultPermission</H3>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>the meta object for the attribute '<em>Default Permission</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultPermission()"><CODE>Realm.getDefaultPermission()</CODE></A>, 
+<DT><B>Returns:</B><DD>the meta object for the attribute '<em>Default Access</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultAccess()"><CODE>Realm.getDefaultAccess()</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm()"><CODE>getRealm()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
@@ -3332,12 +3366,12 @@ getRole_Id</H3>
 </DL>
 <HR>
 
-<A NAME="getRole_Checks()"><!-- --></A><H3>
-getRole_Checks</H3>
+<A NAME="getRole_Permissions()"><!-- --></A><H3>
+getRole_Permissions</H3>
 <PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A> <B>getRole_Checks</B>()</PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A> <B>getRole_Permissions</B>()</PRE>
 <DL>
-<DD>Returns the meta object for the containment reference list '<A HREF="../../../../../org/eclipse/emf/cdo/security/Role.html#getChecks()"><CODE><em>Checks</em></CODE></A>'.
+<DD>Returns the meta object for the containment reference list '<A HREF="../../../../../org/eclipse/emf/cdo/security/Role.html#getPermissions()"><CODE><em>Permissions</em></CODE></A>'.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
@@ -3346,7 +3380,7 @@ getRole_Checks</H3>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>the meta object for the containment reference list '<em>Checks</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Role.html#getChecks()"><CODE>Role.getChecks()</CODE></A>, 
+<DT><B>Returns:</B><DD>the meta object for the containment reference list '<em>Permissions</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Role.html#getPermissions()"><CODE>Role.getPermissions()</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRole()"><CODE>getRole()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
@@ -3659,12 +3693,12 @@ getUser_AllRoles</H3>
 </DL>
 <HR>
 
-<A NAME="getUser_AllChecks()"><!-- --></A><H3>
-getUser_AllChecks</H3>
+<A NAME="getUser_AllPermissions()"><!-- --></A><H3>
+getUser_AllPermissions</H3>
 <PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A> <B>getUser_AllChecks</B>()</PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A> <B>getUser_AllPermissions</B>()</PRE>
 <DL>
-<DD>Returns the meta object for the reference list '<A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getAllChecks()"><CODE><em>All Checks</em></CODE></A>'.
+<DD>Returns the meta object for the reference list '<A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getAllPermissions()"><CODE><em>All Permissions</em></CODE></A>'.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
@@ -3673,7 +3707,7 @@ getUser_AllChecks</H3>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>the meta object for the reference list '<em>All Checks</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getAllChecks()"><CODE>User.getAllChecks()</CODE></A>, 
+<DT><B>Returns:</B><DD>the meta object for the reference list '<em>All Permissions</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getAllPermissions()"><CODE>User.getAllPermissions()</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getUser()"><CODE>getUser()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
@@ -3791,12 +3825,12 @@ getUser_Email</H3>
 </DL>
 <HR>
 
-<A NAME="getUser_DefaultPermissionOverride()"><!-- --></A><H3>
-getUser_DefaultPermissionOverride</H3>
+<A NAME="getUser_DefaultAccessOverride()"><!-- --></A><H3>
+getUser_DefaultAccessOverride</H3>
 <PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A> <B>getUser_DefaultPermissionOverride</B>()</PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A> <B>getUser_DefaultAccessOverride</B>()</PRE>
 <DL>
-<DD>Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultPermissionOverride()"><CODE><em>Default Permission Override</em></CODE></A>'.
+<DD>Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultAccessOverride()"><CODE><em>Default Access Override</em></CODE></A>'.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
@@ -3805,7 +3839,7 @@ getUser_DefaultPermissionOverride</H3>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>the meta object for the attribute '<em>Default Permission Override</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultPermissionOverride()"><CODE>User.getDefaultPermissionOverride()</CODE></A>, 
+<DT><B>Returns:</B><DD>the meta object for the attribute '<em>Default Access Override</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultAccessOverride()"><CODE>User.getDefaultAccessOverride()</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getUser()"><CODE>getUser()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
@@ -3813,12 +3847,12 @@ getUser_DefaultPermissionOverride</H3>
 </DL>
 <HR>
 
-<A NAME="getUser_DefaultPermission()"><!-- --></A><H3>
-getUser_DefaultPermission</H3>
+<A NAME="getUser_DefaultAccess()"><!-- --></A><H3>
+getUser_DefaultAccess</H3>
 <PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A> <B>getUser_DefaultPermission</B>()</PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A> <B>getUser_DefaultAccess</B>()</PRE>
 <DL>
-<DD>Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultPermission()"><CODE><em>Default Permission</em></CODE></A>'.
+<DD>Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultAccess()"><CODE><em>Default Access</em></CODE></A>'.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
@@ -3827,7 +3861,7 @@ getUser_DefaultPermission</H3>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>the meta object for the attribute '<em>Default Permission</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultPermission()"><CODE>User.getDefaultPermission()</CODE></A>, 
+<DT><B>Returns:</B><DD>the meta object for the attribute '<em>Default Access</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/User.html#getDefaultAccess()"><CODE>User.getDefaultAccess()</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getUser()"><CODE>getUser()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
@@ -3922,206 +3956,12 @@ getUserPassword_Encrypted</H3>
 </DL>
 <HR>
 
-<A NAME="getCheck()"><!-- --></A><H3>
-getCheck</H3>
-<PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A> <B>getCheck</B>()</PRE>
-<DL>
-<DD>Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/security/Check.html" title="interface in org.eclipse.emf.cdo.security"><CODE><em>Check</em></CODE></A>'.
- <!-- begin-user-doc -->
- <!-- end-user-doc -->
-<P>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-
-<DT><B>Returns:</B><DD>the meta object for class '<em>Check</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Check.html" title="interface in org.eclipse.emf.cdo.security"><CODE>Check</CODE></A><DT><B>Generated</B></DT>
-  <DD></DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getCheck_Role()"><!-- --></A><H3>
-getCheck_Role</H3>
-<PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A> <B>getCheck_Role</B>()</PRE>
-<DL>
-<DD>Returns the meta object for the container reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/Check.html#getRole()"><CODE><em>Role</em></CODE></A>'.
- <!-- begin-user-doc -->
- <!-- end-user-doc -->
-<P>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-
-<DT><B>Returns:</B><DD>the meta object for the container reference '<em>Role</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Check.html#getRole()"><CODE>Check.getRole()</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getCheck()"><CODE>getCheck()</CODE></A><DT><B>Generated</B></DT>
-  <DD></DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getCheck_Permission()"><!-- --></A><H3>
-getCheck_Permission</H3>
-<PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A> <B>getCheck_Permission</B>()</PRE>
-<DL>
-<DD>Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/Check.html#getPermission()"><CODE><em>Permission</em></CODE></A>'.
- <!-- begin-user-doc -->
- <!-- end-user-doc -->
-<P>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-
-<DT><B>Returns:</B><DD>the meta object for the attribute '<em>Permission</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Check.html#getPermission()"><CODE>Check.getPermission()</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getCheck()"><CODE>getCheck()</CODE></A><DT><B>Generated</B></DT>
-  <DD></DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getClassCheck()"><!-- --></A><H3>
-getClassCheck</H3>
-<PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A> <B>getClassCheck</B>()</PRE>
-<DL>
-<DD>Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/security/ClassCheck.html" title="interface in org.eclipse.emf.cdo.security"><CODE><em>Class Check</em></CODE></A>'.
- <!-- begin-user-doc -->
- <!-- end-user-doc -->
-<P>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-
-<DT><B>Returns:</B><DD>the meta object for class '<em>Class Check</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/ClassCheck.html" title="interface in org.eclipse.emf.cdo.security"><CODE>ClassCheck</CODE></A><DT><B>Generated</B></DT>
-  <DD></DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getClassCheck_ApplicableClass()"><!-- --></A><H3>
-getClassCheck_ApplicableClass</H3>
-<PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A> <B>getClassCheck_ApplicableClass</B>()</PRE>
-<DL>
-<DD>Returns the meta object for the reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/ClassCheck.html#getApplicableClass()"><CODE><em>Applicable Class</em></CODE></A>'.
- <!-- begin-user-doc -->
- <!-- end-user-doc -->
-<P>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-
-<DT><B>Returns:</B><DD>the meta object for the reference '<em>Applicable Class</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/ClassCheck.html#getApplicableClass()"><CODE>ClassCheck.getApplicableClass()</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getClassCheck()"><CODE>getClassCheck()</CODE></A><DT><B>Generated</B></DT>
-  <DD></DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getPackageCheck()"><!-- --></A><H3>
-getPackageCheck</H3>
-<PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A> <B>getPackageCheck</B>()</PRE>
-<DL>
-<DD>Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/security/PackageCheck.html" title="interface in org.eclipse.emf.cdo.security"><CODE><em>Package Check</em></CODE></A>'.
- <!-- begin-user-doc -->
- <!-- end-user-doc -->
-<P>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-
-<DT><B>Returns:</B><DD>the meta object for class '<em>Package Check</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/PackageCheck.html" title="interface in org.eclipse.emf.cdo.security"><CODE>PackageCheck</CODE></A><DT><B>Generated</B></DT>
-  <DD></DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getPackageCheck_ApplicablePackage()"><!-- --></A><H3>
-getPackageCheck_ApplicablePackage</H3>
-<PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A> <B>getPackageCheck_ApplicablePackage</B>()</PRE>
-<DL>
-<DD>Returns the meta object for the reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/PackageCheck.html#getApplicablePackage()"><CODE><em>Applicable Package</em></CODE></A>'.
- <!-- begin-user-doc -->
- <!-- end-user-doc -->
-<P>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-
-<DT><B>Returns:</B><DD>the meta object for the reference '<em>Applicable Package</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/PackageCheck.html#getApplicablePackage()"><CODE>PackageCheck.getApplicablePackage()</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getPackageCheck()"><CODE>getPackageCheck()</CODE></A><DT><B>Generated</B></DT>
-  <DD></DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getResourceCheck()"><!-- --></A><H3>
-getResourceCheck</H3>
-<PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A> <B>getResourceCheck</B>()</PRE>
-<DL>
-<DD>Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/security/ResourceCheck.html" title="interface in org.eclipse.emf.cdo.security"><CODE><em>Resource Check</em></CODE></A>'.
- <!-- begin-user-doc -->
- <!-- end-user-doc -->
-<P>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-
-<DT><B>Returns:</B><DD>the meta object for class '<em>Resource Check</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/ResourceCheck.html" title="interface in org.eclipse.emf.cdo.security"><CODE>ResourceCheck</CODE></A><DT><B>Generated</B></DT>
-  <DD></DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getResourceCheck_Pattern()"><!-- --></A><H3>
-getResourceCheck_Pattern</H3>
-<PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A> <B>getResourceCheck_Pattern</B>()</PRE>
-<DL>
-<DD>Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/ResourceCheck.html#getPattern()"><CODE><em>Pattern</em></CODE></A>'.
- <!-- begin-user-doc -->
- <!-- end-user-doc -->
-<P>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-
-<DT><B>Returns:</B><DD>the meta object for the attribute '<em>Pattern</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/ResourceCheck.html#getPattern()"><CODE>ResourceCheck.getPattern()</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getResourceCheck()"><CODE>getResourceCheck()</CODE></A><DT><B>Generated</B></DT>
-  <DD></DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
 <A NAME="getPermission()"><!-- --></A><H3>
 getPermission</H3>
 <PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EEnum.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EEnum</A> <B>getPermission</B>()</PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A> <B>getPermission</B>()</PRE>
 <DL>
-<DD>Returns the meta object for enum '<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security"><CODE><em>Permission</em></CODE></A>'.
+<DD>Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security"><CODE><em>Permission</em></CODE></A>'.
  <!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
@@ -4130,8 +3970,226 @@ getPermission</H3>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>the meta object for enum '<em>Permission</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="enum in org.eclipse.emf.cdo.security"><CODE>Permission</CODE></A><DT><B>Generated</B></DT>
+<DT><B>Returns:</B><DD>the meta object for class '<em>Permission</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security"><CODE>Permission</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getPermission_Role()"><!-- --></A><H3>
+getPermission_Role</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A> <B>getPermission_Role</B>()</PRE>
+<DL>
+<DD>Returns the meta object for the container reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html#getRole()"><CODE><em>Role</em></CODE></A>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for the container reference '<em>Role</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html#getRole()"><CODE>Permission.getRole()</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getPermission()"><CODE>getPermission()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getPermission_Access()"><!-- --></A><H3>
+getPermission_Access</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A> <B>getPermission_Access</B>()</PRE>
+<DL>
+<DD>Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html#getAccess()"><CODE><em>Access</em></CODE></A>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for the attribute '<em>Access</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Permission.html#getAccess()"><CODE>Permission.getAccess()</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getPermission()"><CODE>getPermission()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getClassPermission()"><!-- --></A><H3>
+getClassPermission</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A> <B>getClassPermission</B>()</PRE>
+<DL>
+<DD>Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/security/ClassPermission.html" title="interface in org.eclipse.emf.cdo.security"><CODE><em>Class Permission</em></CODE></A>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for class '<em>Class Permission</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/ClassPermission.html" title="interface in org.eclipse.emf.cdo.security"><CODE>ClassPermission</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getClassPermission_ApplicableClass()"><!-- --></A><H3>
+getClassPermission_ApplicableClass</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A> <B>getClassPermission_ApplicableClass</B>()</PRE>
+<DL>
+<DD>Returns the meta object for the reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/ClassPermission.html#getApplicableClass()"><CODE><em>Applicable Class</em></CODE></A>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for the reference '<em>Applicable Class</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/ClassPermission.html#getApplicableClass()"><CODE>ClassPermission.getApplicableClass()</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getClassPermission()"><CODE>getClassPermission()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getPackagePermission()"><!-- --></A><H3>
+getPackagePermission</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A> <B>getPackagePermission</B>()</PRE>
+<DL>
+<DD>Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/security/PackagePermission.html" title="interface in org.eclipse.emf.cdo.security"><CODE><em>Package Permission</em></CODE></A>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for class '<em>Package Permission</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/PackagePermission.html" title="interface in org.eclipse.emf.cdo.security"><CODE>PackagePermission</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getPackagePermission_ApplicablePackage()"><!-- --></A><H3>
+getPackagePermission_ApplicablePackage</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A> <B>getPackagePermission_ApplicablePackage</B>()</PRE>
+<DL>
+<DD>Returns the meta object for the reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/PackagePermission.html#getApplicablePackage()"><CODE><em>Applicable Package</em></CODE></A>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for the reference '<em>Applicable Package</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/PackagePermission.html#getApplicablePackage()"><CODE>PackagePermission.getApplicablePackage()</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getPackagePermission()"><CODE>getPackagePermission()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getResourcePermission()"><!-- --></A><H3>
+getResourcePermission</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A> <B>getResourcePermission</B>()</PRE>
+<DL>
+<DD>Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security"><CODE><em>Resource Permission</em></CODE></A>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for class '<em>Resource Permission</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security"><CODE>ResourcePermission</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getResourcePermission_Pattern()"><!-- --></A><H3>
+getResourcePermission_Pattern</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A> <B>getResourcePermission_Pattern</B>()</PRE>
+<DL>
+<DD>Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html#getPattern()"><CODE><em>Pattern</em></CODE></A>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for the attribute '<em>Pattern</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html#getPattern()"><CODE>ResourcePermission.getPattern()</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getResourcePermission()"><CODE>getResourcePermission()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getAccess()"><!-- --></A><H3>
+getAccess</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EEnum.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EEnum</A> <B>getAccess</B>()</PRE>
+<DL>
+<DD>Returns the meta object for enum '<A HREF="../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security"><CODE><em>Access</em></CODE></A>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for enum '<em>Access</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security"><CODE>Access</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getAccessObject()"><!-- --></A><H3>
+getAccessObject</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</A> <B>getAccessObject</B>()</PRE>
+<DL>
+<DD>Returns the meta object for data type '<A HREF="../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security"><CODE><em>Access Object</em></CODE></A>'.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for data type '<em>Access Object</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security"><CODE>Access</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Model</B></DT>
+  <DD>instanceClass="org.eclipse.emf.cdo.security.Access"
+        extendedMetaData="name='Access:Object' baseType='Access'"</DD>
 </DL>
 </DD>
 </DL>

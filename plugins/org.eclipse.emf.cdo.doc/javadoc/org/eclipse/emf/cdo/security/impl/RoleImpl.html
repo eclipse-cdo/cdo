@@ -55,7 +55,7 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ResourceCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityElementImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/security/impl/RoleImpl.html" target="_top"><B>FRAMES</B></A>  &nbsp;
@@ -131,7 +131,7 @@ Class RoleImpl</H2>
  The following features are implemented:
  <ul>
    <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RoleImpl.html#getId()"><CODE><em>Id</em></CODE></A></li>
-   <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RoleImpl.html#getChecks()"><CODE><em>Checks</em></CODE></A></li>
+   <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RoleImpl.html#getPermissions()"><CODE><em>Permissions</em></CODE></A></li>
    <li><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RoleImpl.html#getAssignees()"><CODE><em>Assignees</em></CODE></A></li>
  </ul>
  </p>
@@ -303,16 +303,16 @@ Class RoleImpl</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Check.html" title="interface in org.eclipse.emf.cdo.security">Check</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RoleImpl.html#getChecks()">getChecks</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RoleImpl.html#getId()">getId</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RoleImpl.html#getId()">getId</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/RoleImpl.html#getPermissions()">getPermissions</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -569,21 +569,21 @@ public void <B>setId</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/a
 </DL>
 <HR>
 
-<A NAME="getChecks()"><!-- --></A><H3>
-getChecks</H3>
+<A NAME="getPermissions()"><!-- --></A><H3>
+getPermissions</H3>
 <PRE>
-public <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Check.html" title="interface in org.eclipse.emf.cdo.security">Check</A>&gt; <B>getChecks</B>()</PRE>
+public <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</A>&gt; <B>getPermissions</B>()</PRE>
 <DL>
 <DD><!-- begin-user-doc -->
  <!-- end-user-doc -->
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Role.html#getChecks()">getChecks</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security">Role</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Role.html#getPermissions()">getPermissions</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security">Role</A></CODE></DL>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>the value of the '<em>Checks</em>' containment reference list.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRole_Checks()"><CODE>SecurityPackage.getRole_Checks()</CODE></A>, 
-<A HREF="../../../../../../org/eclipse/emf/cdo/security/Check.html#getRole()"><CODE>Check.getRole()</CODE></A><DT><B>Generated</B></DT>
+<DT><B>Returns:</B><DD>the value of the '<em>Permissions</em>' containment reference list.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRole_Permissions()"><CODE>SecurityPackage.getRole_Permissions()</CODE></A>, 
+<A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html#getRole()"><CODE>Permission.getRole()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DD>
@@ -618,7 +618,7 @@ public <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/ecl
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ResourceCheckImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityElementImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/security/impl/RoleImpl.html" target="_top"><B>FRAMES</B></A>  &nbsp;

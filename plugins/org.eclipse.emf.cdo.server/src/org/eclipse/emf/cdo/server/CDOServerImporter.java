@@ -61,6 +61,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -73,7 +75,7 @@ import java.util.Map;
  * {@link CDOServerExporter exporter} into a new repository.
  * <p>
  * Subtypes specifiy the actual exchange format.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  * @apiviz.has {@link CDOServerImporter.Handler}
@@ -121,7 +123,7 @@ public abstract class CDOServerImporter
   /**
    * Persists the data that has been read by a {@link CDOServerImporter importer} into a new {@link IRepository
    * repository}.
-   * 
+   *
    * @author Eike Stepper
    */
   public static interface Handler extends CDORevisionHandler, CDOLobHandler
@@ -307,7 +309,7 @@ public abstract class CDOServerImporter
   /**
    * An {@link CDOServerImporter importer} that reads and interprets XML output created by an
    * {@link CDOServerExporter.XML XML exporter}.
-   * 
+   *
    * @author Eike Stepper
    */
   public static class XML extends CDOServerImporter implements CDOServerExporter.XMLConstants
@@ -664,6 +666,16 @@ public abstract class CDOServerImporter
         if (Date.class.getSimpleName().equals(type))
         {
           return new Date(Long.valueOf(str));
+        }
+
+        if (BigDecimal.class.getSimpleName().equals(type))
+        {
+          return new BigDecimal(str);
+        }
+
+        if (BigInteger.class.getSimpleName().equals(type))
+        {
+          return new BigInteger(str);
         }
 
         throw new IllegalArgumentException("Invalid type: " + type);

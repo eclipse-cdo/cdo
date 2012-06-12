@@ -49,6 +49,8 @@ import org.xml.sax.SAXException;
 
 import java.io.OutputStream;
 import java.io.Writer;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -57,7 +59,7 @@ import java.util.List;
  * imports} into new repositories.
  * <p>
  * Subtypes specifiy the actual exchange format.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  */
@@ -259,7 +261,7 @@ public abstract class CDOServerExporter<OUT>
 
   /**
    * XML constants being used by both {@link CDOServerExporter exporters} and {@link CDOServerImporter importers}.
-   * 
+   *
    * @author Eike Stepper
    */
   public static interface XMLConstants
@@ -372,7 +374,7 @@ public abstract class CDOServerExporter<OUT>
   /**
    * An {@link CDOServerExporter exporter} that creates XML output suitable to be interpreted by an
    * {@link CDOServerImporter.XML XML importer}.
-   * 
+   *
    * @author Eike Stepper
    */
   public static class XML extends CDOServerExporter<XMLOutput> implements XMLConstants
@@ -697,6 +699,16 @@ public abstract class CDOServerExporter<OUT>
       if (value instanceof String)
       {
         return String.class.getSimpleName();
+      }
+
+      if (value instanceof BigDecimal)
+      {
+        return BigDecimal.class.getSimpleName();
+      }
+
+      if (value instanceof BigInteger)
+      {
+        return BigInteger.class.getSimpleName();
       }
 
       throw new IllegalArgumentException("Invalid type: " + value.getClass().getName());

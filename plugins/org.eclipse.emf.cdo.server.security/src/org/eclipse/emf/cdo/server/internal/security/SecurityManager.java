@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
@@ -22,6 +23,7 @@ import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.ClassPermission;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.PackagePermission;
 import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.RealmUtil;
@@ -347,6 +349,11 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     administration.setId("Administration");
     administration.getAssignees().add(admins);
     newRoles.add(administration);
+
+    PackagePermission allResources = SecurityFactory.eINSTANCE.createPackagePermission();
+    allResources.setAccess(Access.READ);
+    administration.getPermissions().add(allResources);
+    allResources.setApplicablePackage(EresourcePackage.eINSTANCE);
 
     for (EClassifier eClassifier : SecurityPackage.eINSTANCE.getEClassifiers())
     {

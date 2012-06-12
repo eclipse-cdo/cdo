@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: CDO Gastro Example Server Web Support
+Bundle-Name: CDO Electronic Restaurant Example Server Web Support
 Bundle-SymbolicName: org.gastro.server.web;singleton:=true
 Bundle-Version: 4.1.0.qualifier
 Bundle-Activator: org.gastro.server.internal.web.OM$Activator

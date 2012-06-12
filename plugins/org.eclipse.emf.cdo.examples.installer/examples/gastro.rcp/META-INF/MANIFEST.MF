@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: CDO Gastro Example RCP
+Bundle-Name: CDO Electronic Restaurant Example RCP
 Bundle-SymbolicName: org.gastro.rcp; singleton:=true
 Bundle-Version: 4.1.0.qualifier
 Bundle-Activator: org.gastro.internal.rcp.Activator

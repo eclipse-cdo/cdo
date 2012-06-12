@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: CDO Gastro Example Server
+Bundle-Name: CDO Electronic Restaurant Example Server
 Bundle-SymbolicName: org.gastro.server;singleton:=true
 Bundle-Version: 4.0.100.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

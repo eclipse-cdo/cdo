@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: CDO Gastro Example RCP Department
+Bundle-Name: CDO Electronic Restaurant Example RCP Department
 Bundle-SymbolicName: org.gastro.rcp.department; singleton:=true
 Bundle-Version: 4.0.100.qualifier
 Bundle-Activator: org.gastro.rcp.internal.department.Activator

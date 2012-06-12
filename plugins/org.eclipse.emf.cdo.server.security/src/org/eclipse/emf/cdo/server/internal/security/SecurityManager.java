@@ -370,17 +370,19 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   protected CDOPermission convertPermission(Access permission)
   {
-    switch (permission)
+    if (permission != null)
     {
-    case READ:
-      return CDOPermission.READ;
+      switch (permission)
+      {
+      case READ:
+        return CDOPermission.READ;
 
-    case WRITE:
-      return CDOPermission.WRITE;
-
-    default:
-      return CDOPermission.NONE;
+      case WRITE:
+        return CDOPermission.WRITE;
+      }
     }
+
+    return CDOPermission.NONE;
   }
 
   protected CDOPermission getPermission(CDORevision revision, CDORevisionProvider revisionProvider,

@@ -15,10 +15,15 @@ import org.eclipse.emf.cdo.server.IStore;
 
 import org.eclipse.net4j.db.IDBConnectionProvider;
 
+import org.eclipse.emf.ecore.EPackage;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 /**
+ * The Hibernate store manages the Hibernate {@link SessionFactory} and the installed
+ * {@link EPackage} instances.
+ * 
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

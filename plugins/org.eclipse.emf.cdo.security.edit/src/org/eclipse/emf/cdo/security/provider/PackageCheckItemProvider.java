@@ -3,7 +3,7 @@
 package org.eclipse.emf.cdo.security.provider;
 
 import org.eclipse.emf.cdo.security.PackageCheck;
-import org.eclipse.emf.cdo.security.Permission;
+import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -112,7 +112,7 @@ public class PackageCheckItemProvider extends CheckItemProvider implements IEdit
   @Override
   public String getText(Object object)
   {
-    Permission labelValue = ((PackageCheck)object).getPermission();
+    Access labelValue = ((PackageCheck)object).getAccess();
     String label = labelValue == null ? null : labelValue.toString();
     return label == null || label.length() == 0 ? getString("_UI_PackageCheck_type") : //$NON-NLS-1$
         getString("_UI_PackageCheck_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

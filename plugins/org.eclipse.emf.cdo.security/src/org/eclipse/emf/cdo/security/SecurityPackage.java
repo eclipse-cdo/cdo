@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.etypes.EtypesPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -207,13 +208,13 @@ public interface SecurityPackage extends EPackage
   int REALM__NAME = SECURITY_ELEMENT_FEATURE_COUNT + 5;
 
   /**
-   * The feature id for the '<em><b>Default Permission</b></em>' attribute.
+   * The feature id for the '<em><b>Default Access</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REALM__DEFAULT_PERMISSION = SECURITY_ELEMENT_FEATURE_COUNT + 6;
+  int REALM__DEFAULT_ACCESS = SECURITY_ELEMENT_FEATURE_COUNT + 6;
 
   /**
    * The number of structural features of the '<em>Realm</em>' class.
@@ -544,22 +545,22 @@ public interface SecurityPackage extends EPackage
   int USER__EMAIL = ASSIGNEE_FEATURE_COUNT + 4;
 
   /**
-   * The feature id for the '<em><b>Default Permission Override</b></em>' attribute.
+   * The feature id for the '<em><b>Default Access Override</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int USER__DEFAULT_PERMISSION_OVERRIDE = ASSIGNEE_FEATURE_COUNT + 5;
+  int USER__DEFAULT_ACCESS_OVERRIDE = ASSIGNEE_FEATURE_COUNT + 5;
 
   /**
-   * The feature id for the '<em><b>Default Permission</b></em>' attribute.
+   * The feature id for the '<em><b>Default Access</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int USER__DEFAULT_PERMISSION = ASSIGNEE_FEATURE_COUNT + 6;
+  int USER__DEFAULT_ACCESS = ASSIGNEE_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>Locked</b></em>' attribute.
@@ -672,13 +673,13 @@ public interface SecurityPackage extends EPackage
   int CHECK__ROLE = 0;
 
   /**
-   * The feature id for the '<em><b>Permission</b></em>' attribute.
+   * The feature id for the '<em><b>Access</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CHECK__PERMISSION = 1;
+  int CHECK__ACCESS = 1;
 
   /**
    * The number of structural features of the '<em>Check</em>' class.
@@ -709,13 +710,13 @@ public interface SecurityPackage extends EPackage
   int CLASS_CHECK__ROLE = CHECK__ROLE;
 
   /**
-   * The feature id for the '<em><b>Permission</b></em>' attribute.
+   * The feature id for the '<em><b>Access</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CLASS_CHECK__PERMISSION = CHECK__PERMISSION;
+  int CLASS_CHECK__ACCESS = CHECK__ACCESS;
 
   /**
    * The feature id for the '<em><b>Applicable Class</b></em>' reference.
@@ -755,13 +756,13 @@ public interface SecurityPackage extends EPackage
   int PACKAGE_CHECK__ROLE = CHECK__ROLE;
 
   /**
-   * The feature id for the '<em><b>Permission</b></em>' attribute.
+   * The feature id for the '<em><b>Access</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PACKAGE_CHECK__PERMISSION = CHECK__PERMISSION;
+  int PACKAGE_CHECK__ACCESS = CHECK__ACCESS;
 
   /**
    * The feature id for the '<em><b>Applicable Package</b></em>' reference.
@@ -801,13 +802,13 @@ public interface SecurityPackage extends EPackage
   int RESOURCE_CHECK__ROLE = CHECK__ROLE;
 
   /**
-   * The feature id for the '<em><b>Permission</b></em>' attribute.
+   * The feature id for the '<em><b>Access</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int RESOURCE_CHECK__PERMISSION = CHECK__PERMISSION;
+  int RESOURCE_CHECK__ACCESS = CHECK__ACCESS;
 
   /**
    * The feature id for the '<em><b>Pattern</b></em>' attribute.
@@ -828,14 +829,24 @@ public interface SecurityPackage extends EPackage
   int RESOURCE_CHECK_FEATURE_COUNT = CHECK_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.security.Permission <em>Permission</em>}' enum.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.Access <em>Access</em>}' enum.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.security.Permission
-   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getPermission()
+   * @see org.eclipse.emf.cdo.security.Access
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getAccess()
    * @generated
    */
-  int PERMISSION = 13;
+  int ACCESS = 13;
+
+  /**
+   * The meta object id for the '<em>Access Object</em>' data type.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.Access
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getAccessObject()
+   * @generated
+   */
+  int ACCESS_OBJECT = 14;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.SecurityElement <em>Element</em>}'.
@@ -924,15 +935,15 @@ public interface SecurityPackage extends EPackage
   EAttribute getRealm_Name();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.Realm#getDefaultPermission <em>Default Permission</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.Realm#getDefaultAccess <em>Default Access</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Default Permission</em>'.
-   * @see org.eclipse.emf.cdo.security.Realm#getDefaultPermission()
+   * @return the meta object for the attribute '<em>Default Access</em>'.
+   * @see org.eclipse.emf.cdo.security.Realm#getDefaultAccess()
    * @see #getRealm()
    * @generated
    */
-  EAttribute getRealm_DefaultPermission();
+  EAttribute getRealm_DefaultAccess();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.Directory <em>Directory</em>}'.
@@ -1237,26 +1248,26 @@ public interface SecurityPackage extends EPackage
   EAttribute getUser_Email();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.User#getDefaultPermissionOverride <em>Default Permission Override</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.User#getDefaultAccessOverride <em>Default Access Override</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Default Permission Override</em>'.
-   * @see org.eclipse.emf.cdo.security.User#getDefaultPermissionOverride()
+   * @return the meta object for the attribute '<em>Default Access Override</em>'.
+   * @see org.eclipse.emf.cdo.security.User#getDefaultAccessOverride()
    * @see #getUser()
    * @generated
    */
-  EAttribute getUser_DefaultPermissionOverride();
+  EAttribute getUser_DefaultAccessOverride();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.User#getDefaultPermission <em>Default Permission</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.User#getDefaultAccess <em>Default Access</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Default Permission</em>'.
-   * @see org.eclipse.emf.cdo.security.User#getDefaultPermission()
+   * @return the meta object for the attribute '<em>Default Access</em>'.
+   * @see org.eclipse.emf.cdo.security.User#getDefaultAccess()
    * @see #getUser()
    * @generated
    */
-  EAttribute getUser_DefaultPermission();
+  EAttribute getUser_DefaultAccess();
 
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.User#isLocked <em>Locked</em>}'.
@@ -1323,15 +1334,15 @@ public interface SecurityPackage extends EPackage
   EReference getCheck_Role();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.Check#getPermission <em>Permission</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.security.Check#getAccess <em>Access</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Permission</em>'.
-   * @see org.eclipse.emf.cdo.security.Check#getPermission()
+   * @return the meta object for the attribute '<em>Access</em>'.
+   * @see org.eclipse.emf.cdo.security.Check#getAccess()
    * @see #getCheck()
    * @generated
    */
-  EAttribute getCheck_Permission();
+  EAttribute getCheck_Access();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.ClassCheck <em>Class Check</em>}'.
@@ -1397,14 +1408,26 @@ public interface SecurityPackage extends EPackage
   EAttribute getResourceCheck_Pattern();
 
   /**
-   * Returns the meta object for enum '{@link org.eclipse.emf.cdo.security.Permission <em>Permission</em>}'.
+   * Returns the meta object for enum '{@link org.eclipse.emf.cdo.security.Access <em>Access</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for enum '<em>Permission</em>'.
-   * @see org.eclipse.emf.cdo.security.Permission
+   * @return the meta object for enum '<em>Access</em>'.
+   * @see org.eclipse.emf.cdo.security.Access
    * @generated
    */
-  EEnum getPermission();
+  EEnum getAccess();
+
+  /**
+   * Returns the meta object for data type '{@link org.eclipse.emf.cdo.security.Access <em>Access Object</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for data type '<em>Access Object</em>'.
+   * @see org.eclipse.emf.cdo.security.Access
+   * @model instanceClass="org.eclipse.emf.cdo.security.Access"
+   *        extendedMetaData="name='Access:Object' baseType='Access'"
+   * @generated
+   */
+  EDataType getAccessObject();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -1498,12 +1521,12 @@ public interface SecurityPackage extends EPackage
     EAttribute REALM__NAME = eINSTANCE.getRealm_Name();
 
     /**
-     * The meta object literal for the '<em><b>Default Permission</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Default Access</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute REALM__DEFAULT_PERMISSION = eINSTANCE.getRealm_DefaultPermission();
+    EAttribute REALM__DEFAULT_ACCESS = eINSTANCE.getRealm_DefaultAccess();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.DirectoryImpl <em>Directory</em>}' class.
@@ -1742,20 +1765,20 @@ public interface SecurityPackage extends EPackage
     EAttribute USER__EMAIL = eINSTANCE.getUser_Email();
 
     /**
-     * The meta object literal for the '<em><b>Default Permission Override</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Default Access Override</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute USER__DEFAULT_PERMISSION_OVERRIDE = eINSTANCE.getUser_DefaultPermissionOverride();
+    EAttribute USER__DEFAULT_ACCESS_OVERRIDE = eINSTANCE.getUser_DefaultAccessOverride();
 
     /**
-     * The meta object literal for the '<em><b>Default Permission</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Default Access</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute USER__DEFAULT_PERMISSION = eINSTANCE.getUser_DefaultPermission();
+    EAttribute USER__DEFAULT_ACCESS = eINSTANCE.getUser_DefaultAccess();
 
     /**
      * The meta object literal for the '<em><b>Locked</b></em>' attribute feature.
@@ -1810,12 +1833,12 @@ public interface SecurityPackage extends EPackage
     EReference CHECK__ROLE = eINSTANCE.getCheck_Role();
 
     /**
-     * The meta object literal for the '<em><b>Permission</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Access</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CHECK__PERMISSION = eINSTANCE.getCheck_Permission();
+    EAttribute CHECK__ACCESS = eINSTANCE.getCheck_Access();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.ClassCheckImpl <em>Class Check</em>}' class.
@@ -1872,14 +1895,24 @@ public interface SecurityPackage extends EPackage
     EAttribute RESOURCE_CHECK__PATTERN = eINSTANCE.getResourceCheck_Pattern();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.Permission <em>Permission</em>}' enum.
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.Access <em>Access</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.security.Permission
-     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getPermission()
+     * @see org.eclipse.emf.cdo.security.Access
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getAccess()
      * @generated
      */
-    EEnum PERMISSION = eINSTANCE.getPermission();
+    EEnum ACCESS = eINSTANCE.getAccess();
+
+    /**
+     * The meta object literal for the '<em>Access Object</em>' data type.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.Access
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getAccessObject()
+     * @generated
+     */
+    EDataType ACCESS_OBJECT = eINSTANCE.getAccessObject();
 
   }
 

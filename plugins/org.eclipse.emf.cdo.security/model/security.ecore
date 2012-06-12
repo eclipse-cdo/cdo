@@ -18,7 +18,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="allChecks" upperBound="-1"
         eType="#//Check" changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultPermission" eType="#//Permission"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultAccess" eType="#//AccessObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Directory" eSuperTypes="#//SecurityItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"
@@ -59,9 +59,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstName" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastName" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultPermissionOverride"
-        eType="#//Permission"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultPermission" eType="#//Permission"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultAccessOverride"
+        eType="#//AccessObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultAccess" eType="#//AccessObject"
         changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="locked" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="password" eType="#//UserPassword"
@@ -81,8 +81,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Check" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="role" lowerBound="1" eType="#//Role"
         eOpposite="#//Role/checks"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="permission" lowerBound="1"
-        eType="#//Permission" defaultValueLiteral="WRITE"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="access" lowerBound="1"
+        eType="#//Access" defaultValueLiteral="WRITE"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ClassCheck" eSuperTypes="#//Check">
     <eStructuralFeatures xsi:type="ecore:EReference" name="applicableClass" lowerBound="1"
@@ -95,8 +95,14 @@
   <eClassifiers xsi:type="ecore:EClass" name="ResourceCheck" eSuperTypes="#//Check">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pattern" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="Permission">
+  <eClassifiers xsi:type="ecore:EEnum" name="Access">
     <eLiterals name="READ"/>
     <eLiterals name="WRITE" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="AccessObject" instanceClassName="org.eclipse.emf.common.util.Enumerator">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Access:Object"/>
+      <details key="baseType" value="Access"/>
+    </eAnnotations>
   </eClassifiers>
 </ecore:EPackage>

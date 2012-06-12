@@ -21,11 +21,11 @@ import java.util.List;
  * A representation of the literals of the enumeration '<em><b>Permission</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
- * @see org.eclipse.emf.cdo.security.SecurityPackage#getPermission()
+ * @see org.eclipse.emf.cdo.security.SecurityPackage#getAccess()
  * @model
  * @generated
  */
-public enum Permission implements Enumerator
+public enum Access implements Enumerator
 {
   /**
    * The '<em><b>READ</b></em>' literal object.
@@ -78,32 +78,32 @@ public enum Permission implements Enumerator
   public static final int WRITE_VALUE = 1;
 
   /**
-   * An array of all the '<em><b>Permission</b></em>' enumerators.
+   * An array of all the '<em><b>Access</b></em>' enumerators.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private static final Permission[] VALUES_ARRAY = new Permission[] { READ, WRITE, };
+  private static final Access[] VALUES_ARRAY = new Access[] { READ, WRITE, };
 
   /**
-   * A public read-only list of all the '<em><b>Permission</b></em>' enumerators.
+   * A public read-only list of all the '<em><b>Access</b></em>' enumerators.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  public static final List<Permission> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
+  public static final List<Access> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
   /**
-   * Returns the '<em><b>Permission</b></em>' literal with the specified literal value.
+   * Returns the '<em><b>Access</b></em>' literal with the specified literal value.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  public static Permission get(String literal)
+  public static Access get(String literal)
   {
     for (int i = 0; i < VALUES_ARRAY.length; ++i)
     {
-      Permission result = VALUES_ARRAY[i];
+      Access result = VALUES_ARRAY[i];
       if (result.toString().equals(literal))
       {
         return result;
@@ -113,16 +113,16 @@ public enum Permission implements Enumerator
   }
 
   /**
-   * Returns the '<em><b>Permission</b></em>' literal with the specified name.
+   * Returns the '<em><b>Access</b></em>' literal with the specified name.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  public static Permission getByName(String name)
+  public static Access getByName(String name)
   {
     for (int i = 0; i < VALUES_ARRAY.length; ++i)
     {
-      Permission result = VALUES_ARRAY[i];
+      Access result = VALUES_ARRAY[i];
       if (result.getName().equals(name))
       {
         return result;
@@ -132,12 +132,12 @@ public enum Permission implements Enumerator
   }
 
   /**
-   * Returns the '<em><b>Permission</b></em>' literal with the specified integer value.
+   * Returns the '<em><b>Access</b></em>' literal with the specified integer value.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  public static Permission get(int value)
+  public static Access get(int value)
   {
     switch (value)
     {
@@ -176,7 +176,7 @@ public enum Permission implements Enumerator
    * <!-- end-user-doc -->
    * @generated
    */
-  private Permission(int value, String name, String literal)
+  private Access(int value, String name, String literal)
   {
     this.value = value;
     this.name = name;

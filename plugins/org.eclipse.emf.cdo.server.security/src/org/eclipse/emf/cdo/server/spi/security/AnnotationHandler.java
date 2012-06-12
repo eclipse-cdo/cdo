@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.server.spi.security;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.Check;
-import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.RealmUtil;
 import org.eclipse.emf.cdo.security.Role;
@@ -89,35 +89,35 @@ public class AnnotationHandler implements InternalSecurityManager.CommitHandler
 
   protected void handlePackage(Realm realm, EPackage ePackage)
   {
-    handlePackagePermission(realm, ePackage, READ_KEY, Permission.READ);
-    handlePackagePermission(realm, ePackage, WRITE_KEY, Permission.WRITE);
+    handlePackagePermission(realm, ePackage, READ_KEY, Access.READ);
+    handlePackagePermission(realm, ePackage, WRITE_KEY, Access.WRITE);
 
     for (EClassifier eClassifier : ePackage.getEClassifiers())
     {
       if (eClassifier instanceof EClass)
       {
         EClass eClass = (EClass)eClassifier;
-        handleClassPermission(realm, eClass, READ_KEY, Permission.READ);
-        handleClassPermission(realm, eClass, WRITE_KEY, Permission.WRITE);
+        handleClassPermission(realm, eClass, READ_KEY, Access.READ);
+        handleClassPermission(realm, eClass, WRITE_KEY, Access.WRITE);
       }
     }
   }
 
-  protected void handlePackagePermission(Realm realm, EPackage ePackage, String key, Permission permission)
+  protected void handlePackagePermission(Realm realm, EPackage ePackage, String key, Access access)
   {
     EClass checkClass = SecurityPackage.Literals.PACKAGE_CHECK;
     EReference checkFeature = SecurityPackage.Literals.PACKAGE_CHECK__APPLICABLE_PACKAGE;
-    handlePermission(realm, ePackage, key, permission, checkClass, checkFeature);
+    handlePermission(realm, ePackage, key, access, checkClass, checkFeature);
   }
 
-  protected void handleClassPermission(Realm realm, EClass eClass, String key, Permission permission)
+  protected void handleClassPermission(Realm realm, EClass eClass, String key, Access access)
   {
     EClass checkClass = SecurityPackage.Literals.CLASS_CHECK;
     EReference checkFeature = SecurityPackage.Literals.CLASS_CHECK__APPLICABLE_CLASS;
-    handlePermission(realm, eClass, key, permission, checkClass, checkFeature);
+    handlePermission(realm, eClass, key, access, checkClass, checkFeature);
   }
 
-  protected void handlePermission(Realm realm, EModelElement modelElement, String key, Permission permission,
+  protected void handlePermission(Realm realm, EModelElement modelElement, String key, Access access,
       EClass checkClass, EReference checkFeature)
   {
     String annotation = EcoreUtil.getAnnotation(modelElement, SOURCE_URI, key);
@@ -135,7 +135,7 @@ public class AnnotationHandler implements InternalSecurityManager.CommitHandler
       if (token != null && token.length() != 0)
       {
         Check check = (Check)EcoreUtil.create(checkClass);
-        check.setPermission(permission);
+        check.setAccess(access);
         check.eSet(checkFeature, modelElement);
 
         Role role = RealmUtil.findRole(items, token);

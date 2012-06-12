@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.security.impl;
 
 import org.eclipse.emf.cdo.security.Check;
 import org.eclipse.emf.cdo.security.Group;
-import org.eclipse.emf.cdo.security.Permission;
+import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.RealmUtil;
 import org.eclipse.emf.cdo.security.Role;
@@ -38,7 +38,7 @@ import org.eclipse.emf.ecore.InternalEObject;
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getAllRoles <em>All Roles</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getAllChecks <em>All Checks</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getDefaultPermission <em>Default Permission</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getDefaultAccess <em>Default Access</em>}</li>
  * </ul>
  * </p>
  *
@@ -231,9 +231,9 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated
    */
-  public Permission getDefaultPermission()
+  public Access getDefaultAccess()
   {
-    return (Permission)eGet(SecurityPackage.Literals.REALM__DEFAULT_PERMISSION, true);
+    return (Access)eGet(SecurityPackage.Literals.REALM__DEFAULT_ACCESS, true);
   }
 
   /**
@@ -241,9 +241,9 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setDefaultPermission(Permission newDefaultPermission)
+  public void setDefaultAccess(Access newDefaultAccess)
   {
-    eSet(SecurityPackage.Literals.REALM__DEFAULT_PERMISSION, newDefaultPermission);
+    eSet(SecurityPackage.Literals.REALM__DEFAULT_ACCESS, newDefaultAccess);
   }
 
   @Override

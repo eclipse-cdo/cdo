@@ -2,8 +2,8 @@
  */
 package org.eclipse.emf.cdo.security.provider;
 
+import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.ClassCheck;
-import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -113,7 +113,7 @@ public class ClassCheckItemProvider extends CheckItemProvider implements IEditin
   @Override
   public String getText(Object object)
   {
-    Permission labelValue = ((ClassCheck)object).getPermission();
+    Access labelValue = ((ClassCheck)object).getAccess();
     EClass applicableClass = ((ClassCheck)object).getApplicableClass();
     String label = labelValue == null ? null : labelValue.toString();
 

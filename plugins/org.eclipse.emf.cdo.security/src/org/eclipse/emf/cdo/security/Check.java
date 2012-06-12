@@ -24,7 +24,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.Check#getRole <em>Role</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.Check#getPermission <em>Permission</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Check#getAccess <em>Access</em>}</li>
  * </ul>
  * </p>
  *
@@ -64,34 +64,34 @@ public interface Check extends CDOObject
   void setRole(Role value);
 
   /**
-   * Returns the value of the '<em><b>Permission</b></em>' attribute.
+   * Returns the value of the '<em><b>Access</b></em>' attribute.
    * The default value is <code>"WRITE"</code>.
-   * The literals are from the enumeration {@link org.eclipse.emf.cdo.security.Permission}.
+   * The literals are from the enumeration {@link org.eclipse.emf.cdo.security.Access}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Permission</em>' attribute isn't clear,
+   * If the meaning of the '<em>Access</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Permission</em>' attribute.
-   * @see org.eclipse.emf.cdo.security.Permission
-   * @see #setPermission(Permission)
-   * @see org.eclipse.emf.cdo.security.SecurityPackage#getCheck_Permission()
+   * @return the value of the '<em>Access</em>' attribute.
+   * @see org.eclipse.emf.cdo.security.Access
+   * @see #setAccess(Access)
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getCheck_Access()
    * @model default="WRITE" required="true"
    * @generated
    */
-  Permission getPermission();
+  Access getAccess();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.security.Check#getPermission <em>Permission</em>}' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.security.Check#getAccess <em>Access</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Permission</em>' attribute.
-   * @see org.eclipse.emf.cdo.security.Permission
-   * @see #getPermission()
+   * @param value the new value of the '<em>Access</em>' attribute.
+   * @see org.eclipse.emf.cdo.security.Access
+   * @see #getAccess()
    * @generated
    */
-  void setPermission(Permission value);
+  void setAccess(Access value);
 
   boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext);
 

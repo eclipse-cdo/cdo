@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.security.impl;
 
 import org.eclipse.emf.cdo.security.Check;
-import org.eclipse.emf.cdo.security.Permission;
+import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EClass;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.CheckImpl#getRole <em>Role</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.CheckImpl#getPermission <em>Permission</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.CheckImpl#getAccess <em>Access</em>}</li>
  * </ul>
  * </p>
  *
@@ -92,9 +92,9 @@ public abstract class CheckImpl extends CDOObjectImpl implements Check
    * <!-- end-user-doc -->
    * @generated
    */
-  public Permission getPermission()
+  public Access getAccess()
   {
-    return (Permission)eGet(SecurityPackage.Literals.CHECK__PERMISSION, true);
+    return (Access)eGet(SecurityPackage.Literals.CHECK__ACCESS, true);
   }
 
   /**
@@ -102,9 +102,9 @@ public abstract class CheckImpl extends CDOObjectImpl implements Check
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setPermission(Permission newPermission)
+  public void setAccess(Access newAccess)
   {
-    eSet(SecurityPackage.Literals.CHECK__PERMISSION, newPermission);
+    eSet(SecurityPackage.Literals.CHECK__ACCESS, newAccess);
   }
 
 } // CheckImpl

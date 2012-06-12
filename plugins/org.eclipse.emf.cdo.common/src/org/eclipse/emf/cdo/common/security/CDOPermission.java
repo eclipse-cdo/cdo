@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.common.security;
 
 /**
  * Describes the possible protection levels a protectable object may have.
+ *
  * @author Eike Stepper
  * @since 4.1
  */

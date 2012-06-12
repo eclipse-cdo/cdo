@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.security.ClassCheck;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
 import org.eclipse.emf.cdo.security.PackageCheck;
-import org.eclipse.emf.cdo.security.Permission;
+import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.ResourceCheck;
 import org.eclipse.emf.cdo.security.Role;
@@ -117,8 +117,10 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   {
     switch (eDataType.getClassifierID())
     {
-    case SecurityPackage.PERMISSION:
-      return createPermissionFromString(eDataType, initialValue);
+    case SecurityPackage.ACCESS:
+      return createAccessFromString(eDataType, initialValue);
+    case SecurityPackage.ACCESS_OBJECT:
+      return createAccessObjectFromString(eDataType, initialValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
@@ -134,8 +136,10 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   {
     switch (eDataType.getClassifierID())
     {
-    case SecurityPackage.PERMISSION:
-      return convertPermissionToString(eDataType, instanceValue);
+    case SecurityPackage.ACCESS:
+      return convertAccessToString(eDataType, instanceValue);
+    case SecurityPackage.ACCESS_OBJECT:
+      return convertAccessObjectToString(eDataType, instanceValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
@@ -245,9 +249,9 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Permission createPermissionFromString(EDataType eDataType, String initialValue)
+  public Access createAccessFromString(EDataType eDataType, String initialValue)
   {
-    Permission result = Permission.get(initialValue);
+    Access result = Access.get(initialValue);
     if (result == null)
       throw new IllegalArgumentException(
           "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -259,9 +263,29 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public String convertPermissionToString(EDataType eDataType, Object instanceValue)
+  public String convertAccessToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Access createAccessObjectFromString(EDataType eDataType, String initialValue)
+  {
+    return createAccessFromString(SecurityPackage.Literals.ACCESS, initialValue);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertAccessObjectToString(EDataType eDataType, Object instanceValue)
+  {
+    return convertAccessToString(SecurityPackage.Literals.ACCESS, instanceValue);
   }
 
   /**

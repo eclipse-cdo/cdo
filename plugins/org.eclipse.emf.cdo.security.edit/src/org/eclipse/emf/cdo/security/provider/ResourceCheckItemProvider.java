@@ -2,7 +2,7 @@
  */
 package org.eclipse.emf.cdo.security.provider;
 
-import org.eclipse.emf.cdo.security.Permission;
+import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.ResourceCheck;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
@@ -114,7 +114,7 @@ public class ResourceCheckItemProvider extends CheckItemProvider implements IEdi
   @Override
   public String getText(Object object)
   {
-    Permission labelValue = ((ResourceCheck)object).getPermission();
+    Access labelValue = ((ResourceCheck)object).getAccess();
     String label = labelValue == null ? null : labelValue.toString();
     return label == null || label.length() == 0 ? getString("_UI_ResourceCheck_type") : //$NON-NLS-1$
         getString("_UI_ResourceCheck_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

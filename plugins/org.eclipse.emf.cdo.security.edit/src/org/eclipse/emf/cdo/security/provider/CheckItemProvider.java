@@ -3,7 +3,7 @@
 package org.eclipse.emf.cdo.security.provider;
 
 import org.eclipse.emf.cdo.security.Check;
-import org.eclipse.emf.cdo.security.Permission;
+import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -63,26 +63,26 @@ public class CheckItemProvider extends ItemProviderAdapter implements IEditingDo
     {
       super.getPropertyDescriptors(object);
 
-      addPermissionPropertyDescriptor(object);
+      addAccessPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Permission feature.
+   * This adds a property descriptor for the Access feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addPermissionPropertyDescriptor(Object object)
+  protected void addAccessPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
         getResourceLocator(),
-        getString("_UI_Check_permission_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_Check_permission_feature", "_UI_Check_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        SecurityPackage.Literals.CHECK__PERMISSION, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, null));
+        getString("_UI_Check_access_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Check_access_feature", "_UI_Check_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.CHECK__ACCESS, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
+        null));
   }
 
   /**
@@ -116,7 +116,7 @@ public class CheckItemProvider extends ItemProviderAdapter implements IEditingDo
   @Override
   public String getText(Object object)
   {
-    Permission labelValue = ((Check)object).getPermission();
+    Access labelValue = ((Check)object).getAccess();
     String label = labelValue == null ? null : labelValue.toString();
     return label == null || label.length() == 0 ? getString("_UI_Check_type") : //$NON-NLS-1$
         getString("_UI_Check_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
@@ -136,7 +136,7 @@ public class CheckItemProvider extends ItemProviderAdapter implements IEditingDo
 
     switch (notification.getFeatureID(Check.class))
     {
-    case SecurityPackage.CHECK__PERMISSION:
+    case SecurityPackage.CHECK__ACCESS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

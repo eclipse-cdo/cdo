@@ -25,8 +25,8 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.cdo.security.User#getFirstName <em>First Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getLastName <em>Last Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getEmail <em>Email</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.User#getDefaultPermissionOverride <em>Default Permission Override</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.User#getDefaultPermission <em>Default Permission</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.User#getDefaultAccessOverride <em>Default Access Override</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.User#getDefaultAccess <em>Default Access</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#isLocked <em>Locked</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getPassword <em>Password</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getAllGroups <em>All Groups</em>}</li>
@@ -218,50 +218,45 @@ public interface User extends Assignee
   void setEmail(String value);
 
   /**
-   * Returns the value of the '<em><b>Default Permission Override</b></em>' attribute.
-   * The literals are from the enumeration {@link org.eclipse.emf.cdo.security.Permission}.
+   * Returns the value of the '<em><b>Default Access Override</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Default Permission Override</em>' attribute isn't clear,
+   * If the meaning of the '<em>Default Access Override</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Default Permission Override</em>' attribute.
-   * @see org.eclipse.emf.cdo.security.Permission
-   * @see #setDefaultPermissionOverride(Permission)
-   * @see org.eclipse.emf.cdo.security.SecurityPackage#getUser_DefaultPermissionOverride()
-   * @model
+   * @return the value of the '<em>Default Access Override</em>' attribute.
+   * @see #setDefaultAccessOverride(Access)
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getUser_DefaultAccessOverride()
+   * @model dataType="org.eclipse.emf.cdo.security.AccessObject"
    * @generated
    */
-  Permission getDefaultPermissionOverride();
+  Access getDefaultAccessOverride();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.security.User#getDefaultPermissionOverride <em>Default Permission Override</em>}' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.security.User#getDefaultAccessOverride <em>Default Access Override</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Default Permission Override</em>' attribute.
-   * @see org.eclipse.emf.cdo.security.Permission
-   * @see #getDefaultPermissionOverride()
+   * @param value the new value of the '<em>Default Access Override</em>' attribute.
+   * @see #getDefaultAccessOverride()
    * @generated
    */
-  void setDefaultPermissionOverride(Permission value);
+  void setDefaultAccessOverride(Access value);
 
   /**
-   * Returns the value of the '<em><b>Default Permission</b></em>' attribute.
-   * The literals are from the enumeration {@link org.eclipse.emf.cdo.security.Permission}.
+   * Returns the value of the '<em><b>Default Access</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Default Permission</em>' attribute isn't clear,
+   * If the meaning of the '<em>Default Access</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Default Permission</em>' attribute.
-   * @see org.eclipse.emf.cdo.security.Permission
-   * @see org.eclipse.emf.cdo.security.SecurityPackage#getUser_DefaultPermission()
-   * @model transient="true" changeable="false" volatile="true" derived="true"
+   * @return the value of the '<em>Default Access</em>' attribute.
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getUser_DefaultAccess()
+   * @model dataType="org.eclipse.emf.cdo.security.AccessObject" transient="true" changeable="false" volatile="true" derived="true"
    * @generated
    */
-  Permission getDefaultPermission();
+  Access getDefaultAccess();
 
   /**
    * Returns the value of the '<em><b>Locked</b></em>' attribute.

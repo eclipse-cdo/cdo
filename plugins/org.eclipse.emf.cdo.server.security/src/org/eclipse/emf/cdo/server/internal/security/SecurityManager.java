@@ -18,11 +18,11 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.Check;
 import org.eclipse.emf.cdo.security.ClassCheck;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
-import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.RealmUtil;
 import org.eclipse.emf.cdo.security.Role;
@@ -359,7 +359,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
         }
 
         ClassCheck check = SecurityFactory.eINSTANCE.createClassCheck();
-        check.setPermission(Permission.WRITE);
+        check.setAccess(Access.WRITE);
         administration.getChecks().add(check);
         check.setApplicableClass(eClass);
       }
@@ -368,7 +368,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     return realm;
   }
 
-  protected CDOPermission convertPermission(Permission permission)
+  protected CDOPermission convertPermission(Access permission)
   {
     switch (permission)
     {
@@ -386,7 +386,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   protected CDOPermission getPermission(CDORevision revision, CDORevisionProvider revisionProvider,
       CDOBranchPoint securityContext, User user)
   {
-    CDOPermission result = convertPermission(user.getDefaultPermission());
+    CDOPermission result = convertPermission(user.getDefaultAccess());
     if (result == CDOPermission.WRITE)
     {
       return result;
@@ -394,7 +394,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
     for (Check check : user.getAllChecks())
     {
-      CDOPermission permission = convertPermission(check.getPermission());
+      CDOPermission permission = convertPermission(check.getAccess());
       if (permission.ordinal() <= result.ordinal())
       {
         // Avoid expensive calls to Check.isApplicable() if the permission wouldn't increase

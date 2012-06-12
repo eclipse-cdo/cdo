@@ -10,9 +10,9 @@
  */
 package org.eclipse.emf.cdo.security.impl;
 
+import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.Check;
 import org.eclipse.emf.cdo.security.Group;
-import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityPackage;
@@ -40,8 +40,8 @@ import java.util.Set;
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getFirstName <em>First Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getLastName <em>Last Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getEmail <em>Email</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getDefaultPermissionOverride <em>Default Permission Override</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getDefaultPermission <em>Default Permission</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getDefaultAccessOverride <em>Default Access Override</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getDefaultAccess <em>Default Access</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#isLocked <em>Locked</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getPassword <em>Password</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getAllGroups <em>All Groups</em>}</li>
@@ -318,9 +318,9 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated
    */
-  public Permission getDefaultPermissionOverride()
+  public Access getDefaultAccessOverride()
   {
-    return (Permission)eGet(SecurityPackage.Literals.USER__DEFAULT_PERMISSION_OVERRIDE, true);
+    return (Access)eGet(SecurityPackage.Literals.USER__DEFAULT_ACCESS_OVERRIDE, true);
   }
 
   /**
@@ -328,9 +328,9 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setDefaultPermissionOverride(Permission newDefaultPermissionOverride)
+  public void setDefaultAccessOverride(Access newDefaultAccessOverride)
   {
-    eSet(SecurityPackage.Literals.USER__DEFAULT_PERMISSION_OVERRIDE, newDefaultPermissionOverride);
+    eSet(SecurityPackage.Literals.USER__DEFAULT_ACCESS_OVERRIDE, newDefaultAccessOverride);
   }
 
   /**
@@ -338,18 +338,18 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated NOT
    */
-  public Permission getDefaultPermission()
+  public Access getDefaultAccess()
   {
-    Permission defaultPermissionOverride = getDefaultPermissionOverride();
-    if (defaultPermissionOverride != null)
+    Access defaultAccessOverride = getDefaultAccessOverride();
+    if (defaultAccessOverride != null)
     {
-      return defaultPermissionOverride;
+      return defaultAccessOverride;
     }
 
     Realm realm = getRealm();
     if (realm != null)
     {
-      return realm.getDefaultPermission();
+      return realm.getDefaultAccess();
     }
 
     return null;

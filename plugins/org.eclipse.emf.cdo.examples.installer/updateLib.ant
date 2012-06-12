@@ -29,6 +29,30 @@
 					<include name="**" />
 				</fileset>
 			</copy>
+
+			<replaceregexp file="org.eclipse.emf.cdo.examples.installer/examples/@{target}/.project"
+			               byline="false"
+			               flags="s"
+			               match="\s*&lt;buildCommand>\s+&lt;name>org.eclipse.pde.api.tools.apiAnalysisBuilder.*?&lt;/buildCommand>"
+			               replace="" />
+
+			<replaceregexp file="org.eclipse.emf.cdo.examples.installer/examples/@{target}/.project"
+			               byline="false"
+			               flags="s"
+			               match="\s*&lt;buildCommand>\s+&lt;name>org.eclipse.emf.cdo.releng.version.VersionBuilder.*?&lt;/buildCommand>"
+			               replace="" />
+
+			<replaceregexp file="org.eclipse.emf.cdo.examples.installer/examples/@{target}/.project"
+			               byline="false"
+			               flags="s"
+			               match="\s*&lt;nature>org.eclipse.pde.api.tools.apiAnalysisNature&lt;/nature>"
+			               replace="" />
+
+			<replaceregexp file="org.eclipse.emf.cdo.examples.installer/examples/@{target}/.project"
+			               byline="false"
+			               flags="s"
+			               match="\s*&lt;nature>org.eclipse.emf.cdo.releng.version.VersionNature&lt;/nature>"
+			               replace="" />
 		</sequential>
 	</macrodef>
 

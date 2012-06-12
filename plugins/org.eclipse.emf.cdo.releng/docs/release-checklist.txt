@@ -1,2 +1,5 @@
+- Execute org.eclipse.emf.cdo.releng.PrintReleaseDeliverablesForPlan
+- Execute org.eclipse.emf.cdo.releng.PrintUnpublishedComponents
+
 - Adjust emf.link in /org.eclipse.emf.cdo.releng.doc/buildTemplate.ant
 - Update /org.eclipse.emf.cdo.releng.doc/platform-api/package-list from ${TP}/plugins/org.eclipse.platform.doc.isv_???.jar

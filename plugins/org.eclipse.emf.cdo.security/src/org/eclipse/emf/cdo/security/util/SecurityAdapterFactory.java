@@ -12,13 +12,13 @@ package org.eclipse.emf.cdo.security.util;
 
 import org.eclipse.emf.cdo.etypes.ModelElement;
 import org.eclipse.emf.cdo.security.Assignee;
-import org.eclipse.emf.cdo.security.Check;
-import org.eclipse.emf.cdo.security.ClassCheck;
+import org.eclipse.emf.cdo.security.Permission;
+import org.eclipse.emf.cdo.security.ClassPermission;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
-import org.eclipse.emf.cdo.security.PackageCheck;
+import org.eclipse.emf.cdo.security.PackagePermission;
 import org.eclipse.emf.cdo.security.Realm;
-import org.eclipse.emf.cdo.security.ResourceCheck;
+import org.eclipse.emf.cdo.security.ResourcePermission;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityElement;
 import org.eclipse.emf.cdo.security.SecurityItem;
@@ -150,27 +150,27 @@ public class SecurityAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
-    public Adapter caseCheck(Check object)
+    public Adapter casePermission(Permission object)
     {
-      return createCheckAdapter();
+      return createPermissionAdapter();
     }
 
     @Override
-    public Adapter caseClassCheck(ClassCheck object)
+    public Adapter caseClassPermission(ClassPermission object)
     {
-      return createClassCheckAdapter();
+      return createClassPermissionAdapter();
     }
 
     @Override
-    public Adapter casePackageCheck(PackageCheck object)
+    public Adapter casePackagePermission(PackagePermission object)
     {
-      return createPackageCheckAdapter();
+      return createPackagePermissionAdapter();
     }
 
     @Override
-    public Adapter caseResourceCheck(ResourceCheck object)
+    public Adapter caseResourcePermission(ResourcePermission object)
     {
-      return createResourceCheckAdapter();
+      return createResourcePermissionAdapter();
     }
 
     @Override
@@ -336,61 +336,61 @@ public class SecurityAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.Check <em>Check</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.Permission <em>Permission</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.security.Check
+   * @see org.eclipse.emf.cdo.security.Permission
    * @generated
    */
-  public Adapter createCheckAdapter()
+  public Adapter createPermissionAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.ClassCheck <em>Class Check</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.ClassPermission <em>Class Permission</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.security.ClassCheck
+   * @see org.eclipse.emf.cdo.security.ClassPermission
    * @generated
    */
-  public Adapter createClassCheckAdapter()
+  public Adapter createClassPermissionAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.PackageCheck <em>Package Check</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.PackagePermission <em>Package Permission</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.security.PackageCheck
+   * @see org.eclipse.emf.cdo.security.PackagePermission
    * @generated
    */
-  public Adapter createPackageCheckAdapter()
+  public Adapter createPackagePermissionAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.ResourceCheck <em>Resource Check</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.ResourcePermission <em>Resource Permission</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.security.ResourceCheck
+   * @see org.eclipse.emf.cdo.security.ResourcePermission
    * @generated
    */
-  public Adapter createResourceCheckAdapter()
+  public Adapter createResourcePermissionAdapter()
   {
     return null;
   }

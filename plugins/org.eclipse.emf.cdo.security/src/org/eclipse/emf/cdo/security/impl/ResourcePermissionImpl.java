@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.security.ResourceCheck;
+import org.eclipse.emf.cdo.security.ResourcePermission;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
 import org.eclipse.emf.ecore.EClass;
@@ -26,18 +26,18 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Resource Check</b></em>'.
+ * An implementation of the model object '<em><b>Resource Permission</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.ResourceCheckImpl#getPattern <em>Pattern</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.ResourcePermissionImpl#getPattern <em>Pattern</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ResourceCheckImpl extends CheckImpl implements ResourceCheck
+public class ResourcePermissionImpl extends PermissionImpl implements ResourcePermission
 {
   private Pattern pattern;
 
@@ -46,7 +46,7 @@ public class ResourceCheckImpl extends CheckImpl implements ResourceCheck
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ResourceCheckImpl()
+  protected ResourcePermissionImpl()
   {
     super();
   }
@@ -59,7 +59,7 @@ public class ResourceCheckImpl extends CheckImpl implements ResourceCheck
   @Override
   protected EClass eStaticClass()
   {
-    return SecurityPackage.Literals.RESOURCE_CHECK;
+    return SecurityPackage.Literals.RESOURCE_PERMISSION;
   }
 
   /**
@@ -69,7 +69,7 @@ public class ResourceCheckImpl extends CheckImpl implements ResourceCheck
    */
   public String getPattern()
   {
-    return (String)eGet(SecurityPackage.Literals.RESOURCE_CHECK__PATTERN, true);
+    return (String)eGet(SecurityPackage.Literals.RESOURCE_PERMISSION__PATTERN, true);
   }
 
   /**
@@ -79,14 +79,14 @@ public class ResourceCheckImpl extends CheckImpl implements ResourceCheck
    */
   public void setPattern(String newPattern)
   {
-    eSet(SecurityPackage.Literals.RESOURCE_CHECK__PATTERN, newPattern);
+    eSet(SecurityPackage.Literals.RESOURCE_PERMISSION__PATTERN, newPattern);
   }
 
   @Override
   public void eSet(EStructuralFeature eFeature, Object newValue)
   {
     super.eSet(eFeature, newValue);
-    if (eFeature == SecurityPackage.Literals.RESOURCE_CHECK__PATTERN)
+    if (eFeature == SecurityPackage.Literals.RESOURCE_PERMISSION__PATTERN)
     {
       String value = (String)newValue;
       pattern = compilePattern(value);
@@ -128,4 +128,4 @@ public class ResourceCheckImpl extends CheckImpl implements ResourceCheck
     return matcher.matches();
   }
 
-} // ResourceCheckImpl
+} // ResourcePermissionImpl

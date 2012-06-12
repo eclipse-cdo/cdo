@@ -125,10 +125,10 @@ public final class RealmUtil
     return result;
   }
 
-  public static BasicEList<Check> allChecks(EList<SecurityItem> items)
+  public static BasicEList<Permission> allPermissions(EList<SecurityItem> items)
   {
-    BasicEList<Check> result = new BasicEList<Check>();
-    allChecks(items, result);
+    BasicEList<Permission> result = new BasicEList<Permission>();
+    allPermissions(items, result);
     return result;
   }
 
@@ -183,19 +183,19 @@ public final class RealmUtil
     }
   }
 
-  private static void allChecks(EList<SecurityItem> items, EList<Check> result)
+  private static void allPermissions(EList<SecurityItem> items, EList<Permission> result)
   {
     for (SecurityItem item : items)
     {
       if (item instanceof Role)
       {
         Role role = (Role)item;
-        result.addAll(role.getChecks());
+        result.addAll(role.getPermissions());
       }
       else if (item instanceof Directory)
       {
         Directory directory = (Directory)item;
-        allChecks(directory.getItems(), result);
+        allPermissions(directory.getItems(), result);
       }
     }
   }

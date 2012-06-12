@@ -257,78 +257,78 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.ClassCheck} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.ClassPermission} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ClassCheckItemProvider classCheckItemProvider;
+  protected ClassPermissionItemProvider classPermissionItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.ClassCheck}.
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.ClassPermission}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
   @Override
-  public Adapter createClassCheckAdapter()
+  public Adapter createClassPermissionAdapter()
   {
-    if (classCheckItemProvider == null)
+    if (classPermissionItemProvider == null)
     {
-      classCheckItemProvider = new ClassCheckItemProvider(this);
+      classPermissionItemProvider = new ClassPermissionItemProvider(this);
     }
 
-    return classCheckItemProvider;
+    return classPermissionItemProvider;
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.PackageCheck} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.PackagePermission} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected PackageCheckItemProvider packageCheckItemProvider;
+  protected PackagePermissionItemProvider packagePermissionItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.PackageCheck}.
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.PackagePermission}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
   @Override
-  public Adapter createPackageCheckAdapter()
+  public Adapter createPackagePermissionAdapter()
   {
-    if (packageCheckItemProvider == null)
+    if (packagePermissionItemProvider == null)
     {
-      packageCheckItemProvider = new PackageCheckItemProvider(this);
+      packagePermissionItemProvider = new PackagePermissionItemProvider(this);
     }
 
-    return packageCheckItemProvider;
+    return packagePermissionItemProvider;
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.ResourceCheck} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.security.ResourcePermission} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ResourceCheckItemProvider resourceCheckItemProvider;
+  protected ResourcePermissionItemProvider resourcePermissionItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.ResourceCheck}.
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.security.ResourcePermission}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
   @Override
-  public Adapter createResourceCheckAdapter()
+  public Adapter createResourcePermissionAdapter()
   {
-    if (resourceCheckItemProvider == null)
+    if (resourcePermissionItemProvider == null)
     {
-      resourceCheckItemProvider = new ResourceCheckItemProvider(this);
+      resourcePermissionItemProvider = new ResourcePermissionItemProvider(this);
     }
 
-    return resourceCheckItemProvider;
+    return resourcePermissionItemProvider;
   }
 
   /**
@@ -484,12 +484,12 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
       userItemProvider.dispose();
     if (userPasswordItemProvider != null)
       userPasswordItemProvider.dispose();
-    if (classCheckItemProvider != null)
-      classCheckItemProvider.dispose();
-    if (packageCheckItemProvider != null)
-      packageCheckItemProvider.dispose();
-    if (resourceCheckItemProvider != null)
-      resourceCheckItemProvider.dispose();
+    if (classPermissionItemProvider != null)
+      classPermissionItemProvider.dispose();
+    if (packagePermissionItemProvider != null)
+      packagePermissionItemProvider.dispose();
+    if (resourcePermissionItemProvider != null)
+      resourcePermissionItemProvider.dispose();
   }
 
 }

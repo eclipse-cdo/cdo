@@ -11,8 +11,8 @@
 package org.eclipse.emf.cdo.security.impl;
 
 import org.eclipse.emf.cdo.security.Access;
-import org.eclipse.emf.cdo.security.Check;
 import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityPackage;
@@ -46,7 +46,7 @@ import java.util.Set;
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getPassword <em>Password</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getAllGroups <em>All Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getAllRoles <em>All Roles</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getAllChecks <em>All Checks</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getAllPermissions <em>All Permissions</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getUnassignedRoles <em>Unassigned Roles</em>}</li>
  * </ul>
  * </p>
@@ -113,7 +113,7 @@ public class UserImpl extends AssigneeImpl implements User
     }
   };
 
-  private EList<Check> allChecks = new CachedList<Check>()
+  private EList<Permission> allPermissions = new CachedList<Permission>()
   {
     @Override
     protected InternalEObject getOwner()
@@ -124,17 +124,17 @@ public class UserImpl extends AssigneeImpl implements User
     @Override
     protected EStructuralFeature getFeature()
     {
-      return SecurityPackage.Literals.USER__ALL_CHECKS;
+      return SecurityPackage.Literals.USER__ALL_PERMISSIONS;
     }
 
     @Override
     protected Object[] getData()
     {
-      BasicEList<Check> result = new BasicEList<Check>();
+      BasicEList<Permission> result = new BasicEList<Permission>();
 
       for (Role role : getAllRoles())
       {
-        result.addAll(role.getChecks());
+        result.addAll(role.getPermissions());
       }
 
       return result.toArray();
@@ -228,9 +228,9 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated NOT
    */
-  public EList<Check> getAllChecks()
+  public EList<Permission> getAllPermissions()
   {
-    return allChecks;
+    return allPermissions;
   }
 
   /**

@@ -2,7 +2,7 @@
  */
 package org.eclipse.emf.cdo.security.provider;
 
-import org.eclipse.emf.cdo.security.PackageCheck;
+import org.eclipse.emf.cdo.security.PackagePermission;
 import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
@@ -25,12 +25,12 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.security.PackageCheck} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.security.PackagePermission} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class PackageCheckItemProvider extends CheckItemProvider implements IEditingDomainItemProvider,
+public class PackagePermissionItemProvider extends PermissionItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
     ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
@@ -40,7 +40,7 @@ public class PackageCheckItemProvider extends CheckItemProvider implements IEdit
    * <!-- end-user-doc -->
    * @generated
    */
-  public PackageCheckItemProvider(AdapterFactory adapterFactory)
+  public PackagePermissionItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -74,14 +74,14 @@ public class PackageCheckItemProvider extends CheckItemProvider implements IEdit
     itemPropertyDescriptors
         .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
             getResourceLocator(),
-            getString("_UI_PackageCheck_applicablePackage_feature"), //$NON-NLS-1$
+            getString("_UI_PackagePermission_applicablePackage_feature"), //$NON-NLS-1$
             getString(
-                "_UI_PropertyDescriptor_description", "_UI_PackageCheck_applicablePackage_feature", "_UI_PackageCheck_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.PACKAGE_CHECK__APPLICABLE_PACKAGE, true, false, true, null, null, null));
+                "_UI_PropertyDescriptor_description", "_UI_PackagePermission_applicablePackage_feature", "_UI_PackagePermission_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            SecurityPackage.Literals.PACKAGE_PERMISSION__APPLICABLE_PACKAGE, true, false, true, null, null, null));
   }
 
   /**
-   * This returns PackageCheck.gif.
+   * This returns PackagePermission.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -89,7 +89,7 @@ public class PackageCheckItemProvider extends CheckItemProvider implements IEdit
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/PackageCheck")); //$NON-NLS-1$
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/PackagePermission")); //$NON-NLS-1$
   }
 
   /**
@@ -112,10 +112,10 @@ public class PackageCheckItemProvider extends CheckItemProvider implements IEdit
   @Override
   public String getText(Object object)
   {
-    Access labelValue = ((PackageCheck)object).getAccess();
+    Access labelValue = ((PackagePermission)object).getAccess();
     String label = labelValue == null ? null : labelValue.toString();
-    return label == null || label.length() == 0 ? getString("_UI_PackageCheck_type") : //$NON-NLS-1$
-        getString("_UI_PackageCheck_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+    return label == null || label.length() == 0 ? getString("_UI_PackagePermission_type") : //$NON-NLS-1$
+        getString("_UI_PackagePermission_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   /**

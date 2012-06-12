@@ -3,11 +3,12 @@
 package org.eclipse.emf.cdo.security.provider;
 
 import org.eclipse.emf.cdo.security.Access;
-import org.eclipse.emf.cdo.security.ResourceCheck;
+import org.eclipse.emf.cdo.security.ClassPermission;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
@@ -20,19 +21,17 @@ import org.eclipse.emf.edit.provider.ITableItemColorProvider;
 import org.eclipse.emf.edit.provider.ITableItemFontProvider;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.security.ResourceCheck} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.security.ClassPermission} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ResourceCheckItemProvider extends CheckItemProvider implements IEditingDomainItemProvider,
+public class ClassPermissionItemProvider extends PermissionItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
     ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
@@ -42,7 +41,7 @@ public class ResourceCheckItemProvider extends CheckItemProvider implements IEdi
    * <!-- end-user-doc -->
    * @generated
    */
-  public ResourceCheckItemProvider(AdapterFactory adapterFactory)
+  public ClassPermissionItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -60,30 +59,30 @@ public class ResourceCheckItemProvider extends CheckItemProvider implements IEdi
     {
       super.getPropertyDescriptors(object);
 
-      addPatternPropertyDescriptor(object);
+      addApplicableClassPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Pattern feature.
+   * This adds a property descriptor for the Applicable Class feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addPatternPropertyDescriptor(Object object)
+  protected void addApplicableClassPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_ResourceCheck_pattern_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceCheck_pattern_feature", "_UI_ResourceCheck_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        SecurityPackage.Literals.RESOURCE_CHECK__PATTERN, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(),
+            getString("_UI_ClassPermission_applicableClass_feature"), //$NON-NLS-1$
+            getString(
+                "_UI_PropertyDescriptor_description", "_UI_ClassPermission_applicableClass_feature", "_UI_ClassPermission_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            SecurityPackage.Literals.CLASS_PERMISSION__APPLICABLE_CLASS, true, false, true, null, null, null));
   }
 
   /**
-   * This returns ResourceCheck.gif.
+   * This returns ClassPermission.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -91,7 +90,7 @@ public class ResourceCheckItemProvider extends CheckItemProvider implements IEdi
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/ResourceCheck")); //$NON-NLS-1$
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/ClassPermission")); //$NON-NLS-1$
   }
 
   /**
@@ -109,15 +108,22 @@ public class ResourceCheckItemProvider extends CheckItemProvider implements IEdi
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
-    Access labelValue = ((ResourceCheck)object).getAccess();
+    Access labelValue = ((ClassPermission)object).getAccess();
+    EClass applicableClass = ((ClassPermission)object).getApplicableClass();
     String label = labelValue == null ? null : labelValue.toString();
-    return label == null || label.length() == 0 ? getString("_UI_ResourceCheck_type") : //$NON-NLS-1$
-        getString("_UI_ResourceCheck_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+
+    if (applicableClass != null)
+    {
+      label += " " + applicableClass.getName();
+    }
+
+    return label == null || label.length() == 0 ? getString("_UI_ClassPermission_type") : //$NON-NLS-1$
+        label;
   }
 
   /**
@@ -131,13 +137,6 @@ public class ResourceCheckItemProvider extends CheckItemProvider implements IEdi
   public void notifyChanged(Notification notification)
   {
     updateChildren(notification);
-
-    switch (notification.getFeatureID(ResourceCheck.class))
-    {
-    case SecurityPackage.RESOURCE_CHECK__PATTERN:
-      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-      return;
-    }
     super.notifyChanged(notification);
   }
 

@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>Permission</b></em>',
+ * A representation of the literals of the enumeration '<em><b>Access</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
  * @see org.eclipse.emf.cdo.security.SecurityPackage#getAccess()
@@ -225,4 +225,4 @@ public enum Access implements Enumerator
     return literal;
   }
 
-} // Permission
+} // Access

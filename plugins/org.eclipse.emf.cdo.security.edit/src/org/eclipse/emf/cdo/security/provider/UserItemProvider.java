@@ -77,6 +77,7 @@ public class UserItemProvider extends AssigneeItemProvider implements IEditingDo
       addDefaultAccessOverridePropertyDescriptor(object);
       addDefaultAccessPropertyDescriptor(object);
       addLockedPropertyDescriptor(object);
+      addAllPermissionsPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -213,6 +214,21 @@ public class UserItemProvider extends AssigneeItemProvider implements IEditingDo
         getString("_UI_PropertyDescriptor_description", "_UI_User_locked_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         SecurityPackage.Literals.USER__LOCKED, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null,
         null));
+  }
+
+  /**
+   * This adds a property descriptor for the All Permissions feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addAllPermissionsPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_User_allPermissions_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_User_allPermissions_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.USER__ALL_PERMISSIONS, false, false, false, null, null, null));
   }
 
   /**

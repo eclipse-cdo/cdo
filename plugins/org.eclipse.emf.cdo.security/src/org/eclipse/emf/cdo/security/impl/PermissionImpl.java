@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.security.impl;
 
-import org.eclipse.emf.cdo.security.Check;
+import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityPackage;
@@ -21,26 +21,26 @@ import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Check</b></em>'.
+ * An implementation of the model object '<em><b>Permission</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.CheckImpl#getRole <em>Role</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.CheckImpl#getAccess <em>Access</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.PermissionImpl#getRole <em>Role</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.PermissionImpl#getAccess <em>Access</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public abstract class CheckImpl extends CDOObjectImpl implements Check
+public abstract class PermissionImpl extends CDOObjectImpl implements Permission
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected CheckImpl()
+  protected PermissionImpl()
   {
     super();
   }
@@ -53,7 +53,7 @@ public abstract class CheckImpl extends CDOObjectImpl implements Check
   @Override
   protected EClass eStaticClass()
   {
-    return SecurityPackage.Literals.CHECK;
+    return SecurityPackage.Literals.PERMISSION;
   }
 
   /**
@@ -74,7 +74,7 @@ public abstract class CheckImpl extends CDOObjectImpl implements Check
    */
   public Role getRole()
   {
-    return (Role)eGet(SecurityPackage.Literals.CHECK__ROLE, true);
+    return (Role)eGet(SecurityPackage.Literals.PERMISSION__ROLE, true);
   }
 
   /**
@@ -84,7 +84,7 @@ public abstract class CheckImpl extends CDOObjectImpl implements Check
    */
   public void setRole(Role newRole)
   {
-    eSet(SecurityPackage.Literals.CHECK__ROLE, newRole);
+    eSet(SecurityPackage.Literals.PERMISSION__ROLE, newRole);
   }
 
   /**
@@ -94,7 +94,7 @@ public abstract class CheckImpl extends CDOObjectImpl implements Check
    */
   public Access getAccess()
   {
-    return (Access)eGet(SecurityPackage.Literals.CHECK__ACCESS, true);
+    return (Access)eGet(SecurityPackage.Literals.PERMISSION__ACCESS, true);
   }
 
   /**
@@ -104,7 +104,7 @@ public abstract class CheckImpl extends CDOObjectImpl implements Check
    */
   public void setAccess(Access newAccess)
   {
-    eSet(SecurityPackage.Literals.CHECK__ACCESS, newAccess);
+    eSet(SecurityPackage.Literals.PERMISSION__ACCESS, newAccess);
   }
 
-} // CheckImpl
+} // PermissionImpl

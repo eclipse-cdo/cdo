@@ -12,13 +12,13 @@ package org.eclipse.emf.cdo.security.util;
 
 import org.eclipse.emf.cdo.etypes.ModelElement;
 import org.eclipse.emf.cdo.security.Assignee;
-import org.eclipse.emf.cdo.security.Check;
-import org.eclipse.emf.cdo.security.ClassCheck;
+import org.eclipse.emf.cdo.security.Permission;
+import org.eclipse.emf.cdo.security.ClassPermission;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
-import org.eclipse.emf.cdo.security.PackageCheck;
+import org.eclipse.emf.cdo.security.PackagePermission;
 import org.eclipse.emf.cdo.security.Realm;
-import org.eclipse.emf.cdo.security.ResourceCheck;
+import org.eclipse.emf.cdo.security.ResourcePermission;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityElement;
 import org.eclipse.emf.cdo.security.SecurityItem;
@@ -229,40 +229,40 @@ public class SecuritySwitch<T>
         result = defaultCase(theEObject);
       return result;
     }
-    case SecurityPackage.CHECK:
+    case SecurityPackage.PERMISSION:
     {
-      Check check = (Check)theEObject;
-      T result = caseCheck(check);
+      Permission permission = (Permission)theEObject;
+      T result = casePermission(permission);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
     }
-    case SecurityPackage.CLASS_CHECK:
+    case SecurityPackage.CLASS_PERMISSION:
     {
-      ClassCheck classCheck = (ClassCheck)theEObject;
-      T result = caseClassCheck(classCheck);
+      ClassPermission classPermission = (ClassPermission)theEObject;
+      T result = caseClassPermission(classPermission);
       if (result == null)
-        result = caseCheck(classCheck);
+        result = casePermission(classPermission);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
     }
-    case SecurityPackage.PACKAGE_CHECK:
+    case SecurityPackage.PACKAGE_PERMISSION:
     {
-      PackageCheck packageCheck = (PackageCheck)theEObject;
-      T result = casePackageCheck(packageCheck);
+      PackagePermission packagePermission = (PackagePermission)theEObject;
+      T result = casePackagePermission(packagePermission);
       if (result == null)
-        result = caseCheck(packageCheck);
+        result = casePermission(packagePermission);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
     }
-    case SecurityPackage.RESOURCE_CHECK:
+    case SecurityPackage.RESOURCE_PERMISSION:
     {
-      ResourceCheck resourceCheck = (ResourceCheck)theEObject;
-      T result = caseResourceCheck(resourceCheck);
+      ResourcePermission resourcePermission = (ResourcePermission)theEObject;
+      T result = caseResourcePermission(resourcePermission);
       if (result == null)
-        result = caseCheck(resourceCheck);
+        result = casePermission(resourcePermission);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -417,65 +417,65 @@ public class SecuritySwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Check</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Permission</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Check</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Permission</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseCheck(Check object)
+  public T casePermission(Permission object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Class Check</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Class Permission</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Class Check</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Class Permission</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseClassCheck(ClassCheck object)
+  public T caseClassPermission(ClassPermission object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Package Check</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Package Permission</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Package Check</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Package Permission</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T casePackageCheck(PackageCheck object)
+  public T casePackagePermission(PackagePermission object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Resource Check</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Resource Permission</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Resource Check</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Resource Permission</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseResourceCheck(ResourceCheck object)
+  public T caseResourcePermission(ResourcePermission object)
   {
     return null;
   }

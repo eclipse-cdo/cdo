@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.security.impl;
 
 import org.eclipse.emf.cdo.security.Assignee;
-import org.eclipse.emf.cdo.security.Check;
+import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EClass;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RoleImpl#getId <em>Id</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.RoleImpl#getChecks <em>Checks</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.RoleImpl#getPermissions <em>Permissions</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RoleImpl#getAssignees <em>Assignees</em>}</li>
  * </ul>
  * </p>
@@ -93,9 +93,9 @@ public class RoleImpl extends SecurityItemImpl implements Role
    * @generated
    */
   @SuppressWarnings("unchecked")
-  public EList<Check> getChecks()
+  public EList<Permission> getPermissions()
   {
-    return (EList<Check>)eGet(SecurityPackage.Literals.ROLE__CHECKS, true);
+    return (EList<Permission>)eGet(SecurityPackage.Literals.ROLE__PERMISSIONS, true);
   }
 
 } // RoleImpl

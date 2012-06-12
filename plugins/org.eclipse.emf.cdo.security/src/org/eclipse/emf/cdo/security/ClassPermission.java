@@ -14,21 +14,21 @@ import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Class Check</b></em>'.
+ * A representation of the model object '<em><b>Class Permissionermission</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.security.ClassCheck#getApplicableClass <em>Applicable Class</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.ClassPermission#getApplicableClass <em>Applicable Class</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.security.SecurityPackage#getClassCheck()
+ * @see org.eclipse.emf.cdo.security.SecurityPackage#getClassPermission()
  * @model
  * @generated
  */
-public interface ClassCheck extends Check
+public interface ClassPermission extends Permission
 {
   /**
    * Returns the value of the '<em><b>Applicable Class</b></em>' reference.
@@ -40,14 +40,14 @@ public interface ClassCheck extends Check
    * <!-- end-user-doc -->
    * @return the value of the '<em>Applicable Class</em>' reference.
    * @see #setApplicableClass(EClass)
-   * @see org.eclipse.emf.cdo.security.SecurityPackage#getClassCheck_ApplicableClass()
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getClassPermission_ApplicableClass()
    * @model required="true"
    * @generated
    */
   EClass getApplicableClass();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.security.ClassCheck#getApplicableClass <em>Applicable Class</em>}' reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.security.ClassPermission#getApplicableClass <em>Applicable Class</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Applicable Class</em>' reference.
@@ -56,4 +56,4 @@ public interface ClassCheck extends Check
    */
   void setApplicableClass(EClass value);
 
-} // ClassCheck
+} // ClassPermission

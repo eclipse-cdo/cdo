@@ -12,14 +12,14 @@ package org.eclipse.emf.cdo.security.impl;
 
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.security.Assignee;
-import org.eclipse.emf.cdo.security.Check;
-import org.eclipse.emf.cdo.security.ClassCheck;
+import org.eclipse.emf.cdo.security.Permission;
+import org.eclipse.emf.cdo.security.ClassPermission;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
-import org.eclipse.emf.cdo.security.PackageCheck;
+import org.eclipse.emf.cdo.security.PackagePermission;
 import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.Realm;
-import org.eclipse.emf.cdo.security.ResourceCheck;
+import org.eclipse.emf.cdo.security.ResourcePermission;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityElement;
 import org.eclipse.emf.cdo.security.SecurityFactory;
@@ -113,28 +113,28 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass checkEClass = null;
+  private EClass permissionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass classCheckEClass = null;
+  private EClass classPermissionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass packageCheckEClass = null;
+  private EClass packagePermissionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass resourceCheckEClass = null;
+  private EClass resourcePermissionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -282,7 +282,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getRealm_AllChecks()
+  public EReference getRealm_AllPermissions()
   {
     return (EReference)realmEClass.getEStructuralFeatures().get(4);
   }
@@ -382,7 +382,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getRole_Checks()
+  public EReference getRole_Permissions()
   {
     return (EReference)roleEClass.getEStructuralFeatures().get(1);
   }
@@ -532,7 +532,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getUser_AllChecks()
+  public EReference getUser_AllPermissions()
   {
     return (EReference)userEClass.getEStructuralFeatures().get(11);
   }
@@ -652,9 +652,9 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getCheck()
+  public EClass getPermission()
   {
-    return checkEClass;
+    return permissionEClass;
   }
 
   /**
@@ -662,9 +662,9 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getCheck_Role()
+  public EReference getPermission_Role()
   {
-    return (EReference)checkEClass.getEStructuralFeatures().get(0);
+    return (EReference)permissionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -672,9 +672,9 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getCheck_Access()
+  public EAttribute getPermission_Access()
   {
-    return (EAttribute)checkEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)permissionEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -682,9 +682,9 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getClassCheck()
+  public EClass getClassPermission()
   {
-    return classCheckEClass;
+    return classPermissionEClass;
   }
 
   /**
@@ -692,9 +692,9 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getClassCheck_ApplicableClass()
+  public EReference getClassPermission_ApplicableClass()
   {
-    return (EReference)classCheckEClass.getEStructuralFeatures().get(0);
+    return (EReference)classPermissionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -702,9 +702,9 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getPackageCheck()
+  public EClass getPackagePermission()
   {
-    return packageCheckEClass;
+    return packagePermissionEClass;
   }
 
   /**
@@ -712,9 +712,9 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPackageCheck_ApplicablePackage()
+  public EReference getPackagePermission_ApplicablePackage()
   {
-    return (EReference)packageCheckEClass.getEStructuralFeatures().get(0);
+    return (EReference)packagePermissionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -722,9 +722,9 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getResourceCheck()
+  public EClass getResourcePermission()
   {
-    return resourceCheckEClass;
+    return resourcePermissionEClass;
   }
 
   /**
@@ -732,9 +732,9 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getResourceCheck_Pattern()
+  public EAttribute getResourcePermission_Pattern()
   {
-    return (EAttribute)resourceCheckEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)resourcePermissionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -797,7 +797,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     createEReference(realmEClass, REALM__ALL_USERS);
     createEReference(realmEClass, REALM__ALL_GROUPS);
     createEReference(realmEClass, REALM__ALL_ROLES);
-    createEReference(realmEClass, REALM__ALL_CHECKS);
+    createEReference(realmEClass, REALM__ALL_PERMISSIONS);
     createEAttribute(realmEClass, REALM__NAME);
     createEAttribute(realmEClass, REALM__DEFAULT_ACCESS);
 
@@ -807,7 +807,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
 
     roleEClass = createEClass(ROLE);
     createEAttribute(roleEClass, ROLE__ID);
-    createEReference(roleEClass, ROLE__CHECKS);
+    createEReference(roleEClass, ROLE__PERMISSIONS);
     createEReference(roleEClass, ROLE__ASSIGNEES);
 
     assigneeEClass = createEClass(ASSIGNEE);
@@ -834,24 +834,24 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     createEReference(userEClass, USER__PASSWORD);
     createEReference(userEClass, USER__ALL_GROUPS);
     createEReference(userEClass, USER__ALL_ROLES);
-    createEReference(userEClass, USER__ALL_CHECKS);
+    createEReference(userEClass, USER__ALL_PERMISSIONS);
     createEReference(userEClass, USER__UNASSIGNED_ROLES);
 
     userPasswordEClass = createEClass(USER_PASSWORD);
     createEAttribute(userPasswordEClass, USER_PASSWORD__ENCRYPTED);
 
-    checkEClass = createEClass(CHECK);
-    createEReference(checkEClass, CHECK__ROLE);
-    createEAttribute(checkEClass, CHECK__ACCESS);
+    permissionEClass = createEClass(PERMISSION);
+    createEReference(permissionEClass, PERMISSION__ROLE);
+    createEAttribute(permissionEClass, PERMISSION__ACCESS);
 
-    classCheckEClass = createEClass(CLASS_CHECK);
-    createEReference(classCheckEClass, CLASS_CHECK__APPLICABLE_CLASS);
+    classPermissionEClass = createEClass(CLASS_PERMISSION);
+    createEReference(classPermissionEClass, CLASS_PERMISSION__APPLICABLE_CLASS);
 
-    packageCheckEClass = createEClass(PACKAGE_CHECK);
-    createEReference(packageCheckEClass, PACKAGE_CHECK__APPLICABLE_PACKAGE);
+    packagePermissionEClass = createEClass(PACKAGE_PERMISSION);
+    createEReference(packagePermissionEClass, PACKAGE_PERMISSION__APPLICABLE_PACKAGE);
 
-    resourceCheckEClass = createEClass(RESOURCE_CHECK);
-    createEAttribute(resourceCheckEClass, RESOURCE_CHECK__PATTERN);
+    resourcePermissionEClass = createEClass(RESOURCE_PERMISSION);
+    createEAttribute(resourcePermissionEClass, RESOURCE_PERMISSION__PATTERN);
 
     // Create enums
     accessEEnum = createEEnum(ACCESS);
@@ -902,9 +902,9 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     assigneeEClass.getESuperTypes().add(this.getSecurityItem());
     groupEClass.getESuperTypes().add(this.getAssignee());
     userEClass.getESuperTypes().add(this.getAssignee());
-    classCheckEClass.getESuperTypes().add(this.getCheck());
-    packageCheckEClass.getESuperTypes().add(this.getCheck());
-    resourceCheckEClass.getESuperTypes().add(this.getCheck());
+    classPermissionEClass.getESuperTypes().add(this.getPermission());
+    packagePermissionEClass.getESuperTypes().add(this.getPermission());
+    resourcePermissionEClass.getESuperTypes().add(this.getPermission());
 
     // Initialize classes and features; add operations and parameters
     initEClass(securityElementEClass, SecurityElement.class,
@@ -937,10 +937,10 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
         null,
         "allRoles", null, 0, -1, Realm.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEReference(
-        getRealm_AllChecks(),
-        this.getCheck(),
+        getRealm_AllPermissions(),
+        this.getPermission(),
         null,
-        "allChecks", null, 0, -1, Realm.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        "allPermissions", null, 0, -1, Realm.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEAttribute(
         getRealm_Name(),
         theEcorePackage.getEString(),
@@ -967,10 +967,10 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
         theEcorePackage.getEString(),
         "id", null, 0, 1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEReference(
-        getRole_Checks(),
-        this.getCheck(),
-        this.getCheck_Role(),
-        "checks", null, 0, -1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        getRole_Permissions(),
+        this.getPermission(),
+        this.getPermission_Role(),
+        "permissions", null, 0, -1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEReference(
         getRole_Assignees(),
         this.getAssignee(),
@@ -1070,10 +1070,10 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
         null,
         "allRoles", null, 0, -1, User.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEReference(
-        getUser_AllChecks(),
-        this.getCheck(),
+        getUser_AllPermissions(),
+        this.getPermission(),
         null,
-        "allChecks", null, 0, -1, User.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        "allPermissions", null, 0, -1, User.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEReference(
         getUser_UnassignedRoles(),
         this.getRole(),
@@ -1087,39 +1087,40 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
         theEcorePackage.getEString(),
         "encrypted", null, 0, 1, UserPassword.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-    initEClass(checkEClass, Check.class, "Check", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEClass(permissionEClass, Permission.class,
+        "Permission", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEReference(
-        getCheck_Role(),
+        getPermission_Role(),
         this.getRole(),
-        this.getRole_Checks(),
-        "role", null, 1, 1, Check.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        this.getRole_Permissions(),
+        "role", null, 1, 1, Permission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEAttribute(
-        getCheck_Access(),
+        getPermission_Access(),
         this.getAccess(),
-        "access", "WRITE", 1, 1, Check.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+        "access", "WRITE", 1, 1, Permission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
-    initEClass(classCheckEClass, ClassCheck.class,
-        "ClassCheck", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEClass(classPermissionEClass, ClassPermission.class,
+        "ClassPermission", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEReference(
-        getClassCheck_ApplicableClass(),
+        getClassPermission_ApplicableClass(),
         theEcorePackage.getEClass(),
         null,
-        "applicableClass", null, 1, 1, ClassCheck.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        "applicableClass", null, 1, 1, ClassPermission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-    initEClass(packageCheckEClass, PackageCheck.class,
-        "PackageCheck", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEClass(packagePermissionEClass, PackagePermission.class,
+        "PackagePermission", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEReference(
-        getPackageCheck_ApplicablePackage(),
+        getPackagePermission_ApplicablePackage(),
         theEcorePackage.getEPackage(),
         null,
-        "applicablePackage", null, 1, 1, PackageCheck.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        "applicablePackage", null, 1, 1, PackagePermission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-    initEClass(resourceCheckEClass, ResourceCheck.class,
-        "ResourceCheck", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEClass(resourcePermissionEClass, ResourcePermission.class,
+        "ResourcePermission", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEAttribute(
-        getResourceCheck_Pattern(),
+        getResourcePermission_Pattern(),
         theEcorePackage.getEString(),
-        "pattern", null, 0, 1, ResourceCheck.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+        "pattern", null, 0, 1, ResourcePermission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
     // Initialize enums and add enum literals
     initEEnum(accessEEnum, Access.class, "Access"); //$NON-NLS-1$

@@ -13,32 +13,33 @@ package org.eclipse.emf.cdo.security.impl;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
-import org.eclipse.emf.cdo.security.ClassCheck;
+import org.eclipse.emf.cdo.security.PackagePermission;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Class Check</b></em>'.
+ * An implementation of the model object '<em><b>Package Permission</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.ClassCheckImpl#getApplicableClass <em>Applicable Class</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.PackagePermissionImpl#getApplicablePackage <em>Applicable Package</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ClassCheckImpl extends CheckImpl implements ClassCheck
+public class PackagePermissionImpl extends PermissionImpl implements PackagePermission
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ClassCheckImpl()
+  protected PackagePermissionImpl()
   {
     super();
   }
@@ -51,7 +52,7 @@ public class ClassCheckImpl extends CheckImpl implements ClassCheck
   @Override
   protected EClass eStaticClass()
   {
-    return SecurityPackage.Literals.CLASS_CHECK;
+    return SecurityPackage.Literals.PACKAGE_PERMISSION;
   }
 
   /**
@@ -59,9 +60,9 @@ public class ClassCheckImpl extends CheckImpl implements ClassCheck
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getApplicableClass()
+  public EPackage getApplicablePackage()
   {
-    return (EClass)eGet(SecurityPackage.Literals.CLASS_CHECK__APPLICABLE_CLASS, true);
+    return (EPackage)eGet(SecurityPackage.Literals.PACKAGE_PERMISSION__APPLICABLE_PACKAGE, true);
   }
 
   /**
@@ -69,16 +70,16 @@ public class ClassCheckImpl extends CheckImpl implements ClassCheck
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setApplicableClass(EClass newApplicableClass)
+  public void setApplicablePackage(EPackage newApplicablePackage)
   {
-    eSet(SecurityPackage.Literals.CLASS_CHECK__APPLICABLE_CLASS, newApplicableClass);
+    eSet(SecurityPackage.Literals.PACKAGE_PERMISSION__APPLICABLE_PACKAGE, newApplicablePackage);
   }
 
   public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
-    EClass actualClass = revision.getEClass();
-    EClass applicableClass = getApplicableClass();
-    return actualClass == applicableClass;
+    EPackage actualPackage = revision.getEClass().getEPackage();
+    EPackage applicablePackage = getApplicablePackage();
+    return actualPackage == applicablePackage;
   }
 
-} // ClassCheckImpl
+} // PackagePermissionImpl

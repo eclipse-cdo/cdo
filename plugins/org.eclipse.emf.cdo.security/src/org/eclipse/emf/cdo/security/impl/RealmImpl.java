@@ -10,9 +10,9 @@
  */
 package org.eclipse.emf.cdo.security.impl;
 
-import org.eclipse.emf.cdo.security.Check;
-import org.eclipse.emf.cdo.security.Group;
 import org.eclipse.emf.cdo.security.Access;
+import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.RealmUtil;
 import org.eclipse.emf.cdo.security.Role;
@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.InternalEObject;
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getAllUsers <em>All Users</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getAllGroups <em>All Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getAllRoles <em>All Roles</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getAllChecks <em>All Checks</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getAllPermissions <em>All Permissions</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getDefaultAccess <em>Default Access</em>}</li>
  * </ul>
@@ -112,7 +112,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
     }
   };
 
-  private EList<Check> allChecks = new CachedList<Check>()
+  private EList<Permission> allPermissions = new CachedList<Permission>()
   {
     @Override
     protected InternalEObject getOwner()
@@ -123,14 +123,14 @@ public class RealmImpl extends SecurityElementImpl implements Realm
     @Override
     protected EStructuralFeature getFeature()
     {
-      return SecurityPackage.Literals.REALM__ALL_CHECKS;
+      return SecurityPackage.Literals.REALM__ALL_PERMISSIONS;
     }
 
     @Override
     protected Object[] getData()
     {
       EList<SecurityItem> items = getItems();
-      return RealmUtil.allChecks(items).toArray();
+      return RealmUtil.allPermissions(items).toArray();
     }
   };
 
@@ -201,9 +201,9 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated NOT
    */
-  public EList<Check> getAllChecks()
+  public EList<Permission> getAllPermissions()
   {
-    return allChecks;
+    return allPermissions;
   }
 
   /**

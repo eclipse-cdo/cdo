@@ -14,21 +14,21 @@ import org.eclipse.emf.ecore.EPackage;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Package Check</b></em>'.
+ * A representation of the model object '<em><b>Package Permission</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.security.PackageCheck#getApplicablePackage <em>Applicable Package</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.PackagePermission#getApplicablePackage <em>Applicable Package</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.security.SecurityPackage#getPackageCheck()
+ * @see org.eclipse.emf.cdo.security.SecurityPackage#getPackagePermission()
  * @model
  * @generated
  */
-public interface PackageCheck extends Check
+public interface PackagePermission extends Permission
 {
   /**
    * Returns the value of the '<em><b>Applicable Package</b></em>' reference.
@@ -40,14 +40,14 @@ public interface PackageCheck extends Check
    * <!-- end-user-doc -->
    * @return the value of the '<em>Applicable Package</em>' reference.
    * @see #setApplicablePackage(EPackage)
-   * @see org.eclipse.emf.cdo.security.SecurityPackage#getPackageCheck_ApplicablePackage()
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getPackagePermission_ApplicablePackage()
    * @model required="true"
    * @generated
    */
   EPackage getApplicablePackage();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.security.PackageCheck#getApplicablePackage <em>Applicable Package</em>}' reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.security.PackagePermission#getApplicablePackage <em>Applicable Package</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Applicable Package</em>' reference.
@@ -56,4 +56,4 @@ public interface PackageCheck extends Check
    */
   void setApplicablePackage(EPackage value);
 
-} // PackageCheck
+} // PackagePermission

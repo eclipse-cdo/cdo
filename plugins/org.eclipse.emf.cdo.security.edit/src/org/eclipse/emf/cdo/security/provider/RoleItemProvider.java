@@ -119,7 +119,7 @@ public class RoleItemProvider extends SecurityItemItemProvider implements IEditi
     if (childrenFeatures == null)
     {
       super.getChildrenFeatures(object);
-      childrenFeatures.add(SecurityPackage.Literals.ROLE__CHECKS);
+      childrenFeatures.add(SecurityPackage.Literals.ROLE__PERMISSIONS);
     }
     return childrenFeatures;
   }
@@ -192,7 +192,7 @@ public class RoleItemProvider extends SecurityItemItemProvider implements IEditi
     case SecurityPackage.ROLE__ID:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
-    case SecurityPackage.ROLE__CHECKS:
+    case SecurityPackage.ROLE__PERMISSIONS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
@@ -211,14 +211,14 @@ public class RoleItemProvider extends SecurityItemItemProvider implements IEditi
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.ROLE__CHECKS,
-        SecurityFactory.eINSTANCE.createClassCheck()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.ROLE__PERMISSIONS,
+        SecurityFactory.eINSTANCE.createClassPermission()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.ROLE__CHECKS,
-        SecurityFactory.eINSTANCE.createPackageCheck()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.ROLE__PERMISSIONS,
+        SecurityFactory.eINSTANCE.createPackagePermission()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.ROLE__CHECKS,
-        SecurityFactory.eINSTANCE.createResourceCheck()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.ROLE__PERMISSIONS,
+        SecurityFactory.eINSTANCE.createResourcePermission()));
   }
 
 }

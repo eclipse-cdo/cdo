@@ -12,21 +12,21 @@ package org.eclipse.emf.cdo.security;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Resource Check</b></em>'.
+ * A representation of the model object '<em><b>Resource Permission</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.security.ResourceCheck#getPattern <em>Pattern</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.ResourcePermission#getPattern <em>Pattern</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.security.SecurityPackage#getResourceCheck()
+ * @see org.eclipse.emf.cdo.security.SecurityPackage#getResourcePermission()
  * @model
  * @generated
  */
-public interface ResourceCheck extends Check
+public interface ResourcePermission extends Permission
 {
   /**
    * Returns the value of the '<em><b>Pattern</b></em>' attribute.
@@ -38,14 +38,14 @@ public interface ResourceCheck extends Check
    * <!-- end-user-doc -->
    * @return the value of the '<em>Pattern</em>' attribute.
    * @see #setPattern(String)
-   * @see org.eclipse.emf.cdo.security.SecurityPackage#getResourceCheck_Pattern()
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getResourcePermission_Pattern()
    * @model
    * @generated
    */
   String getPattern();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.security.ResourceCheck#getPattern <em>Pattern</em>}' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.security.ResourcePermission#getPattern <em>Pattern</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Pattern</em>' attribute.
@@ -54,4 +54,4 @@ public interface ResourceCheck extends Check
    */
   void setPattern(String value);
 
-} // ResourceCheck
+} // ResourcePermission

@@ -21,7 +21,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.Role#getId <em>Id</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.Role#getChecks <em>Checks</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Role#getPermissions <em>Permissions</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Role#getAssignees <em>Assignees</em>}</li>
  * </ul>
  * </p>
@@ -77,21 +77,21 @@ public interface Role extends SecurityItem
   void setId(String value);
 
   /**
-   * Returns the value of the '<em><b>Checks</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.emf.cdo.security.Check}.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.security.Check#getRole <em>Role</em>}'.
+   * Returns the value of the '<em><b>Permissions</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.security.Permission}.
+   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.security.Permission#getRole <em>Role</em>}'.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Checks</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Permissions</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Checks</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.security.SecurityPackage#getRole_Checks()
-   * @see org.eclipse.emf.cdo.security.Check#getRole
+   * @return the value of the '<em>Permissions</em>' containment reference list.
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getRole_Permissions()
+   * @see org.eclipse.emf.cdo.security.Permission#getRole
    * @model opposite="role" containment="true"
    * @generated
    */
-  EList<Check> getChecks();
+  EList<Permission> getPermissions();
 
 } // Role

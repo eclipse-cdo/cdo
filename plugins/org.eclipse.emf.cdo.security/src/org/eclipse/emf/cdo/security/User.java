@@ -31,7 +31,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.cdo.security.User#getPassword <em>Password</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getAllGroups <em>All Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getAllRoles <em>All Roles</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.User#getAllChecks <em>All Checks</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.User#getAllPermissions <em>All Permissions</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getUnassignedRoles <em>Unassigned Roles</em>}</li>
  * </ul>
  * </p>
@@ -93,20 +93,20 @@ public interface User extends Assignee
   EList<Role> getAllRoles();
 
   /**
-   * Returns the value of the '<em><b>All Checks</b></em>' reference list.
-   * The list contents are of type {@link org.eclipse.emf.cdo.security.Check}.
+   * Returns the value of the '<em><b>All Permissions</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.security.Permission}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>All Checks</em>' reference list isn't clear,
+   * If the meaning of the '<em>All Permissions</em>' reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>All Checks</em>' reference list.
-   * @see org.eclipse.emf.cdo.security.SecurityPackage#getUser_AllChecks()
+   * @return the value of the '<em>All Permissions</em>' reference list.
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getUser_AllPermissions()
    * @model transient="true" changeable="false" volatile="true" derived="true"
    * @generated
    */
-  EList<Check> getAllChecks();
+  EList<Permission> getAllPermissions();
 
   /**
    * Returns the value of the '<em><b>Unassigned Roles</b></em>' reference list.

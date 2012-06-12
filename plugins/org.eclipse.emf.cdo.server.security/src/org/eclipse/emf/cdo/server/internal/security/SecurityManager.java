@@ -19,10 +19,10 @@ import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.security.Access;
-import org.eclipse.emf.cdo.security.Check;
-import org.eclipse.emf.cdo.security.ClassCheck;
+import org.eclipse.emf.cdo.security.ClassPermission;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.RealmUtil;
 import org.eclipse.emf.cdo.security.Role;
@@ -358,10 +358,10 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
           continue;
         }
 
-        ClassCheck check = SecurityFactory.eINSTANCE.createClassCheck();
-        check.setAccess(Access.WRITE);
-        administration.getChecks().add(check);
-        check.setApplicableClass(eClass);
+        ClassPermission permission = SecurityFactory.eINSTANCE.createClassPermission();
+        permission.setAccess(Access.WRITE);
+        administration.getPermissions().add(permission);
+        permission.setApplicableClass(eClass);
       }
     }
 
@@ -392,18 +392,18 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       return result;
     }
 
-    for (Check check : user.getAllChecks())
+    for (Permission permission : user.getAllPermissions())
     {
-      CDOPermission permission = convertPermission(check.getAccess());
-      if (permission.ordinal() <= result.ordinal())
+      CDOPermission p = convertPermission(permission.getAccess());
+      if (p.ordinal() <= result.ordinal())
       {
-        // Avoid expensive calls to Check.isApplicable() if the permission wouldn't increase
+        // Avoid expensive calls to Permission.isApplicable() if the permission wouldn't increase
         continue;
       }
 
-      if (check.isApplicable(revision, revisionProvider, securityContext))
+      if (permission.isApplicable(revision, revisionProvider, securityContext))
       {
-        result = permission;
+        result = p;
         if (result == CDOPermission.WRITE)
         {
           return result;
@@ -531,12 +531,12 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
       handleCommit(commitContext, user);
 
-      checkRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getNewObjects());
-      checkRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getDirtyObjects());
+      permissionRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getNewObjects());
+      permissionRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getDirtyObjects());
     }
 
-    private void checkRevisionsBeforeCommitting(CommitContext commitContext, CDOBranchPoint securityContext, User user,
-        InternalCDORevision[] revisions)
+    private void permissionRevisionsBeforeCommitting(CommitContext commitContext, CDOBranchPoint securityContext,
+        User user, InternalCDORevision[] revisions)
     {
       for (InternalCDORevision revision : revisions)
       {

@@ -85,31 +85,31 @@ public interface SecurityFactory extends EFactory
   UserPassword createUserPassword();
 
   /**
-   * Returns a new object of class '<em>Class Check</em>'.
+   * Returns a new object of class '<em>Class Permission</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Class Check</em>'.
+   * @return a new object of class '<em>Class Permission</em>'.
    * @generated
    */
-  ClassCheck createClassCheck();
+  ClassPermission createClassPermission();
 
   /**
-   * Returns a new object of class '<em>Package Check</em>'.
+   * Returns a new object of class '<em>Package Permission</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Package Check</em>'.
+   * @return a new object of class '<em>Package Permission</em>'.
    * @generated
    */
-  PackageCheck createPackageCheck();
+  PackagePermission createPackagePermission();
 
   /**
-   * Returns a new object of class '<em>Resource Check</em>'.
+   * Returns a new object of class '<em>Resource Permission</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Resource Check</em>'.
+   * @return a new object of class '<em>Resource Permission</em>'.
    * @generated
    */
-  ResourceCheck createResourceCheck();
+  ResourcePermission createResourcePermission();
 
   /**
    * Returns the package supported by this factory.

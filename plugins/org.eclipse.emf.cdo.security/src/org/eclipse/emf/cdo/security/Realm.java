@@ -24,7 +24,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.cdo.security.Realm#getAllUsers <em>All Users</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Realm#getAllGroups <em>All Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Realm#getAllRoles <em>All Roles</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.security.Realm#getAllChecks <em>All Checks</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Realm#getAllPermissions <em>All Permissions</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Realm#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Realm#getDefaultAccess <em>Default Access</em>}</li>
  * </ul>
@@ -101,20 +101,20 @@ public interface Realm extends SecurityElement
   EList<Role> getAllRoles();
 
   /**
-   * Returns the value of the '<em><b>All Checks</b></em>' reference list.
-   * The list contents are of type {@link org.eclipse.emf.cdo.security.Check}.
+   * Returns the value of the '<em><b>All Permissions</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.security.Permission}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>All Checks</em>' reference list isn't clear,
+   * If the meaning of the '<em>All Permissions</em>' reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>All Checks</em>' reference list.
-   * @see org.eclipse.emf.cdo.security.SecurityPackage#getRealm_AllChecks()
+   * @return the value of the '<em>All Permissions</em>' reference list.
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getRealm_AllPermissions()
    * @model transient="true" changeable="false" volatile="true" derived="true"
    * @generated
    */
-  EList<Check> getAllChecks();
+  EList<Permission> getAllPermissions();
 
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.

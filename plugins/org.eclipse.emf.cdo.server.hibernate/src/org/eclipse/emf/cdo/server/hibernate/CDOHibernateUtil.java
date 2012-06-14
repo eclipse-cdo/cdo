@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Martin Taal - added mappingProvider support
@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
 /**
+ * Various static methods that may help in setting up and dealing with {@link IHibernateStore Hibernate stores}.
+ *
  * @author Eike Stepper
  * @author Martin Taal
  */

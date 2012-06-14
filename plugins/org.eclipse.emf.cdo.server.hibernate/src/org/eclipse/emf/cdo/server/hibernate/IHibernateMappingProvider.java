@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Taal - initial API and implementation
  *    Eike Stepper - maintenance
@@ -14,8 +14,8 @@ package org.eclipse.emf.cdo.server.hibernate;
 import org.w3c.dom.Element;
 
 /**
- * A mappingprovider adds a hibernate mapping to a hibernate configuration object.
- * 
+ * A mapping provider adds a hibernate mapping to a hibernate configuration object.
+ *
  * @author Martin Taal
  */
 public interface IHibernateMappingProvider
@@ -32,6 +32,8 @@ public interface IHibernateMappingProvider
   public void setHibernateStore(IHibernateStore hibernateStore);
 
   /**
+   * Creates {@link IHibernateMappingProvider mapping provider} instances.
+   *
    * @author Eike Stepper
    * @since 2.0
    */

@@ -17,16 +17,21 @@
     <property name="allowInterruptRunningQueries" value="true"/>
     <property name="idGenerationLocation" value="STORE"/> <!-- Possible values: STORE | CLIENT -->
 
-    <!-- Example (see https://bugs.eclipse.org/bugs/show_bug.cgi?id=302775):
-    <userManager type="file" description="_database/repo1.users"/>
+    <!-- Example http://bugs.eclipse.org/380629
+			<securityManager type="default" realmPath="/security"/>
+			<securityManager type="annotation" realmPath="/security"/>
     -->
 
-    <!-- Example (see https://bugs.eclipse.org/bugs/show_bug.cgi?id=345835):
-    <userManager type="TestRepository" description="repo1"/>
+    <!-- Example http://bugs.eclipse.org/302775
+			<userManager type="file" description="_database/repo1.users"/>
     -->
 
-    <!-- Example (see https://bugs.eclipse.org/bugs/show_bug.cgi?id=345431):
-    <initialPackage nsURI="http://www.eclipse.org/emf/CDO/examples/company/1.0.0"/>
+    <!-- Example http://bugs.eclipse.org/34583
+			<userManager type="TestRepository" description="repo1"/>
+    -->
+
+    <!-- Example http://bugs.eclipse.org/345431
+			<initialPackage nsURI="http://www.eclipse.org/emf/CDO/examples/company/1.0.0"/>
     -->
 
     <store type="db">
@@ -36,8 +41,6 @@
 
       <mappingStrategy type="horizontal"> <!-- callout -->
         <property name="qualifiedNames" value="true"/>
-        <property name="toManyReferences" value="ONE_TABLE_PER_REFERENCE"/>
-        <property name="toOneReferences" value="LIKE_ATTRIBUTES"/>
 
         <!--
           Per default, the objectTypeCache is in-memory and contains
@@ -46,7 +49,7 @@
           The cache can be disabled by setting a size of 0.
         -->
 
-        <!-- Optional: 
+        <!-- Optional:
         <property name="objectTypeCacheSize" value="100000" />
         -->
 
@@ -109,6 +112,6 @@
       <property name="port" value="50032"/>
     </store>
   </repository>
-  -->  
+  -->
 
 </cdoServer>

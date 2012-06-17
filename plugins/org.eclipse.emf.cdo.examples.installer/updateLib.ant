@@ -56,4 +56,18 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="update-launch">
+		<attribute name="example" />
+		<attribute name="target" />
+		<attribute name="launch" />
+		<attribute name="project" />
+		<sequential>
+			<replaceregexp file="org.eclipse.emf.cdo.examples.installer/examples/@{target}/@{launch}.launch"
+			               byline="true"
+			               flags="g"
+			               match="@{example}"
+			               replace="@{project}" />
+		</sequential>
+	</macrodef>
+
 </project>

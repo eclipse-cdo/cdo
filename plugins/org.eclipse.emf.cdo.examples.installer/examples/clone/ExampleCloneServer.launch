@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/org.eclipse.emf.cdo.examples.installer.clone/src/org/eclipse/emf/cdo/examples/server/offline/OfflineExampleClone.java"/>
+<listEntry value="/cdo.example.clone/src/org/eclipse/emf/cdo/examples/server/offline/OfflineExampleClone.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.emf.cdo.examples.server.offline.OfflineExampleClone"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.emf.cdo.examples.installer.clone"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="cdo.example.clone"/>
 </launchConfiguration>

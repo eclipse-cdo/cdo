@@ -40,7 +40,7 @@ import java.util.Map;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
- * 
+ *
  * @author Eike Stepper
  */
 public abstract class OM
@@ -62,6 +62,8 @@ public abstract class OM
    */
   public static final class Activator extends OSGiActivator
   {
+    private String serverPort;
+
     public Activator()
     {
       super(BUNDLE);
@@ -70,6 +72,12 @@ public abstract class OM
     @Override
     protected void doStart() throws Exception
     {
+      serverPort = System.getProperty("org.gastro.server.port");
+      if (serverPort == null)
+      {
+        return;
+      }
+
       OM.LOG.info("Gastro server starting");
       JdbcDataSource dataSource = new JdbcDataSource();
       dataSource.setURL("jdbc:h2:database/gastro");
@@ -88,13 +96,19 @@ public abstract class OM
       CDOServerUtil.addRepository(IPluginContainer.INSTANCE, repository);
       CDONet4jServerUtil.prepareContainer(IPluginContainer.INSTANCE);
 
-      acceptor = (IAcceptor)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.acceptors", "tcp", "0.0.0.0:2036");
+      String description = "0.0.0.0:" + serverPort;
+      acceptor = (IAcceptor)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.acceptors", "tcp", description);
       OM.LOG.info("Gastro server started");
     }
 
     @Override
     protected void doStop() throws Exception
     {
+      if (serverPort == null)
+      {
+        return;
+      }
+
       OM.LOG.info("Gastro server stopping");
       LifecycleUtil.deactivate(acceptor);
       LifecycleUtil.deactivate(repository);

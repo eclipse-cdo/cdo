@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.Net4jUtil;
@@ -66,6 +67,8 @@ public class GastroServlet extends HttpServlet
 
   private MenuCardTemplate template = MenuCardTemplate.create(StringUtil.NL);
 
+  private IRepository repository;
+
   public GastroServlet()
   {
   }
@@ -73,8 +76,14 @@ public class GastroServlet extends HttpServlet
   @Override
   public void init() throws ServletException
   {
+    repository = GastroServer.getRepository();
+    if (repository == null)
+    {
+      return;
+    }
+
     OM.LOG.info("Gastro servlet initializing");
-    String repositoryName = GastroServer.getRepository().getName();
+    String repositoryName = repository.getName();
     restaurantName = getRestaurantName();
 
     acceptor = Net4jUtil.getAcceptor(IPluginContainer.INSTANCE, "jvm", repositoryName);
@@ -93,6 +102,11 @@ public class GastroServlet extends HttpServlet
   @Override
   public void destroy()
   {
+    if (repository == null)
+    {
+      return;
+    }
+
     OM.LOG.info("Gastro servlet destroying");
     if (view != null)
     {

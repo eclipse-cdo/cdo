@@ -1,7 +1,3 @@
-Class description missing: org.eclipse.emf.cdo.server.hibernate.CDOHibernateUtil.class(CDOHibernateUtil.java:21)
-Class description missing: org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider$Factory.class(IHibernateMappingProvider.java:38)
-Class description missing: org.eclipse.emf.cdo.server.spi.admin.CDOAdminHandler$Factory.class(CDOAdminHandler.java:34)
-Class description missing: org.eclipse.emf.cdo.server.spi.admin.CDOAdminHandler.class(CDOAdminHandler.java:23)
 Class description missing: org.eclipse.emf.cdo.server.spi.security.AnnotationHandler.class(AnnotationHandler.java:41)
 Class description missing: org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager$CommitHandler.class(InternalSecurityManager.java:40)
 Class description missing: org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager.class(InternalSecurityManager.java:23)

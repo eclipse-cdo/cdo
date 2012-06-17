@@ -105,6 +105,14 @@ Interface CDOAdminHandler</H2>
 
 
 <P>
+Handles requests from server-side <A HREF="../../../../../../../org/eclipse/emf/cdo/common/admin/CDOAdmin.html" title="interface in org.eclipse.emf.cdo.common.admin"><CODE>CDOAdmin</CODE></A> instances to <A HREF="../../../../../../../org/eclipse/emf/cdo/server/spi/admin/CDOAdminHandler.html#createRepository(java.lang.String, java.util.Map)"><CODE>create</CODE></A> or
+ <A HREF="../../../../../../../org/eclipse/emf/cdo/server/spi/admin/CDOAdminHandler.html#deleteRepository(org.eclipse.emf.cdo.server.IRepository)"><CODE>delete</CODE></A> repositories.
+ <p>
+ A handler can be contributed by <A HREF="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true#registerFactory(org.eclipse.net4j.util.factory.IFactory)" title="class or interface in org.eclipse.net4j.util.container"><CODE>registering</CODE></A>
+ a <A HREF="../../../../../../../org/eclipse/emf/cdo/server/spi/admin/CDOAdminHandler.Factory.html" title="class in org.eclipse.emf.cdo.server.spi.admin"><CODE>factory</CODE></A> with the <A HREF="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container"><CODE>managed container</CODE></A>.
+<P>
+
+<P>
 <DL>
 <DT><B>Since:</B></DT>
   <DD>4.1</DD>
@@ -126,7 +134,7 @@ Interface CDOAdminHandler</H2>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/spi/admin/CDOAdminHandler.Factory.html" title="class in org.eclipse.emf.cdo.server.spi.admin">CDOAdminHandler.Factory</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates <A HREF="../../../../../../../org/eclipse/emf/cdo/server/spi/admin/CDOAdminHandler.html" title="interface in org.eclipse.emf.cdo.server.spi.admin"><CODE>CDOAdminHandler</CODE></A> instances.</TD>
 </TR>
 </TABLE>
 &nbsp;

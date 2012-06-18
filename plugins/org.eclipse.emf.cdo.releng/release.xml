@@ -1,347 +1,472 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<release tag="R20110608-1407" integration="true" repository="CDO Model Repository Site">
-<element name="com.mongodb" version="2.4.0.v20110608-1747" type="org.eclipse.update.feature"/>
-<element name="com.mongodb.source" version="2.4.0.v20110608-1747" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn" version="1.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen" version="1.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.emf" version="1.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.emf.source" version="1.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.gmf" version="1.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.gmf.source" version="1.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.source" version="1.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn.ecore.editor.dawn" version="1.0.0.v20110607-1900" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn.ecore.editor.dawn.source" version="1.0.0.v20110607-1900" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn" version="1.0.0.v20110607-1900" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn.source" version="1.0.0.v20110607-1900" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn.examples" version="1.0.0.v20110607-1900" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn.examples.source" version="1.0.0.v20110607-1900" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn.sdk" version="1.0.0.v20110607-1900" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn.sdk.source" version="1.0.0.v20110607-1900" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn.source" version="1.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn.tests" version="1.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.dawn.tests.source" version="1.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.defs" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.defs.source" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.doc" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.doc.source" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.epp" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.epp.source" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.examples" version="4.0.0.v20110608-1011" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.examples.hibernate" version="4.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.examples.hibernate.source" version="4.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.examples.source" version="4.0.0.v20110608-1011" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.license" version="4.0.0.v20110518-0608" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.releng.version" version="1.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.releng.version.source" version="1.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.sdk" version="4.0.0.v20110608-1747" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.sdk.source" version="4.0.0.v20110608-1747" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.server" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.server.db" version="4.0.0.v20110608-1054" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.server.db.source" version="4.0.0.v20110608-1054" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.server.db4o" version="4.0.0.v20110608-1054" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.server.db4o.source" version="4.0.0.v20110608-1054" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.server.hibernate" version="4.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.server.hibernate.source" version="4.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.server.mongodb" version="4.0.0.v20110608-1747" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.server.mongodb.source" version="4.0.0.v20110608-1747" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.server.objectivity" version="4.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.server.objectivity.source" version="4.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.server.source" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.source" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.tests" version="4.0.0.v20110608-1054" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.tests.hibernate" version="4.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.tests.hibernate.source" version="4.0.0.v20110607-1632" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.emf.cdo.tests.source" version="4.0.0.v20110608-1054" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j" version="4.0.0.v20110608-1440" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.db" version="4.0.0.v20110608-1440" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.db.derby" version="4.0.0.v20110607-1031" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.db.derby.source" version="4.0.0.v20110607-1031" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.db.doc" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.db.doc.source" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.db.h2" version="4.0.0.v20110607-1031" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.db.h2.source" version="4.0.0.v20110607-1031" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.db.hsqldb" version="4.0.0.v20110607-1031" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.db.hsqldb.source" version="4.0.0.v20110607-1031" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.db.mysql" version="4.0.0.v20110607-1031" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.db.mysql.source" version="4.0.0.v20110607-1031" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.db.postgresql" version="4.0.0.v20110607-1031" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.db.postgresql.source" version="4.0.0.v20110607-1031" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.db.source" version="4.0.0.v20110608-1440" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.defs" version="4.0.0.v20110608-1440" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.defs.source" version="4.0.0.v20110608-1440" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.doc" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.doc.source" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.examples" version="4.0.0.v20110518-0627" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.examples.source" version="4.0.0.v20110518-0627" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.sdk" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.sdk.source" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.source" version="4.0.0.v20110608-1440" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.tests" version="4.0.0.v20110518-0627" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.tests.source" version="4.0.0.v20110518-0627" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.ui" version="4.0.0.v20110607-1031" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.ui.source" version="4.0.0.v20110607-1031" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.util.doc" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.eclipse.net4j.util.doc.source" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>
-<element name="org.gastro" version="4.0.0.v20110607-1701" type="org.eclipse.update.feature"/>
-<element name="org.gastro.source" version="4.0.0.v20110607-1701" type="org.eclipse.update.feature"/>
-<element name="com.mongodb" version="2.4.0.v20110526-1642" type="osgi.bundle"/>
-<element name="com.mongodb.source" version="2.4.0.v20110526-1642" type="osgi.bundle"/>
-<element name="org.apache.commons.codec" version="1.3.0.v201101211617" type="osgi.bundle"/>
-<element name="org.apache.commons.codec.source" version="1.3.0.v201101211617" type="osgi.bundle"/>
-<element name="org.apache.commons.httpclient" version="3.1.0.v201012070820" type="osgi.bundle"/>
-<element name="org.apache.commons.httpclient.source" version="3.1.0.v201012070820" type="osgi.bundle"/>
-<element name="org.apache.commons.lang" version="2.4.0.v201005080502" type="osgi.bundle"/>
-<element name="org.apache.commons.lang.source" version="2.4.0.v201005080502" type="osgi.bundle"/>
-<element name="org.apache.commons.logging" version="1.1.1.v201101211721" type="osgi.bundle"/>
-<element name="org.apache.derby" version="10.5.1.1_201105231903" type="osgi.bundle"/>
-<element name="org.apache.derby.source" version="10.5.1.1_201105231903" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo" version="4.0.0.v20110608-1639" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.common" version="4.0.0.v20110608-1639" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.common.db" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.common.db.source" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.common.source" version="4.0.0.v20110608-1639" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn" version="1.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen" version="1.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel" version="1.0.0.v20110524-1809" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.edit" version="1.0.0.v20110524-1809" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.edit.source" version="1.0.0.v20110524-1809" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor" version="1.0.0.v20110524-1809" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor.source" version="1.0.0.v20110524-1809" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf" version="1.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.edit" version="1.0.0.v20110524-1809" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.edit.source" version="1.0.0.v20110524-1809" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.source" version="1.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.ui" version="1.0.0.v20110524-1809" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.ui.source" version="1.0.0.v20110524-1809" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf" version="1.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.edit" version="1.0.0.v20110524-1809" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.edit.source" version="1.0.0.v20110524-1809" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.source" version="1.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.ui" version="1.0.0.v20110524-1809" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.ui.source" version="1.0.0.v20110524-1809" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.source" version="1.0.0.v20110524-1809" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.codegen.source" version="1.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.ecore.editor.dawn" version="1.0.0.v20110607-1900" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.ecore.editor.dawn.source" version="1.0.0.v20110607-1900" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn" version="1.0.0.v20110607-1900" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn.source" version="1.0.0.v20110607-1900" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.examples" version="1.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.examples.acore" version="1.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.examples.acore.diagram" version="1.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.examples.acore.diagram.dawn" version="1.0.0.v20110607-1900" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.examples.acore.diagram.dawn.source" version="1.0.0.v20110607-1900" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.examples.acore.diagram.source" version="1.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.examples.acore.edit" version="1.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.examples.acore.edit.source" version="1.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.examples.acore.editor" version="1.0.0.v20110526-1545" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.examples.acore.editor.dawn" version="1.0.0.v20110607-1900" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.examples.acore.editor.dawn.source" version="1.0.0.v20110607-1900" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.examples.acore.editor.source" version="1.0.0.v20110526-1545" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.examples.acore.source" version="1.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.examples.source" version="1.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.sdk" version="1.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.sdk.source" version="1.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.source" version="1.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.tests" version="1.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.tests.source" version="1.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.ui" version="1.0.0.v20110517-0936" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.ui.source" version="1.0.0.v20110517-0936" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.util" version="1.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.dawn.util.source" version="1.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.defs" version="4.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.defs.source" version="4.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.doc" version="4.0.0.v20110608-1639" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.edit" version="4.0.0.v20110528-1844" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.edit.source" version="4.0.0.v20110528-1844" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.examples" version="4.0.0.v20110608-1011" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.examples.company" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.examples.company.edit" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.examples.company.edit.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.examples.company.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.examples.hibernate.client" version="4.0.0.v20110518-0826" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.examples.hibernate.client.source" version="4.0.0.v20110518-0826" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.examples.hibernate.server" version="4.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.examples.hibernate.server.source" version="4.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.examples.server" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.examples.server.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.examples.source" version="4.0.0.v20110608-1011" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.location" version="4.0.0.v20110528-1118" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.location.source" version="4.0.0.v20110528-1118" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.migrator" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.migrator.source" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.net4j" version="4.0.0.v20110608-1440" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.net4j.source" version="4.0.0.v20110608-1440" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.releng.version" version="1.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.releng.version.digest" version="1.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.releng.version.digest.source" version="1.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.releng.version.digest.ui" version="1.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.releng.version.digest.ui.source" version="1.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.releng.version.source" version="1.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.sdk" version="4.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.sdk.source" version="4.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server" version="4.0.0.v20110608-1440" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.db" version="4.0.0.v20110608-1054" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.db.source" version="4.0.0.v20110608-1054" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.db4o" version="4.0.0.v20110608-1054" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.db4o.source" version="4.0.0.v20110608-1054" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.hibernate" version="4.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.hibernate.source" version="4.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.hibernate.teneo" version="3.0.100.v20110527-1138" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.hibernate.teneo.source" version="3.0.100.v20110527-1138" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.mongodb" version="4.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.mongodb.source" version="4.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.net4j" version="4.0.0.v20110528-1118" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.net4j.source" version="4.0.0.v20110528-1118" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.objectivity" version="4.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.objectivity.source" version="4.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.objectivity.stub" version="4.0.0.v20110605-0541" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.objectivity.stub.source" version="4.0.0.v20110605-0541" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.ocl" version="4.0.0.v20110528-1118" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.ocl.source" version="4.0.0.v20110528-1118" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.server.source" version="4.0.0.v20110608-1440" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.source" version="4.0.0.v20110608-1639" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.team" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.team.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests" version="4.0.0.v20110608-1054" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.db" version="4.0.0.v20110607-0551" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.db.source" version="4.0.0.v20110607-0551" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.db4o" version="4.0.0.v20110608-1054" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.db4o.source" version="4.0.0.v20110608-1054" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.hibernate" version="4.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.hibernate.source" version="4.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.mango" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.mango.source" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.model1" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.model1.source" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.model2" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.model2.source" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.model3" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.model3.source" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.model4" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.model4.source" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.model4interfaces" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.model4interfaces.source" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.model5" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.model5.source" version="3.0.100.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.model6" version="4.0.0.v20110527-1807" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.model6.source" version="4.0.0.v20110527-1807" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.mongodb" version="4.0.0.v20110524-1119" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.mongodb.source" version="4.0.0.v20110524-1119" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.objectivity" version="4.0.0.v20110607-1025" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.objectivity.source" version="4.0.0.v20110607-1025" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.source" version="4.0.0.v20110608-1054" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.ui" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.tests.ui.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.ui" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.ui.defs" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.ui.defs.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.ui.ide" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.ui.ide.source" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.ui.location" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.ui.location.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.ui.shared" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.ui.shared.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.ui.source" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.ui.workspace" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.ui.workspace.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.workspace" version="4.0.0.v20110527-1138" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.workspace.efs" version="4.0.0.v20110518-0954" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.workspace.efs.source" version="4.0.0.v20110518-0954" type="osgi.bundle"/>
-<element name="org.eclipse.emf.cdo.workspace.source" version="4.0.0.v20110527-1138" type="osgi.bundle"/>
-<element name="org.eclipse.net4j" version="4.0.0.v20110608-1440" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.buddies" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.buddies.chat" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.buddies.chat.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.buddies.chat.ui" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.buddies.chat.ui.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.buddies.common" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.buddies.common.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.buddies.server" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.buddies.server.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.buddies.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.buddies.ui" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.buddies.ui.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.db" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.db.derby" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.db.derby.source" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.db.doc" version="4.0.0.v20110608-1639" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.db.h2" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.db.h2.source" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.db.hsqldb" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.db.hsqldb.source" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.db.mysql" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.db.mysql.source" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.db.postgresql" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.db.postgresql.source" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.db.source" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.db.tests" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.db.tests.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.defs" version="4.0.0.v20110607-1701" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.defs.source" version="4.0.0.v20110607-1701" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.doc" version="4.0.0.v20110608-1639" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.examples" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.examples.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.http" version="4.0.0.v20110528-1118" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.http.common" version="4.0.0.v20110528-1118" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.http.common.source" version="4.0.0.v20110528-1118" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.http.server" version="4.0.0.v20110528-1118" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.http.server.source" version="4.0.0.v20110528-1118" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.http.source" version="4.0.0.v20110528-1118" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.http.tests" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.http.tests.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.jms" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.jms.admin" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.jms.admin.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.jms.api" version="3.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.jms.api.source" version="3.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.jms.server" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.jms.server.jdbc" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.jms.server.jdbc.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.jms.server.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.jms.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.jvm" version="4.0.0.v20110528-1118" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.jvm.source" version="4.0.0.v20110528-1118" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.sdk" version="4.0.0.v20110527-0904" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.sdk.source" version="4.0.0.v20110527-0904" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.source" version="4.0.0.v20110608-1440" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.tcp" version="4.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.tcp.source" version="4.0.0.v20110607-1632" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.tests" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.tests.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.ui" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.ui.defs" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.ui.defs.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.ui.shared" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.ui.shared.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.ui.source" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.util" version="3.1.0.v20110608-1440" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.util.defs" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.util.defs.source" version="4.0.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.util.doc" version="4.0.0.v20110608-1639" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.util.source" version="3.1.0.v20110608-1440" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.util.ui" version="3.1.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.eclipse.net4j.util.ui.source" version="3.1.0.v20110607-1031" type="osgi.bundle"/>
-<element name="org.gastro.business" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.gastro.business.edit" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.gastro.business.edit.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.gastro.business.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.gastro.inventory" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.gastro.inventory.edit" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.gastro.inventory.edit.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.gastro.inventory.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.gastro.rcp" version="4.0.0.v20110607-1701" type="osgi.bundle"/>
-<element name="org.gastro.rcp.department" version="4.0.0.v20110529-0919" type="osgi.bundle"/>
-<element name="org.gastro.rcp.department.source" version="4.0.0.v20110529-0919" type="osgi.bundle"/>
-<element name="org.gastro.rcp.source" version="4.0.0.v20110607-1701" type="osgi.bundle"/>
-<element name="org.gastro.rcp.table" version="4.0.0.v20110529-0919" type="osgi.bundle"/>
-<element name="org.gastro.rcp.table.source" version="4.0.0.v20110529-0919" type="osgi.bundle"/>
-<element name="org.gastro.server" version="4.0.0.v20110529-0919" type="osgi.bundle"/>
-<element name="org.gastro.server.source" version="4.0.0.v20110529-0919" type="osgi.bundle"/>
-<element name="org.gastro.server.web" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.gastro.server.web.source" version="4.0.0.v20110516-1727" type="osgi.bundle"/>
-<element name="org.gastro.testclient" version="4.0.0.v20110529-0919" type="osgi.bundle"/>
-<element name="org.gastro.testclient.source" version="4.0.0.v20110529-0919" type="osgi.bundle"/>
-<element name="org.h2" version="1.1.117.v201105142352" type="osgi.bundle"/>
-<element name="org.h2.source" version="1.1.117.v201105142352" type="osgi.bundle"/>
+<release tag="" integration="true" repository="CDO Model Repository Site">
+	<element name="org.eclipse.emf.cdo" version="4.1.0.v20120612-1514" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn" version="2.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen" version="2.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.emf" version="2.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.emf.source" version="2.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.gmf" version="2.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.gmf.source" version="2.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.source" version="2.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn.ecore.editor.dawn" version="1.0.0.v20120525-0627" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn.ecore.editor.dawn.source" version="1.0.0.v20120525-0627" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn" version="1.0.0.v20120525-0627" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn.source" version="1.0.0.v20120525-0627" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples" version="2.0.0.v20120523-0528" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.source" version="2.0.0.v20120523-0528" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn.sdk" version="2.0.0.v20120525-0730" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn.sdk.source" version="2.0.0.v20120525-0730" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn.source" version="2.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn.tests" version="2.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.dawn.tests.source" version="2.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.defs" version="4.1.0.v20120612-1514" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.defs.source" version="4.1.0.v20120612-1514" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.doc" version="4.1.0.v20120612-1844" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.doc.source" version="4.1.0.v20120612-1844" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.epp" version="4.1.0.v20120612-1514" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.epp.source" version="4.1.0.v20120612-1514" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.examples" version="4.1.0.v20120612-1807" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.examples.hibernate" version="4.1.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.examples.hibernate.source" version="4.1.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.examples.installer" version="4.1.0.v20120612-1807" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.examples.installer.source" version="4.1.0.v20120612-1807" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.examples.source" version="4.1.0.v20120612-1807" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.explorer.product" version="4.1.0.v20120612-0544" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.explorer.product.source" version="4.1.0.v20120612-0544" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.license" version="4.1.0.v20120114-1027" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.migrator" version="4.1.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.migrator.source" version="4.1.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.buildstamp" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.buildstamp.source" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.gitbash" version="1.0.0.v20120605-0832" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.gitbash.source" version="1.0.0.v20120605-0832" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.help" version="4.1.0.v20120611-1554" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.help.source" version="4.1.0.v20120611-1554" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.launches" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.launches.source" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.manifests" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.manifests.source" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.projectcopy" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.projectcopy.source" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.relativepaths" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.relativepaths.source" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.tasks" version="1.0.0.v20120521-0909" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.tasks.source" version="1.0.0.v20120521-0909" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.version" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.version.source" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.windowtitle" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.windowtitle.source" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.winexplorer" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.winexplorer.source" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.workingsets" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.releng.workingsets.source" version="1.0.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.sdk" version="4.1.0.v20120612-1844" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.sdk.source" version="4.1.0.v20120612-1844" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.server" version="4.1.0.v20120612-1514" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.server.db" version="4.1.0.v20120610-1749" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.server.db.source" version="4.1.0.v20120610-1749" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.server.db4o" version="4.1.0.v20120610-1749" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.server.db4o.source" version="4.1.0.v20120610-1749" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.server.hibernate" version="4.1.0.v20120612-1733" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.server.hibernate.source" version="4.1.0.v20120612-1733" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.server.mongodb" version="4.1.0.v20120610-1749" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.server.mongodb.source" version="4.1.0.v20120610-1749" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.server.objectivity" version="4.1.0.v20120610-1749" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.server.objectivity.source" version="4.1.0.v20120610-1749" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.server.product" version="4.1.0.v20120612-1056" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.server.product.source" version="4.1.0.v20120612-1056" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.server.source" version="4.1.0.v20120612-1514" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.source" version="4.1.0.v20120612-1514" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.tests" version="4.1.0.v20120611-0558" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.tests.hibernate" version="4.1.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.tests.hibernate.source" version="4.1.0.v20120521-0710" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.emf.cdo.tests.source" version="4.1.0.v20120611-0558" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j" version="4.1.0.v20120612-0600" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.db" version="4.1.0.v20120609-0625" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.db.derby" version="4.1.0.v20120607-1600" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.db.derby.source" version="4.1.0.v20120607-1600" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.db.doc" version="4.1.0.v20120611-1554" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.db.doc.source" version="4.1.0.v20120611-1554" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.db.h2" version="4.1.0.v20120607-1600" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.db.h2.source" version="4.1.0.v20120607-1600" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.db.hsqldb" version="4.1.0.v20120607-1600" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.db.hsqldb.source" version="4.1.0.v20120607-1600" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.db.mysql" version="4.1.0.v20120607-1600" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.db.mysql.source" version="4.1.0.v20120607-1600" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.db.postgresql" version="4.1.0.v20120607-1600" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.db.postgresql.source" version="4.1.0.v20120607-1600" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.db.source" version="4.1.0.v20120609-0625" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.defs" version="4.1.0.v20120612-0600" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.defs.source" version="4.1.0.v20120612-0600" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.doc" version="4.1.0.v20120611-1554" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.doc.source" version="4.1.0.v20120611-1554" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.examples" version="4.1.0.v20120612-0705" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.examples.installer" version="4.1.0.v20120612-0543" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.examples.installer.source" version="4.1.0.v20120612-0543" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.examples.source" version="4.1.0.v20120612-0705" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.sdk" version="4.1.0.v20120612-0600" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.sdk.source" version="4.1.0.v20120612-0600" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.source" version="4.1.0.v20120612-0600" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.tests" version="4.1.0.v20120607-1014" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.tests.source" version="4.1.0.v20120607-1014" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.ui" version="4.1.0.v20120609-0722" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.ui.source" version="4.1.0.v20120609-0722" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.util" version="4.1.0.v20120609-0625" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.util.doc" version="4.1.0.v20120611-1554" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.util.doc.source" version="4.1.0.v20120611-1554" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.util.source" version="4.1.0.v20120609-0625" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.util.ui" version="4.1.0.v20120612-0600" type="org.eclipse.update.feature"/>
+	<element name="org.eclipse.net4j.util.ui.source" version="4.1.0.v20120612-0600" type="org.eclipse.update.feature"/>
+	<element name="org.gastro" version="4.1.0.v20120612-1031" type="org.eclipse.update.feature"/>
+	<element name="org.gastro.source" version="4.1.0.v20120612-1031" type="org.eclipse.update.feature"/>
+	<element name="org.apache.commons.codec" version="1.3.0.v201101211617" type="osgi.bundle"/>
+	<element name="org.apache.commons.codec.source" version="1.3.0.v201101211617" type="osgi.bundle"/>
+	<element name="org.apache.commons.httpclient" version="3.1.0.v201012070820" type="osgi.bundle"/>
+	<element name="org.apache.commons.httpclient.source" version="3.1.0.v201012070820" type="osgi.bundle"/>
+	<element name="org.apache.commons.lang" version="2.6.0.v201205030909" type="osgi.bundle"/>
+	<element name="org.apache.commons.lang.source" version="2.6.0.v201205030909" type="osgi.bundle"/>
+	<element name="org.apache.commons.logging" version="1.1.1.v201101211721" type="osgi.bundle"/>
+	<element name="org.apache.derby" version="10.5.1.1_v201108232300" type="osgi.bundle"/>
+	<element name="org.apache.derby.source" version="10.5.1.1_v201108232300" type="osgi.bundle"/>
+	<element name="org.eclipse.core.contenttype" version="3.4.200.v20120523-2004" type="osgi.bundle"/>
+	<element name="org.eclipse.core.contenttype.source" version="3.4.200.v20120523-2004" type="osgi.bundle"/>
+	<element name="org.eclipse.core.jobs" version="3.5.200.v20120521-2346" type="osgi.bundle"/>
+	<element name="org.eclipse.core.jobs.source" version="3.5.200.v20120521-2346" type="osgi.bundle"/>
+	<element name="org.eclipse.core.runtime" version="3.8.0.v20120521-2346" type="osgi.bundle"/>
+	<element name="org.eclipse.core.runtime.compatibility.registry" version="3.5.100.v20120521-2346" type="osgi.bundle"/>
+	<element name="org.eclipse.core.runtime.compatibility.registry.source" version="3.5.100.v20120521-2346" type="osgi.bundle"/>
+	<element name="org.eclipse.core.runtime.source" version="3.8.0.v20120521-2346" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo" version="4.1.0.v20120611-0549" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.admin" version="4.1.0.v20120610-1146" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.admin.source" version="4.1.0.v20120610-1146" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.common" version="4.1.0.v20120612-0811" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.common.db" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.common.db.source" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.common.source" version="4.1.0.v20120612-0811" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen" version="1.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.edit" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.edit.source" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor.source" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.edit" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.edit.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.ui" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.ui.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.edit" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.edit.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.ui" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.ui.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.source" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.codegen.source" version="1.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.ecore.editor.dawn" version="1.0.0.v20120525-0627" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.ecore.editor.dawn.source" version="1.0.0.v20120525-0627" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn" version="1.0.0.v20120525-0627" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn.source" version="1.0.0.v20120525-0627" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.emf" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.emf.source" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples" version="1.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.acore" version="1.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.acore.diagram" version="1.0.100.v20120523-0528" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.acore.diagram.dawn" version="1.0.100.v20120523-0528" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.acore.diagram.dawn.source" version="1.0.100.v20120523-0528" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.acore.diagram.source" version="1.0.100.v20120523-0528" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.acore.edit" version="1.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.acore.edit.source" version="1.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.acore.editor" version="1.0.100.v20120523-0528" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.acore.editor.dawn" version="1.0.100.v20120523-0528" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.acore.editor.dawn.source" version="1.0.100.v20120523-0528" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.acore.editor.source" version="1.0.100.v20120523-0528" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.acore.graphiti" version="1.0.0.v20120523-0528" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.acore.graphiti.dawn" version="1.0.0.v20120523-0528" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.acore.graphiti.dawn.source" version="1.0.0.v20120523-0528" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.acore.graphiti.source" version="1.0.0.v20120523-0528" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.acore.source" version="1.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.examples.source" version="1.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.gmf" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.gmf.source" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.graphiti" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.graphiti.source" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.sdk" version="2.0.0.v20120525-0730" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.sdk.source" version="2.0.0.v20120525-0730" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.source" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.tests" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.tests.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.ui" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.ui.source" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.util" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.dawn.util.source" version="2.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.defs" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.defs.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.doc" version="4.1.0.v20120612-1844" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.doc.source" version="4.1.0.v20120612-1844" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.edit" version="4.1.0.v20120521-0909" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.edit.source" version="4.1.0.v20120521-0909" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.efs" version="4.0.0.v20120525-0627" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.efs.source" version="4.0.0.v20120525-0627" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples" version="4.0.100.v20120611-1121" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.company" version="4.0.100.v20120611-1644" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.company.edit" version="4.0.100.v20120612-0544" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.company.edit.source" version="4.0.100.v20120612-0544" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.company.source" version="4.0.100.v20120611-1644" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.hibernate.client" version="4.1.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.hibernate.client.source" version="4.1.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.hibernate.server" version="4.1.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.hibernate.server.source" version="4.1.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.installer" version="4.1.0.v20120612-1807" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.installer.client" version="4.1.0.v20120612-0544" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.installer.client.source" version="4.1.0.v20120612-0544" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.installer.clone" version="4.1.0.v20120611-1644" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.installer.clone.source" version="4.1.0.v20120611-1644" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.installer.master" version="4.1.0.v20120612-1056" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.installer.master.source" version="4.1.0.v20120612-1056" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.installer.source" version="4.1.0.v20120612-1807" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.server" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.server.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.examples.source" version="4.0.100.v20120611-1121" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.explorer" version="4.1.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.explorer.source" version="4.1.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.location" version="4.0.100.v20120525-0627" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.location.source" version="4.0.100.v20120525-0627" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.migrator" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.migrator.source" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.net4j" version="4.1.0.v20120611-0549" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.net4j.source" version="4.1.0.v20120611-0549" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.buildstamp" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.buildstamp.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.gitbash" version="1.0.0.v20120605-0832" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.gitbash.source" version="1.0.0.v20120605-0832" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.help" version="4.1.0.v20120611-1554" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.help.source" version="4.1.0.v20120611-1554" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.launches" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.launches.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.manifests" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.manifests.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.projectcopy" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.projectcopy.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.relativepaths" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.relativepaths.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.tasks" version="1.0.0.v20120521-0909" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.tasks.source" version="1.0.0.v20120521-0909" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.version" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.version.digest" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.version.digest.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.version.digest.ui" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.version.digest.ui.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.version.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.windowtitle" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.windowtitle.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.winexplorer" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.winexplorer.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.workingsets" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.releng.workingsets.source" version="1.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.sdk" version="4.1.0.v20120525-0730" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.sdk.source" version="4.1.0.v20120525-0730" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.security" version="4.1.0.v20120612-1514" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.security.edit" version="4.1.0.v20120612-0859" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.security.edit.source" version="4.1.0.v20120612-0859" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.security.editor" version="4.1.0.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.security.editor.source" version="4.1.0.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.security.source" version="4.1.0.v20120612-1514" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server" version="4.1.0.v20120612-0939" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.admin" version="4.1.0.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.admin.source" version="4.1.0.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.db" version="4.1.0.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.db.source" version="4.1.0.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.db4o" version="4.0.0.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.db4o.source" version="4.0.0.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.hibernate" version="4.1.0.v20120612-1733" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.hibernate.source" version="4.1.0.v20120612-1733" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.hibernate.teneo" version="4.1.0.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.hibernate.teneo.source" version="4.1.0.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.mongodb" version="4.0.100.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.mongodb.source" version="4.0.100.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.net4j" version="4.0.100.v20120611-0549" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.net4j.source" version="4.0.100.v20120611-0549" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.objectivity" version="4.0.100.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.objectivity.source" version="4.0.100.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.objectivity.stub" version="4.1.0.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.objectivity.stub.source" version="4.1.0.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.ocl" version="4.0.0.v20120606-0915" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.ocl.source" version="4.0.0.v20120606-0915" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.product" version="4.1.0.v20120612-1056" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.product.source" version="4.1.0.v20120612-1056" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.security" version="4.1.0.v20120612-0929" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.security.source" version="4.1.0.v20120612-0929" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.server.source" version="4.1.0.v20120612-0939" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.source" version="4.1.0.v20120611-0549" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.team" version="4.0.100.v20120609-0759" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.team.source" version="4.0.100.v20120609-0759" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests" version="4.0.100.v20120611-0558" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.all" version="4.1.0.v20120523-0544" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.all.source" version="4.1.0.v20120523-0544" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.db" version="4.0.100.v20120603-1003" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.db.source" version="4.0.100.v20120603-1003" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.db4o" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.db4o.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.hibernate" version="4.1.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.hibernate.source" version="4.1.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.mango" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.mango.source" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.model1" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.model1.source" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.model2" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.model2.source" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.model3" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.model3.source" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.model4" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.model4.source" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.model4interfaces" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.model4interfaces.source" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.model5" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.model5.source" version="3.0.200.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.model6" version="4.0.0.v20120521-0909" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.model6.source" version="4.0.0.v20120521-0909" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.mongodb" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.mongodb.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.objectivity" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.objectivity.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.source" version="4.0.100.v20120611-0558" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.ui" version="4.0.100.v20120525-0627" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.tests.ui.source" version="4.0.100.v20120525-0627" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.ui" version="4.1.0.v20120611-0549" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.ui.admin" version="4.1.0.v20120611-0549" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.ui.admin.source" version="4.1.0.v20120611-0549" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.ui.defs" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.ui.defs.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.ui.efs" version="4.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.ui.efs.source" version="4.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.ui.ide" version="4.0.100.v20120606-1626" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.ui.ide.source" version="4.0.100.v20120606-1626" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.ui.location" version="4.0.100.v20120606-1626" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.ui.location.source" version="4.0.100.v20120606-1626" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.ui.shared" version="4.0.100.v20120606-1626" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.ui.shared.source" version="4.0.100.v20120606-1626" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.ui.source" version="4.1.0.v20120611-0549" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.ui.workspace" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.ui.workspace.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.workspace" version="4.1.0.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.workspace.efs" version="4.0.0.v20120524-0838" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.workspace.efs.source" version="4.0.0.v20120524-0838" type="osgi.bundle"/>
+	<element name="org.eclipse.emf.cdo.workspace.source" version="4.1.0.v20120610-1749" type="osgi.bundle"/>
+	<element name="org.eclipse.equinox.app" version="1.3.100.v20120522-1841" type="osgi.bundle"/>
+	<element name="org.eclipse.equinox.app.source" version="1.3.100.v20120522-1841" type="osgi.bundle"/>
+	<element name="org.eclipse.equinox.common" version="3.6.100.v20120522-1841" type="osgi.bundle"/>
+	<element name="org.eclipse.equinox.common.source" version="3.6.100.v20120522-1841" type="osgi.bundle"/>
+	<element name="org.eclipse.equinox.preferences" version="3.5.0.v20120522-1841" type="osgi.bundle"/>
+	<element name="org.eclipse.equinox.preferences.source" version="3.5.0.v20120522-1841" type="osgi.bundle"/>
+	<element name="org.eclipse.equinox.registry" version="3.5.200.v20120522-1841" type="osgi.bundle"/>
+	<element name="org.eclipse.equinox.registry.source" version="3.5.200.v20120522-1841" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j" version="4.1.0.v20120611-0549" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.buddies" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.buddies.chat" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.buddies.chat.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.buddies.chat.ui" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.buddies.chat.ui.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.buddies.common" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.buddies.common.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.buddies.server" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.buddies.server.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.buddies.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.buddies.ui" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.buddies.ui.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.db" version="4.1.0.v20120607-1600" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.db.derby" version="4.0.100.v20120607-1600" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.db.derby.source" version="4.0.100.v20120607-1600" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.db.doc" version="4.1.0.v20120611-1554" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.db.doc.source" version="4.1.0.v20120611-1554" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.db.h2" version="4.0.100.v20120607-1600" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.db.h2.source" version="4.0.100.v20120607-1600" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.db.hsqldb" version="4.1.0.v20120607-1600" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.db.hsqldb.source" version="4.1.0.v20120607-1600" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.db.mysql" version="4.0.100.v20120607-1600" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.db.mysql.source" version="4.0.100.v20120607-1600" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.db.postgresql" version="4.0.100.v20120607-1600" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.db.postgresql.source" version="4.0.100.v20120607-1600" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.db.source" version="4.1.0.v20120607-1600" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.db.tests" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.db.tests.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.debug" version="3.0.0.v20120521-0909" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.debug.source" version="3.0.0.v20120521-0909" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.defs" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.defs.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.doc" version="4.1.0.v20120611-1554" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.doc.source" version="4.1.0.v20120611-1554" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.examples" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.examples.installer" version="4.1.0.v20120612-0543" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.examples.installer.source" version="4.1.0.v20120612-0543" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.examples.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.http" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.http.common" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.http.common.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.http.server" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.http.server.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.http.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.http.tests" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.http.tests.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.jms" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.jms.admin" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.jms.admin.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.jms.api" version="3.1.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.jms.api.source" version="3.1.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.jms.server" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.jms.server.jdbc" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.jms.server.jdbc.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.jms.server.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.jms.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.jms.tests" version="4.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.jms.tests.source" version="4.0.0.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.jvm" version="4.1.0.v20120607-1039" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.jvm.source" version="4.1.0.v20120607-1039" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.sdk" version="4.1.0.v20120525-0730" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.sdk.source" version="4.1.0.v20120525-0730" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.source" version="4.1.0.v20120611-0549" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.tcp" version="4.1.0.v20120609-0625" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.tcp.source" version="4.1.0.v20120609-0625" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.tests" version="4.1.0.v20120607-1014" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.tests.source" version="4.1.0.v20120607-1014" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.ui" version="4.1.0.v20120609-0722" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.ui.defs" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.ui.defs.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.ui.shared" version="4.1.0.v20120609-1104" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.ui.shared.source" version="4.1.0.v20120609-1104" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.ui.source" version="4.1.0.v20120609-0722" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.util" version="3.2.0.v20120609-0625" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.util.defs" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.util.defs.source" version="4.0.100.v20120521-0710" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.util.doc" version="4.1.0.v20120611-1554" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.util.doc.source" version="4.1.0.v20120611-1554" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.util.source" version="3.2.0.v20120609-0625" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.util.ui" version="3.2.0.v20120611-0350" type="osgi.bundle"/>
+	<element name="org.eclipse.net4j.util.ui.source" version="3.2.0.v20120611-0350" type="osgi.bundle"/>
+	<element name="org.eclipse.orbit.mongodb" version="2.7.3.v20120213-1927" type="osgi.bundle"/>
+	<element name="org.eclipse.osgi" version="3.8.0.v20120529-1548" type="osgi.bundle"/>
+	<element name="org.eclipse.osgi.source" version="3.8.0.v20120529-1548" type="osgi.bundle"/>
+	<element name="org.gastro.business" version="4.0.100.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.gastro.business.edit" version="4.0.100.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.gastro.business.edit.source" version="4.0.100.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.gastro.business.source" version="4.0.100.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.gastro.inventory" version="4.0.100.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.gastro.inventory.edit" version="4.0.100.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.gastro.inventory.edit.source" version="4.0.100.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.gastro.inventory.source" version="4.0.100.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.gastro.rcp" version="4.1.0.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.gastro.rcp.department" version="4.0.100.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.gastro.rcp.department.source" version="4.0.100.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.gastro.rcp.source" version="4.1.0.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.gastro.rcp.table" version="4.0.100.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.gastro.rcp.table.source" version="4.0.100.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.gastro.server" version="4.0.100.v20120612-1031" type="osgi.bundle"/>
+	<element name="org.gastro.server.source" version="4.0.100.v20120612-1031" type="osgi.bundle"/>
+	<element name="org.gastro.server.web" version="4.1.0.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.gastro.server.web.source" version="4.1.0.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.gastro.testclient" version="4.0.100.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.gastro.testclient.source" version="4.0.100.v20120612-0832" type="osgi.bundle"/>
+	<element name="org.h2" version="1.1.117.v201105142352" type="osgi.bundle"/>
+	<element name="org.h2.source" version="1.1.117.v201105142352" type="osgi.bundle"/>
 </release>

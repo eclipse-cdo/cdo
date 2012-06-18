@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor" version="2">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.gmf.codegen.gmfgen.provider.GenCustomGeneratorExtensionItemProvider">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.gmf.codegen.gmfgen.provider.GenCustomGeneratorExtensionItemProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor_2.0.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.gmf.codegen.gmfgen.provider.GenFixedInputsTemplateInvocationItemProvider">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.gmf.codegen.gmfgen.provider.GenFixedInputsTemplateInvocationItemProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor_2.0.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.gmf.codegen.gmfgen.provider.GenTemplateInvocationBaseItemProvider">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.gmf.codegen.gmfgen.provider.GenTemplateInvocationBaseItemProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor_2.0.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.gmf.codegen.gmfgen.provider.GenTemplateInvocationItemProvider">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.gmf.codegen.gmfgen.provider.GenTemplateInvocationItemProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor_2.0.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.gmf.codegen.gmfgen.provider.GenVisualEffectItemProvider">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.gmf.codegen.gmfgen.provider.GenVisualEffectItemProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor_2.0.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.gmf.codegen.gmfgen.provider.OclChoiceParserItemProvider">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.gmf.codegen.gmfgen.provider.OclChoiceParserItemProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor_2.0.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.gmf.codegen.gmfgen.provider.PredefinedEnumParserItemProvider">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.gmf.codegen.gmfgen.provider.PredefinedEnumParserItemProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor_2.0.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

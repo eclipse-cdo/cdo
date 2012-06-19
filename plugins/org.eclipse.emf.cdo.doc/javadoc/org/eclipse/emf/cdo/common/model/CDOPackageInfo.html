@@ -92,7 +92,7 @@ org.eclipse.emf.cdo.common.model</FONT>
 <BR>
 Interface CDOPackageInfo</H2>
 <DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</A>&gt;, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Descriptor</A></DD>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</A>&gt;, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Descriptor</A></DD>
 </DL>
 <DL>
 <DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</A></DD>
@@ -100,7 +100,7 @@ Interface CDOPackageInfo</H2>
 <HR>
 <DL>
   <DT>public interface <B>CDOPackageInfo</B>
-  <DD>extends <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Descriptor</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</A>&gt;
+  <DD>extends <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Descriptor</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</A>&gt;
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
@@ -119,11 +119,11 @@ Interface CDOPackageInfo</H2>
 
 
 <P>
-Describes a single <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>package </CODE></A> instance of the nested package tree strucure represented by the
+Describes a single <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>package </CODE></A> instance of the nested package tree strucure represented by the
  containing <A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><CODE>package unit</CODE></A>.
  <p>
  While the containing package unit is in the <A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.State.html#PROXY"><CODE>PROXY</CODE></A> state this package info acts as
- a <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>package descriptor</CODE></A> in the associated <A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model"><CODE>package registry</CODE></A>. When that
+ a <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>package descriptor</CODE></A> in the associated <A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model"><CODE>package registry</CODE></A>. When that
  package unit is loaded all contained package infos/descriptors are resolved and replaced by their actual packages. At
  the same time the describing package info objects are attached as adapters to the resolved packages. This way the
  descriptive information is available before and after loading the packages.
@@ -151,10 +151,10 @@ Describes a single <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc
 &nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.common.notify.Adapter"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.emf.common.notify.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</A></B></TH>
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.emf.common.notify.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/notify/Adapter.Internal.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter.Internal</A></CODE></TD>
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.Internal.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter.Internal</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -169,11 +169,11 @@ Describes a single <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A></CODE></FONT></TD>
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html#getEPackage(boolean)">getEPackage</A></B>(boolean&nbsp;loadOnDemand)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>package</CODE></A> described by this package info.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>package</CODE></A> described by this package info.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -197,7 +197,7 @@ Describes a single <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html#getParentURI()">getParentURI</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the namespace URI of the <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EPackage.html?is-external=true#getESuperPackage()" title="class or interface in org.eclipse.emf.ecore"><CODE>super package</CODE></A> of the package described by this
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the namespace URI of the <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.html?is-external=true#getESuperPackage()" title="class or interface in org.eclipse.emf.ecore"><CODE>super package</CODE></A> of the package described by this
  package info.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -240,19 +240,19 @@ Describes a single <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.common.notify.Adapter"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.common.notify.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.common.notify.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/notify/Adapter.html?is-external=true#getTarget()" title="class or interface in org.eclipse.emf.common.notify">getTarget</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/notify/Adapter.html?is-external=true#isAdapterForType(java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify">isAdapterForType</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/notify/Adapter.html?is-external=true#notifyChanged(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify">notifyChanged</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/common/notify/Adapter.html?is-external=true#setTarget(org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.common.notify">setTarget</A></CODE></TD>
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true#getTarget()" title="class or interface in org.eclipse.emf.common.notify">getTarget</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true#isAdapterForType(java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify">isAdapterForType</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true#notifyChanged(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify">notifyChanged</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true#setTarget(org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.common.notify">setTarget</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.ecore.EPackage.Descriptor"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.ecore.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Descriptor</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.ecore.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Descriptor</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true#getEFactory()" title="class or interface in org.eclipse.emf.ecore">getEFactory</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true#getEPackage()" title="class or interface in org.eclipse.emf.ecore">getEPackage</A></CODE></TD>
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true#getEFactory()" title="class or interface in org.eclipse.emf.ecore">getEFactory</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true#getEPackage()" title="class or interface in org.eclipse.emf.ecore">getEPackage</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Comparable"><!-- --></A>
@@ -314,7 +314,7 @@ getParentURI</H3>
 <PRE>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getParentURI</B>()</PRE>
 <DL>
-<DD>Returns the namespace URI of the <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EPackage.html?is-external=true#getESuperPackage()" title="class or interface in org.eclipse.emf.ecore"><CODE>super package</CODE></A> of the package described by this
+<DD>Returns the namespace URI of the <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.html?is-external=true#getESuperPackage()" title="class or interface in org.eclipse.emf.ecore"><CODE>super package</CODE></A> of the package described by this
  package info.
 <P>
 <DD><DL>
@@ -329,9 +329,9 @@ getParentURI</H3>
 <A NAME="getEPackage(boolean)"><!-- --></A><H3>
 getEPackage</H3>
 <PRE>
-<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A> <B>getEPackage</B>(boolean&nbsp;loadOnDemand)</PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A> <B>getEPackage</B>(boolean&nbsp;loadOnDemand)</PRE>
 <DL>
-<DD>Returns the <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>package</CODE></A> described by this package info.
+<DD>Returns the <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>package</CODE></A> described by this package info.
 <P>
 <DD><DL>
 </DL>

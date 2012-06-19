@@ -262,7 +262,7 @@ Interface InternalCDOSession</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#getPackageRegistry()">getPackageRegistry</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the EMF <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>package registry</CODE></A> that is used by all <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>objects</CODE></A> of all
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the EMF <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>package registry</CODE></A> that is used by all <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>objects</CODE></A> of all
  <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>views</CODE></A> of this session.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -374,7 +374,7 @@ Interface InternalCDOSession</H2>
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#resolveElementProxy(org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.ecore.EStructuralFeature, int, int)">resolveElementProxy</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A>&nbsp;revision,
-                    <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature,
+                    <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature,
                     int&nbsp;accessIndex,
                     int&nbsp;serverIndex)</CODE>
 
@@ -717,10 +717,10 @@ getPackageRegistry</H3>
 <A HREF="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry</A> <B>getPackageRegistry</B>()</PRE>
 <DL>
 <DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getPackageRegistry()">CDOSession</A></CODE></B></DD>
-<DD>Returns the EMF <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>package registry</CODE></A> that is used by all <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>objects</CODE></A> of all
+<DD>Returns the EMF <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>package registry</CODE></A> that is used by all <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>objects</CODE></A> of all
  <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>views</CODE></A> of this session.
  <p>
- This registry is managed by the <A HREF="../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><CODE>package unit manager</CODE></A> of this session. All <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>packages</CODE></A> that are already persisted in the repository of this session are automatically registered with this
+ This registry is managed by the <A HREF="../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><CODE>package unit manager</CODE></A> of this session. All <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>packages</CODE></A> that are already persisted in the repository of this session are automatically registered with this
  registry. New packages can be locally registered with this registry and are committed to the repository through a
  <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A>, if needed.
 <P>
@@ -1034,7 +1034,7 @@ void <B>viewDetached</B>(<A HREF="../../../../../org/eclipse/emf/spi/cdo/Interna
 resolveElementProxy</H3>
 <PRE>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>resolveElementProxy</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A>&nbsp;revision,
-                           <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature,
+                           <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature,
                            int&nbsp;accessIndex,
                            int&nbsp;serverIndex)</PRE>
 <DL>

@@ -88,11 +88,19 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/internal/server/TransactionCommitContext.java" type="org.eclipse.emf.cdo.internal.server.TransactionCommitContext$DeltaLockWrapper">
+    <resource path="src/org/eclipse/emf/cdo/internal/server/TransactionCommitContext.java" type="org.eclipse.emf.cdo.internal.server.TransactionCommitContext$DeltaLockWrapper$ForID">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOID"/>
+                <message_argument value="ForID"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/TransactionCommitContext.java" type="org.eclipse.emf.cdo.internal.server.TransactionCommitContext$DeltaLockWrapper$ForIDAndBranch">
         <filter id="574619656">
             <message_arguments>
                 <message_argument value="CDOIDAndBranch"/>
-                <message_argument value="DeltaLockWrapper"/>
+                <message_argument value="ForIDAndBranch"/>
             </message_arguments>
         </filter>
     </resource>

@@ -769,7 +769,7 @@ public class TransactionCommitContext implements InternalCommitContext
         InternalCDORevisionDelta delta = dirtyObjectDeltas[i];
         CDOID id = delta.getID();
         Object key = lockManager.getLockKey(id, transaction.getBranch());
-        lockedObjects.add(new DeltaLockWrapper(key, delta));
+        lockedObjects.add(createDeltaLockWrapper(key, delta));
 
         if (hasContainmentChanges(delta))
         {
@@ -828,6 +828,21 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
+  private DeltaLockWrapper createDeltaLockWrapper(Object key, InternalCDORevisionDelta delta)
+  {
+    if (key instanceof CDOID)
+    {
+      return new DeltaLockWrapper.ForID((CDOID)key, delta);
+    }
+
+    if (key instanceof CDOIDAndBranch)
+    {
+      return new DeltaLockWrapper.ForIDAndBranch((CDOIDAndBranch)key, delta);
+    }
+
+    throw new IllegalArgumentException("Invalid key: " + key);
+  }
+
   /**
    * Iterates up the eContainers of an object and returns <code>true</code> on the first parent locked by another view.
    *
@@ -856,7 +871,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
 
     Object key = lockManager.getLockKey(id, transaction.getBranch());
-    DeltaLockWrapper lockWrapper = new DeltaLockWrapper(key, null);
+    DeltaLockWrapper lockWrapper = createDeltaLockWrapper(key, null);
 
     if (lockManager.hasLockByOthers(LockType.WRITE, transaction, lockWrapper))
     {
@@ -1323,7 +1338,7 @@ public class TransactionCommitContext implements InternalCommitContext
   /**
    * @author Martin Fluegge
    */
-  private static final class DeltaLockWrapper implements CDOIDAndBranch
+  private static abstract class DeltaLockWrapper
   {
     private Object key;
 
@@ -1343,16 +1358,6 @@ public class TransactionCommitContext implements InternalCommitContext
     public InternalCDORevisionDelta getDelta()
     {
       return delta;
-    }
-
-    public CDOID getID()
-    {
-      return key instanceof CDOIDAndBranch ? ((CDOIDAndBranch)key).getID() : (CDOID)key;
-    }
-
-    public CDOBranch getBranch()
-    {
-      return key instanceof CDOIDAndBranch ? ((CDOIDAndBranch)key).getBranch() : null;
     }
 
     @Override
@@ -1377,6 +1382,92 @@ public class TransactionCommitContext implements InternalCommitContext
     public String toString()
     {
       return key.toString();
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private static final class ForID extends DeltaLockWrapper implements CDOID
+    {
+      private static final long serialVersionUID = 1L;
+
+      public ForID(CDOID key, InternalCDORevisionDelta delta)
+      {
+        super(key, delta);
+      }
+
+      @Override
+      public CDOID getKey()
+      {
+        return (CDOID)super.getKey();
+      }
+
+      public Type getType()
+      {
+        return getKey().getType();
+      }
+
+      public boolean isNull()
+      {
+        return getKey().isNull();
+      }
+
+      public boolean isObject()
+      {
+        return getKey().isObject();
+      }
+
+      public boolean isTemporary()
+      {
+        return getKey().isTemporary();
+      }
+
+      public boolean isDangling()
+      {
+        return getKey().isDangling();
+      }
+
+      public boolean isExternal()
+      {
+        return getKey().isExternal();
+      }
+
+      public String toURIFragment()
+      {
+        return getKey().toURIFragment();
+      }
+
+      public int compareTo(CDOID o)
+      {
+        return getKey().compareTo(o);
+      }
+    }
+
+    /**
+     * @author Martin Fluegge
+     */
+    private static final class ForIDAndBranch extends DeltaLockWrapper implements CDOIDAndBranch
+    {
+      public ForIDAndBranch(CDOIDAndBranch key, InternalCDORevisionDelta delta)
+      {
+        super(key, delta);
+      }
+
+      @Override
+      public CDOIDAndBranch getKey()
+      {
+        return (CDOIDAndBranch)super.getKey();
+      }
+
+      public CDOID getID()
+      {
+        return getKey().getID();
+      }
+
+      public CDOBranch getBranch()
+      {
+        return getKey().getBranch();
+      }
     }
   }
 

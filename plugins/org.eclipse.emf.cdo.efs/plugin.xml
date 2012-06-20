@@ -21,29 +21,4 @@
       </filesystem>
    </extension>
 
-   <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="org.eclipse.emf.cdo.efs.actionSet"
-            label="EFS Test Action Set"
-            visible="true">
-         <menu
-               id="sampleMenu"
-               label="Sample &amp;Menu">
-            <separator
-                  name="sampleGroup">
-            </separator>
-         </menu>
-         <action
-               class="org.eclipse.emf.cdo.internal.efs.ui.CreateCDOProjectAction"
-               icon="icons/sample.gif"
-               id="org.eclipse.emf.cdo.efs.actions.CreateCDOProjectAction"
-               label="EFS TEST"
-               menubarPath="sampleMenu/sampleGroup"
-               toolbarPath="sampleGroup"
-               tooltip="Create an EFS project">
-         </action>
-      </actionSet>
-   </extension>
-
 </plugin>

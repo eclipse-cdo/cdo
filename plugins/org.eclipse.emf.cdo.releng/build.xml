@@ -462,7 +462,7 @@
 
 		<pathconvert property="site.p2.dir">
 			<dirset dir="${buckminster.output.root}">
-				<filename name="org.eclipse.emf.cdo.site_.*-eclipse.feature/site.p2" />
+				<filename name="org.eclipse.emf.cdo.site_*-eclipse.feature/site.p2" />
 			</dirset>
 		</pathconvert>
 		<echoproperties destfile="${result}/all.properties" />

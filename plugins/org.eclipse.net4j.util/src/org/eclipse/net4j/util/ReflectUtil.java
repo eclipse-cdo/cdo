@@ -34,7 +34,7 @@ import java.util.WeakHashMap;
 
 /**
  * Various static helper methods for dealing with Java reflection.
- * 
+ *
  * @author Eike Stepper
  */
 public final class ReflectUtil
@@ -433,31 +433,31 @@ public final class ReflectUtil
             {
               String str = (String)value;
               value = null;
-              if (type.isAssignableFrom(Boolean.class))
+              if (type.isAssignableFrom(Boolean.class) || type.isAssignableFrom(boolean.class))
               {
                 value = Boolean.parseBoolean(str);
               }
-              else if (type.isAssignableFrom(Byte.class))
+              else if (type.isAssignableFrom(Byte.class) || type.isAssignableFrom(byte.class))
               {
                 value = Byte.parseByte(str);
               }
-              else if (type.isAssignableFrom(Short.class))
+              else if (type.isAssignableFrom(Short.class) || type.isAssignableFrom(short.class))
               {
                 value = Short.parseShort(str);
               }
-              else if (type.isAssignableFrom(Integer.class))
+              else if (type.isAssignableFrom(Integer.class) || type.isAssignableFrom(int.class))
               {
                 value = Integer.parseInt(str);
               }
-              else if (type.isAssignableFrom(Long.class))
+              else if (type.isAssignableFrom(Long.class) || type.isAssignableFrom(long.class))
               {
                 value = Long.parseLong(str);
               }
-              else if (type.isAssignableFrom(Float.class))
+              else if (type.isAssignableFrom(Float.class) || type.isAssignableFrom(float.class))
               {
                 value = Float.parseFloat(str);
               }
-              else if (type.isAssignableFrom(Double.class))
+              else if (type.isAssignableFrom(Double.class) || type.isAssignableFrom(double.class))
               {
                 value = Double.parseDouble(str);
               }
@@ -591,7 +591,7 @@ public final class ReflectUtil
   /**
    * Annotates fields that are to be skipped in {@link ReflectUtil#collectFields(Class, List)
    * ReflectUtil.collectFields()} and {@link ReflectUtil#toString(Object) ReflectUtil.toString()}.
-   * 
+   *
    * @author Eike Stepper
    * @apiviz.exclude
    */

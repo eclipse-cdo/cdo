@@ -75,12 +75,10 @@ public class SetContainer<E> extends Container<E>
     {
       for (E element : set)
       {
-        if (set.remove(element))
-        {
-          event.addDelta(element, Kind.REMOVED);
-        }
+        event.addDelta(element, Kind.REMOVED);
       }
 
+      set.clear();
       notifyAll();
     }
 

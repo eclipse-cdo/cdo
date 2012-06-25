@@ -125,40 +125,40 @@ public class SavePointTest extends AbstractCDOTest
     CDOSession session = openSession();
     session.getPackageRegistry().putEPackage(getModel1Package());
 
-    CDOTransaction transaction1 = session.openTransaction();
-    CDOUserSavepoint savePoint0 = transaction1.setSavepoint();
+    CDOTransaction transaction = session.openTransaction();
+    CDOUserSavepoint savePoint0 = transaction.setSavepoint();
 
-    // Client1
-    CDOResource resource1 = transaction1.createResource("/test1");
-    Company company1 = getModel1Factory().createCompany();
-    resource1.getContents().add(company1);
-    Category category1 = getModel1Factory().createCategory();
-    company1.getCategories().add(category1);
+    CDOResource resource = transaction.createResource("/test1");
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
 
-    CDOUserSavepoint savePoint1 = transaction1.setSavepoint();
-    Category category2 = getModel1Factory().createCategory();
-    company1.getCategories().add(category2);
+    Category categoryA = getModel1Factory().createCategory();
+    company.getCategories().add(categoryA);
 
-    CDOUserSavepoint savePoint2 = transaction1.setSavepoint();
-    CDOUserSavepoint savePoint3 = transaction1.setSavepoint();
+    CDOUserSavepoint savePoint1 = transaction.setSavepoint();
+    Category categoryB = getModel1Factory().createCategory();
+    company.getCategories().add(categoryB);
 
-    assertEquals(true, transaction1.isDirty());
+    CDOUserSavepoint savePoint2 = transaction.setSavepoint();
+    CDOUserSavepoint savePoint3 = transaction.setSavepoint();
+
+    assertEquals(true, transaction.isDirty());
 
     savePoint3.rollback();
-    assertEquals(true, transaction1.isDirty());
+    assertEquals(true, transaction.isDirty());
 
     savePoint2.rollback();
-    assertEquals(true, transaction1.isDirty());
+    assertEquals(true, transaction.isDirty());
 
     savePoint1.rollback();
-    assertEquals(true, transaction1.isDirty());
+    assertEquals(true, transaction.isDirty());
 
     // Didn`t make any modification prior to savepoint0
     savePoint0.rollback();
-    assertEquals(false, transaction1.isDirty());
+    assertEquals(false, transaction.isDirty());
 
-    transaction1.rollback();
-    assertEquals(false, transaction1.isDirty());
+    transaction.rollback();
+    assertEquals(false, transaction.isDirty());
   }
 
   private void flow1(boolean commitBegin, boolean commitEnd) throws Exception
@@ -263,7 +263,7 @@ public class SavePointTest extends AbstractCDOTest
 
   /**
    * Compare http://www.eclipse.org/newsportal/article.php?id=41697&group=eclipse.tools.emf#41697
-   * 
+   *
    * <pre>
    * Passive update is enabled.
    * client1 sets a save point

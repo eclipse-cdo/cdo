@@ -13,12 +13,14 @@ package org.eclipse.emf.internal.cdo.object;
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -42,6 +44,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * @author Eike Stepper
@@ -201,6 +204,44 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
   public synchronized CDOLockState cdoLockState()
   {
     return CDOObjectImpl.getLockState(this);
+  }
+
+  public Resource.Internal getInstanceResource(InternalEObject instance)
+  {
+    return instance.eDirectResource();
+  }
+
+  public InternalEObject getInstanceContainer(InternalEObject instance)
+  {
+    return instance.eInternalContainer();
+  }
+
+  public int getInstanceContainerFeatureID(InternalEObject instance)
+  {
+    return instance.eContainerFeatureID();
+  }
+
+  public Object getInstanceValue(InternalEObject instance, EStructuralFeature feature,
+      CDOPackageRegistry packageRegistry)
+  {
+    return instance.eGet(feature);
+  }
+
+  public void setInstanceResource(Resource.Internal resource)
+  {
+    Method method = ReflectUtil.getMethod(instance.getClass(), "eSetDirectResource", Resource.Internal.class); //$NON-NLS-1$
+    ReflectUtil.invokeMethod(method, instance, resource);
+  }
+
+  public void setInstanceContainer(InternalEObject container, int containerFeatureID)
+  {
+    Method method = ReflectUtil.getMethod(instance.getClass(), "eBasicSetContainer", InternalEObject.class, int.class); //$NON-NLS-1$
+    ReflectUtil.invokeMethod(method, instance, container, containerFeatureID);
+  }
+
+  public void setInstanceValue(InternalEObject instance, EStructuralFeature feature, Object value)
+  {
+    instance.eSet(feature, value);
   }
 
   public EList<Adapter> eAdapters()

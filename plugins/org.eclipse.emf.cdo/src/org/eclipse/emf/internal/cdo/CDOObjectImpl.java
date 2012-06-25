@@ -275,7 +275,21 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   public void cdoInternalSetResource(CDOResource resource)
   {
-    throw new UnsupportedOperationException();
+    // Unsets direct resource and/or eContainer.
+    // Only intended to be called by CDOTransactionImpl.removeObject(CDOID, CDOObject).
+    // See bug 383370.
+
+    // TODO Rename this method to cdoInternalDetach()
+
+    if (resource != null)
+    {
+      throw new IllegalArgumentException(
+          "Only intended to be called by CDOTransactionImpl.removeObject(CDOID, CDOObject");
+    }
+
+    super.eSetDirectResource(null);
+    eContainer = null;
+    eContainerFeatureID = 0;
   }
 
   /**

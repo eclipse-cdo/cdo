@@ -99,6 +99,7 @@ import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
@@ -127,6 +128,7 @@ import org.eclipse.net4j.util.options.OptionsEvent;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -136,6 +138,8 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.impl.EClassImpl.FeatureSubsetSupplier;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.Resource.Internal;
 import org.eclipse.emf.ecore.util.EContentsEList.FeatureIterator;
 import org.eclipse.emf.ecore.util.ECrossReferenceEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -147,6 +151,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -1160,30 +1165,36 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public synchronized void rollback()
   {
     checkActive();
-    getTransactionStrategy().rollback(this, firstSavepoint);
+
+    CDOTransactionStrategy strategy = getTransactionStrategy();
+    strategy.rollback(this, firstSavepoint);
+
     cleanUp(null);
   }
 
   private void removeObject(CDOID id, final CDOObject object)
   {
-    ((InternalCDOObject)object).cdoInternalSetState(CDOState.TRANSIENT);
+    InternalCDOObject internal = (InternalCDOObject)object;
+    internal.cdoInternalSetState(CDOState.TRANSIENT);
     removeObject(id);
 
     if (object instanceof CDOResource)
     {
-      getViewSet().executeWithoutNotificationHandling(new Callable<Boolean>()
+      InternalCDOViewSet viewSet = getViewSet();
+      viewSet.executeWithoutNotificationHandling(new Callable<Boolean>()
       {
         public Boolean call() throws Exception
         {
-          getResourceSet().getResources().remove(object);
+          EList<Resource> resources = getResourceSet().getResources();
+          resources.remove(object);
           return true;
         }
       });
     }
 
-    ((InternalCDOObject)object).cdoInternalSetID(null);
-    ((InternalCDOObject)object).cdoInternalSetRevision(null);
-    ((InternalCDOObject)object).cdoInternalSetView(null);
+    internal.cdoInternalSetID(null);
+    internal.cdoInternalSetRevision(null);
+    internal.cdoInternalSetView(null);
   }
 
   private Set<CDOID> rollbackCompletely(CDOUserSavepoint savepoint)
@@ -1194,11 +1205,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     for (InternalCDOSavepoint itrSavepoint = lastSavepoint; itrSavepoint != null; itrSavepoint = itrSavepoint
         .getPreviousSavepoint())
     {
+      Set<Object> toBeDetached = new HashSet<Object>();
+
       // Rollback new objects attached after the save point
       Map<CDOID, CDOObject> newObjectsMap = itrSavepoint.getNewObjects();
       for (CDOID id : newObjectsMap.keySet())
       {
         CDOObject object = newObjectsMap.get(id);
+        toBeDetached.add(id);
+        toBeDetached.add(object);
+        toBeDetached.add(((InternalCDOObject)object).cdoInternalInstance());
         removeObject(id, object);
       }
 
@@ -1210,7 +1226,36 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         CDOID id = reattachedObject.cdoID();
         if (!detachedIDs.contains(id))
         {
+          toBeDetached.add(id);
+          toBeDetached.add(reattachedObject);
+          toBeDetached.add(((InternalCDOObject)reattachedObject).cdoInternalInstance());
           removeObject(id, reattachedObject);
+        }
+      }
+
+      for (Object idOrObject : toBeDetached)
+      {
+        if (idOrObject instanceof CDOObjectImpl)
+        {
+          CDOObjectImpl impl = (CDOObjectImpl)idOrObject;
+          Internal directResource = impl.eDirectResource();
+          EObject container = impl.eContainer();
+          if (!toBeDetached.contains(directResource) && !toBeDetached.contains(container))
+          {
+            // Unset direct resource and/or eContainer
+            impl.cdoInternalSetResource(null);
+          }
+        }
+        else if (idOrObject instanceof CDOObjectWrapper)
+        {
+          CDOObjectWrapper wrapper = (CDOObjectWrapper)idOrObject;
+          Internal directResource = wrapper.eDirectResource();
+          EObject container = wrapper.eContainer();
+          if (!toBeDetached.contains(directResource) && !toBeDetached.contains(container))
+          {
+            wrapper.setInstanceResource(null);
+            wrapper.setInstanceContainer(null, 0);
+          }
         }
       }
 

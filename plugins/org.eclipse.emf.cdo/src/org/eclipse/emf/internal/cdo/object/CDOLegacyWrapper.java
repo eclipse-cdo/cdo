@@ -671,44 +671,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     return object;
   }
 
-  protected Resource.Internal getInstanceResource(InternalEObject instance)
-  {
-    return instance.eDirectResource();
-  }
-
-  protected InternalEObject getInstanceContainer(InternalEObject instance)
-  {
-    return instance.eInternalContainer();
-  }
-
-  protected int getInstanceContainerFeatureID(InternalEObject instance)
-  {
-    return instance.eContainerFeatureID();
-  }
-
-  protected Object getInstanceValue(InternalEObject instance, EStructuralFeature feature,
-      CDOPackageRegistry packageRegistry)
-  {
-    return instance.eGet(feature);
-  }
-
-  protected void setInstanceResource(Resource.Internal resource)
-  {
-    Method method = ReflectUtil.getMethod(instance.getClass(), "eSetDirectResource", Resource.Internal.class); //$NON-NLS-1$
-    ReflectUtil.invokeMethod(method, instance, resource);
-  }
-
-  protected void setInstanceContainer(InternalEObject container, int containerFeatureID)
-  {
-    Method method = ReflectUtil.getMethod(instance.getClass(), "eBasicSetContainer", InternalEObject.class, int.class); //$NON-NLS-1$
-    ReflectUtil.invokeMethod(method, instance, container, containerFeatureID);
-  }
-
-  protected void setInstanceValue(InternalEObject instance, EStructuralFeature feature, Object value)
-  {
-    instance.eSet(feature, value);
-  }
-
   /**
    * @param feature
    *          in case that a proxy has to be created the feature that will determine the interface type of the proxy and

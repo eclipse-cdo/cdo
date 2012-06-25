@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model1.Customer;
@@ -237,6 +238,20 @@ public class OCLQueryTest extends AbstractCDOTest
 
     List<Product1> products = query.getResult(Product1.class);
     assertEquals(NUM_OF_PRODUCTS, products.size());
+  }
+
+  public void testMultipleQueries() throws Exception
+  {
+    ISession session = getRepository().getSessionManager().getElements()[0];
+    int originalLength = session.getListeners().length;
+
+    for (int counter = 0; counter < 1000; counter++)
+    {
+      CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances().name", getModel1Package().getProduct1());
+      query.getResult(String.class);
+    }
+
+    assertEquals(originalLength, session.getListeners().length);
   }
 
   private CDOResource createTestSet(CDOTransaction transaction) throws CommitException

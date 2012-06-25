@@ -34,7 +34,7 @@ import java.util.Map;
 
 /**
  * Implements server side SQL query execution.
- * 
+ *
  * @author Kai Schlamp
  */
 public class SQLQueryHandler implements IQueryHandler
@@ -79,7 +79,7 @@ public class SQLQueryHandler implements IQueryHandler
    * It is possible to use variables inside the SQL string with ":" as prefix. E.g.
    * "SELECT cdo_id FROM Company WHERE name LIKE :name". The value must then be set by using a parameter. E.g.
    * query.setParameter(":name", "Foo%");
-   * 
+   *
    * @param info
    *          the object containing the query and parameters
    * @param context
@@ -188,6 +188,7 @@ public class SQLQueryHandler implements IQueryHandler
           for (int i = 0; i < indexes.length; i++)
           {
             Object parameter = info.getParameters().get(key);
+            // parameter = convertToSQL(parameter);
             statement.setObject(indexes[i], parameter);
           }
         }
@@ -231,7 +232,7 @@ public class SQLQueryHandler implements IQueryHandler
             int columnCount = resultSet.getMetaData().getColumnCount();
             if (columnCount == 1)
             {
-              Object result = convertValue(resultSet.getObject(1));
+              Object result = convertFromSQL(resultSet.getObject(1));
               context.addResult(mapQuery ? toMap(columnNames, new Object[] { result }) : result);
             }
             else
@@ -239,7 +240,7 @@ public class SQLQueryHandler implements IQueryHandler
               Object[] results = new Object[columnCount];
               for (int i = 0; i < columnCount; i++)
               {
-                results[i] = convertValue(resultSet.getObject(i + 1));
+                results[i] = convertFromSQL(resultSet.getObject(i + 1));
               }
 
               context.addResult(mapQuery ? toMap(columnNames, results) : results);
@@ -264,8 +265,22 @@ public class SQLQueryHandler implements IQueryHandler
     }
   }
 
-  private Object convertValue(Object value)
+  @SuppressWarnings("unused")
+  private Object convertToSQL(Object value)
   {
+    if (value instanceof java.util.Date)
+    {
+      java.util.Date date = (java.util.Date)value;
+      value = new java.sql.Date(date.getTime());
+    }
+
+    return value;
+  }
+
+  private Object convertFromSQL(Object value)
+  {
+    // Conversion of java.sql.Date not needed in this direction
+
     if (value instanceof Clob)
     {
       Clob clob = (Clob)value;

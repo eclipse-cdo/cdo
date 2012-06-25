@@ -22,22 +22,25 @@ import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
+import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOQuery;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Test different aspects of SQL querying using the CDO query api.
- * 
+ *
  * @author Kai Schlamp
  */
 public class SQLQueryTest extends AbstractCDOTest
@@ -161,6 +164,30 @@ public class SQLQueryTest extends AbstractCDOTest
     }
 
     transaction.commit();
+  }
+
+  @CleanRepositoriesBefore
+  public void testDateParameter() throws Exception
+  {
+    Date aDate = new Date();
+    CDOSession session = openSession();
+
+    {
+      PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
+      purchaseOrder.setDate(aDate);
+
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+      resource.getContents().add(purchaseOrder);
+      resource.getContents().add(getModel1Factory().createPurchaseOrder());
+      transaction.commit();
+    }
+
+    CDOView view = session.openView();
+    CDOQuery query = view.createQuery("sql", "SELECT CDO_ID FROM  model1_purchaseorder WHERE date0 = :aDate");
+    query.setParameter("aDate", aDate);
+    List<PurchaseOrder> orders = query.getResult(PurchaseOrder.class);
+    assertEquals(1, orders.size());
   }
 
   public void testPaging() throws Exception

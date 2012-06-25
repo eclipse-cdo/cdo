@@ -160,9 +160,10 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
 
   private Future<?> execute(QueryContext queryContext)
   {
+    register(queryContext);
+
     Future<?> future = getExecutors().submit(queryContext);
     queryContext.setFuture(future);
-    register(queryContext);
     return future;
   }
 

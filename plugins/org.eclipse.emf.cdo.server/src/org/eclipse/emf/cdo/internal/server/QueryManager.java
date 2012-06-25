@@ -104,7 +104,7 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
 
   public InternalQueryResult execute(InternalView view, CDOQueryInfo queryInfo)
   {
-    InternalQueryResult queryResult = new QueryResult(view, queryInfo, nextQuery());
+    InternalQueryResult queryResult = new QueryResult(view, queryInfo, getNextQueryID());
     QueryContext queryContext = new QueryContext(queryResult);
     execute(queryContext);
     return queryResult;
@@ -132,23 +132,23 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
     queryContext.cancel();
   }
 
-  public synchronized void register(final QueryContext queryContext)
+  public synchronized void register(QueryContext queryContext)
   {
-    queryContexts.put(queryContext.getQueryResult().getQueryID(), queryContext);
+    int queryID = queryContext.getQueryResult().getQueryID();
+    queryContexts.put(queryID, queryContext);
     queryContext.addListener();
   }
 
-  public synchronized void unregister(final QueryContext queryContext)
+  public synchronized void unregister(QueryContext queryContext)
   {
-    if (queryContexts.remove(queryContext.getQueryResult().getQueryID()) != null)
-    {
-      queryContext.removeListener();
-    }
+    int queryID = queryContext.getQueryResult().getQueryID();
+    queryContexts.remove(queryID);
+    queryContext.removeListener();
   }
 
-  public synchronized int nextQuery()
+  public synchronized int getNextQueryID()
   {
-    return nextQuery++;
+    return ++nextQuery;
   }
 
   @Override
@@ -306,15 +306,13 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
 
     public void addListener()
     {
-      InternalView view = getQueryResult().getView();
-      InternalSession session = view.getSession();
+      InternalSession session = getQueryResult().getView().getSession();
       session.addListener(sessionListener);
     }
 
     public void removeListener()
     {
-      InternalView view = getQueryResult().getView();
-      InternalSession session = view.getSession();
+      InternalSession session = getQueryResult().getView().getSession();
       session.removeListener(sessionListener);
     }
   }

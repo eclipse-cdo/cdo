@@ -37,6 +37,7 @@ public abstract class AbstractCDORevisionCache extends ReferenceQueueWorker<Inte
 
   public AbstractCDORevisionCache()
   {
+    setDaemon(true);
   }
 
   @Override
@@ -70,6 +71,12 @@ public abstract class AbstractCDORevisionCache extends ReferenceQueueWorker<Inte
     }
 
     return new CacheSoftReference((InternalCDORevision)revision, getQueue());
+  }
+
+  @Override
+  protected String getThreadName()
+  {
+    return "CDORevisionCacheCleaner";
   }
 
   /**

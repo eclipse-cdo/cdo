@@ -50,9 +50,11 @@ public class ExecutorServiceFactory extends Factory
     final ThreadGroup threadGroup = new ThreadGroup(threadGroupName);
     ThreadFactory threadFactory = new ThreadFactory()
     {
+      private int num;
+
       public Thread newThread(Runnable r)
       {
-        Thread thread = new Thread(threadGroup, r);
+        Thread thread = new Thread(threadGroup, r, threadGroup.getName() + "-Thread-" + ++num);
         thread.setDaemon(true);
         return thread;
       }

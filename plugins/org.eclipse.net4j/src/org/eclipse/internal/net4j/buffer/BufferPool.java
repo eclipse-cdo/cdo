@@ -197,7 +197,7 @@ public class BufferPool extends BufferProvider implements IBufferPool.Introspect
   {
     public Monitor()
     {
-      setName("BufferPoolMonitor"); //$NON-NLS-1$
+      setName("Net4jBufferPoolMonitor"); //$NON-NLS-1$
       setDaemon(true);
     }
 

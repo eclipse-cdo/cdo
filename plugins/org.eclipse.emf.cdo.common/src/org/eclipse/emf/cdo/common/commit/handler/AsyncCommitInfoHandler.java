@@ -19,7 +19,7 @@ import org.eclipse.net4j.util.concurrent.QueueWorker;
 /**
  * A {@link CDOCommitInfoHandler commit info handler} that asynchronously delegates {@link CDOCommitInfo commit infos}
  * to another handler.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  */
@@ -54,5 +54,11 @@ public class AsyncCommitInfoHandler extends QueueWorker<CDOCommitInfo> implement
   protected boolean doRemainingWorkBeforeDeactivate()
   {
     return true;
+  }
+
+  @Override
+  protected String getThreadName()
+  {
+    return "CDOAsyncCommitInfoHandler";
   }
 }

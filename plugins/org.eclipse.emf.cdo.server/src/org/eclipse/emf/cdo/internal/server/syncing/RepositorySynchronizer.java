@@ -173,7 +173,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
   @Override
   protected String getThreadName()
   {
-    return "RepositorySynchronizer"; //$NON-NLS-1$
+    return "CDORepositorySynchronizer"; //$NON-NLS-1$
   }
 
   @Override

@@ -863,7 +863,7 @@ public class CDOViewImpl extends AbstractCDOView
       @Override
       protected String getThreadName()
       {
-        return "InvalidationRunner-" + CDOViewImpl.this; //$NON-NLS-1$
+        return "CDOInvalidationRunner-" + CDOViewImpl.this; //$NON-NLS-1$
       }
 
       @Override

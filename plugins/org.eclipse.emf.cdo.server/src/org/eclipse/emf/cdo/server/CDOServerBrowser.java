@@ -338,7 +338,7 @@ public class CDOServerBrowser extends Worker
   @Override
   protected String getThreadName()
   {
-    return "DBBrowser";
+    return "CDOServerBrowser";
   }
 
   protected void initPages(List<Page> pages)

@@ -65,6 +65,12 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
       int pause = cleanIdleConnectors();
       context.nextWork(pause);
     }
+
+    @Override
+    protected String getThreadName()
+    {
+      return "HTTPAcceptorCleaner";
+    }
   };
 
   public HTTPAcceptor()

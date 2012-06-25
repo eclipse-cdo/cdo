@@ -133,6 +133,12 @@ public class DemoServer extends Lifecycle
   private final class Cleaner extends Worker
   {
     @Override
+    protected String getThreadName()
+    {
+      return "DemoServerCleaner";
+    }
+
+    @Override
     protected void work(WorkContext context) throws Exception
     {
       for (DemoConfiguration config : getConfigs())

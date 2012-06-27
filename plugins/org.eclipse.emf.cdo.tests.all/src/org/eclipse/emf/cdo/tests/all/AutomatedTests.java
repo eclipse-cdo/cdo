@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.all;
 
 import org.eclipse.emf.cdo.tests.AllTests;
 import org.eclipse.emf.cdo.tests.db.AllTestsDBH2All;
+import org.eclipse.emf.cdo.tests.db.AllTestsDBH2Offline;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,6 +27,7 @@ public class AutomatedTests extends TestSuite
     TestSuite suite = new TestSuite("Automated Tests");
     suite.addTest(new AllTests().getTestSuite("MEMStore Tests"));
     suite.addTest(new AllTestsDBH2All().getTestSuite("DBStore Tests"));
+    suite.addTest(new AllTestsDBH2Offline().getTestSuite("DBStore Offline Tests"));
     return suite;
   }
 }

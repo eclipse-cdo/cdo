@@ -13,6 +13,8 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
@@ -27,7 +29,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
@@ -44,6 +45,8 @@ import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
@@ -74,7 +77,7 @@ import java.util.List;
  * cdo_version_removed) which records for which revisions a particular entry existed. Also, this mapping is mainly
  * optimized for potentially very large lists: the need for having the complete list stored in memopy to do
  * in-the-middle-moved and inserts is traded in for a few more DB access operations.
- * 
+ *
  * @author Eike Stepper
  * @author Stefan Winkler
  * @author Lothar Werzinger
@@ -420,10 +423,14 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
 
   public final void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String where)
   {
+    CDORevision revision = chunkReader.getRevision();
+    CDOID id = revision.getID();
+    int branchID = revision.getBranch().getID();
+
     if (TRACER.isEnabled())
     {
       TRACER.format("Reading list chunk values for feature {0}.{1} of {2}", getContainingClass().getName(), //$NON-NLS-1$
-          getFeature().getName(), chunkReader.getRevision());
+          getFeature().getName(), revision);
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
@@ -446,10 +453,10 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
 
       String sql = builder.toString();
       stmt = statementCache.getPreparedStatement(sql, ReuseProbability.LOW);
-      idHandler.setCDOID(stmt, 1, chunkReader.getRevision().getID());
-      stmt.setInt(2, chunkReader.getRevision().getBranch().getID());
-      stmt.setInt(3, chunkReader.getRevision().getVersion());
-      stmt.setInt(4, chunkReader.getRevision().getVersion());
+      idHandler.setCDOID(stmt, 1, id);
+      stmt.setInt(2, branchID);
+      stmt.setInt(3, revision.getVersion());
+      stmt.setInt(4, revision.getVersion());
 
       if (TRACER.isEnabled())
       {
@@ -481,9 +488,9 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
               // read missing indexes from missingValueStartIndex to currentIndex
               if (baseReader == null)
               {
-                baseReader = createBaseChunkReader(chunkReader.getAccessor(), chunkReader.getRevision().getID(),
-                    chunkReader.getRevision().getBranch().getID());
+                baseReader = createBaseChunkReader(chunkReader.getAccessor(), id, branchID);
               }
+
               if (TRACER.isEnabled())
               {
                 TRACER.format(
@@ -502,6 +509,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
             {
               TRACER.format("ChunkReader read value for index {0} from result set: {1}", nextDBIndex, value); //$NON-NLS-1$
             }
+
             chunk.add(i, value);
 
             // advance DB cursor and read next available index
@@ -532,8 +540,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
           // read missing indexes from missingValueStartIndex to last chunk index
           if (baseReader == null)
           {
-            baseReader = createBaseChunkReader(chunkReader.getAccessor(), chunkReader.getRevision().getID(),
-                chunkReader.getRevision().getBranch().getID());
+            baseReader = createBaseChunkReader(chunkReader.getAccessor(), id, branchID);
           }
 
           if (TRACER.isEnabled())
@@ -542,6 +549,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
                 .format(
                     "Scheduling range {0}-{1} to be read from base revision", missingValueStartIndex, chunk.getStartIndex() + chunk.size()); //$NON-NLS-1$
           }
+
           baseReader.addRangedChunk(missingValueStartIndex, chunk.getStartIndex() + chunk.size());
         }
       }
@@ -595,7 +603,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     if (TRACER.isEnabled())
     {
       TRACER.format("Reading list chunk values done for feature {0}.{1} of {2}", //$NON-NLS-1$
-          getContainingClass().getName(), getFeature().getName(), chunkReader.getRevision());
+          getContainingClass().getName(), getFeature().getName(), revision);
     }
   }
 
@@ -628,7 +636,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
 
   /**
    * Clear a list of a given revision.
-   * 
+   *
    * @param accessor
    *          the accessor to use
    * @param id
@@ -1271,7 +1279,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
 
   /**
    * Read a single value from the current revision's list.
-   * 
+   *
    * @param accessor
    *          the store accessor
    * @param id
@@ -1333,7 +1341,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
 
   /**
    * Read a single value (at a given index) from the base revision
-   * 
+   *
    * @param accessor
    *          the DBStoreAccessor
    * @param id
@@ -1355,18 +1363,21 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
 
   private IStoreChunkReader createBaseChunkReader(IDBStoreAccessor accessor, CDOID id, int branchID)
   {
-    IRepository repository = accessor.getStore().getRepository();
-    CDOBranchPoint base = repository.getBranchManager().getBranch(branchID).getBase();
-    InternalCDORevision baseRevision = (InternalCDORevision)repository.getRevisionManager().getRevision(id, base, /*
-                                                                                                                   * referenceChunk
-                                                                                                                   * =
-                                                                                                                   */0, /*
-                                                                                                                         * prefetchDepth
-                                                                                                                         * =
-                                                                                                                         */
-    CDORevision.DEPTH_NONE, true);
-    IStoreChunkReader chunkReader = accessor.createChunkReader(baseRevision, getFeature());
-    return chunkReader;
+    InternalRepository repository = (InternalRepository)accessor.getStore().getRepository();
+
+    CDOBranchManager branchManager = repository.getBranchManager();
+    CDOBranch branch = branchManager.getBranch(branchID);
+    CDOBranchPoint base = branch.getBase();
+    if (base.getBranch() == null)
+    {
+      // Branch is main branch!
+      throw new IllegalArgumentException("Base of main branch is null");
+    }
+
+    InternalCDORevisionManager revisionManager = repository.getRevisionManager();
+    InternalCDORevision baseRevision = revisionManager.getRevision(id, base, 0, CDORevision.DEPTH_NONE, true);
+
+    return accessor.createChunkReader(baseRevision, getFeature());
   }
 
   public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere,

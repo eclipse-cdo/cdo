@@ -58,6 +58,7 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDOLegacyAdapter;
 import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
@@ -214,8 +215,8 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
         throw new IllegalStateException("RootResourceID is null; is the repository not yet initialized?");
       }
 
-      CDOResourceImpl resource = (CDOResourceImpl)getObject(rootResourceID);
-      setRootResource(resource);
+      getObject(rootResourceID);
+      CheckUtil.checkState(rootResource, "rootResource");
     }
 
     return rootResource;

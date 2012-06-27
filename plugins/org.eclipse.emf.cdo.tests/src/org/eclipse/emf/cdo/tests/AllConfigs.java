@@ -22,6 +22,11 @@ import java.util.List;
  */
 public abstract class AllConfigs extends ConfigTestSuite
 {
+  public List<Class<? extends ConfigTest>> getBugzillaTests()
+  {
+    return getTestClasses(OM.BUNDLE, "org.eclipse.emf.cdo.tests.bugzilla");
+  }
+
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
@@ -100,6 +105,6 @@ public abstract class AllConfigs extends ConfigTestSuite
     // TODO testClasses.add(GeneratedEcoreTest.class);
 
     // Bugzilla verifications
-    testClasses.addAll(getTestClasses(OM.BUNDLE, "org.eclipse.emf.cdo.tests.bugzilla"));
+    testClasses.addAll(getBugzillaTests());
   }
 }

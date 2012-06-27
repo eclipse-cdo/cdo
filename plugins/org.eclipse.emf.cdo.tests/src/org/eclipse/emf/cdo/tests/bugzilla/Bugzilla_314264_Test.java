@@ -34,50 +34,74 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 public class Bugzilla_314264_Test extends AbstractCDOTest
 {
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
-  @CleanRepositoriesBefore
-  public void testMergeTest() throws Exception
+  public void testMerge() throws Exception
   {
-    // setup transaction.
-    final CDOSession session = openSession();
-    final CDOTransaction tr1 = session.openTransaction();
+    // Setup transaction.
+    CDOSession session = openSession();
+    CDOTransaction tr1 = session.openTransaction();
     tr1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    final CDOResource resource = tr1.createResource(getResourcePath("/test1"));
-    TaskContainer container = getModel2Factory().createTaskContainer();
-    resource.getContents().add(container);
+    CDOResource resource = tr1.createResource(getResourcePath("/test"));
+    TaskContainer container1 = getModel2Factory().createTaskContainer();
+    resource.getContents().add(container1);
 
-    // add at least 2 elements to avoid getting a clear when removing one.
-    container.getTasks().add(getModel2Factory().createTask());
-    container.getTasks().add(getModel2Factory().createTask());
+    // Add at least 2 elements to avoid getting a clear when removing one.
+    container1.getTasks().add(getModel2Factory().createTask());
+    container1.getTasks().add(getModel2Factory().createTask());
     tr1.commit();
 
-    // sleep(1000);
+    CDOBranch branch2 = tr1.getBranch().createBranch("branch2");
+    CDOTransaction tr2 = session.openTransaction(branch2);
 
-    final CDOBranch otherBranch = tr1.getBranch().createBranch("other");
-    final CDOTransaction tr2 = session.openTransaction(otherBranch);
+    TaskContainer container2 = tr2.getObject(container1);
+    assertNotNull(container2);
 
-    TaskContainer otherContainer = tr2.getObject(container);
-    assertNotNull(otherContainer);
+    // Add a new element on other branch at index 0.
+    container2.getTasks().add(0, getModel2Factory().createTask());
 
-    // add a new element on other branch at index 0.
-    otherContainer.getTasks().add(0, getModel2Factory().createTask());
-
-    // remove an element on main branch at index 0.
-    container.getTasks().remove(0);
-
+    // Remove an element on main branch at index 0.
+    container1.getTasks().remove(0);
     commitAndSync(tr1, tr2);
     commitAndSync(tr2, tr1);
 
-    // merge the other branch to main.
+    // Merge the other branch to main.
     tr1.merge(tr2.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
 
     tr1.commit();
     assertEquals(false, tr1.isDirty());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
+  public void testMerge1() throws Exception
+  {
+    // Try again after some warm up. See bug 383602.
+    testMerge();
+  }
+
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
+  public void testMerge2() throws Exception
+  {
+    // Try again after some warm up. See bug 383602.
+    testMerge();
+  }
+
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
+  public void testMerge3() throws Exception
+  {
+    // Try again after some warm up. See bug 383602.
+    testMerge();
+  }
+
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
+  public void testMerge4() throws Exception
+  {
+    // Try again after some warm up. See bug 383602.
+    testMerge();
+  }
+
   public void testNotificationBuilderTest() throws Exception
   {
-    // setup transaction.
+    // Setup transaction.
     final CDOSession session = openSession();
     final CDOTransaction tr1 = session.openTransaction();
     tr1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
@@ -89,7 +113,7 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
 
     final BlockingResultContainer result = new BlockingResultContainer();
 
-    // setup additional view.
+    // Setup additional view.
     CDOView view = session.openView();
     view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
@@ -112,7 +136,7 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
     TaskContainer containerObject = view.getObject(container);
     containerObject.eAdapters().add(adapter);
 
-    // add elements at index 0 causing NotificationBuilder to patch indices beyond 0.
+    // Add elements at index 0 causing NotificationBuilder to patch indices beyond 0.
     container.getTasks().add(0, getModel2Factory().createTask());
     container.getTasks().add(0, getModel2Factory().createTask());
     tr1.commit();

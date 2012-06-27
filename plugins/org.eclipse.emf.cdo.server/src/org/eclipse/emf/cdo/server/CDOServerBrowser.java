@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -806,7 +807,22 @@ public class CDOServerBrowser extends Worker
       showKeyValue(pout, true, "version", revision.getVersion());
       showKeyValue(pout, true, "created", commitInfo);
       showKeyValue(pout, true, "revised", CDOCommonUtil.formatTimeStamp(revision.getRevised()));
-      if (!(revision instanceof SyntheticCDORevision))
+      if (revision instanceof SyntheticCDORevision)
+      {
+        if (revision instanceof PointerCDORevision)
+        {
+          PointerCDORevision pointer = (PointerCDORevision)revision;
+          CDOBranchVersion target = pointer.getTarget();
+          CDOBranch branch = target.getBranch();
+          int version = target.getVersion();
+
+          String label = getVersionLabel("v", version, branch);
+          CDORevisionKey targetKey = CDORevisionUtil.createRevisionKey(pointer.getID(), branch, version);
+          String value = CDORevisionUtil.formatRevisionKey(targetKey);
+          showKeyValue(pout, true, "target", browser.href(label, getName(), "revision", value));
+        }
+      }
+      else
       {
         showKeyValue(pout, true, "resource", getRevisionValue(revision.getResourceID(), browser, ids, revision));
         showKeyValue(pout, true, "container", getRevisionValue(revision.getContainerID(), browser, ids, revision));
@@ -841,12 +857,10 @@ public class CDOServerBrowser extends Worker
             builder.append("&nbsp;&nbsp;");
             for (CDORevision revision : revisions)
             {
-              String label = getVersionPrefix(revision) + revision.getVersion();
-              String branchName = revision.getBranch().getName();
-              if (!CDOBranch.MAIN_BRANCH_NAME.equals(branchName))
-              {
-                label += "[" + branchName + "]";
-              }
+              String versionPrefix = getVersionPrefix(revision);
+              int version = revision.getVersion();
+              CDOBranch branch = revision.getBranch();
+              String label = getVersionLabel(versionPrefix, version, branch);
 
               builder.append(" ");
               if (revision == context)
@@ -877,6 +891,17 @@ public class CDOServerBrowser extends Worker
       }
 
       return value;
+    }
+
+    private String getVersionLabel(String versionPrefix, int version, CDOBranch branch)
+    {
+      String label = versionPrefix + version;
+      String branchName = branch.getName();
+      if (!CDOBranch.MAIN_BRANCH_NAME.equals(branchName))
+      {
+        label += "[" + branchName + "]";
+      }
+      return label;
     }
 
     private String getVersionPrefix(CDORevision revision)

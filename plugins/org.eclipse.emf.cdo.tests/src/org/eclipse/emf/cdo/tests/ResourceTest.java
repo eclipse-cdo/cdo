@@ -263,6 +263,17 @@ public class ResourceTest extends AbstractCDOTest
     session.close();
   }
 
+  // public void testRootResourceParent() throws Exception
+  // {
+  // CDOSession session = openSession();
+  // ResourceSet resourceSet = new ResourceSetImpl();
+  // CDOTransaction transaction = session.openTransaction(resourceSet);
+  // CDOResource rootResource = transaction.getRootResource();
+  // assertEquals(true, CDOIDUtil.isNull(rootResource.cdoRevision().data().getResourceID()));
+  // assertEquals(null, rootResource.eResource());
+  // assertEquals(false, transaction.getResourceSet().getResources().contains(rootResource));
+  // }
+
   @CleanRepositoriesBefore
   public void testCreateResource_FromResourceSet() throws Exception
   {

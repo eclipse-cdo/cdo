@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
@@ -41,6 +43,8 @@ import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
@@ -75,7 +79,7 @@ import java.util.Map;
  * entry existed. Also, this mapping is mainly optimized for potentially very large lists: the need for having the
  * complete list stored in memory to do in-the-middle-moved and inserts is traded in for a few more DB access
  * operations.
- * 
+ *
  * @author Eike Stepper
  * @author Stefan Winkler
  * @author Lothar Werzinger
@@ -716,7 +720,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
 
   /**
    * Get column name (lazy).
-   * 
+   *
    * @param tag
    *          The feature's MetaID in CDO
    * @return the column name where the values are stored
@@ -735,7 +739,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
 
   /**
    * Get type mapping (lazy).
-   * 
+   *
    * @param tag
    *          The feature's MetaID in CDO
    * @return the corresponding type mapping
@@ -773,7 +777,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
 
   /**
    * Clear a list of a given revision.
-   * 
+   *
    * @param accessor
    *          the accessor to use
    * @param id
@@ -1463,7 +1467,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
 
   /**
    * Read a single value (at a given index) from the base revision
-   * 
+   *
    * @param accessor
    *          the DBStoreAccessor
    * @param id
@@ -1485,11 +1489,21 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
 
   private IStoreChunkReader createBaseChunkReader(IDBStoreAccessor accessor, CDOID id, int branchID)
   {
-    CDOBranchPoint base = accessor.getStore().getRepository().getBranchManager().getBranch(branchID).getBase();
-    InternalCDORevision baseRevision = (InternalCDORevision)accessor.getStore().getRepository().getRevisionManager()
-        .getRevision(id, base, /* referenceChunk = */0, /* prefetchDepth = */CDORevision.DEPTH_NONE, true);
-    IStoreChunkReader chunkReader = accessor.createChunkReader(baseRevision, getFeature());
-    return chunkReader;
+    InternalRepository repository = (InternalRepository)accessor.getStore().getRepository();
+
+    CDOBranchManager branchManager = repository.getBranchManager();
+    CDOBranch branch = branchManager.getBranch(branchID);
+    CDOBranchPoint base = branch.getBase();
+    if (base.getBranch() == null)
+    {
+      // Branch is main branch!
+      throw new IllegalArgumentException("Base of main branch is null");
+    }
+
+    InternalCDORevisionManager revisionManager = repository.getRevisionManager();
+    InternalCDORevision baseRevision = revisionManager.getRevision(id, base, 0, CDORevision.DEPTH_NONE, true);
+
+    return accessor.createChunkReader(baseRevision, getFeature());
   }
 
   public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere,

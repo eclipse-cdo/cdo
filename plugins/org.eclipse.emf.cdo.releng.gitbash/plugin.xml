@@ -20,6 +20,15 @@
             id="org.eclipse.emf.cdo.releng.gitbash.contribution1"
             objectClass="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
          <action
+               class="org.eclipse.emf.cdo.releng.gitbash.GitCleanAction"
+               enablesFor="1"
+               id="org.eclipse.emf.cdo.releng.gitbash.GitCleanAction"
+               label="Git Clean"
+               menubarPath="additions"
+               state="true"
+               style="push"
+               tooltip="Execute git clean -f -d"/>
+         <action
                class="org.eclipse.emf.cdo.releng.gitbash.GitResetHardAction"
                enablesFor="1"
                id="org.eclipse.emf.cdo.releng.gitbash.GitResetHardAction"
@@ -27,7 +36,7 @@
                menubarPath="additions"
                state="true"
                style="push"
-               tooltip="Execute Git reset --hard"/>
+               tooltip="Execute git reset --hard"/>
          <action
                class="org.eclipse.emf.cdo.releng.gitbash.GitAddAllAction"
                enablesFor="1"
@@ -36,7 +45,7 @@
                menubarPath="additions"
                state="true"
                style="push"
-               tooltip="Execute Git add --all"/>
+               tooltip="Execute git add --all"/>
          <action
                class="org.eclipse.emf.cdo.releng.gitbash.GitBashAction"
                enablesFor="1"

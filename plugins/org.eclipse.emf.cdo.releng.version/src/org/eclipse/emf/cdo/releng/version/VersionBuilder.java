@@ -244,6 +244,11 @@ public class VersionBuilder extends IncrementalProjectBuilder
   private void checkDependencyRanges(IPluginModelBase pluginModel) throws CoreException, IOException
   {
     BundleDescription description = pluginModel.getBundleDescription();
+    if (description == null)
+    {
+      return;
+    }
+
     for (BundleSpecification requiredBundle : description.getRequiredBundles())
     {
       VersionRange range = requiredBundle.getVersionRange();

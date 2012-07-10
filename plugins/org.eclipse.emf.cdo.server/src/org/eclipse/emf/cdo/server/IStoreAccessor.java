@@ -64,7 +64,7 @@ import java.util.Set;
 
 /**
  * Represents a <i>connection</i> to a physical data storage back-end.
- * 
+ *
  * @author Eike Stepper
  * @apiviz.uses {@link IStoreChunkReader} - - creates
  */
@@ -77,7 +77,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
 
   /**
    * Returns the session this accessor is associated with.
-   * 
+   *
    * @since 3.0
    */
   public InternalSession getSession();
@@ -85,7 +85,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   /**
    * Returns the transaction this accessor is associated with if {@link #isReader()} returns <code>false</code>,
    * <code>null</code> otherwise.
-   * 
+   *
    * @since 2.0
    */
   public ITransaction getTransaction();
@@ -93,7 +93,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   /**
    * Returns <code>true</code> if this accessor has been configured for read-only access to the back-end,
    * <code>false</code> otherwise.
-   * 
+   *
    * @since 2.0
    */
   public boolean isReader();
@@ -112,14 +112,14 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * Demand loads a given package proxy that has been created on startup of the repository.
    * <p>
    * This method must only load the given package, <b>not</b> possible contained packages.
-   * 
+   *
    * @since 2.0
    */
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit);
 
   /**
    * Reads a revision from the back-end that was valid at the given timeStamp in the given branch.
-   * 
+   *
    * @since 4.0
    */
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
@@ -127,7 +127,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
 
   /**
    * Reads a revision with the given version in the given branch from the back-end.
-   * 
+   *
    * @since 4.0
    */
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
@@ -148,7 +148,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * <code>revision.getTimeStamp()</code> and <code>revision.getRevised()</code>.
    * </ul>
    * </ul>
-   * 
+   *
    * @since 4.0
    */
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
@@ -157,7 +157,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   /**
    * Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.
    * DetachedCDORevisions must also be considered!
-   * 
+   *
    * @since 4.0
    */
   public Set<CDOID> readChangeSet(OMMonitor monitor, CDOChangeSetSegment... segments);
@@ -165,7 +165,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   /**
    * Returns the <code>CDOID</code> of the resource node with the given folderID and name if a resource with this
    * folderID and name exists in the store, <code>null</code> otherwise.
-   * 
+   *
    * @since 3.0
    */
   public CDOID readResourceID(CDOID folderID, String name, CDOBranchPoint branchPoint);
@@ -188,7 +188,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * <p>
    * <b>Usage context:</b> This method is only called in the context of a commit operation of a client transaction if
    * that transaction contains additions of or changes to large objects.
-   * 
+   *
    * @param ids
    *          the collection of large object IDs that the unknown IDs are supposed to be removed from.
    * @since 4.0
@@ -200,7 +200,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * <i>stream</i>.
    * <p>
    * The identifier of a {@link CDOLob large object} is the SHA-1 digest of the content of this large object.
-   * 
+   *
    * @param id
    *          the ID of the large object whose content is to be written to the <i>stream</i>.
    * @throws IOException
@@ -227,7 +227,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * <p>
    * <b>Note</b>: {@link IStoreAccessor#write(InternalCommitContext, OMMonitor)} and
    * {@link IStoreAccessor#commit(OMMonitor)} could be called from different threads.
-   * 
+   *
    * @since 3.0
    */
   public void write(InternalCommitContext context, OMMonitor monitor);
@@ -239,7 +239,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * {@link IStoreAccessor#commit(OMMonitor)} could be called from different threads.
    * <p>
    * <b>Note</b>: Implementors should detect if dirty write occurred. In this case it should throw an exception.
-   * 
+   *
    * <pre>
    * if (revision.getVersion() != revisionDelta.getOriginVersion())
    * {
@@ -247,7 +247,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    *       + &quot; that was already modified&quot;);
    * }
    * </pre>
-   * 
+   *
    * @since 2.0
    */
   public void commit(OMMonitor monitor);
@@ -255,7 +255,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   /**
    * <b>Note</b>: {@link IStoreAccessor#write(InternalCommitContext, OMMonitor)} and {@link IStoreAccessor#rollback()}
    * could be called from different threads.
-   * 
+   *
    * @since 2.0
    */
   public void rollback();
@@ -267,7 +267,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * methods on the {@link IStoreAccessor} API. All these method calls get the same <code>CommitContext</code> instance
    * passed so that the implementor of the {@link IStoreAccessor} can track the state and progress of the commit
    * operation.
-   * 
+   *
    * @author Eike Stepper
    * @since 2.0
    * @noimplement This interface is not intended to be implemented by clients.
@@ -279,14 +279,14 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     /**
      * Returns the transactional view (<code>ITransaction</code>) which is the scope of the commit operation represented
      * by this <code>CommitContext</code>.
-     * 
+     *
      * @since 4.0
      */
     public ITransaction getTransaction();
 
     /**
      * Returns the branch ID and timestamp of this commit operation.
-     * 
+     *
      * @since 3.0
      */
     public CDOBranchPoint getBranchPoint();
@@ -327,7 +327,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     /**
      * Returns an array of the locks on the new objects that are part of the commit operation represented by this
      * <code>CommitContext</code>.
-     * 
+     *
      * @since 4.1
      */
     public CDOLockState[] getLocksOnNewObjects();
@@ -353,14 +353,14 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     /**
      * Returns an array of the removed object that are part of the commit operation represented by this
      * <code>CommitContext</code>.
-     * 
+     *
      * @since 2.0
      */
     public CDOID[] getDetachedObjects();
 
     /**
      * Returns a map with an {@link EClass} value per {@link CDOID} type.
-     * 
+     *
      * @since 4.0
      */
     public Map<CDOID, EClass> getDetachedObjectTypes();
@@ -384,7 +384,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * </ul>
      * </ol>
      * </ol>
-     * 
+     *
      * @since 4.0
      */
     public ExtendedDataInputStream getLobs();
@@ -418,7 +418,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   /**
    * Represents the query execution state of a {@link IStoreAccessor#queryResources(QueryResourcesContext) resources
    * query}.
-   * 
+   *
    * @author Eike Stepper
    * @since 2.0
    * @noimplement This interface is not intended to be implemented by clients.
@@ -440,7 +440,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
 
     /**
      * Adds the CDOID of one resource to the results of the underlying query.
-     * 
+     *
      * @return <code>true</code> to indicate that more results can be passed subsequently, <code>false</code> otherwise
      *         (i.e. maxResults has been reached or an asynchronous query has been canceled).
      */
@@ -449,7 +449,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     /**
      * Represents the query execution state of a {@link IStoreAccessor#queryResources(QueryResourcesContext) resources
      * query} that is supposed to deliver one exact resource, or <code>null</code>.
-     * 
+     *
      * @author Eike Stepper
      * @since 2.0
      * @apiviz.exclude
@@ -462,7 +462,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
 
   /**
    * Represents the query execution state of a {@link IStoreAccessor#queryXRefs(QueryXRefsContext) XRefs query}.
-   * 
+   *
    * @author Eike Stepper
    * @since 3.0
    * @noimplement This interface is not intended to be implemented by clients.
@@ -490,7 +490,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
 
     /**
      * Adds the data of one cross reference to the results of the underlying query.
-     * 
+     *
      * @return <code>true</code> to indicate that more results can be passed subsequently, <code>false</code> otherwise
      *         (i.e. maxResults has been reached or an asynchronous query has been canceled).
      */
@@ -500,7 +500,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   /**
    * An extension interface for {@link IStoreAccessor store accessors} that support <i>raw data access</i> as needed by
    * {@link IRepositorySynchronizer repository synchronizers} or {@link CDOServerImporter server importers}.
-   * 
+   *
    * @author Eike Stepper
    * @since 4.0
    * @apiviz.exclude
@@ -519,7 +519,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * <b>Usage context:</b> This method is only called in the context of a
      * {@link CDOProtocolConstants#SIGNAL_REPLICATE_REPOSITORY_RAW REPLICATE_REPOSITORY_RAW} signal that is triggered
      * from {@link IRepositorySynchronizer}.
-     * 
+     *
      * @param out
      *          the <i>stream</i> to serialize the data to.
      * @param fromBranchID
@@ -554,7 +554,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * <b>Usage context:</b> This method is only called in the context of a
      * {@link CDOProtocolConstants#SIGNAL_REPLICATE_REPOSITORY_RAW REPLICATE_REPOSITORY_RAW} signal that is triggered
      * from {@link IRepositorySynchronizer}.
-     * 
+     *
      * @param in
      *          the <i>stream</i> to deserialize the data from.
      * @param fromBranchID
@@ -587,7 +587,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
      * this method are followed by a single final call to the {@link #rawCommit(double, OMMonitor) rawCommit()} method
      * where the accumulated backend changes can be committed atomically.
-     * 
+     *
      * @param packageUnits
      *          the package units to be stored in the backend represented by this {@link IStoreAccessor.Raw raw store
      *          accessor}.
@@ -608,7 +608,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
      * this method are followed by a single final call to the {@link #rawCommit(double, OMMonitor) rawCommit()} method
      * where the accumulated backend changes can be committed atomically.
-     * 
+     *
      * @param revision
      *          the revision to be stored in the backend represented by this {@link IStoreAccessor.Raw raw store
      *          accessor}.
@@ -627,7 +627,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
      * this method are followed by a single final call to the {@link #rawCommit(double, OMMonitor) rawCommit()} method
      * where the accumulated backend changes can be committed atomically.
-     * 
+     *
      * @param id
      *          the {@link CDOBlob#getID() ID} of the blob to be stored in the backend represented by this
      *          {@link IStoreAccessor.Raw raw store accessor}.
@@ -648,7 +648,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
      * this method are followed by a single final call to the {@link #rawCommit(double, OMMonitor) rawCommit()} method
      * where the accumulated backend changes can be committed atomically.
-     * 
+     *
      * @param id
      *          the {@link CDOClob#getID() ID} of the clob to be stored in the backend represented by this
      *          {@link IStoreAccessor.Raw raw store accessor}.
@@ -669,7 +669,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
      * this method are followed by a single final call to the {@link #rawCommit(double, OMMonitor) rawCommit()} method
      * where the accumulated backend changes can be committed atomically.
-     * 
+     *
      * @param branch
      *          the {@link CDOCommitInfo#getBranch() branch} of the commit info to be stored in the backend represented
      *          by this {@link IStoreAccessor.Raw raw store accessor}.
@@ -698,16 +698,14 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
      * this method are followed by a single final call to the {@link #rawCommit(double, OMMonitor) rawCommit()} method
      * where the accumulated backend changes can be committed atomically.
-     * 
+     *
      * @see #rawCommit(double, OMMonitor)
-     * @deprecated Not used anymore
      */
-    @Deprecated
     public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor);
 
     /**
      * Atomically commits the accumulated backend changes resulting from previous calls to the rawStore() methods.
-     * 
+     *
      * @param commitWork
      *          the amount of work to use up from the monitor while executing the commit.
      * @param monitor
@@ -725,7 +723,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
 
   /**
    * An extension interface for {@link IStoreAccessor store accessors} that support <i>durable locking</i>.
-   * 
+   *
    * @see DurableLocking2
    * @author Eike Stepper
    * @since 4.0
@@ -742,7 +740,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
 
   /**
    * An extension interface for {@link IStoreAccessor store accessors} that support <i>durable locking</i>.
-   * 
+   *
    * @author Caspar De Groot
    * @since 4.1
    * @apiviz.exclude

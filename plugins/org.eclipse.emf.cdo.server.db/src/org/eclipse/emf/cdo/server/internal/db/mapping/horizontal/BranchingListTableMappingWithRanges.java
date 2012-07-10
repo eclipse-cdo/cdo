@@ -696,6 +696,12 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     clearList(accessor, id, branchID, revision.getVersion(), FINAL_VERSION, revision.getList(getFeature()).size() - 1);
   }
 
+  @Override
+  public void rawDeleted(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version)
+  {
+    throw new UnsupportedOperationException("Raw deletion does not work in range-based mappings");
+  }
+
   public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, final int oldVersion,
       final int newVersion, long created, CDOListFeatureDelta delta)
   {

@@ -190,6 +190,8 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
   private String sqlSelectForChangeSet;
 
+  private String sqlRawDeleteAttributes;
+
   private ThreadLocal<FeatureDeltaWriter> deltaWriter = new ThreadLocal<FeatureDeltaWriter>()
   {
     @Override
@@ -404,6 +406,18 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
     sqlSelectForChangeSet = builder.toString();
+
+    // ----------- Raw delete one specific revision ------
+    builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
+    builder.append(getTable());
+    builder.append(" WHERE "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append("=? AND "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+    builder.append("=? AND "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append("=?"); //$NON-NLS-1$
+    sqlRawDeleteAttributes = builder.toString();
   }
 
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
@@ -704,6 +718,30 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       }
 
       DBUtil.update(stmt, true);
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      statementCache.releasePreparedStatement(stmt);
+    }
+  }
+
+  @Override
+  protected void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version, OMMonitor fork)
+  {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
+    PreparedStatement stmt = null;
+
+    try
+    {
+      stmt = statementCache.getPreparedStatement(sqlRawDeleteAttributes, ReuseProbability.HIGH);
+      getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, id);
+      stmt.setInt(2, branch.getID());
+      stmt.setInt(3, version);
+      DBUtil.update(stmt, false);
     }
     catch (SQLException e)
     {

@@ -259,7 +259,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
   /**
    * Read the revision's values from the DB.
-   * 
+   *
    * @return <code>true</code> if the revision has been read successfully.<br>
    *         <code>false</code> if the revision does not exist in the DB.
    */
@@ -743,6 +743,50 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       monitor.done();
     }
   }
+
+  public void rawDelete(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, OMMonitor monitor)
+  {
+    Async async = null;
+    monitor.begin(1 + listMappings.size());
+
+    try
+    {
+      rawDeleteAttributes(accessor, id, branch, version, monitor.fork());
+
+      // notify list mappings so they can clean up
+      for (IListMapping mapping : getListMappings())
+      {
+        if (mapping instanceof BasicAbstractListTableMapping)
+        {
+          try
+          {
+            async = monitor.forkAsync();
+
+            BasicAbstractListTableMapping m = (BasicAbstractListTableMapping)mapping;
+            m.rawDeleted(accessor, id, branch, version);
+          }
+          finally
+          {
+            if (async != null)
+            {
+              async.stop();
+            }
+          }
+        }
+        else
+        {
+          throw new UnsupportedOperationException("rawDeleted() is not supported by " + mapping.getClass().getName());
+        }
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  protected abstract void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version,
+      OMMonitor fork);
 
   public final boolean queryXRefs(IDBStoreAccessor accessor, QueryXRefsContext context, String idString)
   {

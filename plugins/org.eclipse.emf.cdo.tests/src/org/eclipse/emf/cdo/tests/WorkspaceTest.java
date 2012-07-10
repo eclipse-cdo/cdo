@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
@@ -63,6 +64,7 @@ import java.util.Map;
  * @author Eike Stepper
  */
 @Requires(IRepositoryConfig.CAPABILITY_AUDITING)
+@Skips("DB.ranges")
 public class WorkspaceTest extends AbstractCDOTest
 {
   private static final String RESOURCE = "/test1";
@@ -663,6 +665,54 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(0, base.getIDs().size());
     assertEquals(info.getBranch().getPathName(), workspace.getBranchPath());
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
+  }
+
+  @Requires(IRepositoryConfig.CAPABILITY_UUIDS)
+  public void testCheckinAfterAddExt() throws Exception
+  {
+    InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+    IOUtil.ERR().println("Checkout done");
+
+    {
+      CDOTransaction transaction = workspace.openTransaction();
+      CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
+      for (int i = 0; i < PRODUCTS; i++)
+      {
+        resource.getContents().add(createProduct(i));
+      }
+
+      transaction.commit();
+      transaction.close();
+    }
+
+    {
+      CDOTransaction transaction = workspace.openTransaction();
+      CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
+      for (int i = 0; i < PRODUCTS; i++)
+      {
+        resource.getContents().add(createProduct(i));
+      }
+
+      transaction.commit();
+      transaction.close();
+    }
+
+    workspace.checkin();
+    // workspace.update(null);
+
+    {
+      CDOTransaction transaction = workspace.openTransaction();
+      CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
+      for (int i = 0; i < PRODUCTS; i++)
+      {
+        resource.getContents().add(createProduct(i));
+      }
+
+      transaction.commit();
+      transaction.close();
+    }
+
+    workspace.checkin();
   }
 
   public void testCheckinAfterDetach() throws Exception

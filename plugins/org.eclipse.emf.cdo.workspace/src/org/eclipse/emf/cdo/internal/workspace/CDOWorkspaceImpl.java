@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -183,7 +184,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
   protected void checkout()
   {
     final OMMonitor monitor = new Monitor();
-    final IStoreAccessor.Raw accessor = (IStoreAccessor.Raw)localRepository.getStore().getWriter(null);
+    final IStoreAccessor.Raw accessor = getLocalWriter(null);
     StoreThreadLocal.setAccessor(accessor);
 
     try
@@ -570,13 +571,62 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       transaction.setCommitComment(comment);
       CDOCommitInfo info = transaction.commit();
 
+      adjustLocalRevisions(transaction, info);
       clearBase();
       setTimeStamp(info.getTimeStamp());
+
       return info;
     }
     finally
     {
       LifecycleUtil.deactivate(remoteSession);
+    }
+  }
+
+  protected void adjustLocalRevisions(InternalCDOTransaction transaction, CDOCommitInfo info)
+  {
+    IStoreAccessor.Raw accessor = null;
+    for (CDORevisionKey key : info.getChangedObjects())
+    {
+      CDOID id = key.getID();
+      InternalCDORevision localRevision = (InternalCDORevision)getRevision(id);
+      CDORevision baseRevision = base.getRevision(id);
+      CDORevision remoteRevision = transaction.getObject(id).cdoRevision();
+
+      CDOBranch localBranch = head.getBranch();
+      EClass eClass = localRevision.getEClass();
+
+      for (int v = baseRevision.getVersion(); v < localRevision.getVersion(); v++)
+      {
+        if (accessor == null)
+        {
+          accessor = getLocalWriter(null);
+          StoreThreadLocal.setAccessor(accessor);
+        }
+
+        accessor.rawDelete(id, v, localBranch, eClass, new Monitor());
+      }
+
+      if (localRevision.getVersion() != remoteRevision.getVersion())
+      {
+        if (accessor == null)
+        {
+          accessor = getLocalWriter(null);
+          StoreThreadLocal.setAccessor(accessor);
+        }
+
+        accessor.rawDelete(id, localRevision.getVersion(), localBranch, eClass, new Monitor());
+        localRevision.setVersion(remoteRevision.getVersion());
+        accessor.rawStore(localRevision, new Monitor());
+      }
+    }
+
+    if (accessor != null)
+    {
+      accessor.rawCommit(1, new Monitor());
+      StoreThreadLocal.release();
+      localRepository.getRevisionManager().getCache().clear();
+      localSession.getRevisionManager().getCache().clear();
     }
   }
 
@@ -630,7 +680,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
         ISession repoSession = localRepository.getSessionManager().getSession(localSession.getSessionID());
         ITransaction repoTransaction = (ITransaction)repoSession.getView(transaction.getViewID());
 
-        IStoreAccessor.Raw accessor = (IStoreAccessor.Raw)localRepository.getStore().getWriter(repoTransaction);
+        IStoreAccessor.Raw accessor = getLocalWriter(repoTransaction);
         StoreThreadLocal.setAccessor(accessor);
 
         monitor.begin(idMappings.size() * 2 + adjustedObjects.size() * 2 + 10);
@@ -772,6 +822,11 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
   {
     String localAcceptorName = getLocalAcceptorName();
     return JVMUtil.getConnector(container, localAcceptorName);
+  }
+
+  protected IStoreAccessor.Raw getLocalWriter(ITransaction transaction)
+  {
+    return (IStoreAccessor.Raw)localRepository.getStore().getWriter(transaction);
   }
 
   protected InternalRepository createLocalRepository(String localRepositoryName, IStore store)

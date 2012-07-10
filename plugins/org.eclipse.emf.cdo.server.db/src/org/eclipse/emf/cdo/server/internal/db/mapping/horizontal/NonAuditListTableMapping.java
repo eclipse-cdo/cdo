@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -55,7 +56,7 @@ import java.util.ListIterator;
 
 /**
  * This is a list-to-table mapping optimized for non-audit-mode. It doesn't care about version and has delta support.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  */
@@ -223,7 +224,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
   /**
    * Clear a list of a given revision.
-   * 
+   *
    * @param accessor
    *          the accessor to use
    * @param id
@@ -250,6 +251,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     }
   }
 
+  @Override
+  public void rawDeleted(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version)
+  {
+    clearList(accessor, id);
+  }
+
   public int getCurrentIndexOffset(IDBStoreAccessor accessor, CDOID id)
   {
     IPreparedStatementCache statementCache = accessor.getStatementCache();
@@ -266,6 +273,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         // list is empty. Return the default offset of 0.
         return 0;
       }
+
       // return the minimum index which is equal to the current offset.
       return rset.getInt(1);
     }
@@ -694,7 +702,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     /**
      * Write calculated changes to the database
-     * 
+     *
      * @param accessor
      */
     private void writeResultToDatabase(IDBStoreAccessor accessor, CDOID id)
@@ -908,7 +916,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     /**
      * Perform the shift operations to adjust indexes resulting from remove, insert, and move operations.
-     * 
+     *
      * @see #writeResultToDatabase(IDBStoreAccessor, CDOID)
      * @throws SQLException
      */

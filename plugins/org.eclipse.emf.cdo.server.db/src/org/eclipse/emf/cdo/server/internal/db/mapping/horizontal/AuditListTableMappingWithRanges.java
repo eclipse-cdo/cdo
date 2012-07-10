@@ -73,7 +73,7 @@ import java.util.List;
  * cdo_version_removed) which records for which revisions a particular entry existed. Also, this mapping is mainly
  * optimized for potentially very large lists: the need for having the complete list stored in memopy to do
  * in-the-middle-moved and inserts is traded in for a few more DB access operations.
- * 
+ *
  * @author Eike Stepper
  * @author Stefan Winkler
  * @author Lothar Werzinger
@@ -465,7 +465,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
 
   /**
    * Clear a list of a given revision.
-   * 
+   *
    * @param accessor
    *          the accessor to use
    * @param id
@@ -528,6 +528,12 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
 
     // set cdo_revision_removed for all list items (so we have no NULL values)
     clearList(accessor, id, revision.getVersion(), FINAL_VERSION);
+  }
+
+  @Override
+  public void rawDeleted(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version)
+  {
+    throw new UnsupportedOperationException("Raw deletion does not work in range-based mappings");
   }
 
   public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, int oldVersion,

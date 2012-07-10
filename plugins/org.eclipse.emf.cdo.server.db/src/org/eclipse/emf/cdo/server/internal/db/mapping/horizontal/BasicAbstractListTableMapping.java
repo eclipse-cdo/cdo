@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping2;
@@ -70,4 +71,5 @@ public abstract class BasicAbstractListTableMapping implements IListMapping2
     builder.append(toIndex - 1);
   }
 
+  public abstract void rawDeleted(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version);
 }

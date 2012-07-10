@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -46,8 +47,6 @@ import java.util.Map;
 @Requires({ IRepositoryConfig.CAPABILITY_BRANCHING, "MEM" })
 public class RevisionManagerTest extends AbstractCDOTest
 {
-  private static final CDOID ID = CDOIDUtil.createLong(2);
-
   private static final EClass CLASS = EcorePackage.eINSTANCE.getEAnnotation();
 
   private static final int DETACH = -1;
@@ -61,6 +60,8 @@ public class RevisionManagerTest extends AbstractCDOTest
   private InternalSession serverSession;
 
   private InternalCDOBranchManager branchManager;
+
+  private CDOID objectID;
 
   private int branchID;
 
@@ -95,6 +96,15 @@ public class RevisionManagerTest extends AbstractCDOTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
+
+    if (getRepositoryConfig().getIDGenerationLocation() == IDGenerationLocation.STORE)
+    {
+      objectID = CDOIDUtil.createLong(2);
+    }
+    else
+    {
+      objectID = CDOIDUtil.createUUID();
+    }
 
     Field disableGC = ReflectUtil.getField(AbstractCDORevisionCache.class, "disableGC");
     ReflectUtil.setValue(disableGC, null, true);
@@ -167,7 +177,7 @@ public class RevisionManagerTest extends AbstractCDOTest
         timeStamp += duration;
 
         revisions[i] = new CDORevisionImpl(CLASS);
-        revisions[i].setID(ID);
+        revisions[i].setID(objectID);
         revisions[i].setBranchPoint(branchPoint);
         revisions[i].setRevised(timeStamp - 1);
         revisions[i].setVersion(i + 1);
@@ -175,7 +185,7 @@ public class RevisionManagerTest extends AbstractCDOTest
       }
       else
       {
-        revisions[i] = store.detachObject(ID, branch, timeStamp - 1);
+        revisions[i] = store.detachObject(objectID, branch, timeStamp - 1);
       }
     }
 
@@ -218,7 +228,7 @@ public class RevisionManagerTest extends AbstractCDOTest
   {
     CDOBranchPoint branchPoint = branch.getPoint(timeStamp);
     dumpCache(branchPoint);
-    return revisionManager.getRevision(ID, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+    return revisionManager.getRevision(objectID, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
   }
 
   private void prefetchBaseline(CDOBranch branch, int levelsUp)

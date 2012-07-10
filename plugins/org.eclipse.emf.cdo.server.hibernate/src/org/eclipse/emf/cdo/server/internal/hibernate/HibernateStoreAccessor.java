@@ -1074,7 +1074,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     commit(monitor);
   }
 
-  @Deprecated
   public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();

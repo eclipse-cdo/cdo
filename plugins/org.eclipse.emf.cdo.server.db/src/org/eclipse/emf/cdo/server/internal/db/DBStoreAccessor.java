@@ -51,6 +51,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractHorizontalClassMapping;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
@@ -151,7 +152,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   /**
    * Returns an iterator that iterates over all objects in the store and makes their CDOIDs available for processing.
    * This method is supposed to be called very infrequently, for example during the recovery from a crash.
-   * 
+   *
    * @since 2.0
    * @deprecated Not used by the framework anymore.
    */
@@ -1264,19 +1265,24 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, monitor);
   }
 
-  @Deprecated
   public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor)
   {
-    throw new UnsupportedOperationException();
+    if (eClass == null)
+    {
+      eClass = getObjectType(id);
+    }
 
-    // IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    // if (eClass == null)
-    // {
-    // eClass = getObjectType(id);
-    // }
-    //
-    // IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
-    // mapping.detachObject(this, id, version, branch, CDOBranchPoint.UNSPECIFIED_DATE, monitor);
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
+    if (mapping instanceof AbstractHorizontalClassMapping)
+    {
+      AbstractHorizontalClassMapping m = (AbstractHorizontalClassMapping)mapping;
+      m.rawDelete(this, id, version, branch, monitor);
+    }
+    else
+    {
+      throw new UnsupportedOperationException("rawDelete() is not supported by " + mapping.getClass().getName());
+    }
   }
 
   public void rawCommit(double commitWork, OMMonitor monitor)

@@ -79,6 +79,8 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
 
   private String sqlReviseAttributes;
 
+  private String sqlRawDeleteAttributes;
+
   private ThreadLocal<FeatureDeltaWriter> deltaWriter = new ThreadLocal<FeatureDeltaWriter>()
   {
     @Override
@@ -263,6 +265,16 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
     builder.append("=0"); //$NON-NLS-1$
     sqlSelectAllObjectIDs = builder.toString();
+
+    // ----------- Raw delete one specific revision ------
+    builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
+    builder.append(getTable());
+    builder.append(" WHERE "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append("=? AND "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append("=?"); //$NON-NLS-1$
+    sqlRawDeleteAttributes = builder.toString();
   }
 
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
@@ -553,6 +565,29 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
       }
 
       DBUtil.update(stmt, true);
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      statementCache.releasePreparedStatement(stmt);
+    }
+  }
+
+  @Override
+  protected void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version, OMMonitor fork)
+  {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
+    PreparedStatement stmt = null;
+
+    try
+    {
+      stmt = statementCache.getPreparedStatement(sqlRawDeleteAttributes, ReuseProbability.HIGH);
+      getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, id);
+      stmt.setInt(2, version);
+      DBUtil.update(stmt, false);
     }
     catch (SQLException e)
     {

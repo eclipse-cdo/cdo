@@ -9,10 +9,11 @@
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - 271444: [DB] Multiple refactorings bug 271444
  *    Christopher Albert - 254455: [DB] Support FeatureMaps bug 254455
- *    Stefan Winkler - Bug 329025: [DB] Support branching for range-based mapping strategy 
+ *    Stefan Winkler - Bug 329025: [DB] Support branching for range-based mapping strategy
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
@@ -50,7 +51,7 @@ import java.util.Iterator;
 /**
  * This is a featuremap-to-table mapping optimized for non-audit-mode. It doesn't care about version and has delta
  * support.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  */
@@ -215,7 +216,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
 
   /**
    * Clear a list of a given revision.
-   * 
+   *
    * @param accessor
    *          the accessor to use
    * @param id
@@ -242,9 +243,15 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     }
   }
 
+  @Override
+  public void rawDeleted(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version)
+  {
+    clearList(accessor, id);
+  }
+
   /**
    * Insert a list item at a specified position.
-   * 
+   *
    * @param accessor
    *          the accessor to use
    * @param id
@@ -310,7 +317,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
   /**
    * Move a list item from one position to another. Indices between both positions are updated so that the list remains
    * consistent.
-   * 
+   *
    * @param accessor
    *          the accessor to use
    * @param id
@@ -371,7 +378,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
 
   /**
    * Remove a list item from a specified a position.
-   * 
+   *
    * @param accessor
    *          the accessor to use
    * @param id
@@ -477,7 +484,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
 
   /**
    * Set a value at a specified position to the given value.
-   * 
+   *
    * @param accessor
    *          the accessor to use
    * @param id

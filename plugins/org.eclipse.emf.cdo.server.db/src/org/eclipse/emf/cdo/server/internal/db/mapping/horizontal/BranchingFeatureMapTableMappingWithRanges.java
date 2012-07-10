@@ -841,6 +841,12 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
         revised);
   }
 
+  @Override
+  public void rawDeleted(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version)
+  {
+    throw new UnsupportedOperationException("Raw deletion does not work in range-based mappings");
+  }
+
   public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, int oldVersion,
       final int newVersion, long created, CDOListFeatureDelta delta)
   {

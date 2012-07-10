@@ -52,7 +52,7 @@ import java.util.List;
 
 /**
  * This abstract base class provides basic behavior needed for mapping many-valued attributes to tables.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  */
@@ -457,7 +457,7 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
 
   /**
    * Used by subclasses to indicate which fields should be in the table. I.e. just a pair of name and DBType ...
-   * 
+   *
    * @author Stefan Winkler
    */
   protected static class FieldInfo

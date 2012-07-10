@@ -820,7 +820,6 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
     writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, monitor);
   }
 
-  @Deprecated
   public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();

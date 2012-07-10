@@ -194,7 +194,7 @@ public class RevisionManagerTest extends AbstractCDOTest
 
   private InternalCDORevision[] createBranch(CDOBranch baseBranch, long baseTimeStamp, long offset, long... durations)
   {
-    CDOBranch branch = baseBranch.createBranch("branch" + ++branchID, baseTimeStamp);
+    CDOBranch branch = doCreateBranch(baseBranch, baseTimeStamp);
     return fillBranch(branch, offset, durations);
   }
 
@@ -209,6 +209,16 @@ public class RevisionManagerTest extends AbstractCDOTest
   {
     CDOBranch baseBranch = revision.getBranch();
     long baseTimeStamp = getMiddleOfValidity(revision);
+    return doCreateBranch(baseBranch, baseTimeStamp);
+  }
+
+  private CDOBranch doCreateBranch(CDOBranch baseBranch, long baseTimeStamp)
+  {
+    while (repository.getTimeStamp() < baseTimeStamp)
+    {
+      sleep(1);
+    }
+
     return baseBranch.createBranch("branch" + ++branchID, baseTimeStamp);
   }
 
@@ -218,7 +228,7 @@ public class RevisionManagerTest extends AbstractCDOTest
     long revised = revision.getRevised();
     if (revised == CDOBranchPoint.UNSPECIFIED_DATE)
     {
-      revised = timeStamp + 10000;
+      revised = timeStamp + 100;
     }
 
     return timeStamp / 2 + revised / 2;

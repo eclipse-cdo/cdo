@@ -160,7 +160,8 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
       }
     }
 
-    add(new CDODeltaNotificationImpl(object, Notification.SET, getEFeatureID(feature), oldValue, delta.getValue()));
+    add(new CDODeltaNotificationImpl(object, Notification.SET, getEFeatureID(feature), oldValue, delta.getValue(),
+        delta.getIndex()));
   }
 
   @Override

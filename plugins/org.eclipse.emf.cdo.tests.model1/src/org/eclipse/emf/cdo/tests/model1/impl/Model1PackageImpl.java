@@ -35,105 +35,84 @@ import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Model1PackageImpl extends EPackageImpl implements Model1Package
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass addressEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass supplierEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass purchaseOrderEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass orderDetailEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass orderAddressEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass productToOrderEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EEnum vatEEnum = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass categoryEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass product1EClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass companyEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass customerEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass orderEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass salesOrderEClass = null;
@@ -158,18 +137,17 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * <p>
-   * This method is used to initialize {@link Model1Package#eINSTANCE} when that field is accessed. Clients should not
-   * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
    * 
+   * <p>This method is used to initialize {@link Model1Package#eINSTANCE} when that field is accessed.
+   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -202,7 +180,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getAddress()
@@ -212,7 +189,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getAddress_Name()
@@ -222,7 +198,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getAddress_Street()
@@ -232,7 +207,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getAddress_City()
@@ -242,7 +216,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getSupplier()
@@ -252,7 +225,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getSupplier_PurchaseOrders()
@@ -262,7 +234,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getSupplier_Preferred()
@@ -272,7 +243,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getPurchaseOrder()
@@ -282,7 +252,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getPurchaseOrder_Date()
@@ -292,7 +261,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getPurchaseOrder_Supplier()
@@ -302,7 +270,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getOrderDetail()
@@ -312,7 +279,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getOrderDetail_Order()
@@ -322,7 +288,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getOrderDetail_Product()
@@ -332,7 +297,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getOrderDetail_Price()
@@ -342,7 +306,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getOrderAddress()
@@ -352,7 +315,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getOrderAddress_TestAttribute()
@@ -362,7 +324,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getProductToOrder()
@@ -372,7 +333,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getProductToOrder_Key()
@@ -382,7 +342,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getProductToOrder_Value()
@@ -392,7 +351,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EEnum getVAT()
@@ -402,7 +360,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCategory()
@@ -412,7 +369,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getCategory_Name()
@@ -422,7 +378,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCategory_Categories()
@@ -432,7 +387,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCategory_Products()
@@ -442,7 +396,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getProduct1()
@@ -452,7 +405,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getProduct1_Name()
@@ -462,7 +414,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getProduct1_OrderDetails()
@@ -472,7 +423,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getProduct1_Vat()
@@ -481,18 +431,26 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getProduct1_Description()
+  public EAttribute getProduct1_OtherVATs()
   {
     return (EAttribute)product1EClass.getEStructuralFeatures().get(3);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * @generated
+   */
+  public EAttribute getProduct1_Description()
+  {
+    return (EAttribute)product1EClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public EClass getCompany()
@@ -502,7 +460,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCompany_Categories()
@@ -512,7 +469,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCompany_Suppliers()
@@ -522,7 +478,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCompany_PurchaseOrders()
@@ -532,7 +487,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCompany_Customers()
@@ -542,7 +496,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCompany_SalesOrders()
@@ -552,7 +505,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCustomer()
@@ -562,7 +514,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCustomer_SalesOrders()
@@ -572,7 +523,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCustomer_OrderByProduct()
@@ -582,7 +532,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getOrder()
@@ -592,7 +541,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getOrder_OrderDetails()
@@ -602,7 +550,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getSalesOrder()
@@ -612,7 +559,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getSalesOrder_Id()
@@ -622,7 +568,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getSalesOrder_Customer()
@@ -632,7 +577,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Model1Factory getModel1Factory()
@@ -642,15 +586,14 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
-   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the meta-model objects for the package.  This method is
+   * guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void createPackageContents()
@@ -705,6 +648,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     createEAttribute(product1EClass, PRODUCT1__NAME);
     createEReference(product1EClass, PRODUCT1__ORDER_DETAILS);
     createEAttribute(product1EClass, PRODUCT1__VAT);
+    createEAttribute(product1EClass, PRODUCT1__OTHER_VA_TS);
     createEAttribute(product1EClass, PRODUCT1__DESCRIPTION);
 
     orderAddressEClass = createEClass(ORDER_ADDRESS);
@@ -720,15 +664,14 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
-   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Complete the initialization of the package and its meta-model.  This
+   * method is guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void initializePackageContents()
@@ -847,6 +790,8 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getProduct1_Vat(), this.getVAT(), "vat", "vat15", 0, 1, Product1.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getProduct1_OtherVATs(), this.getVAT(), "otherVATs", "vat15", 0, -1, Product1.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getProduct1_Description(), ecorePackage.getEString(), "description", null, 0, 1, Product1.class,
         IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -880,8 +825,8 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
   }
 
   /**
-   * Initializes the annotations for <b>teneo.jpa</b>. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Initializes the annotations for <b>teneo.jpa</b>.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void createTeneoAnnotations()

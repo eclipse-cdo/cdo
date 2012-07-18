@@ -223,13 +223,18 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
   protected void notifyRemove(EStructuralFeature feature, int position)
   {
     CDOStore store = view.getStore();
-    InternalEObject oldChild = (InternalEObject)store.remove(instance, feature, position);
-    if (oldChild != null && feature instanceof EReference)
+
+    Object oldChild = store.remove(instance, feature, position);
+    if (oldChild instanceof InternalEObject)
     {
-      EReference reference = (EReference)feature;
-      if (reference.isContainment())
+      if (feature instanceof EReference)
       {
-        setContainer(store, oldChild, null, 0);
+        EReference reference = (EReference)feature;
+        if (reference.isContainment())
+        {
+          InternalEObject oldChildEObject = (InternalEObject)oldChild;
+          setContainer(store, oldChildEObject, null, 0);
+        }
       }
     }
   }
@@ -237,17 +242,22 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
   protected void notifyRemoveMany(EStructuralFeature feature, Object oldValue)
   {
     CDOStore store = view.getStore();
+
     @SuppressWarnings("unchecked")
     List<Object> list = (List<Object>)oldValue;
     for (int i = list.size() - 1; i >= 0; --i)
     {
-      InternalEObject oldChild = (InternalEObject)store.remove(instance, feature, i);
-      if (oldChild != null && feature instanceof EReference)
+      Object oldChild = store.remove(instance, feature, i);
+      if (oldChild instanceof InternalEObject)
       {
-        EReference reference = (EReference)feature;
-        if (reference.isContainment())
+        if (feature instanceof EReference)
         {
-          setContainer(store, oldChild, null, 0);
+          EReference reference = (EReference)feature;
+          if (reference.isContainment())
+          {
+            InternalEObject oldChildEObject = (InternalEObject)oldChild;
+            setContainer(store, oldChildEObject, null, 0);
+          }
         }
       }
     }

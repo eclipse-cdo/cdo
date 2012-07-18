@@ -31,19 +31,18 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CategoryImpl#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CategoryImpl#getCategories <em>Categories</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CategoryImpl#getProducts <em>Products</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CategoryImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CategoryImpl#getCategories <em>Categories</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CategoryImpl#getProducts <em>Products</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class CategoryImpl extends EObjectImpl implements Category
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
@@ -59,8 +58,8 @@ public class CategoryImpl extends EObjectImpl implements Category
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getName()
    * @generated
    * @ordered
@@ -78,9 +77,9 @@ public class CategoryImpl extends EObjectImpl implements Category
   protected EList<Category> categories;
 
   /**
-   * The cached value of the '{@link #getProducts() <em>Products</em>}' containment reference list. <!-- begin-user-doc
+   * The cached value of the '{@link #getProducts() <em>Products</em>}' containment reference list.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @see #getProducts()
    * @generated
    * @ordered
@@ -89,7 +88,6 @@ public class CategoryImpl extends EObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CategoryImpl()
@@ -99,7 +97,6 @@ public class CategoryImpl extends EObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -110,7 +107,6 @@ public class CategoryImpl extends EObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -120,7 +116,6 @@ public class CategoryImpl extends EObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)
@@ -133,7 +128,6 @@ public class CategoryImpl extends EObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<Category> getCategories()
@@ -147,7 +141,6 @@ public class CategoryImpl extends EObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<Product1> getProducts()
@@ -161,7 +154,6 @@ public class CategoryImpl extends EObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -179,7 +171,6 @@ public class CategoryImpl extends EObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -199,7 +190,6 @@ public class CategoryImpl extends EObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -225,7 +215,6 @@ public class CategoryImpl extends EObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -248,7 +237,6 @@ public class CategoryImpl extends EObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -268,7 +256,6 @@ public class CategoryImpl extends EObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

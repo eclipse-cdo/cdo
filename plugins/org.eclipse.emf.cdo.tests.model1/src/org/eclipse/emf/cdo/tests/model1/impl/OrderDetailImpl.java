@@ -24,26 +24,18 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderDetailImpl#getOrder <em>Order</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderDetailImpl#getProduct <em>Product</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderDetailImpl#getPrice <em>Price</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderDetailImpl#getOrder <em>Order</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderDetailImpl#getProduct <em>Product</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderDetailImpl#getPrice <em>Price</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected OrderDetailImpl()
@@ -53,7 +45,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -64,7 +55,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -75,7 +65,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Order getOrder()
@@ -85,7 +74,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setOrder(Order newOrder)
@@ -95,7 +83,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Product1 getProduct()
@@ -105,7 +92,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setProduct(Product1 newProduct)
@@ -115,7 +101,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public float getPrice()
@@ -125,7 +110,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setPrice(float newPrice)

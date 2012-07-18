@@ -22,12 +22,15 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.security.NoPermissionException;
 import org.eclipse.emf.cdo.common.util.PartialCollectionLoadingNotSupportedException;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
@@ -36,6 +39,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
+import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
@@ -63,6 +67,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Eike Stepper
@@ -711,6 +717,100 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       // Add the object to the set of reattached objects
       Map<CDOID, CDOObject> reattachedObjects = transaction.getLastSavepoint().getReattachedObjects();
       reattachedObjects.put(id, object);
+
+      // Bug 385268
+      InternalEObject reattachedObject = object.cdoInternalInstance();
+      processRevisionDeltas(reattachedObject, transaction);
+    }
+
+    private void processRevisionDeltas(InternalEObject reattachedObject, InternalCDOTransaction transaction)
+    {
+      InternalCDOSavepoint lastSavepoint = transaction.getLastSavepoint();
+      ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas();
+      for (Iterator<Entry<CDOID, CDORevisionDelta>> it = revisionDeltas.entrySet().iterator(); it.hasNext();)
+      {
+        Entry<CDOID, CDORevisionDelta> entry = it.next();
+        CDORevisionDelta revisionDelta = entry.getValue();
+
+        Map<EStructuralFeature, CDOFeatureDelta> map = ((InternalCDORevisionDelta)revisionDelta).getFeatureDeltaMap();
+        processFeatureDeltas(reattachedObject, map);
+
+        if (revisionDelta.isEmpty())
+        {
+          it.remove();
+
+          CDOID id = revisionDelta.getID();
+          InternalCDOObject cleanObject = (InternalCDOObject)lastSavepoint.getDirtyObjects().remove(id);
+          cleanObject.cdoInternalSetState(CDOState.CLEAN);
+        }
+      }
+
+      if (revisionDeltas.isEmpty())
+      {
+        makeTransactionClean(transaction);
+      }
+    }
+
+    private void processFeatureDeltas(InternalEObject reattachedObject, Map<EStructuralFeature, CDOFeatureDelta> map)
+    {
+      for (Iterator<Entry<EStructuralFeature, CDOFeatureDelta>> it = map.entrySet().iterator(); it.hasNext();)
+      {
+        Entry<EStructuralFeature, CDOFeatureDelta> entry = it.next();
+        CDOFeatureDelta featureDelta = entry.getValue();
+        processFeatureDelta(reattachedObject, it, featureDelta);
+      }
+    }
+
+    private void processFeatureDelta(InternalEObject reattachedObject, Iterator<?> it, CDOFeatureDelta featureDelta)
+    {
+      switch (featureDelta.getType())
+      {
+      case SET:
+        CDOSetFeatureDelta setFeatureDelta = (CDOSetFeatureDelta)featureDelta;
+        Object oldValue = setFeatureDelta.getOldValue();
+        if (oldValue instanceof InternalCDOObject)
+        {
+          oldValue = ((InternalCDOObject)oldValue).cdoInternalInstance();
+        }
+
+        Object newValue = setFeatureDelta.getValue();
+        if (newValue instanceof InternalCDOObject)
+        {
+          newValue = ((InternalCDOObject)newValue).cdoInternalInstance();
+        }
+
+        if (reattachedObject == oldValue && reattachedObject == newValue)
+        {
+          it.remove();
+        }
+
+        break;
+
+      case LIST:
+        CDOListFeatureDelta listFeatureDelta = (CDOListFeatureDelta)featureDelta;
+        List<CDOFeatureDelta> listChanges = listFeatureDelta.getListChanges();
+        for (Iterator<CDOFeatureDelta> listIt = listChanges.iterator(); listIt.hasNext();)
+        {
+          CDOFeatureDelta singleFeatureDelta = listIt.next();
+          processFeatureDelta(reattachedObject, listIt, singleFeatureDelta);
+        }
+
+        if (listChanges.isEmpty())
+        {
+          it.remove();
+        }
+
+        break;
+      }
+    }
+
+    private void makeTransactionClean(InternalCDOTransaction transaction)
+    {
+      if (transaction instanceof CDOTransactionImpl)
+      {
+        CDOTransactionImpl impl = (CDOTransactionImpl)transaction;
+        impl.setDirty(false); // TODO make setDirty() SPI
+      }
     }
   }
 

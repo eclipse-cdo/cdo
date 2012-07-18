@@ -381,6 +381,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return dirty;
   }
 
+  public void setDirty(boolean dirty)
+  {
+    this.dirty = dirty;
+  }
+
   @Override
   public synchronized boolean hasConflict()
   {

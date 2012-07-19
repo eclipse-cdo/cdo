@@ -58,7 +58,8 @@
 	      </objectContribution>
        <objectContribution
              adaptable="false"
-             id="org.eclipse.emf.cdo.dawn.handleLocking"             objectClass="org.eclipse.gef.EditPart">
+             id="org.eclipse.emf.cdo.dawn.handleLocking"
+             objectClass="org.eclipse.gef.EditPart">
           <menu
                 id="org.eclipse.emf.cdo.dawn.menu.locking"
                 label="Locking"

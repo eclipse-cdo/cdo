@@ -2,13 +2,13 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="html" omit-xml-declaration="yes" indent="yes"/>
 	<xsl:strip-space elements="*"/>
-	
+
 	<xsl:template match="/">
 		<html xmlns="http://www.w3.org/1999/xhtml">
 			<xsl:apply-templates select="repository"/>
 		</html>
 	</xsl:template>
-	
+
 	<xsl:template match="repository">
 		<head>
 			<title>
@@ -25,11 +25,11 @@
 					<a href="http://wiki.eclipse.org/CDO">wiki</a>.
 					<br/> For information about installing or updating Eclipse software, see the
 					<a
-						href="http://help.eclipse.org/helios/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/tasks-124.htm">
+						href="http://help.eclipse.org/juno/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/tasks-124.htm">
 						Eclipse Platform Help</a>.
 					<br/> Some plugins require third party software from p2 repositories listed in this
 					<a href="bookmarks.xml">bookmarks.xml</a> file.</em>
-				
+
 			</p>
 			<table border="0">
 				<tr>
@@ -53,7 +53,7 @@
 			</table>
 		</body>
 	</xsl:template>
-	
+
 	<xsl:template match="provided">
 		<tr>
 			<td>
@@ -64,5 +64,5 @@
 			</td>
 		</tr>
 	</xsl:template>
-	
+
 </xsl:stylesheet>

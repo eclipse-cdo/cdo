@@ -42,6 +42,10 @@ public class VersionBuilder extends IncrementalProjectBuilder
 {
   public static final String BUILDER_ID = "org.eclipse.emf.cdo.releng.version.VersionBuilder";
 
+  public static final String DEPENDENCY_RANGES_ARGUMENT = "ignore.missing.dependency.ranges";
+
+  public static final String EXPORT_VERSIONS_ARGUMENT = "ignore.missing.export.versions";
+
   public static final String RELEASE_PATH_ARGUMENT = "release.path";
 
   public static final String VALIDATOR_CLASS_ARGUMENT = "validator.class";
@@ -79,8 +83,15 @@ public class VersionBuilder extends IncrementalProjectBuilder
         throw new IllegalStateException("Could not locate the plugin model base for project: " + getProject().getName());
       }
 
-      checkDependencyRanges(pluginModel);
-      checkPackageExports(pluginModel);
+      if (!"true".equals(args.get(DEPENDENCY_RANGES_ARGUMENT)))
+      {
+        checkDependencyRanges(pluginModel);
+      }
+
+      if (!"true".equals(args.get(EXPORT_VERSIONS_ARGUMENT)))
+      {
+        checkPackageExports(pluginModel);
+      }
 
       /*
        * Determine validator to use

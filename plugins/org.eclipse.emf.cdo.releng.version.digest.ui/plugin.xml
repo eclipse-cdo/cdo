@@ -12,6 +12,7 @@
 -->
 
 <plugin>
+
    <extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution

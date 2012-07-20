@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.dialogs.FilteredResourcesSelectionDialog;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -55,14 +56,12 @@ public class CreateRelativePathAction implements IObjectActionDelegate
     this.selection = selection;
   }
 
-  @SuppressWarnings("restriction")
   public void run(IAction action)
   {
     IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
     IResource source = (IResource)((IStructuredSelection)selection).getFirstElement();
 
-    org.eclipse.ui.internal.ide.dialogs.OpenResourceDialog dialog = new org.eclipse.ui.internal.ide.dialogs.OpenResourceDialog(
-        shell, root, IResource.FILE);
+    FilteredResourcesSelectionDialog dialog = new FilteredResourcesSelectionDialog(shell, false, root, IResource.FILE);
     dialog.setTitle(TITLE);
 
     if (dialog.open() == Dialog.OK)

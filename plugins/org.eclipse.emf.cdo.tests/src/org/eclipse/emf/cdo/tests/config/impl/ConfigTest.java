@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
+import org.eclipse.emf.cdo.tests.config.impl.SessionConfig.Net4j;
 import org.eclipse.emf.cdo.tests.mango.MangoFactory;
 import org.eclipse.emf.cdo.tests.mango.MangoPackage;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
@@ -301,11 +302,37 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   /**
    * @category Session
    */
+  public String getTransportType() throws Exception
+  {
+    ISessionConfig sessionConfig = getSessionConfig();
+    if (sessionConfig instanceof Net4j)
+    {
+      Net4j net4j = (Net4j)sessionConfig;
+      return net4j.getTransportType();
+    }
+
+    return null;
+  }
+
+  /**
+   * @category Session
+   */
   public void stopTransport() throws Exception
   {
     getSessionConfig().stopTransport();
   }
 
+  /**
+   * @category Session
+   */
+  public String getURIProtocol()
+  {
+    return getSessionConfig().getURIProtocol();
+  }
+
+  /**
+   * @category Session
+   */
   public String getURIPrefix()
   {
     return getSessionConfig().getURIPrefix();
@@ -540,7 +567,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    * Constructs a test-specific resource path of the format "/TestClass_testMethod/resourceName". Using this instead of
    * (just) a hardcoded name for the test resource, ensures that the test method is isolated from all others at the
    * resource level.
-   * 
+   *
    * @param resourceName
    *          - the test-local name of the resource (or null if one wants to receive the path of the test-local resource
    *          folder

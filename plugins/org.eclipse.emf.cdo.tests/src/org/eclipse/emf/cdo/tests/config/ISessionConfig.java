@@ -31,6 +31,8 @@ public interface ISessionConfig extends IConfig
 
   public void stopTransport() throws Exception;
 
+  public String getURIProtocol();
+
   public String getURIPrefix();
 
   public CDOSession openSession();

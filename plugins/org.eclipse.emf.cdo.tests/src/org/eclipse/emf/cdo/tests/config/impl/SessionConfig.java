@@ -232,6 +232,11 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       capabilities.add(CAPABILITY_EMBEDDED);
     }
 
+    public String getURIProtocol()
+    {
+      throw new UnsupportedOperationException();
+    }
+
     public String getURIPrefix()
     {
       throw new UnsupportedOperationException();
@@ -266,6 +271,11 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     public void initCapabilities(Set<String> capabilities)
     {
       capabilities.add(CAPABILITY_NET4J);
+    }
+
+    public String getTransportType()
+    {
+      return getName().toLowerCase();
     }
 
     @Override
@@ -308,6 +318,11 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       {
         IOUtil.print(ex);
       }
+    }
+
+    public String getURIProtocol()
+    {
+      return "cdo.net4j." + getTransportType();
     }
 
     @Override
@@ -383,7 +398,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
       public String getURIPrefix()
       {
-        return "cdo.net4j.tcp://" + CONNECTOR_HOST;
+        return getURIProtocol() + "://" + CONNECTOR_HOST;
       }
 
       @Override
@@ -454,7 +469,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
       public String getURIPrefix()
       {
-        return "cdo.net4j.ssl://" + CONNECTOR_HOST;
+        return getURIProtocol() + "://" + CONNECTOR_HOST;
       }
 
       @Override
@@ -525,7 +540,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
       public String getURIPrefix()
       {
-        return "cdo.net4j.jvm://" + ACCEPTOR_NAME;
+        return getURIProtocol() + "://" + ACCEPTOR_NAME;
       }
 
       @Override

@@ -157,10 +157,13 @@ public class Scenario implements IScenario
   public Set<String> getCapabilities()
   {
     Set<String> capabilities = new CaseInsensitiveStringSet();
+    capabilities.add(IConfig.CAPABILITY_ALL);
+
     containerConfig.initCapabilities(capabilities);
     repositoryConfig.initCapabilities(capabilities);
     sessionConfig.initCapabilities(capabilities);
     modelConfig.initCapabilities(capabilities);
+
     return capabilities;
   }
 

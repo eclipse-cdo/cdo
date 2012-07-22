@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.releng.version.Release.Element.Type;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -34,7 +35,10 @@ import org.eclipse.pde.core.plugin.PluginRegistry;
 import org.osgi.framework.Version;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -57,6 +61,14 @@ public class VersionBuilder extends IncrementalProjectBuilder
 
   private static final Path FEATURE_PATH = new Path("feature.xml");
 
+  private static final int NO_CHANGE = 0;
+
+  private static final int MICRO_CHANGE = 1;
+
+  private static final int MINOR_CHANGE = 2;
+
+  private static final int MAJOR_CHANGE = 3;
+
   private Release release;
 
   public VersionBuilder()
@@ -68,7 +80,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
       throws CoreException
   {
     IProject project = getProject();
-    IProject[] releaseProject = null;
+    List<IProject> buildDpependencies = new ArrayList<IProject>();
 
     BuildState buildState = Activator.getBuildState(project);
     boolean fullBuild = buildState.getReleaseTag() == null;
@@ -81,44 +93,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
       Markers.deleteAllMarkers(project);
 
       IModel componentModel = getComponentModel(project);
-
-      if (componentModel instanceof IPluginModelBase)
-      {
-        if (!"true".equals(args.get(DEPENDENCY_RANGES_ARGUMENT)))
-        {
-          checkDependencyRanges((IPluginModelBase)componentModel);
-        }
-
-        if (!"true".equals(args.get(EXPORT_VERSIONS_ARGUMENT)))
-        {
-          checkPackageExports((IPluginModelBase)componentModel);
-        }
-      }
-
-      /*
-       * Determine validator to use
-       */
-
       IFile projectDescription = project.getFile(new Path(".project"));
-      String validatorClass = (String)args.get(VALIDATOR_CLASS_ARGUMENT);
-      if (validatorClass == null)
-      {
-        validatorClass = "org.eclipse.emf.cdo.releng.version.digest.DigestValidator$BuildModel";
-      }
-
-      try
-      {
-        Class<?> c = Class.forName(validatorClass, true, VersionBuilder.class.getClassLoader());
-        validator = (VersionValidator)c.newInstance();
-      }
-      catch (Exception ex)
-      {
-        String msg = ex.getLocalizedMessage() + ": " + validatorClass;
-        Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, ".*(" + validatorClass + ").*");
-        return releaseProject;
-      }
-
-      trace(validator.getClass().getName() + ": " + project.getName());
 
       /*
        * Determine release data to validate against
@@ -127,16 +102,15 @@ public class VersionBuilder extends IncrementalProjectBuilder
       String releasePath = (String)args.get(RELEASE_PATH_ARGUMENT);
       if (releasePath == null)
       {
-        validator.abort(buildState, project, null, monitor);
         String msg = "Build command argument missing: " + RELEASE_PATH_ARGUMENT;
-        Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, ".*(" + BUILDER_ID + ").*");
-        return releaseProject;
+        Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, "(" + BUILDER_ID + ")");
+        return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
       }
 
       try
       {
         IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(releasePath));
-        releaseProject = new IProject[] { file.getProject() };
+        buildDpependencies.add(file.getProject());
 
         Release release = ReleaseManager.INSTANCE.getRelease(file);
         boolean releaseHasChanged = !release.getTag().equals(buildState.getReleaseTag());
@@ -152,8 +126,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
       {
         String msg = "Problem with release spec: " + releasePath;
         Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, releasePath);
-        validator.abort(buildState, project, null, monitor);
-        return releaseProject;
+        return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
       }
 
       /*
@@ -164,37 +137,113 @@ public class VersionBuilder extends IncrementalProjectBuilder
       Element releaseElement = release.getElements().get(element);
       if (releaseElement == null)
       {
-        validator.abort(buildState, project, null, monitor);
         trace("Project has not been released: " + project.getName());
-        return releaseProject;
+        return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
       }
 
       Version elementVersion = element.getVersion();
       Version releaseVersion = releaseElement.getVersion();
-      Version nextVersion = new Version(releaseVersion.getMajor(), releaseVersion.getMinor(), releaseVersion.getMicro()
-          + (release.isIntegration() ? 100 : 1));
+      Version nextImplVersion = new Version(releaseVersion.getMajor(), releaseVersion.getMinor(),
+          releaseVersion.getMicro() + (release.isIntegration() ? 100 : 1));
       int comparison = releaseVersion.compareTo(elementVersion);
       if (comparison < 0)
       {
-        if (!nextVersion.equals(elementVersion))
+        if (!nextImplVersion.equals(elementVersion))
         {
-          if (elementVersion.getMajor() == nextVersion.getMajor()
-              && elementVersion.getMinor() == nextVersion.getMinor())
+          if (elementVersion.getMajor() == nextImplVersion.getMajor()
+              && elementVersion.getMinor() == nextImplVersion.getMinor())
           {
-            addVersionMarker("Version should be " + nextVersion);
+            addVersionMarker("Version should be " + nextImplVersion);
           }
         }
 
-        validator.abort(buildState, project, null, monitor);
-        return releaseProject;
+        if (componentModel instanceof IPluginModelBase)
+        {
+          return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+        }
       }
 
       if (comparison > 0)
       {
-        validator.abort(buildState, project, null, monitor);
         addVersionMarker("Version has been decreased after release " + releaseVersion);
-        return releaseProject;
+        return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
       }
+
+      if (componentModel instanceof IPluginModelBase)
+      {
+        if (!"true".equals(args.get(DEPENDENCY_RANGES_ARGUMENT)))
+        {
+          checkDependencyRanges((IPluginModelBase)componentModel);
+        }
+
+        if (!"true".equals(args.get(EXPORT_VERSIONS_ARGUMENT)))
+        {
+          checkPackageExports((IPluginModelBase)componentModel);
+        }
+      }
+      else
+      {
+        List<Map.Entry<Element, Version>> warnings = new ArrayList<Entry<Element, Version>>();
+        int change = checkFeatureAPI(componentModel, buildDpependencies, warnings);
+        if (change != NO_CHANGE)
+        {
+          Version nextFeatureVersion = null;
+          if (change == MAJOR_CHANGE)
+          {
+            nextFeatureVersion = new Version(releaseVersion.getMajor() + 1, 0, 0);
+          }
+          else if (change == MINOR_CHANGE)
+          {
+            nextFeatureVersion = new Version(releaseVersion.getMajor(), releaseVersion.getMinor() + 1, 0);
+          }
+          else if (change == MICRO_CHANGE)
+          {
+            nextFeatureVersion = new Version(releaseVersion.getMajor(), releaseVersion.getMinor(),
+                releaseVersion.getMicro() + 1);
+          }
+
+          if (elementVersion.compareTo(nextFeatureVersion) < 0)
+          {
+            addVersionMarker("Version should be " + nextFeatureVersion);
+
+            for (Entry<Element, Version> entry : warnings)
+            {
+              addIncludeMarker(entry.getKey(), entry.getValue());
+            }
+          }
+
+          return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+        }
+
+        if (!elementVersion.equals(releaseVersion))
+        {
+          return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+        }
+      }
+
+      /*
+       * Determine validator to use
+       */
+
+      String validatorClass = (String)args.get(VALIDATOR_CLASS_ARGUMENT);
+      if (validatorClass == null)
+      {
+        validatorClass = "org.eclipse.emf.cdo.releng.version.digest.DigestValidator$BuildModel";
+      }
+
+      try
+      {
+        Class<?> c = Class.forName(validatorClass, true, VersionBuilder.class.getClassLoader());
+        validator = (VersionValidator)c.newInstance();
+      }
+      catch (Exception ex)
+      {
+        String msg = ex.getLocalizedMessage() + ": " + validatorClass;
+        Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, ".*(" + validatorClass + ").*");
+        return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+      }
+
+      trace(validator.getClass().getName() + ": " + project.getName());
 
       /*
        * Do the validation
@@ -213,7 +262,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
       {
         if (buildState.isChangedSinceRelease())
         {
-          addVersionMarker("Version must be increased to " + nextVersion);
+          addVersionMarker("Version must be increased to " + nextImplVersion);
         }
       }
       catch (Exception ignore)
@@ -243,7 +292,190 @@ public class VersionBuilder extends IncrementalProjectBuilder
       monitor.done();
     }
 
-    return releaseProject;
+    return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+  }
+
+  @SuppressWarnings("restriction")
+  private int checkFeatureAPI(IModel componentModel, List<IProject> buildDpependencies,
+      List<Entry<Element, Version>> warnings)
+  {
+    org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel = (org.eclipse.pde.internal.core.ifeature.IFeatureModel)componentModel;
+    org.eclipse.pde.internal.core.ifeature.IFeature feature = featureModel.getFeature();
+
+    int biggestChange = NO_CHANGE;
+    for (org.eclipse.pde.internal.core.ifeature.IFeatureChild versionable : feature.getIncludedFeatures())
+    {
+      String id = versionable.getId();
+      Element element = new Element(id, versionable.getVersion(), Element.Type.FEATURE);
+      int change = checkFeatureAPI(element, warnings);
+      biggestChange = Math.max(biggestChange, change);
+
+      IProject project = getFeatureProject(id);
+      if (project != null)
+      {
+        buildDpependencies.add(project);
+      }
+    }
+
+    for (org.eclipse.pde.internal.core.ifeature.IFeaturePlugin versionable : feature.getPlugins())
+    {
+      Element element = new Element(versionable.getId(), versionable.getVersion(), Element.Type.PLUGIN);
+      int change = checkFeatureAPI(element, warnings);
+      biggestChange = Math.max(biggestChange, change);
+
+      IProject project = getPluginProject(versionable.getId());
+      if (project != null)
+      {
+        buildDpependencies.add(project);
+      }
+
+    }
+
+    return biggestChange;
+  }
+
+  private int checkFeatureAPI(Element element, List<Entry<Element, Version>> warnings)
+  {
+    // TODO Removal --> MAJOR_CHANGE
+
+    Element releasedElement = release.getElements().get(element);
+    if (releasedElement != null)
+    {
+      Version releasedVersion = releasedElement.getVersion();
+
+      Version version = element.getVersion();
+      if (version.equals(Version.emptyVersion))
+      {
+        if (element.getType() == Element.Type.PLUGIN)
+        {
+          version = getPluginVersion(element.getName());
+        }
+        else
+        {
+          version = getFeatureVersion(element.getName());
+        }
+
+        if (version == null)
+        {
+          return NO_CHANGE;
+        }
+      }
+
+      if (version.getMajor() != releasedVersion.getMajor())
+      {
+        addWarning(releasedElement, version, warnings);
+        return MAJOR_CHANGE;
+      }
+
+      if (version.getMinor() != releasedVersion.getMinor())
+      {
+        addWarning(releasedElement, version, warnings);
+        return MINOR_CHANGE;
+      }
+
+      if (version.getMicro() != releasedVersion.getMicro())
+      {
+        addWarning(releasedElement, version, warnings);
+        return MICRO_CHANGE;
+      }
+
+      return NO_CHANGE;
+    }
+
+    // Addition
+    return MINOR_CHANGE;
+  }
+
+  private void addWarning(final Element releasedElement, final Version version,
+      List<Map.Entry<Element, Version>> warnings)
+  {
+    warnings.add(new Map.Entry<Element, Version>()
+    {
+      public Element getKey()
+      {
+        return releasedElement;
+      }
+
+      public Version getValue()
+      {
+        return version;
+      }
+
+      public Version setValue(Version value)
+      {
+        throw new UnsupportedOperationException();
+      }
+    });
+  }
+
+  private Version getPluginVersion(String name)
+  {
+    IPluginModelBase pluginModel = PluginRegistry.findModel(name);
+    if (pluginModel != null)
+    {
+      Version version = pluginModel.getBundleDescription().getVersion();
+      return stripQualifier(version);
+    }
+
+    return null;
+  }
+
+  @SuppressWarnings("restriction")
+  private Version getFeatureVersion(String name)
+  {
+    org.eclipse.pde.internal.core.ifeature.IFeatureModel[] featureModels = org.eclipse.pde.internal.core.PDECore
+        .getDefault().getFeatureModelManager().getModels();
+
+    for (org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel : featureModels)
+    {
+      org.eclipse.pde.internal.core.ifeature.IFeature feature = featureModel.getFeature();
+      String id = feature.getId();
+      if (id.equals(name))
+      {
+        Version version = new Version(feature.getVersion());
+        return stripQualifier(version);
+      }
+    }
+
+    return null;
+  }
+
+  private IProject getPluginProject(String name)
+  {
+    IPluginModelBase pluginModel = PluginRegistry.findModel(name);
+    if (pluginModel != null)
+    {
+      IResource resource = pluginModel.getUnderlyingResource();
+      if (resource != null)
+      {
+        return resource.getProject();
+      }
+    }
+
+    return null;
+  }
+
+  @SuppressWarnings("restriction")
+  private IProject getFeatureProject(String name)
+  {
+    org.eclipse.pde.internal.core.ifeature.IFeatureModel[] featureModels = org.eclipse.pde.internal.core.PDECore
+        .getDefault().getFeatureModelManager().getModels();
+
+    for (org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel : featureModels)
+    {
+      IResource resource = featureModel.getUnderlyingResource();
+      if (resource != null)
+      {
+        return resource.getProject();
+      }
+    }
+
+    return null;
+  }
+
+  private Version stripQualifier(Version version)
+  {
+    return new Version(version.getMajor(), version.getMinor(), version.getMicro());
   }
 
   private Element createElement(IModel componentModel) throws CoreException
@@ -400,14 +632,14 @@ public class VersionBuilder extends IncrementalProjectBuilder
   private void addRequireMarker(String name, String message) throws CoreException, IOException
   {
     IFile file = getProject().getFile(MANIFEST_PATH);
-    String regex = ".* " + name.replaceAll("\\.", "\\\\.") + ";bundle-version=\"([^\\\"]*)\".*";
+    String regex = name.replaceAll("\\.", "\\\\.") + ";bundle-version=\"([^\\\"]*)\"";
     Markers.addMarker(file, "'" + name + "' " + message, IMarker.SEVERITY_ERROR, regex);
   }
 
   private void addImportMarker(String name, String message) throws CoreException, IOException
   {
     IFile file = getProject().getFile(MANIFEST_PATH);
-    String regex = ".* " + name.replaceAll("\\.", "\\\\.") + ";version=\"([^\\\"]*)\".*";
+    String regex = name.replaceAll("\\.", "\\\\.") + ";version=\"([^\\\"]*)\"";
     Markers.addMarker(file, "'" + name + "' " + message, IMarker.SEVERITY_ERROR, regex);
   }
 
@@ -415,7 +647,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
   {
     IFile file = getProject().getFile(MANIFEST_PATH);
     String message = "'" + name + "' export has wrong version information";
-    String regex = ".* " + name.replaceAll("\\.", "\\\\.") + ";version=\"([0123456789\\.]*)\".*";
+    String regex = name.replaceAll("\\.", "\\\\.") + ";version=\"([0123456789\\.]*)\"";
     Markers.addMarker(file, message, IMarker.SEVERITY_ERROR, regex);
   }
 
@@ -425,15 +657,46 @@ public class VersionBuilder extends IncrementalProjectBuilder
     IFile file = getProject().getFile(FEATURE_PATH);
     if (file.exists())
     {
-      regex = ".*?feature.*?version\\s*=\\s*[\"'](\\d+(\\.\\d+(\\.\\d+)?)?).*";
+      regex = "feature.*?version\\s*=\\s*[\"'](\\d+(\\.\\d+(\\.\\d+)?)?)";
     }
     else
     {
       file = getProject().getFile(MANIFEST_PATH);
-      regex = ".*?Bundle-Version: *(\\d+(\\.\\d+(\\.\\d+)?)?).*";
+      regex = "Bundle-Version: *(\\d+(\\.\\d+(\\.\\d+)?)?)";
     }
 
     Markers.addMarker(file, message, IMarker.SEVERITY_ERROR, regex);
+  }
+
+  private void addIncludeMarker(Element releasedElement, Version version)
+  {
+    IFile file = getProject().getFile(FEATURE_PATH);
+    String type;
+    String tag;
+    if (releasedElement.getType() == Element.Type.PLUGIN)
+    {
+      type = "Plug-in";
+      tag = "plugin";
+    }
+    else
+    {
+      type = "Feature";
+      tag = "includes";
+    }
+
+    try
+    {
+      String name = releasedElement.getName();
+      String regex = "<" + tag + "\\s+.*?id\\s*=\\s*[\"'](" + name.replace(".", "\\.") + ")";
+      String msg = type + " reference '" + name + "' has changed from " + releasedElement.getVersion() + " to "
+          + version;
+
+      Markers.addMarker(file, msg, IMarker.SEVERITY_WARNING, regex);
+    }
+    catch (Exception ex)
+    {
+      Activator.log(ex);
+    }
   }
 
   public static void trace(String msg)

@@ -99,7 +99,7 @@ public final class Markers
       Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
       Matcher matcher = pattern.matcher(string);
 
-      if (matcher.matches())
+      if (matcher.find())
       {
         int startChar = matcher.start(1);
         int endChar = matcher.end(1);

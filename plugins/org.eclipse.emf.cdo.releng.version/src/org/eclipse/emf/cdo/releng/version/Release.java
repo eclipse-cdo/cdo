@@ -126,6 +126,11 @@ public class Release
       this.type = type;
     }
 
+    public Element(String name, String version, Type type)
+    {
+      this(name, new Version(version), type);
+    }
+
     public String getName()
     {
       return name;

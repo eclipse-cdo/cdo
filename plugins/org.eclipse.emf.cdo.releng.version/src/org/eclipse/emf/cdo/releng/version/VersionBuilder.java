@@ -425,13 +425,12 @@ public class VersionBuilder extends IncrementalProjectBuilder
     IFile file = getProject().getFile(FEATURE_PATH);
     if (file.exists())
     {
-
-      regex = ".*version\\s*=\\s*[\"'](\\d+\\.\\d+\\.\\d+).*";
+      regex = ".*?feature.*?version\\s*=\\s*[\"'](\\d+(\\.\\d+(\\.\\d+)?)?).*";
     }
     else
     {
       file = getProject().getFile(MANIFEST_PATH);
-      regex = "Bundle-Version: *(\\d+\\.\\d+\\.\\d+).*";
+      regex = ".*?Bundle-Version: *(\\d+(\\.\\d+(\\.\\d+)?)?).*";
     }
 
     Markers.addMarker(file, message, IMarker.SEVERITY_ERROR, regex);
@@ -456,6 +455,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
         throw new IllegalStateException("The project " + project.getName() + " is neither a plugin nor a feature");
       }
     }
+
     return componentModel;
   }
 

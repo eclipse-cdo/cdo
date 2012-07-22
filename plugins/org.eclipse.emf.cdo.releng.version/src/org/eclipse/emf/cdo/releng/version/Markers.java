@@ -16,6 +16,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 
 import java.io.BufferedReader;
+import java.io.CharArrayWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,7 +30,7 @@ public final class Markers
 {
   public static final String MARKER_TYPE = "org.eclipse.emf.cdo.releng.version.VersionProblem"; //$NON-NLS-1$
 
-  private static final String NL = System.getProperty("line.separator"); //$NON-NLS-1$
+  private static final Pattern NL_PATTERN = Pattern.compile("([\\n][\\r]?|[\\r][\\n]?)", Pattern.MULTILINE);
 
   private Markers()
   {
@@ -79,30 +80,44 @@ public final class Markers
   public static void addMarker(IFile file, String message, int severity, String regex) throws CoreException,
       IOException
   {
-    Pattern pattern = Pattern.compile(regex);
     InputStream contents = null;
 
     try
     {
       contents = file.getContents();
       BufferedReader reader = new BufferedReader(new InputStreamReader(contents));
+      CharArrayWriter caw = new CharArrayWriter();
 
-      String line;
-      int lineNumber = 1;
-      int charNumber = 0;
-      while ((line = reader.readLine()) != null)
+      int c;
+      while ((c = reader.read()) != -1)
       {
-        Matcher matcher = pattern.matcher(line);
-        if (matcher.matches())
+        caw.write(c);
+      }
+
+      String string = caw.toString();
+
+      Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
+      Matcher matcher = pattern.matcher(string);
+
+      if (matcher.matches())
+      {
+        int startChar = matcher.start(1);
+        int endChar = matcher.end(1);
+
+        matcher = NL_PATTERN.matcher(string);
+        int line = 0;
+        while (matcher.find())
         {
-          int startChar = charNumber + matcher.start(1);
-          int endChar = charNumber + matcher.end(1);
-          addMarker(file, message, severity, lineNumber, startChar, endChar);
-          return;
+          if (matcher.start(1) > startChar)
+          {
+            break;
+          }
+
+          ++line;
         }
 
-        lineNumber += 1;
-        charNumber += line.length() + NL.length();
+        addMarker(file, message, severity, line, startChar, endChar);
+        return;
       }
     }
     finally

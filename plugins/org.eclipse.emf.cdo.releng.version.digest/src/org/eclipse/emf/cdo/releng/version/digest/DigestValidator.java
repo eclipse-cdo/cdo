@@ -30,7 +30,6 @@ import org.eclipse.pde.core.build.IBuild;
 import org.eclipse.pde.core.build.IBuildEntry;
 import org.eclipse.pde.core.build.IBuildModel;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
-import org.eclipse.pde.internal.core.ifeature.IFeatureModel;
 
 import java.io.FilterInputStream;
 import java.io.IOException;
@@ -467,6 +466,7 @@ public class DigestValidator extends VersionValidator
       return build;
     }
 
+    @SuppressWarnings("restriction")
     private String getName(IModel componentModel)
     {
       if (componentModel instanceof IPluginModelBase)
@@ -475,7 +475,7 @@ public class DigestValidator extends VersionValidator
         return pluginModel.getBundleDescription().getSymbolicName();
       }
 
-      return ((IFeatureModel)componentModel).getFeature().getId();
+      return ((org.eclipse.pde.internal.core.ifeature.IFeatureModel)componentModel).getFeature().getId();
     }
 
     private void consider(String path)

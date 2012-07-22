@@ -30,10 +30,6 @@ import org.eclipse.osgi.service.resolver.VersionRange;
 import org.eclipse.pde.core.IModel;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.core.plugin.PluginRegistry;
-import org.eclipse.pde.internal.core.FeatureModelManager;
-import org.eclipse.pde.internal.core.PDECore;
-import org.eclipse.pde.internal.core.ifeature.IFeature;
-import org.eclipse.pde.internal.core.ifeature.IFeatureModel;
 
 import org.osgi.framework.Version;
 
@@ -67,7 +63,6 @@ public class VersionBuilder extends IncrementalProjectBuilder
   {
   }
 
-  @SuppressWarnings("restriction")
   @Override
   protected final IProject[] build(int kind, @SuppressWarnings("rawtypes") Map args, IProgressMonitor monitor)
       throws CoreException
@@ -165,7 +160,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
        * Determine if a validation is needed or if the version has already been increased properly
        */
 
-      Element element = getElement(componentModel);
+      Element element = createElement(componentModel);
       Element releaseElement = release.getElements().get(element);
       if (releaseElement == null)
       {
@@ -251,19 +246,27 @@ public class VersionBuilder extends IncrementalProjectBuilder
     return releaseProject;
   }
 
-  private Element getElement(IModel componentModel) throws CoreException
+  private Element createElement(IModel componentModel) throws CoreException
   {
     if (componentModel instanceof IPluginModelBase)
     {
       IPluginModelBase pluginModel = (IPluginModelBase)componentModel;
       BundleDescription description = pluginModel.getBundleDescription();
+
       String name = description.getSymbolicName();
       Version version = description.getVersion();
       return new Element(name, version, Type.PLUGIN);
     }
 
-    IFeatureModel featureModel = (IFeatureModel)componentModel;
-    IFeature feature = featureModel.getFeature();
+    return createFeatureElement(componentModel);
+  }
+
+  @SuppressWarnings("restriction")
+  private Element createFeatureElement(IModel componentModel)
+  {
+    org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel = (org.eclipse.pde.internal.core.ifeature.IFeatureModel)componentModel;
+    org.eclipse.pde.internal.core.ifeature.IFeature feature = featureModel.getFeature();
+
     String name = feature.getId();
     Version version = new Version(feature.getVersion());
     return new Element(name, version, Type.FEATURE);
@@ -456,10 +459,13 @@ public class VersionBuilder extends IncrementalProjectBuilder
     return componentModel;
   }
 
-  private static IFeatureModel getFeatureModel(IProject project)
+  @SuppressWarnings("restriction")
+  private static org.eclipse.pde.internal.core.ifeature.IFeatureModel getFeatureModel(IProject project)
   {
-    FeatureModelManager featureModelManager = PDECore.getDefault().getFeatureModelManager();
-    for (IFeatureModel featureModel : featureModelManager.getWorkspaceModels())
+    org.eclipse.pde.internal.core.ifeature.IFeatureModel[] featureModels = org.eclipse.pde.internal.core.PDECore
+        .getDefault().getFeatureModelManager().getWorkspaceModels();
+
+    for (org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel : featureModels)
     {
       if (featureModel.getUnderlyingResource().getProject() == project)
       {
@@ -470,6 +476,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
     return null;
   }
 
+  @SuppressWarnings("restriction")
   public static IModel getComponentModel(Element element)
   {
     String name = element.getName();
@@ -482,8 +489,10 @@ public class VersionBuilder extends IncrementalProjectBuilder
       }
     }
 
-    IFeatureModel[] featureModels = PDECore.getDefault().getFeatureModelManager().getWorkspaceModels();
-    for (IFeatureModel featureModel : featureModels)
+    org.eclipse.pde.internal.core.ifeature.IFeatureModel[] featureModels = org.eclipse.pde.internal.core.PDECore
+        .getDefault().getFeatureModelManager().getWorkspaceModels();
+
+    for (org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel : featureModels)
     {
       if (featureModel.getFeature().getId().equals(name))
       {
@@ -494,6 +503,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
     return null;
   }
 
+  @SuppressWarnings("restriction")
   public static Version getComponentVersion(IModel componentModel)
   {
     if (componentModel instanceof IPluginModelBase)
@@ -502,6 +512,6 @@ public class VersionBuilder extends IncrementalProjectBuilder
       return pluginModel.getBundleDescription().getVersion();
     }
 
-    return new Version(((IFeatureModel)componentModel).getFeature().getVersion());
+    return new Version(((org.eclipse.pde.internal.core.ifeature.IFeatureModel)componentModel).getFeature().getVersion());
   }
 }

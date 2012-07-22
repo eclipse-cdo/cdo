@@ -43,7 +43,7 @@ public class Release
 
   private String repository;
 
-  private Map<String, Element> elements = new HashMap<String, Element>();
+  private Map<Element, Element> elements = new HashMap<Element, Element>();
 
   Release(SAXParser parser, IFile file) throws CoreException, IOException, SAXException
   {
@@ -93,7 +93,7 @@ public class Release
     return repository;
   }
 
-  public Map<String, Element> getElements()
+  public Map<Element, Element> getElements()
   {
     return Collections.unmodifiableMap(elements);
   }
@@ -136,6 +136,55 @@ public class Release
       return version;
     }
 
+    @Override
+    public int hashCode()
+    {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + (name == null ? 0 : name.hashCode());
+      result = prime * result + (getType() == null ? 0 : getType().hashCode());
+      return result;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+      if (this == obj)
+      {
+        return true;
+      }
+
+      if (obj == null)
+      {
+        return false;
+      }
+
+      if (!(obj instanceof Element))
+      {
+        return false;
+      }
+
+      Element other = (Element)obj;
+      if (name == null)
+      {
+        if (other.name != null)
+        {
+          return false;
+        }
+      }
+      else if (!name.equals(other.name))
+      {
+        return false;
+      }
+
+      if (getType() != other.getType())
+      {
+        return false;
+      }
+
+      return true;
+    }
+
     public Type getType()
     {
       return type;
@@ -175,7 +224,7 @@ public class Release
         Type type = getType(attributes, "type");
 
         Element element = new Element(name, version, type);
-        elements.put(name, element);
+        elements.put(element, element);
       }
     }
 

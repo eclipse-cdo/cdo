@@ -27,8 +27,13 @@ import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.osgi.service.resolver.ExportPackageDescription;
 import org.eclipse.osgi.service.resolver.ImportPackageSpecification;
 import org.eclipse.osgi.service.resolver.VersionRange;
+import org.eclipse.pde.core.IModel;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.core.plugin.PluginRegistry;
+import org.eclipse.pde.internal.core.FeatureModelManager;
+import org.eclipse.pde.internal.core.PDECore;
+import org.eclipse.pde.internal.core.ifeature.IFeature;
+import org.eclipse.pde.internal.core.ifeature.IFeatureModel;
 
 import org.osgi.framework.Version;
 
@@ -54,12 +59,15 @@ public class VersionBuilder extends IncrementalProjectBuilder
 
   private static final Path MANIFEST_PATH = new Path("META-INF/MANIFEST.MF");
 
+  private static final Path FEATURE_PATH = new Path("feature.xml");
+
   private Release release;
 
   public VersionBuilder()
   {
   }
 
+  @SuppressWarnings("restriction")
   @Override
   protected final IProject[] build(int kind, @SuppressWarnings("rawtypes") Map args, IProgressMonitor monitor)
       throws CoreException
@@ -77,20 +85,19 @@ public class VersionBuilder extends IncrementalProjectBuilder
     {
       Markers.deleteAllMarkers(project);
 
-      IPluginModelBase pluginModel = PluginRegistry.findModel(getProject());
-      if (pluginModel == null)
-      {
-        throw new IllegalStateException("Could not locate the plugin model base for project: " + getProject().getName());
-      }
+      IModel componentModel = getComponentModel(project);
 
-      if (!"true".equals(args.get(DEPENDENCY_RANGES_ARGUMENT)))
+      if (componentModel instanceof IPluginModelBase)
       {
-        checkDependencyRanges(pluginModel);
-      }
+        if (!"true".equals(args.get(DEPENDENCY_RANGES_ARGUMENT)))
+        {
+          checkDependencyRanges((IPluginModelBase)componentModel);
+        }
 
-      if (!"true".equals(args.get(EXPORT_VERSIONS_ARGUMENT)))
-      {
-        checkPackageExports(pluginModel);
+        if (!"true".equals(args.get(EXPORT_VERSIONS_ARGUMENT)))
+        {
+          checkPackageExports((IPluginModelBase)componentModel);
+        }
       }
 
       /*
@@ -158,8 +165,8 @@ public class VersionBuilder extends IncrementalProjectBuilder
        * Determine if a validation is needed or if the version has already been increased properly
        */
 
-      Element element = getElement(pluginModel);
-      Element releaseElement = release.getElements().get(element.getName());
+      Element element = getElement(componentModel);
+      Element releaseElement = release.getElements().get(element);
       if (releaseElement == null)
       {
         validator.abort(buildState, project, null, monitor);
@@ -205,7 +212,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
         delta = getDelta(project);
       }
 
-      validator.updateBuildState(buildState, releasePath, release, project, delta, pluginModel, monitor);
+      validator.updateBuildState(buildState, releasePath, release, project, delta, componentModel, monitor);
 
       try
       {
@@ -244,12 +251,22 @@ public class VersionBuilder extends IncrementalProjectBuilder
     return releaseProject;
   }
 
-  private Element getElement(IPluginModelBase pluginModel) throws CoreException
+  private Element getElement(IModel componentModel) throws CoreException
   {
-    BundleDescription description = pluginModel.getBundleDescription();
-    String name = description.getSymbolicName();
-    Version version = description.getVersion();
-    return new Element(name, version, Type.PLUGIN);
+    if (componentModel instanceof IPluginModelBase)
+    {
+      IPluginModelBase pluginModel = (IPluginModelBase)componentModel;
+      BundleDescription description = pluginModel.getBundleDescription();
+      String name = description.getSymbolicName();
+      Version version = description.getVersion();
+      return new Element(name, version, Type.PLUGIN);
+    }
+
+    IFeatureModel featureModel = (IFeatureModel)componentModel;
+    IFeature feature = featureModel.getFeature();
+    String name = feature.getId();
+    Version version = new Version(feature.getVersion());
+    return new Element(name, version, Type.FEATURE);
   }
 
   private void checkDependencyRanges(IPluginModelBase pluginModel) throws CoreException, IOException
@@ -401,8 +418,19 @@ public class VersionBuilder extends IncrementalProjectBuilder
 
   private void addVersionMarker(String message) throws CoreException, IOException
   {
-    IFile file = getProject().getFile(MANIFEST_PATH);
-    String regex = "Bundle-Version: *([^ ]*)";
+    String regex;
+    IFile file = getProject().getFile(FEATURE_PATH);
+    if (file.exists())
+    {
+
+      regex = ".*version\\s*=\\s*[\"'](\\d+\\.\\d+\\.\\d+).*";
+    }
+    else
+    {
+      file = getProject().getFile(MANIFEST_PATH);
+      regex = "Bundle-Version: *(\\d+\\.\\d+\\.\\d+).*";
+    }
+
     Markers.addMarker(file, message, IMarker.SEVERITY_ERROR, regex);
   }
 
@@ -412,5 +440,68 @@ public class VersionBuilder extends IncrementalProjectBuilder
     {
       System.out.println(msg);
     }
+  }
+
+  public static IModel getComponentModel(IProject project)
+  {
+    IModel componentModel = PluginRegistry.findModel(project);
+    if (componentModel == null)
+    {
+      componentModel = getFeatureModel(project);
+      if (componentModel == null)
+      {
+        throw new IllegalStateException("The project " + project.getName() + " is neither a plugin nor a feature");
+      }
+    }
+    return componentModel;
+  }
+
+  private static IFeatureModel getFeatureModel(IProject project)
+  {
+    FeatureModelManager featureModelManager = PDECore.getDefault().getFeatureModelManager();
+    for (IFeatureModel featureModel : featureModelManager.getWorkspaceModels())
+    {
+      if (featureModel.getUnderlyingResource().getProject() == project)
+      {
+        return featureModel;
+      }
+    }
+
+    return null;
+  }
+
+  public static IModel getComponentModel(Element element)
+  {
+    String name = element.getName();
+    if (element.getType() == Element.Type.PLUGIN)
+    {
+      IModel pluginModel = PluginRegistry.findModel(name);
+      if (pluginModel != null)
+      {
+        return pluginModel;
+      }
+    }
+
+    IFeatureModel[] featureModels = PDECore.getDefault().getFeatureModelManager().getWorkspaceModels();
+    for (IFeatureModel featureModel : featureModels)
+    {
+      if (featureModel.getFeature().getId().equals(name))
+      {
+        return featureModel;
+      }
+    }
+
+    return null;
+  }
+
+  public static Version getComponentVersion(IModel componentModel)
+  {
+    if (componentModel instanceof IPluginModelBase)
+    {
+      IPluginModelBase pluginModel = (IPluginModelBase)componentModel;
+      return pluginModel.getBundleDescription().getVersion();
+    }
+
+    return new Version(((IFeatureModel)componentModel).getFeature().getVersion());
   }
 }

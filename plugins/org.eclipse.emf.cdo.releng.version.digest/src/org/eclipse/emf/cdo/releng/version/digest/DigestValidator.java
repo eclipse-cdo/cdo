@@ -25,11 +25,12 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.pde.core.IModel;
 import org.eclipse.pde.core.build.IBuild;
 import org.eclipse.pde.core.build.IBuildEntry;
 import org.eclipse.pde.core.build.IBuildModel;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
-import org.eclipse.pde.core.plugin.PluginRegistry;
+import org.eclipse.pde.internal.core.ifeature.IFeatureModel;
 
 import java.io.FilterInputStream;
 import java.io.IOException;
@@ -57,20 +58,20 @@ public class DigestValidator extends VersionValidator
 
   @Override
   public void updateBuildState(BuildState buildState, String releasePath, Release release, IProject project,
-      IResourceDelta delta, IPluginModelBase pluginModel, IProgressMonitor monitor) throws Exception
+      IResourceDelta delta, IModel componentModel, IProgressMonitor monitor) throws Exception
   {
     DigestValidatorState validatorState = (DigestValidatorState)buildState.getValidatorState();
-    beforeValidation(validatorState, pluginModel);
+    beforeValidation(validatorState, componentModel);
     if (validatorState == null || delta == null)
     {
       VersionBuilder.trace("Digest: Full validation...");
       buildState.setValidatorState(null);
-      validatorState = validateFull(project, null, pluginModel, monitor);
+      validatorState = validateFull(project, null, componentModel, monitor);
     }
     else
     {
       VersionBuilder.trace("Digest: Delta validation...");
-      validatorState = validateDelta(delta, validatorState, pluginModel, monitor);
+      validatorState = validateDelta(delta, validatorState, componentModel, monitor);
     }
 
     afterValidation(validatorState);
@@ -89,8 +90,8 @@ public class DigestValidator extends VersionValidator
     buildState.setValidatorState(validatorState);
   }
 
-  public DigestValidatorState validateFull(IResource resource, DigestValidatorState parentState,
-      IPluginModelBase pluginModel, IProgressMonitor monitor) throws Exception
+  public DigestValidatorState validateFull(IResource resource, DigestValidatorState parentState, IModel componentModel,
+      IProgressMonitor monitor) throws Exception
   {
     if (resource.getType() != IResource.PROJECT && !isConsidered(resource))
     {
@@ -108,7 +109,7 @@ public class DigestValidator extends VersionValidator
       List<DigestValidatorState> memberStates = new ArrayList<DigestValidatorState>();
       for (IResource member : container.members())
       {
-        DigestValidatorState memberState = validateFull(member, result, pluginModel, monitor);
+        DigestValidatorState memberState = validateFull(member, result, componentModel, monitor);
         if (memberState != null)
         {
           memberStates.add(memberState);
@@ -132,7 +133,7 @@ public class DigestValidator extends VersionValidator
   }
 
   public DigestValidatorState validateDelta(IResourceDelta delta, DigestValidatorState validatorState,
-      IPluginModelBase pluginModel, IProgressMonitor monitor) throws Exception
+      IModel componentModel, IProgressMonitor monitor) throws Exception
   {
     IResource resource = delta.getResource();
     if (!resource.exists() || resource.getType() != IResource.PROJECT && !isConsidered(resource))
@@ -156,7 +157,7 @@ public class DigestValidator extends VersionValidator
         {
           IResource memberResource = memberDelta.getResource();
           DigestValidatorState memberState = validatorState.getChild(memberResource.getName());
-          DigestValidatorState newMemberState = validateDelta(memberDelta, memberState, pluginModel, monitor);
+          DigestValidatorState newMemberState = validateDelta(memberDelta, memberState, componentModel, monitor);
           if (newMemberState != null)
           {
             newMemberState.setParent(result);
@@ -204,7 +205,7 @@ public class DigestValidator extends VersionValidator
     return result;
   }
 
-  public void beforeValidation(DigestValidatorState validatorState, IPluginModelBase pluginModel) throws Exception
+  public void beforeValidation(DigestValidatorState validatorState, IModel componentModel) throws Exception
   {
   }
 
@@ -389,12 +390,12 @@ public class DigestValidator extends VersionValidator
     }
 
     @Override
-    public void beforeValidation(DigestValidatorState validatorState, IPluginModelBase pluginModel) throws Exception
+    public void beforeValidation(DigestValidatorState validatorState, IModel componentModel) throws Exception
     {
       considered.clear();
       considered.add("");
 
-      IBuild build = getBuild(pluginModel);
+      IBuild build = getBuild(componentModel);
       IBuildEntry binIncludes = build.getEntry(IBuildEntry.BIN_INCLUDES);
       if (binIncludes != null)
       {
@@ -440,34 +441,41 @@ public class DigestValidator extends VersionValidator
     }
 
     @SuppressWarnings("restriction")
-    private IBuild getBuild(IPluginModelBase pluginModel) throws CoreException
+    private IBuild getBuild(IModel componentModel) throws CoreException
     {
-      IBuildModel buildModel = PluginRegistry.createBuildModel(pluginModel);
-      if (buildModel == null)
+      IProject project = componentModel.getUnderlyingResource().getProject();
+      IFile buildFile = org.eclipse.pde.internal.core.project.PDEProject.getBuildProperties(project);
+
+      IBuildModel buildModel = null;
+      if (buildFile.exists())
       {
-        IProject project = pluginModel.getUnderlyingResource().getProject();
-        IFile buildFile = org.eclipse.pde.internal.core.project.PDEProject.getBuildProperties(project);
-        if (buildFile.exists())
-        {
-          buildModel = new org.eclipse.pde.internal.core.build.WorkspaceBuildModel(buildFile);
-          buildModel.load();
-        }
+        buildModel = new org.eclipse.pde.internal.core.build.WorkspaceBuildModel(buildFile);
+        buildModel.load();
       }
 
       if (buildModel == null)
       {
-        throw new IllegalStateException("Could not determine build model for "
-            + pluginModel.getBundleDescription().getSymbolicName());
+        throw new IllegalStateException("Could not determine build model for " + getName(componentModel));
       }
 
       IBuild build = buildModel.getBuild();
       if (build == null)
       {
-        throw new IllegalStateException("Could not determine build model for "
-            + pluginModel.getBundleDescription().getSymbolicName());
+        throw new IllegalStateException("Could not determine build model for " + getName(componentModel));
       }
 
       return build;
+    }
+
+    private String getName(IModel componentModel)
+    {
+      if (componentModel instanceof IPluginModelBase)
+      {
+        IPluginModelBase pluginModel = (IPluginModelBase)componentModel;
+        return pluginModel.getBundleDescription().getSymbolicName();
+      }
+
+      return ((IFeatureModel)componentModel).getFeature().getId();
     }
 
     private void consider(String path)

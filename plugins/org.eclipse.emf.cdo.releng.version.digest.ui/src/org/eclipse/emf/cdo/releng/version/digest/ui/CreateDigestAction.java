@@ -12,8 +12,8 @@ package org.eclipse.emf.cdo.releng.version.digest.ui;
 
 import org.eclipse.emf.cdo.releng.version.Release;
 import org.eclipse.emf.cdo.releng.version.Release.Element;
-import org.eclipse.emf.cdo.releng.version.Release.Element.Type;
 import org.eclipse.emf.cdo.releng.version.ReleaseManager;
+import org.eclipse.emf.cdo.releng.version.VersionBuilder;
 import org.eclipse.emf.cdo.releng.version.digest.DigestValidator;
 import org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState;
 
@@ -29,9 +29,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.osgi.service.resolver.BundleDescription;
-import org.eclipse.pde.core.plugin.IPluginModelBase;
-import org.eclipse.pde.core.plugin.PluginRegistry;
+import org.eclipse.pde.core.IModel;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
@@ -129,9 +127,9 @@ public class CreateDigestAction implements IObjectActionDelegate
     try
     {
       Map<String, byte[]> result = new HashMap<String, byte[]>();
-      for (Entry<String, Element> entry : release.getElements().entrySet())
+      for (Entry<Element, Element> entry : release.getElements().entrySet())
       {
-        String name = entry.getKey();
+        String name = entry.getKey().getName();
         monitor.subTask(name);
 
         try
@@ -139,27 +137,26 @@ public class CreateDigestAction implements IObjectActionDelegate
           try
           {
             Element element = entry.getValue();
-            if (element.getType() != Type.PLUGIN || element.getName().endsWith(".source"))
+            if (element.getName().endsWith(".source"))
             {
               continue;
             }
 
-            IPluginModelBase pluginModel = PluginRegistry.findModel(name);
-            if (pluginModel == null)
+            IModel componentModel = VersionBuilder.getComponentModel(element);
+            if (componentModel == null)
             {
-              warnings.add(name + ": Plugin not found");
+              warnings.add(name + ": Component not found");
               continue;
             }
 
-            IResource resource = pluginModel.getUnderlyingResource();
+            IResource resource = componentModel.getUnderlyingResource();
             if (resource == null)
             {
-              warnings.add(name + ": Plugin is not in workspace");
+              warnings.add(name + ": Component is not in workspace");
               continue;
             }
 
-            BundleDescription description = pluginModel.getBundleDescription();
-            Version version = description.getVersion();
+            Version version = VersionBuilder.getComponentVersion(componentModel);
             version = new Version(version.getMajor(), version.getMinor(), version.getMicro());
 
             if (!element.getVersion().equals(version))
@@ -169,8 +166,8 @@ public class CreateDigestAction implements IObjectActionDelegate
 
             // TODO Determine validator class from .project
             DigestValidator validator = new DigestValidator.BuildModel();
-            validator.beforeValidation(null, pluginModel);
-            DigestValidatorState state = validator.validateFull(resource.getProject(), null, pluginModel,
+            validator.beforeValidation(null, componentModel);
+            DigestValidatorState state = validator.validateFull(resource.getProject(), null, componentModel,
                 new NullProgressMonitor());
             validator.afterValidation(state);
             result.put(state.getName(), state.getDigest());

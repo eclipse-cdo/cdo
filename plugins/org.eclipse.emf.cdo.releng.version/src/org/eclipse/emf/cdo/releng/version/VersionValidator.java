@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.releng.version;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.pde.core.plugin.IPluginModelBase;
+import org.eclipse.pde.core.IModel;
 
 /**
  * @author Eike Stepper
@@ -31,5 +31,5 @@ public abstract class VersionValidator
   }
 
   public abstract void updateBuildState(BuildState buildState, String releasePath, Release release, IProject project,
-      IResourceDelta delta, IPluginModelBase pluginModel, IProgressMonitor monitor) throws Exception;
+      IResourceDelta delta, IModel componentModel, IProgressMonitor monitor) throws Exception;
 }

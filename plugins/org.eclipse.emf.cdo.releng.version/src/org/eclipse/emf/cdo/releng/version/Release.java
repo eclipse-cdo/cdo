@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.releng.version;
 
-import org.eclipse.emf.cdo.releng.version.Release.Element.Type;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
@@ -45,15 +43,13 @@ public class Release
 {
   public static final String RELEASE_TAG = "release";
 
-  public static final String ELEMENT_TAG = "element";
+  public static final String FEATURE_TAG = "feature";
 
-  public static final String INCLUDES_TAG = "includes";
+  public static final String PLUGIN_TAG = "plugin";
 
   public static final String TAG_ATTRIBUTE = "tag";
 
   public static final String INTEGRATION_ATTRIBUTE = "integration";
-
-  public static final String TYPE_ATTRIBUTE = "type";
 
   public static final String NAME_ATTRIBUTE = "name";
 
@@ -174,20 +170,19 @@ public class Release
 
     for (Element element : list)
     {
-      writeElement(builder, element, INDENT, ELEMENT_TAG);
+      writeElement(builder, element, INDENT);
     }
 
     builder.append("</" + RELEASE_TAG + ">\n");
   }
 
-  private void writeElement(StringBuilder builder, Element element, String indent, String tag)
+  private void writeElement(StringBuilder builder, Element element, String indent)
   {
-    String type = element.getType().toString().toLowerCase();
     String name = element.getName();
     Version version = element.getVersion();
 
-    builder.append(indent + "<" + tag + " " + TYPE_ATTRIBUTE + "=\"" + type + "\" " + NAME_ATTRIBUTE + "=\"" + name
-        + "\" " + VERSION_ATTRIBUTE + "=\"" + version + "\"");
+    builder.append(indent + "<" + element.getTag() + " " + NAME_ATTRIBUTE + "=\"" + name + "\" " + VERSION_ATTRIBUTE
+        + "=\"" + version + "\"");
 
     List<Element> content = element.getChildren();
     if (content.isEmpty())
@@ -201,10 +196,10 @@ public class Release
 
       for (Element child : content)
       {
-        writeElement(builder, child, indent + INDENT, INCLUDES_TAG);
+        writeElement(builder, child, indent + INDENT);
       }
 
-      builder.append(indent + "</" + tag + ">\n");
+      builder.append(indent + "</" + element.getTag() + ">\n");
     }
   }
 
@@ -250,6 +245,11 @@ public class Release
     public Type getType()
     {
       return type;
+    }
+
+    public String getTag()
+    {
+      return type == Type.PLUGIN ? PLUGIN_TAG : FEATURE_TAG;
     }
 
     public String getName()
@@ -428,21 +428,20 @@ public class Release
         tag = getString(attributes, TAG_ATTRIBUTE);
         integration = getBoolean(attributes, INTEGRATION_ATTRIBUTE);
       }
-      else if (ELEMENT_TAG.equalsIgnoreCase(qName))
+      else if (FEATURE_TAG.equalsIgnoreCase(qName))
       {
-        parent = createElement(attributes);
+        parent = createElement(Element.Type.FEATURE, attributes);
         elements.put(parent, parent);
       }
-      else if (INCLUDES_TAG.equalsIgnoreCase(qName))
+      else if (PLUGIN_TAG.equalsIgnoreCase(qName))
       {
-        Element child = createElement(attributes);
-        parent.getChildren().add(child);
+        parent = createElement(Element.Type.PLUGIN, attributes);
+        elements.put(parent, parent);
       }
     }
 
-    private Element createElement(Attributes attributes) throws SAXException
+    private Element createElement(Element.Type type, Attributes attributes) throws SAXException
     {
-      Type type = getType(attributes, TYPE_ATTRIBUTE);
       String name = getString(attributes, NAME_ATTRIBUTE);
       Version version = new Version(getString(attributes, VERSION_ATTRIBUTE));
 
@@ -452,7 +451,7 @@ public class Release
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException
     {
-      if (ELEMENT_TAG.equalsIgnoreCase(qName))
+      if (FEATURE_TAG.equalsIgnoreCase(qName) || PLUGIN_TAG.equalsIgnoreCase(qName))
       {
         parent = null;
       }
@@ -483,12 +482,6 @@ public class Release
       }
 
       throw new SAXException("Illegal value for " + name);
-    }
-
-    private Type getType(Attributes attributes, String name) throws SAXException
-    {
-      String type = getString(attributes, name).toUpperCase();
-      return Type.valueOf(type);
     }
 
     @Override

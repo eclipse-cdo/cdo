@@ -10,11 +10,18 @@
  */
 package org.eclipse.emf.cdo.releng.version;
 
+import org.osgi.framework.Version;
+
 /**
  * @author Eike Stepper
  */
 public class VersionUtil
 {
+  public static Version normalize(Version version)
+  {
+    return new Version(version.getMajor(), version.getMinor(), version.getMicro());
+  }
+
   /**
    * @deprecated This method exists so that others can produce a reliable compiler warning by calling it. A
    *             <code>@SuppressWarnings("deprecation")</code> annotation will never become unnecessary then.

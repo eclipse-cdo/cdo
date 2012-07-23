@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.releng.version;
 
 import org.eclipse.emf.cdo.releng.version.Release.Element;
-import org.eclipse.emf.cdo.releng.version.Release.Element.Type;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -112,7 +111,16 @@ public class VersionBuilder extends IncrementalProjectBuilder
         IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(releasePath));
         buildDpependencies.add(file.getProject());
 
-        Release release = ReleaseManager.INSTANCE.getRelease(file);
+        Release release;
+        if (!file.exists())
+        {
+          release = ReleaseManager.INSTANCE.createRelease(file);
+        }
+        else
+        {
+          release = ReleaseManager.INSTANCE.getRelease(file);
+        }
+
         boolean releaseHasChanged = !release.getTag().equals(buildState.getReleaseTag());
         if (releaseHasChanged)
         {
@@ -124,8 +132,9 @@ public class VersionBuilder extends IncrementalProjectBuilder
       }
       catch (CoreException ex)
       {
+        ex.printStackTrace();
         String msg = "Problem with release spec: " + releasePath;
-        Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, releasePath);
+        Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, "(" + releasePath.replace(".", "\\.") + ")");
         return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
       }
 
@@ -133,7 +142,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
        * Determine if a validation is needed or if the version has already been increased properly
        */
 
-      Element element = createElement(componentModel);
+      Element element = ReleaseManager.INSTANCE.createElement(componentModel);
       Element releaseElement = release.getElements().get(element);
       if (releaseElement == null)
       {
@@ -306,7 +315,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
     for (org.eclipse.pde.internal.core.ifeature.IFeatureChild versionable : feature.getIncludedFeatures())
     {
       String id = versionable.getId();
-      Element element = new Element(id, versionable.getVersion(), Element.Type.FEATURE);
+      Element element = new Element(Element.Type.FEATURE, id, versionable.getVersion());
       int change = checkFeatureAPI(element, warnings);
       biggestChange = Math.max(biggestChange, change);
 
@@ -319,7 +328,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
 
     for (org.eclipse.pde.internal.core.ifeature.IFeaturePlugin versionable : feature.getPlugins())
     {
-      Element element = new Element(versionable.getId(), versionable.getVersion(), Element.Type.PLUGIN);
+      Element element = new Element(Element.Type.PLUGIN, versionable.getId(), versionable.getVersion());
       int change = checkFeatureAPI(element, warnings);
       biggestChange = Math.max(biggestChange, change);
 
@@ -328,7 +337,6 @@ public class VersionBuilder extends IncrementalProjectBuilder
       {
         buildDpependencies.add(project);
       }
-
     }
 
     return biggestChange;
@@ -342,23 +350,11 @@ public class VersionBuilder extends IncrementalProjectBuilder
     if (releasedElement != null)
     {
       Version releasedVersion = releasedElement.getVersion();
-
       Version version = element.getVersion();
-      if (version.equals(Version.emptyVersion))
-      {
-        if (element.getType() == Element.Type.PLUGIN)
-        {
-          version = getPluginVersion(element.getName());
-        }
-        else
-        {
-          version = getFeatureVersion(element.getName());
-        }
 
-        if (version == null)
-        {
-          return NO_CHANGE;
-        }
+      if (version == null)
+      {
+        return NO_CHANGE;
       }
 
       if (version.getMajor() != releasedVersion.getMajor())
@@ -408,38 +404,6 @@ public class VersionBuilder extends IncrementalProjectBuilder
     });
   }
 
-  private Version getPluginVersion(String name)
-  {
-    IPluginModelBase pluginModel = PluginRegistry.findModel(name);
-    if (pluginModel != null)
-    {
-      Version version = pluginModel.getBundleDescription().getVersion();
-      return stripQualifier(version);
-    }
-
-    return null;
-  }
-
-  @SuppressWarnings("restriction")
-  private Version getFeatureVersion(String name)
-  {
-    org.eclipse.pde.internal.core.ifeature.IFeatureModel[] featureModels = org.eclipse.pde.internal.core.PDECore
-        .getDefault().getFeatureModelManager().getModels();
-
-    for (org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel : featureModels)
-    {
-      org.eclipse.pde.internal.core.ifeature.IFeature feature = featureModel.getFeature();
-      String id = feature.getId();
-      if (id.equals(name))
-      {
-        Version version = new Version(feature.getVersion());
-        return stripQualifier(version);
-      }
-    }
-
-    return null;
-  }
-
   private IProject getPluginProject(String name)
   {
     IPluginModelBase pluginModel = PluginRegistry.findModel(name);
@@ -471,37 +435,6 @@ public class VersionBuilder extends IncrementalProjectBuilder
     }
 
     return null;
-  }
-
-  private Version stripQualifier(Version version)
-  {
-    return new Version(version.getMajor(), version.getMinor(), version.getMicro());
-  }
-
-  private Element createElement(IModel componentModel) throws CoreException
-  {
-    if (componentModel instanceof IPluginModelBase)
-    {
-      IPluginModelBase pluginModel = (IPluginModelBase)componentModel;
-      BundleDescription description = pluginModel.getBundleDescription();
-
-      String name = description.getSymbolicName();
-      Version version = description.getVersion();
-      return new Element(name, version, Type.PLUGIN);
-    }
-
-    return createFeatureElement(componentModel);
-  }
-
-  @SuppressWarnings("restriction")
-  private Element createFeatureElement(IModel componentModel)
-  {
-    org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel = (org.eclipse.pde.internal.core.ifeature.IFeatureModel)componentModel;
-    org.eclipse.pde.internal.core.ifeature.IFeature feature = featureModel.getFeature();
-
-    String name = feature.getId();
-    Version version = new Version(feature.getVersion());
-    return new Element(name, version, Type.FEATURE);
   }
 
   private void checkDependencyRanges(IPluginModelBase pluginModel) throws CoreException, IOException
@@ -586,7 +519,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
   {
     BundleDescription description = pluginModel.getBundleDescription();
     String bundleName = description.getSymbolicName();
-    Version bundleVersion = Release.normalizeVersion(description.getVersion());
+    Version bundleVersion = VersionUtil.normalize(description.getVersion());
 
     for (ExportPackageDescription packageExport : description.getExportPackages())
     {

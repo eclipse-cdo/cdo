@@ -15,6 +15,9 @@ import org.eclipse.emf.cdo.releng.version.Release.Element.Type;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.pde.core.plugin.IPluginModelBase;
+import org.eclipse.pde.core.plugin.PluginRegistry;
 
 import org.osgi.framework.Version;
 import org.xml.sax.Attributes;
@@ -24,10 +27,14 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.parsers.SAXParser;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,15 +42,38 @@ import java.util.Map;
  */
 public class Release
 {
+  public static final String RELEASE_TAG = "release";
+
+  public static final String ELEMENT_TAG = "element";
+
+  public static final String INCLUDES_TAG = "includes";
+
+  public static final String TAG_ATTRIBUTE = "tag";
+
+  public static final String INTEGRATION_ATTRIBUTE = "integration";
+
+  public static final String TYPE_ATTRIBUTE = "type";
+
+  public static final String NAME_ATTRIBUTE = "name";
+
+  public static final String VERSION_ATTRIBUTE = "version";
+
+  private static final String INDENT = "\t";
+
   private IFile file;
 
   private String tag;
 
   private boolean integration;
 
-  private String repository;
-
   private Map<Element, Element> elements = new HashMap<Element, Element>();
+
+  public Release(IFile file)
+  {
+    this.file = file;
+    tag = "";
+    integration = true;
+  }
 
   Release(SAXParser parser, IFile file) throws CoreException, IOException, SAXException
   {
@@ -88,14 +118,9 @@ public class Release
     return integration;
   }
 
-  public String getRepository()
-  {
-    return repository;
-  }
-
   public Map<Element, Element> getElements()
   {
-    return Collections.unmodifiableMap(elements);
+    return elements;
   }
 
   public int getSize()
@@ -103,9 +128,94 @@ public class Release
     return elements.size();
   }
 
-  public static Version normalizeVersion(Version version)
+  public void write() throws IOException, CoreException
   {
-    return new Version(version.getMajor(), version.getMinor(), version.getMicro());
+    StringBuilder builder = new StringBuilder();
+    writeRelease(builder);
+
+    String xml = builder.toString();
+    ByteArrayInputStream contents = new ByteArrayInputStream(xml.getBytes("UTF-8"));
+    if (file.exists())
+    {
+      file.setContents(contents, true, true, new NullProgressMonitor());
+    }
+    else
+    {
+      file.create(contents, true, new NullProgressMonitor());
+    }
+  }
+
+  private void writeRelease(StringBuilder builder)
+  {
+    builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+    builder.append("<" + RELEASE_TAG + " " + TAG_ATTRIBUTE + "=\"\" " + INTEGRATION_ATTRIBUTE + "=\"" + integration
+        + "\">\n");
+
+    List<Element> list = new ArrayList<Element>(elements.keySet());
+    Collections.sort(list, new Comparator<Element>()
+    {
+      public int compare(Element o1, Element o2)
+      {
+        int result = o1.getType().compareTo(o2.getType());
+        if (result == 0)
+        {
+          result = o1.getName().compareTo(o2.getName());
+        }
+
+        if (result == 0)
+        {
+          result = o1.getVersion().compareTo(o2.getVersion());
+        }
+
+        return result;
+      }
+    });
+
+    for (Element element : list)
+    {
+      writeElement(builder, element, INDENT, ELEMENT_TAG);
+    }
+
+    builder.append("</" + RELEASE_TAG + ">\n");
+  }
+
+  private void writeElement(StringBuilder builder, Element element, String indent, String tag)
+  {
+    String type = element.getType().toString().toLowerCase();
+    String name = element.getName();
+    Version version = element.getVersion();
+
+    builder.append(indent + "<" + tag + " " + TYPE_ATTRIBUTE + "=\"" + type + "\" " + NAME_ATTRIBUTE + "=\"" + name
+        + "\" " + VERSION_ATTRIBUTE + "=\"" + version + "\"");
+
+    List<Element> content = element.getContent();
+    if (content.isEmpty())
+    {
+      builder.append("/");
+      writeElementEnd(builder, element);
+    }
+    else
+    {
+      writeElementEnd(builder, element);
+
+      for (Element child : content)
+      {
+        writeElement(builder, child, indent + INDENT, INCLUDES_TAG);
+      }
+
+      builder.append(indent + "</" + tag + ">\n");
+    }
+  }
+
+  private void writeElementEnd(StringBuilder builder, Element element)
+  {
+    builder.append(">");
+    if (element.getVersion().equals(Version.emptyVersion))
+    {
+      builder.append(" <!-- UNRESOLVED -->");
+    }
+
+    builder.append("\n");
   }
 
   /**
@@ -113,22 +223,30 @@ public class Release
    */
   public static class Element
   {
+    private Type type;
+
     private String name;
 
     private Version version;
 
-    private Type type;
+    private List<Element> content = new ArrayList<Element>();
 
-    public Element(String name, Version version, Type type)
+    public Element(Type type, String name, Version version)
     {
-      this.name = name;
-      this.version = normalizeVersion(version);
       this.type = type;
+      this.name = name;
+      this.version = VersionUtil.normalize(version);
+      resolveVersion();
     }
 
-    public Element(String name, String version, Type type)
+    public Element(Type type, String name, String version)
     {
-      this(name, new Version(version), type);
+      this(type, name, new Version(version));
+    }
+
+    public Type getType()
+    {
+      return type;
     }
 
     public String getName()
@@ -139,6 +257,11 @@ public class Release
     public Version getVersion()
     {
       return version;
+    }
+
+    public List<Element> getContent()
+    {
+      return content;
     }
 
     @Override
@@ -190,9 +313,57 @@ public class Release
       return true;
     }
 
-    public Type getType()
+    private void resolveVersion()
     {
-      return type;
+      if (version.equals(Version.emptyVersion))
+      {
+        Version resolvedVersion;
+        if (type == Element.Type.PLUGIN)
+        {
+          resolvedVersion = getPluginVersion(name);
+        }
+        else
+        {
+          resolvedVersion = getFeatureVersion(name);
+        }
+
+        if (resolvedVersion != null)
+        {
+          version = resolvedVersion;
+        }
+      }
+    }
+
+    private Version getPluginVersion(String name)
+    {
+      IPluginModelBase pluginModel = PluginRegistry.findModel(name);
+      if (pluginModel != null)
+      {
+        Version version = pluginModel.getBundleDescription().getVersion();
+        return VersionUtil.normalize(version);
+      }
+
+      return null;
+    }
+
+    @SuppressWarnings("restriction")
+    private Version getFeatureVersion(String name)
+    {
+      org.eclipse.pde.internal.core.ifeature.IFeatureModel[] featureModels = org.eclipse.pde.internal.core.PDECore
+          .getDefault().getFeatureModelManager().getModels();
+
+      for (org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel : featureModels)
+      {
+        org.eclipse.pde.internal.core.ifeature.IFeature feature = featureModel.getFeature();
+        String id = feature.getId();
+        if (id.equals(name))
+        {
+          Version version = new Version(feature.getVersion());
+          return VersionUtil.normalize(version);
+        }
+      }
+
+      return null;
     }
 
     /**
@@ -207,8 +378,10 @@ public class Release
   /**
    * @author Eike Stepper
    */
-  private final class XMLHandler extends DefaultHandler
+  public class XMLHandler extends DefaultHandler
   {
+    private Element parent;
+
     public XMLHandler()
     {
     }
@@ -216,20 +389,38 @@ public class Release
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException
     {
-      if ("release".equalsIgnoreCase(qName))
+      if (RELEASE_TAG.equalsIgnoreCase(qName))
       {
-        tag = getString(attributes, "tag");
-        integration = getBoolean(attributes, "integration");
-        repository = getString(attributes, "repository");
+        tag = getString(attributes, TAG_ATTRIBUTE);
+        integration = getBoolean(attributes, INTEGRATION_ATTRIBUTE);
       }
-      else if ("element".equalsIgnoreCase(qName))
+      else if (ELEMENT_TAG.equalsIgnoreCase(qName))
       {
-        String name = getString(attributes, "name");
-        Version version = new Version(getString(attributes, "version"));
-        Type type = getType(attributes, "type");
+        parent = createElement(attributes);
+        elements.put(parent, parent);
+      }
+      else if (INCLUDES_TAG.equalsIgnoreCase(qName))
+      {
+        Element child = createElement(attributes);
+        parent.getContent().add(child);
+      }
+    }
 
-        Element element = new Element(name, version, type);
-        elements.put(element, element);
+    private Element createElement(Attributes attributes) throws SAXException
+    {
+      Type type = getType(attributes, TYPE_ATTRIBUTE);
+      String name = getString(attributes, NAME_ATTRIBUTE);
+      Version version = new Version(getString(attributes, VERSION_ATTRIBUTE));
+
+      return new Element(type, name, version);
+    }
+
+    @Override
+    public void endElement(String uri, String localName, String qName) throws SAXException
+    {
+      if (ELEMENT_TAG.equalsIgnoreCase(qName))
+      {
+        parent = null;
       }
     }
 
@@ -262,18 +453,8 @@ public class Release
 
     private Type getType(Attributes attributes, String name) throws SAXException
     {
-      String type = getString(attributes, name);
-      if ("org.eclipse.update.feature".equals(type))
-      {
-        return Type.FEATURE;
-      }
-
-      if ("osgi.bundle".equals(type))
-      {
-        return Type.PLUGIN;
-      }
-
-      throw new SAXException("Illegal value for " + name);
+      String type = getString(attributes, name).toUpperCase();
+      return Type.valueOf(type);
     }
 
     @Override

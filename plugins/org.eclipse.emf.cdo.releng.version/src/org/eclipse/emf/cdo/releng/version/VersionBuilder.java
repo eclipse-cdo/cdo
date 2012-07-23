@@ -46,15 +46,15 @@ public class VersionBuilder extends IncrementalProjectBuilder
 {
   public static final String BUILDER_ID = "org.eclipse.emf.cdo.releng.version.VersionBuilder";
 
-  public static final String DEPENDENCY_RANGES_ARGUMENT = "ignore.missing.dependency.ranges";
-
-  public static final String EXPORT_VERSIONS_ARGUMENT = "ignore.missing.export.versions";
-
   public static final String RELEASE_PATH_ARGUMENT = "release.path";
 
   public static final String VALIDATOR_CLASS_ARGUMENT = "validator.class";
 
-  public static boolean DEBUG = false;
+  public static final String IGNORE_DEPENDENCY_RANGES_ARGUMENT = "ignore.missing.dependency.ranges";
+
+  public static final String IGNORE_EXPORT_VERSIONS_ARGUMENT = "ignore.missing.export.versions";
+
+  public static final String IGNORE_CONTENT_CHANGES_ARGUMENT = "ignore.feature.content.changes";
 
   private static final Path MANIFEST_PATH = new Path("META-INF/MANIFEST.MF");
 
@@ -71,6 +71,8 @@ public class VersionBuilder extends IncrementalProjectBuilder
   private static final int MINOR_CHANGE = 2;
 
   private static final int MAJOR_CHANGE = 3;
+
+  private static final boolean DEBUG = false;
 
   private Release release;
 
@@ -184,17 +186,17 @@ public class VersionBuilder extends IncrementalProjectBuilder
 
       if (componentModel instanceof IPluginModelBase)
       {
-        if (!"true".equals(args.get(DEPENDENCY_RANGES_ARGUMENT)))
+        if (!"true".equals(args.get(IGNORE_DEPENDENCY_RANGES_ARGUMENT)))
         {
           checkDependencyRanges((IPluginModelBase)componentModel);
         }
 
-        if (!"true".equals(args.get(EXPORT_VERSIONS_ARGUMENT)))
+        if (!"true".equals(args.get(IGNORE_EXPORT_VERSIONS_ARGUMENT)))
         {
           checkPackageExports((IPluginModelBase)componentModel);
         }
       }
-      else
+      else if (!"true".equals(args.get(IGNORE_CONTENT_CHANGES_ARGUMENT)))
       {
         List<Map.Entry<Element, Version>> warnings = new ArrayList<Entry<Element, Version>>();
         int change = checkFeatureAPI(componentModel, element, releaseElement, buildDpependencies, warnings);
@@ -334,8 +336,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
       int change = checkFeatureAPI(element, releasedElement, child, warnings);
       biggestChange = Math.max(biggestChange, change);
 
-      String name = child.getName();
-      IProject project = child.getType() == Element.Type.PLUGIN ? getPluginProject(name) : getFeatureProject(name);
+      IProject project = getProject(child);
       if (project != null)
       {
         buildDpependencies.add(project);
@@ -423,6 +424,17 @@ public class VersionBuilder extends IncrementalProjectBuilder
         throw new UnsupportedOperationException();
       }
     });
+  }
+
+  private IProject getProject(Element element)
+  {
+    String name = element.getName();
+    if (element.getType() == Element.Type.PLUGIN)
+    {
+      return getPluginProject(name);
+    }
+  
+    return getFeatureProject(name);
   }
 
   private IProject getPluginProject(String name)

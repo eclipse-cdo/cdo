@@ -66,13 +66,19 @@ public class AddNatureAction extends AbstractAction<Map<String, String>>
       boolean ignoreMissingDependencyRanges = dialog.isIgnoreMissingDependencyRanges();
       if (ignoreMissingDependencyRanges)
       {
-        arguments.put(VersionBuilder.DEPENDENCY_RANGES_ARGUMENT, "true");
+        arguments.put(VersionBuilder.IGNORE_DEPENDENCY_RANGES_ARGUMENT, "true");
       }
 
       boolean ignoreMissingExportVersions = dialog.isIgnoreMissingExportVersions();
       if (ignoreMissingExportVersions)
       {
-        arguments.put(VersionBuilder.EXPORT_VERSIONS_ARGUMENT, "true");
+        arguments.put(VersionBuilder.IGNORE_EXPORT_VERSIONS_ARGUMENT, "true");
+      }
+
+      boolean ignoreFeatureContentChanges = dialog.isIgnoreFeatureContentChanges();
+      if (ignoreFeatureContentChanges)
+      {
+        arguments.put(VersionBuilder.IGNORE_CONTENT_CHANGES_ARGUMENT, "true");
       }
     }
 
@@ -133,6 +139,10 @@ public class AddNatureAction extends AbstractAction<Map<String, String>>
 
     private boolean ignoreMissingExportVersions;
 
+    private Button ignoreFeatureContentChangesButton;
+
+    private boolean ignoreFeatureContentChanges;
+
     public BuilderConfigurationDialog(Shell shell, IContainer container)
     {
       super(shell, false, container, IResource.FILE);
@@ -152,6 +162,11 @@ public class AddNatureAction extends AbstractAction<Map<String, String>>
       return ignoreMissingExportVersions;
     }
 
+    public boolean isIgnoreFeatureContentChanges()
+    {
+      return ignoreFeatureContentChanges;
+    }
+
     @Override
     protected Control createDialogArea(Composite parent)
     {
@@ -162,6 +177,9 @@ public class AddNatureAction extends AbstractAction<Map<String, String>>
 
       ignoreMissingExportVersionsButton = new Button(content, SWT.CHECK);
       ignoreMissingExportVersionsButton.setText("Ignore missing package export versions");
+
+      ignoreFeatureContentChangesButton = new Button(content, SWT.CHECK);
+      ignoreFeatureContentChangesButton.setText("Ignore feature content changes");
 
       return dialogArea;
     }
@@ -178,6 +196,7 @@ public class AddNatureAction extends AbstractAction<Map<String, String>>
     {
       ignoreMissingDependencyRanges = ignoreMissingDependencyRangesButton.getSelection();
       ignoreMissingExportVersions = ignoreMissingExportVersionsButton.getSelection();
+      ignoreFeatureContentChanges = ignoreFeatureContentChangesButton.getSelection();
       super.okPressed();
     }
   }

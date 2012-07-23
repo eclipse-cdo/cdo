@@ -60,6 +60,8 @@ public class VersionBuilder extends IncrementalProjectBuilder
 
   private static final Path FEATURE_PATH = new Path("feature.xml");
 
+  private static final Version ADDITION = new Version(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
+
   private static final Version REMOVAL = new Version(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
 
   private static final int NO_CHANGE = 0;
@@ -363,7 +365,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
     Element releasedElementsChild = releasedElement.getChild(childElement);
     if (releasedElementsChild == null)
     {
-      addWarning(childElement, null, warnings);
+      addWarning(childElement, ADDITION, warnings);
       return MINOR_CHANGE; // ADDITION
     }
 
@@ -650,7 +652,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
         String regex = "<" + tag + "\\s+.*?id\\s*=\\s*[\"'](" + name.replace(".", "\\.") + ")";
         String msg;
 
-        if (version == null)
+        if (version == ADDITION)
         {
           msg = type + " reference '" + name + "' has been added with " + releasedElement.getVersion();
         }

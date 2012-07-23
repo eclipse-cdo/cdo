@@ -60,6 +60,8 @@ public class VersionBuilder extends IncrementalProjectBuilder
 
   private static final Path FEATURE_PATH = new Path("feature.xml");
 
+  private static final Version REMOVAL = new Version(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
+
   private static final int NO_CHANGE = 0;
 
   private static final int MICRO_CHANGE = 1;
@@ -193,7 +195,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
       else
       {
         List<Map.Entry<Element, Version>> warnings = new ArrayList<Entry<Element, Version>>();
-        int change = checkFeatureAPI(componentModel, buildDpependencies, warnings);
+        int change = checkFeatureAPI(componentModel, element, releaseElement, buildDpependencies, warnings);
         if (change != NO_CHANGE)
         {
           Version nextFeatureVersion = null;
@@ -305,81 +307,98 @@ public class VersionBuilder extends IncrementalProjectBuilder
   }
 
   @SuppressWarnings("restriction")
-  private int checkFeatureAPI(IModel componentModel, List<IProject> buildDpependencies,
-      List<Entry<Element, Version>> warnings)
+  private int checkFeatureAPI(IModel componentModel, Element element, Element releasedElement,
+      List<IProject> buildDpependencies, List<Entry<Element, Version>> warnings)
   {
     org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel = (org.eclipse.pde.internal.core.ifeature.IFeatureModel)componentModel;
     org.eclipse.pde.internal.core.ifeature.IFeature feature = featureModel.getFeature();
 
-    int biggestChange = NO_CHANGE;
     for (org.eclipse.pde.internal.core.ifeature.IFeatureChild versionable : feature.getIncludedFeatures())
     {
-      String id = versionable.getId();
-      Element element = new Element(Element.Type.FEATURE, id, versionable.getVersion());
-      int change = checkFeatureAPI(element, warnings);
+      Element childElement = new Element(Element.Type.FEATURE, versionable.getId(), versionable.getVersion());
+      element.getChildren().add(childElement);
+    }
+
+    for (org.eclipse.pde.internal.core.ifeature.IFeaturePlugin versionable : feature.getPlugins())
+    {
+      Element childElement = new Element(Element.Type.PLUGIN, versionable.getId(), versionable.getVersion());
+      element.getChildren().add(childElement);
+    }
+
+    int biggestChange = NO_CHANGE;
+    List<Element> allChildren = element.getAllChildren();
+    for (Element child : allChildren)
+    {
+      int change = checkFeatureAPI(element, releasedElement, child, warnings);
       biggestChange = Math.max(biggestChange, change);
 
-      IProject project = getFeatureProject(id);
+      String name = child.getName();
+      IProject project = child.getType() == Element.Type.PLUGIN ? getPluginProject(name) : getFeatureProject(name);
       if (project != null)
       {
         buildDpependencies.add(project);
       }
     }
 
-    for (org.eclipse.pde.internal.core.ifeature.IFeaturePlugin versionable : feature.getPlugins())
+    for (Element releasedElementsChild : releasedElement.getAllChildren())
     {
-      Element element = new Element(Element.Type.PLUGIN, versionable.getId(), versionable.getVersion());
-      int change = checkFeatureAPI(element, warnings);
-      biggestChange = Math.max(biggestChange, change);
-
-      IProject project = getPluginProject(versionable.getId());
-      if (project != null)
+      if (!allChildren.contains(releasedElementsChild))
       {
-        buildDpependencies.add(project);
+        addWarning(releasedElementsChild, REMOVAL, warnings);
+        biggestChange = MAJOR_CHANGE; // REMOVAL
       }
     }
 
     return biggestChange;
   }
 
-  private int checkFeatureAPI(Element element, List<Entry<Element, Version>> warnings)
+  private int checkFeatureAPI(Element element, Element releasedElement, Element childElement,
+      List<Entry<Element, Version>> warnings)
   {
-    // TODO Removal --> MAJOR_CHANGE
-
-    Element releasedElement = release.getElements().get(element);
-    if (releasedElement != null)
+    if (childElement.isUnresolved())
     {
-      Version releasedVersion = releasedElement.getVersion();
-      Version version = element.getVersion();
-
-      if (version == null)
-      {
-        return NO_CHANGE;
-      }
-
-      if (version.getMajor() != releasedVersion.getMajor())
-      {
-        addWarning(releasedElement, version, warnings);
-        return MAJOR_CHANGE;
-      }
-
-      if (version.getMinor() != releasedVersion.getMinor())
-      {
-        addWarning(releasedElement, version, warnings);
-        return MINOR_CHANGE;
-      }
-
-      if (version.getMicro() != releasedVersion.getMicro())
-      {
-        addWarning(releasedElement, version, warnings);
-        return MICRO_CHANGE;
-      }
-
       return NO_CHANGE;
     }
 
-    // Addition
-    return MINOR_CHANGE;
+    Element releasedElementsChild = releasedElement.getChild(childElement);
+    if (releasedElementsChild == null)
+    {
+      addWarning(childElement, null, warnings);
+      return MINOR_CHANGE; // ADDITION
+    }
+
+    Element childsReleasedElement = release.getElements().get(childElement);
+    if (childsReleasedElement == null)
+    {
+      return NO_CHANGE;
+    }
+
+    Version releasedVersion = childsReleasedElement.getVersion();
+    Version version = childElement.getVersion();
+    if (version == null)
+    {
+      return NO_CHANGE;
+    }
+
+    if (version.getMajor() != releasedVersion.getMajor())
+    {
+      addWarning(childsReleasedElement, version, warnings);
+      return MAJOR_CHANGE;
+    }
+
+    if (version.getMinor() != releasedVersion.getMinor())
+    {
+      addWarning(childsReleasedElement, version, warnings);
+      return MINOR_CHANGE;
+    }
+
+    if (version.getMicro() != releasedVersion.getMicro())
+    {
+      addWarning(childsReleasedElement, version, warnings);
+      return MICRO_CHANGE;
+    }
+
+    return NO_CHANGE;
   }
 
   private void addWarning(final Element releasedElement, final Version version,
@@ -423,7 +442,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
   private IProject getFeatureProject(String name)
   {
     org.eclipse.pde.internal.core.ifeature.IFeatureModel[] featureModels = org.eclipse.pde.internal.core.PDECore
-        .getDefault().getFeatureModelManager().getModels();
+        .getDefault().getFeatureModelManager().getWorkspaceModels();
 
     for (org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel : featureModels)
     {
@@ -620,11 +639,29 @@ public class VersionBuilder extends IncrementalProjectBuilder
     try
     {
       String name = releasedElement.getName();
-      String regex = "<" + tag + "\\s+.*?id\\s*=\\s*[\"'](" + name.replace(".", "\\.") + ")";
-      String msg = type + " reference '" + name + "' has changed from " + releasedElement.getVersion() + " to "
-          + version;
 
-      Markers.addMarker(file, msg, IMarker.SEVERITY_WARNING, regex);
+      if (version == REMOVAL)
+      {
+        String msg = type + " reference '" + name + "' has been removed";
+        Markers.addMarker(file, msg, IMarker.SEVERITY_WARNING);
+      }
+      else
+      {
+        String regex = "<" + tag + "\\s+.*?id\\s*=\\s*[\"'](" + name.replace(".", "\\.") + ")";
+        String msg;
+
+        if (version == null)
+        {
+          msg = type + " reference '" + name + "' has been added with " + releasedElement.getVersion();
+        }
+        else
+        {
+          msg = type + " reference '" + name + "' has been changed from " + releasedElement.getVersion() + " to "
+              + version;
+        }
+
+        Markers.addMarker(file, msg, IMarker.SEVERITY_WARNING, regex);
+      }
     }
     catch (Exception ex)
     {
@@ -673,41 +710,16 @@ public class VersionBuilder extends IncrementalProjectBuilder
   }
 
   @SuppressWarnings("restriction")
-  public static IModel getComponentModel(Element element)
-  {
-    String name = element.getName();
-    if (element.getType() == Element.Type.PLUGIN)
-    {
-      IModel pluginModel = PluginRegistry.findModel(name);
-      if (pluginModel != null)
-      {
-        return pluginModel;
-      }
-    }
-
-    org.eclipse.pde.internal.core.ifeature.IFeatureModel[] featureModels = org.eclipse.pde.internal.core.PDECore
-        .getDefault().getFeatureModelManager().getWorkspaceModels();
-
-    for (org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel : featureModels)
-    {
-      if (featureModel.getFeature().getId().equals(name))
-      {
-        return featureModel;
-      }
-    }
-
-    return null;
-  }
-
-  @SuppressWarnings("restriction")
   public static Version getComponentVersion(IModel componentModel)
   {
     if (componentModel instanceof IPluginModelBase)
     {
       IPluginModelBase pluginModel = (IPluginModelBase)componentModel;
-      return pluginModel.getBundleDescription().getVersion();
+      return VersionUtil.normalize(pluginModel.getBundleDescription().getVersion());
     }
 
-    return new Version(((org.eclipse.pde.internal.core.ifeature.IFeatureModel)componentModel).getFeature().getVersion());
+    Version version = new Version(((org.eclipse.pde.internal.core.ifeature.IFeatureModel)componentModel).getFeature()
+        .getVersion());
+    return VersionUtil.normalize(version);
   }
 }

@@ -142,7 +142,7 @@ public class CreateDigestAction implements IObjectActionDelegate
               continue;
             }
 
-            IModel componentModel = VersionBuilder.getComponentModel(element);
+            IModel componentModel = ReleaseManager.INSTANCE.getComponentModel(element);
             if (componentModel == null)
             {
               warnings.add(name + ": Component not found");
@@ -157,7 +157,6 @@ public class CreateDigestAction implements IObjectActionDelegate
             }
 
             Version version = VersionBuilder.getComponentVersion(componentModel);
-            version = new Version(version.getMajor(), version.getMinor(), version.getMicro());
 
             if (!element.getVersion().equals(version))
             {

@@ -16,6 +16,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.pde.core.IModel;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.core.plugin.PluginRegistry;
 
@@ -188,7 +189,7 @@ public class Release
     builder.append(indent + "<" + tag + " " + TYPE_ATTRIBUTE + "=\"" + type + "\" " + NAME_ATTRIBUTE + "=\"" + name
         + "\" " + VERSION_ATTRIBUTE + "=\"" + version + "\"");
 
-    List<Element> content = element.getContent();
+    List<Element> content = element.getChildren();
     if (content.isEmpty())
     {
       builder.append("/");
@@ -229,7 +230,9 @@ public class Release
 
     private Version version;
 
-    private List<Element> content = new ArrayList<Element>();
+    private List<Element> children = new ArrayList<Element>();
+
+    private List<Element> allChildren;
 
     public Element(Type type, String name, Version version)
     {
@@ -259,9 +262,44 @@ public class Release
       return version;
     }
 
-    public List<Element> getContent()
+    public List<Element> getChildren()
     {
-      return content;
+      return children;
+    }
+
+    public List<Element> getAllChildren()
+    {
+      if (allChildren == null)
+      {
+        allChildren = new ArrayList<Element>();
+        for (Element child : children)
+        {
+          recurseChildren(child);
+        }
+      }
+
+      return allChildren;
+    }
+
+    private void recurseChildren(Element element)
+    {
+      allChildren.add(element);
+      for (Element child : element.getChildren())
+      {
+        recurseChildren(child);
+      }
+    }
+
+    public Element getChild(Element childElement)
+    {
+      List<Element> allChildren = getAllChildren();
+      int index = allChildren.indexOf(childElement);
+      if (index != -1)
+      {
+        return allChildren.get(index);
+      }
+
+      return null;
     }
 
     @Override
@@ -313,9 +351,14 @@ public class Release
       return true;
     }
 
+    public boolean isUnresolved()
+    {
+      return version.equals(Version.emptyVersion);
+    }
+
     private void resolveVersion()
     {
-      if (version.equals(Version.emptyVersion))
+      if (isUnresolved())
       {
         Version resolvedVersion;
         if (type == Element.Type.PLUGIN)
@@ -346,24 +389,15 @@ public class Release
       return null;
     }
 
-    @SuppressWarnings("restriction")
     private Version getFeatureVersion(String name)
     {
-      org.eclipse.pde.internal.core.ifeature.IFeatureModel[] featureModels = org.eclipse.pde.internal.core.PDECore
-          .getDefault().getFeatureModelManager().getModels();
-
-      for (org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel : featureModels)
+      IModel componentModel = ReleaseManager.INSTANCE.getComponentModel(this);
+      if (componentModel != null)
       {
-        org.eclipse.pde.internal.core.ifeature.IFeature feature = featureModel.getFeature();
-        String id = feature.getId();
-        if (id.equals(name))
-        {
-          Version version = new Version(feature.getVersion());
-          return VersionUtil.normalize(version);
-        }
+        return VersionBuilder.getComponentVersion(componentModel);
       }
 
-      return null;
+      return version;
     }
 
     /**
@@ -402,7 +436,7 @@ public class Release
       else if (INCLUDES_TAG.equalsIgnoreCase(qName))
       {
         Element child = createElement(attributes);
-        parent.getContent().add(child);
+        parent.getChildren().add(child);
       }
     }
 

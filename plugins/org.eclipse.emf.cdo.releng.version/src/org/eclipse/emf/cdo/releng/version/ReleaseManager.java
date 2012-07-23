@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.pde.core.IModel;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
+import org.eclipse.pde.core.plugin.PluginRegistry;
 
 import org.osgi.framework.Version;
 import org.xml.sax.SAXException;
@@ -36,6 +37,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.WeakHashMap;
 
 /**
@@ -107,6 +109,7 @@ public class ReleaseManager
     Release release = new Release(file);
     String path = file.getFullPath().toString();
 
+    Map<Element, Element> elements = release.getElements();
     for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects())
     {
       if (project.isOpen())
@@ -126,9 +129,30 @@ public class ReleaseManager
               {
                 IModel componentModel = VersionBuilder.getComponentModel(project);
                 Element element = createElement(componentModel, true);
-                release.getElements().put(element, element);
+                elements.put(element, element);
               }
             }
+          }
+        }
+      }
+    }
+
+    Set<Element> keySet = elements.keySet();
+    for (Element element : keySet.toArray(new Element[keySet.size()]))
+    {
+      for (Element child : element.getChildren())
+      {
+        if (!elements.containsKey(child))
+        {
+          IModel childModel = getComponentModel(child);
+          if (childModel != null)
+          {
+            Element topElement = createElement(childModel, true);
+            elements.put(topElement, topElement);
+          }
+          else
+          {
+            elements.put(child, child);
           }
         }
       }
@@ -174,16 +198,73 @@ public class ReleaseManager
       for (org.eclipse.pde.internal.core.ifeature.IFeatureChild versionable : feature.getIncludedFeatures())
       {
         Element child = new Element(Element.Type.FEATURE, versionable.getId(), versionable.getVersion());
-        element.getContent().add(child);
+        element.getChildren().add(child);
       }
 
       for (org.eclipse.pde.internal.core.ifeature.IFeaturePlugin versionable : feature.getPlugins())
       {
         Element child = new Element(Element.Type.PLUGIN, versionable.getId(), versionable.getVersion());
-        element.getContent().add(child);
+        element.getChildren().add(child);
       }
     }
 
     return element;
+  }
+
+  @SuppressWarnings("restriction")
+  public IModel getComponentModel(Element element)
+  {
+    String name = element.getName();
+    if (element.getType() == Element.Type.PLUGIN)
+    {
+      IModel pluginModel = PluginRegistry.findModel(name);
+      if (pluginModel != null)
+      {
+        return pluginModel;
+      }
+    }
+
+    org.eclipse.pde.internal.core.FeatureModelManager manager = org.eclipse.pde.internal.core.PDECore.getDefault()
+        .getFeatureModelManager();
+    org.eclipse.pde.internal.core.ifeature.IFeatureModel[] featureModels = manager.getWorkspaceModels();
+
+    org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel = getFeatureModel(name, featureModels);
+    if (featureModel == null)
+    {
+      featureModels = manager.getExternalModels();
+      featureModel = getFeatureModel(name, featureModels);
+    }
+
+    return featureModel;
+  }
+
+  @SuppressWarnings("restriction")
+  private org.eclipse.pde.internal.core.ifeature.IFeatureModel getFeatureModel(String name,
+      org.eclipse.pde.internal.core.ifeature.IFeatureModel[] featureModels)
+  {
+    Version highestVersion = null;
+    org.eclipse.pde.internal.core.ifeature.IFeatureModel highestModel = null;
+
+    for (org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel : featureModels)
+    {
+      org.eclipse.pde.internal.core.ifeature.IFeature feature = featureModel.getFeature();
+      String id = feature.getId();
+      if (id.equals(name))
+      {
+        Version newVersion = new Version(feature.getVersion());
+        if (highestVersion == null || highestVersion.compareTo(newVersion) < 0)
+        {
+          highestVersion = newVersion;
+          highestModel = featureModel;
+        }
+      }
+    }
+
+    if (highestModel == null)
+    {
+      return null;
+    }
+
+    return highestModel;
   }
 }

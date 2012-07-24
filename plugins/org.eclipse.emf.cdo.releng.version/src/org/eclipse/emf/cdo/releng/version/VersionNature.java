@@ -63,6 +63,8 @@ public class VersionNature implements IProjectNature
 
   public void deconfigure() throws CoreException
   {
+    Markers.deleteAllMarkers(project);
+
     IProjectDescription description = getProject().getDescription();
     ICommand[] commands = description.getBuildSpec();
     for (int i = 0; i < commands.length; ++i)

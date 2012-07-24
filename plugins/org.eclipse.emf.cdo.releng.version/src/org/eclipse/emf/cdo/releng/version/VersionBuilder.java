@@ -98,6 +98,22 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
   }
 
   @Override
+  protected void clean(IProgressMonitor monitor) throws CoreException
+  {
+    monitor.beginTask(null, 1);
+
+    try
+    {
+      IProject project = getProject();
+      Markers.deleteAllMarkers(project);
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  @Override
   protected final IProject[] build(int kind, @SuppressWarnings("rawtypes") Map args, IProgressMonitor monitor)
       throws CoreException
   {

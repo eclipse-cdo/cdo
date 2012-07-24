@@ -75,6 +75,12 @@ public class AddNatureAction extends AbstractAction<Map<String, String>>
         arguments.put(VersionBuilder.IGNORE_EXPORT_VERSIONS_ARGUMENT, "true");
       }
 
+      boolean ignoreFeatureContentRedundancy = dialog.isIgnoreFeatureContentRedundancy();
+      if (ignoreFeatureContentRedundancy)
+      {
+        arguments.put(VersionBuilder.IGNORE_CONTENT_REDUNDANCY_ARGUMENT, "true");
+      }
+
       boolean ignoreFeatureContentChanges = dialog.isIgnoreFeatureContentChanges();
       if (ignoreFeatureContentChanges)
       {
@@ -143,6 +149,10 @@ public class AddNatureAction extends AbstractAction<Map<String, String>>
 
     private boolean ignoreFeatureContentChanges;
 
+    private Button ignoreFeatureContentRedundancyButton;
+
+    private boolean ignoreFeatureContentRedundancy;
+
     public BuilderConfigurationDialog(Shell shell, IContainer container)
     {
       super(shell, false, container, IResource.FILE);
@@ -162,6 +172,11 @@ public class AddNatureAction extends AbstractAction<Map<String, String>>
       return ignoreMissingExportVersions;
     }
 
+    public boolean isIgnoreFeatureContentRedundancy()
+    {
+      return ignoreFeatureContentRedundancy;
+    }
+
     public boolean isIgnoreFeatureContentChanges()
     {
       return ignoreFeatureContentChanges;
@@ -177,6 +192,9 @@ public class AddNatureAction extends AbstractAction<Map<String, String>>
 
       ignoreMissingExportVersionsButton = new Button(content, SWT.CHECK);
       ignoreMissingExportVersionsButton.setText("Ignore missing package export versions");
+
+      ignoreFeatureContentRedundancyButton = new Button(content, SWT.CHECK);
+      ignoreFeatureContentRedundancyButton.setText("Ignore feature content redundancy");
 
       ignoreFeatureContentChangesButton = new Button(content, SWT.CHECK);
       ignoreFeatureContentChangesButton.setText("Ignore feature content changes");
@@ -196,6 +214,7 @@ public class AddNatureAction extends AbstractAction<Map<String, String>>
     {
       ignoreMissingDependencyRanges = ignoreMissingDependencyRangesButton.getSelection();
       ignoreMissingExportVersions = ignoreMissingExportVersionsButton.getSelection();
+      ignoreFeatureContentRedundancy = ignoreFeatureContentRedundancyButton.getSelection();
       ignoreFeatureContentChanges = ignoreFeatureContentChangesButton.getSelection();
       super.okPressed();
     }

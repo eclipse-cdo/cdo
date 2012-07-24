@@ -54,6 +54,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 
   public static final String IGNORE_EXPORT_VERSIONS_ARGUMENT = "ignore.missing.export.versions";
 
+  public static final String IGNORE_CONTENT_REDUNDANCY_ARGUMENT = "ignore.feature.content.redundancy";
+
   public static final String IGNORE_CONTENT_CHANGES_ARGUMENT = "ignore.feature.content.changes";
 
   private static final Path MANIFEST_PATH = new Path("META-INF/MANIFEST.MF");
@@ -192,6 +194,14 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 
       Element element = ReleaseManager.INSTANCE.createElement(componentModel, true);
       elementCache.put(element, element);
+      for (Element child : element.getAllChildren(this))
+      {
+        IProject childProject = getProject(child);
+        if (childProject != null)
+        {
+          buildDpependencies.add(childProject);
+        }
+      }
 
       Element releaseElement = release.getElements().get(element);
       if (releaseElement == null)
@@ -202,8 +212,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 
       Version elementVersion = element.getVersion();
       Version releaseVersion = releaseElement.getVersion();
-      Version nextImplVersion = new Version(releaseVersion.getMajor(), releaseVersion.getMinor(),
-          releaseVersion.getMicro() + (release.isIntegration() ? 100 : 1));
+      Version nextImplVersion = getNextImplVersion(releaseVersion);
+
       int comparison = releaseVersion.compareTo(elementVersion);
       if (comparison < 0)
       {
@@ -240,43 +250,38 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
           checkPackageExports((IPluginModelBase)componentModel);
         }
       }
-      else if (!"true".equals(args.get(IGNORE_CONTENT_CHANGES_ARGUMENT)))
+      else
       {
-        List<Map.Entry<Element, Version>> warnings = new ArrayList<Entry<Element, Version>>();
-        int change = checkFeatureAPI(componentModel, element, releaseElement, buildDpependencies, warnings);
-        if (change != NO_CHANGE)
+        if (!"true".equals(args.get(IGNORE_CONTENT_REDUNDANCY_ARGUMENT)))
         {
-          Version nextFeatureVersion = null;
-          if (change == MAJOR_CHANGE)
-          {
-            nextFeatureVersion = new Version(releaseVersion.getMajor() + 1, 0, 0);
-          }
-          else if (change == MINOR_CHANGE)
-          {
-            nextFeatureVersion = new Version(releaseVersion.getMajor(), releaseVersion.getMinor() + 1, 0);
-          }
-          else if (change == MICRO_CHANGE)
-          {
-            nextFeatureVersion = nextImplVersion;
-          }
-
-          if (elementVersion.compareTo(nextFeatureVersion) < 0)
-          {
-            addVersionMarker("Version must be increased to " + nextFeatureVersion
-                + " because the feature's references have changed");
-
-            for (Entry<Element, Version> entry : warnings)
-            {
-              addIncludeMarker(entry.getKey(), entry.getValue());
-            }
-          }
-
-          return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+          checkFeatureRedundancy(element);
         }
 
-        if (!elementVersion.equals(releaseVersion))
+        if (!"true".equals(args.get(IGNORE_CONTENT_CHANGES_ARGUMENT)))
         {
-          return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+          List<Map.Entry<Element, Version>> warnings = new ArrayList<Entry<Element, Version>>();
+          int change = checkFeatureContentChanges(componentModel, element, releaseElement, warnings);
+          if (change != NO_CHANGE)
+          {
+            Version nextFeatureVersion = getNextFeatureVersion(releaseVersion, nextImplVersion, change);
+            if (elementVersion.compareTo(nextFeatureVersion) < 0)
+            {
+              addVersionMarker("Version must be increased to " + nextFeatureVersion
+                  + " because the feature's references have changed");
+
+              for (Entry<Element, Version> entry : warnings)
+              {
+                addIncludeMarker(entry.getKey(), entry.getValue());
+              }
+            }
+
+            return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+          }
+
+          if (!elementVersion.equals(releaseVersion))
+          {
+            return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+          }
         }
       }
 
@@ -349,6 +354,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     }
     finally
     {
+      release = null;
       elementCache.clear();
       monitor.done();
     }
@@ -356,8 +362,54 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
   }
 
-  private int checkFeatureAPI(IModel componentModel, Element element, Element releasedElement,
-      List<IProject> buildDpependencies, List<Entry<Element, Version>> warnings)
+  private Version getNextImplVersion(Version releaseVersion)
+  {
+    return new Version(releaseVersion.getMajor(), releaseVersion.getMinor(), releaseVersion.getMicro()
+        + (release.isIntegration() ? 100 : 1));
+  }
+
+  private Version getNextFeatureVersion(Version releaseVersion, Version nextImplVersion, int change)
+  {
+    Version nextFeatureVersion = null;
+    if (change == MAJOR_CHANGE)
+    {
+      nextFeatureVersion = new Version(releaseVersion.getMajor() + 1, 0, 0);
+    }
+    else if (change == MINOR_CHANGE)
+    {
+      nextFeatureVersion = new Version(releaseVersion.getMajor(), releaseVersion.getMinor() + 1, 0);
+    }
+    else if (change == MICRO_CHANGE)
+    {
+      nextFeatureVersion = nextImplVersion;
+    }
+    return nextFeatureVersion;
+  }
+
+  private int checkFeatureContentChanges(IModel componentModel, Element element, Element releasedElement,
+      List<Entry<Element, Version>> warnings)
+  {
+    int biggestChange = NO_CHANGE;
+    Set<Element> allChildren = element.getAllChildren(this);
+    for (Element child : allChildren)
+    {
+      int change = checkFeatureContentChanges(element, releasedElement, child, warnings);
+      biggestChange = Math.max(biggestChange, change);
+    }
+
+    for (Element releasedElementsChild : releasedElement.getAllChildren(release))
+    {
+      if (!allChildren.contains(releasedElementsChild))
+      {
+        addWarning(releasedElementsChild, REMOVAL, warnings);
+        biggestChange = MAJOR_CHANGE; // REMOVAL
+      }
+    }
+
+    return biggestChange;
+  }
+
+  private void checkFeatureRedundancy(Element element)
   {
     for (Element pluginChild : element.getChildren())
     {
@@ -387,34 +439,9 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
         }
       }
     }
-
-    int biggestChange = NO_CHANGE;
-    Set<Element> allChildren = element.getAllChildren(this);
-    for (Element child : allChildren)
-    {
-      int change = checkFeatureAPI(element, releasedElement, child, warnings);
-      biggestChange = Math.max(biggestChange, change);
-
-      IProject project = getProject(child);
-      if (project != null)
-      {
-        buildDpependencies.add(project);
-      }
-    }
-
-    for (Element releasedElementsChild : releasedElement.getAllChildren(release))
-    {
-      if (!allChildren.contains(releasedElementsChild))
-      {
-        addWarning(releasedElementsChild, REMOVAL, warnings);
-        biggestChange = MAJOR_CHANGE; // REMOVAL
-      }
-    }
-
-    return biggestChange;
   }
 
-  private int checkFeatureAPI(Element element, Element releasedElement, Element childElement,
+  private int checkFeatureContentChanges(Element element, Element releasedElement, Element childElement,
       List<Entry<Element, Version>> warnings)
   {
     if (childElement.isUnresolved())

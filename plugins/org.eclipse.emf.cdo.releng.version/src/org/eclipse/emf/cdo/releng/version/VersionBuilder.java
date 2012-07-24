@@ -58,6 +58,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 
   public static final String IGNORE_CONTENT_CHANGES_ARGUMENT = "ignore.feature.content.changes";
 
+  public static final boolean DEBUG = false;
+
   private static final Path MANIFEST_PATH = new Path("META-INF/MANIFEST.MF");
 
   private static final Path FEATURE_PATH = new Path("feature.xml");
@@ -73,8 +75,6 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
   private static final int MINOR_CHANGE = 2;
 
   private static final int MAJOR_CHANGE = 3;
-
-  private static final boolean DEBUG = false;
 
   private Release release;
 
@@ -205,7 +205,11 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
       Element releaseElement = release.getElements().get(element);
       if (releaseElement == null)
       {
-        trace("Project has not been released: " + project.getName());
+        if (DEBUG)
+        {
+          System.out.println("Project has not been released: " + project.getName());
+        }
+
         return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
       }
 
@@ -306,7 +310,10 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
         return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
       }
 
-      trace(validator.getClass().getName() + ": " + project.getName());
+      if (DEBUG)
+      {
+        System.out.println(validator.getClass().getName() + ": " + project.getName());
+      }
 
       /*
        * Do the validation
@@ -814,14 +821,6 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
   {
     String regex = "<" + tag + "\\s+.*?id\\s*=\\s*[\"'](" + name.replace(".", "\\.") + ")";
     Markers.addMarker(file, msg, IMarker.SEVERITY_WARNING, regex);
-  }
-
-  public static void trace(String msg)
-  {
-    if (DEBUG)
-    {
-      System.out.println(msg);
-    }
   }
 
   public static IModel getComponentModel(IProject project)

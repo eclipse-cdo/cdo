@@ -148,14 +148,6 @@ public class DigestValidator extends VersionValidator
     }
   }
 
-  public void beforeValidation(DigestValidatorState validatorState, IModel componentModel) throws Exception
-  {
-  }
-
-  public void afterValidation(DigestValidatorState validatorState) throws Exception
-  {
-  }
-
   @Override
   public void updateBuildState(BuildState buildState, String releasePath, Release release, IProject project,
       IResourceDelta delta, IModel componentModel, IProgressMonitor monitor) throws Exception
@@ -164,13 +156,21 @@ public class DigestValidator extends VersionValidator
     beforeValidation(validatorState, componentModel);
     if (validatorState == null || delta == null)
     {
-      VersionBuilder.trace("Digest: Full validation...");
+      if (VersionBuilder.DEBUG)
+      {
+        System.out.println("Digest: Full validation...");
+      }
+
       buildState.setValidatorState(null);
       validatorState = validateFull(project, null, componentModel, monitor);
     }
     else
     {
-      VersionBuilder.trace("Digest: Delta validation...");
+      if (VersionBuilder.DEBUG)
+      {
+        System.out.println("Digest: Delta validation...");
+      }
+
       validatorState = validateDelta(delta, validatorState, componentModel, monitor);
     }
 
@@ -181,12 +181,19 @@ public class DigestValidator extends VersionValidator
     }
 
     byte[] validatorDigest = validatorState.getDigest();
-    VersionBuilder.trace("DIGEST  = " + formatDigest(validatorDigest));
+    if (VersionBuilder.DEBUG)
+    {
+      System.out.println("DIGEST  = " + formatDigest(validatorDigest));
+    }
 
     byte[] releaseDigest = getReleaseDigest(releasePath, release, project.getName(), monitor);
-    VersionBuilder.trace("RELEASE = " + formatDigest(releaseDigest));
+    if (VersionBuilder.DEBUG)
+    {
+      System.out.println("RELEASE = " + formatDigest(releaseDigest));
+    }
 
-    buildState.setChangedSinceRelease(!MessageDigest.isEqual(validatorDigest, releaseDigest));
+    boolean changedSinceRelease = !MessageDigest.isEqual(validatorDigest, releaseDigest);
+    buildState.setChangedSinceRelease(changedSinceRelease);
     buildState.setValidatorState(validatorState);
   }
 
@@ -198,7 +205,11 @@ public class DigestValidator extends VersionValidator
       return null;
     }
 
-    VersionBuilder.trace("Digest: " + resource.getFullPath());
+    if (VersionBuilder.DEBUG)
+    {
+      System.out.println("Digest: " + resource.getFullPath());
+    }
+
     DigestValidatorState result = new DigestValidatorState();
     result.setName(resource.getName());
     result.setParent(parentState);
@@ -217,7 +228,11 @@ public class DigestValidator extends VersionValidator
       }
 
       byte[] digest = getFolderDigest(memberStates);
-      VersionBuilder.trace("Considered: " + container.getFullPath() + " --> " + formatDigest(digest));
+      if (VersionBuilder.DEBUG)
+      {
+        System.out.println("Considered: " + container.getFullPath() + " --> " + formatDigest(digest));
+      }
+
       result.setDigest(digest);
       result.setChildren(memberStates.toArray(new DigestValidatorState[memberStates.size()]));
     }
@@ -225,7 +240,11 @@ public class DigestValidator extends VersionValidator
     {
       IFile file = (IFile)resource;
       byte[] digest = getFileDigest(file);
-      VersionBuilder.trace("Considered: " + file.getFullPath() + " --> " + formatDigest(digest));
+      if (VersionBuilder.DEBUG)
+      {
+        System.out.println("Considered: " + file.getFullPath() + " --> " + formatDigest(digest));
+      }
+
       result.setDigest(digest);
     }
 
@@ -308,6 +327,14 @@ public class DigestValidator extends VersionValidator
   protected boolean isConsidered(IResource resource)
   {
     return !resource.isDerived();
+  }
+
+  protected void beforeValidation(DigestValidatorState validatorState, IModel componentModel) throws Exception
+  {
+  }
+
+  protected void afterValidation(DigestValidatorState validatorState) throws Exception
+  {
   }
 
   private byte[] getReleaseDigest(String releasePath, Release release, String name, IProgressMonitor monitor)
@@ -538,7 +565,7 @@ public class DigestValidator extends VersionValidator
     }
 
     @Override
-    public void beforeValidation(DigestValidatorState validatorState, IModel componentModel) throws Exception
+    protected void beforeValidation(DigestValidatorState validatorState, IModel componentModel) throws Exception
     {
       considered.clear();
       considered.add("");
@@ -566,7 +593,7 @@ public class DigestValidator extends VersionValidator
     }
 
     @Override
-    public void afterValidation(DigestValidatorState validatorState) throws Exception
+    protected void afterValidation(DigestValidatorState validatorState) throws Exception
     {
       considered.clear();
     }

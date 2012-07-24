@@ -48,7 +48,6 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -63,9 +62,97 @@ public class DigestValidator extends VersionValidator
 {
   private static final byte[] BUFFER = new byte[8192];
 
-  private static final Map<Release, Map<String, byte[]>> digestCache = new WeakHashMap<Release, Map<String, byte[]>>();
+  private static final Map<Release, ReleaseDigest> RELEASE_DIGESTS = new WeakHashMap<Release, ReleaseDigest>();
 
   public DigestValidator()
+  {
+  }
+
+  public ReleaseDigest createReleaseDigest(Release release, IFile target, List<String> warnings,
+      IProgressMonitor monitor) throws CoreException
+  {
+    monitor.beginTask(null, release.getSize() + 1);
+
+    try
+    {
+      ReleaseDigest releaseDigest = new ReleaseDigest(release.getTag());
+      for (Entry<Element, Element> entry : release.getElements().entrySet())
+      {
+        String name = entry.getKey().getName();
+        monitor.subTask(name);
+
+        try
+        {
+          try
+          {
+            Element element = entry.getValue();
+            if (element.getName().endsWith(".source"))
+            {
+              continue;
+            }
+
+            IModel componentModel = ReleaseManager.INSTANCE.getComponentModel(element);
+            if (componentModel == null)
+            {
+              addWarning(warnings, name + ": Component not found");
+              continue;
+            }
+
+            IResource resource = componentModel.getUnderlyingResource();
+            if (resource == null)
+            {
+              addWarning(warnings, name + ": Component is not in workspace");
+              continue;
+            }
+
+            Version version = VersionBuilder.getComponentVersion(componentModel);
+
+            if (!element.getVersion().equals(version))
+            {
+              addWarning(warnings, name + ": Plugin version is not " + element.getVersion());
+            }
+
+            IProject project = resource.getProject();
+
+            beforeValidation(null, componentModel);
+            DigestValidatorState state = validateFull(project, null, componentModel, monitor);
+            afterValidation(state);
+
+            releaseDigest.put(state.getName(), state.getDigest());
+          }
+          finally
+          {
+            monitor.worked(1);
+          }
+        }
+        catch (Exception ex)
+        {
+          addWarning(warnings, name + ": " + Activator.getStatus(ex).getMessage());
+        }
+      }
+
+      writeReleaseDigest(releaseDigest, target, monitor);
+      return releaseDigest;
+    }
+    catch (CoreException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new CoreException(Activator.getStatus(ex));
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  public void beforeValidation(DigestValidatorState validatorState, IModel componentModel) throws Exception
+  {
+  }
+
+  public void afterValidation(DigestValidatorState validatorState) throws Exception
   {
   }
 
@@ -218,14 +305,6 @@ public class DigestValidator extends VersionValidator
     return result;
   }
 
-  public void beforeValidation(DigestValidatorState validatorState, IModel componentModel) throws Exception
-  {
-  }
-
-  public void afterValidation(DigestValidatorState validatorState) throws Exception
-  {
-  }
-
   protected boolean isConsidered(IResource resource)
   {
     return !resource.isDerived();
@@ -234,21 +313,29 @@ public class DigestValidator extends VersionValidator
   private byte[] getReleaseDigest(String releasePath, Release release, String name, IProgressMonitor monitor)
       throws IOException, CoreException, ClassNotFoundException
   {
-    Map<String, byte[]> projectDigests = digestCache.get(release);
-    if (projectDigests == null)
+    ReleaseDigest releaseDigest = RELEASE_DIGESTS.get(release);
+    if (releaseDigest == null)
     {
       IFile file = getDigestFile(new Path(releasePath));
       if (file.exists())
       {
-        projectDigests = readDigestFile(file);
+        releaseDigest = readDigestFile(file);
+
+        if (!releaseDigest.getTag().equals(release.getTag()))
+        {
+          releaseDigest = null;
+        }
       }
-      else
+
+      if (releaseDigest == null)
       {
-        projectDigests = createDigestFile(release, file, null, monitor);
+        releaseDigest = createReleaseDigest(release, file, null, monitor);
       }
+
+      RELEASE_DIGESTS.put(release, releaseDigest);
     }
 
-    return projectDigests.get(name);
+    return releaseDigest.get(name);
   }
 
   private byte[] getFolderDigest(Collection<DigestValidatorState> states) throws Exception
@@ -270,7 +357,7 @@ public class DigestValidator extends VersionValidator
     return digest.digest();
   }
 
-  public static byte[] getFileDigest(IFile file) throws Exception
+  private byte[] getFileDigest(IFile file) throws Exception
   {
     InputStream stream = null;
 
@@ -369,18 +456,14 @@ public class DigestValidator extends VersionValidator
     return builder.toString();
   }
 
-  private static Map<String, byte[]> readDigestFile(IFile file) throws IOException, CoreException,
-      ClassNotFoundException
+  private ReleaseDigest readDigestFile(IFile file) throws IOException, CoreException, ClassNotFoundException
   {
     ObjectInputStream stream = null;
 
     try
     {
       stream = new ObjectInputStream(file.getContents());
-
-      @SuppressWarnings("unchecked")
-      Map<String, byte[]> projectDigests = (Map<String, byte[]>)stream.readObject();
-      return projectDigests;
+      return (ReleaseDigest)stream.readObject();
     }
     finally
     {
@@ -398,12 +481,12 @@ public class DigestValidator extends VersionValidator
     }
   }
 
-  private static void writeDigestFile(Map<String, byte[]> projectDigests, IFile target, IProgressMonitor monitor)
+  private void writeReleaseDigest(ReleaseDigest releaseDigest, IFile target, IProgressMonitor monitor)
       throws IOException, CoreException
   {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     ObjectOutputStream oos = new ObjectOutputStream(baos);
-    oos.writeObject(projectDigests);
+    oos.writeObject(releaseDigest);
     oos.close();
 
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
@@ -428,92 +511,12 @@ public class DigestValidator extends VersionValidator
     monitor.worked(1);
   }
 
-  private static void addWarning(List<String> warnings, String msg)
+  private void addWarning(List<String> warnings, String msg)
   {
     Activator.log(new Status(IStatus.WARNING, Activator.PLUGIN_ID, msg));
     if (warnings != null)
     {
       warnings.add(msg);
-    }
-  }
-
-  public Map<String, byte[]> createDigestFile(Release release, IFile target, List<String> warnings,
-      IProgressMonitor monitor) throws CoreException
-  {
-    monitor.beginTask(null, release.getSize() + 1);
-
-    try
-    {
-      Map<String, byte[]> projectDigests = new HashMap<String, byte[]>();
-      for (Entry<Element, Element> entry : release.getElements().entrySet())
-      {
-        String name = entry.getKey().getName();
-        monitor.subTask(name);
-
-        try
-        {
-          try
-          {
-            Element element = entry.getValue();
-            if (element.getName().endsWith(".source"))
-            {
-              continue;
-            }
-
-            IModel componentModel = ReleaseManager.INSTANCE.getComponentModel(element);
-            if (componentModel == null)
-            {
-              addWarning(warnings, name + ": Component not found");
-              continue;
-            }
-
-            IResource resource = componentModel.getUnderlyingResource();
-            if (resource == null)
-            {
-              addWarning(warnings, name + ": Component is not in workspace");
-              continue;
-            }
-
-            Version version = VersionBuilder.getComponentVersion(componentModel);
-
-            if (!element.getVersion().equals(version))
-            {
-              addWarning(warnings, name + ": Plugin version is not " + element.getVersion());
-            }
-
-            IProject project = resource.getProject();
-
-            beforeValidation(null, componentModel);
-            DigestValidatorState state = validateFull(project, null, componentModel, monitor);
-            afterValidation(state);
-
-            projectDigests.put(state.getName(), state.getDigest());
-          }
-          finally
-          {
-            monitor.worked(1);
-          }
-        }
-        catch (Exception ex)
-        {
-          addWarning(warnings, name + ": " + Activator.getStatus(ex).getMessage());
-        }
-      }
-
-      writeDigestFile(projectDigests, target, monitor);
-      return projectDigests;
-    }
-    catch (CoreException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new CoreException(Activator.getStatus(ex));
-    }
-    finally
-    {
-      monitor.done();
     }
   }
 

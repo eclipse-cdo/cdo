@@ -73,7 +73,7 @@ public class CreateDigestAction implements IObjectActionDelegate
 
             // TODO Determine validator class from .project
             DigestValidator validator = new DigestValidator.BuildModel();
-            validator.createDigestFile(release, target, warnings, monitor);
+            validator.createReleaseDigest(release, target, warnings, monitor);
 
             if (!warnings.isEmpty())
             {

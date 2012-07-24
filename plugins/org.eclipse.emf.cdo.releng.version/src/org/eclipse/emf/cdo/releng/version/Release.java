@@ -157,8 +157,8 @@ public class Release implements ElementResolver
   private void writeRelease(StringBuilder builder)
   {
     builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-    builder.append("<" + RELEASE_TAG + " " + INTEGRATION_ATTRIBUTE + "=\"+integration+\" " + TAG_ATTRIBUTE + "=\""
-        + tag + "\">\n");
+    builder.append("<" + RELEASE_TAG + " " + INTEGRATION_ATTRIBUTE + "=\"" + integration + "\" " + TAG_ATTRIBUTE
+        + "=\"" + tag + "\">\n");
 
     List<Element> list = new ArrayList<Element>(elements.keySet());
     Collections.sort(list, new Comparator<Element>()

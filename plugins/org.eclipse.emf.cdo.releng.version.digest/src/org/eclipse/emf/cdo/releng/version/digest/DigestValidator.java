@@ -27,7 +27,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.pde.core.IModel;
@@ -55,6 +54,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 /**
  * @author Eike Stepper
@@ -62,6 +62,8 @@ import java.util.Set;
 public class DigestValidator extends VersionValidator
 {
   private static final byte[] BUFFER = new byte[8192];
+
+  private static final Map<Release, Map<String, byte[]>> digestCache = new WeakHashMap<Release, Map<String, byte[]>>();
 
   public DigestValidator()
   {
@@ -232,36 +234,21 @@ public class DigestValidator extends VersionValidator
   private byte[] getReleaseDigest(String releasePath, Release release, String name, IProgressMonitor monitor)
       throws IOException, CoreException, ClassNotFoundException
   {
-    IFile file = getDigestFile(new Path(releasePath));
-    if (!file.exists())
+    Map<String, byte[]> projectDigests = digestCache.get(release);
+    if (projectDigests == null)
     {
-      return createDigest(this, release, file, null, monitor);
-    }
-
-    ObjectInputStream stream = null;
-
-    try
-    {
-      stream = new ObjectInputStream(file.getContents());
-
-      @SuppressWarnings("unchecked")
-      Map<String, byte[]> map = (Map<String, byte[]>)stream.readObject();
-      return map.get(name);
-    }
-    finally
-    {
-      if (stream != null)
+      IFile file = getDigestFile(new Path(releasePath));
+      if (file.exists())
       {
-        try
-        {
-          stream.close();
-        }
-        catch (Exception ex)
-        {
-          Activator.log(ex);
-        }
+        projectDigests = readDigestFile(file);
+      }
+      else
+      {
+        projectDigests = createDigestFile(release, file, null, monitor);
       }
     }
+
+    return projectDigests.get(name);
   }
 
   private byte[] getFolderDigest(Collection<DigestValidatorState> states) throws Exception
@@ -383,14 +370,82 @@ public class DigestValidator extends VersionValidator
     return builder.toString();
   }
 
-  public static byte[] createDigest(DigestValidator validator, Release release, IFile target, List<String> warnings,
+  private static Map<String, byte[]> readDigestFile(IFile file) throws IOException, CoreException,
+      ClassNotFoundException
+  {
+    ObjectInputStream stream = null;
+
+    try
+    {
+      stream = new ObjectInputStream(file.getContents());
+
+      @SuppressWarnings("unchecked")
+      Map<String, byte[]> projectDigests = (Map<String, byte[]>)stream.readObject();
+      return projectDigests;
+    }
+    finally
+    {
+      if (stream != null)
+      {
+        try
+        {
+          stream.close();
+        }
+        catch (Exception ex)
+        {
+          Activator.log(ex);
+        }
+      }
+    }
+  }
+
+  private static void writeDigestFile(Map<String, byte[]> projectDigests, IFile target, IProgressMonitor monitor)
+      throws IOException, CoreException
+  {
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    ObjectOutputStream oos = new ObjectOutputStream(baos);
+    oos.writeObject(projectDigests);
+    oos.close();
+
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    if (target.exists())
+    {
+      int i = 1;
+      for (;;)
+      {
+        try
+        {
+          target.move(target.getFullPath().addFileExtension("bak" + i), true, monitor);
+          break;
+        }
+        catch (Exception ex)
+        {
+          ++i;
+        }
+      }
+    }
+
+    target.create(bais, true, monitor);
+    monitor.worked(1);
+  }
+
+  private static void addWarning(List<String> warnings, String msg)
+  {
+    Activator.log(new Status(IStatus.WARNING, Activator.PLUGIN_ID, msg));
+    if (warnings != null)
+    {
+      warnings.add(msg);
+    }
+  }
+
+  public Map<String, byte[]> createDigestFile(Release release, IFile target, List<String> warnings,
       IProgressMonitor monitor) throws CoreException
   {
     monitor.beginTask(null, release.getSize() + 1);
 
     try
     {
-      Map<String, byte[]> result = new HashMap<String, byte[]>();
+      Map<String, byte[]> projectDigests = new HashMap<String, byte[]>();
       for (Entry<Element, Element> entry : release.getElements().entrySet())
       {
         String name = entry.getKey().getName();
@@ -427,11 +482,13 @@ public class DigestValidator extends VersionValidator
               addWarning(warnings, name + ": Plugin version is not " + element.getVersion());
             }
 
-            validator.beforeValidation(null, componentModel);
-            DigestValidatorState state = validator.validateFull(resource.getProject(), null, componentModel,
-                new NullProgressMonitor());
-            validator.afterValidation(state);
-            result.put(state.getName(), state.getDigest());
+            IProject project = resource.getProject();
+
+            beforeValidation(null, componentModel);
+            DigestValidatorState state = validateFull(project, null, componentModel, monitor);
+            afterValidation(state);
+
+            projectDigests.put(state.getName(), state.getDigest());
           }
           finally
           {
@@ -444,35 +501,8 @@ public class DigestValidator extends VersionValidator
         }
       }
 
-      ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      ObjectOutputStream oos = new ObjectOutputStream(baos);
-      oos.writeObject(result);
-      oos.close();
-
-      byte[] digest = baos.toByteArray();
-
-      ByteArrayInputStream bais = new ByteArrayInputStream(digest);
-      if (target.exists())
-      {
-        int i = 1;
-        for (;;)
-        {
-          try
-          {
-            target.move(target.getFullPath().addFileExtension("bak" + i), true, monitor);
-            break;
-          }
-          catch (Exception ex)
-          {
-            ++i;
-          }
-        }
-      }
-
-      target.create(bais, true, monitor);
-      monitor.worked(1);
-
-      return digest;
+      writeDigestFile(projectDigests, target, monitor);
+      return projectDigests;
     }
     catch (CoreException ex)
     {
@@ -485,15 +515,6 @@ public class DigestValidator extends VersionValidator
     finally
     {
       monitor.done();
-    }
-  }
-
-  private static void addWarning(List<String> warnings, String msg)
-  {
-    Activator.log(new Status(IStatus.WARNING, Activator.PLUGIN_ID, msg));
-    if (warnings != null)
-    {
-      warnings.add(msg);
     }
   }
 

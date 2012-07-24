@@ -69,11 +69,11 @@ public class CreateDigestAction implements IObjectActionDelegate
         {
           try
           {
+            List<String> warnings = new ArrayList<String>();
+
             // TODO Determine validator class from .project
             DigestValidator validator = new DigestValidator.BuildModel();
-
-            List<String> warnings = new ArrayList<String>();
-            DigestValidator.createDigest(validator, release, target, warnings, monitor);
+            validator.createDigestFile(release, target, warnings, monitor);
 
             if (!warnings.isEmpty())
             {
@@ -109,5 +109,4 @@ public class CreateDigestAction implements IObjectActionDelegate
           "An error occured. Consult the error log for details.");
     }
   }
-
 }

@@ -86,7 +86,13 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
       IModel componentModel = ReleaseManager.INSTANCE.getComponentModel(key);
       if (componentModel != null)
       {
-        return ReleaseManager.INSTANCE.createElement(componentModel, true);
+        Element element = ReleaseManager.INSTANCE.createElement(componentModel, true);
+        if (element.getType() == Element.Type.FEATURE)
+        {
+          fillChildren(componentModel, element);
+        }
+
+        return element;
       }
     }
     catch (Exception ex)
@@ -95,6 +101,28 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     }
 
     return null;
+  }
+
+  @SuppressWarnings("restriction")
+  private List<Element> fillChildren(IModel componentModel, Element element)
+  {
+    org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel = (org.eclipse.pde.internal.core.ifeature.IFeatureModel)componentModel;
+    org.eclipse.pde.internal.core.ifeature.IFeature feature = featureModel.getFeature();
+
+    List<Element> children = element.getChildren();
+    for (org.eclipse.pde.internal.core.ifeature.IFeatureChild versionable : feature.getIncludedFeatures())
+    {
+      Element childElement = new Element(Element.Type.FEATURE, versionable.getId(), versionable.getVersion());
+      children.add(childElement);
+    }
+
+    for (org.eclipse.pde.internal.core.ifeature.IFeaturePlugin versionable : feature.getPlugins())
+    {
+      Element childElement = new Element(Element.Type.PLUGIN, versionable.getId(), versionable.getVersion());
+      children.add(childElement);
+    }
+
+    return children;
   }
 
   @Override
@@ -344,23 +372,37 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
   }
 
-  @SuppressWarnings("restriction")
   private int checkFeatureAPI(IModel componentModel, Element element, Element releasedElement,
       List<IProject> buildDpependencies, List<Entry<Element, Version>> warnings)
   {
-    org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel = (org.eclipse.pde.internal.core.ifeature.IFeatureModel)componentModel;
-    org.eclipse.pde.internal.core.ifeature.IFeature feature = featureModel.getFeature();
-
-    for (org.eclipse.pde.internal.core.ifeature.IFeatureChild versionable : feature.getIncludedFeatures())
+    List<Element> children = fillChildren(componentModel, element);
+    for (Element pluginChild : children)
     {
-      Element childElement = new Element(Element.Type.FEATURE, versionable.getId(), versionable.getVersion());
-      element.getChildren().add(childElement);
-    }
-
-    for (org.eclipse.pde.internal.core.ifeature.IFeaturePlugin versionable : feature.getPlugins())
-    {
-      Element childElement = new Element(Element.Type.PLUGIN, versionable.getId(), versionable.getVersion());
-      element.getChildren().add(childElement);
+      if (pluginChild.getType() == Element.Type.PLUGIN)
+      {
+        for (Element featureChild : children)
+        {
+          if (featureChild.getType() == Element.Type.FEATURE)
+          {
+            featureChild = resolveElement(featureChild);
+            if (featureChild != null)
+            {
+              Set<Element> allChildren = featureChild.getAllChildren(this);
+              if (allChildren.contains(pluginChild))
+              {
+                try
+                {
+                  addRedundancyMarker(pluginChild, featureChild);
+                }
+                catch (Exception ex)
+                {
+                  Activator.log(ex);
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
     int biggestChange = NO_CHANGE;
@@ -629,63 +671,107 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     return false;
   }
 
-  private void addRequireMarker(String name, String message) throws CoreException, IOException
+  private void addRequireMarker(String name, String message)
   {
-    IFile file = getProject().getFile(MANIFEST_PATH);
-    String regex = name.replaceAll("\\.", "\\\\.") + ";bundle-version=\"([^\\\"]*)\"";
-    Markers.addMarker(file, "'" + name + "' " + message, IMarker.SEVERITY_ERROR, regex);
-  }
-
-  private void addImportMarker(String name, String message) throws CoreException, IOException
-  {
-    IFile file = getProject().getFile(MANIFEST_PATH);
-    String regex = name.replaceAll("\\.", "\\\\.") + ";version=\"([^\\\"]*)\"";
-    Markers.addMarker(file, "'" + name + "' " + message, IMarker.SEVERITY_ERROR, regex);
-  }
-
-  private void addExportMarker(String name) throws CoreException, IOException
-  {
-    IFile file = getProject().getFile(MANIFEST_PATH);
-    String message = "'" + name + "' export has wrong version information";
-    String regex = name.replaceAll("\\.", "\\\\.") + ";version=\"([0123456789\\.]*)\"";
-    Markers.addMarker(file, message, IMarker.SEVERITY_ERROR, regex);
-  }
-
-  private void addVersionMarker(String message) throws CoreException, IOException
-  {
-    String regex;
-    IFile file = getProject().getFile(FEATURE_PATH);
-    if (file.exists())
+    try
     {
-      regex = "feature.*?version\\s*=\\s*[\"'](\\d+(\\.\\d+(\\.\\d+)?)?)";
+      IFile file = getProject().getFile(MANIFEST_PATH);
+      String regex = name.replaceAll("\\.", "\\\\.") + ";bundle-version=\"([^\\\"]*)\"";
+      Markers.addMarker(file, "'" + name + "' " + message, IMarker.SEVERITY_ERROR, regex);
     }
-    else
+    catch (Exception ex)
     {
-      file = getProject().getFile(MANIFEST_PATH);
-      regex = "Bundle-Version: *(\\d+(\\.\\d+(\\.\\d+)?)?)";
+      Activator.log(ex);
     }
+  }
 
-    Markers.addMarker(file, message, IMarker.SEVERITY_ERROR, regex);
+  private void addImportMarker(String name, String message)
+  {
+    try
+    {
+      IFile file = getProject().getFile(MANIFEST_PATH);
+      String regex = name.replaceAll("\\.", "\\\\.") + ";version=\"([^\\\"]*)\"";
+      Markers.addMarker(file, "'" + name + "' " + message, IMarker.SEVERITY_ERROR, regex);
+    }
+    catch (Exception ex)
+    {
+      Activator.log(ex);
+    }
+  }
+
+  private void addExportMarker(String name)
+  {
+    try
+    {
+      IFile file = getProject().getFile(MANIFEST_PATH);
+      String message = "'" + name + "' export has wrong version information";
+      String regex = name.replaceAll("\\.", "\\\\.") + ";version=\"([0123456789\\.]*)\"";
+      Markers.addMarker(file, message, IMarker.SEVERITY_ERROR, regex);
+    }
+    catch (Exception ex)
+    {
+      Activator.log(ex);
+    }
+  }
+
+  private void addVersionMarker(String message)
+  {
+    try
+    {
+      String regex;
+      IFile file = getProject().getFile(FEATURE_PATH);
+      if (file.exists())
+      {
+        regex = "feature.*?version\\s*=\\s*[\"'](\\d+(\\.\\d+(\\.\\d+)?)?)";
+      }
+      else
+      {
+        file = getProject().getFile(MANIFEST_PATH);
+        regex = "Bundle-Version: *(\\d+(\\.\\d+(\\.\\d+)?)?)";
+      }
+
+      Markers.addMarker(file, message, IMarker.SEVERITY_ERROR, regex);
+    }
+    catch (Exception ex)
+    {
+      Activator.log(ex);
+    }
+  }
+
+  private void addRedundancyMarker(Element pluginChild, Element featureChild)
+  {
+    try
+    {
+      IFile file = getProject().getFile(FEATURE_PATH);
+      String name = pluginChild.getName();
+      String msg = "Plug-in reference '" + name + "' is redundant because feature '" + featureChild.getName()
+          + "' already includes it";
+      addFeatureChildMarker(file, "plugin", name, msg);
+    }
+    catch (Exception ex)
+    {
+      Activator.log(ex);
+    }
   }
 
   private void addIncludeMarker(Element releasedElement, Version version)
   {
-    IFile file = getProject().getFile(FEATURE_PATH);
-    String type;
-    String tag;
-    if (releasedElement.getType() == Element.Type.PLUGIN)
-    {
-      type = "Plug-in";
-      tag = "plugin";
-    }
-    else
-    {
-      type = "Feature";
-      tag = "includes";
-    }
-
     try
     {
+      IFile file = getProject().getFile(FEATURE_PATH);
+      String type;
+      String tag;
+      if (releasedElement.getType() == Element.Type.PLUGIN)
+      {
+        type = "Plug-in";
+        tag = "plugin";
+      }
+      else
+      {
+        type = "Feature";
+        tag = "includes";
+      }
+
       String name = releasedElement.getName();
 
       if (version == REMOVAL)
@@ -695,9 +781,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
       }
       else
       {
-        String regex = "<" + tag + "\\s+.*?id\\s*=\\s*[\"'](" + name.replace(".", "\\.") + ")";
         String msg;
-
         if (version == ADDITION)
         {
           msg = type + " reference '" + name + "' has been added with " + releasedElement.getVersion();
@@ -708,13 +792,19 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
               + version;
         }
 
-        Markers.addMarker(file, msg, IMarker.SEVERITY_WARNING, regex);
+        addFeatureChildMarker(file, tag, name, msg);
       }
     }
     catch (Exception ex)
     {
       Activator.log(ex);
     }
+  }
+
+  private void addFeatureChildMarker(IFile file, String tag, String name, String msg) throws CoreException, IOException
+  {
+    String regex = "<" + tag + "\\s+.*?id\\s*=\\s*[\"'](" + name.replace(".", "\\.") + ")";
+    Markers.addMarker(file, msg, IMarker.SEVERITY_WARNING, regex);
   }
 
   public static void trace(String msg)

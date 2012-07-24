@@ -270,7 +270,7 @@ public class DigestValidator extends VersionValidator
     return digest.digest();
   }
 
-  private byte[] getFileDigest(IFile file) throws Exception
+  public static byte[] getFileDigest(IFile file) throws Exception
   {
     InputStream stream = null;
 
@@ -293,7 +293,6 @@ public class DigestValidator extends VersionValidator
             case 10:
             case 13:
               continue;
-
             }
 
             digest.update((byte)ch);

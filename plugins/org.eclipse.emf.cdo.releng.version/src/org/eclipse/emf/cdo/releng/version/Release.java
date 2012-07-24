@@ -32,6 +32,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author Eike Stepper
@@ -56,17 +57,17 @@ public class Release implements ElementResolver
 
   private IFile file;
 
-  private String tag;
-
   private boolean integration;
+
+  private String tag;
 
   private Map<Element, Element> elements = new HashMap<Element, Element>();
 
   public Release(IFile file)
   {
     this.file = file;
-    tag = "";
     integration = true;
+    initTag();
   }
 
   Release(SAXParser parser, IFile file) throws CoreException, IOException, SAXException
@@ -80,6 +81,7 @@ public class Release implements ElementResolver
     {
       contents = file.getContents();
       parser.parse(contents, handler);
+      initTag();
     }
     finally
     {
@@ -94,6 +96,14 @@ public class Release implements ElementResolver
           Activator.log(ex);
         }
       }
+    }
+  }
+
+  private void initTag()
+  {
+    if (tag == null)
+    {
+      tag = UUID.randomUUID().toString();
     }
   }
 
@@ -147,8 +157,8 @@ public class Release implements ElementResolver
   private void writeRelease(StringBuilder builder)
   {
     builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-    builder.append("<" + RELEASE_TAG + " " + TAG_ATTRIBUTE + "=\"\" " + INTEGRATION_ATTRIBUTE + "=\"" + integration
-        + "\">\n");
+    builder.append("<" + RELEASE_TAG + " " + INTEGRATION_ATTRIBUTE + "=\"+integration+\" " + TAG_ATTRIBUTE + "=\""
+        + tag + "\">\n");
 
     List<Element> list = new ArrayList<Element>(elements.keySet());
     Collections.sort(list, new Comparator<Element>()

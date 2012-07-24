@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.releng.version;
 
-import org.eclipse.emf.cdo.releng.version.Release.Element;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
@@ -38,11 +36,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public class VersionBuilder extends IncrementalProjectBuilder
+public class VersionBuilder extends IncrementalProjectBuilder implements ElementResolver
 {
   public static final String BUILDER_ID = "org.eclipse.emf.cdo.releng.version.VersionBuilder";
 
@@ -78,6 +77,24 @@ public class VersionBuilder extends IncrementalProjectBuilder
 
   public VersionBuilder()
   {
+  }
+
+  public Element resolveElement(Element key)
+  {
+    try
+    {
+      IModel componentModel = ReleaseManager.INSTANCE.getComponentModel(key);
+      if (componentModel != null)
+      {
+        return ReleaseManager.INSTANCE.createElement(componentModel, true);
+      }
+    }
+    catch (Exception ex)
+    {
+      Activator.log(ex);
+    }
+
+    return null;
   }
 
   @Override
@@ -213,13 +230,13 @@ public class VersionBuilder extends IncrementalProjectBuilder
           }
           else if (change == MICRO_CHANGE)
           {
-            nextFeatureVersion = new Version(releaseVersion.getMajor(), releaseVersion.getMinor(),
-                releaseVersion.getMicro() + 1);
+            nextFeatureVersion = nextImplVersion;
           }
 
           if (elementVersion.compareTo(nextFeatureVersion) < 0)
           {
-            addVersionMarker("Version should be " + nextFeatureVersion);
+            addVersionMarker("Version must be increased to " + nextFeatureVersion
+                + " because the feature's references have changed");
 
             for (Entry<Element, Version> entry : warnings)
             {
@@ -277,7 +294,8 @@ public class VersionBuilder extends IncrementalProjectBuilder
       {
         if (buildState.isChangedSinceRelease())
         {
-          addVersionMarker("Version must be increased to " + nextImplVersion);
+          addVersionMarker("Version must be increased to " + nextImplVersion
+              + " because the project's contents have changed");
         }
       }
       catch (Exception ignore)
@@ -330,7 +348,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
     }
 
     int biggestChange = NO_CHANGE;
-    List<Element> allChildren = element.getAllChildren();
+    Set<Element> allChildren = element.getAllChildren(this);
     for (Element child : allChildren)
     {
       int change = checkFeatureAPI(element, releasedElement, child, warnings);
@@ -343,7 +361,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
       }
     }
 
-    for (Element releasedElementsChild : releasedElement.getAllChildren())
+    for (Element releasedElementsChild : releasedElement.getAllChildren(release))
     {
       if (!allChildren.contains(releasedElementsChild))
       {
@@ -363,7 +381,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
       return NO_CHANGE;
     }
 
-    Element releasedElementsChild = releasedElement.getChild(childElement);
+    Element releasedElementsChild = releasedElement.getChild(release, childElement);
     if (releasedElementsChild == null)
     {
       addWarning(childElement, ADDITION, warnings);
@@ -433,7 +451,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
     {
       return getPluginProject(name);
     }
-  
+
     return getFeatureProject(name);
   }
 
@@ -461,7 +479,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
     for (org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel : featureModels)
     {
       IResource resource = featureModel.getUnderlyingResource();
-      if (resource != null)
+      if (resource != null && featureModel.getFeature().getId().equals(name))
       {
         return resource.getProject();
       }

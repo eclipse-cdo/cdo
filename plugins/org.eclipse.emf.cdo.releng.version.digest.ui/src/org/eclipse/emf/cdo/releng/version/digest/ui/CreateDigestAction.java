@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.version.digest.ui;
 
+import org.eclipse.emf.cdo.releng.version.Element;
 import org.eclipse.emf.cdo.releng.version.Release;
-import org.eclipse.emf.cdo.releng.version.Release.Element;
 import org.eclipse.emf.cdo.releng.version.ReleaseManager;
 import org.eclipse.emf.cdo.releng.version.VersionBuilder;
 import org.eclipse.emf.cdo.releng.version.digest.DigestValidator;

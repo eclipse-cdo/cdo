@@ -14,9 +14,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.pde.core.IModel;
-import org.eclipse.pde.core.plugin.IPluginModelBase;
-import org.eclipse.pde.core.plugin.PluginRegistry;
 
 import org.osgi.framework.Version;
 import org.xml.sax.Attributes;
@@ -39,7 +36,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class Release
+public class Release implements ElementResolver
 {
   public static final String RELEASE_TAG = "release";
 
@@ -118,6 +115,11 @@ public class Release
   public Map<Element, Element> getElements()
   {
     return elements;
+  }
+
+  public Element resolveElement(Element key)
+  {
+    return elements.get(key);
   }
 
   public int getSize()
@@ -217,204 +219,11 @@ public class Release
   /**
    * @author Eike Stepper
    */
-  public static class Element
-  {
-    private Type type;
-
-    private String name;
-
-    private Version version;
-
-    private List<Element> children = new ArrayList<Element>();
-
-    private List<Element> allChildren;
-
-    public Element(Type type, String name, Version version)
-    {
-      this.type = type;
-      this.name = name;
-      this.version = VersionUtil.normalize(version);
-      resolveVersion();
-    }
-
-    public Element(Type type, String name, String version)
-    {
-      this(type, name, new Version(version));
-    }
-
-    public Type getType()
-    {
-      return type;
-    }
-
-    public String getTag()
-    {
-      return type == Type.PLUGIN ? PLUGIN_TAG : FEATURE_TAG;
-    }
-
-    public String getName()
-    {
-      return name;
-    }
-
-    public Version getVersion()
-    {
-      return version;
-    }
-
-    public List<Element> getChildren()
-    {
-      return children;
-    }
-
-    public List<Element> getAllChildren()
-    {
-      if (allChildren == null)
-      {
-        allChildren = new ArrayList<Element>();
-        for (Element child : children)
-        {
-          recurseChildren(child);
-        }
-      }
-
-      return allChildren;
-    }
-
-    private void recurseChildren(Element element)
-    {
-      allChildren.add(element);
-      for (Element child : element.getChildren())
-      {
-        recurseChildren(child);
-      }
-    }
-
-    public Element getChild(Element childElement)
-    {
-      List<Element> allChildren = getAllChildren();
-      int index = allChildren.indexOf(childElement);
-      if (index != -1)
-      {
-        return allChildren.get(index);
-      }
-
-      return null;
-    }
-
-    @Override
-    public int hashCode()
-    {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + (name == null ? 0 : name.hashCode());
-      result = prime * result + (getType() == null ? 0 : getType().hashCode());
-      return result;
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-      if (this == obj)
-      {
-        return true;
-      }
-
-      if (obj == null)
-      {
-        return false;
-      }
-
-      if (!(obj instanceof Element))
-      {
-        return false;
-      }
-
-      Element other = (Element)obj;
-      if (name == null)
-      {
-        if (other.name != null)
-        {
-          return false;
-        }
-      }
-      else if (!name.equals(other.name))
-      {
-        return false;
-      }
-
-      if (getType() != other.getType())
-      {
-        return false;
-      }
-
-      return true;
-    }
-
-    public boolean isUnresolved()
-    {
-      return version.equals(Version.emptyVersion);
-    }
-
-    private void resolveVersion()
-    {
-      if (isUnresolved())
-      {
-        Version resolvedVersion;
-        if (type == Element.Type.PLUGIN)
-        {
-          resolvedVersion = getPluginVersion(name);
-        }
-        else
-        {
-          resolvedVersion = getFeatureVersion(name);
-        }
-
-        if (resolvedVersion != null)
-        {
-          version = resolvedVersion;
-        }
-      }
-    }
-
-    private Version getPluginVersion(String name)
-    {
-      IPluginModelBase pluginModel = PluginRegistry.findModel(name);
-      if (pluginModel != null)
-      {
-        Version version = pluginModel.getBundleDescription().getVersion();
-        return VersionUtil.normalize(version);
-      }
-
-      return null;
-    }
-
-    private Version getFeatureVersion(String name)
-    {
-      IModel componentModel = ReleaseManager.INSTANCE.getComponentModel(this);
-      if (componentModel != null)
-      {
-        return VersionBuilder.getComponentVersion(componentModel);
-      }
-
-      return version;
-    }
-
-    /**
-     * @author Eike Stepper
-     */
-    public static enum Type
-    {
-      FEATURE, PLUGIN
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
   public class XMLHandler extends DefaultHandler
   {
     private Element parent;
+
+    private int level;
 
     public XMLHandler()
     {
@@ -430,13 +239,29 @@ public class Release
       }
       else if (FEATURE_TAG.equalsIgnoreCase(qName))
       {
-        parent = createElement(Element.Type.FEATURE, attributes);
-        elements.put(parent, parent);
+        Element element = createElement(Element.Type.FEATURE, attributes);
+        if (++level == 1)
+        {
+          elements.put(element, element);
+          parent = element;
+        }
+        else
+        {
+          parent.getChildren().add(element);
+        }
       }
       else if (PLUGIN_TAG.equalsIgnoreCase(qName))
       {
-        parent = createElement(Element.Type.PLUGIN, attributes);
-        elements.put(parent, parent);
+        Element element = createElement(Element.Type.PLUGIN, attributes);
+        if (++level == 1)
+        {
+          elements.put(element, element);
+          parent = element;
+        }
+        else
+        {
+          parent.getChildren().add(element);
+        }
       }
     }
 
@@ -453,7 +278,7 @@ public class Release
     {
       if (FEATURE_TAG.equalsIgnoreCase(qName) || PLUGIN_TAG.equalsIgnoreCase(qName))
       {
-        parent = null;
+        --level;
       }
     }
 

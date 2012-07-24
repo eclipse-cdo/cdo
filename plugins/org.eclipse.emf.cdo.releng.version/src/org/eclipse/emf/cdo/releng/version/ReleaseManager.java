@@ -10,8 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.version;
 
-import org.eclipse.emf.cdo.releng.version.Release.Element;
-import org.eclipse.emf.cdo.releng.version.Release.Element.Type;
+import org.eclipse.emf.cdo.releng.version.Element.Type;
 
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
@@ -168,7 +167,7 @@ public class ReleaseManager
     return createElement(componentModel, false);
   }
 
-  private Element createElement(IModel componentModel, boolean withFeatureContent) throws CoreException
+  public Element createElement(IModel componentModel, boolean withFeatureContent) throws CoreException
   {
     if (componentModel instanceof IPluginModelBase)
     {

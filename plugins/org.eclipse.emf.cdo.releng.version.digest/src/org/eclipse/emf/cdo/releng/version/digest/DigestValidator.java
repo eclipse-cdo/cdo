@@ -11,7 +11,9 @@
 package org.eclipse.emf.cdo.releng.version.digest;
 
 import org.eclipse.emf.cdo.releng.version.BuildState;
+import org.eclipse.emf.cdo.releng.version.Element;
 import org.eclipse.emf.cdo.releng.version.Release;
+import org.eclipse.emf.cdo.releng.version.ReleaseManager;
 import org.eclipse.emf.cdo.releng.version.VersionBuilder;
 import org.eclipse.emf.cdo.releng.version.VersionValidator;
 
@@ -24,24 +26,34 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.pde.core.IModel;
 import org.eclipse.pde.core.build.IBuild;
 import org.eclipse.pde.core.build.IBuildEntry;
 import org.eclipse.pde.core.build.IBuildModel;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 
+import org.osgi.framework.Version;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -82,7 +94,7 @@ public class DigestValidator extends VersionValidator
     byte[] validatorDigest = validatorState.getDigest();
     VersionBuilder.trace("DIGEST  = " + formatDigest(validatorDigest));
 
-    byte[] releaseDigest = getReleaseDigest(releasePath, project.getName());
+    byte[] releaseDigest = getReleaseDigest(releasePath, release, project.getName(), monitor);
     VersionBuilder.trace("RELEASE = " + formatDigest(releaseDigest));
 
     buildState.setChangedSinceRelease(!MessageDigest.isEqual(validatorDigest, releaseDigest));
@@ -217,13 +229,13 @@ public class DigestValidator extends VersionValidator
     return !resource.isDerived();
   }
 
-  private byte[] getReleaseDigest(String releasePath, String name) throws IOException, CoreException,
-      ClassNotFoundException
+  private byte[] getReleaseDigest(String releasePath, Release release, String name, IProgressMonitor monitor)
+      throws IOException, CoreException, ClassNotFoundException
   {
     IFile file = getDigestFile(new Path(releasePath));
     if (!file.exists())
     {
-      throw new IllegalStateException("Digest file not found: " + file.getFullPath());
+      return createDigest(this, release, file, null, monitor);
     }
 
     ObjectInputStream stream = null;
@@ -369,6 +381,120 @@ public class DigestValidator extends VersionValidator
     }
 
     return builder.toString();
+  }
+
+  public static byte[] createDigest(DigestValidator validator, Release release, IFile target, List<String> warnings,
+      IProgressMonitor monitor) throws CoreException
+  {
+    monitor.beginTask(null, release.getSize() + 1);
+
+    try
+    {
+      Map<String, byte[]> result = new HashMap<String, byte[]>();
+      for (Entry<Element, Element> entry : release.getElements().entrySet())
+      {
+        String name = entry.getKey().getName();
+        monitor.subTask(name);
+
+        try
+        {
+          try
+          {
+            Element element = entry.getValue();
+            if (element.getName().endsWith(".source"))
+            {
+              continue;
+            }
+
+            IModel componentModel = ReleaseManager.INSTANCE.getComponentModel(element);
+            if (componentModel == null)
+            {
+              addWarning(warnings, name + ": Component not found");
+              continue;
+            }
+
+            IResource resource = componentModel.getUnderlyingResource();
+            if (resource == null)
+            {
+              addWarning(warnings, name + ": Component is not in workspace");
+              continue;
+            }
+
+            Version version = VersionBuilder.getComponentVersion(componentModel);
+
+            if (!element.getVersion().equals(version))
+            {
+              addWarning(warnings, name + ": Plugin version is not " + element.getVersion());
+            }
+
+            validator.beforeValidation(null, componentModel);
+            DigestValidatorState state = validator.validateFull(resource.getProject(), null, componentModel,
+                new NullProgressMonitor());
+            validator.afterValidation(state);
+            result.put(state.getName(), state.getDigest());
+          }
+          finally
+          {
+            monitor.worked(1);
+          }
+        }
+        catch (Exception ex)
+        {
+          addWarning(warnings, name + ": " + Activator.getStatus(ex).getMessage());
+        }
+      }
+
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      ObjectOutputStream oos = new ObjectOutputStream(baos);
+      oos.writeObject(result);
+      oos.close();
+
+      byte[] digest = baos.toByteArray();
+
+      ByteArrayInputStream bais = new ByteArrayInputStream(digest);
+      if (target.exists())
+      {
+        int i = 1;
+        for (;;)
+        {
+          try
+          {
+            target.move(target.getFullPath().addFileExtension("bak" + i), true, monitor);
+            break;
+          }
+          catch (Exception ex)
+          {
+            ++i;
+          }
+        }
+      }
+
+      target.create(bais, true, monitor);
+      monitor.worked(1);
+
+      return digest;
+    }
+    catch (CoreException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new CoreException(Activator.getStatus(ex));
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  private static void addWarning(List<String> warnings, String msg)
+  {
+    Activator.log(new Status(IStatus.WARNING, Activator.PLUGIN_ID, msg));
+    if (warnings != null)
+    {
+      warnings.add(msg);
+    }
   }
 
   public static IFile getDigestFile(IPath releasePath)

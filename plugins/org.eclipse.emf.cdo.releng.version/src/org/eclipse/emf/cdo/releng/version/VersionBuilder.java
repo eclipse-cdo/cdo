@@ -182,7 +182,6 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
       }
       catch (CoreException ex)
       {
-        ex.printStackTrace();
         String msg = "Problem with release spec: " + releasePath;
         Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, "(" + releasePath.replace(".", "\\.") + ")");
         return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);

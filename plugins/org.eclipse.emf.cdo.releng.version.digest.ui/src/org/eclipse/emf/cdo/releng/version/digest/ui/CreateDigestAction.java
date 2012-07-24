@@ -10,40 +10,26 @@
  */
 package org.eclipse.emf.cdo.releng.version.digest.ui;
 
-import org.eclipse.emf.cdo.releng.version.Element;
 import org.eclipse.emf.cdo.releng.version.Release;
 import org.eclipse.emf.cdo.releng.version.ReleaseManager;
-import org.eclipse.emf.cdo.releng.version.VersionBuilder;
 import org.eclipse.emf.cdo.releng.version.digest.DigestValidator;
-import org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.pde.core.IModel;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
-import org.osgi.framework.Version;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -83,7 +69,12 @@ public class CreateDigestAction implements IObjectActionDelegate
         {
           try
           {
-            List<String> warnings = createDigest(release, target, monitor);
+            // TODO Determine validator class from .project
+            DigestValidator validator = new DigestValidator.BuildModel();
+
+            List<String> warnings = new ArrayList<String>();
+            DigestValidator.createDigest(validator, release, target, warnings, monitor);
+
             if (!warnings.isEmpty())
             {
               final StringBuilder builder = new StringBuilder("The following problems occured:\n");
@@ -119,109 +110,4 @@ public class CreateDigestAction implements IObjectActionDelegate
     }
   }
 
-  private List<String> createDigest(Release release, IFile target, IProgressMonitor monitor) throws CoreException
-  {
-    monitor.beginTask(null, release.getSize() + 1);
-    List<String> warnings = new ArrayList<String>();
-
-    try
-    {
-      Map<String, byte[]> result = new HashMap<String, byte[]>();
-      for (Entry<Element, Element> entry : release.getElements().entrySet())
-      {
-        String name = entry.getKey().getName();
-        monitor.subTask(name);
-
-        try
-        {
-          try
-          {
-            Element element = entry.getValue();
-            if (element.getName().endsWith(".source"))
-            {
-              continue;
-            }
-
-            IModel componentModel = ReleaseManager.INSTANCE.getComponentModel(element);
-            if (componentModel == null)
-            {
-              warnings.add(name + ": Component not found");
-              continue;
-            }
-
-            IResource resource = componentModel.getUnderlyingResource();
-            if (resource == null)
-            {
-              warnings.add(name + ": Component is not in workspace");
-              continue;
-            }
-
-            Version version = VersionBuilder.getComponentVersion(componentModel);
-
-            if (!element.getVersion().equals(version))
-            {
-              warnings.add(name + ": Plugin version is not " + element.getVersion());
-            }
-
-            // TODO Determine validator class from .project
-            DigestValidator validator = new DigestValidator.BuildModel();
-            validator.beforeValidation(null, componentModel);
-            DigestValidatorState state = validator.validateFull(resource.getProject(), null, componentModel,
-                new NullProgressMonitor());
-            validator.afterValidation(state);
-            result.put(state.getName(), state.getDigest());
-          }
-          finally
-          {
-            monitor.worked(1);
-          }
-        }
-        catch (Exception ex)
-        {
-          ex.printStackTrace();
-          warnings.add(name + ": " + Activator.getStatus(ex).getMessage());
-        }
-      }
-
-      ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      ObjectOutputStream oos = new ObjectOutputStream(baos);
-      oos.writeObject(result);
-      oos.close();
-
-      ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-      if (target.exists())
-      {
-        int i = 1;
-        for (;;)
-        {
-          try
-          {
-            target.move(target.getFullPath().addFileExtension("bak" + i), true, monitor);
-            break;
-          }
-          catch (Exception ex)
-          {
-            ++i;
-          }
-        }
-      }
-
-      target.create(bais, true, monitor);
-      monitor.worked(1);
-    }
-    catch (CoreException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new CoreException(Activator.getStatus(ex));
-    }
-    finally
-    {
-      monitor.done();
-    }
-
-    return warnings;
-  }
 }

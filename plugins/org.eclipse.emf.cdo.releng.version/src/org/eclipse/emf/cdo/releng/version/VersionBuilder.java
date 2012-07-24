@@ -33,6 +33,7 @@ import org.osgi.framework.Version;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -75,6 +76,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 
   private Release release;
 
+  private Map<Element, Element> elementCache = new HashMap<Element, Element>();
+
   public VersionBuilder()
   {
   }
@@ -83,46 +86,24 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
   {
     try
     {
-      IModel componentModel = ReleaseManager.INSTANCE.getComponentModel(key);
-      if (componentModel != null)
+      Element element = elementCache.get(key);
+      if (element == null)
       {
-        Element element = ReleaseManager.INSTANCE.createElement(componentModel, true);
-        if (element.getType() == Element.Type.FEATURE)
+        IModel componentModel = ReleaseManager.INSTANCE.getComponentModel(key);
+        if (componentModel != null)
         {
-          fillChildren(componentModel, element);
+          element = ReleaseManager.INSTANCE.createElement(componentModel, true);
+          elementCache.put(element, element);
         }
-
-        return element;
       }
+
+      return element;
     }
     catch (Exception ex)
     {
       Activator.log(ex);
+      return null;
     }
-
-    return null;
-  }
-
-  @SuppressWarnings("restriction")
-  private List<Element> fillChildren(IModel componentModel, Element element)
-  {
-    org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel = (org.eclipse.pde.internal.core.ifeature.IFeatureModel)componentModel;
-    org.eclipse.pde.internal.core.ifeature.IFeature feature = featureModel.getFeature();
-
-    List<Element> children = element.getChildren();
-    for (org.eclipse.pde.internal.core.ifeature.IFeatureChild versionable : feature.getIncludedFeatures())
-    {
-      Element childElement = new Element(Element.Type.FEATURE, versionable.getId(), versionable.getVersion());
-      children.add(childElement);
-    }
-
-    for (org.eclipse.pde.internal.core.ifeature.IFeaturePlugin versionable : feature.getPlugins())
-    {
-      Element childElement = new Element(Element.Type.PLUGIN, versionable.getId(), versionable.getVersion());
-      children.add(childElement);
-    }
-
-    return children;
   }
 
   @Override
@@ -209,7 +190,9 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
        * Determine if a validation is needed or if the version has already been increased properly
        */
 
-      Element element = ReleaseManager.INSTANCE.createElement(componentModel);
+      Element element = ReleaseManager.INSTANCE.createElement(componentModel, true);
+      elementCache.put(element, element);
+
       Element releaseElement = release.getElements().get(element);
       if (releaseElement == null)
       {
@@ -366,6 +349,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     }
     finally
     {
+      elementCache.clear();
       monitor.done();
     }
 
@@ -375,12 +359,11 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
   private int checkFeatureAPI(IModel componentModel, Element element, Element releasedElement,
       List<IProject> buildDpependencies, List<Entry<Element, Version>> warnings)
   {
-    List<Element> children = fillChildren(componentModel, element);
-    for (Element pluginChild : children)
+    for (Element pluginChild : element.getChildren())
     {
       if (pluginChild.getType() == Element.Type.PLUGIN)
       {
-        for (Element featureChild : children)
+        for (Element featureChild : element.getChildren())
         {
           if (featureChild.getType() == Element.Type.FEATURE)
           {

@@ -162,11 +162,6 @@ public class ReleaseManager
     return release;
   }
 
-  public Element createElement(IModel componentModel) throws CoreException
-  {
-    return createElement(componentModel, false);
-  }
-
   public Element createElement(IModel componentModel, boolean withFeatureContent) throws CoreException
   {
     if (componentModel instanceof IPluginModelBase)

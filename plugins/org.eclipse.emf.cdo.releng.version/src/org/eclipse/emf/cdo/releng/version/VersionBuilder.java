@@ -171,10 +171,11 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
           release = ReleaseManager.INSTANCE.getRelease(file);
         }
 
-        boolean releaseHasChanged = !release.getTag().equals(buildState.getReleaseTag());
+        String tag = release.getTag();
+        boolean releaseHasChanged = !tag.equals(buildState.getReleaseTag());
         if (releaseHasChanged)
         {
-          buildState.setReleaseTag(release.getTag());
+          buildState.setReleaseTag(tag);
           fullBuild = true;
         }
 
@@ -302,17 +303,17 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
       {
         Class<?> c = Class.forName(validatorClass, true, VersionBuilder.class.getClassLoader());
         validator = (VersionValidator)c.newInstance();
+
+        if (DEBUG)
+        {
+          System.out.println(validator.getClass().getName() + ": " + project.getName());
+        }
       }
       catch (Exception ex)
       {
         String msg = ex.getLocalizedMessage() + ": " + validatorClass;
         Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, ".*(" + validatorClass + ").*");
         return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
-      }
-
-      if (DEBUG)
-      {
-        System.out.println(validator.getClass().getName() + ": " + project.getName());
       }
 
       /*
@@ -328,17 +329,10 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 
       validator.updateBuildState(buildState, releasePath, release, project, delta, componentModel, monitor);
 
-      try
+      if (buildState.isChangedSinceRelease())
       {
-        if (buildState.isChangedSinceRelease())
-        {
-          addVersionMarker("Version must be increased to " + nextImplVersion
-              + " because the project's contents have changed");
-        }
-      }
-      catch (Exception ignore)
-      {
-        Activator.log(ignore);
+        addVersionMarker("Version must be increased to " + nextImplVersion
+            + " because the project's contents have changed");
       }
     }
     catch (Exception ex)

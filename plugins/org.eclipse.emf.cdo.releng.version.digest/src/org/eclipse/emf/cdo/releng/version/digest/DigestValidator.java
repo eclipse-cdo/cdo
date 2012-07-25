@@ -23,6 +23,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -447,7 +448,8 @@ public class DigestValidator extends VersionValidator
             IResource resource = componentModel.getUnderlyingResource();
             if (resource == null)
             {
-              addWarning(warnings, name + ": Component is not in workspace");
+              String type = componentModel instanceof IPluginModelBase ? "Plug-in" : "Feature";
+              addWarning(warnings, name + ": " + type + " is not in workspace");
               continue;
             }
 
@@ -455,7 +457,8 @@ public class DigestValidator extends VersionValidator
 
             if (!element.getVersion().equals(version))
             {
-              addWarning(warnings, name + ": Plugin version is not " + element.getVersion());
+              String type = componentModel instanceof IPluginModelBase ? "Plug-in" : "Feature";
+              addWarning(warnings, name + ": " + type + " version is not " + element.getVersion());
             }
 
             IProject project = resource.getProject();
@@ -496,8 +499,10 @@ public class DigestValidator extends VersionValidator
 
   public static IFile getDigestFile(IPath releasePath)
   {
-    IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(releasePath);
-    return file.getParent().getFile(new Path("release.digest"));
+    IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+    IFile file = root.getFile(releasePath);
+    IPath digestPath = file.getFullPath().removeFileExtension().addFileExtension("digest");
+    return root.getFile(digestPath);
   }
 
   /**

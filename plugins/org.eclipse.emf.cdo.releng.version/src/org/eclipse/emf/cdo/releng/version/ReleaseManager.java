@@ -35,6 +35,7 @@ import javax.xml.parsers.SAXParserFactory;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -138,8 +139,10 @@ public class ReleaseManager
     }
 
     Set<Element> keySet = elements.keySet();
-    for (Element element : keySet.toArray(new Element[keySet.size()]))
+    ArrayList<Element> queue = new ArrayList<Element>(keySet);
+    for (int i = 0; i < queue.size(); i++)
     {
+      Element element = queue.get(i);
       for (Element child : element.getChildren())
       {
         if (!elements.containsKey(child))
@@ -148,6 +151,7 @@ public class ReleaseManager
           if (childModel != null)
           {
             Element topElement = createElement(childModel, true);
+            queue.add(topElement);
             elements.put(topElement, topElement);
           }
           else

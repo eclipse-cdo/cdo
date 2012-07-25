@@ -14,21 +14,11 @@ import org.eclipse.emf.cdo.releng.version.VersionBuilder;
 import org.eclipse.emf.cdo.releng.version.VersionNature;
 
 import org.eclipse.core.resources.ICommand;
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.dialogs.FilteredResourcesSelectionDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,15 +42,13 @@ public class AddNatureAction extends AbstractAction<Map<String, String>>
   {
     Map<String, String> arguments = null;
 
-    IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-    BuilderConfigurationDialog dialog = new BuilderConfigurationDialog(shell, root);
+    ConfigurationDialog dialog = new ConfigurationDialog(shell);
 
-    if (dialog.open() == BuilderConfigurationDialog.OK)
+    if (dialog.open() == ConfigurationDialog.OK)
     {
       arguments = new HashMap<String, String>();
 
-      IResource target = (IResource)dialog.getResult()[0];
-      String releasePath = target.getFullPath().toString();
+      String releasePath = dialog.getReleasePath();
       arguments.put(VersionBuilder.RELEASE_PATH_ARGUMENT, releasePath);
 
       boolean ignoreMissingDependencyRanges = dialog.isIgnoreMissingDependencyRanges();
@@ -128,95 +116,5 @@ public class AddNatureAction extends AbstractAction<Map<String, String>>
     command.setBuilderName(VersionBuilder.BUILDER_ID);
     command.setArguments(arguments);
     return command;
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public class BuilderConfigurationDialog extends FilteredResourcesSelectionDialog
-  {
-    private Composite content;
-
-    private Button ignoreMissingDependencyRangesButton;
-
-    private boolean ignoreMissingDependencyRanges;
-
-    private Button ignoreMissingExportVersionsButton;
-
-    private boolean ignoreMissingExportVersions;
-
-    private Button ignoreFeatureContentChangesButton;
-
-    private boolean ignoreFeatureContentChanges;
-
-    private Button ignoreFeatureContentRedundancyButton;
-
-    private boolean ignoreFeatureContentRedundancy;
-
-    public BuilderConfigurationDialog(Shell shell, IContainer container)
-    {
-      super(shell, false, container, IResource.FILE);
-      setTitle("Builder Configuration");
-      setMessage("Select a release specification file and check additional settings.");
-      setInitialPattern("release.xml", CARET_BEGINNING);
-      setHelpAvailable(false);
-    }
-
-    public boolean isIgnoreMissingDependencyRanges()
-    {
-      return ignoreMissingDependencyRanges;
-    }
-
-    public boolean isIgnoreMissingExportVersions()
-    {
-      return ignoreMissingExportVersions;
-    }
-
-    public boolean isIgnoreFeatureContentRedundancy()
-    {
-      return ignoreFeatureContentRedundancy;
-    }
-
-    public boolean isIgnoreFeatureContentChanges()
-    {
-      return ignoreFeatureContentChanges;
-    }
-
-    @Override
-    protected Control createDialogArea(Composite parent)
-    {
-      Control dialogArea = super.createDialogArea(parent);
-
-      ignoreMissingDependencyRangesButton = new Button(content, SWT.CHECK);
-      ignoreMissingDependencyRangesButton.setText("Ignore missing dependency version ranges");
-
-      ignoreMissingExportVersionsButton = new Button(content, SWT.CHECK);
-      ignoreMissingExportVersionsButton.setText("Ignore missing package export versions");
-
-      ignoreFeatureContentRedundancyButton = new Button(content, SWT.CHECK);
-      ignoreFeatureContentRedundancyButton.setText("Ignore feature content redundancy");
-
-      ignoreFeatureContentChangesButton = new Button(content, SWT.CHECK);
-      ignoreFeatureContentChangesButton.setText("Ignore feature content changes");
-
-      return dialogArea;
-    }
-
-    @Override
-    protected Control createExtendedContentArea(Composite content)
-    {
-      this.content = content;
-      return super.createExtendedContentArea(content);
-    }
-
-    @Override
-    protected void okPressed()
-    {
-      ignoreMissingDependencyRanges = ignoreMissingDependencyRangesButton.getSelection();
-      ignoreMissingExportVersions = ignoreMissingExportVersionsButton.getSelection();
-      ignoreFeatureContentRedundancy = ignoreFeatureContentRedundancyButton.getSelection();
-      ignoreFeatureContentChanges = ignoreFeatureContentChangesButton.getSelection();
-      super.okPressed();
-    }
   }
 }

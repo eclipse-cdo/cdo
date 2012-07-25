@@ -79,6 +79,11 @@ public class Release implements ElementResolver
       contents = file.getContents();
       parser.parse(contents, handler);
 
+      if (!handler.hasReleaseTag())
+      {
+        throw new IOException("Release specification file does not contain a <release> element: " + file.getFullPath());
+      }
+
       digest = VersionUtil.getSHA1(file);
     }
     finally
@@ -230,17 +235,28 @@ public class Release implements ElementResolver
     {
     }
 
+    public boolean hasReleaseTag()
+    {
+      return level == 1;
+    }
+
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException
     {
       if (RELEASE_TAG.equalsIgnoreCase(qName))
       {
         integration = getBoolean(attributes, INTEGRATION_ATTRIBUTE);
+        ++level;
       }
       else if (FEATURE_TAG.equalsIgnoreCase(qName))
       {
+        if (level == 0)
+        {
+          return;
+        }
+
         Element element = createElement(Element.Type.FEATURE, attributes);
-        if (++level == 1)
+        if (++level == 2)
         {
           elements.put(element, element);
           parent = element;
@@ -252,8 +268,13 @@ public class Release implements ElementResolver
       }
       else if (PLUGIN_TAG.equalsIgnoreCase(qName))
       {
+        if (level == 0)
+        {
+          return;
+        }
+
         Element element = createElement(Element.Type.PLUGIN, attributes);
-        if (++level == 1)
+        if (++level == 2)
         {
           elements.put(element, element);
           parent = element;

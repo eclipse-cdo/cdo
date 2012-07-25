@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.version.ui;
 
+import org.eclipse.core.resources.IWorkspaceRunnable;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -62,7 +64,14 @@ public abstract class AbstractAction<ARGS> implements IObjectActionDelegate
           {
             try
             {
-              runWithArguments(arguments);
+              ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable()
+              {
+                public void run(IProgressMonitor monitor) throws CoreException
+                {
+                  runWithArguments(arguments);
+                }
+              }, monitor);
+
               return Status.OK_STATUS;
             }
             catch (CoreException ex)

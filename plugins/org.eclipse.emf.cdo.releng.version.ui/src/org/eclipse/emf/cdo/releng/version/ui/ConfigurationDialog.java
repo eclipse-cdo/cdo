@@ -10,6 +10,11 @@
  */
 package org.eclipse.emf.cdo.releng.version.ui;
 
+import org.eclipse.emf.cdo.releng.version.IVersionBuilderArguments;
+import org.eclipse.emf.cdo.releng.version.VersionBuilderArguments;
+
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -21,62 +26,34 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  */
-public class ConfigurationDialog extends TitleAreaDialog
+public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuilderArguments
 {
   private static final String BUILDER_CONFIGURATION = "Version Builder Configuration";
 
-  private Text releasePathText;
+  private VersionBuilderArguments values;
 
-  private String releasePath;
+  private Text releasePathText;
 
   private Button ignoreMissingDependencyRangesButton;
 
-  private boolean ignoreMissingDependencyRanges;
-
   private Button ignoreMissingExportVersionsButton;
-
-  private boolean ignoreMissingExportVersions;
 
   private Button ignoreFeatureContentChangesButton;
 
-  private boolean ignoreFeatureContentChanges;
-
   private Button ignoreFeatureContentRedundancyButton;
 
-  private boolean ignoreFeatureContentRedundancy;
-
-  public ConfigurationDialog(Shell shell)
+  public ConfigurationDialog(Shell parentShell, VersionBuilderArguments defaults)
   {
-    super(shell);
+    super(parentShell);
     setHelpAvailable(false);
-  }
-
-  public String getReleasePath()
-  {
-    return releasePath;
-  }
-
-  public boolean isIgnoreMissingDependencyRanges()
-  {
-    return ignoreMissingDependencyRanges;
-  }
-
-  public boolean isIgnoreMissingExportVersions()
-  {
-    return ignoreMissingExportVersions;
-  }
-
-  public boolean isIgnoreFeatureContentRedundancy()
-  {
-    return ignoreFeatureContentRedundancy;
-  }
-
-  public boolean isIgnoreFeatureContentChanges()
-  {
-    return ignoreFeatureContentChanges;
+    values = new VersionBuilderArguments(defaults);
   }
 
   @Override
@@ -101,18 +78,23 @@ public class ConfigurationDialog extends TitleAreaDialog
     new Label(composite, SWT.NONE).setText("Path to release specification file: ");
     releasePathText = new Text(composite, SWT.BORDER);
     releasePathText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+    releasePathText.setText(values.getReleasePath());
 
     ignoreMissingDependencyRangesButton = new Button(composite, SWT.CHECK);
     ignoreMissingDependencyRangesButton.setText("Ignore missing dependency version ranges");
+    ignoreMissingDependencyRangesButton.setSelection(values.isIgnoreMissingDependencyRanges());
 
     ignoreMissingExportVersionsButton = new Button(composite, SWT.CHECK);
     ignoreMissingExportVersionsButton.setText("Ignore missing package export versions");
+    ignoreMissingExportVersionsButton.setSelection(values.isIgnoreMissingExportVersions());
 
     ignoreFeatureContentRedundancyButton = new Button(composite, SWT.CHECK);
     ignoreFeatureContentRedundancyButton.setText("Ignore feature content redundancy");
+    ignoreFeatureContentRedundancyButton.setSelection(values.isIgnoreFeatureContentRedundancy());
 
     ignoreFeatureContentChangesButton = new Button(composite, SWT.CHECK);
     ignoreFeatureContentChangesButton.setText("Ignore feature content changes");
+    ignoreFeatureContentChangesButton.setSelection(values.isIgnoreFeatureContentChanges());
 
     return dialogArea;
   }
@@ -120,11 +102,113 @@ public class ConfigurationDialog extends TitleAreaDialog
   @Override
   protected void okPressed()
   {
-    releasePath = releasePathText.getText();
-    ignoreMissingDependencyRanges = ignoreMissingDependencyRangesButton.getSelection();
-    ignoreMissingExportVersions = ignoreMissingExportVersionsButton.getSelection();
-    ignoreFeatureContentRedundancy = ignoreFeatureContentRedundancyButton.getSelection();
-    ignoreFeatureContentChanges = ignoreFeatureContentChangesButton.getSelection();
+    values.setReleasePath(releasePathText.getText());
+    values.setIgnoreMissingDependencyRanges(ignoreMissingDependencyRangesButton.getSelection());
+    values.setIgnoreMissingExportVersions(ignoreMissingExportVersionsButton.getSelection());
+    values.setIgnoreFeatureContentRedundancy(ignoreFeatureContentRedundancyButton.getSelection());
+    values.setIgnoreFeatureContentChanges(ignoreFeatureContentChangesButton.getSelection());
     super.okPressed();
+  }
+
+  public String getReleasePath()
+  {
+    return values.getReleasePath();
+  }
+
+  public boolean isIgnoreMissingDependencyRanges()
+  {
+    return values.isIgnoreMissingDependencyRanges();
+  }
+
+  public boolean isIgnoreMissingExportVersions()
+  {
+    return values.isIgnoreMissingExportVersions();
+  }
+
+  public boolean isIgnoreFeatureContentRedundancy()
+  {
+    return values.isIgnoreFeatureContentRedundancy();
+  }
+
+  public boolean isIgnoreFeatureContentChanges()
+  {
+    return values.isIgnoreFeatureContentChanges();
+  }
+
+  public void applyTo(IProject project) throws CoreException
+  {
+    values.applyTo(project);
+  }
+
+  public int size()
+  {
+    return values.size();
+  }
+
+  public boolean isEmpty()
+  {
+    return values.isEmpty();
+  }
+
+  public String get(Object key)
+  {
+    return values.get(key);
+  }
+
+  public boolean containsKey(Object key)
+  {
+    return values.containsKey(key);
+  }
+
+  public String put(String key, String value)
+  {
+    return values.put(key, value);
+  }
+
+  public void putAll(Map<? extends String, ? extends String> m)
+  {
+    values.putAll(m);
+  }
+
+  public String remove(Object key)
+  {
+    return values.remove(key);
+  }
+
+  public void clear()
+  {
+    values.clear();
+  }
+
+  public boolean containsValue(Object value)
+  {
+    return values.containsValue(value);
+  }
+
+  public Set<String> keySet()
+  {
+    return values.keySet();
+  }
+
+  public Collection<String> values()
+  {
+    return values.values();
+  }
+
+  public Set<java.util.Map.Entry<String, String>> entrySet()
+  {
+    return values.entrySet();
+  }
+
+  @Override
+  public boolean equals(Object o)
+  {
+    return values.equals(o);
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return values.hashCode();
   }
 }

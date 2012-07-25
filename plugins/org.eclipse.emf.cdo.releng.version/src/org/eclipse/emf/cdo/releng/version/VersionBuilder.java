@@ -47,18 +47,6 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 {
   public static final String BUILDER_ID = "org.eclipse.emf.cdo.releng.version.VersionBuilder";
 
-  public static final String RELEASE_PATH_ARGUMENT = "release.path";
-
-  public static final String VALIDATOR_CLASS_ARGUMENT = "validator.class";
-
-  public static final String IGNORE_DEPENDENCY_RANGES_ARGUMENT = "ignore.missing.dependency.ranges";
-
-  public static final String IGNORE_EXPORT_VERSIONS_ARGUMENT = "ignore.missing.export.versions";
-
-  public static final String IGNORE_CONTENT_REDUNDANCY_ARGUMENT = "ignore.feature.content.redundancy";
-
-  public static final String IGNORE_CONTENT_CHANGES_ARGUMENT = "ignore.feature.content.changes";
-
   public static final boolean DEBUG = true;
 
   private static final Path MANIFEST_PATH = new Path("META-INF/MANIFEST.MF");
@@ -129,6 +117,9 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
   protected final IProject[] build(int kind, @SuppressWarnings("rawtypes") Map args, IProgressMonitor monitor)
       throws CoreException
   {
+    @SuppressWarnings("unchecked")
+    VersionBuilderArguments arguments = new VersionBuilderArguments(args);
+
     IProject project = getProject();
     List<IProject> buildDpependencies = new ArrayList<IProject>();
 
@@ -150,10 +141,10 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
        * Determine release data to validate against
        */
 
-      String releasePath = (String)args.get(RELEASE_PATH_ARGUMENT);
+      String releasePath = arguments.getReleasePath();
       if (releasePath == null)
       {
-        String msg = "Build command argument missing: " + RELEASE_PATH_ARGUMENT;
+        String msg = "Path to release spec file is not configured";
         Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, "(" + BUILDER_ID + ")");
         return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
       }
@@ -246,24 +237,24 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 
       if (componentModel instanceof IPluginModelBase)
       {
-        if (!"true".equals(args.get(IGNORE_DEPENDENCY_RANGES_ARGUMENT)))
+        if (!arguments.isIgnoreMissingDependencyRanges())
         {
           checkDependencyRanges((IPluginModelBase)componentModel);
         }
 
-        if (!"true".equals(args.get(IGNORE_EXPORT_VERSIONS_ARGUMENT)))
+        if (!arguments.isIgnoreMissingExportVersions())
         {
           checkPackageExports((IPluginModelBase)componentModel);
         }
       }
       else
       {
-        if (!"true".equals(args.get(IGNORE_CONTENT_REDUNDANCY_ARGUMENT)))
+        if (!arguments.isIgnoreFeatureContentRedundancy())
         {
           checkFeatureRedundancy(element);
         }
 
-        if (!"true".equals(args.get(IGNORE_CONTENT_CHANGES_ARGUMENT)))
+        if (!arguments.isIgnoreFeatureContentChanges())
         {
           List<Map.Entry<Element, Version>> warnings = new ArrayList<Entry<Element, Version>>();
           int change = checkFeatureContentChanges(componentModel, element, releaseElement, warnings);
@@ -295,15 +286,15 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
        * Determine validator to use
        */
 
-      String validatorClass = (String)args.get(VALIDATOR_CLASS_ARGUMENT);
-      if (validatorClass == null)
+      String validatorClassName = arguments.getValidatorClassName();
+      if (validatorClassName == null)
       {
-        validatorClass = "org.eclipse.emf.cdo.releng.version.digest.DigestValidator$BuildModel";
+        validatorClassName = IVersionBuilderArguments.DEFAULT_VALIDATOR_CLASS_NAME;
       }
 
       try
       {
-        Class<?> c = Class.forName(validatorClass, true, VersionBuilder.class.getClassLoader());
+        Class<?> c = Class.forName(validatorClassName, true, VersionBuilder.class.getClassLoader());
         validator = (VersionValidator)c.newInstance();
 
         if (DEBUG)
@@ -313,8 +304,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
       }
       catch (Exception ex)
       {
-        String msg = ex.getLocalizedMessage() + ": " + validatorClass;
-        Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, ".*(" + validatorClass + ").*");
+        String msg = ex.getLocalizedMessage() + ": " + validatorClassName;
+        Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, ".*(" + validatorClassName + ").*");
         return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
       }
 

@@ -12,10 +12,8 @@ package org.eclipse.emf.cdo.releng.version;
 
 import org.eclipse.emf.cdo.releng.version.Element.Type;
 
-import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
@@ -115,25 +113,13 @@ public class ReleaseManager
     {
       if (project.isOpen())
       {
-        IProjectDescription desc = project.getDescription();
-        ICommand[] commands = desc.getBuildSpec();
-
-        for (int i = 0; i < commands.length; ++i)
+        VersionBuilderArguments args = new VersionBuilderArguments(project);
+        String releasePath = args.getReleasePath();
+        if (path.equals(releasePath))
         {
-          if (commands[i].getBuilderName().equals(VersionBuilder.BUILDER_ID))
-          {
-            Map<String, String> arguments = commands[i].getArguments();
-            if (arguments != null)
-            {
-              String releasePath = arguments.get(VersionBuilder.RELEASE_PATH_ARGUMENT);
-              if (path.equals(releasePath))
-              {
-                IModel componentModel = VersionBuilder.getComponentModel(project);
-                Element element = createElement(componentModel, true);
-                elements.put(element, element);
-              }
-            }
-          }
+          IModel componentModel = VersionBuilder.getComponentModel(project);
+          Element element = createElement(componentModel, true);
+          elements.put(element, element);
         }
       }
     }

@@ -10,18 +10,14 @@
  */
 package org.eclipse.emf.cdo.releng.version.ui;
 
-import org.eclipse.emf.cdo.releng.version.VersionBuilder;
-import org.eclipse.emf.cdo.releng.version.VersionNature;
+import org.eclipse.emf.cdo.releng.version.VersionBuilderArguments;
 
-import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,7 +28,7 @@ public class RemoveNatureAction extends AbstractAction<Boolean>
 {
   public RemoveNatureAction()
   {
-    super("Remove version tool nature");
+    super("Remove Version Management");
   }
 
   @Override
@@ -55,28 +51,13 @@ public class RemoveNatureAction extends AbstractAction<Boolean>
     }
   }
 
-  protected void removeNature(IProject project) throws CoreException
+  public static void removeNature(IProject project) throws CoreException
   {
     IProjectDescription description = project.getDescription();
 
-    String[] natureIds = description.getNatureIds();
-    List<String> ids = new ArrayList<String>(Arrays.asList(natureIds));
-    ids.remove(VersionNature.NATURE_ID);
+    List<String> ids = VersionBuilderArguments.getOtherNatures(description);
     description.setNatureIds(ids.toArray(new String[ids.size()]));
 
-    ICommand[] buildSpec = description.getBuildSpec();
-    List<ICommand> commands = new ArrayList<ICommand>(Arrays.asList(buildSpec));
-    for (Iterator<ICommand> it = commands.iterator(); it.hasNext();)
-    {
-      ICommand command = it.next();
-      if (VersionBuilder.BUILDER_ID.equals(command.getBuilderName()))
-      {
-        it.remove();
-        break;
-      }
-    }
-
-    description.setBuildSpec(commands.toArray(new ICommand[commands.size()]));
     project.setDescription(description, new NullProgressMonitor());
   }
 }

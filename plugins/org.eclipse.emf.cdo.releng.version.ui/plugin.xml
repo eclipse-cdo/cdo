@@ -23,11 +23,11 @@
                class="org.eclipse.emf.cdo.releng.version.ui.AddNatureAction"
                enablesFor="*"
                id="org.eclipse.emf.cdo.releng.AddNatureAction"
-               label="Add Version Tool Nature"
+               label="Add Version Management"
                menubarPath="org.eclipse.emf.cdo.releng/group1"
                state="true"
                style="push"
-               tooltip="Add the CDO version tool nature to the selected project(s)">
+               tooltip="Add the version management nature to the selected project(s)">
          </action>
          <visibility>
             <not>
@@ -43,14 +43,35 @@
             id="org.eclipse.emf.cdo.releng.version.ui.contribution2"
             objectClass="org.eclipse.core.resources.IProject">
          <action
-               class="org.eclipse.emf.cdo.releng.version.ui.RemoveNatureAction"
+               class="org.eclipse.emf.cdo.releng.version.ui.ConfigureBuilderAction"
                enablesFor="*"
-               id="org.eclipse.emf.cdo.releng.RemoveNatureAction"
-               label="Remove Version Tool Nature"
+               id="org.eclipse.emf.cdo.releng.ConfigureBuilderAction"
+               label="Configure Version Management"
                menubarPath="org.eclipse.emf.cdo.releng/group1"
                state="true"
                style="push"
-               tooltip="Remove the CDO version tool nature from the selected project(s)">
+               tooltip="Configure the version management builder of the selected project(s)">
+         </action>
+         <visibility>
+	            <objectState
+	                  name="projectNature"
+	                  value="org.eclipse.emf.cdo.releng.version.VersionNature">
+	            </objectState>
+         </visibility>
+      </objectContribution>
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.emf.cdo.releng.version.ui.contribution3"
+            objectClass="org.eclipse.core.resources.IProject">
+         <action
+               class="org.eclipse.emf.cdo.releng.version.ui.RemoveNatureAction"
+               enablesFor="*"
+               id="org.eclipse.emf.cdo.releng.RemoveNatureAction"
+               label="Remove Version Management"
+               menubarPath="org.eclipse.emf.cdo.releng/group1"
+               state="true"
+               style="push"
+               tooltip="Remove the version management nature from the selected project(s)">
          </action>
          <visibility>
 	            <objectState

@@ -10,77 +10,41 @@
  */
 package org.eclipse.emf.cdo.releng.version.ui;
 
-import org.eclipse.emf.cdo.releng.version.VersionBuilder;
-import org.eclipse.emf.cdo.releng.version.VersionNature;
+import org.eclipse.emf.cdo.releng.version.IVersionBuilderArguments;
+import org.eclipse.emf.cdo.releng.version.VersionBuilderArguments;
 
-import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public class AddNatureAction extends AbstractAction<Map<String, String>>
+public class AddNatureAction extends AbstractAction<IVersionBuilderArguments>
 {
   public AddNatureAction()
   {
-    super("Add version tool nature");
+    super("Add Version Management");
   }
 
   @Override
-  protected Map<String, String> promptArguments()
+  protected IVersionBuilderArguments promptArguments()
   {
-    Map<String, String> arguments = null;
-
-    ConfigurationDialog dialog = new ConfigurationDialog(shell);
+    VersionBuilderArguments arguments = new VersionBuilderArguments();
+    ConfigurationDialog dialog = new ConfigurationDialog(shell, arguments);
 
     if (dialog.open() == ConfigurationDialog.OK)
     {
-      arguments = new HashMap<String, String>();
-
-      String releasePath = dialog.getReleasePath();
-      arguments.put(VersionBuilder.RELEASE_PATH_ARGUMENT, releasePath);
-
-      boolean ignoreMissingDependencyRanges = dialog.isIgnoreMissingDependencyRanges();
-      if (ignoreMissingDependencyRanges)
-      {
-        arguments.put(VersionBuilder.IGNORE_DEPENDENCY_RANGES_ARGUMENT, "true");
-      }
-
-      boolean ignoreMissingExportVersions = dialog.isIgnoreMissingExportVersions();
-      if (ignoreMissingExportVersions)
-      {
-        arguments.put(VersionBuilder.IGNORE_EXPORT_VERSIONS_ARGUMENT, "true");
-      }
-
-      boolean ignoreFeatureContentRedundancy = dialog.isIgnoreFeatureContentRedundancy();
-      if (ignoreFeatureContentRedundancy)
-      {
-        arguments.put(VersionBuilder.IGNORE_CONTENT_REDUNDANCY_ARGUMENT, "true");
-      }
-
-      boolean ignoreFeatureContentChanges = dialog.isIgnoreFeatureContentChanges();
-      if (ignoreFeatureContentChanges)
-      {
-        arguments.put(VersionBuilder.IGNORE_CONTENT_CHANGES_ARGUMENT, "true");
-      }
+      return dialog;
     }
 
     return arguments;
   }
 
   @Override
-  protected void runWithArguments(Map<String, String> arguments) throws CoreException
+  protected void runWithArguments(IVersionBuilderArguments arguments) throws CoreException
   {
     for (Iterator<?> it = ((IStructuredSelection)selection).iterator(); it.hasNext();)
     {
@@ -88,33 +52,8 @@ public class AddNatureAction extends AbstractAction<Map<String, String>>
       if (element instanceof IProject)
       {
         IProject project = (IProject)element;
-        addNature(project, arguments);
+        arguments.applyTo(project);
       }
     }
-  }
-
-  protected void addNature(IProject project, Map<String, String> arguments) throws CoreException
-  {
-    IProjectDescription description = project.getDescription();
-
-    String[] natureIds = description.getNatureIds();
-    List<String> ids = new ArrayList<String>(Arrays.asList(natureIds));
-    ids.add(VersionNature.NATURE_ID);
-    description.setNatureIds(ids.toArray(new String[ids.size()]));
-
-    ICommand[] buildSpec = description.getBuildSpec();
-    List<ICommand> commands = new ArrayList<ICommand>(Arrays.asList(buildSpec));
-    commands.add(createBuildCommand(description, arguments));
-    description.setBuildSpec(commands.toArray(new ICommand[commands.size()]));
-
-    project.setDescription(description, new NullProgressMonitor());
-  }
-
-  protected ICommand createBuildCommand(IProjectDescription description, Map<String, String> arguments)
-  {
-    ICommand command = description.newCommand();
-    command.setBuilderName(VersionBuilder.BUILDER_ID);
-    command.setArguments(arguments);
-    return command;
   }
 }

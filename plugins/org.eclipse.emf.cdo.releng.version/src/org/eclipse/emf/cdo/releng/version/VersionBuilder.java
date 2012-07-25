@@ -414,11 +414,13 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 
   private void checkFeatureRedundancy(Element element)
   {
-    for (Element pluginChild : element.getChildren())
+    int i = 0;
+    List<Element> children = element.getChildren();
+    for (Element pluginChild : children)
     {
       if (pluginChild.getType() == Element.Type.PLUGIN)
       {
-        for (Element featureChild : element.getChildren())
+        for (Element featureChild : children)
         {
           if (featureChild.getType() == Element.Type.FEATURE)
           {
@@ -440,7 +442,14 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
             }
           }
         }
+
+        if (children.indexOf(pluginChild) != i)
+        {
+          addRedundancyMarker(pluginChild, null);
+        }
       }
+
+      ++i;
     }
   }
 
@@ -757,8 +766,9 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     {
       IFile file = getProject().getFile(FEATURE_PATH);
       String name = pluginChild.getName();
-      String msg = "Plug-in reference '" + name + "' is redundant because feature '" + featureChild.getName()
-          + "' already includes it";
+      String cause = featureChild != null ? "feature '" + featureChild.getName() + "' already includes it"
+          : " because it occurs more than once in this feature";
+      String msg = "Plug-in reference '" + name + "' is redundant because " + cause;
       addFeatureChildMarker(file, "plugin", name, msg);
     }
     catch (Exception ex)

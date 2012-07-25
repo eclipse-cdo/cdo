@@ -32,6 +32,7 @@ import org.eclipse.pde.core.plugin.PluginRegistry;
 import org.osgi.framework.Version;
 
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +59,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 
   public static final String IGNORE_CONTENT_CHANGES_ARGUMENT = "ignore.feature.content.changes";
 
-  public static final boolean DEBUG = false;
+  public static final boolean DEBUG = true;
 
   private static final Path MANIFEST_PATH = new Path("META-INF/MANIFEST.MF");
 
@@ -132,7 +133,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     List<IProject> buildDpependencies = new ArrayList<IProject>();
 
     BuildState buildState = Activator.getBuildState(project);
-    boolean fullBuild = buildState.getReleaseTag() == null;
+    byte[] releaseSpecDigest = buildState.getReleaseSpecDigest();
+    boolean fullBuild = releaseSpecDigest == null;
     VersionValidator validator = null;
 
     monitor.beginTask(null, 1);
@@ -158,31 +160,31 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 
       try
       {
-        IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(releasePath));
-        buildDpependencies.add(file.getProject());
+        IFile releaseSpecFile = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(releasePath));
+        buildDpependencies.add(releaseSpecFile.getProject());
 
         Release release;
-        if (!file.exists())
+        if (!releaseSpecFile.exists())
         {
-          release = ReleaseManager.INSTANCE.createRelease(file);
+          release = ReleaseManager.INSTANCE.createRelease(releaseSpecFile);
         }
         else
         {
-          release = ReleaseManager.INSTANCE.getRelease(file);
+          release = ReleaseManager.INSTANCE.getRelease(releaseSpecFile);
         }
 
-        String tag = release.getTag();
-        boolean releaseHasChanged = !tag.equals(buildState.getReleaseTag());
-        if (releaseHasChanged)
+        byte[] digest = VersionUtil.getSHA1(releaseSpecFile);
+        if (releaseSpecDigest == null || !MessageDigest.isEqual(digest, releaseSpecDigest))
         {
-          buildState.setReleaseTag(tag);
+          buildState.setReleaseSpecDigest(digest);
           fullBuild = true;
         }
 
         this.release = release;
       }
-      catch (CoreException ex)
+      catch (Exception ex)
       {
+        Activator.log(ex);
         String msg = "Problem with release spec: " + releasePath;
         Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, "(" + releasePath.replace(".", "\\.") + ")");
         return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
@@ -383,6 +385,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     {
       nextFeatureVersion = nextImplVersion;
     }
+
     return nextFeatureVersion;
   }
 

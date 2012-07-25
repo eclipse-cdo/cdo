@@ -70,7 +70,6 @@ public class Activator extends Plugin
       {
         buildStates = new HashMap<String, BuildState>();
       }
-
     }
   }
 

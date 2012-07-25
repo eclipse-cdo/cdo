@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.releng.version.Element;
 import org.eclipse.emf.cdo.releng.version.Release;
 import org.eclipse.emf.cdo.releng.version.ReleaseManager;
 import org.eclipse.emf.cdo.releng.version.VersionBuilder;
+import org.eclipse.emf.cdo.releng.version.VersionUtil;
 import org.eclipse.emf.cdo.releng.version.VersionValidator;
 
 import org.eclipse.core.resources.IContainer;
@@ -39,9 +40,7 @@ import org.osgi.framework.Version;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FilterInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.security.MessageDigest;
@@ -60,92 +59,10 @@ import java.util.WeakHashMap;
  */
 public class DigestValidator extends VersionValidator
 {
-  private static final byte[] BUFFER = new byte[8192];
-
   private static final Map<Release, ReleaseDigest> RELEASE_DIGESTS = new WeakHashMap<Release, ReleaseDigest>();
 
   public DigestValidator()
   {
-  }
-
-  public ReleaseDigest createReleaseDigest(Release release, IFile target, List<String> warnings,
-      IProgressMonitor monitor) throws CoreException
-  {
-    monitor.beginTask(null, release.getSize() + 1);
-
-    try
-    {
-      ReleaseDigest releaseDigest = new ReleaseDigest(release.getTag());
-      for (Entry<Element, Element> entry : release.getElements().entrySet())
-      {
-        String name = entry.getKey().getName();
-        monitor.subTask(name);
-
-        try
-        {
-          try
-          {
-            Element element = entry.getValue();
-            if (element.getName().endsWith(".source"))
-            {
-              continue;
-            }
-
-            IModel componentModel = ReleaseManager.INSTANCE.getComponentModel(element);
-            if (componentModel == null)
-            {
-              addWarning(warnings, name + ": Component not found");
-              continue;
-            }
-
-            IResource resource = componentModel.getUnderlyingResource();
-            if (resource == null)
-            {
-              addWarning(warnings, name + ": Component is not in workspace");
-              continue;
-            }
-
-            Version version = VersionBuilder.getComponentVersion(componentModel);
-
-            if (!element.getVersion().equals(version))
-            {
-              addWarning(warnings, name + ": Plugin version is not " + element.getVersion());
-            }
-
-            IProject project = resource.getProject();
-
-            beforeValidation(null, componentModel);
-            DigestValidatorState state = validateFull(project, null, componentModel, monitor);
-            afterValidation(state);
-
-            releaseDigest.put(state.getName(), state.getDigest());
-          }
-          finally
-          {
-            monitor.worked(1);
-          }
-        }
-        catch (Exception ex)
-        {
-          addWarning(warnings, name + ": " + Activator.getStatus(ex).getMessage());
-        }
-      }
-
-      writeReleaseDigest(releaseDigest, target, monitor);
-      return releaseDigest;
-    }
-    catch (CoreException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new CoreException(Activator.getStatus(ex));
-    }
-    finally
-    {
-      monitor.done();
-    }
   }
 
   @Override
@@ -153,6 +70,19 @@ public class DigestValidator extends VersionValidator
       IResourceDelta delta, IModel componentModel, IProgressMonitor monitor) throws Exception
   {
     DigestValidatorState validatorState = (DigestValidatorState)buildState.getValidatorState();
+    ReleaseDigest releaseDigest = getReleaseDigest(releasePath, release, monitor);
+
+    // Check whether the release digest to use is still the one that has been used the for the last build.
+    long timeStamp = releaseDigest.getTimeStamp();
+    if (timeStamp != buildState.getValidatorTimeStamp())
+    {
+      // Trigger full build if the release digest to use is different from the one used for the last build
+      delta = null;
+
+      // Avoid triggering full builds after this (full) build
+      buildState.setValidatorTimeStamp(timeStamp);
+    }
+
     beforeValidation(validatorState, componentModel);
     if (validatorState == null || delta == null)
     {
@@ -168,7 +98,7 @@ public class DigestValidator extends VersionValidator
     {
       if (VersionBuilder.DEBUG)
       {
-        System.out.println("Digest: Delta validation...");
+        System.out.println("Digest: Incremental validation...");
       }
 
       validatorState = validateDelta(delta, validatorState, componentModel, monitor);
@@ -186,13 +116,13 @@ public class DigestValidator extends VersionValidator
       System.out.println("DIGEST  = " + formatDigest(validatorDigest));
     }
 
-    byte[] releaseDigest = getReleaseDigest(releasePath, release, project.getName(), monitor);
+    byte[] releasedProjectDigest = releaseDigest.get(project.getName());
     if (VersionBuilder.DEBUG)
     {
-      System.out.println("RELEASE = " + formatDigest(releaseDigest));
+      System.out.println("RELEASE = " + formatDigest(releasedProjectDigest));
     }
 
-    boolean changedSinceRelease = !MessageDigest.isEqual(validatorDigest, releaseDigest);
+    boolean changedSinceRelease = !MessageDigest.isEqual(validatorDigest, releasedProjectDigest);
     buildState.setChangedSinceRelease(changedSinceRelease);
     buildState.setValidatorState(validatorState);
   }
@@ -337,18 +267,31 @@ public class DigestValidator extends VersionValidator
   {
   }
 
-  private byte[] getReleaseDigest(String releasePath, Release release, String name, IProgressMonitor monitor)
+  private ReleaseDigest getReleaseDigest(String releasePath, Release release, IProgressMonitor monitor)
       throws IOException, CoreException, ClassNotFoundException
   {
+    IFile file = getDigestFile(new Path(releasePath));
+    long localTimeStamp = file.getLocalTimeStamp();
+
     ReleaseDigest releaseDigest = RELEASE_DIGESTS.get(release);
+    if (releaseDigest != null)
+    {
+      // Check whether digest file has changed on disk.
+      if (localTimeStamp != releaseDigest.getTimeStamp())
+      {
+        // Digest file has changed. Reload it further down.
+        releaseDigest = null;
+      }
+    }
+
     if (releaseDigest == null)
     {
-      IFile file = getDigestFile(new Path(releasePath));
       if (file.exists())
       {
         releaseDigest = readDigestFile(file);
 
-        if (!releaseDigest.getTag().equals(release.getTag()))
+        // Check whether the digest file on disk (still) matches the release spec
+        if (!MessageDigest.isEqual(releaseDigest.getReleaseSpecDigest(), release.getDigest()))
         {
           releaseDigest = null;
         }
@@ -359,10 +302,11 @@ public class DigestValidator extends VersionValidator
         releaseDigest = createReleaseDigest(release, file, null, monitor);
       }
 
+      releaseDigest.setTimeStamp(localTimeStamp);
       RELEASE_DIGESTS.put(release, releaseDigest);
     }
 
-    return releaseDigest.get(name);
+    return releaseDigest;
   }
 
   private byte[] getFolderDigest(Collection<DigestValidatorState> states) throws Exception
@@ -386,84 +330,7 @@ public class DigestValidator extends VersionValidator
 
   private byte[] getFileDigest(IFile file) throws Exception
   {
-    InputStream stream = null;
-
-    try
-    {
-      final MessageDigest digest = MessageDigest.getInstance("SHA-1");
-      stream = new FilterInputStream(file.getContents())
-      {
-        @Override
-        public int read() throws IOException
-        {
-          for (;;)
-          {
-            int ch = super.read();
-            switch (ch)
-            {
-            case -1:
-              return -1;
-
-            case 10:
-            case 13:
-              continue;
-            }
-
-            digest.update((byte)ch);
-            return ch;
-          }
-        }
-
-        @Override
-        public int read(byte[] b, int off, int len) throws IOException
-        {
-          int read = super.read(b, off, len);
-          if (read == -1)
-          {
-            return -1;
-          }
-
-          for (int i = off; i < off + read; i++)
-          {
-            byte c = b[i];
-            if (c == 10 || c == 13)
-            {
-              if (i + 1 < off + read)
-              {
-                System.arraycopy(b, i + 1, b, i, read - i - 1);
-                --i;
-              }
-
-              --read;
-            }
-          }
-
-          digest.update(b, off, read);
-          return read;
-        }
-      };
-
-      while (stream.read(BUFFER) != -1)
-      {
-        // Do nothing
-      }
-
-      return digest.digest();
-    }
-    finally
-    {
-      if (stream != null)
-      {
-        try
-        {
-          stream.close();
-        }
-        catch (Exception ex)
-        {
-          Activator.log(ex);
-        }
-      }
-    }
+    return VersionUtil.getSHA1(file);
   }
 
   private String formatDigest(byte[] digest)
@@ -544,6 +411,86 @@ public class DigestValidator extends VersionValidator
     if (warnings != null)
     {
       warnings.add(msg);
+    }
+  }
+
+  public ReleaseDigest createReleaseDigest(Release release, IFile target, List<String> warnings,
+      IProgressMonitor monitor) throws CoreException
+  {
+    monitor.beginTask(null, release.getSize() + 1);
+
+    try
+    {
+      ReleaseDigest releaseDigest = new ReleaseDigest(release.getDigest());
+      for (Entry<Element, Element> entry : release.getElements().entrySet())
+      {
+        String name = entry.getKey().getName();
+        monitor.subTask(name);
+
+        try
+        {
+          try
+          {
+            Element element = entry.getValue();
+            if (element.getName().endsWith(".source"))
+            {
+              continue;
+            }
+
+            IModel componentModel = ReleaseManager.INSTANCE.getComponentModel(element);
+            if (componentModel == null)
+            {
+              addWarning(warnings, name + ": Component not found");
+              continue;
+            }
+
+            IResource resource = componentModel.getUnderlyingResource();
+            if (resource == null)
+            {
+              addWarning(warnings, name + ": Component is not in workspace");
+              continue;
+            }
+
+            Version version = VersionBuilder.getComponentVersion(componentModel);
+
+            if (!element.getVersion().equals(version))
+            {
+              addWarning(warnings, name + ": Plugin version is not " + element.getVersion());
+            }
+
+            IProject project = resource.getProject();
+
+            beforeValidation(null, componentModel);
+            DigestValidatorState state = validateFull(project, null, componentModel, monitor);
+            afterValidation(state);
+
+            releaseDigest.put(state.getName(), state.getDigest());
+          }
+          finally
+          {
+            monitor.worked(1);
+          }
+        }
+        catch (Exception ex)
+        {
+          addWarning(warnings, name + ": " + Activator.getStatus(ex).getMessage());
+        }
+      }
+
+      writeReleaseDigest(releaseDigest, target, monitor);
+      return releaseDigest;
+    }
+    catch (CoreException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new CoreException(Activator.getStatus(ex));
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 

@@ -26,13 +26,13 @@ import javax.xml.parsers.SAXParser;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * @author Eike Stepper
@@ -45,8 +45,6 @@ public class Release implements ElementResolver
 
   public static final String PLUGIN_TAG = "plugin";
 
-  public static final String TAG_ATTRIBUTE = "tag";
-
   public static final String INTEGRATION_ATTRIBUTE = "integration";
 
   public static final String NAME_ATTRIBUTE = "name";
@@ -57,9 +55,9 @@ public class Release implements ElementResolver
 
   private IFile file;
 
-  private boolean integration;
+  private byte[] digest;
 
-  private String tag;
+  private boolean integration;
 
   private Map<Element, Element> elements = new HashMap<Element, Element>();
 
@@ -67,10 +65,9 @@ public class Release implements ElementResolver
   {
     this.file = file;
     integration = true;
-    initTag();
   }
 
-  Release(SAXParser parser, IFile file) throws CoreException, IOException, SAXException
+  Release(SAXParser parser, IFile file) throws CoreException, IOException, SAXException, NoSuchAlgorithmException
   {
     this.file = file;
 
@@ -81,7 +78,8 @@ public class Release implements ElementResolver
     {
       contents = file.getContents();
       parser.parse(contents, handler);
-      initTag();
+
+      digest = VersionUtil.getSHA1(file);
     }
     finally
     {
@@ -99,22 +97,14 @@ public class Release implements ElementResolver
     }
   }
 
-  private void initTag()
-  {
-    if (tag == null)
-    {
-      tag = UUID.randomUUID().toString();
-    }
-  }
-
   public IFile getFile()
   {
     return file;
   }
 
-  public String getTag()
+  public byte[] getDigest()
   {
-    return tag;
+    return digest;
   }
 
   public boolean isIntegration()
@@ -137,7 +127,7 @@ public class Release implements ElementResolver
     return elements.size();
   }
 
-  public void write() throws IOException, CoreException
+  public void write() throws IOException, CoreException, NoSuchAlgorithmException
   {
     StringBuilder builder = new StringBuilder();
     writeRelease(builder);
@@ -152,13 +142,14 @@ public class Release implements ElementResolver
     {
       file.create(contents, true, new NullProgressMonitor());
     }
+
+    digest = VersionUtil.getSHA1(file);
   }
 
   private void writeRelease(StringBuilder builder)
   {
     builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-    builder.append("<" + RELEASE_TAG + " " + INTEGRATION_ATTRIBUTE + "=\"" + integration + "\" " + TAG_ATTRIBUTE
-        + "=\"" + tag + "\">\n");
+    builder.append("<" + RELEASE_TAG + " " + INTEGRATION_ATTRIBUTE + "=\"" + integration + "\">\n");
 
     List<Element> list = new ArrayList<Element>(elements.keySet());
     Collections.sort(list, new Comparator<Element>()
@@ -244,7 +235,6 @@ public class Release implements ElementResolver
     {
       if (RELEASE_TAG.equalsIgnoreCase(qName))
       {
-        tag = getString(attributes, TAG_ATTRIBUTE);
         integration = getBoolean(attributes, INTEGRATION_ATTRIBUTE);
       }
       else if (FEATURE_TAG.equalsIgnoreCase(qName))

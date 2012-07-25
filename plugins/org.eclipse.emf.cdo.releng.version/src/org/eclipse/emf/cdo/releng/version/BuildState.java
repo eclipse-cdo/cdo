@@ -19,9 +19,11 @@ public class BuildState implements Serializable
 {
   private static final long serialVersionUID = 1L;
 
-  private String releaseTag;
+  private byte[] releaseSpecDigest;
 
   private boolean changedSinceRelease;
+
+  private long validatorTimeStamp;
 
   private Serializable validatorState;
 
@@ -29,14 +31,24 @@ public class BuildState implements Serializable
   {
   }
 
-  void setReleaseTag(String releaseTag)
+  public byte[] getReleaseSpecDigest()
   {
-    this.releaseTag = releaseTag;
+    return releaseSpecDigest;
   }
 
-  public String getReleaseTag()
+  public void setReleaseSpecDigest(byte[] releaseSpecDigest)
   {
-    return releaseTag;
+    this.releaseSpecDigest = releaseSpecDigest;
+  }
+
+  public long getValidatorTimeStamp()
+  {
+    return validatorTimeStamp;
+  }
+
+  public void setValidatorTimeStamp(long validatorTimeStamp)
+  {
+    this.validatorTimeStamp = validatorTimeStamp;
   }
 
   public boolean isChangedSinceRelease()

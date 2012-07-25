@@ -34,6 +34,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -103,7 +104,7 @@ public class ReleaseManager
     }
   }
 
-  public synchronized Release createRelease(IFile file) throws CoreException, IOException
+  public synchronized Release createRelease(IFile file) throws CoreException, IOException, NoSuchAlgorithmException
   {
     Release release = new Release(file);
     String path = file.getFullPath().toString();

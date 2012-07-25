@@ -19,16 +19,28 @@ public class ReleaseDigest extends HashMap<String, byte[]>
 {
   private static final long serialVersionUID = 1L;
 
-  private String tag;
+  private byte[] releaseSpecDigest;
 
-  public ReleaseDigest(String tag)
+  private transient long timeStamp;
+
+  public ReleaseDigest(byte[] releaseSpecDigest)
   {
-    this.tag = tag;
+    this.releaseSpecDigest = releaseSpecDigest;
   }
 
-  public String getTag()
+  public byte[] getReleaseSpecDigest()
   {
-    return tag;
+    return releaseSpecDigest;
+  }
+
+  public long getTimeStamp()
+  {
+    return timeStamp;
+  }
+
+  public void setTimeStamp(long timeStamp)
+  {
+    this.timeStamp = timeStamp;
   }
 
   public byte[] getProjectDigest(String projectName)

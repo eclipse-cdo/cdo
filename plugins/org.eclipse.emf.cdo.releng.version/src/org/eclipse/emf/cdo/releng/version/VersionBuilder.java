@@ -209,17 +209,17 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 
       Version elementVersion = element.getVersion();
       Version releaseVersion = releaseElement.getVersion();
-      Version nextImplVersion = getNextImplVersion(releaseVersion);
+      Version nextImplementationVersion = getNextImplVersion(releaseVersion);
 
       int comparison = releaseVersion.compareTo(elementVersion);
       if (comparison < 0)
       {
-        if (!nextImplVersion.equals(elementVersion))
+        if (!nextImplementationVersion.equals(elementVersion))
         {
-          if (elementVersion.getMajor() == nextImplVersion.getMajor()
-              && elementVersion.getMinor() == nextImplVersion.getMinor())
+          if (elementVersion.getMajor() == nextImplementationVersion.getMajor()
+              && elementVersion.getMinor() == nextImplementationVersion.getMinor())
           {
-            addVersionMarker("Version should be " + nextImplVersion);
+            addVersionMarker("Version should be " + nextImplementationVersion, nextImplementationVersion);
           }
         }
 
@@ -231,7 +231,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 
       if (comparison > 0)
       {
-        addVersionMarker("Version has been decreased after release " + releaseVersion);
+        addVersionMarker("Version has been decreased after release " + releaseVersion, releaseVersion);
         return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
       }
 
@@ -260,11 +260,11 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
           int change = checkFeatureContentChanges(componentModel, element, releaseElement, warnings);
           if (change != NO_CHANGE)
           {
-            Version nextFeatureVersion = getNextFeatureVersion(releaseVersion, nextImplVersion, change);
+            Version nextFeatureVersion = getNextFeatureVersion(releaseVersion, nextImplementationVersion, change);
             if (elementVersion.compareTo(nextFeatureVersion) < 0)
             {
               addVersionMarker("Version must be increased to " + nextFeatureVersion
-                  + " because the feature's references have changed");
+                  + " because the feature's references have changed", nextFeatureVersion);
 
               for (Entry<Element, Version> entry : warnings)
               {
@@ -324,8 +324,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 
       if (buildState.isChangedSinceRelease())
       {
-        addVersionMarker("Version must be increased to " + nextImplVersion
-            + " because the project's contents have changed");
+        addVersionMarker("Version must be increased to " + nextImplementationVersion
+            + " because the project's contents have changed", nextImplementationVersion);
       }
     }
     catch (Exception ex)
@@ -727,7 +727,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     }
   }
 
-  private void addVersionMarker(String message)
+  private void addVersionMarker(String message, Version version)
   {
     try
     {
@@ -743,7 +743,9 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
         regex = "Bundle-Version: *(\\d+(\\.\\d+(\\.\\d+)?)?)";
       }
 
-      Markers.addMarker(file, message, IMarker.SEVERITY_ERROR, regex);
+      IMarker marker = Markers.addMarker(file, message, IMarker.SEVERITY_ERROR, regex);
+      marker.setAttribute(Markers.QUICK_FIX_PATTERN, regex);
+      marker.setAttribute(Markers.QUICK_FIX_REPLACEMENT, version.toString());
     }
     catch (Exception ex)
     {
@@ -817,8 +819,10 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 
   private void addFeatureChildMarker(IFile file, String tag, String name, String msg) throws CoreException, IOException
   {
-    String regex = "<" + tag + "\\s+.*?id\\s*=\\s*[\"'](" + name.replace(".", "\\.") + ")";
-    Markers.addMarker(file, msg, IMarker.SEVERITY_WARNING, regex);
+    String regex = "[ \\t\\x0B\\f]*<" + tag + "\\s+.*?id\\s*=\\s*[\"'](" + name.replace(".", "\\.")
+        + ").*?/>([ \\t\\x0B\\f]*[\\n\\r])*";
+    IMarker marker = Markers.addMarker(file, msg, IMarker.SEVERITY_WARNING, regex);
+    marker.setAttribute(Markers.QUICK_FIX_PATTERN, regex);
   }
 
   public static IModel getComponentModel(IProject project)

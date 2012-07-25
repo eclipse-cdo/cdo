@@ -78,7 +78,11 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
     new Label(composite, SWT.NONE).setText("Path to release specification file: ");
     releasePathText = new Text(composite, SWT.BORDER);
     releasePathText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-    releasePathText.setText(values.getReleasePath());
+    String releasePath = values.getReleasePath();
+    if (releasePath != null)
+    {
+      releasePathText.setText(releasePath);
+    }
 
     ignoreMissingDependencyRangesButton = new Button(composite, SWT.CHECK);
     ignoreMissingDependencyRangesButton.setText("Ignore missing dependency version ranges");

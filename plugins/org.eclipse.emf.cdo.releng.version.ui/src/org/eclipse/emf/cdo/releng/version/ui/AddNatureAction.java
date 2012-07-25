@@ -40,7 +40,7 @@ public class AddNatureAction extends AbstractAction<IVersionBuilderArguments>
       return dialog;
     }
 
-    return arguments;
+    return null;
   }
 
   @Override

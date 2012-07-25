@@ -81,5 +81,13 @@
          </visibility>
       </objectContribution>
    </extension>
+   
+   <extension
+         point="org.eclipse.ui.ide.markerResolution">
+      <markerResolutionGenerator
+            class="org.eclipse.emf.cdo.releng.version.ui.Quickfixer"
+            markerType="org.eclipse.emf.cdo.releng.version.VersionProblem">
+      </markerResolutionGenerator>
+   </extension>
 
 </plugin>

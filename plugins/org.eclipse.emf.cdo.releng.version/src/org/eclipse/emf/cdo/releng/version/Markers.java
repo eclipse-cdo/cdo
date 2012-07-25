@@ -28,7 +28,11 @@ import java.util.regex.Pattern;
  */
 public final class Markers
 {
-  public static final String MARKER_TYPE = "org.eclipse.emf.cdo.releng.version.VersionProblem"; //$NON-NLS-1$
+  public static final String MARKER_TYPE = "org.eclipse.emf.cdo.releng.version.VersionProblem";
+
+  public static final String QUICK_FIX_PATTERN = "quickFixPattern";
+
+  public static final String QUICK_FIX_REPLACEMENT = "quickReplacement"; 
 
   private static final Pattern NL_PATTERN = Pattern.compile("([\\n][\\r]?|[\\r][\\n]?)", Pattern.MULTILINE);
 
@@ -36,19 +40,21 @@ public final class Markers
   {
   }
 
-  public static void addMarker(IResource resource, String message) throws CoreException
+  public static IMarker addMarker(IResource resource, String message) throws CoreException
   {
-    addMarker(resource, message, IMarker.SEVERITY_ERROR);
+    return addMarker(resource, message, IMarker.SEVERITY_ERROR);
   }
 
-  public static void addMarker(IResource resource, String message, int severity) throws CoreException
+  public static IMarker addMarker(IResource resource, String message, int severity) throws CoreException
   {
     IMarker marker = resource.createMarker(MARKER_TYPE);
     marker.setAttribute(IMarker.MESSAGE, message);
     marker.setAttribute(IMarker.SEVERITY, severity);
+    return marker;
   }
 
-  public static void addMarker(IResource resource, String message, int severity, int lineNumber) throws CoreException
+  public static IMarker addMarker(IResource resource, String message, int severity, int lineNumber)
+      throws CoreException
   {
     IMarker marker = resource.createMarker(MARKER_TYPE);
     marker.setAttribute(IMarker.MESSAGE, message);
@@ -59,9 +65,10 @@ public final class Markers
     }
 
     marker.setAttribute(IMarker.LINE_NUMBER, lineNumber);
+    return marker;
   }
 
-  public static void addMarker(IFile file, String message, int severity, int lineNumber, int charStart, int charEnd)
+  public static IMarker addMarker(IFile file, String message, int severity, int lineNumber, int charStart, int charEnd)
       throws CoreException
   {
     if (lineNumber < 1)
@@ -75,9 +82,10 @@ public final class Markers
     marker.setAttribute(IMarker.LINE_NUMBER, lineNumber);
     marker.setAttribute(IMarker.CHAR_START, charStart);
     marker.setAttribute(IMarker.CHAR_END, charEnd);
+    return marker;
   }
 
-  public static void addMarker(IFile file, String message, int severity, String regex) throws CoreException,
+  public static IMarker addMarker(IFile file, String message, int severity, String regex) throws CoreException,
       IOException
   {
     InputStream contents = null;
@@ -116,8 +124,7 @@ public final class Markers
           ++line;
         }
 
-        addMarker(file, message, severity, line, startChar, endChar);
-        return;
+        return addMarker(file, message, severity, line, startChar, endChar);
       }
     }
     finally
@@ -135,7 +142,7 @@ public final class Markers
       }
     }
 
-    addMarker(file, message, severity);
+    return addMarker(file, message, severity);
   }
 
   public static void deleteMarkers(IResource resource) throws CoreException

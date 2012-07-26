@@ -268,7 +268,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
           int change = checkFeatureContentChanges(componentModel, element, releaseElement, warnings);
           if (change != NO_CHANGE)
           {
-            Version nextFeatureVersion = getNextFeatureVersion(releaseVersion, nextImplementationVersion, change);
+            Version nextFeatureVersion = getNextFeatureVersion(releaseVersion, change);
             if (elementVersion.compareTo(nextFeatureVersion) < 0)
             {
               addVersionMarker("Version must be increased to " + nextFeatureVersion
@@ -369,7 +369,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
         + (release.isIntegration() ? 100 : 1));
   }
 
-  private Version getNextFeatureVersion(Version releaseVersion, Version nextImplVersion, int change)
+  private Version getNextFeatureVersion(Version releaseVersion, int change)
   {
     Version nextFeatureVersion = null;
     if (change == MAJOR_CHANGE)
@@ -382,7 +382,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     }
     else if (change == MICRO_CHANGE)
     {
-      nextFeatureVersion = nextImplVersion;
+      nextFeatureVersion = getNextImplVersion(releaseVersion);
     }
 
     return nextFeatureVersion;

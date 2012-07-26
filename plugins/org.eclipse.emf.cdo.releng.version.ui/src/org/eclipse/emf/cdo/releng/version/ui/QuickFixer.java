@@ -17,8 +17,10 @@ import org.eclipse.core.filebuffers.ITextFileBufferManager;
 import org.eclipse.core.filebuffers.LocationKind;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IMarkerResolution;
@@ -71,17 +73,45 @@ public class QuickFixer implements IMarkerResolutionGenerator2
 
     public String getLabel()
     {
-      return "Foo";
+      try
+      {
+        Object replacement = marker.getAttribute(Markers.QUICK_FIX_REPLACEMENT);
+        if (replacement != null)
+        {
+          return "Change version to " + replacement;
+        }
+
+        return "Remove reference";
+      }
+      catch (CoreException ex)
+      {
+        Activator.log(ex);
+        return "";
+      }
     }
 
     public String getDescription()
     {
-      return "Foo Foo Foo";
+      return "";
     }
 
     public Image getImage()
     {
-      return null;
+      try
+      {
+        ImageRegistry imageRegistry = Activator.getPlugin().getImageRegistry();
+        if (marker.getAttribute(Markers.QUICK_FIX_REPLACEMENT) != null)
+        {
+          return imageRegistry.get(Activator.ICONS_CORRECTION_CHANGE_GIF);
+        }
+
+        return imageRegistry.get(Activator.ICONS_CORRECTION_DELETE_GIF);
+      }
+      catch (CoreException ex)
+      {
+        Activator.log(ex);
+        return null;
+      }
     }
 
     public void run(IMarker marker)

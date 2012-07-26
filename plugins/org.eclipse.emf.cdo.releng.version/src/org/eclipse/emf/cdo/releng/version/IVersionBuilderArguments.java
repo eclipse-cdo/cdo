@@ -32,5 +32,7 @@ public interface IVersionBuilderArguments extends Map<String, String>
 
   public boolean isIgnoreFeatureContentChanges();
 
+  public boolean isIgnoreMalformedVersionsButton();
+
   public void applyTo(IProject project) throws CoreException;
 }

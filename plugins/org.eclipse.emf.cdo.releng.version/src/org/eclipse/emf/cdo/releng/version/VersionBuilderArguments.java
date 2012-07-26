@@ -42,6 +42,8 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
 
   private static final String IGNORE_CONTENT_CHANGES_ARGUMENT = "ignore.feature.content.changes";
 
+  private static final String IGNORE_MALFORMED_VERSIONS_ARGUMENT = "ignore.malformed.versions";
+
   public VersionBuilderArguments()
   {
   }
@@ -94,6 +96,11 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
   public boolean isIgnoreFeatureContentChanges()
   {
     return "true".equals(get(IGNORE_CONTENT_CHANGES_ARGUMENT));
+  }
+
+  public boolean isIgnoreMalformedVersionsButton()
+  {
+    return "true".equals(get(IGNORE_MALFORMED_VERSIONS_ARGUMENT));
   }
 
   public void setReleasePath(String value)
@@ -165,6 +172,18 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
     else
     {
       remove(IGNORE_CONTENT_CHANGES_ARGUMENT);
+    }
+  }
+
+  public void setIgnoreMalformedVersions(boolean value)
+  {
+    if (value)
+    {
+      put(IGNORE_MALFORMED_VERSIONS_ARGUMENT, Boolean.toString(true));
+    }
+    else
+    {
+      remove(IGNORE_MALFORMED_VERSIONS_ARGUMENT);
     }
   }
 

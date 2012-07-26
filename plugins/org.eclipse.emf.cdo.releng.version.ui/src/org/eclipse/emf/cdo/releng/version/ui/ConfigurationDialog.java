@@ -49,6 +49,8 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
 
   private Button ignoreFeatureContentRedundancyButton;
 
+  private Button ignoreMalformedVersionsButton;
+
   public ConfigurationDialog(Shell parentShell, VersionBuilderArguments defaults)
   {
     super(parentShell);
@@ -100,6 +102,10 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
     ignoreFeatureContentChangesButton.setText("Ignore feature content changes");
     ignoreFeatureContentChangesButton.setSelection(values.isIgnoreFeatureContentChanges());
 
+    ignoreMalformedVersionsButton = new Button(composite, SWT.CHECK);
+    ignoreMalformedVersionsButton.setText("Ignore malformed versions");
+    ignoreMalformedVersionsButton.setSelection(values.isIgnoreMalformedVersionsButton());
+
     return dialogArea;
   }
 
@@ -111,6 +117,7 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
     values.setIgnoreMissingExportVersions(ignoreMissingExportVersionsButton.getSelection());
     values.setIgnoreFeatureContentRedundancy(ignoreFeatureContentRedundancyButton.getSelection());
     values.setIgnoreFeatureContentChanges(ignoreFeatureContentChangesButton.getSelection());
+    values.setIgnoreMalformedVersions(ignoreMalformedVersionsButton.getSelection());
     super.okPressed();
   }
 
@@ -137,6 +144,11 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
   public boolean isIgnoreFeatureContentChanges()
   {
     return values.isIgnoreFeatureContentChanges();
+  }
+
+  public boolean isIgnoreMalformedVersionsButton()
+  {
+    return values.isIgnoreMalformedVersionsButton();
   }
 
   public void applyTo(IProject project) throws CoreException

@@ -98,11 +98,9 @@ public final class Markers
     return marker;
   }
 
-  public static IMarker addMarker(IFile file, String message, int severity, String regex) throws CoreException,
-      IOException
+  public static String getContent(IFile file) throws CoreException, IOException
   {
     InputStream contents = null;
-
     try
     {
       contents = file.getContents();
@@ -115,30 +113,7 @@ public final class Markers
         caw.write(c);
       }
 
-      String string = caw.toString();
-
-      Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
-      Matcher matcher = pattern.matcher(string);
-
-      if (matcher.find())
-      {
-        int startChar = matcher.start(1);
-        int endChar = matcher.end(1);
-
-        matcher = NL_PATTERN.matcher(string);
-        int line = 0;
-        while (matcher.find())
-        {
-          if (matcher.start(1) > startChar)
-          {
-            break;
-          }
-
-          ++line;
-        }
-
-        return addMarker(file, message, severity, line, startChar, endChar);
-      }
+      return caw.toString();
     }
     finally
     {
@@ -153,6 +128,36 @@ public final class Markers
           Activator.log(ex);
         }
       }
+
+    }
+  }
+
+  public static IMarker addMarker(IFile file, String message, int severity, String regex) throws CoreException,
+      IOException
+  {
+    String string = getContent(file);
+
+    Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
+    Matcher matcher = pattern.matcher(string);
+
+    if (matcher.find())
+    {
+      int startChar = matcher.start(1);
+      int endChar = matcher.end(1);
+
+      matcher = NL_PATTERN.matcher(string);
+      int line = 0;
+      while (matcher.find())
+      {
+        if (matcher.start(1) > startChar)
+        {
+          break;
+        }
+
+        ++line;
+      }
+
+      return addMarker(file, message, severity, line, startChar, endChar);
     }
 
     return addMarker(file, message, severity);

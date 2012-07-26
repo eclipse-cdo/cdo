@@ -39,6 +39,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Eike Stepper
@@ -47,7 +49,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 {
   public static final String BUILDER_ID = "org.eclipse.emf.cdo.releng.version.VersionBuilder";
 
-  public static final boolean DEBUG = true;
+  public static final boolean DEBUG = Boolean.valueOf(System.getProperty("org.eclipse.emf.cdo.releng.version.debug",
+      "false"));
 
   private static final Path MANIFEST_PATH = new Path("META-INF/MANIFEST.MF");
 
@@ -205,6 +208,11 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
         }
 
         return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+      }
+
+      if (!arguments.isIgnoreMalformedVersionsButton())
+      {
+        checkMalformedVersions(componentModel);
       }
 
       Version elementVersion = element.getVersion();
@@ -559,6 +567,55 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     return null;
   }
 
+  private void checkMalformedVersions(IModel componentModel)
+  {
+    IResource underlyingResource = componentModel.getUnderlyingResource();
+    if (underlyingResource != null)
+    {
+      IProject project = underlyingResource.getProject();
+      if (project.isAccessible())
+      {
+        IFile file = null;
+        String regex = null;
+        if (componentModel instanceof IPluginModelBase)
+        {
+          file = project.getFile(MANIFEST_PATH);
+          regex = "Bundle-Version: *(\\d+(\\.\\d+(\\.\\d+(\\.[-_a-zA-Z0-9]+)?)?)?)";
+        }
+        else
+        {
+          file = project.getFile(FEATURE_PATH);
+          regex = "feature.*?version\\s*=\\s*[\"'](\\d+(\\.\\d+(\\.\\d+(\\.[-_a-zA-Z0-9]+)?)?)?)";
+        }
+
+        if (file.exists())
+        {
+          try
+          {
+            String content = Markers.getContent(file);
+            Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
+            Matcher matcher = pattern.matcher(content);
+            if (matcher.find())
+            {
+              String version = matcher.group(1);
+              if (matcher.groupCount() < 4 || !".qualifier".equals(matcher.group(4)))
+              {
+                Version expectedVersion = new Version(version);
+                addMalformedVersionMarker(file, regex,
+                    new Version(expectedVersion.getMajor(), expectedVersion.getMinor(), expectedVersion.getMicro(),
+                        "qualifier"));
+              }
+            }
+          }
+          catch (Exception ex)
+          {
+            Activator.log(ex);
+          }
+        }
+      }
+    }
+  }
+
   private void checkDependencyRanges(IPluginModelBase pluginModel) throws CoreException, IOException
   {
     BundleDescription description = pluginModel.getBundleDescription();
@@ -720,6 +777,22 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
       String message = "'" + name + "' export has wrong version information";
       String regex = name.replaceAll("\\.", "\\\\.") + ";version=\"([0123456789\\.]*)\"";
       Markers.addMarker(file, message, IMarker.SEVERITY_ERROR, regex);
+    }
+    catch (Exception ex)
+    {
+      Activator.log(ex);
+    }
+  }
+
+  private void addMalformedVersionMarker(IFile file, String regex, Version version)
+  {
+    try
+    {
+      String versionString = version.toString();
+      IMarker marker = Markers.addMarker(file, "The version should be of the form '" + versionString + "'",
+          IMarker.SEVERITY_ERROR, regex);
+      marker.setAttribute(Markers.QUICK_FIX_PATTERN, regex);
+      marker.setAttribute(Markers.QUICK_FIX_REPLACEMENT, versionString);
     }
     catch (Exception ex)
     {

@@ -153,12 +153,16 @@ public class ReleaseManager
     return release;
   }
 
-  public Element createElement(IModel componentModel, boolean withFeatureContent) throws CoreException
+  public Element createElement(IModel componentModel, boolean withFeatureContent)
   {
     if (componentModel instanceof IPluginModelBase)
     {
       IPluginModelBase pluginModel = (IPluginModelBase)componentModel;
       BundleDescription description = pluginModel.getBundleDescription();
+      if (description == null)
+      {
+        throw new IllegalStateException("No bundle description for " + pluginModel.getInstallLocation());
+      }
 
       String name = description.getSymbolicName();
       Version version = description.getVersion();

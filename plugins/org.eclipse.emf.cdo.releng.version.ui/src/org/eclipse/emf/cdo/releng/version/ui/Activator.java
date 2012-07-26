@@ -12,16 +12,21 @@ package org.eclipse.emf.cdo.releng.version.ui;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.osgi.framework.BundleContext;
 
 /**
  * @author Eike Stepper
  */
-public class Activator extends Plugin
+public class Activator extends AbstractUIPlugin
 {
+  public static final String ICONS_CORRECTION_DELETE_GIF = "icons/correction_delete.gif";
+
+  public static final String ICONS_CORRECTION_CHANGE_GIF = "icons/correction_change.gif";
+
   public static final String PLUGIN_ID = "org.eclipse.emf.cdo.releng.version.ui";
 
   private static Activator plugin;
@@ -30,11 +35,25 @@ public class Activator extends Plugin
   {
   }
 
+  public static Activator getPlugin()
+  {
+    return plugin;
+  }
+
   @Override
   public void start(BundleContext context) throws Exception
   {
     super.start(context);
     plugin = this;
+
+    registerImage(ICONS_CORRECTION_CHANGE_GIF);
+    registerImage(ICONS_CORRECTION_DELETE_GIF);
+  }
+
+  private void registerImage(String key)
+  {
+    Image image = imageDescriptorFromPlugin(PLUGIN_ID, key).createImage();
+    getImageRegistry().put(key, image);
   }
 
   @Override

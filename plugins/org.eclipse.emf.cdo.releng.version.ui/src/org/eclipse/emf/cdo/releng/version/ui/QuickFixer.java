@@ -14,27 +14,75 @@ import org.eclipse.emf.cdo.releng.version.Markers;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IMarkerResolution;
-import org.eclipse.ui.IMarkerResolution2;
 import org.eclipse.ui.IMarkerResolutionGenerator2;
+import org.eclipse.ui.views.markers.WorkbenchMarkerResolution;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.CharArrayWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * @author Eike Stepper
  */
-public class Quickfixer /* extends WorkbenchMarkerResolution */implements IMarkerResolutionGenerator2
+public class QuickFixer implements IMarkerResolutionGenerator2
 {
-  private static final IMarkerResolution MARKER_RESOLUTION = new IMarkerResolution2()
+  private static final IMarkerResolution[] NO_MARKER_RESOLUTIONS = {};
+
+  public QuickFixer()
   {
+  }
+
+  public IMarkerResolution[] getResolutions(IMarker marker)
+  {
+    if (hasResolutions(marker))
+    {
+      IMarkerResolution[] markers = { new VersionMarkerResolution(marker) };
+      return markers;
+    }
+
+    return NO_MARKER_RESOLUTIONS;
+  }
+
+  public boolean hasResolutions(IMarker marker)
+  {
+    return Markers.hasQuickFixes(marker);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class VersionMarkerResolution extends WorkbenchMarkerResolution
+  {
+    private IMarker marker;
+
+    public VersionMarkerResolution(IMarker marker)
+    {
+      this.marker = marker;
+    }
+
+    public String getLabel()
+    {
+      return "Foo";
+    }
+
+    public String getDescription()
+    {
+      return "Foo Foo Foo";
+    }
+
+    public Image getImage()
+    {
+      return null;
+    }
+
     public void run(IMarker marker)
     {
       try
@@ -45,8 +93,7 @@ public class Quickfixer /* extends WorkbenchMarkerResolution */implements IMarke
         {
           IFile file = (IFile)marker.getResource();
           InputStream contents = file.getContents();
-          String charset = file.getCharset();
-          BufferedReader reader = new BufferedReader(new InputStreamReader(contents, charset));
+          BufferedReader reader = new BufferedReader(new InputStreamReader(contents, file.getCharset()));
           CharArrayWriter caw = new CharArrayWriter();
 
           int c;
@@ -74,7 +121,7 @@ public class Quickfixer /* extends WorkbenchMarkerResolution */implements IMarke
               replacement = "";
             }
 
-            file.setContents(new ByteArrayInputStream((before + replacement + after).getBytes(charset)), true, true,
+            file.setContents(new ByteArrayInputStream((before + replacement + after).getBytes(file.getCharset())), true, true,
                 null);
           }
         }
@@ -85,41 +132,19 @@ public class Quickfixer /* extends WorkbenchMarkerResolution */implements IMarke
       }
     }
 
-    public String getLabel()
+    @Override
+    public IMarker[] findOtherMarkers(IMarker[] markers)
     {
-      return "Foo";
-    }
+      List<IMarker> result = new ArrayList<IMarker>();
+      for (IMarker marker : markers)
+      {
+        if (marker != this.marker && Markers.hasQuickFixes(marker))
+        {
+          result.add(marker);
+        }
+      }
 
-    public Image getImage()
-    {
-      return null;
-    }
-
-    public String getDescription()
-    {
-      return "Foo Foo Foo";
-    }
-  };
-
-  private static final IMarkerResolution[] MARKER_RESOLUTIONS = new IMarkerResolution[] { MARKER_RESOLUTION };
-
-  private static final IMarkerResolution[] NO_MARKER_RESOLUTIONS = new IMarkerResolution[0];
-
-  public IMarkerResolution[] getResolutions(IMarker marker)
-  {
-    return hasResolutions(marker) ? MARKER_RESOLUTIONS : NO_MARKER_RESOLUTIONS;
-  }
-
-  public boolean hasResolutions(IMarker marker)
-  {
-    try
-    {
-      return marker.getAttribute(Markers.QUICK_FIX_PATTERN) != null;
-    }
-    catch (CoreException ex)
-    {
-      Activator.log(ex);
-      return false;
+      return result.toArray(new IMarker[result.size()]);
     }
   }
 }

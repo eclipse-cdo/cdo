@@ -32,12 +32,25 @@ public final class Markers
 
   public static final String QUICK_FIX_PATTERN = "quickFixPattern";
 
-  public static final String QUICK_FIX_REPLACEMENT = "quickReplacement"; 
+  public static final String QUICK_FIX_REPLACEMENT = "quickReplacement";
 
   private static final Pattern NL_PATTERN = Pattern.compile("([\\n][\\r]?|[\\r][\\n]?)", Pattern.MULTILINE);
 
   private Markers()
   {
+  }
+
+  public static boolean hasQuickFixes(IMarker marker)
+  {
+    try
+    {
+      return marker.getAttribute(QUICK_FIX_PATTERN) != null;
+    }
+    catch (CoreException ex)
+    {
+      Activator.log(ex);
+      return false;
+    }
   }
 
   public static IMarker addMarker(IResource resource, String message) throws CoreException
@@ -93,7 +106,7 @@ public final class Markers
     try
     {
       contents = file.getContents();
-      BufferedReader reader = new BufferedReader(new InputStreamReader(contents));
+      BufferedReader reader = new BufferedReader(new InputStreamReader(contents, file.getCharset()));
       CharArrayWriter caw = new CharArrayWriter();
 
       int c;

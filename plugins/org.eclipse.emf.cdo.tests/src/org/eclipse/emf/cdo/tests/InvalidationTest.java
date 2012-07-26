@@ -26,9 +26,11 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
@@ -40,6 +42,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -48,6 +54,81 @@ import java.util.concurrent.TimeUnit;
  */
 public class InvalidationTest extends AbstractCDOTest
 {
+  public void testIvalidationMemoryLeak() throws Exception
+  {
+    final CDOSession session = openSession();
+
+    /**
+     * @author Eike Stepper
+     */
+    class MyTransTest implements Runnable
+    {
+      private int nr;
+
+      public MyTransTest(int nr)
+      {
+        this.nr = nr;
+      }
+
+      public void run()
+      {
+        for (int i = 0; i < 10; i++)
+        {
+          Category category = getModel1Factory().createCategory();
+          category.setName("Category " + System.currentTimeMillis());
+
+          CDOTransaction transaction = session.openTransaction();
+
+          try
+          {
+            CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1_" + nr));
+            resource.getContents().add(category);
+            transaction.commit();
+          }
+          catch (Exception ex)
+          {
+            ex.printStackTrace();
+          }
+          finally
+          {
+            transaction.close();
+          }
+        }
+      }
+    }
+
+    List<Thread> threads = new ArrayList<Thread>();
+    for (int i = 0; i < 20; i++)
+    {
+      threads.add(new Thread(new MyTransTest(i + 1)));
+    }
+
+    for (Thread thread : threads)
+    {
+      thread.start();
+    }
+
+    for (Thread thread : threads)
+    {
+      thread.join();
+    }
+
+    // session.refresh();
+    // sleep(2000);
+
+    new MyTransTest(0).run();
+
+    sleep(60000);
+
+    // session.refresh();
+
+    Field field = ReflectUtil.getField(CDOSessionImpl.class, "outOfSequenceInvalidations");
+    Map<?, ?> outOfSequenceInvalidations = (Map<?, ?>)ReflectUtil.getValue(field, session);
+
+    int size = outOfSequenceInvalidations.size();
+    assertEquals(0, size);
+  }
+
   public void testSeparateView() throws Exception
   {
     final CDOSession session = openSession();

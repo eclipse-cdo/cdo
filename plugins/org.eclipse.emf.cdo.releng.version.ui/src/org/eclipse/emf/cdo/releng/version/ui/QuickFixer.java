@@ -12,18 +12,19 @@ package org.eclipse.emf.cdo.releng.version.ui;
 
 import org.eclipse.emf.cdo.releng.version.Markers;
 
+import org.eclipse.core.filebuffers.ITextFileBuffer;
+import org.eclipse.core.filebuffers.ITextFileBufferManager;
+import org.eclipse.core.filebuffers.LocationKind;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.IMarkerResolutionGenerator2;
 import org.eclipse.ui.views.markers.WorkbenchMarkerResolution;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.CharArrayWriter;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -92,37 +93,56 @@ public class QuickFixer implements IMarkerResolutionGenerator2
         if (regEx != null)
         {
           IFile file = (IFile)marker.getResource();
-          InputStream contents = file.getContents();
-          BufferedReader reader = new BufferedReader(new InputStreamReader(contents, file.getCharset()));
-          CharArrayWriter caw = new CharArrayWriter();
 
-          int c;
-          while ((c = reader.read()) != -1)
-          {
-            caw.write(c);
-          }
+          IPath fullPath = file.getFullPath();
+          ITextFileBufferManager.DEFAULT.connect(fullPath, LocationKind.IFILE, new NullProgressMonitor());
+          ITextFileBuffer buffer = ITextFileBufferManager.DEFAULT.getTextFileBuffer(fullPath, LocationKind.IFILE);
+          boolean wasDirty = buffer.isDirty();
 
-          String string = caw.toString();
+          IDocument document = buffer.getDocument();
+          String content = document.get();
+
+          // InputStream contents = file.getContents();
+          // BufferedReader reader = new BufferedReader(new InputStreamReader(contents, file.getCharset()));
+          // CharArrayWriter caw = new CharArrayWriter();
+          //
+          // int c;
+          // while ((c = reader.read()) != -1)
+          // {
+          // caw.write(c);
+          // }
+          //
+          // String content = caw.toString();
+
           Pattern pattern = Pattern.compile(regEx, Pattern.MULTILINE | Pattern.DOTALL);
-          Matcher matcher = pattern.matcher(string);
+          Matcher matcher = pattern.matcher(content);
           if (matcher.find())
           {
-            String before;
-            String after;
+            int start;
+            int end;
             if (replacement != null)
             {
-              before = string.substring(0, matcher.start(1));
-              after = string.substring(matcher.end(1));
+              start = matcher.start(1);
+              end = matcher.end(1);
             }
             else
             {
-              before = string.substring(0, matcher.start());
-              after = string.substring(matcher.end());
+              start = matcher.start();
+              end = matcher.end();
               replacement = "";
             }
 
-            file.setContents(new ByteArrayInputStream((before + replacement + after).getBytes(file.getCharset())), true, true,
-                null);
+            document.replace(start, end - start, replacement);
+
+            // file.setContents(new ByteArrayInputStream((before + replacement + after).getBytes(file.getCharset())),
+            // true, true, null);
+
+            if (!wasDirty && !buffer.isShared())
+            {
+              buffer.commit(new NullProgressMonitor(), true);
+            }
+
+            ITextFileBufferManager.DEFAULT.disconnect(fullPath, LocationKind.IFILE, new NullProgressMonitor());
           }
         }
       }

@@ -161,6 +161,19 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
         checkMalformedVersions(componentModel);
       }
 
+      if (componentModel instanceof IPluginModelBase)
+      {
+        if (!arguments.isIgnoreMissingDependencyRanges())
+        {
+          checkDependencyRanges((IPluginModelBase)componentModel);
+        }
+
+        if (!arguments.isIgnoreMissingExportVersions())
+        {
+          checkPackageExports((IPluginModelBase)componentModel);
+        }
+      }
+
       /*
        * Determine release data to validate against
        */
@@ -274,7 +287,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
           }
         }
 
-        if (componentModel instanceof IPluginModelBase)
+        if (element.getType() == Element.Type.PLUGIN)
         {
           return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
         }
@@ -286,19 +299,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
         return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
       }
 
-      if (componentModel instanceof IPluginModelBase)
-      {
-        if (!arguments.isIgnoreMissingDependencyRanges())
-        {
-          checkDependencyRanges((IPluginModelBase)componentModel);
-        }
-
-        if (!arguments.isIgnoreMissingExportVersions())
-        {
-          checkPackageExports((IPluginModelBase)componentModel);
-        }
-      }
-      else
+      if (element.getType() == Element.Type.FEATURE)
       {
         if (!arguments.isIgnoreFeatureContentRedundancy())
         {
@@ -440,7 +441,10 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 
     deviations = false;
     integration = true;
-    String contents = INTEGRATION_PROPERTY_KEY + " = " + integration;
+
+    String nl = System.getProperty("line.separator");
+    String contents = INTEGRATION_PROPERTY_KEY + " = " + integration + nl + DEVIATIONS_PROPERTY_KEY + " = "
+        + deviations + nl;
 
     String charsetName = propertiesFile.getCharset();
     byte[] bytes = contents.getBytes(charsetName);
@@ -796,7 +800,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
         if (packageVersion != null && !packageVersion.equals(Version.emptyVersion)
             && !packageVersion.equals(bundleVersion))
         {
-          addExportMarker(packageName);
+          addExportMarker(packageName, bundleVersion);
         }
       }
     }
@@ -856,14 +860,19 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     }
   }
 
-  private void addExportMarker(String name)
+  private void addExportMarker(String name, Version bundleVersion)
   {
+    String versionString = bundleVersion.toString();
+
     try
     {
       IFile file = getProject().getFile(MANIFEST_PATH);
-      String message = "'" + name + "' export has wrong version information";
+      String message = "Export of package '" + name + "' should have the version " + versionString;
       String regex = name.replaceAll("\\.", "\\\\.") + ";version=\"([0123456789\\.]*)\"";
-      Markers.addMarker(file, message, IMarker.SEVERITY_ERROR, regex);
+
+      IMarker marker = Markers.addMarker(file, message, IMarker.SEVERITY_ERROR, regex);
+      marker.setAttribute(Markers.QUICK_FIX_PATTERN, regex);
+      marker.setAttribute(Markers.QUICK_FIX_REPLACEMENT, versionString);
     }
     catch (Exception ex)
     {

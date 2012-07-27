@@ -11,10 +11,14 @@
 package org.eclipse.emf.cdo.releng.version;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 
 import org.osgi.framework.Version;
 
+import java.io.Closeable;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +31,29 @@ import java.security.NoSuchAlgorithmException;
 public class VersionUtil
 {
   private static final byte[] BUFFER = new byte[8192];
+
+  public static void close(Closeable closeable)
+  {
+    if (closeable != null)
+    {
+      try
+      {
+        closeable.close();
+      }
+      catch (Exception ex)
+      {
+        Activator.log(ex);
+      }
+    }
+  }
+
+  public static IFile getFile(IPath releasePath, String extension)
+  {
+    IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+    IFile file = root.getFile(releasePath);
+    IPath path = file.getFullPath().removeFileExtension().addFileExtension(extension);
+    return root.getFile(path);
+  }
 
   public static Version normalize(Version version)
   {

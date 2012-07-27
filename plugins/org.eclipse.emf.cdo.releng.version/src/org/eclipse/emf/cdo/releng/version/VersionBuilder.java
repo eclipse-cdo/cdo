@@ -18,7 +18,9 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.BundleSpecification;
@@ -31,13 +33,16 @@ import org.eclipse.pde.core.plugin.PluginRegistry;
 
 import org.osgi.framework.Version;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -56,6 +61,10 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 
   private static final Path FEATURE_PATH = new Path("feature.xml");
 
+  private static final String INTEGRATION_PROPERTY_KEY = "baseline.for.integration";
+
+  private static final String DEVIATIONS_PROPERTY_KEY = "show.deviations";
+
   private static final Version ADDITION = new Version(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
 
   private static final Version REMOVAL = new Version(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
@@ -69,6 +78,10 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
   private static final int MAJOR_CHANGE = 3;
 
   private Release release;
+
+  private Boolean integration;
+
+  private Boolean deviations;
 
   private Map<Element, Element> elementCache = new HashMap<Element, Element>();
 
@@ -110,6 +123,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
 
     try
     {
+      Activator.clearBuildState(project);
       Markers.deleteAllMarkers(project);
     }
     finally
@@ -124,14 +138,15 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
   {
     @SuppressWarnings("unchecked")
     VersionBuilderArguments arguments = new VersionBuilderArguments(args);
+    List<IProject> buildDpependencies = new ArrayList<IProject>();
+    VersionValidator validator = null;
 
     IProject project = getProject();
-    List<IProject> buildDpependencies = new ArrayList<IProject>();
+    IFile projectDescription = project.getFile(new Path(".project"));
 
     BuildState buildState = Activator.getBuildState(project);
     byte[] releaseSpecDigest = buildState.getReleaseSpecDigest();
     boolean fullBuild = releaseSpecDigest == null;
-    VersionValidator validator = null;
 
     monitor.beginTask("", 1);
     monitor.subTask("Checking version validity of " + project.getName());
@@ -141,23 +156,28 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
       Markers.deleteAllMarkers(project);
 
       IModel componentModel = getComponentModel(project);
-      IFile projectDescription = project.getFile(new Path(".project"));
+      if (!arguments.isIgnoreMalformedVersionsButton())
+      {
+        checkMalformedVersions(componentModel);
+      }
 
       /*
        * Determine release data to validate against
        */
 
-      String releasePath = arguments.getReleasePath();
-      if (releasePath == null)
+      String releasePathArg = arguments.getReleasePath();
+      if (releasePathArg == null)
       {
         String msg = "Path to release spec file is not configured";
         Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, "(" + BUILDER_ID + ")");
         return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
       }
 
+      IPath releasePath = new Path(releasePathArg);
+
       try
       {
-        IFile releaseSpecFile = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(releasePath));
+        IFile releaseSpecFile = ResourcesPlugin.getWorkspace().getRoot().getFile(releasePath);
         buildDpependencies.add(releaseSpecFile.getProject());
 
         Release release;
@@ -183,7 +203,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
       {
         Activator.log(ex);
         String msg = "Problem with release spec: " + releasePath;
-        Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, "(" + releasePath.replace(".", "\\.") + ")");
+        Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR,
+            "(" + releasePath.toString().replace(".", "\\.") + ")");
         return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
       }
 
@@ -213,9 +234,23 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
         return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
       }
 
-      if (!arguments.isIgnoreMalformedVersionsButton())
+      IFile propertiesFile = VersionUtil.getFile(releasePath, "properties");
+      long propertiesTimeStamp = propertiesFile.getLocalTimeStamp();
+      if (buildState.getPropertiesTimeStamp() != propertiesTimeStamp)
       {
-        checkMalformedVersions(componentModel);
+        if (initReleaseProperties(propertiesFile))
+        {
+          fullBuild = true;
+        }
+
+        buildState.setDeviations(deviations);
+        buildState.setIntegration(integration);
+        buildState.setPropertiesTimeStamp(propertiesTimeStamp);
+      }
+      else
+      {
+        deviations = buildState.isDeviations();
+        integration = buildState.isIntegration();
       }
 
       Version elementVersion = element.getVersion();
@@ -223,6 +258,11 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
       Version nextImplementationVersion = getNextImplVersion(releaseVersion);
 
       int comparison = releaseVersion.compareTo(elementVersion);
+      if (comparison != 0 && deviations)
+      {
+        addDeviationMarker(element, releaseVersion);
+      }
+
       if (comparison < 0)
       {
         if (!nextImplementationVersion.equals(elementVersion))
@@ -271,7 +311,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
           int change = checkFeatureContentChanges(componentModel, element, releaseElement, warnings);
           if (change != NO_CHANGE)
           {
-            Version nextFeatureVersion = getNextFeatureVersion(releaseVersion, change);
+            Version nextFeatureVersion = getNextFeatureVersion(releaseVersion, nextImplementationVersion, change);
             if (elementVersion.compareTo(nextFeatureVersion) < 0)
             {
               addVersionMarker("Version must be increased to " + nextFeatureVersion
@@ -331,7 +371,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
         delta = getDelta(project);
       }
 
-      validator.updateBuildState(buildState, releasePath, release, project, delta, componentModel, monitor);
+      validator.updateBuildState(buildState, release, project, delta, componentModel, monitor);
 
       if (buildState.isChangedSinceRelease())
       {
@@ -358,6 +398,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     }
     finally
     {
+      deviations = null;
+      integration = null;
       release = null;
       elementCache.clear();
       monitor.done();
@@ -366,13 +408,55 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
   }
 
+  private boolean initReleaseProperties(IFile propertiesFile) throws CoreException, IOException
+  {
+    if (propertiesFile.exists())
+    {
+      InputStream contents = null;
+
+      try
+      {
+        contents = propertiesFile.getContents();
+
+        Properties properties = new Properties();
+        properties.load(contents);
+
+        deviations = Boolean.valueOf(properties.getProperty(DEVIATIONS_PROPERTY_KEY, "false"));
+
+        Boolean newValue = Boolean.valueOf(properties.getProperty(INTEGRATION_PROPERTY_KEY, "true"));
+        if (!newValue.equals(integration))
+        {
+          integration = newValue;
+          return true;
+        }
+
+        return false;
+      }
+      finally
+      {
+        VersionUtil.close(contents);
+      }
+    }
+
+    deviations = false;
+    integration = true;
+    String contents = INTEGRATION_PROPERTY_KEY + " = " + integration;
+
+    String charsetName = propertiesFile.getCharset();
+    byte[] bytes = contents.getBytes(charsetName);
+
+    ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+    propertiesFile.create(bais, true, new NullProgressMonitor());
+    return true;
+  }
+
   private Version getNextImplVersion(Version releaseVersion)
   {
     return new Version(releaseVersion.getMajor(), releaseVersion.getMinor(), releaseVersion.getMicro()
-        + (release.isIntegration() ? 100 : 1));
+        + (integration ? 100 : 1));
   }
 
-  private Version getNextFeatureVersion(Version releaseVersion, int change)
+  private Version getNextFeatureVersion(Version releaseVersion, Version nextImplementationVersion, int change)
   {
     Version nextFeatureVersion = null;
     if (change == MAJOR_CHANGE)
@@ -385,7 +469,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     }
     else if (change == MICRO_CHANGE)
     {
-      nextFeatureVersion = getNextImplVersion(releaseVersion);
+      nextFeatureVersion = nextImplementationVersion;
     }
 
     return nextFeatureVersion;
@@ -803,7 +887,29 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     }
   }
 
+  private void addDeviationMarker(Element element, Version releasedVersion)
+  {
+    String type;
+    if (element.getType() == Element.Type.PLUGIN)
+    {
+      type = "Plug-in";
+    }
+    else
+    {
+      type = "Feature";
+    }
+
+    Version version = element.getVersion();
+    String message = type + " '" + element.getName() + "' has been changed from " + releasedVersion + " to " + version;
+    addVersionMarker(message, version, IMarker.SEVERITY_INFO);
+  }
+
   private void addVersionMarker(String message, Version version)
+  {
+    addVersionMarker(message, version, IMarker.SEVERITY_ERROR);
+  }
+
+  private void addVersionMarker(String message, Version version, int severity)
   {
     try
     {
@@ -819,9 +925,12 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
         regex = "Bundle-Version: *(\\d+(\\.\\d+(\\.\\d+)?)?)";
       }
 
-      IMarker marker = Markers.addMarker(file, message, IMarker.SEVERITY_ERROR, regex);
-      marker.setAttribute(Markers.QUICK_FIX_PATTERN, regex);
-      marker.setAttribute(Markers.QUICK_FIX_REPLACEMENT, version.toString());
+      IMarker marker = Markers.addMarker(file, message, severity, regex);
+      if (severity != IMarker.SEVERITY_INFO)
+      {
+        marker.setAttribute(Markers.QUICK_FIX_PATTERN, regex);
+        marker.setAttribute(Markers.QUICK_FIX_REPLACEMENT, version.toString());
+      }
     }
     catch (Exception ex)
     {

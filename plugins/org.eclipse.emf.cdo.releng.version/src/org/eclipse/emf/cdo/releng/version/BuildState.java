@@ -21,6 +21,12 @@ public class BuildState implements Serializable
 
   private byte[] releaseSpecDigest;
 
+  private long propertiesTimeStamp;
+
+  private boolean deviations;
+
+  private boolean integration;
+
   private boolean changedSinceRelease;
 
   private long validatorTimeStamp;
@@ -39,6 +45,36 @@ public class BuildState implements Serializable
   public void setReleaseSpecDigest(byte[] releaseSpecDigest)
   {
     this.releaseSpecDigest = releaseSpecDigest;
+  }
+
+  public long getPropertiesTimeStamp()
+  {
+    return propertiesTimeStamp;
+  }
+
+  public void setPropertiesTimeStamp(long propertiesTimeStamp)
+  {
+    this.propertiesTimeStamp = propertiesTimeStamp;
+  }
+
+  public boolean isDeviations()
+  {
+    return deviations;
+  }
+
+  public void setDeviations(boolean deviations)
+  {
+    this.deviations = deviations;
+  }
+
+  public boolean isIntegration()
+  {
+    return integration;
+  }
+
+  public void setIntegration(boolean integration)
+  {
+    this.integration = integration;
   }
 
   public long getValidatorTimeStamp()

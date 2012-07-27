@@ -45,8 +45,6 @@ public class Release implements ElementResolver
 
   public static final String PLUGIN_TAG = "plugin";
 
-  public static final String INTEGRATION_ATTRIBUTE = "integration";
-
   public static final String NAME_ATTRIBUTE = "name";
 
   public static final String VERSION_ATTRIBUTE = "version";
@@ -57,14 +55,11 @@ public class Release implements ElementResolver
 
   private byte[] digest;
 
-  private boolean integration;
-
   private Map<Element, Element> elements = new HashMap<Element, Element>();
 
   public Release(IFile file)
   {
     this.file = file;
-    integration = true;
   }
 
   Release(SAXParser parser, IFile file) throws CoreException, IOException, SAXException, NoSuchAlgorithmException
@@ -88,17 +83,7 @@ public class Release implements ElementResolver
     }
     finally
     {
-      if (contents != null)
-      {
-        try
-        {
-          contents.close();
-        }
-        catch (Exception ex)
-        {
-          Activator.log(ex);
-        }
-      }
+      VersionUtil.close(contents);
     }
   }
 
@@ -110,11 +95,6 @@ public class Release implements ElementResolver
   public byte[] getDigest()
   {
     return digest;
-  }
-
-  public boolean isIntegration()
-  {
-    return integration;
   }
 
   public Map<Element, Element> getElements()
@@ -154,7 +134,7 @@ public class Release implements ElementResolver
   private void writeRelease(StringBuilder builder)
   {
     builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-    builder.append("<" + RELEASE_TAG + " " + INTEGRATION_ATTRIBUTE + "=\"" + integration + "\">\n");
+    builder.append("<" + RELEASE_TAG + ">\n");
 
     List<Element> list = new ArrayList<Element>(elements.keySet());
     Collections.sort(list, new Comparator<Element>()
@@ -245,7 +225,6 @@ public class Release implements ElementResolver
     {
       if (RELEASE_TAG.equalsIgnoreCase(qName))
       {
-        integration = getBoolean(attributes, INTEGRATION_ATTRIBUTE);
         ++level;
       }
       else if (FEATURE_TAG.equalsIgnoreCase(qName))
@@ -309,22 +288,6 @@ public class Release implements ElementResolver
       if (value != null)
       {
         return value;
-      }
-
-      throw new SAXException("Illegal value for " + name);
-    }
-
-    private boolean getBoolean(Attributes attributes, String name) throws SAXException
-    {
-      String value = attributes.getValue(name);
-      if ("false".equalsIgnoreCase(value))
-      {
-        return false;
-      }
-
-      if ("true".equalsIgnoreCase(value))
-      {
-        return true;
       }
 
       throw new SAXException("Illegal value for " + name);

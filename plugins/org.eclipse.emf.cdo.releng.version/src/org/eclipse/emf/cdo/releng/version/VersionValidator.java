@@ -30,6 +30,6 @@ public abstract class VersionValidator
     buildState.setValidatorState(null);
   }
 
-  public abstract void updateBuildState(BuildState buildState, String releasePath, Release release, IProject project,
-      IResourceDelta delta, IModel componentModel, IProgressMonitor monitor) throws Exception;
+  public abstract void updateBuildState(BuildState buildState, Release release, IProject project, IResourceDelta delta,
+      IModel componentModel, IProgressMonitor monitor) throws Exception;
 }

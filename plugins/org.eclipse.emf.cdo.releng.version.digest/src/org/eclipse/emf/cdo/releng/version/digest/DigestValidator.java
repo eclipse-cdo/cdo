@@ -23,13 +23,10 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.pde.core.IModel;
 import org.eclipse.pde.core.build.IBuild;
@@ -67,10 +64,11 @@ public class DigestValidator extends VersionValidator
   }
 
   @Override
-  public void updateBuildState(BuildState buildState, String releasePath, Release release, IProject project,
-      IResourceDelta delta, IModel componentModel, IProgressMonitor monitor) throws Exception
+  public void updateBuildState(BuildState buildState, Release release, IProject project, IResourceDelta delta,
+      IModel componentModel, IProgressMonitor monitor) throws Exception
   {
     DigestValidatorState validatorState = (DigestValidatorState)buildState.getValidatorState();
+    IPath releasePath = release.getFile().getFullPath();
     ReleaseDigest releaseDigest = getReleaseDigest(releasePath, release, monitor);
 
     // Check whether the release digest to use is still the one that has been used the for the last build.
@@ -268,10 +266,10 @@ public class DigestValidator extends VersionValidator
   {
   }
 
-  private ReleaseDigest getReleaseDigest(String releasePath, Release release, IProgressMonitor monitor)
+  private ReleaseDigest getReleaseDigest(IPath releasePath, Release release, IProgressMonitor monitor)
       throws IOException, CoreException, ClassNotFoundException
   {
-    IFile file = getDigestFile(new Path(releasePath));
+    IFile file = getDigestFile(releasePath);
     long localTimeStamp = file.getLocalTimeStamp();
 
     ReleaseDigest releaseDigest = RELEASE_DIGESTS.get(release);
@@ -499,10 +497,7 @@ public class DigestValidator extends VersionValidator
 
   public static IFile getDigestFile(IPath releasePath)
   {
-    IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-    IFile file = root.getFile(releasePath);
-    IPath digestPath = file.getFullPath().removeFileExtension().addFileExtension("digest");
-    return root.getFile(digestPath);
+    return VersionUtil.getFile(releasePath, "digest");
   }
 
   /**

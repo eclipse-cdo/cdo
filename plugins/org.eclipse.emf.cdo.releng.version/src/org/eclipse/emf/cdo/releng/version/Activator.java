@@ -170,6 +170,12 @@ public class Activator extends Plugin
     return buildState;
   }
 
+  public static void clearBuildState(IProject project)
+  {
+    String name = project.getName();
+    plugin.buildStates.remove(name);
+  }
+
   public static void log(String message)
   {
     plugin.getLog().log(new Status(IStatus.INFO, PLUGIN_ID, message));

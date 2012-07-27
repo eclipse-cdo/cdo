@@ -103,11 +103,13 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
   @Override
   protected void clean(IProgressMonitor monitor) throws CoreException
   {
-    monitor.beginTask(null, 1);
+    IProject project = getProject();
+
+    monitor.beginTask("", 1);
+    monitor.subTask("Cleaning version validity problems of " + project.getName());
 
     try
     {
-      IProject project = getProject();
       Markers.deleteAllMarkers(project);
     }
     finally
@@ -131,7 +133,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements Element
     boolean fullBuild = releaseSpecDigest == null;
     VersionValidator validator = null;
 
-    monitor.beginTask(null, 1);
+    monitor.beginTask("", 1);
+    monitor.subTask("Checking version validity of " + project.getName());
 
     try
     {

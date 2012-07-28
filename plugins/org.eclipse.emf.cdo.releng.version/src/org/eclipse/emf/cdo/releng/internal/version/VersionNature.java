@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.internal.version;
 
+import org.eclipse.emf.cdo.releng.version.Markers;
 import org.eclipse.emf.cdo.releng.version.VersionUtil;
 
 import org.eclipse.core.resources.ICommand;

@@ -16,5 +16,8 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.ui;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.ui.ide;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.cdo.releng.version;bundle-version="[2.0.0,3.0.0)";visibility:=reexport
-Export-Package: org.eclipse.emf.cdo.releng.version.ui;version="2.0.0";x-internal:=true
+Export-Package: org.eclipse.emf.cdo.releng.version.ui;version="2.0.0";x-internal:=true,
+ org.eclipse.emf.cdo.releng.version.ui.actions;version="2.0.0";x-internal:=true,
+ org.eclipse.emf.cdo.releng.version.ui.dialogs;version="2.0.0";x-internal:=true,
+ org.eclipse.emf.cdo.releng.version.ui.quickfixes;version="2.0.0";x-internal:=true
 Eclipse-BuddyPolicy: dependent

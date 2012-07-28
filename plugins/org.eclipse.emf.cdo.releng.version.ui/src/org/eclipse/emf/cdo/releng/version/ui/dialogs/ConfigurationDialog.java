@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.version.ui;
+package org.eclipse.emf.cdo.releng.version.ui.dialogs;
 
 import org.eclipse.emf.cdo.releng.internal.version.IVersionBuilderArguments;
 import org.eclipse.emf.cdo.releng.internal.version.VersionBuilderArguments;

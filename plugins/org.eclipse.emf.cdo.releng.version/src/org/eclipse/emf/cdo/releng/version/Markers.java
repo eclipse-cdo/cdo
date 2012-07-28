@@ -8,7 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.internal.version;
+package org.eclipse.emf.cdo.releng.version;
+
+import org.eclipse.emf.cdo.releng.internal.version.Activator;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;

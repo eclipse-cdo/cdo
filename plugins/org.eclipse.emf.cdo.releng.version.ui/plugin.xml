@@ -20,7 +20,7 @@
             id="org.eclipse.emf.cdo.releng.version.ui.contribution1"
             objectClass="org.eclipse.core.resources.IProject">
          <action
-               class="org.eclipse.emf.cdo.releng.version.ui.AddNatureAction"
+               class="org.eclipse.emf.cdo.releng.version.ui.actions.AddNatureAction"
                enablesFor="*"
                id="org.eclipse.emf.cdo.releng.AddNatureAction"
                label="Add Version Management"
@@ -43,7 +43,7 @@
             id="org.eclipse.emf.cdo.releng.version.ui.contribution2"
             objectClass="org.eclipse.core.resources.IProject">
          <action
-               class="org.eclipse.emf.cdo.releng.version.ui.ConfigureBuilderAction"
+               class="org.eclipse.emf.cdo.releng.version.ui.actions.ConfigureBuilderAction"
                enablesFor="*"
                id="org.eclipse.emf.cdo.releng.ConfigureBuilderAction"
                label="Configure Version Management"
@@ -64,7 +64,7 @@
             id="org.eclipse.emf.cdo.releng.version.ui.contribution3"
             objectClass="org.eclipse.core.resources.IProject">
          <action
-               class="org.eclipse.emf.cdo.releng.version.ui.RemoveNatureAction"
+               class="org.eclipse.emf.cdo.releng.version.ui.actions.RemoveNatureAction"
                enablesFor="*"
                id="org.eclipse.emf.cdo.releng.RemoveNatureAction"
                label="Remove Version Management"
@@ -85,7 +85,7 @@
    <extension
          point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator
-            class="org.eclipse.emf.cdo.releng.version.ui.QuickFixer"
+            class="org.eclipse.emf.cdo.releng.version.ui.quickfixes.VersionResolutionGenerator"
             markerType="org.eclipse.emf.cdo.releng.version.VersionProblem">
       </markerResolutionGenerator>
    </extension>

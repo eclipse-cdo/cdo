@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.releng.version.IElement;
 import org.eclipse.emf.cdo.releng.version.IElementResolver;
 import org.eclipse.emf.cdo.releng.version.IRelease;
 import org.eclipse.emf.cdo.releng.version.IReleaseManager;
+import org.eclipse.emf.cdo.releng.version.Markers;
 import org.eclipse.emf.cdo.releng.version.VersionUtil;
 import org.eclipse.emf.cdo.releng.version.VersionValidator;
 

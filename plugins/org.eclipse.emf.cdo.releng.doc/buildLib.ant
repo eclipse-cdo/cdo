@@ -7,6 +7,7 @@
 
 	<target name="delegate">
 		<ant antfile="plugins/org.eclipse.net4j.util.doc/build.xml" target="${delegate.target}" />
+		<ant antfile="plugins/org.eclipse.emf.cdo.releng.version.doc/build.xml" target="${delegate.target}" />
 		<ant antfile="plugins/org.eclipse.net4j.db.doc/build.xml" target="${delegate.target}" />
 		<ant antfile="plugins/org.eclipse.net4j.doc/build.xml" target="${delegate.target}" />
 		<ant antfile="plugins/org.eclipse.emf.cdo.doc/build.xml" target="${delegate.target}" />
@@ -20,6 +21,7 @@
 			<path path="plugins/org.eclipse.emf.cdo.doc/toc.html" />
 			<path path="plugins/org.eclipse.net4j.doc/toc.html" />
 			<path path="plugins/org.eclipse.net4j.db.doc/toc.html" />
+			<path path="plugins/org.eclipse.emf.cdo.releng.version.doc/toc.html" />
 			<path path="plugins/org.eclipse.net4j.util.doc/toc.html" />
 			<path path="plugins/org.eclipse.emf.cdo.releng.doc/help/tocFooter.html" />
 		</concat>

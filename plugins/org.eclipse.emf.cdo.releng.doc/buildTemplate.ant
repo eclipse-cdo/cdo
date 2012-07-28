@@ -3,7 +3,7 @@
 
 	<!-- GENERATION WARNING -->
 
-	<property file="${user.home}/org.eclipse.emf.cdo.releng.doc_4.1.properties" />
+	<property file="${user.home}/org.eclipse.emf.cdo.releng.doc_4.2.properties" />
 	<property name="path.tp" value=".target" />
 	<property name="path.supplemental" value="${user.home}/git/local/org.eclipse.emf.cdo.releng.doc.supplemental" />
 

@@ -81,7 +81,7 @@
          </visibility>
       </objectContribution>
    </extension>
-   
+
    <extension
          point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator
@@ -89,5 +89,22 @@
             markerType="org.eclipse.emf.cdo.releng.version.VersionProblem">
       </markerResolutionGenerator>
    </extension>
+
+	<!--
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="org.eclipse.emf.cdo.releng.version"
+            name="Extended Version Management">
+      </category>
+      <view
+            category="org.eclipse.emf.cdo.releng.version"
+            class="org.eclipse.emf.cdo.releng.version.ui.views.VersionsView"
+            icon="icons/sample.gif"
+            id="org.eclipse.emf.cdo.releng.version.VersionsView"
+            name="Versions">
+      </view>
+   </extension>
+	 -->
 
 </plugin>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<component id="org.eclipse.emf.cdo.dawn" version="2">
-    <resource path="src/org/eclipse/emf/cdo/dawn/resources/DawnPathmapManager.java" type="org.eclipse.emf.cdo.dawn.resources.DawnPathmapManager">
-        <filter comment="To be fixed later" id="576720909">
+<component id="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn" version="2">
+    <resource path="src/org/eclipse/emf/cdo/dawn/ecoretools/diagram/edit/policies/DawnECoreRootCanonicalEditPolicy.java" type="org.eclipse.emf.cdo.dawn.ecoretools.diagram.edit.policies.DawnECoreRootCanonicalEditPolicy">
+        <filter id="576720909">
             <message_arguments>
-                <message_argument value="PathmapManager"/>
-                <message_argument value="DawnPathmapManager"/>
+                <message_argument value="EPackageCanonicalEditPolicy"/>
+                <message_argument value="DawnECoreRootCanonicalEditPolicy"/>
             </message_arguments>
         </filter>
     </resource>

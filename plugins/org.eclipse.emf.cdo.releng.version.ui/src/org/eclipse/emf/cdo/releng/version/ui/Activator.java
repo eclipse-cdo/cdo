@@ -23,9 +23,11 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin
 {
-  public static final String ICONS_CORRECTION_DELETE_GIF = "icons/correction_delete.gif";
+  public static final String CORRECTION_DELETE_GIF = "icons/correction_delete.gif";
 
-  public static final String ICONS_CORRECTION_CHANGE_GIF = "icons/correction_change.gif";
+  public static final String CORRECTION_CHANGE_GIF = "icons/correction_change.gif";
+
+  public static final String CORRECTION_CONFIGURE_GIF = "icons/correction_configure.gif";
 
   public static final String PLUGIN_ID = "org.eclipse.emf.cdo.releng.version.ui";
 
@@ -46,8 +48,9 @@ public class Activator extends AbstractUIPlugin
     super.start(context);
     plugin = this;
 
-    registerImage(ICONS_CORRECTION_CHANGE_GIF);
-    registerImage(ICONS_CORRECTION_DELETE_GIF);
+    registerImage(CORRECTION_CHANGE_GIF);
+    registerImage(CORRECTION_DELETE_GIF);
+    registerImage(CORRECTION_CONFIGURE_GIF);
   }
 
   private void registerImage(String key)

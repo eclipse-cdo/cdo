@@ -11,13 +11,14 @@
 package org.eclipse.emf.cdo.releng.version.ui;
 
 import org.eclipse.emf.cdo.releng.version.Markers;
+import org.eclipse.emf.cdo.releng.version.VersionBuilderArguments;
 
 import org.eclipse.core.filebuffers.ITextFileBuffer;
 import org.eclipse.core.filebuffers.ITextFileBufferManager;
 import org.eclipse.core.filebuffers.LocationKind;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.resource.ImageRegistry;
@@ -37,57 +38,71 @@ import java.util.regex.Pattern;
  */
 public class QuickFixer implements IMarkerResolutionGenerator2
 {
-  private static final IMarkerResolution[] NO_MARKER_RESOLUTIONS = {};
-
   public QuickFixer()
   {
   }
 
   public IMarkerResolution[] getResolutions(IMarker marker)
   {
-    if (hasResolutions(marker))
+    List<IMarkerResolution> resolutions = new ArrayList<IMarkerResolution>();
+
+    String regEx = Markers.getQuickFixPattern(marker);
+    if (regEx != null)
     {
-      IMarkerResolution[] markers = { new VersionMarkerResolution(marker) };
-      return markers;
+      String replacement = Markers.getQuickFixReplacement(marker);
+      resolutions.add(new ReplaceResolution(marker, replacement));
     }
 
-    return NO_MARKER_RESOLUTIONS;
+    String ignoreOption = Markers.getQuickFixConfigureOption(marker);
+    if (ignoreOption != null)
+    {
+      resolutions.add(new ConfigureResolution(marker, ignoreOption));
+    }
+
+    return resolutions.toArray(new IMarkerResolution[resolutions.size()]);
   }
 
   public boolean hasResolutions(IMarker marker)
   {
-    return Markers.hasQuickFixes(marker);
+    if (Markers.getQuickFixPattern(marker) != null)
+    {
+      return true;
+    }
+
+    if (Markers.getQuickFixConfigureOption(marker) != null)
+    {
+      return true;
+    }
+
+    return false;
   }
 
   /**
    * @author Eike Stepper
    */
-  private static final class VersionMarkerResolution extends WorkbenchMarkerResolution
+  private abstract class AbstractResolution extends WorkbenchMarkerResolution
   {
     private IMarker marker;
 
-    public VersionMarkerResolution(IMarker marker)
+    private String label;
+
+    private String imageKey;
+
+    public AbstractResolution(IMarker marker, String label, String imageKey)
     {
       this.marker = marker;
+      this.label = label;
+      this.imageKey = imageKey;
+    }
+
+    public IMarker getMarker()
+    {
+      return marker;
     }
 
     public String getLabel()
     {
-      try
-      {
-        Object replacement = marker.getAttribute(Markers.QUICK_FIX_REPLACEMENT);
-        if (replacement != null)
-        {
-          return "Change version to " + replacement;
-        }
-
-        return "Remove reference";
-      }
-      catch (CoreException ex)
-      {
-        Activator.log(ex);
-        return "";
-      }
+      return label;
     }
 
     public String getDescription()
@@ -95,91 +110,10 @@ public class QuickFixer implements IMarkerResolutionGenerator2
       return "";
     }
 
-    public Image getImage()
+    public final Image getImage()
     {
-      try
-      {
-        ImageRegistry imageRegistry = Activator.getPlugin().getImageRegistry();
-        if (marker.getAttribute(Markers.QUICK_FIX_REPLACEMENT) != null)
-        {
-          return imageRegistry.get(Activator.ICONS_CORRECTION_CHANGE_GIF);
-        }
-
-        return imageRegistry.get(Activator.ICONS_CORRECTION_DELETE_GIF);
-      }
-      catch (CoreException ex)
-      {
-        Activator.log(ex);
-        return null;
-      }
-    }
-
-    public void run(IMarker marker)
-    {
-      try
-      {
-        String regEx = (String)marker.getAttribute(Markers.QUICK_FIX_PATTERN);
-        String replacement = (String)marker.getAttribute(Markers.QUICK_FIX_REPLACEMENT);
-        if (regEx != null)
-        {
-          IFile file = (IFile)marker.getResource();
-
-          IPath fullPath = file.getFullPath();
-          ITextFileBufferManager.DEFAULT.connect(fullPath, LocationKind.IFILE, new NullProgressMonitor());
-          ITextFileBuffer buffer = ITextFileBufferManager.DEFAULT.getTextFileBuffer(fullPath, LocationKind.IFILE);
-          boolean wasDirty = buffer.isDirty();
-
-          IDocument document = buffer.getDocument();
-          String content = document.get();
-
-          // InputStream contents = file.getContents();
-          // BufferedReader reader = new BufferedReader(new InputStreamReader(contents, file.getCharset()));
-          // CharArrayWriter caw = new CharArrayWriter();
-          //
-          // int c;
-          // while ((c = reader.read()) != -1)
-          // {
-          // caw.write(c);
-          // }
-          //
-          // String content = caw.toString();
-
-          Pattern pattern = Pattern.compile(regEx, Pattern.MULTILINE | Pattern.DOTALL);
-          Matcher matcher = pattern.matcher(content);
-          if (matcher.find())
-          {
-            int start;
-            int end;
-            if (replacement != null)
-            {
-              start = matcher.start(1);
-              end = matcher.end(1);
-            }
-            else
-            {
-              start = matcher.start();
-              end = matcher.end();
-              replacement = "";
-            }
-
-            document.replace(start, end - start, replacement);
-
-            // file.setContents(new ByteArrayInputStream((before + replacement + after).getBytes(file.getCharset())),
-            // true, true, null);
-
-            if (!wasDirty && !buffer.isShared())
-            {
-              buffer.commit(new NullProgressMonitor(), true);
-            }
-
-            ITextFileBufferManager.DEFAULT.disconnect(fullPath, LocationKind.IFILE, new NullProgressMonitor());
-          }
-        }
-      }
-      catch (Exception ex)
-      {
-        Activator.log(ex);
-      }
+      ImageRegistry imageRegistry = Activator.getPlugin().getImageRegistry();
+      return imageRegistry.get(imageKey);
     }
 
     @Override
@@ -188,13 +122,185 @@ public class QuickFixer implements IMarkerResolutionGenerator2
       List<IMarker> result = new ArrayList<IMarker>();
       for (IMarker marker : markers)
       {
-        if (marker != this.marker && Markers.hasQuickFixes(marker))
+        try
         {
-          result.add(marker);
+          if (marker != this.marker && isApplicable(marker))
+          {
+            result.add(marker);
+          }
+        }
+        catch (Exception ex)
+        {
+          Activator.log(ex);
         }
       }
 
       return result.toArray(new IMarker[result.size()]);
+    }
+
+    protected abstract boolean isApplicable(IMarker marker) throws Exception;
+
+    public final void run(IMarker marker)
+    {
+      try
+      {
+        apply(marker);
+      }
+      catch (Exception ex)
+      {
+        Activator.log(ex);
+      }
+    }
+
+    protected abstract void apply(IMarker marker) throws Exception;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private abstract class AbstractDocumentResolution extends AbstractResolution
+  {
+    public AbstractDocumentResolution(IMarker marker, String label, String imageKey)
+    {
+      super(marker, label, imageKey);
+    }
+
+    @Override
+    protected final void apply(IMarker marker) throws Exception
+    {
+      IPath fullPath = ((IFile)marker.getResource()).getFullPath();
+      ITextFileBufferManager.DEFAULT.connect(fullPath, LocationKind.IFILE, new NullProgressMonitor());
+
+      try
+      {
+        ITextFileBuffer buffer = ITextFileBufferManager.DEFAULT.getTextFileBuffer(fullPath, LocationKind.IFILE);
+        boolean wasDirty = buffer.isDirty();
+
+        IDocument document = buffer.getDocument();
+        if (apply(marker, document))
+        {
+          if (!wasDirty && !buffer.isShared())
+          {
+            buffer.commit(new NullProgressMonitor(), true);
+          }
+        }
+      }
+      finally
+      {
+        ITextFileBufferManager.DEFAULT.disconnect(fullPath, LocationKind.IFILE, new NullProgressMonitor());
+      }
+    }
+
+    protected abstract boolean apply(IMarker marker, IDocument document) throws Exception;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private class ReplaceResolution extends AbstractDocumentResolution
+  {
+    private String replacement;
+
+    public ReplaceResolution(IMarker marker, String replacement)
+    {
+      super(marker, replacement == null ? "Remove the reference" : "Change the version",
+          replacement == null ? Activator.CORRECTION_DELETE_GIF : Activator.CORRECTION_CHANGE_GIF);
+      this.replacement = replacement == null ? "" : replacement;
+    }
+
+    @Override
+    public String getDescription()
+    {
+      if (replacement.length() != 0)
+      {
+        return getLabel() + " to " + replacement;
+      }
+
+      return super.getDescription();
+    }
+
+    @Override
+    protected boolean isApplicable(IMarker marker)
+    {
+      if (Markers.getQuickFixPattern(marker) == null)
+      {
+        return false;
+      }
+
+      boolean expectedReplacement = replacement.length() != 0;
+      boolean actualReplacement = Markers.getQuickFixReplacement(marker) != null;
+      return actualReplacement == expectedReplacement;
+    }
+
+    @Override
+    protected boolean apply(IMarker marker, IDocument document) throws Exception
+    {
+      String content = document.get();
+
+      String regEx = Markers.getQuickFixPattern(marker);
+      String replacement = Markers.getQuickFixReplacement(marker);
+
+      Pattern pattern = Pattern.compile(regEx, Pattern.MULTILINE | Pattern.DOTALL);
+      Matcher matcher = pattern.matcher(content);
+      if (matcher.find())
+      {
+        int start;
+        int end;
+        if (replacement.length() != 0)
+        {
+          start = matcher.start(1);
+          end = matcher.end(1);
+        }
+        else
+        {
+          start = matcher.start();
+          end = matcher.end();
+        }
+
+        document.replace(start, end - start, replacement);
+        return true;
+      }
+
+      return false;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private class ConfigureResolution extends AbstractResolution
+  {
+    private String option;
+
+    public ConfigureResolution(IMarker marker, String option)
+    {
+      super(marker, "Configure the project to ignore the problem", Activator.CORRECTION_CONFIGURE_GIF);
+      this.option = option;
+    }
+
+    @Override
+    public String getDescription()
+    {
+      IProject project = getMarker().getResource().getProject();
+      return "Set " + option + " = true in '/" + project.getName() + "/.project'";
+    }
+
+    @Override
+    protected boolean isApplicable(IMarker marker)
+    {
+      String requiredOption = Markers.getQuickFixConfigureOption(marker);
+      return option.equals(requiredOption);
+    }
+
+    @Override
+    protected void apply(IMarker marker) throws Exception
+    {
+      String option = Markers.getQuickFixConfigureOption(marker);
+
+      IProject project = marker.getResource().getProject();
+      VersionBuilderArguments arguments = new VersionBuilderArguments(project);
+      arguments.put(option, "true");
+      arguments.applyTo(project);
     }
   }
 }

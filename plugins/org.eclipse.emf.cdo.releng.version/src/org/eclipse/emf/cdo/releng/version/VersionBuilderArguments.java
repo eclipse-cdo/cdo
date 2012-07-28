@@ -30,20 +30,6 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
 {
   private static final long serialVersionUID = 1L;
 
-  private static final String RELEASE_PATH_ARGUMENT = "release.path";
-
-  private static final String VALIDATOR_CLASS_ARGUMENT = "validator.class";
-
-  private static final String IGNORE_DEPENDENCY_RANGES_ARGUMENT = "ignore.missing.dependency.ranges";
-
-  private static final String IGNORE_EXPORT_VERSIONS_ARGUMENT = "ignore.missing.export.versions";
-
-  private static final String IGNORE_CONTENT_REDUNDANCY_ARGUMENT = "ignore.feature.content.redundancy";
-
-  private static final String IGNORE_CONTENT_CHANGES_ARGUMENT = "ignore.feature.content.changes";
-
-  private static final String IGNORE_MALFORMED_VERSIONS_ARGUMENT = "ignore.malformed.versions";
-
   public VersionBuilderArguments()
   {
   }
@@ -70,48 +56,48 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
 
   public String getReleasePath()
   {
-    return get(RELEASE_PATH_ARGUMENT);
+    return get(IVersionBuilderArguments.RELEASE_PATH_ARGUMENT);
   }
 
   public String getValidatorClassName()
   {
-    return get(VALIDATOR_CLASS_ARGUMENT);
+    return get(IVersionBuilderArguments.VALIDATOR_CLASS_ARGUMENT);
   }
 
   public boolean isIgnoreMissingDependencyRanges()
   {
-    return "true".equals(get(IGNORE_DEPENDENCY_RANGES_ARGUMENT));
+    return "true".equals(get(IVersionBuilderArguments.IGNORE_DEPENDENCY_RANGES_ARGUMENT));
   }
 
   public boolean isIgnoreMissingExportVersions()
   {
-    return "true".equals(get(IGNORE_EXPORT_VERSIONS_ARGUMENT));
+    return "true".equals(get(IVersionBuilderArguments.IGNORE_EXPORT_VERSIONS_ARGUMENT));
   }
 
   public boolean isIgnoreFeatureContentRedundancy()
   {
-    return "true".equals(get(IGNORE_CONTENT_REDUNDANCY_ARGUMENT));
+    return "true".equals(get(IVersionBuilderArguments.IGNORE_CONTENT_REDUNDANCY_ARGUMENT));
   }
 
   public boolean isIgnoreFeatureContentChanges()
   {
-    return "true".equals(get(IGNORE_CONTENT_CHANGES_ARGUMENT));
+    return "true".equals(get(IVersionBuilderArguments.IGNORE_CONTENT_CHANGES_ARGUMENT));
   }
 
   public boolean isIgnoreMalformedVersionsButton()
   {
-    return "true".equals(get(IGNORE_MALFORMED_VERSIONS_ARGUMENT));
+    return "true".equals(get(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT));
   }
 
   public void setReleasePath(String value)
   {
     if (value != null)
     {
-      put(RELEASE_PATH_ARGUMENT, value);
+      put(IVersionBuilderArguments.RELEASE_PATH_ARGUMENT, value);
     }
     else
     {
-      remove(RELEASE_PATH_ARGUMENT);
+      remove(IVersionBuilderArguments.RELEASE_PATH_ARGUMENT);
     }
   }
 
@@ -119,11 +105,11 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
   {
     if (value != null)
     {
-      put(VALIDATOR_CLASS_ARGUMENT, value);
+      put(IVersionBuilderArguments.VALIDATOR_CLASS_ARGUMENT, value);
     }
     else
     {
-      remove(VALIDATOR_CLASS_ARGUMENT);
+      remove(IVersionBuilderArguments.VALIDATOR_CLASS_ARGUMENT);
     }
   }
 
@@ -131,11 +117,11 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
   {
     if (value)
     {
-      put(IGNORE_DEPENDENCY_RANGES_ARGUMENT, Boolean.toString(true));
+      put(IVersionBuilderArguments.IGNORE_DEPENDENCY_RANGES_ARGUMENT, Boolean.toString(true));
     }
     else
     {
-      remove(IGNORE_DEPENDENCY_RANGES_ARGUMENT);
+      remove(IVersionBuilderArguments.IGNORE_DEPENDENCY_RANGES_ARGUMENT);
     }
   }
 
@@ -143,11 +129,11 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
   {
     if (value)
     {
-      put(IGNORE_EXPORT_VERSIONS_ARGUMENT, Boolean.toString(true));
+      put(IVersionBuilderArguments.IGNORE_EXPORT_VERSIONS_ARGUMENT, Boolean.toString(true));
     }
     else
     {
-      remove(IGNORE_EXPORT_VERSIONS_ARGUMENT);
+      remove(IVersionBuilderArguments.IGNORE_EXPORT_VERSIONS_ARGUMENT);
     }
   }
 
@@ -155,11 +141,11 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
   {
     if (value)
     {
-      put(IGNORE_CONTENT_REDUNDANCY_ARGUMENT, Boolean.toString(true));
+      put(IVersionBuilderArguments.IGNORE_CONTENT_REDUNDANCY_ARGUMENT, Boolean.toString(true));
     }
     else
     {
-      remove(IGNORE_CONTENT_REDUNDANCY_ARGUMENT);
+      remove(IVersionBuilderArguments.IGNORE_CONTENT_REDUNDANCY_ARGUMENT);
     }
   }
 
@@ -167,11 +153,11 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
   {
     if (value)
     {
-      put(IGNORE_CONTENT_CHANGES_ARGUMENT, Boolean.toString(true));
+      put(IVersionBuilderArguments.IGNORE_CONTENT_CHANGES_ARGUMENT, Boolean.toString(true));
     }
     else
     {
-      remove(IGNORE_CONTENT_CHANGES_ARGUMENT);
+      remove(IVersionBuilderArguments.IGNORE_CONTENT_CHANGES_ARGUMENT);
     }
   }
 
@@ -179,11 +165,11 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
   {
     if (value)
     {
-      put(IGNORE_MALFORMED_VERSIONS_ARGUMENT, Boolean.toString(true));
+      put(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT, Boolean.toString(true));
     }
     else
     {
-      remove(IGNORE_MALFORMED_VERSIONS_ARGUMENT);
+      remove(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT);
     }
   }
 

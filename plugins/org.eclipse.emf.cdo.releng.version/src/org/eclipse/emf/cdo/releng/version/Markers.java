@@ -32,7 +32,9 @@ public final class Markers
 
   public static final String QUICK_FIX_PATTERN = "quickFixPattern";
 
-  public static final String QUICK_FIX_REPLACEMENT = "quickReplacement";
+  public static final String QUICK_FIX_REPLACEMENT = "quickFixReplacement";
+
+  public static final String QUICK_FIX_CONFIGURE_OPTION = "quickFixConfigureOption";
 
   private static final Pattern NL_PATTERN = Pattern.compile("([\\n][\\r]?|[\\r][\\n]?)", Pattern.MULTILINE);
 
@@ -40,16 +42,31 @@ public final class Markers
   {
   }
 
-  public static boolean hasQuickFixes(IMarker marker)
+  public static String getQuickFixPattern(IMarker marker)
+  {
+    return getAttribute(marker, QUICK_FIX_PATTERN);
+  }
+
+  public static String getQuickFixReplacement(IMarker marker)
+  {
+    return getAttribute(marker, QUICK_FIX_REPLACEMENT);
+  }
+
+  public static String getQuickFixConfigureOption(IMarker marker)
+  {
+    return getAttribute(marker, QUICK_FIX_CONFIGURE_OPTION);
+  }
+
+  public static String getAttribute(IMarker marker, String attributeName)
   {
     try
     {
-      return marker.getAttribute(QUICK_FIX_PATTERN) != null;
+      return (String)marker.getAttribute(attributeName);
     }
     catch (CoreException ex)
     {
       Activator.log(ex);
-      return false;
+      return null;
     }
   }
 
@@ -128,7 +145,6 @@ public final class Markers
           Activator.log(ex);
         }
       }
-
     }
   }
 

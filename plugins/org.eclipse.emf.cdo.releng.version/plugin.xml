@@ -19,7 +19,7 @@
          point="org.eclipse.core.resources.natures">
       <runtime>
          <run
-               class="org.eclipse.emf.cdo.releng.version.VersionNature">
+               class="org.eclipse.emf.cdo.releng.internal.version.VersionNature">
          </run>
       </runtime>
       <builder
@@ -36,7 +36,7 @@
             hasNature="true"
             isConfigurable="true">
          <run
-               class="org.eclipse.emf.cdo.releng.version.VersionBuilder">
+               class="org.eclipse.emf.cdo.releng.internal.version.VersionBuilder">
          </run>
       </builder>
    </extension>

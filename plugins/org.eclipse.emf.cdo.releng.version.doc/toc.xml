@@ -13,9 +13,6 @@
       <topic label="Extended Version Management" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.releng.version" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html" icon="package" />
       </topic>
-      <topic label="Extended Version Management Digest Validator" href="javadoc/org/eclipse/emf/cdo/releng/version/digest/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.emf.cdo.releng.version.digest" href="javadoc/org/eclipse/emf/cdo/releng/version/digest/package-summary.html" icon="package" />
-      </topic>
     </topic>
   </topic>
   <topic label="Online Docs" href="html/online/index.html">

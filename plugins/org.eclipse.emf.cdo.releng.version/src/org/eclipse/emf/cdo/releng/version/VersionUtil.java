@@ -10,11 +10,17 @@
  */
 package org.eclipse.emf.cdo.releng.version;
 
+import org.eclipse.emf.cdo.releng.internal.version.Activator;
+
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.pde.core.IModel;
+import org.eclipse.pde.core.plugin.IPluginModelBase;
+import org.eclipse.pde.core.plugin.PluginRegistry;
 
 import org.osgi.framework.Version;
 
@@ -28,9 +34,64 @@ import java.security.NoSuchAlgorithmException;
 /**
  * @author Eike Stepper
  */
-public class VersionUtil
+public final class VersionUtil
 {
+  public static final String BUILDER_ID = "org.eclipse.emf.cdo.releng.version.VersionBuilder";
+
+  public static final boolean DEBUG = Boolean.valueOf(System.getProperty("org.eclipse.emf.cdo.releng.version.debug",
+      "false"));
+
   private static final byte[] BUFFER = new byte[8192];
+
+  private VersionUtil()
+  {
+  }
+
+  public static IModel getComponentModel(IProject project)
+  {
+    IModel componentModel = PluginRegistry.findModel(project);
+    if (componentModel == null)
+    {
+      componentModel = getFeatureModel(project);
+      if (componentModel == null)
+      {
+        throw new IllegalStateException("The project " + project.getName() + " is neither a plugin nor a feature");
+      }
+    }
+
+    return componentModel;
+  }
+
+  @SuppressWarnings("restriction")
+  public static org.eclipse.pde.internal.core.ifeature.IFeatureModel getFeatureModel(IProject project)
+  {
+    org.eclipse.pde.internal.core.ifeature.IFeatureModel[] featureModels = org.eclipse.pde.internal.core.PDECore
+        .getDefault().getFeatureModelManager().getWorkspaceModels();
+
+    for (org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel : featureModels)
+    {
+      if (featureModel.getUnderlyingResource().getProject() == project)
+      {
+        return featureModel;
+      }
+    }
+
+    return null;
+  }
+
+  @SuppressWarnings("restriction")
+  public static Version getComponentVersion(IModel componentModel)
+  {
+    if (componentModel instanceof IPluginModelBase)
+    {
+      IPluginModelBase pluginModel = (IPluginModelBase)componentModel;
+      return normalize(pluginModel.getBundleDescription().getVersion());
+    }
+
+    Version version = new Version(((org.eclipse.pde.internal.core.ifeature.IFeatureModel)componentModel).getFeature()
+        .getVersion());
+    return normalize(version);
+  }
 
   public static void close(Closeable closeable)
   {
@@ -140,14 +201,5 @@ public class VersionUtil
         }
       }
     }
-  }
-
-  /**
-   * @deprecated This method exists so that others can produce a reliable compiler warning by calling it. A
-   *             <code>@SuppressWarnings("deprecation")</code> annotation will never become unnecessary then.
-   */
-  @Deprecated
-  public static void someDeprecatedCode()
-  {
   }
 }

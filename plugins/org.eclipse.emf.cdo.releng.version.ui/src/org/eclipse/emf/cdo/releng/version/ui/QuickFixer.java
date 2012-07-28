@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.version.ui;
 
-import org.eclipse.emf.cdo.releng.version.Markers;
-import org.eclipse.emf.cdo.releng.version.VersionBuilderArguments;
+import org.eclipse.emf.cdo.releng.internal.version.Markers;
+import org.eclipse.emf.cdo.releng.internal.version.VersionBuilderArguments;
 
 import org.eclipse.core.filebuffers.ITextFileBuffer;
 import org.eclipse.core.filebuffers.ITextFileBufferManager;

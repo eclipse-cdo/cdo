@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.version.ui;
 
-import org.eclipse.emf.cdo.releng.version.IVersionBuilderArguments;
-import org.eclipse.emf.cdo.releng.version.VersionBuilderArguments;
+import org.eclipse.emf.cdo.releng.internal.version.IVersionBuilderArguments;
+import org.eclipse.emf.cdo.releng.internal.version.VersionBuilderArguments;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;

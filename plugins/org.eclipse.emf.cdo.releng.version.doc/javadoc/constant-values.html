@@ -39,7 +39,7 @@ function windowTitle()
 <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
   <TR ALIGN="center" VALIGN="top">
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Package</FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="org/eclipse/emf/cdo/releng/version/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Use</FONT>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
@@ -100,205 +100,13 @@ org.eclipse.*</FONT></TH>
 
 <TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="3">org.eclipse.emf.cdo.releng.version.<A HREF="org/eclipse/emf/cdo/releng/version/Activator.html" title="class in org.eclipse.emf.cdo.releng.version">Activator</A></TH>
+<TH ALIGN="left" COLSPAN="3">org.eclipse.emf.cdo.releng.version.<A HREF="org/eclipse/emf/cdo/releng/version/VersionUtil.html" title="class in org.eclipse.emf.cdo.releng.version">VersionUtil</A></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.Activator.PLUGIN_ID"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<A NAME="org.eclipse.emf.cdo.releng.version.VersionUtil.BUILDER_ID"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/Activator.html#PLUGIN_ID">PLUGIN_ID</A></CODE></TD>
-<TD ALIGN="right"><CODE>"org.eclipse.emf.cdo.releng.version"</CODE></TD>
-</TR>
-</FONT></TD>
-</TR>
-</TABLE>
-
-<P>
-
-<P>
-
-<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="3">org.eclipse.emf.cdo.releng.version.<A HREF="org/eclipse/emf/cdo/releng/version/IVersionBuilderArguments.html" title="interface in org.eclipse.emf.cdo.releng.version">IVersionBuilderArguments</A></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.IVersionBuilderArguments.DEFAULT_VALIDATOR_CLASS_NAME"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/IVersionBuilderArguments.html#DEFAULT_VALIDATOR_CLASS_NAME">DEFAULT_VALIDATOR_CLASS_NAME</A></CODE></TD>
-<TD ALIGN="right"><CODE>"org.eclipse.emf.cdo.releng.version.digest.DigestValidator$BuildModel"</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.IVersionBuilderArguments.IGNORE_CONTENT_CHANGES_ARGUMENT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/IVersionBuilderArguments.html#IGNORE_CONTENT_CHANGES_ARGUMENT">IGNORE_CONTENT_CHANGES_ARGUMENT</A></CODE></TD>
-<TD ALIGN="right"><CODE>"ignore.feature.content.changes"</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.IVersionBuilderArguments.IGNORE_CONTENT_REDUNDANCY_ARGUMENT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/IVersionBuilderArguments.html#IGNORE_CONTENT_REDUNDANCY_ARGUMENT">IGNORE_CONTENT_REDUNDANCY_ARGUMENT</A></CODE></TD>
-<TD ALIGN="right"><CODE>"ignore.feature.content.redundancy"</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.IVersionBuilderArguments.IGNORE_DEPENDENCY_RANGES_ARGUMENT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/IVersionBuilderArguments.html#IGNORE_DEPENDENCY_RANGES_ARGUMENT">IGNORE_DEPENDENCY_RANGES_ARGUMENT</A></CODE></TD>
-<TD ALIGN="right"><CODE>"ignore.missing.dependency.ranges"</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.IVersionBuilderArguments.IGNORE_EXPORT_VERSIONS_ARGUMENT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/IVersionBuilderArguments.html#IGNORE_EXPORT_VERSIONS_ARGUMENT">IGNORE_EXPORT_VERSIONS_ARGUMENT</A></CODE></TD>
-<TD ALIGN="right"><CODE>"ignore.missing.export.versions"</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/IVersionBuilderArguments.html#IGNORE_MALFORMED_VERSIONS_ARGUMENT">IGNORE_MALFORMED_VERSIONS_ARGUMENT</A></CODE></TD>
-<TD ALIGN="right"><CODE>"ignore.malformed.versions"</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.IVersionBuilderArguments.RELEASE_PATH_ARGUMENT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/IVersionBuilderArguments.html#RELEASE_PATH_ARGUMENT">RELEASE_PATH_ARGUMENT</A></CODE></TD>
-<TD ALIGN="right"><CODE>"release.path"</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.IVersionBuilderArguments.VALIDATOR_CLASS_ARGUMENT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/IVersionBuilderArguments.html#VALIDATOR_CLASS_ARGUMENT">VALIDATOR_CLASS_ARGUMENT</A></CODE></TD>
-<TD ALIGN="right"><CODE>"validator.class"</CODE></TD>
-</TR>
-</FONT></TD>
-</TR>
-</TABLE>
-
-<P>
-
-<P>
-
-<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="3">org.eclipse.emf.cdo.releng.version.<A HREF="org/eclipse/emf/cdo/releng/version/Markers.html" title="class in org.eclipse.emf.cdo.releng.version">Markers</A></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.Markers.MARKER_TYPE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/Markers.html#MARKER_TYPE">MARKER_TYPE</A></CODE></TD>
-<TD ALIGN="right"><CODE>"org.eclipse.emf.cdo.releng.version.VersionProblem"</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.Markers.QUICK_FIX_CONFIGURE_OPTION"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/Markers.html#QUICK_FIX_CONFIGURE_OPTION">QUICK_FIX_CONFIGURE_OPTION</A></CODE></TD>
-<TD ALIGN="right"><CODE>"quickFixConfigureOption"</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.Markers.QUICK_FIX_PATTERN"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/Markers.html#QUICK_FIX_PATTERN">QUICK_FIX_PATTERN</A></CODE></TD>
-<TD ALIGN="right"><CODE>"quickFixPattern"</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.Markers.QUICK_FIX_REPLACEMENT"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/Markers.html#QUICK_FIX_REPLACEMENT">QUICK_FIX_REPLACEMENT</A></CODE></TD>
-<TD ALIGN="right"><CODE>"quickFixReplacement"</CODE></TD>
-</TR>
-</FONT></TD>
-</TR>
-</TABLE>
-
-<P>
-
-<P>
-
-<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="3">org.eclipse.emf.cdo.releng.version.<A HREF="org/eclipse/emf/cdo/releng/version/Release.html" title="class in org.eclipse.emf.cdo.releng.version">Release</A></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.Release.FEATURE_TAG"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/Release.html#FEATURE_TAG">FEATURE_TAG</A></CODE></TD>
-<TD ALIGN="right"><CODE>"feature"</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.Release.NAME_ATTRIBUTE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/Release.html#NAME_ATTRIBUTE">NAME_ATTRIBUTE</A></CODE></TD>
-<TD ALIGN="right"><CODE>"name"</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.Release.PLUGIN_TAG"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/Release.html#PLUGIN_TAG">PLUGIN_TAG</A></CODE></TD>
-<TD ALIGN="right"><CODE>"plugin"</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.Release.RELEASE_TAG"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/Release.html#RELEASE_TAG">RELEASE_TAG</A></CODE></TD>
-<TD ALIGN="right"><CODE>"release"</CODE></TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.Release.VERSION_ATTRIBUTE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/Release.html#VERSION_ATTRIBUTE">VERSION_ATTRIBUTE</A></CODE></TD>
-<TD ALIGN="right"><CODE>"version"</CODE></TD>
-</TR>
-</FONT></TD>
-</TR>
-</TABLE>
-
-<P>
-
-<P>
-
-<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="3">org.eclipse.emf.cdo.releng.version.<A HREF="org/eclipse/emf/cdo/releng/version/VersionBuilder.html" title="class in org.eclipse.emf.cdo.releng.version">VersionBuilder</A></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.VersionBuilder.BUILDER_ID"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/VersionBuilder.html#BUILDER_ID">BUILDER_ID</A></CODE></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/VersionUtil.html#BUILDER_ID">BUILDER_ID</A></CODE></TD>
 <TD ALIGN="right"><CODE>"org.eclipse.emf.cdo.releng.version.VersionBuilder"</CODE></TD>
-</TR>
-</FONT></TD>
-</TR>
-</TABLE>
-
-<P>
-
-<P>
-
-<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="3">org.eclipse.emf.cdo.releng.version.<A HREF="org/eclipse/emf/cdo/releng/version/VersionNature.html" title="class in org.eclipse.emf.cdo.releng.version">VersionNature</A></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.VersionNature.NATURE_ID"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/VersionNature.html#NATURE_ID">NATURE_ID</A></CODE></TD>
-<TD ALIGN="right"><CODE>"org.eclipse.emf.cdo.releng.version.VersionNature"</CODE></TD>
-</TR>
-</FONT></TD>
-</TR>
-</TABLE>
-
-<P>
-
-<P>
-
-<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="3">org.eclipse.emf.cdo.releng.version.digest.<A HREF="org/eclipse/emf/cdo/releng/version/digest/Activator.html" title="class in org.eclipse.emf.cdo.releng.version.digest">Activator</A></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<A NAME="org.eclipse.emf.cdo.releng.version.digest.Activator.PLUGIN_ID"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
-<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/releng/version/digest/Activator.html#PLUGIN_ID">PLUGIN_ID</A></CODE></TD>
-<TD ALIGN="right"><CODE>"org.eclipse.emf.cdo.releng.version.digest"</CODE></TD>
 </TR>
 </FONT></TD>
 </TR>
@@ -320,7 +128,7 @@ org.eclipse.*</FONT></TH>
 <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
   <TR ALIGN="center" VALIGN="top">
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Package</FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="org/eclipse/emf/cdo/releng/version/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Use</FONT>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>

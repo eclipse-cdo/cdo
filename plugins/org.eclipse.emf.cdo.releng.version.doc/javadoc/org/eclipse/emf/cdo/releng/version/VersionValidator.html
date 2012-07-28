@@ -39,7 +39,7 @@ function windowTitle()
 <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
   <TR ALIGN="center" VALIGN="top">
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/VersionValidator.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
@@ -95,9 +95,6 @@ Class VersionValidator</H2>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
   <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.emf.cdo.releng.version.VersionValidator</B>
 </PRE>
-<DL>
-<DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidator</A></DD>
-</DL>
 <HR>
 <DL>
   <DT>public abstract class <B>VersionValidator</B>
@@ -105,8 +102,7 @@ Class VersionValidator</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="VersionValidator.html" title="VersionValidator" alt="" coords="79,6,196,31"/>
-<area shape="rect" id="node2" href="digest/DigestValidator.html" title="DigestValidator (org.eclipse.emf.cdo.releng.version.digest)" alt="" coords="5,71,269,111"/>
+<area shape="rect" id="node1" href="VersionValidator.html" title="VersionValidator" alt="" coords="5,6,123,31"/>
 </map>
 
 <CENTER><IMG SRC="VersionValidator.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -145,7 +141,7 @@ Class VersionValidator</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionValidator.html#abort(org.eclipse.emf.cdo.releng.version.BuildState, org.eclipse.core.resources.IProject, java.lang.Exception, org.eclipse.core.runtime.IProgressMonitor)">abort</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html" title="class in org.eclipse.emf.cdo.releng.version">BuildState</A>&nbsp;buildState,
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionValidator.html#abort(org.eclipse.emf.cdo.releng.version.IBuildState, org.eclipse.core.resources.IProject, java.lang.Exception, org.eclipse.core.runtime.IProgressMonitor)">abort</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IBuildState.html" title="interface in org.eclipse.emf.cdo.releng.version">IBuildState</A>&nbsp;buildState,
       <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IProject.html?is-external=true" title="class or interface in org.eclipse.core.resources">IProject</A>&nbsp;project,
       <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A>&nbsp;exception,
       <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
@@ -156,8 +152,8 @@ Class VersionValidator</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>abstract &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionValidator.html#updateBuildState(org.eclipse.emf.cdo.releng.version.BuildState, org.eclipse.emf.cdo.releng.version.Release, org.eclipse.core.resources.IProject, org.eclipse.core.resources.IResourceDelta, org.eclipse.pde.core.IModel, org.eclipse.core.runtime.IProgressMonitor)">updateBuildState</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html" title="class in org.eclipse.emf.cdo.releng.version">BuildState</A>&nbsp;buildState,
-                 <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html" title="class in org.eclipse.emf.cdo.releng.version">Release</A>&nbsp;release,
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionValidator.html#updateBuildState(org.eclipse.emf.cdo.releng.version.IBuildState, org.eclipse.emf.cdo.releng.version.IRelease, org.eclipse.core.resources.IProject, org.eclipse.core.resources.IResourceDelta, org.eclipse.pde.core.IModel, org.eclipse.core.runtime.IProgressMonitor)">updateBuildState</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IBuildState.html" title="interface in org.eclipse.emf.cdo.releng.version">IBuildState</A>&nbsp;buildState,
+                 <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IRelease.html" title="interface in org.eclipse.emf.cdo.releng.version">IRelease</A>&nbsp;release,
                  <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IProject.html?is-external=true" title="class or interface in org.eclipse.core.resources">IProject</A>&nbsp;project,
                  <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IResourceDelta.html?is-external=true" title="class or interface in org.eclipse.core.resources">IResourceDelta</A>&nbsp;delta,
                  org.eclipse.pde.core.IModel&nbsp;componentModel,
@@ -206,10 +202,10 @@ public <B>VersionValidator</B>()</PRE>
 </TR>
 </TABLE>
 
-<A NAME="abort(org.eclipse.emf.cdo.releng.version.BuildState, org.eclipse.core.resources.IProject, java.lang.Exception, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+<A NAME="abort(org.eclipse.emf.cdo.releng.version.IBuildState, org.eclipse.core.resources.IProject, java.lang.Exception, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
 abort</H3>
 <PRE>
-public void <B>abort</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html" title="class in org.eclipse.emf.cdo.releng.version">BuildState</A>&nbsp;buildState,
+public void <B>abort</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IBuildState.html" title="interface in org.eclipse.emf.cdo.releng.version">IBuildState</A>&nbsp;buildState,
                   <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IProject.html?is-external=true" title="class or interface in org.eclipse.core.resources">IProject</A>&nbsp;project,
                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A>&nbsp;exception,
                   <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)
@@ -223,11 +219,11 @@ public void <B>abort</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/releng/v
 </DL>
 <HR>
 
-<A NAME="updateBuildState(org.eclipse.emf.cdo.releng.version.BuildState, org.eclipse.emf.cdo.releng.version.Release, org.eclipse.core.resources.IProject, org.eclipse.core.resources.IResourceDelta, org.eclipse.pde.core.IModel, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+<A NAME="updateBuildState(org.eclipse.emf.cdo.releng.version.IBuildState, org.eclipse.emf.cdo.releng.version.IRelease, org.eclipse.core.resources.IProject, org.eclipse.core.resources.IResourceDelta, org.eclipse.pde.core.IModel, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
 updateBuildState</H3>
 <PRE>
-public abstract void <B>updateBuildState</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html" title="class in org.eclipse.emf.cdo.releng.version">BuildState</A>&nbsp;buildState,
-                                      <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html" title="class in org.eclipse.emf.cdo.releng.version">Release</A>&nbsp;release,
+public abstract void <B>updateBuildState</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IBuildState.html" title="interface in org.eclipse.emf.cdo.releng.version">IBuildState</A>&nbsp;buildState,
+                                      <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IRelease.html" title="interface in org.eclipse.emf.cdo.releng.version">IRelease</A>&nbsp;release,
                                       <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IProject.html?is-external=true" title="class or interface in org.eclipse.core.resources">IProject</A>&nbsp;project,
                                       <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IResourceDelta.html?is-external=true" title="class or interface in org.eclipse.core.resources">IResourceDelta</A>&nbsp;delta,
                                       org.eclipse.pde.core.IModel&nbsp;componentModel,
@@ -254,7 +250,7 @@ public abstract void <B>updateBuildState</B>(<A HREF="../../../../../../org/ecli
 <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
   <TR ALIGN="center" VALIGN="top">
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/VersionValidator.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>

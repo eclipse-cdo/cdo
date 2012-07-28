@@ -10,9 +10,9 @@
  */
 package org.eclipse.emf.cdo.releng.version.ui;
 
-import org.eclipse.emf.cdo.releng.version.IVersionBuilderArguments;
-import org.eclipse.emf.cdo.releng.version.VersionBuilder;
-import org.eclipse.emf.cdo.releng.version.VersionBuilderArguments;
+import org.eclipse.emf.cdo.releng.internal.version.IVersionBuilderArguments;
+import org.eclipse.emf.cdo.releng.internal.version.VersionBuilderArguments;
+import org.eclipse.emf.cdo.releng.version.VersionUtil;
 
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IProject;
@@ -51,7 +51,7 @@ public class ConfigureBuilderAction extends AbstractAction<IVersionBuilderArgume
           IProjectDescription description = project.getDescription();
           for (ICommand command : description.getBuildSpec())
           {
-            if (VersionBuilder.BUILDER_ID.equals(command.getBuilderName()))
+            if (VersionUtil.BUILDER_ID.equals(command.getBuilderName()))
             {
               VersionBuilderArguments commandArguments = new VersionBuilderArguments(command.getArguments());
               if (arguments != null)

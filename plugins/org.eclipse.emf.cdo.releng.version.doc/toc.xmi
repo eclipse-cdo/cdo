@@ -3,8 +3,6 @@
   <article:Plugin name="org.eclipse.emf.cdo.releng.version" label="Extended Version Management">
     <packages name="org.eclipse.emf.cdo.releng.version"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.releng.version.digest" label="Extended Version Management Digest Validator">
-    <packages name="org.eclipse.emf.cdo.releng.version.digest"/>
-  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.version.digest" label="Extended Version Management Digest Validator"/>
   <article:Plugin name="org.eclipse.emf.cdo.releng.version.ui" label="Extended Version Management UI"/>
 </xmi:XMI>

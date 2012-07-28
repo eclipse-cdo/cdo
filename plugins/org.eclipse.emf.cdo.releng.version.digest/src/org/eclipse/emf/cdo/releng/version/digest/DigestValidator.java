@@ -10,11 +10,10 @@
  */
 package org.eclipse.emf.cdo.releng.version.digest;
 
-import org.eclipse.emf.cdo.releng.version.BuildState;
-import org.eclipse.emf.cdo.releng.version.Element;
-import org.eclipse.emf.cdo.releng.version.Release;
-import org.eclipse.emf.cdo.releng.version.ReleaseManager;
-import org.eclipse.emf.cdo.releng.version.VersionBuilder;
+import org.eclipse.emf.cdo.releng.version.IBuildState;
+import org.eclipse.emf.cdo.releng.version.IElement;
+import org.eclipse.emf.cdo.releng.version.IRelease;
+import org.eclipse.emf.cdo.releng.version.IReleaseManager;
 import org.eclipse.emf.cdo.releng.version.VersionUtil;
 import org.eclipse.emf.cdo.releng.version.VersionValidator;
 
@@ -57,14 +56,14 @@ import java.util.WeakHashMap;
  */
 public class DigestValidator extends VersionValidator
 {
-  private static final Map<Release, ReleaseDigest> RELEASE_DIGESTS = new WeakHashMap<Release, ReleaseDigest>();
+  private static final Map<IRelease, ReleaseDigest> RELEASE_DIGESTS = new WeakHashMap<IRelease, ReleaseDigest>();
 
   public DigestValidator()
   {
   }
 
   @Override
-  public void updateBuildState(BuildState buildState, Release release, IProject project, IResourceDelta delta,
+  public void updateBuildState(IBuildState buildState, IRelease release, IProject project, IResourceDelta delta,
       IModel componentModel, IProgressMonitor monitor) throws Exception
   {
     DigestValidatorState validatorState = (DigestValidatorState)buildState.getValidatorState();
@@ -85,7 +84,7 @@ public class DigestValidator extends VersionValidator
     beforeValidation(validatorState, componentModel);
     if (validatorState == null || delta == null)
     {
-      if (VersionBuilder.DEBUG)
+      if (VersionUtil.DEBUG)
       {
         System.out.println("Digest: Full validation...");
       }
@@ -95,7 +94,7 @@ public class DigestValidator extends VersionValidator
     }
     else
     {
-      if (VersionBuilder.DEBUG)
+      if (VersionUtil.DEBUG)
       {
         System.out.println("Digest: Incremental validation...");
       }
@@ -110,13 +109,13 @@ public class DigestValidator extends VersionValidator
     }
 
     byte[] validatorDigest = validatorState.getDigest();
-    if (VersionBuilder.DEBUG)
+    if (VersionUtil.DEBUG)
     {
       System.out.println("DIGEST  = " + formatDigest(validatorDigest));
     }
 
     byte[] releasedProjectDigest = releaseDigest.get(project.getName());
-    if (VersionBuilder.DEBUG)
+    if (VersionUtil.DEBUG)
     {
       System.out.println("RELEASE = " + formatDigest(releasedProjectDigest));
     }
@@ -134,7 +133,7 @@ public class DigestValidator extends VersionValidator
       return null;
     }
 
-    if (VersionBuilder.DEBUG)
+    if (VersionUtil.DEBUG)
     {
       System.out.println("Digest: " + resource.getFullPath());
     }
@@ -157,7 +156,7 @@ public class DigestValidator extends VersionValidator
       }
 
       byte[] digest = getFolderDigest(memberStates);
-      if (VersionBuilder.DEBUG)
+      if (VersionUtil.DEBUG)
       {
         System.out.println("Considered: " + container.getFullPath() + " --> " + formatDigest(digest));
       }
@@ -169,7 +168,7 @@ public class DigestValidator extends VersionValidator
     {
       IFile file = (IFile)resource;
       byte[] digest = getFileDigest(file);
-      if (VersionBuilder.DEBUG)
+      if (VersionUtil.DEBUG)
       {
         System.out.println("Considered: " + file.getFullPath() + " --> " + formatDigest(digest));
       }
@@ -266,7 +265,7 @@ public class DigestValidator extends VersionValidator
   {
   }
 
-  private ReleaseDigest getReleaseDigest(IPath releasePath, Release release, IProgressMonitor monitor)
+  private ReleaseDigest getReleaseDigest(IPath releasePath, IRelease release, IProgressMonitor monitor)
       throws IOException, CoreException, ClassNotFoundException
   {
     IFile file = getDigestFile(releasePath);
@@ -413,7 +412,7 @@ public class DigestValidator extends VersionValidator
     }
   }
 
-  public ReleaseDigest createReleaseDigest(Release release, IFile target, List<String> warnings,
+  public ReleaseDigest createReleaseDigest(IRelease release, IFile target, List<String> warnings,
       IProgressMonitor monitor) throws CoreException
   {
     monitor.beginTask(null, release.getSize() + 1);
@@ -421,7 +420,7 @@ public class DigestValidator extends VersionValidator
     try
     {
       ReleaseDigest releaseDigest = new ReleaseDigest(release.getDigest());
-      for (Entry<Element, Element> entry : release.getElements().entrySet())
+      for (Entry<IElement, IElement> entry : release.getElements().entrySet())
       {
         String name = entry.getKey().getName();
         monitor.subTask(name);
@@ -430,13 +429,13 @@ public class DigestValidator extends VersionValidator
         {
           try
           {
-            Element element = entry.getValue();
+            IElement element = entry.getValue();
             if (element.getName().endsWith(".source"))
             {
               continue;
             }
 
-            IModel componentModel = ReleaseManager.INSTANCE.getComponentModel(element);
+            IModel componentModel = IReleaseManager.INSTANCE.getComponentModel(element);
             if (componentModel == null)
             {
               addWarning(warnings, name + ": Component not found");
@@ -451,7 +450,7 @@ public class DigestValidator extends VersionValidator
               continue;
             }
 
-            Version version = VersionBuilder.getComponentVersion(componentModel);
+            Version version = VersionUtil.getComponentVersion(componentModel);
 
             if (!element.getVersion().equals(version))
             {

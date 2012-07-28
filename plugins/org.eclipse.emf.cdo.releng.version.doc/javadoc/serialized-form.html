@@ -4,7 +4,7 @@
 <HEAD>
 
 <TITLE>
-Serialized Form (CDO Release Engineering Documentation)
+Serialized Form (Extended Version Management Documentation)
 </TITLE>
 
 <META NAME="date" CONTENT="">
@@ -16,7 +16,7 @@ Serialized Form (CDO Release Engineering Documentation)
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Serialized Form (CDO Release Engineering Documentation)";
+        parent.document.title="Serialized Form (Extended Version Management Documentation)";
     }
 }
 </SCRIPT>
@@ -114,9 +114,36 @@ Serialized Form</H1>
 </TABLE>
 
 <H3>
-releaseTag</H3>
+releaseSpecDigest</H3>
 <PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>releaseTag</B></PRE>
+byte[] <B>releaseSpecDigest</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+propertiesTimeStamp</H3>
+<PRE>
+long <B>propertiesTimeStamp</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+deviations</H3>
+<PRE>
+boolean <B>deviations</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
+integration</H3>
+<PRE>
+boolean <B>integration</B></PRE>
 <DL>
 <DL>
 </DL>
@@ -132,6 +159,15 @@ boolean <B>changedSinceRelease</B></PRE>
 </DL>
 <HR>
 <H3>
+validatorTimeStamp</H3>
+<PRE>
+long <B>validatorTimeStamp</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+<H3>
 validatorState</H3>
 <PRE>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</A> <B>validatorState</B></PRE>
@@ -139,6 +175,20 @@ validatorState</H3>
 <DL>
 </DL>
 </DL>
+
+<P>
+<A NAME="org.eclipse.emf.cdo.releng.version.VersionBuilderArguments"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Class <A HREF="org/eclipse/emf/cdo/releng/version/VersionBuilderArguments.html" title="class in org.eclipse.emf.cdo.releng.version">org.eclipse.emf.cdo.releng.version.VersionBuilderArguments</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util">HashMap</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt; implements Serializable</B></FONT></TH>
+</TR>
+</TABLE>
+
+<P>
+<B>serialVersionUID:&nbsp;</B>1L
+
+<P>
 <HR SIZE="4" NOSHADE>
 
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
@@ -200,6 +250,36 @@ parent</H3>
 children</H3>
 <PRE>
 <A HREF="org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>[] <B>children</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+
+<P>
+<A NAME="org.eclipse.emf.cdo.releng.version.digest.ReleaseDigest"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Class <A HREF="org/eclipse/emf/cdo/releng/version/digest/ReleaseDigest.html" title="class in org.eclipse.emf.cdo.releng.version.digest">org.eclipse.emf.cdo.releng.version.digest.ReleaseDigest</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/HashMap.html?is-external=true" title="class or interface in java.util">HashMap</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,byte[]&gt; implements Serializable</B></FONT></TH>
+</TR>
+</TABLE>
+
+<P>
+<B>serialVersionUID:&nbsp;</B>1L
+
+<P>
+<A NAME="serializedForm"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Serialized Fields</B></FONT></TH>
+</TR>
+</TABLE>
+
+<H3>
+releaseSpecDigest</H3>
+<PRE>
+byte[] <B>releaseSpecDigest</B></PRE>
 <DL>
 <DL>
 </DL>

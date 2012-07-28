@@ -4,7 +4,7 @@
 <HEAD>
 
 <TITLE>
-Release (CDO Release Engineering Documentation)
+Release (Extended Version Management Documentation)
 </TITLE>
 
 <META NAME="date" CONTENT="">
@@ -16,7 +16,7 @@ Release (CDO Release Engineering Documentation)
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Release (CDO Release Engineering Documentation)";
+        parent.document.title="Release (Extended Version Management Documentation)";
     }
 }
 </SCRIPT>
@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Markers.html" title="class in org.eclipse.emf.cdo.releng.version"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.Element.html" title="class in org.eclipse.emf.cdo.releng.version"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.XMLHandler.html" title="class in org.eclipse.emf.cdo.releng.version"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/releng/version/Release.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="Release.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -76,9 +76,9 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_top"></A>
@@ -95,14 +95,19 @@ Class Release</H2>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
   <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.emf.cdo.releng.version.Release</B>
 </PRE>
+<DL>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/ElementResolver.html" title="interface in org.eclipse.emf.cdo.releng.version">ElementResolver</A></DD>
+</DL>
 <HR>
 <DL>
   <DT>public class <B>Release</B>
   <DD>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>
+  <DD>implements <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/ElementResolver.html" title="interface in org.eclipse.emf.cdo.releng.version">ElementResolver</A>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="Release.html" title="Release" alt="" coords="5,6,75,31"/>
+<area shape="rect" id="node1" href="ElementResolver.html" title="&#171;interface&#187; ElementResolver" alt="" coords="5,5,123,45"/>
+<area shape="rect" id="node2" href="Release.html" title="Release" alt="" coords="29,85,99,110"/>
 </map>
 
 <CENTER><IMG SRC="Release.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -123,8 +128,73 @@ Class Release</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;class</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.Element.html" title="class in org.eclipse.emf.cdo.releng.version">Release.Element</A></B></CODE>
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.XMLHandler.html" title="class in org.eclipse.emf.cdo.releng.version">Release.XMLHandler</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html#FEATURE_TAG">FEATURE_TAG</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html#NAME_ATTRIBUTE">NAME_ATTRIBUTE</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html#PLUGIN_TAG">PLUGIN_TAG</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html#RELEASE_TAG">RELEASE_TAG</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html#VERSION_ATTRIBUTE">VERSION_ATTRIBUTE</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html#Release(org.eclipse.core.resources.IFile)">Release</A></B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IFile.html?is-external=true" title="class or interface in org.eclipse.core.resources">IFile</A>&nbsp;file)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -141,7 +211,15 @@ Class Release</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.Element.html" title="class in org.eclipse.emf.cdo.releng.version">Release.Element</A>&gt;</CODE></FONT></TD>
+<CODE>&nbsp;byte[]</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html#getDigest()">getDigest</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Element.html" title="class in org.eclipse.emf.cdo.releng.version">Element</A>,<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Element.html" title="class in org.eclipse.emf.cdo.releng.version">Element</A>&gt;</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html#getElements()">getElements</A></B>()</CODE>
 
 <BR>
@@ -157,14 +235,6 @@ Class Release</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html#getRepository()">getRepository</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html#getSize()">getSize</A></B>()</CODE>
 
@@ -173,24 +243,16 @@ Class Release</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html#getTag()">getTag</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Element.html" title="class in org.eclipse.emf.cdo.releng.version">Element</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html#resolveElement(org.eclipse.emf.cdo.releng.version.Element)">resolveElement</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Element.html" title="class in org.eclipse.emf.cdo.releng.version">Element</A>&nbsp;key)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html#isIntegration()">isIntegration</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;org.osgi.framework.Version</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html#normalizeVersion(org.osgi.framework.Version)">normalizeVersion</A></B>(org.osgi.framework.Version&nbsp;version)</CODE>
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html#write()">write</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -207,6 +269,82 @@ Class Release</H2>
 </TABLE>
 &nbsp;
 <P>
+
+<!-- ============ FIELD DETAIL =========== -->
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Field Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="RELEASE_TAG"><!-- --></A><H3>
+RELEASE_TAG</H3>
+<PRE>
+public static final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>RELEASE_TAG</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../constant-values.html#org.eclipse.emf.cdo.releng.version.Release.RELEASE_TAG">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="FEATURE_TAG"><!-- --></A><H3>
+FEATURE_TAG</H3>
+<PRE>
+public static final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>FEATURE_TAG</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../constant-values.html#org.eclipse.emf.cdo.releng.version.Release.FEATURE_TAG">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="PLUGIN_TAG"><!-- --></A><H3>
+PLUGIN_TAG</H3>
+<PRE>
+public static final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>PLUGIN_TAG</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../constant-values.html#org.eclipse.emf.cdo.releng.version.Release.PLUGIN_TAG">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="NAME_ATTRIBUTE"><!-- --></A><H3>
+NAME_ATTRIBUTE</H3>
+<PRE>
+public static final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>NAME_ATTRIBUTE</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../constant-values.html#org.eclipse.emf.cdo.releng.version.Release.NAME_ATTRIBUTE">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="VERSION_ATTRIBUTE"><!-- --></A><H3>
+VERSION_ATTRIBUTE</H3>
+<PRE>
+public static final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>VERSION_ATTRIBUTE</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../constant-values.html#org.eclipse.emf.cdo.releng.version.Release.VERSION_ATTRIBUTE">Constant Field Values</A></DL>
+</DL>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="Release(org.eclipse.core.resources.IFile)"><!-- --></A><H3>
+Release</H3>
+<PRE>
+public <B>Release</B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IFile.html?is-external=true" title="class or interface in org.eclipse.core.resources">IFile</A>&nbsp;file)</PRE>
+<DL>
+</DL>
 
 <!-- ============ METHOD DETAIL ========== -->
 
@@ -226,36 +364,20 @@ public <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/refe
 <DD><DL>
 </DL>
 </DD>
-</DL>
-<HR>
-
-<A NAME="getTag()"><!-- --></A><H3>
-getTag</H3>
-<PRE>
-public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getTag</B>()</PRE>
-<DL>
 <DD><DL>
 </DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="isIntegration()"><!-- --></A><H3>
-isIntegration</H3>
+<A NAME="getDigest()"><!-- --></A><H3>
+getDigest</H3>
 <PRE>
-public boolean <B>isIntegration</B>()</PRE>
+public byte[] <B>getDigest</B>()</PRE>
 <DL>
 <DD><DL>
 </DL>
 </DD>
-</DL>
-<HR>
-
-<A NAME="getRepository()"><!-- --></A><H3>
-getRepository</H3>
-<PRE>
-public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getRepository</B>()</PRE>
-<DL>
 <DD><DL>
 </DL>
 </DD>
@@ -265,8 +387,25 @@ public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Strin
 <A NAME="getElements()"><!-- --></A><H3>
 getElements</H3>
 <PRE>
-public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.Element.html" title="class in org.eclipse.emf.cdo.releng.version">Release.Element</A>&gt; <B>getElements</B>()</PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Element.html" title="class in org.eclipse.emf.cdo.releng.version">Element</A>,<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Element.html" title="class in org.eclipse.emf.cdo.releng.version">Element</A>&gt; <B>getElements</B>()</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="resolveElement(org.eclipse.emf.cdo.releng.version.Element)"><!-- --></A><H3>
+resolveElement</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Element.html" title="class in org.eclipse.emf.cdo.releng.version">Element</A> <B>resolveElement</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Element.html" title="class in org.eclipse.emf.cdo.releng.version">Element</A>&nbsp;key)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/ElementResolver.html#resolveElement(org.eclipse.emf.cdo.releng.version.Element)">resolveElement</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/ElementResolver.html" title="interface in org.eclipse.emf.cdo.releng.version">ElementResolver</A></CODE></DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -281,16 +420,29 @@ public int <B>getSize</B>()</PRE>
 <DD><DL>
 </DL>
 </DD>
+<DD><DL>
+</DL>
+</DD>
 </DL>
 <HR>
 
-<A NAME="normalizeVersion(org.osgi.framework.Version)"><!-- --></A><H3>
-normalizeVersion</H3>
+<A NAME="write()"><!-- --></A><H3>
+write</H3>
 <PRE>
-public static org.osgi.framework.Version <B>normalizeVersion</B>(org.osgi.framework.Version&nbsp;version)</PRE>
+public void <B>write</B>()
+           throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A>,
+                  <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</A>,
+                  <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/security/NoSuchAlgorithmException.html?is-external=true" title="class or interface in java.security">NoSuchAlgorithmException</A></PRE>
 <DL>
 <DD><DL>
 </DL>
+</DD>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE>
+<DD><CODE><A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</A></CODE>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/security/NoSuchAlgorithmException.html?is-external=true" title="class or interface in java.security">NoSuchAlgorithmException</A></CODE></DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->
@@ -324,7 +476,7 @@ public static org.osgi.framework.Version <B>normalizeVersion</B>(org.osgi.framew
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Markers.html" title="class in org.eclipse.emf.cdo.releng.version"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.Element.html" title="class in org.eclipse.emf.cdo.releng.version"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.XMLHandler.html" title="class in org.eclipse.emf.cdo.releng.version"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/releng/version/Release.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="Release.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -344,9 +496,9 @@ public static org.osgi.framework.Version <B>normalizeVersion</B>(org.osgi.framew
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_bottom"></A>

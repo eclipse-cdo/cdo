@@ -4,7 +4,7 @@
 <HEAD>
 
 <TITLE>
-BuildState (CDO Release Engineering Documentation)
+BuildState (Extended Version Management Documentation)
 </TITLE>
 
 <META NAME="date" CONTENT="">
@@ -16,7 +16,7 @@ BuildState (CDO Release Engineering Documentation)
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="BuildState (CDO Release Engineering Documentation)";
+        parent.document.title="BuildState (Extended Version Management Documentation)";
     }
 }
 </SCRIPT>
@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Activator.html" title="class in org.eclipse.emf.cdo.releng.version"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Markers.html" title="class in org.eclipse.emf.cdo.releng.version"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Element.html" title="class in org.eclipse.emf.cdo.releng.version"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/releng/version/BuildState.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="BuildState.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -131,8 +131,16 @@ Class BuildState</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html#getReleaseTag()">getReleaseTag</A></B>()</CODE>
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html#getPropertiesTimeStamp()">getPropertiesTimeStamp</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;byte[]</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html#getReleaseSpecDigest()">getReleaseSpecDigest</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -147,8 +155,32 @@ Class BuildState</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html#getValidatorTimeStamp()">getValidatorTimeStamp</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;boolean</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html#isChangedSinceRelease()">isChangedSinceRelease</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html#isDeviations()">isDeviations</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html#isIntegration()">isIntegration</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -164,7 +196,47 @@ Class BuildState</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html#setDeviations(boolean)">setDeviations</A></B>(boolean&nbsp;deviations)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html#setIntegration(boolean)">setIntegration</A></B>(boolean&nbsp;integration)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html#setPropertiesTimeStamp(long)">setPropertiesTimeStamp</A></B>(long&nbsp;propertiesTimeStamp)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html#setReleaseSpecDigest(byte[])">setReleaseSpecDigest</A></B>(byte[]&nbsp;releaseSpecDigest)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html#setValidatorState(java.io.Serializable)">setValidatorState</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</A>&nbsp;validatorState)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html#setValidatorTimeStamp(long)">setValidatorTimeStamp</A></B>(long&nbsp;validatorTimeStamp)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -192,10 +264,136 @@ Class BuildState</H2>
 </TR>
 </TABLE>
 
-<A NAME="getReleaseTag()"><!-- --></A><H3>
-getReleaseTag</H3>
+<A NAME="getReleaseSpecDigest()"><!-- --></A><H3>
+getReleaseSpecDigest</H3>
 <PRE>
-public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getReleaseTag</B>()</PRE>
+public byte[] <B>getReleaseSpecDigest</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setReleaseSpecDigest(byte[])"><!-- --></A><H3>
+setReleaseSpecDigest</H3>
+<PRE>
+public void <B>setReleaseSpecDigest</B>(byte[]&nbsp;releaseSpecDigest)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getPropertiesTimeStamp()"><!-- --></A><H3>
+getPropertiesTimeStamp</H3>
+<PRE>
+public long <B>getPropertiesTimeStamp</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setPropertiesTimeStamp(long)"><!-- --></A><H3>
+setPropertiesTimeStamp</H3>
+<PRE>
+public void <B>setPropertiesTimeStamp</B>(long&nbsp;propertiesTimeStamp)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isDeviations()"><!-- --></A><H3>
+isDeviations</H3>
+<PRE>
+public boolean <B>isDeviations</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setDeviations(boolean)"><!-- --></A><H3>
+setDeviations</H3>
+<PRE>
+public void <B>setDeviations</B>(boolean&nbsp;deviations)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isIntegration()"><!-- --></A><H3>
+isIntegration</H3>
+<PRE>
+public boolean <B>isIntegration</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setIntegration(boolean)"><!-- --></A><H3>
+setIntegration</H3>
+<PRE>
+public void <B>setIntegration</B>(boolean&nbsp;integration)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getValidatorTimeStamp()"><!-- --></A><H3>
+getValidatorTimeStamp</H3>
+<PRE>
+public long <B>getValidatorTimeStamp</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setValidatorTimeStamp(long)"><!-- --></A><H3>
+setValidatorTimeStamp</H3>
+<PRE>
+public void <B>setValidatorTimeStamp</B>(long&nbsp;validatorTimeStamp)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -291,7 +489,7 @@ public void <B>setValidatorState</B>(<A HREF="http://download.oracle.com/javase/
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Activator.html" title="class in org.eclipse.emf.cdo.releng.version"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Markers.html" title="class in org.eclipse.emf.cdo.releng.version"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Element.html" title="class in org.eclipse.emf.cdo.releng.version"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/releng/version/BuildState.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="BuildState.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

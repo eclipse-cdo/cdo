@@ -15,7 +15,7 @@
 	<property name="platform.api" location="plugins/org.eclipse.emf.cdo.releng.doc/package-lists/platform" />
 
 
-	<property name="project.path" value="plugins/org.eclipse.emf.cdo.releng.help" />
+	<property name="project.path" value="plugins/org.eclipse.emf.cdo.releng.version.doc" />
 	<property file="${project.path}/plugin.properties" />
 	<property file="${project.path}/build.properties" />
 	<property name="javadoc.name" value="${pluginName}" />
@@ -55,7 +55,7 @@
 	         classpathref="javadoc.classpath" />
 
 	<target name="build.java">
-		<echo message="Building JavaDoc for org.eclipse.emf.cdo.releng.help" />
+		<echo message="Building JavaDoc for org.eclipse.emf.cdo.releng.version.doc" />
 
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset dir="${javadoc.destdir}" defaultexcludes="true">
@@ -64,7 +64,7 @@
 		</delete>
 
 		<property name="warningsfile"
-		          location="plugins/org.eclipse.emf.cdo.releng.doc/debug/org.eclipse.emf.cdo.releng.help.warnings" />
+		          location="plugins/org.eclipse.emf.cdo.releng.doc/debug/org.eclipse.emf.cdo.releng.version.doc.warnings" />
 
 		<javadoc destdir="${javadoc.destdir}"
 		         encoding="ISO-8859-1"
@@ -91,30 +91,20 @@
 			</doclet>
 
 			<fileset dir="plugins" defaultexcludes="yes">
-				<include name="org.eclipse.emf.cdo.releng.version.digest.ui/src/org/eclipse/emf/cdo/releng/version/digest/ui/*.java" />
 				<include name="org.eclipse.emf.cdo.releng.version.digest/src/org/eclipse/emf/cdo/releng/version/digest/*.java" />
 				<include name="org.eclipse.emf.cdo.releng.version/src/org/eclipse/emf/cdo/releng/version/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.version/src/org/eclipse/emf/cdo/releng/version/test/*.java" />
 			</fileset>
 
-			<group title="CDO Release Engineering Version Tool">
+			<group title="Extended Version Management">
 				<package name="org.eclipse.emf.cdo.releng.version" />
-				<package name="org.eclipse.emf.cdo.releng.version.test" />
 			</group>
-			<group title="CDO Release Engineering Version Tool (Digest Validator UI)">
-				<package name="org.eclipse.emf.cdo.releng.version.digest.ui" />
-			</group>
-			<group title="CDO Release Engineering Version Tool (Digest Validator)">
+			<group title="Extended Version Management Digest Validator">
 				<package name="org.eclipse.emf.cdo.releng.version.digest" />
 			</group>
 
 			<link href="${jdk.link}" />
 			<link href="${emf.link}" />
 			<link href="${platform.link}" offline="true" packagelistloc="${platform.api}" />
-			<link href="MAKE-RELATIVE/org.eclipse.emf.cdo.doc/javadoc" offline="true" packagelistloc="plugins/org.eclipse.emf.cdo.doc/javadoc" />
-			<link href="MAKE-RELATIVE/org.eclipse.net4j.db.doc/javadoc" offline="true" packagelistloc="plugins/org.eclipse.net4j.db.doc/javadoc" />
-			<link href="MAKE-RELATIVE/org.eclipse.net4j.doc/javadoc" offline="true" packagelistloc="plugins/org.eclipse.net4j.doc/javadoc" />
-			<link href="MAKE-RELATIVE/org.eclipse.net4j.util.doc/javadoc" offline="true" packagelistloc="plugins/org.eclipse.net4j.util.doc/javadoc" />
 
 			<tag name="ADDED" description="Added" />
 			<tag name="Singleton" description="Singleton" />
@@ -191,7 +181,7 @@
 	</target>
 
 	<target name="build.schema" unless="schema.skip">
-		<echo message="Building SchemaDoc for org.eclipse.emf.cdo.releng.help" />
+		<echo message="Building SchemaDoc for org.eclipse.emf.cdo.releng.version.doc" />
 
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset dir="${schemadoc.destdir}" defaultexcludes="true">
@@ -215,7 +205,7 @@
 	</target>
 
 	<target name="build.article" unless="article.skip">
-		<echo message="Building Articles for org.eclipse.emf.cdo.releng.help" />
+		<echo message="Building Articles for org.eclipse.emf.cdo.releng.version.doc" />
 
 		<tstamp>
 			<format property="start.time" pattern="y-M-D-H-m-s-S" />
@@ -250,55 +240,19 @@
 			        path="plugins/org.eclipse.emf.cdo.releng.doc/bin;${path.supplemental}/bin;${path.supplemental}/org.eclipse.emf.ecore_2.7.0.v20110605-0747.jar;${path.supplemental}/org.eclipse.emf.ecore.xmi_2.7.0.v20110520-1406.jar;${path.supplemental}/org.eclipse.emf.common_2.7.0.v20110605-0747.jar;${path.supplemental}/dom4j-1.6.1.jar;${path.supplemental}/poi-3.8-beta4-20110826.jar;${path.supplemental}/poi-ooxml-3.8-beta4-20110826.jar;${path.supplemental}/poi-ooxml-schemas-3.8-beta4-20110826.jar;${path.supplemental}/xmlbeans-2.3.0.jar">
 				<param name="-starttime" value="${start.time}" />
 				<param name="-basefolder" value="${basedir}" />
-				<param name="-project" value="org.eclipse.emf.cdo.releng.help" />
+				<param name="-project" value="org.eclipse.emf.cdo.releng.version.doc" />
 				<param name="-externals" value="${jdk.link};${platform.link};${emf.link}" />
 			</doclet>
 
 			<fileset dir="plugins">
-				<include name="org.eclipse.emf.cdo.releng.help/src/**/*.java" />
-				<include name="org.eclipse.emf.cdo.doc/src/**/*.java" />
-				<include name="org.eclipse.net4j.db.doc/src/**/*.java" />
-				<include name="org.eclipse.net4j.doc/src/**/*.java" />
-				<include name="org.eclipse.net4j.util.doc/src/**/*.java" />
+				<include name="org.eclipse.emf.cdo.releng.version.doc/src/**/*.java" />
 			</fileset>
 
-			<package name="org.eclipse.emf.cdo.releng.help" />
-			<package name="org.eclipse.emf.cdo.releng.help.contributor" />
-			<package name="org.eclipse.emf.cdo.releng.help.online" />
-			<package name="org.eclipse.emf.cdo.releng.help.reference" />
-			<package name="org.eclipse.emf.cdo.releng.help.reference.api" />
-			<package name="org.eclipse.emf.cdo.releng.help.releng" />
-			<package name="org.eclipse.emf.cdo.releng.help.releng.building" />
-			<package name="org.eclipse.emf.cdo.releng.help.releng.promoting" />
-			<package name="org.eclipse.emf.cdo.releng.help.releng.provisioning" />
-			<package name="org.eclipse.emf.cdo.releng.help.releng.versioning" />
-			<package name="org.eclipse.emf.cdo.releng.help.writer" />
-			<package name="org.eclipse.emf.cdo.releng.help.writer.authoring" />
-			<package name="org.eclipse.emf.cdo.releng.help.writer.building" />
-			<package name="org.eclipse.emf.cdo.releng.help.writer.examples" />
-			<package name="org.eclipse.emf.cdo.doc" />
-			<package name="org.eclipse.emf.cdo.doc.online" />
-			<package name="org.eclipse.emf.cdo.doc.programmers" />
-			<package name="org.eclipse.emf.cdo.doc.programmers.client" />
-			<package name="org.eclipse.emf.cdo.doc.programmers.server" />
-			<package name="org.eclipse.emf.cdo.doc.reference" />
-			<package name="org.eclipse.emf.cdo.doc.reference.api" />
-			<package name="org.eclipse.emf.cdo.doc.reference.schema" />
-			<package name="org.eclipse.net4j.db.doc" />
-			<package name="org.eclipse.net4j.db.doc.online" />
-			<package name="org.eclipse.net4j.db.doc.reference" />
-			<package name="org.eclipse.net4j.db.doc.reference.api" />
-			<package name="org.eclipse.net4j.db.doc.reference.schema" />
-			<package name="org.eclipse.net4j.doc" />
-			<package name="org.eclipse.net4j.doc.online" />
-			<package name="org.eclipse.net4j.doc.reference" />
-			<package name="org.eclipse.net4j.doc.reference.api" />
-			<package name="org.eclipse.net4j.doc.reference.schema" />
-			<package name="org.eclipse.net4j.util.doc" />
-			<package name="org.eclipse.net4j.util.doc.online" />
-			<package name="org.eclipse.net4j.util.doc.reference" />
-			<package name="org.eclipse.net4j.util.doc.reference.api" />
-			<package name="org.eclipse.net4j.util.doc.reference.schema" />
+			<package name="org.eclipse.emf.cdo.releng.version.doc" />
+			<package name="org.eclipse.emf.cdo.releng.version.doc.guide" />
+			<package name="org.eclipse.emf.cdo.releng.version.doc.online" />
+			<package name="org.eclipse.emf.cdo.releng.version.doc.reference" />
+			<package name="org.eclipse.emf.cdo.releng.version.doc.reference.api" />
 		</javadoc>
 	</target>
 

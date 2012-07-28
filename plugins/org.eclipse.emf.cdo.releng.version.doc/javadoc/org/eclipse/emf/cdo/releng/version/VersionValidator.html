@@ -4,7 +4,7 @@
 <HEAD>
 
 <TITLE>
-VersionValidator (CDO Release Engineering Documentation)
+VersionValidator (Extended Version Management Documentation)
 </TITLE>
 
 <META NAME="date" CONTENT="">
@@ -16,7 +16,7 @@ VersionValidator (CDO Release Engineering Documentation)
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="VersionValidator (CDO Release Engineering Documentation)";
+        parent.document.title="VersionValidator (Extended Version Management Documentation)";
     }
 }
 </SCRIPT>
@@ -156,12 +156,11 @@ Class VersionValidator</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>abstract &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionValidator.html#updateBuildState(org.eclipse.emf.cdo.releng.version.BuildState, java.lang.String, org.eclipse.emf.cdo.releng.version.Release, org.eclipse.core.resources.IProject, org.eclipse.core.resources.IResourceDelta, org.eclipse.pde.core.plugin.IPluginModelBase, org.eclipse.core.runtime.IProgressMonitor)">updateBuildState</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html" title="class in org.eclipse.emf.cdo.releng.version">BuildState</A>&nbsp;buildState,
-                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;releasePath,
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionValidator.html#updateBuildState(org.eclipse.emf.cdo.releng.version.BuildState, org.eclipse.emf.cdo.releng.version.Release, org.eclipse.core.resources.IProject, org.eclipse.core.resources.IResourceDelta, org.eclipse.pde.core.IModel, org.eclipse.core.runtime.IProgressMonitor)">updateBuildState</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html" title="class in org.eclipse.emf.cdo.releng.version">BuildState</A>&nbsp;buildState,
                  <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html" title="class in org.eclipse.emf.cdo.releng.version">Release</A>&nbsp;release,
                  <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IProject.html?is-external=true" title="class or interface in org.eclipse.core.resources">IProject</A>&nbsp;project,
                  <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IResourceDelta.html?is-external=true" title="class or interface in org.eclipse.core.resources">IResourceDelta</A>&nbsp;delta,
-                 org.eclipse.pde.core.plugin.IPluginModelBase&nbsp;pluginModel,
+                 org.eclipse.pde.core.IModel&nbsp;componentModel,
                  <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
 
 <BR>
@@ -224,15 +223,14 @@ public void <B>abort</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/releng/v
 </DL>
 <HR>
 
-<A NAME="updateBuildState(org.eclipse.emf.cdo.releng.version.BuildState, java.lang.String, org.eclipse.emf.cdo.releng.version.Release, org.eclipse.core.resources.IProject, org.eclipse.core.resources.IResourceDelta, org.eclipse.pde.core.plugin.IPluginModelBase, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+<A NAME="updateBuildState(org.eclipse.emf.cdo.releng.version.BuildState, org.eclipse.emf.cdo.releng.version.Release, org.eclipse.core.resources.IProject, org.eclipse.core.resources.IResourceDelta, org.eclipse.pde.core.IModel, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
 updateBuildState</H3>
 <PRE>
 public abstract void <B>updateBuildState</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html" title="class in org.eclipse.emf.cdo.releng.version">BuildState</A>&nbsp;buildState,
-                                      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;releasePath,
                                       <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Release.html" title="class in org.eclipse.emf.cdo.releng.version">Release</A>&nbsp;release,
                                       <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IProject.html?is-external=true" title="class or interface in org.eclipse.core.resources">IProject</A>&nbsp;project,
                                       <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IResourceDelta.html?is-external=true" title="class or interface in org.eclipse.core.resources">IResourceDelta</A>&nbsp;delta,
-                                      org.eclipse.pde.core.plugin.IPluginModelBase&nbsp;pluginModel,
+                                      org.eclipse.pde.core.IModel&nbsp;componentModel,
                                       <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)
                                throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
 <DL>

@@ -4,7 +4,7 @@
 <HEAD>
 
 <TITLE>
-VersionUtil (CDO Release Engineering Documentation)
+VersionUtil (Extended Version Management Documentation)
 </TITLE>
 
 <META NAME="date" CONTENT="">
@@ -16,7 +16,7 @@ VersionUtil (CDO Release Engineering Documentation)
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="VersionUtil (CDO Release Engineering Documentation)";
+        parent.document.title="VersionUtil (Extended Version Management Documentation)";
     }
 }
 </SCRIPT>
@@ -141,6 +141,39 @@ Class VersionUtil</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionUtil.html#close(java.io.Closeable)">close</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</A>&nbsp;closeable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IFile.html?is-external=true" title="class or interface in org.eclipse.core.resources">IFile</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionUtil.html#getFile(org.eclipse.core.runtime.IPath, java.lang.String)">getFile</A></B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</A>&nbsp;releasePath,
+        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;extension)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;byte[]</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionUtil.html#getSHA1(org.eclipse.core.resources.IFile)">getSHA1</A></B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IFile.html?is-external=true" title="class or interface in org.eclipse.core.resources">IFile</A>&nbsp;file)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;org.osgi.framework.Version</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionUtil.html#normalize(org.osgi.framework.Version)">normalize</A></B>(org.osgi.framework.Version&nbsp;version)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionUtil.html#someDeprecatedCode()">someDeprecatedCode</A></B>()</CODE>
 
 <BR>
@@ -186,6 +219,58 @@ public <B>VersionUtil</B>()</PRE>
 <B>Method Detail</B></FONT></TH>
 </TR>
 </TABLE>
+
+<A NAME="close(java.io.Closeable)"><!-- --></A><H3>
+close</H3>
+<PRE>
+public static void <B>close</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</A>&nbsp;closeable)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getFile(org.eclipse.core.runtime.IPath, java.lang.String)"><!-- --></A><H3>
+getFile</H3>
+<PRE>
+public static <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IFile.html?is-external=true" title="class or interface in org.eclipse.core.resources">IFile</A> <B>getFile</B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</A>&nbsp;releasePath,
+                            <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;extension)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="normalize(org.osgi.framework.Version)"><!-- --></A><H3>
+normalize</H3>
+<PRE>
+public static org.osgi.framework.Version <B>normalize</B>(org.osgi.framework.Version&nbsp;version)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getSHA1(org.eclipse.core.resources.IFile)"><!-- --></A><H3>
+getSHA1</H3>
+<PRE>
+public static byte[] <B>getSHA1</B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IFile.html?is-external=true" title="class or interface in org.eclipse.core.resources">IFile</A>&nbsp;file)
+                      throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/security/NoSuchAlgorithmException.html?is-external=true" title="class or interface in java.security">NoSuchAlgorithmException</A>,
+                             <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</A>,
+                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/security/NoSuchAlgorithmException.html?is-external=true" title="class or interface in java.security">NoSuchAlgorithmException</A></CODE>
+<DD><CODE><A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</A></CODE>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
 
 <A NAME="someDeprecatedCode()"><!-- --></A><H3>
 someDeprecatedCode</H3>

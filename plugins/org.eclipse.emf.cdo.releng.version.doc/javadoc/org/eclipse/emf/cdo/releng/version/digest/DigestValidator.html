@@ -4,7 +4,7 @@
 <HEAD>
 
 <TITLE>
-DigestValidator (CDO Release Engineering Documentation)
+DigestValidator (Extended Version Management Documentation)
 </TITLE>
 
 <META NAME="date" CONTENT="">
@@ -16,7 +16,7 @@ DigestValidator (CDO Release Engineering Documentation)
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="DigestValidator (CDO Release Engineering Documentation)";
+        parent.document.title="DigestValidator (Extended Version Management Documentation)";
     }
 }
 </SCRIPT>
@@ -163,7 +163,7 @@ Class DigestValidator</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
+<CODE>protected &nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#afterValidation(org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState)">afterValidation</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;validatorState)</CODE>
 
 <BR>
@@ -171,9 +171,20 @@ Class DigestValidator</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#beforeValidation(org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.plugin.IPluginModelBase)">beforeValidation</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;validatorState,
-                 org.eclipse.pde.core.plugin.IPluginModelBase&nbsp;pluginModel)</CODE>
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#beforeValidation(org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.IModel)">beforeValidation</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;validatorState,
+                 org.eclipse.pde.core.IModel&nbsp;componentModel)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/ReleaseDigest.html" title="class in org.eclipse.emf.cdo.releng.version.digest">ReleaseDigest</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#createReleaseDigest(org.eclipse.emf.cdo.releng.version.Release, org.eclipse.core.resources.IFile, java.util.List, org.eclipse.core.runtime.IProgressMonitor)">createReleaseDigest</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/Release.html" title="class in org.eclipse.emf.cdo.releng.version">Release</A>&nbsp;release,
+                    <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IFile.html?is-external=true" title="class or interface in org.eclipse.core.resources">IFile</A>&nbsp;target,
+                    <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;warnings,
+                    <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -197,12 +208,11 @@ Class DigestValidator</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#updateBuildState(org.eclipse.emf.cdo.releng.version.BuildState, java.lang.String, org.eclipse.emf.cdo.releng.version.Release, org.eclipse.core.resources.IProject, org.eclipse.core.resources.IResourceDelta, org.eclipse.pde.core.plugin.IPluginModelBase, org.eclipse.core.runtime.IProgressMonitor)">updateBuildState</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html" title="class in org.eclipse.emf.cdo.releng.version">BuildState</A>&nbsp;buildState,
-                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;releasePath,
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#updateBuildState(org.eclipse.emf.cdo.releng.version.BuildState, org.eclipse.emf.cdo.releng.version.Release, org.eclipse.core.resources.IProject, org.eclipse.core.resources.IResourceDelta, org.eclipse.pde.core.IModel, org.eclipse.core.runtime.IProgressMonitor)">updateBuildState</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html" title="class in org.eclipse.emf.cdo.releng.version">BuildState</A>&nbsp;buildState,
                  <A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/Release.html" title="class in org.eclipse.emf.cdo.releng.version">Release</A>&nbsp;release,
                  <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IProject.html?is-external=true" title="class or interface in org.eclipse.core.resources">IProject</A>&nbsp;project,
                  <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IResourceDelta.html?is-external=true" title="class or interface in org.eclipse.core.resources">IResourceDelta</A>&nbsp;delta,
-                 org.eclipse.pde.core.plugin.IPluginModelBase&nbsp;pluginModel,
+                 org.eclipse.pde.core.IModel&nbsp;componentModel,
                  <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
 
 <BR>
@@ -211,9 +221,9 @@ Class DigestValidator</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#validateDelta(org.eclipse.core.resources.IResourceDelta, org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.plugin.IPluginModelBase, org.eclipse.core.runtime.IProgressMonitor)">validateDelta</A></B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IResourceDelta.html?is-external=true" title="class or interface in org.eclipse.core.resources">IResourceDelta</A>&nbsp;delta,
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#validateDelta(org.eclipse.core.resources.IResourceDelta, org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.IModel, org.eclipse.core.runtime.IProgressMonitor)">validateDelta</A></B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IResourceDelta.html?is-external=true" title="class or interface in org.eclipse.core.resources">IResourceDelta</A>&nbsp;delta,
               <A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;validatorState,
-              org.eclipse.pde.core.plugin.IPluginModelBase&nbsp;pluginModel,
+              org.eclipse.pde.core.IModel&nbsp;componentModel,
               <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
 
 <BR>
@@ -222,9 +232,9 @@ Class DigestValidator</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#validateFull(org.eclipse.core.resources.IResource, org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.plugin.IPluginModelBase, org.eclipse.core.runtime.IProgressMonitor)">validateFull</A></B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IResource.html?is-external=true" title="class or interface in org.eclipse.core.resources">IResource</A>&nbsp;resource,
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#validateFull(org.eclipse.core.resources.IResource, org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.IModel, org.eclipse.core.runtime.IProgressMonitor)">validateFull</A></B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IResource.html?is-external=true" title="class or interface in org.eclipse.core.resources">IResource</A>&nbsp;resource,
              <A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;parentState,
-             org.eclipse.pde.core.plugin.IPluginModelBase&nbsp;pluginModel,
+             org.eclipse.pde.core.IModel&nbsp;componentModel,
              <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
 
 <BR>
@@ -279,20 +289,19 @@ public <B>DigestValidator</B>()</PRE>
 </TR>
 </TABLE>
 
-<A NAME="updateBuildState(org.eclipse.emf.cdo.releng.version.BuildState, java.lang.String, org.eclipse.emf.cdo.releng.version.Release, org.eclipse.core.resources.IProject, org.eclipse.core.resources.IResourceDelta, org.eclipse.pde.core.plugin.IPluginModelBase, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+<A NAME="updateBuildState(org.eclipse.emf.cdo.releng.version.BuildState, org.eclipse.emf.cdo.releng.version.Release, org.eclipse.core.resources.IProject, org.eclipse.core.resources.IResourceDelta, org.eclipse.pde.core.IModel, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
 updateBuildState</H3>
 <PRE>
 public void <B>updateBuildState</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/BuildState.html" title="class in org.eclipse.emf.cdo.releng.version">BuildState</A>&nbsp;buildState,
-                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;releasePath,
                              <A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/Release.html" title="class in org.eclipse.emf.cdo.releng.version">Release</A>&nbsp;release,
                              <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IProject.html?is-external=true" title="class or interface in org.eclipse.core.resources">IProject</A>&nbsp;project,
                              <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IResourceDelta.html?is-external=true" title="class or interface in org.eclipse.core.resources">IResourceDelta</A>&nbsp;delta,
-                             org.eclipse.pde.core.plugin.IPluginModelBase&nbsp;pluginModel,
+                             org.eclipse.pde.core.IModel&nbsp;componentModel,
                              <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)
                       throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/VersionValidator.html#updateBuildState(org.eclipse.emf.cdo.releng.version.BuildState, java.lang.String, org.eclipse.emf.cdo.releng.version.Release, org.eclipse.core.resources.IProject, org.eclipse.core.resources.IResourceDelta, org.eclipse.pde.core.plugin.IPluginModelBase, org.eclipse.core.runtime.IProgressMonitor)">updateBuildState</A></CODE> in class <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/VersionValidator.html" title="class in org.eclipse.emf.cdo.releng.version">VersionValidator</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/VersionValidator.html#updateBuildState(org.eclipse.emf.cdo.releng.version.BuildState, org.eclipse.emf.cdo.releng.version.Release, org.eclipse.core.resources.IProject, org.eclipse.core.resources.IResourceDelta, org.eclipse.pde.core.IModel, org.eclipse.core.runtime.IProgressMonitor)">updateBuildState</A></CODE> in class <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/VersionValidator.html" title="class in org.eclipse.emf.cdo.releng.version">VersionValidator</A></CODE></DL>
 </DD>
 <DD><DL>
 
@@ -302,12 +311,12 @@ public void <B>updateBuildState</B>(<A HREF="../../../../../../../org/eclipse/em
 </DL>
 <HR>
 
-<A NAME="validateFull(org.eclipse.core.resources.IResource, org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.plugin.IPluginModelBase, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+<A NAME="validateFull(org.eclipse.core.resources.IResource, org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.IModel, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
 validateFull</H3>
 <PRE>
 public <A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A> <B>validateFull</B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IResource.html?is-external=true" title="class or interface in org.eclipse.core.resources">IResource</A>&nbsp;resource,
                                          <A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;parentState,
-                                         org.eclipse.pde.core.plugin.IPluginModelBase&nbsp;pluginModel,
+                                         org.eclipse.pde.core.IModel&nbsp;componentModel,
                                          <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)
                                   throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
 <DL>
@@ -319,43 +328,14 @@ public <A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/D
 </DL>
 <HR>
 
-<A NAME="validateDelta(org.eclipse.core.resources.IResourceDelta, org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.plugin.IPluginModelBase, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+<A NAME="validateDelta(org.eclipse.core.resources.IResourceDelta, org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.IModel, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
 validateDelta</H3>
 <PRE>
 public <A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A> <B>validateDelta</B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IResourceDelta.html?is-external=true" title="class or interface in org.eclipse.core.resources">IResourceDelta</A>&nbsp;delta,
                                           <A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;validatorState,
-                                          org.eclipse.pde.core.plugin.IPluginModelBase&nbsp;pluginModel,
+                                          org.eclipse.pde.core.IModel&nbsp;componentModel,
                                           <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)
                                    throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
-<DL>
-<DD><DL>
-
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE></DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="beforeValidation(org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.plugin.IPluginModelBase)"><!-- --></A><H3>
-beforeValidation</H3>
-<PRE>
-public void <B>beforeValidation</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;validatorState,
-                             org.eclipse.pde.core.plugin.IPluginModelBase&nbsp;pluginModel)
-                      throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
-<DL>
-<DD><DL>
-
-<DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE></DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="afterValidation(org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState)"><!-- --></A><H3>
-afterValidation</H3>
-<PRE>
-public void <B>afterValidation</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;validatorState)
-                     throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
 <DL>
 <DD><DL>
 
@@ -372,6 +352,52 @@ protected boolean <B>isConsidered</B>(<A HREF="http://help.eclipse.org/topic//or
 <DL>
 <DD><DL>
 </DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="beforeValidation(org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.IModel)"><!-- --></A><H3>
+beforeValidation</H3>
+<PRE>
+protected void <B>beforeValidation</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;validatorState,
+                                org.eclipse.pde.core.IModel&nbsp;componentModel)
+                         throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="afterValidation(org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState)"><!-- --></A><H3>
+afterValidation</H3>
+<PRE>
+protected void <B>afterValidation</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;validatorState)
+                        throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createReleaseDigest(org.eclipse.emf.cdo.releng.version.Release, org.eclipse.core.resources.IFile, java.util.List, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+createReleaseDigest</H3>
+<PRE>
+public <A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/ReleaseDigest.html" title="class in org.eclipse.emf.cdo.releng.version.digest">ReleaseDigest</A> <B>createReleaseDigest</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/Release.html" title="class in org.eclipse.emf.cdo.releng.version">Release</A>&nbsp;release,
+                                         <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IFile.html?is-external=true" title="class or interface in org.eclipse.core.resources">IFile</A>&nbsp;target,
+                                         <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;&nbsp;warnings,
+                                         <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)
+                                  throws <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</A></CODE></DL>
 </DD>
 </DL>
 <HR>

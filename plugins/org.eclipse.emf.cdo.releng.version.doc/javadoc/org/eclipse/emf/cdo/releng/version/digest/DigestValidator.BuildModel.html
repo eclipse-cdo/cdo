@@ -4,7 +4,7 @@
 <HEAD>
 
 <TITLE>
-DigestValidator.BuildModel (CDO Release Engineering Documentation)
+DigestValidator.BuildModel (Extended Version Management Documentation)
 </TITLE>
 
 <META NAME="date" CONTENT="">
@@ -16,7 +16,7 @@ DigestValidator.BuildModel (CDO Release Engineering Documentation)
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="DigestValidator.BuildModel (CDO Release Engineering Documentation)";
+        parent.document.title="DigestValidator.BuildModel (Extended Version Management Documentation)";
     }
 }
 </SCRIPT>
@@ -165,7 +165,7 @@ Class DigestValidator.BuildModel</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
+<CODE>protected &nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.BuildModel.html#afterValidation(org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState)">afterValidation</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;validatorState)</CODE>
 
 <BR>
@@ -173,9 +173,9 @@ Class DigestValidator.BuildModel</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.BuildModel.html#beforeValidation(org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.plugin.IPluginModelBase)">beforeValidation</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;validatorState,
-                 org.eclipse.pde.core.plugin.IPluginModelBase&nbsp;pluginModel)</CODE>
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.BuildModel.html#beforeValidation(org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.IModel)">beforeValidation</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;validatorState,
+                 org.eclipse.pde.core.IModel&nbsp;componentModel)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -195,7 +195,7 @@ Class DigestValidator.BuildModel</H2>
 <TH ALIGN="left"><B>Methods inherited from class org.eclipse.emf.cdo.releng.version.digest.<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidator</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#getDigestFile(org.eclipse.core.runtime.IPath)">getDigestFile</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#updateBuildState(org.eclipse.emf.cdo.releng.version.BuildState, java.lang.String, org.eclipse.emf.cdo.releng.version.Release, org.eclipse.core.resources.IProject, org.eclipse.core.resources.IResourceDelta, org.eclipse.pde.core.plugin.IPluginModelBase, org.eclipse.core.runtime.IProgressMonitor)">updateBuildState</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#validateDelta(org.eclipse.core.resources.IResourceDelta, org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.plugin.IPluginModelBase, org.eclipse.core.runtime.IProgressMonitor)">validateDelta</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#validateFull(org.eclipse.core.resources.IResource, org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.plugin.IPluginModelBase, org.eclipse.core.runtime.IProgressMonitor)">validateFull</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#createReleaseDigest(org.eclipse.emf.cdo.releng.version.Release, org.eclipse.core.resources.IFile, java.util.List, org.eclipse.core.runtime.IProgressMonitor)">createReleaseDigest</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#getDigestFile(org.eclipse.core.runtime.IPath)">getDigestFile</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#updateBuildState(org.eclipse.emf.cdo.releng.version.BuildState, org.eclipse.emf.cdo.releng.version.Release, org.eclipse.core.resources.IProject, org.eclipse.core.resources.IResourceDelta, org.eclipse.pde.core.IModel, org.eclipse.core.runtime.IProgressMonitor)">updateBuildState</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#validateDelta(org.eclipse.core.resources.IResourceDelta, org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.IModel, org.eclipse.core.runtime.IProgressMonitor)">validateDelta</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#validateFull(org.eclipse.core.resources.IResource, org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.IModel, org.eclipse.core.runtime.IProgressMonitor)">validateFull</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.releng.version.VersionValidator"><!-- --></A>
@@ -246,15 +246,15 @@ public <B>DigestValidator.BuildModel</B>()</PRE>
 </TR>
 </TABLE>
 
-<A NAME="beforeValidation(org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.plugin.IPluginModelBase)"><!-- --></A><H3>
+<A NAME="beforeValidation(org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.IModel)"><!-- --></A><H3>
 beforeValidation</H3>
 <PRE>
-public void <B>beforeValidation</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;validatorState,
-                             org.eclipse.pde.core.plugin.IPluginModelBase&nbsp;pluginModel)
-                      throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
+protected void <B>beforeValidation</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;validatorState,
+                                org.eclipse.pde.core.IModel&nbsp;componentModel)
+                         throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
 <DL>
 <DD><DL>
-<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#beforeValidation(org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.plugin.IPluginModelBase)">beforeValidation</A></CODE> in class <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidator</A></CODE></DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#beforeValidation(org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState, org.eclipse.pde.core.IModel)">beforeValidation</A></CODE> in class <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidator</A></CODE></DL>
 </DD>
 <DD><DL>
 
@@ -267,8 +267,8 @@ public void <B>beforeValidation</B>(<A HREF="../../../../../../../org/eclipse/em
 <A NAME="afterValidation(org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState)"><!-- --></A><H3>
 afterValidation</H3>
 <PRE>
-public void <B>afterValidation</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;validatorState)
-                     throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
+protected void <B>afterValidation</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidatorState.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidatorState</A>&nbsp;validatorState)
+                        throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
 <DL>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html#afterValidation(org.eclipse.emf.cdo.releng.version.digest.DigestValidatorState)">afterValidation</A></CODE> in class <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/releng/version/digest/DigestValidator.html" title="class in org.eclipse.emf.cdo.releng.version.digest">DigestValidator</A></CODE></DL>

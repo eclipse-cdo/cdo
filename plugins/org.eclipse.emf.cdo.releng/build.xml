@@ -267,6 +267,11 @@
 						<arg value="org.eclipse.buckminster.git.headless.feature.feature.group" />
 					</args>
 				</eclipse.launch>
+
+				<!-- See http://wiki.eclipse.org/Hudson#Configuring_a_proxy_for_the_p2_director -->
+				<copy file="${releng}/hudson/org.eclipse.core.net.prefs"
+				      todir="${tools}/buckminster/configuration/.settings"
+				      overwrite="true" />
 			</then>
 		</if>
 	</target>

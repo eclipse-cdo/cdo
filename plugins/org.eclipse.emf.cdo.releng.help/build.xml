@@ -5,7 +5,7 @@
 	<!-- THIS FILE HAS BEEN GENERATED, DO NOT CHANGE -->
 	<!-- =========================================== -->
 
-	<property file="${user.home}/org.eclipse.emf.cdo.releng.doc_4.1.properties" />
+	<property file="${user.home}/org.eclipse.emf.cdo.releng.doc_4.2.properties" />
 	<property name="path.tp" value=".target" />
 	<property name="path.supplemental" value="${user.home}/git/local/org.eclipse.emf.cdo.releng.doc.supplemental" />
 
@@ -91,22 +91,8 @@
 			</doclet>
 
 			<fileset dir="plugins" defaultexcludes="yes">
-				<include name="org.eclipse.emf.cdo.releng.version.digest.ui/src/org/eclipse/emf/cdo/releng/version/digest/ui/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.version.digest/src/org/eclipse/emf/cdo/releng/version/digest/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.version/src/org/eclipse/emf/cdo/releng/version/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.version/src/org/eclipse/emf/cdo/releng/version/test/*.java" />
 			</fileset>
 
-			<group title="CDO Release Engineering Version Tool">
-				<package name="org.eclipse.emf.cdo.releng.version" />
-				<package name="org.eclipse.emf.cdo.releng.version.test" />
-			</group>
-			<group title="CDO Release Engineering Version Tool (Digest Validator UI)">
-				<package name="org.eclipse.emf.cdo.releng.version.digest.ui" />
-			</group>
-			<group title="CDO Release Engineering Version Tool (Digest Validator)">
-				<package name="org.eclipse.emf.cdo.releng.version.digest" />
-			</group>
 
 			<link href="${jdk.link}" />
 			<link href="${emf.link}" />

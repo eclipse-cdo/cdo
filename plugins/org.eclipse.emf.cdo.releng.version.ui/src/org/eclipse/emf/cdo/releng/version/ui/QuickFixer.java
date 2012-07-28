@@ -246,7 +246,7 @@ public class QuickFixer implements IMarkerResolutionGenerator2
       {
         int start;
         int end;
-        if (replacement.length() != 0)
+        if (replacement != null && replacement.length() != 0)
         {
           start = matcher.start(1);
           end = matcher.end(1);
@@ -255,6 +255,7 @@ public class QuickFixer implements IMarkerResolutionGenerator2
         {
           start = matcher.start();
           end = matcher.end();
+          replacement = "";
         }
 
         document.replace(start, end - start, replacement);

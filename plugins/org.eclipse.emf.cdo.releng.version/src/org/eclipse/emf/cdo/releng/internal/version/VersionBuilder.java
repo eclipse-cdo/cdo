@@ -18,9 +18,11 @@ import org.eclipse.emf.cdo.releng.version.Markers;
 import org.eclipse.emf.cdo.releng.version.VersionUtil;
 import org.eclipse.emf.cdo.releng.version.VersionValidator;
 
+import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
@@ -36,6 +38,8 @@ import org.eclipse.osgi.service.resolver.ExportPackageDescription;
 import org.eclipse.osgi.service.resolver.ImportPackageSpecification;
 import org.eclipse.osgi.service.resolver.VersionRange;
 import org.eclipse.pde.core.IModel;
+import org.eclipse.pde.core.plugin.IPluginBase;
+import org.eclipse.pde.core.plugin.IPluginExtensionPoint;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.core.plugin.PluginRegistry;
 
@@ -60,6 +64,8 @@ import java.util.regex.Pattern;
  */
 public class VersionBuilder extends IncrementalProjectBuilder implements IElementResolver
 {
+  private static final Path DESCRIPTION_PATH = new Path(".project");
+
   private static final Path MANIFEST_PATH = new Path("META-INF/MANIFEST.MF");
 
   private static final Path FEATURE_PATH = new Path("feature.xml");
@@ -79,6 +85,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
   private static final int MINOR_CHANGE = 2;
 
   private static final int MAJOR_CHANGE = 3;
+
+  private static final String NL = System.getProperty("line.separator");
 
   private IRelease release;
 
@@ -145,7 +153,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
     VersionValidator validator = null;
 
     IProject project = getProject();
-    IFile projectDescription = project.getFile(new Path(".project"));
+    IFile projectDescription = project.getFile(DESCRIPTION_PATH);
 
     BuildState buildState = Activator.getBuildState(project);
     byte[] releaseSpecDigest = buildState.getReleaseSpecDigest();
@@ -159,7 +167,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       Markers.deleteAllMarkers(project);
 
       IModel componentModel = VersionUtil.getComponentModel(project);
-      if (!arguments.isIgnoreMalformedVersionsButton())
+      if (!arguments.isIgnoreMalformedVersions())
       {
         if (checkMalformedVersions(componentModel))
         {
@@ -169,6 +177,11 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
 
       if (componentModel instanceof IPluginModelBase)
       {
+        if (!arguments.isIgnoreSchemaBuilder())
+        {
+          checkSchemaBuilder((IPluginModelBase)componentModel, projectDescription);
+        }
+
         if (!arguments.isIgnoreMissingDependencyRanges())
         {
           checkDependencyRanges((IPluginModelBase)componentModel);
@@ -479,9 +492,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
     deviations = false;
     integration = true;
 
-    String nl = System.getProperty("line.separator");
-    String contents = INTEGRATION_PROPERTY_KEY + " = " + integration + nl + DEVIATIONS_PROPERTY_KEY + " = "
-        + deviations + nl;
+    String contents = INTEGRATION_PROPERTY_KEY + " = " + integration + NL + DEVIATIONS_PROPERTY_KEY + " = "
+        + deviations + NL;
 
     String charsetName = propertiesFile.getCharset();
     byte[] bytes = contents.getBytes(charsetName);
@@ -842,6 +854,56 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
         {
           addExportMarker(packageName, bundleVersion);
         }
+      }
+    }
+  }
+
+  private void checkSchemaBuilder(IPluginModelBase pluginModel, IFile file) throws CoreException, IOException
+  {
+    IProjectDescription description = getProject().getDescription();
+
+    IPluginBase pluginBase = pluginModel.getPluginBase();
+    if (pluginBase != null)
+    {
+      IPluginExtensionPoint[] extensionPoints = pluginBase.getExtensionPoints();
+      if (extensionPoints != null & extensionPoints.length != 0)
+      {
+        // Plugin has an extension point. Check that SchemaBuilder is configured.
+        for (ICommand command : description.getBuildSpec())
+        {
+          if ("org.eclipse.pde.SchemaBuilder".equals(command.getBuilderName()))
+          {
+            return;
+          }
+        }
+
+        String regex = "<buildCommand\\s*>\\s*<name>\\s*org.eclipse.pde.ManifestBuilder\\s*</name>.*?</buildCommand>(\\s*)";
+        String msg = "Schema builder is missing";
+
+        IMarker marker = Markers.addMarker(file, msg, IMarker.SEVERITY_WARNING, regex);
+        marker.setAttribute(Markers.QUICK_FIX_PATTERN, regex);
+        marker.setAttribute(Markers.QUICK_FIX_REPLACEMENT, NL + "\t\t<buildCommand>" + NL
+            + "\t\t\t<name>org.eclipse.pde.SchemaBuilder</name>" + NL + "\t\t\t<arguments>" + NL + "\t\t\t</arguments>"
+            + NL + "\t\t</buildCommand>" + NL + "\t\t");
+        marker
+            .setAttribute(Markers.QUICK_FIX_CONFIGURE_OPTION, IVersionBuilderArguments.IGNORE_SCHEMA_BUILDER_ARGUMENT);
+        return;
+      }
+    }
+
+    // Plugin has no extension point(s). Check that SchemaBuilder is not configured.
+    for (ICommand command : description.getBuildSpec())
+    {
+      if ("org.eclipse.pde.SchemaBuilder".equals(command.getBuilderName()))
+      {
+        String regex = "(<buildCommand\\s*>\\s*<name>\\s*org.eclipse.pde.SchemaBuilder\\s*</name>.*?</buildCommand>)\\s*";
+        String msg = "No schema builder is needed because no extension point is declared";
+
+        IMarker marker = Markers.addMarker(file, msg, IMarker.SEVERITY_WARNING, regex);
+        marker.setAttribute(Markers.QUICK_FIX_PATTERN, regex);
+        marker
+            .setAttribute(Markers.QUICK_FIX_CONFIGURE_OPTION, IVersionBuilderArguments.IGNORE_SCHEMA_BUILDER_ARGUMENT);
+        break;
       }
     }
   }

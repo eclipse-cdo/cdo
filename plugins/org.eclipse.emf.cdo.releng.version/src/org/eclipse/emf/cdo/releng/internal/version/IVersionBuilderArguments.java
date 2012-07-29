@@ -26,6 +26,10 @@ public interface IVersionBuilderArguments extends Map<String, String>
 
   public static final String VALIDATOR_CLASS_ARGUMENT = "validator.class";
 
+  public static final String IGNORE_MALFORMED_VERSIONS_ARGUMENT = "ignore.malformed.versions";
+
+  public static final String IGNORE_SCHEMA_BUILDER_ARGUMENT = "ignore.schema.builder";
+
   public static final String IGNORE_DEPENDENCY_RANGES_ARGUMENT = "ignore.missing.dependency.ranges";
 
   public static final String IGNORE_EXPORT_VERSIONS_ARGUMENT = "ignore.missing.export.versions";
@@ -34,9 +38,11 @@ public interface IVersionBuilderArguments extends Map<String, String>
 
   public static final String IGNORE_CONTENT_CHANGES_ARGUMENT = "ignore.feature.content.changes";
 
-  public static final String IGNORE_MALFORMED_VERSIONS_ARGUMENT = "ignore.malformed.versions";
-
   public String getReleasePath();
+
+  public boolean isIgnoreMalformedVersions();
+
+  public boolean isIgnoreSchemaBuilder();
 
   public boolean isIgnoreMissingDependencyRanges();
 
@@ -45,8 +51,6 @@ public interface IVersionBuilderArguments extends Map<String, String>
   public boolean isIgnoreFeatureContentRedundancy();
 
   public boolean isIgnoreFeatureContentChanges();
-
-  public boolean isIgnoreMalformedVersionsButton();
 
   public void applyTo(IProject project) throws CoreException;
 }

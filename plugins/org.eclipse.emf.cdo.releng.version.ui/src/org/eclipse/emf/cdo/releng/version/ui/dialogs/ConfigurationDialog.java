@@ -17,6 +17,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -35,11 +37,17 @@ import java.util.Set;
  */
 public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuilderArguments
 {
+  private static final String PATH_LABEL = "Path to release specification file";
+
   private static final String BUILDER_CONFIGURATION = "Version Builder Configuration";
 
   private VersionBuilderArguments values;
 
   private Text releasePathText;
+
+  private Button ignoreMalformedVersionsButton;
+
+  private Button ignoreSchemaBuilderButton;
 
   private Button ignoreMissingDependencyRangesButton;
 
@@ -48,8 +56,6 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
   private Button ignoreFeatureContentChangesButton;
 
   private Button ignoreFeatureContentRedundancyButton;
-
-  private Button ignoreMalformedVersionsButton;
 
   public ConfigurationDialog(Shell parentShell, VersionBuilderArguments defaults)
   {
@@ -77,7 +83,8 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
     composite.setLayout(new GridLayout());
     composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-    new Label(composite, SWT.NONE).setText("Path to release specification file: ");
+    new Label(composite, SWT.NONE).setText(PATH_LABEL + ": ");
+
     releasePathText = new Text(composite, SWT.BORDER);
     releasePathText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
     String releasePath = values.getReleasePath();
@@ -85,6 +92,14 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
     {
       releasePathText.setText(releasePath);
     }
+
+    ignoreMalformedVersionsButton = new Button(composite, SWT.CHECK);
+    ignoreMalformedVersionsButton.setText("Ignore malformed versions");
+    ignoreMalformedVersionsButton.setSelection(values.isIgnoreMalformedVersions());
+
+    ignoreSchemaBuilderButton = new Button(composite, SWT.CHECK);
+    ignoreSchemaBuilderButton.setText("Ignore schema builder");
+    ignoreSchemaBuilderButton.setSelection(values.isIgnoreMalformedVersions());
 
     ignoreMissingDependencyRangesButton = new Button(composite, SWT.CHECK);
     ignoreMissingDependencyRangesButton.setText("Ignore missing dependency version ranges");
@@ -102,53 +117,75 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
     ignoreFeatureContentChangesButton.setText("Ignore feature content changes");
     ignoreFeatureContentChangesButton.setSelection(values.isIgnoreFeatureContentChanges());
 
-    ignoreMalformedVersionsButton = new Button(composite, SWT.CHECK);
-    ignoreMalformedVersionsButton.setText("Ignore malformed versions");
-    ignoreMalformedVersionsButton.setSelection(values.isIgnoreMalformedVersionsButton());
+    releasePathText.addModifyListener(new ModifyListener()
+    {
+      public void modifyText(ModifyEvent e)
+      {
+        validate();
+      }
+    });
 
+    validate();
     return dialogArea;
+  }
+
+  protected void validate()
+  {
+    if (releasePathText.getText().trim().length() == 0)
+    {
+      setErrorMessage(PATH_LABEL + " is empty.");
+      return;
+    }
+
+    setErrorMessage(null);
   }
 
   @Override
   protected void okPressed()
   {
     values.setReleasePath(releasePathText.getText());
+    values.setIgnoreMalformedVersions(ignoreMalformedVersionsButton.getSelection());
+    values.setIgnoreSchemaBuilder(ignoreSchemaBuilderButton.getSelection());
     values.setIgnoreMissingDependencyRanges(ignoreMissingDependencyRangesButton.getSelection());
     values.setIgnoreMissingExportVersions(ignoreMissingExportVersionsButton.getSelection());
     values.setIgnoreFeatureContentRedundancy(ignoreFeatureContentRedundancyButton.getSelection());
     values.setIgnoreFeatureContentChanges(ignoreFeatureContentChangesButton.getSelection());
-    values.setIgnoreMalformedVersions(ignoreMalformedVersionsButton.getSelection());
     super.okPressed();
   }
 
   public String getReleasePath()
   {
-    return values.getReleasePath();
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean isIgnoreMalformedVersions()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean isIgnoreSchemaBuilder()
+  {
+    throw new UnsupportedOperationException();
   }
 
   public boolean isIgnoreMissingDependencyRanges()
   {
-    return values.isIgnoreMissingDependencyRanges();
+    throw new UnsupportedOperationException();
   }
 
   public boolean isIgnoreMissingExportVersions()
   {
-    return values.isIgnoreMissingExportVersions();
+    throw new UnsupportedOperationException();
   }
 
   public boolean isIgnoreFeatureContentRedundancy()
   {
-    return values.isIgnoreFeatureContentRedundancy();
+    throw new UnsupportedOperationException();
   }
 
   public boolean isIgnoreFeatureContentChanges()
   {
-    return values.isIgnoreFeatureContentChanges();
-  }
-
-  public boolean isIgnoreMalformedVersionsButton()
-  {
-    return values.isIgnoreMalformedVersionsButton();
+    throw new UnsupportedOperationException();
   }
 
   public void applyTo(IProject project) throws CoreException

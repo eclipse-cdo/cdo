@@ -66,6 +66,16 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
     return get(IVersionBuilderArguments.VALIDATOR_CLASS_ARGUMENT);
   }
 
+  public boolean isIgnoreMalformedVersions()
+  {
+    return "true".equals(get(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT));
+  }
+
+  public boolean isIgnoreSchemaBuilder()
+  {
+    return "true".equals(get(IVersionBuilderArguments.IGNORE_SCHEMA_BUILDER_ARGUMENT));
+  }
+
   public boolean isIgnoreMissingDependencyRanges()
   {
     return "true".equals(get(IVersionBuilderArguments.IGNORE_DEPENDENCY_RANGES_ARGUMENT));
@@ -84,11 +94,6 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
   public boolean isIgnoreFeatureContentChanges()
   {
     return "true".equals(get(IVersionBuilderArguments.IGNORE_CONTENT_CHANGES_ARGUMENT));
-  }
-
-  public boolean isIgnoreMalformedVersionsButton()
-  {
-    return "true".equals(get(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT));
   }
 
   public void setReleasePath(String value)
@@ -112,6 +117,30 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
     else
     {
       remove(IVersionBuilderArguments.VALIDATOR_CLASS_ARGUMENT);
+    }
+  }
+
+  public void setIgnoreMalformedVersions(boolean value)
+  {
+    if (value)
+    {
+      put(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT, Boolean.toString(true));
+    }
+    else
+    {
+      remove(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT);
+    }
+  }
+
+  public void setIgnoreSchemaBuilder(boolean value)
+  {
+    if (value)
+    {
+      put(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT, Boolean.toString(true));
+    }
+    else
+    {
+      remove(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT);
     }
   }
 
@@ -160,18 +189,6 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
     else
     {
       remove(IVersionBuilderArguments.IGNORE_CONTENT_CHANGES_ARGUMENT);
-    }
-  }
-
-  public void setIgnoreMalformedVersions(boolean value)
-  {
-    if (value)
-    {
-      put(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT, Boolean.toString(true));
-    }
-    else
-    {
-      remove(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT);
     }
   }
 

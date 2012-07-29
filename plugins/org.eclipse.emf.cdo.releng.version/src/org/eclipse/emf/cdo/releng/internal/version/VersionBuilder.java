@@ -88,6 +88,9 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
 
   private static final int MAJOR_CHANGE = 3;
 
+  private static final Pattern DEBUG_OPTION_PATTERN = Pattern.compile("^( *)([^/ \\n\\r]+)/([^ =]+)( *=.*)$",
+  Pattern.MULTILINE);
+
   private static final String NL = System.getProperty("line.separator");
 
   private IRelease release;
@@ -914,9 +917,6 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       }
     }
   }
-
-  private static final Pattern DEBUG_OPTION_PATTERN = Pattern.compile("^( *)([^/ \\n\\r]+)/([^ =]+)( *=.*)$",
-      Pattern.MULTILINE);
 
   private void checkDebugOptions(IPluginModelBase pluginModel) throws CoreException, IOException
   {

@@ -66,6 +66,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
 {
   private static final Path DESCRIPTION_PATH = new Path(".project");
 
+  private static final Path OPTIONS_PATH = new Path(".options");
+
   private static final Path MANIFEST_PATH = new Path("META-INF/MANIFEST.MF");
 
   private static final Path FEATURE_PATH = new Path("feature.xml");
@@ -180,6 +182,11 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
         if (!arguments.isIgnoreSchemaBuilder())
         {
           checkSchemaBuilder((IPluginModelBase)componentModel, projectDescription);
+        }
+
+        if (!arguments.isIgnoreDebugOptions())
+        {
+          checkDebugOptions((IPluginModelBase)componentModel);
         }
 
         if (!arguments.isIgnoreMissingDependencyRanges())
@@ -732,7 +739,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
         {
           try
           {
-            String content = Markers.getContent(file);
+            String content = VersionUtil.getContent(file);
             Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
             Matcher matcher = pattern.matcher(content);
             if (matcher.find())
@@ -904,6 +911,40 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
         marker
             .setAttribute(Markers.QUICK_FIX_CONFIGURE_OPTION, IVersionBuilderArguments.IGNORE_SCHEMA_BUILDER_ARGUMENT);
         break;
+      }
+    }
+  }
+
+  private static final Pattern DEBUG_OPTION_PATTERN = Pattern.compile("^( *)([^/ \\n\\r]+)/([^ =]+)( *=.*)$",
+      Pattern.MULTILINE);
+
+  private void checkDebugOptions(IPluginModelBase pluginModel) throws CoreException, IOException
+  {
+    IFile file = getProject().getFile(OPTIONS_PATH);
+    if (file.isAccessible())
+    {
+      String symbolicName = pluginModel.getBundleDescription().getSymbolicName();
+      String content = VersionUtil.getContent(file);
+
+      Matcher matcher = DEBUG_OPTION_PATTERN.matcher(content);
+      while (matcher.find())
+      {
+        String pluginID = matcher.group(2);
+        if (!symbolicName.equals(pluginID))
+        {
+          String prefix = matcher.group(1);
+          String suffix = "/" + (matcher.group(3) + matcher.group(4)).replace(".", "\\.");
+          pluginID = pluginID.replace(".", "\\.");
+
+          String regex = prefix + "(" + pluginID + ")" + suffix;
+          String msg = "Debug option should be '" + symbolicName + "/" + matcher.group(3) + "'";
+
+          IMarker marker = Markers.addMarker(file, msg, IMarker.SEVERITY_ERROR, regex);
+          marker.setAttribute(Markers.QUICK_FIX_PATTERN, regex);
+          marker.setAttribute(Markers.QUICK_FIX_REPLACEMENT, symbolicName);
+          marker.setAttribute(Markers.QUICK_FIX_CONFIGURE_OPTION,
+              IVersionBuilderArguments.IGNORE_SCHEMA_BUILDER_ARGUMENT);
+        }
       }
     }
   }

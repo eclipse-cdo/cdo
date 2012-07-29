@@ -17,11 +17,7 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 
-import java.io.BufferedReader;
-import java.io.CharArrayWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -117,43 +113,10 @@ public final class Markers
     return marker;
   }
 
-  public static String getContent(IFile file) throws CoreException, IOException
-  {
-    InputStream contents = null;
-    try
-    {
-      contents = file.getContents();
-      BufferedReader reader = new BufferedReader(new InputStreamReader(contents, file.getCharset()));
-      CharArrayWriter caw = new CharArrayWriter();
-
-      int c;
-      while ((c = reader.read()) != -1)
-      {
-        caw.write(c);
-      }
-
-      return caw.toString();
-    }
-    finally
-    {
-      if (contents != null)
-      {
-        try
-        {
-          contents.close();
-        }
-        catch (Exception ex)
-        {
-          Activator.log(ex);
-        }
-      }
-    }
-  }
-
   public static IMarker addMarker(IFile file, String message, int severity, String regex) throws CoreException,
       IOException
   {
-    String string = getContent(file);
+    String string = VersionUtil.getContent(file);
 
     Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
     Matcher matcher = pattern.matcher(string);

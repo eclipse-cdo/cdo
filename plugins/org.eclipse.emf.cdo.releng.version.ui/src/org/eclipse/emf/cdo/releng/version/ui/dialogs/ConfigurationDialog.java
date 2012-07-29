@@ -49,6 +49,8 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
 
   private Button ignoreSchemaBuilderButton;
 
+  private Button ignoreDebugOptionsButton;
+
   private Button ignoreMissingDependencyRangesButton;
 
   private Button ignoreMissingExportVersionsButton;
@@ -99,7 +101,11 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
 
     ignoreSchemaBuilderButton = new Button(composite, SWT.CHECK);
     ignoreSchemaBuilderButton.setText("Ignore schema builder");
-    ignoreSchemaBuilderButton.setSelection(values.isIgnoreMalformedVersions());
+    ignoreSchemaBuilderButton.setSelection(values.isIgnoreSchemaBuilder());
+
+    ignoreDebugOptionsButton = new Button(composite, SWT.CHECK);
+    ignoreDebugOptionsButton.setText("Ignore debug options");
+    ignoreDebugOptionsButton.setSelection(values.isIgnoreDebugOptions());
 
     ignoreMissingDependencyRangesButton = new Button(composite, SWT.CHECK);
     ignoreMissingDependencyRangesButton.setText("Ignore missing dependency version ranges");
@@ -146,6 +152,7 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
     values.setReleasePath(releasePathText.getText());
     values.setIgnoreMalformedVersions(ignoreMalformedVersionsButton.getSelection());
     values.setIgnoreSchemaBuilder(ignoreSchemaBuilderButton.getSelection());
+    values.setIgnoreDebugOptions(ignoreDebugOptionsButton.getSelection());
     values.setIgnoreMissingDependencyRanges(ignoreMissingDependencyRangesButton.getSelection());
     values.setIgnoreMissingExportVersions(ignoreMissingExportVersionsButton.getSelection());
     values.setIgnoreFeatureContentRedundancy(ignoreFeatureContentRedundancyButton.getSelection());
@@ -158,12 +165,22 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
     throw new UnsupportedOperationException();
   }
 
+  public String getValidatorClassName()
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public boolean isIgnoreMalformedVersions()
   {
     throw new UnsupportedOperationException();
   }
 
   public boolean isIgnoreSchemaBuilder()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean isIgnoreDebugOptions()
   {
     throw new UnsupportedOperationException();
   }

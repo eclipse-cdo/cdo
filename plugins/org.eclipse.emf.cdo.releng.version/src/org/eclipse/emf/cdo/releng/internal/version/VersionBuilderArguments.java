@@ -61,9 +61,19 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
     return get(IVersionBuilderArguments.RELEASE_PATH_ARGUMENT);
   }
 
+  public void setReleasePath(String value)
+  {
+    setString(IVersionBuilderArguments.RELEASE_PATH_ARGUMENT, value);
+  }
+
   public String getValidatorClassName()
   {
     return get(IVersionBuilderArguments.VALIDATOR_CLASS_ARGUMENT);
+  }
+
+  public void setValidatorClassName(String value)
+  {
+    setString(IVersionBuilderArguments.VALIDATOR_CLASS_ARGUMENT, value);
   }
 
   public boolean isIgnoreMalformedVersions()
@@ -71,9 +81,29 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
     return "true".equals(get(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT));
   }
 
+  public void setIgnoreMalformedVersions(boolean value)
+  {
+    setBoolean(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT, value);
+  }
+
   public boolean isIgnoreSchemaBuilder()
   {
     return "true".equals(get(IVersionBuilderArguments.IGNORE_SCHEMA_BUILDER_ARGUMENT));
+  }
+
+  public void setIgnoreSchemaBuilder(boolean value)
+  {
+    setBoolean(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT, value);
+  }
+
+  public boolean isIgnoreDebugOptions()
+  {
+    return "true".equals(get(IVersionBuilderArguments.IGNORE_SCHEMA_BUILDER_ARGUMENT));
+  }
+
+  public void setIgnoreDebugOptions(boolean value)
+  {
+    setBoolean(IVersionBuilderArguments.IGNORE_DEBUG_OPTIONS_ARGUMENT, value);
   }
 
   public boolean isIgnoreMissingDependencyRanges()
@@ -81,9 +111,19 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
     return "true".equals(get(IVersionBuilderArguments.IGNORE_DEPENDENCY_RANGES_ARGUMENT));
   }
 
+  public void setIgnoreMissingDependencyRanges(boolean value)
+  {
+    setBoolean(IVersionBuilderArguments.IGNORE_DEPENDENCY_RANGES_ARGUMENT, value);
+  }
+
   public boolean isIgnoreMissingExportVersions()
   {
     return "true".equals(get(IVersionBuilderArguments.IGNORE_EXPORT_VERSIONS_ARGUMENT));
+  }
+
+  public void setIgnoreMissingExportVersions(boolean value)
+  {
+    setBoolean(IVersionBuilderArguments.IGNORE_EXPORT_VERSIONS_ARGUMENT, value);
   }
 
   public boolean isIgnoreFeatureContentRedundancy()
@@ -91,105 +131,19 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
     return "true".equals(get(IVersionBuilderArguments.IGNORE_CONTENT_REDUNDANCY_ARGUMENT));
   }
 
+  public void setIgnoreFeatureContentRedundancy(boolean value)
+  {
+    setBoolean(IVersionBuilderArguments.IGNORE_CONTENT_REDUNDANCY_ARGUMENT, value);
+  }
+
   public boolean isIgnoreFeatureContentChanges()
   {
     return "true".equals(get(IVersionBuilderArguments.IGNORE_CONTENT_CHANGES_ARGUMENT));
   }
 
-  public void setReleasePath(String value)
-  {
-    if (value != null)
-    {
-      put(IVersionBuilderArguments.RELEASE_PATH_ARGUMENT, value);
-    }
-    else
-    {
-      remove(IVersionBuilderArguments.RELEASE_PATH_ARGUMENT);
-    }
-  }
-
-  public void setValidatorClassName(String value)
-  {
-    if (value != null)
-    {
-      put(IVersionBuilderArguments.VALIDATOR_CLASS_ARGUMENT, value);
-    }
-    else
-    {
-      remove(IVersionBuilderArguments.VALIDATOR_CLASS_ARGUMENT);
-    }
-  }
-
-  public void setIgnoreMalformedVersions(boolean value)
-  {
-    if (value)
-    {
-      put(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT, Boolean.toString(true));
-    }
-    else
-    {
-      remove(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT);
-    }
-  }
-
-  public void setIgnoreSchemaBuilder(boolean value)
-  {
-    if (value)
-    {
-      put(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT, Boolean.toString(true));
-    }
-    else
-    {
-      remove(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT);
-    }
-  }
-
-  public void setIgnoreMissingDependencyRanges(boolean value)
-  {
-    if (value)
-    {
-      put(IVersionBuilderArguments.IGNORE_DEPENDENCY_RANGES_ARGUMENT, Boolean.toString(true));
-    }
-    else
-    {
-      remove(IVersionBuilderArguments.IGNORE_DEPENDENCY_RANGES_ARGUMENT);
-    }
-  }
-
-  public void setIgnoreMissingExportVersions(boolean value)
-  {
-    if (value)
-    {
-      put(IVersionBuilderArguments.IGNORE_EXPORT_VERSIONS_ARGUMENT, Boolean.toString(true));
-    }
-    else
-    {
-      remove(IVersionBuilderArguments.IGNORE_EXPORT_VERSIONS_ARGUMENT);
-    }
-  }
-
-  public void setIgnoreFeatureContentRedundancy(boolean value)
-  {
-    if (value)
-    {
-      put(IVersionBuilderArguments.IGNORE_CONTENT_REDUNDANCY_ARGUMENT, Boolean.toString(true));
-    }
-    else
-    {
-      remove(IVersionBuilderArguments.IGNORE_CONTENT_REDUNDANCY_ARGUMENT);
-    }
-  }
-
   public void setIgnoreFeatureContentChanges(boolean value)
   {
-    if (value)
-    {
-      put(IVersionBuilderArguments.IGNORE_CONTENT_CHANGES_ARGUMENT, Boolean.toString(true));
-    }
-    else
-    {
-      remove(IVersionBuilderArguments.IGNORE_CONTENT_CHANGES_ARGUMENT);
-    }
+    setBoolean(IVersionBuilderArguments.IGNORE_CONTENT_CHANGES_ARGUMENT, value);
   }
 
   public void applyTo(IProject project) throws CoreException
@@ -213,6 +167,30 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
     command.setBuilderName(VersionUtil.BUILDER_ID);
     command.setArguments(this);
     return command;
+  }
+
+  private void setString(String key, String value)
+  {
+    if (value != null)
+    {
+      put(key, value);
+    }
+    else
+    {
+      remove(key);
+    }
+  }
+
+  private void setBoolean(String key, boolean value)
+  {
+    if (value)
+    {
+      put(key, Boolean.toString(true));
+    }
+    else
+    {
+      remove(key);
+    }
   }
 
   public static List<String> getOtherNatures(IProjectDescription description)

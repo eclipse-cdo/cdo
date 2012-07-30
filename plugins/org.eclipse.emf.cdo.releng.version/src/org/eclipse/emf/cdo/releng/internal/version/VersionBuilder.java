@@ -89,7 +89,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
   private static final int MAJOR_CHANGE = 3;
 
   private static final Pattern DEBUG_OPTION_PATTERN = Pattern.compile("^( *)([^/ \\n\\r]+)/([^ =]+)( *=.*)$",
-  Pattern.MULTILINE);
+      Pattern.MULTILINE);
 
   private static final String NL = System.getProperty("line.separator");
 
@@ -162,7 +162,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
 
     BuildState buildState = Activator.getBuildState(project);
     byte[] releaseSpecDigest = buildState.getReleaseSpecDigest();
-    boolean fullBuild = releaseSpecDigest == null;
+    final boolean fullBuild = releaseSpecDigest == null || kind == FULL_BUILD || kind == CLEAN_BUILD;
+    IResourceDelta delta = fullBuild ? null : getDelta(project);
 
     monitor.beginTask("", 1);
     monitor.subTask("Checking version validity of " + project.getName());
@@ -172,11 +173,17 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       Markers.deleteAllMarkers(project);
 
       IModel componentModel = VersionUtil.getComponentModel(project);
+      IPath componentModelPath = componentModel.getUnderlyingResource().getProjectRelativePath();
+      boolean componentModelChanged = delta == null || delta.findMember(componentModelPath) != null;
+
       if (!arguments.isIgnoreMalformedVersions())
       {
-        if (checkMalformedVersions(componentModel))
+        if (componentModelChanged)
         {
-          return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+          if (checkMalformedVersions(componentModel))
+          {
+            return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+          }
         }
       }
 
@@ -184,22 +191,34 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       {
         if (!arguments.isIgnoreSchemaBuilder())
         {
-          checkSchemaBuilder((IPluginModelBase)componentModel, projectDescription);
+          if (delta == null || delta.findMember(DESCRIPTION_PATH) != null)
+          {
+            checkSchemaBuilder((IPluginModelBase)componentModel, projectDescription);
+          }
         }
 
         if (!arguments.isIgnoreDebugOptions())
         {
-          checkDebugOptions((IPluginModelBase)componentModel);
+          if (delta == null || delta.findMember(OPTIONS_PATH) != null)
+          {
+            checkDebugOptions((IPluginModelBase)componentModel);
+          }
         }
 
         if (!arguments.isIgnoreMissingDependencyRanges())
         {
-          checkDependencyRanges((IPluginModelBase)componentModel);
+          if (componentModelChanged)
+          {
+            checkDependencyRanges((IPluginModelBase)componentModel);
+          }
         }
 
         if (!arguments.isIgnoreMissingExportVersions())
         {
-          checkPackageExports((IPluginModelBase)componentModel);
+          if (componentModelChanged)
+          {
+            checkPackageExports((IPluginModelBase)componentModel);
+          }
         }
 
         if (hasAPIToolsMarker((IPluginModelBase)componentModel))
@@ -241,7 +260,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
         if (releaseSpecDigest == null || !MessageDigest.isEqual(digest, releaseSpecDigest))
         {
           buildState.setReleaseSpecDigest(digest);
-          fullBuild = true;
+          delta = null;
         }
 
         this.release = release;
@@ -287,7 +306,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       {
         if (initReleaseProperties(propertiesFile))
         {
-          fullBuild = true;
+          delta = null;
         }
 
         buildState.setDeviations(deviations);
@@ -403,13 +422,6 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       /*
        * Do the validation
        */
-
-      IResourceDelta delta = null;
-      fullBuild |= kind == FULL_BUILD;
-      if (!fullBuild)
-      {
-        delta = getDelta(project);
-      }
 
       validator.updateBuildState(buildState, release, project, delta, componentModel, monitor);
 

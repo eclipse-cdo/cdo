@@ -329,9 +329,11 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
         addDeviationMarker(element, releaseVersion);
       }
 
+      boolean implementationVersionIncreased = false;
       if (comparison < 0)
       {
-        if (!nextImplementationVersion.equals(elementVersion))
+        implementationVersionIncreased = nextImplementationVersion.equals(elementVersion);
+        if (!implementationVersionIncreased)
         {
           if (elementVersion.getMajor() == nextImplementationVersion.getMajor()
               && elementVersion.getMinor() == nextImplementationVersion.getMinor())
@@ -390,6 +392,11 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
             return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
           }
         }
+      }
+
+      if (implementationVersionIncreased)
+      {
+        return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
       }
 
       /*

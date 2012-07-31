@@ -8,7 +8,7 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
- *    Caspar De Groot - write options 
+ *    Caspar De Groot - write options
  */
 package org.eclipse.emf.cdo.tests;
 
@@ -1190,5 +1190,73 @@ public class LockingManagerTest extends AbstractLockingTest
     Object key = branching ? CDOIDUtil.createIDAndBranch(id, tx.getBranch()) : id;
     LockState<Object, IView> state = mgr.getLockState(key);
     assertNull(state);
+  }
+
+  public void testAutoReleaseLocksOnUnchangedObject() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+
+    Category category1 = getModel1Factory().createCategory();
+    company.getCategories().add(category1);
+
+    Category category2 = getModel1Factory().createCategory();
+    company.getCategories().add(category2);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
+    resource.getContents().add(company);
+    transaction.commit();
+
+    CDOLock writeLock = CDOUtil.getCDOObject(category1).cdoWriteLock();
+    writeLock.lock(DEFAULT_TIMEOUT);
+
+    // Check that explicit lock on unchanged object is not released
+    transaction.options().setAutoReleaseLocksEnabled(false);
+    category2.setName("NewName");
+    transaction.commit();
+    assertEquals(true, writeLock.isLocked()); // Explicit lock not released because of AutoReleaseLocks=false
+    assertEquals(false, CDOUtil.getCDOObject(category2).cdoWriteLock().isLocked()); // Implicit locks always released
+
+    // Check that explicit lock on unchanged object is released
+    transaction.options().setAutoReleaseLocksEnabled(true);
+    category2.setName("NewName2");
+    transaction.commit();
+    assertEquals(false, writeLock.isLocked()); // Explicit lock released because of AutoReleaseLocks=true
+    assertEquals(false, CDOUtil.getCDOObject(category2).cdoWriteLock().isLocked()); // Implicit locks always released
+  }
+
+  public void testAutoReleaseLocksOnChangedObject() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+
+    Category category1 = getModel1Factory().createCategory();
+    company.getCategories().add(category1);
+
+    Category category2 = getModel1Factory().createCategory();
+    company.getCategories().add(category2);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
+    resource.getContents().add(company);
+    transaction.commit();
+
+    CDOLock writeLock = CDOUtil.getCDOObject(category1).cdoWriteLock();
+    writeLock.lock(DEFAULT_TIMEOUT);
+
+    // Check that explicit lock on changed object is not released
+    transaction.options().setAutoReleaseLocksEnabled(false);
+    category1.setName("NewName");
+    transaction.commit();
+    assertEquals(true, writeLock.isLocked());
+
+    // Check that explicit lock on changed object is released
+    transaction.options().setAutoReleaseLocksEnabled(true);
+    category1.setName("NewName2");
+    transaction.commit();
+    assertEquals(false, writeLock.isLocked());
   }
 }

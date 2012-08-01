@@ -80,22 +80,22 @@ public final class LifecycleUtil
   /**
    * @since 2.0
    */
-  public static void checkActive(Object object) throws IllegalStateException
+  public static void checkActive(Object object) throws LifecycleException
   {
     if (!isActive(object))
     {
-      throw new IllegalStateException("Not active: " + object); //$NON-NLS-1$
+      throw new LifecycleException("Not active: " + object); //$NON-NLS-1$
     }
   }
 
   /**
    * @since 2.0
    */
-  public static void checkInactive(Object object) throws IllegalStateException
+  public static void checkInactive(Object object) throws LifecycleException
   {
     if (isActive(object))
     {
-      throw new IllegalStateException("Not inactive: " + object); //$NON-NLS-1$
+      throw new LifecycleException("Not inactive: " + object); //$NON-NLS-1$
     }
   }
 

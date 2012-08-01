@@ -60,12 +60,15 @@ public abstract class StoreAccessor extends StoreAccessorBase
     String userID = context.getUserID();
     String commitComment = context.getCommitComment();
 
-    boolean deltas = getStore().getSupportedChangeFormats().contains(IStore.ChangeFormat.DELTA);
+    Store store = getStore();
+    boolean deltas = store.getSupportedChangeFormats().contains(IStore.ChangeFormat.DELTA);
 
     InternalCDOPackageUnit[] newPackageUnits = context.getNewPackageUnits();
     InternalCDORevision[] newObjects = context.getNewObjects();
     CDOID[] detachedObjects = context.getDetachedObjects();
-    int dirtyCount = deltas ? context.getDirtyObjectDeltas().length : context.getDirtyObjects().length;
+    InternalCDORevisionDelta[] dirtyObjectDeltas = context.getDirtyObjectDeltas();
+    InternalCDORevision[] dirtyObjects = context.getDirtyObjects();
+    int dirtyCount = deltas ? dirtyObjectDeltas.length : dirtyObjects.length;
 
     try
     {
@@ -77,7 +80,8 @@ public abstract class StoreAccessor extends StoreAccessorBase
         writePackageUnits(newPackageUnits, monitor.fork(newPackageUnits.length));
       }
 
-      if (getStore().getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE)
+      IDGenerationLocation idGenerationLocation = store.getRepository().getIDGenerationLocation();
+      if (idGenerationLocation == IDGenerationLocation.STORE)
       {
         addIDMappings(context, monitor.fork());
       }
@@ -98,11 +102,11 @@ public abstract class StoreAccessor extends StoreAccessorBase
       {
         if (deltas)
         {
-          writeRevisionDeltas(context.getDirtyObjectDeltas(), branch, timeStamp, monitor.fork(dirtyCount));
+          writeRevisionDeltas(dirtyObjectDeltas, branch, timeStamp, monitor.fork(dirtyCount));
         }
         else
         {
-          writeRevisions(context.getDirtyObjects(), branch, monitor.fork(dirtyCount));
+          writeRevisions(dirtyObjects, branch, monitor.fork(dirtyCount));
         }
       }
 

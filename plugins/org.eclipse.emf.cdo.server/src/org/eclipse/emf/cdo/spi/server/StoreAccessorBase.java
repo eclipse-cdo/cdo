@@ -179,8 +179,8 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
       }
     }
 
-    getStore().setLastCommitTime(latest);
-    getStore().setLastNonLocalCommitTime(latestNonLocal);
+    store.setLastCommitTime(latest);
+    store.setLastNonLocalCommitTime(latestNonLocal);
   }
 
   /**
@@ -226,7 +226,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
    * Add ID mappings for all new objects of a transaction to the commit context. The implementor must, for each new
    * object of the commit context, determine a permanent CDOID and make it known to the context by calling
    * {@link InternalCommitContext#addIDMapping(CDOID, CDOID)}.
-   * 
+   *
    * @since 3.0
    */
   public void addIDMappings(InternalCommitContext commitContext, OMMonitor monitor)

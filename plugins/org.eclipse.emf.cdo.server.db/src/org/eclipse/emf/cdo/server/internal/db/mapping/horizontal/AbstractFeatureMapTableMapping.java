@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -534,7 +535,8 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
    */
   private EStructuralFeature getFeatureByTag(CDOID tag)
   {
-    return (EStructuralFeature)getMappingStrategy().getStore().getMetaDataManager().getMetaInstance(tag);
+    IMetaDataManager metaDataManager = getMappingStrategy().getStore().getMetaDataManager();
+    return (EStructuralFeature)metaDataManager.getMetaInstance(tag);
   }
 
   /**
@@ -544,7 +546,8 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
    */
   protected CDOID getTagByFeature(EStructuralFeature feature, long timeStamp)
   {
-    return getMappingStrategy().getStore().getMetaDataManager().getMetaID(feature, timeStamp);
+    IMetaDataManager metaDataManager = getMappingStrategy().getStore().getMetaDataManager();
+    return metaDataManager.getMetaID(feature, timeStamp);
   }
 
   /**

@@ -59,10 +59,10 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMap;
-import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.io.IOException;
@@ -433,12 +433,29 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
       EStructuralFeature innerFeature = feature; // Prepare for possible feature map
       if (isFeatureMap)
       {
-        Entry entry = (FeatureMap.Entry)value;
+        FeatureMap.Entry entry = (FeatureMap.Entry)value;
         innerFeature = entry.getEStructuralFeature();
         value = entry.getValue();
 
-        int featureID = owner.getFeatureID(innerFeature);
-        writeInt(featureID);
+        EClass eClass = innerFeature.getEContainingClass();
+        EPackage ePackage = eClass.getEPackage();
+        if (ePackage.getName() == null)
+        {
+          // Probably a demand-created DocumentRoot feature
+          writeBoolean(true);
+          writeString(ePackage.getNsURI());
+          writeString(eClass.getName());
+          writeBoolean(innerFeature instanceof EReference);
+          writeString(innerFeature.getName());
+        }
+        else
+        {
+          writeBoolean(false);
+          writeCDOClassifierRef(eClass);
+
+          int featureID = eClass.getFeatureID(innerFeature);
+          writeInt(featureID);
+        }
       }
 
       if (value != null && innerFeature instanceof EReference)

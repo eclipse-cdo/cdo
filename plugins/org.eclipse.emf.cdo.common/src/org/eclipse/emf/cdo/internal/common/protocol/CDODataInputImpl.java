@@ -83,12 +83,18 @@ import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
+import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -459,8 +465,52 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     {
       if (isFeatureMap)
       {
-        int featureID = readInt();
-        EStructuralFeature innerFeature = owner.getEStructuralFeature(featureID);
+        EStructuralFeature innerFeature;
+
+        boolean demandCreated = readBoolean();
+        if (demandCreated)
+        {
+          EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
+          ePackage.setNsURI(readString());
+
+          EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+          eClass.setName(readString());
+          ePackage.getEClassifiers().add(eClass);
+
+          if (readBoolean())
+          {
+            EReference eReference = EcoreFactory.eINSTANCE.createEReference();
+            eReference.setEType(EcorePackage.Literals.EOBJECT);
+            // if (isElement)
+            // {
+            // eReference.setContainment(true);
+            // eReference.setResolveProxies(false);
+            // }
+            innerFeature = eReference;
+          }
+          else
+          {
+            EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+            eAttribute.setEType(XMLTypePackage.eINSTANCE.getAnySimpleType());
+            innerFeature = eAttribute;
+          }
+
+          innerFeature.setName(readString());
+          innerFeature.setDerived(true);
+          innerFeature.setTransient(true);
+          innerFeature.setVolatile(true);
+          // if (isElement)
+          // {
+          // innerFeature.setUpperBound(ETypedElement.UNSPECIFIED_MULTIPLICITY);
+          // }
+          eClass.getEStructuralFeatures().add(innerFeature);
+        }
+        else
+        {
+          EClass eClass = (EClass)readCDOClassifierRefAndResolve();
+          innerFeature = eClass.getEStructuralFeature(readInt());
+        }
+
         type = CDOModelUtil.getType(innerFeature.getEType());
         value = type.readValue(this);
         value = CDORevisionUtil.createFeatureMapEntry(innerFeature, value);

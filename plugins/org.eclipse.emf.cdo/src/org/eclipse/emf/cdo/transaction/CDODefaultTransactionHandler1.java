@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 
 /**
  * An empty default implementation of {@link CDOTransactionHandler1}.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  */
@@ -30,7 +30,7 @@ public class CDODefaultTransactionHandler1 implements CDOTransactionHandler1
    */
   public void attachingObject(CDOTransaction transaction, CDOObject object)
   {
-    // Do nothing
+    handleDefault(transaction);
   }
 
   /**
@@ -38,13 +38,21 @@ public class CDODefaultTransactionHandler1 implements CDOTransactionHandler1
    */
   public void detachingObject(CDOTransaction transaction, CDOObject object)
   {
-    // Do nothing
+    handleDefault(transaction);
   }
 
   /**
    * This implementation does nothing. Clients may override to provide specialized behaviour.
    */
   public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureChange)
+  {
+    handleDefault(transaction);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void handleDefault(CDOTransaction transaction)
   {
     // Do nothing
   }

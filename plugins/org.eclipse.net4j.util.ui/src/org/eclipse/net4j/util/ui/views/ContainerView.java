@@ -451,8 +451,15 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
    */
   protected void refreshPressed()
   {
-    itemProvider.dispose();
-    initViewer();
+    UIUtil.refreshViewer(viewer);
+    // UIUtil.preserveViewerState(viewer, new Runnable()
+    // {
+    // public void run()
+    // {
+    // itemProvider.dispose();
+    // initViewer();
+    // }
+    // });
   }
 
   protected void closeView()
@@ -532,83 +539,30 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
   public void refreshViewer(boolean updateLabels)
   {
-    refreshElement(null, updateLabels);
+    itemProvider.refreshViewer(updateLabels);
   }
 
-  public void refreshElement(final Object element, final boolean updateLabels)
+  public void refreshElement(Object element, boolean updateLabels)
   {
-    try
-    {
-      getDisplay().asyncExec(new Runnable()
-      {
-        public void run()
-        {
-          try
-          {
-            if (element != null)
-            {
-              viewer.refresh(element, updateLabels);
-            }
-            else
-            {
-              viewer.refresh(updateLabels);
-            }
-          }
-          catch (RuntimeException ignore)
-          {
-          }
-        }
-      });
-    }
-    catch (RuntimeException ignore)
-    {
-    }
+    itemProvider.refreshElement(element, updateLabels);
   }
 
-  public void updateLabels(final Object element)
+  public void updateLabels(Object element)
   {
-    try
-    {
-      getDisplay().asyncExec(new Runnable()
-      {
-        public void run()
-        {
-          try
-          {
-            viewer.update(element, null);
-          }
-          catch (RuntimeException ignore)
-          {
-          }
-        }
-      });
-    }
-    catch (RuntimeException ignore)
-    {
-    }
+    itemProvider.updateLabels(element);
   }
 
-  public void revealElement(final Object element)
+  public void revealElement(Object element)
   {
-    try
-    {
-      getDisplay().asyncExec(new Runnable()
-      {
-        public void run()
-        {
-          try
-          {
-            viewer.reveal(element);
-          }
-          catch (RuntimeException ignore)
-          {
-          }
-        }
-      });
-    }
-    catch (RuntimeException ignore)
-    {
-    }
+    itemProvider.revealElement(element);
+  }
+
+  /**
+   * @since 3.3
+   */
+  public void expandElement(Object element, int level)
+  {
+    itemProvider.expandElement(element, level);
   }
 
   public static ImageDescriptor getAddImageDescriptor()

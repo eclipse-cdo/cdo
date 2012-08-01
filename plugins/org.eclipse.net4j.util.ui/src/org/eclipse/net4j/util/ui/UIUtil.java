@@ -18,6 +18,9 @@ import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredViewer;
+import org.eclipse.jface.viewers.TreePath;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
@@ -99,6 +102,18 @@ public final class UIUtil
     {
       widget.dispose();
     }
+  }
+
+  /**
+   * @since 3.3
+   */
+  public static Font getItalicFont(Control control)
+  {
+    FontData[] datas = control.getFont().getFontData().clone();
+    datas[0].setStyle(SWT.ITALIC);
+    Display display = control.getShell().getDisplay();
+    Font font = new Font(display, datas);
+    return font;
   }
 
   public static Font getBoldFont(Control control)
@@ -353,7 +368,7 @@ public final class UIUtil
 
   /**
    * Adds indentation to the control. if indent value is < 0, the control indentation is left unchanged.
-   * 
+   *
    * @since 2.0
    */
   public static void setIndentation(Control control, int horizontalIndent, int verticalIndent)
@@ -380,9 +395,9 @@ public final class UIUtil
   }
 
   /**
-   * @since 2.0
+   * @since 3.3
    */
-  public static void refreshViewer(final Viewer viewer)
+  public static void preserveViewerState(final Viewer viewer, final Runnable runnable)
   {
     try
     {
@@ -390,13 +405,31 @@ public final class UIUtil
       {
         public void run()
         {
+          ISelection selection = viewer.getSelection();
+
+          TreePath[] paths = null;
+          if (viewer instanceof TreeViewer)
+          {
+            TreeViewer treeViewer = (TreeViewer)viewer;
+            paths = treeViewer.getExpandedTreePaths();
+          }
+
           try
           {
-            viewer.refresh();
+            runnable.run();
           }
           catch (RuntimeException ignore)
           {
             // Do nothing
+          }
+          finally
+          {
+            if (paths != null)
+            {
+              ((TreeViewer)viewer).setExpandedElements(paths);
+            }
+
+            viewer.setSelection(selection);
           }
         }
       });
@@ -408,8 +441,43 @@ public final class UIUtil
   }
 
   /**
+   * @since 2.0
+   */
+  public static void refreshViewer(final Viewer viewer)
+  {
+    preserveViewerState(viewer, new Runnable()
+    {
+      public void run()
+      {
+        viewer.refresh();
+      }
+    });
+  }
+
+  /**
+   * @since 3.3
+   */
+  public static void refreshElement(final StructuredViewer viewer, final Object element, final boolean updateLabels)
+  {
+    preserveViewerState(viewer, new Runnable()
+    {
+      public void run()
+      {
+        if (element != null && element != viewer.getInput())
+        {
+          viewer.refresh(element, updateLabels);
+        }
+        else
+        {
+          viewer.refresh(updateLabels);
+        }
+      }
+    });
+  }
+
+  /**
    * Shows a message in the StatusBar. Image can be omitted by passing a null parameter
-   * 
+   *
    * @since 2.0
    */
   public static void setStatusBarMessage(final String message, final Image image)

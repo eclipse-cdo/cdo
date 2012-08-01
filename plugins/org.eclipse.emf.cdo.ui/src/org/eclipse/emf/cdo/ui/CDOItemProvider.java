@@ -56,7 +56,6 @@ import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
@@ -86,7 +85,7 @@ import java.util.List;
  * {@link org.eclipse.jface.viewers.ILabelProvider label} provider for concepts such as {@link CDOSession},
  * {@link CDOView}, {@link CDOResource} and {@link CDOResourceFolder}. It also providers common context menu action over
  * those elements.
- * 
+ *
  * @author Eike Stepper
  * @see org.eclipse.jface.viewers.IContentProvider
  * @see org.eclipse.jface.viewers.ILabelProvider
@@ -94,8 +93,6 @@ import java.util.List;
 public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 {
   private IWorkbenchPage page;
-
-  private Font bold;
 
   public CDOItemProvider(IWorkbenchPage page, IElementFilter rootElementFilter)
   {
@@ -106,20 +103,6 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   public CDOItemProvider(IWorkbenchPage page)
   {
     this(page, null);
-  }
-
-  @Override
-  protected void connectInput(IContainer<Object> input)
-  {
-    super.connectInput(input);
-    bold = UIUtil.getBoldFont(getViewer().getControl());
-  }
-
-  @Override
-  protected void disconnectInput(IContainer<Object> input)
-  {
-    bold.dispose();
-    super.disconnectInput(input);
   }
 
   @Override
@@ -269,7 +252,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       CDOTransaction transaction = (CDOTransaction)obj;
       if (transaction.isDirty())
       {
-        return bold;
+        return getBoldFont();
       }
     }
 

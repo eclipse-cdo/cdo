@@ -17,11 +17,9 @@ import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 
 /**
@@ -34,6 +32,8 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
   private INPUT input;
 
   private Font italicFont;
+
+  private Font boldFont;
 
   public StructuredContentProvider()
   {
@@ -51,6 +51,12 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
     {
       italicFont.dispose();
       italicFont = null;
+    }
+
+    if (boldFont != null)
+    {
+      boldFont.dispose();
+      boldFont = null;
     }
   }
 
@@ -109,7 +115,7 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
    */
   public void refreshViewer(boolean updateLabels)
   {
-    refreshElement(null, updateLabels);
+    UIUtil.refreshElement(viewer, null, updateLabels);
   }
 
   /**
@@ -117,40 +123,17 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
    */
   public void refreshElement(final Object element, final boolean updateLabels)
   {
-    try
-    {
-      getDisplay().asyncExec(new Runnable()
-      {
-        public void run()
-        {
-          try
-          {
-            refreshSynced(element, updateLabels);
-          }
-          catch (RuntimeException ignore)
-          {
-          }
-        }
-      });
-    }
-    catch (RuntimeException ignore)
-    {
-    }
+    UIUtil.refreshElement(viewer, element, updateLabels);
   }
 
   /**
    * @since 3.1
+   * @deprecated Use {@link #refreshElement(Object, boolean)}
    */
+  @Deprecated
   public void refreshSynced(final Object element, final boolean updateLabels)
   {
-    if (element != null && element != input)
-    {
-      viewer.refresh(element, updateLabels);
-    }
-    else
-    {
-      viewer.refresh(updateLabels);
-    }
+    refreshElement(element, updateLabels);
   }
 
   /**
@@ -231,6 +214,40 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
     }
   }
 
+  /**
+   * @since 3.3
+   */
+  public void expandElement(final Object element, final int level)
+  {
+    if (element != null)
+    {
+      if (getViewer() instanceof TreeViewer)
+      {
+        final TreeViewer viewer = (TreeViewer)getViewer();
+
+        try
+        {
+          getDisplay().asyncExec(new Runnable()
+          {
+            public void run()
+            {
+              try
+              {
+                viewer.expandToLevel(element, level);
+              }
+              catch (RuntimeException ignore)
+              {
+              }
+            }
+          });
+        }
+        catch (RuntimeException ignore)
+        {
+        }
+      }
+    }
+  }
+
   protected Display getDisplay()
   {
     Display display = viewer.getControl().getDisplay();
@@ -249,12 +266,22 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
   {
     if (italicFont == null && viewer != null)
     {
-      Control control = viewer.getControl();
-      FontData data = control.getFont().getFontData()[0];
-
-      italicFont = new Font(control.getDisplay(), data.getName(), data.getHeight(), data.getStyle() | SWT.ITALIC);
+      italicFont = UIUtil.getItalicFont(viewer.getControl());
     }
 
     return italicFont;
+  }
+
+  /**
+   * @since 3.3
+   */
+  protected synchronized Font getBoldFont()
+  {
+    if (boldFont == null && viewer != null)
+    {
+      boldFont = UIUtil.getBoldFont(viewer.getControl());
+    }
+
+    return boldFont;
   }
 }

@@ -103,6 +103,11 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
 
   public void registerRevisionDelta(CDORevisionDelta revisionDelta);
 
+  /**
+   * @since 4.2
+   */
+  public void setDirty(boolean dirty);
+
   public void setConflict(InternalCDOObject object);
 
   /**
@@ -137,7 +142,7 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
 
   /**
    * Provides a context for a commit operation.
-   * 
+   *
    * @author Simon McDuff
    * @noimplement This interface is not intended to be implemented by clients.
    * @noextend This interface is not intended to be extended by clients.

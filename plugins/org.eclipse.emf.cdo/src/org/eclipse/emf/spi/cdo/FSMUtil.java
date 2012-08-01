@@ -98,7 +98,7 @@ public final class FSMUtil
     {
       if (!view.isLegacyModeEnabled())
       {
-        throw new LegacyModeNotEnabledException();
+        throw new LegacyModeNotEnabledException(object.toString());
       }
 
       return adaptLegacy((InternalEObject)object);

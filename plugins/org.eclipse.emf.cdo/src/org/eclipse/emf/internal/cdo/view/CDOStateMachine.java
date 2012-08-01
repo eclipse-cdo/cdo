@@ -39,7 +39,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
-import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
@@ -747,7 +746,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       if (revisionDeltas.isEmpty())
       {
-        makeTransactionClean(transaction);
+        transaction.setDirty(false);
       }
     }
 
@@ -801,15 +800,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         }
 
         break;
-      }
-    }
-
-    private void makeTransactionClean(InternalCDOTransaction transaction)
-    {
-      if (transaction instanceof CDOTransactionImpl)
-      {
-        CDOTransactionImpl impl = (CDOTransactionImpl)transaction;
-        impl.setDirty(false); // TODO make setDirty() SPI
       }
     }
   }

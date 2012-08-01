@@ -2946,7 +2946,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         {
           if (noLegacy && object instanceof CDOObjectWrapper)
           {
-            throw new LegacyModeNotEnabledException();
+            throw new LegacyModeNotEnabledException(object.toString());
           }
 
           collectLobs((InternalCDORevision)object.cdoRevision(), lobs);

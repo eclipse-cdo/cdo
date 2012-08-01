@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.view.CDOView;
  * An unchecked exception being thrown if <i><a href="http://wiki.eclipse.org/CDO_Legacy_Mode">legacy objects</a></i>
  * are to be accessed and the associated {@link CDOView view} is not in {@link CDOView#isLegacyModeEnabled() legacy
  * mode}.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
@@ -26,23 +26,25 @@ public class LegacyModeNotEnabledException extends IllegalStateException
 {
   private static final long serialVersionUID = 1L;
 
+  private static final String MESSAGE = "Legacy mode is not enabled";
+
   public LegacyModeNotEnabledException()
   {
-    this("Legacy mode is not enabled");
+    this(MESSAGE);
   }
 
-  public LegacyModeNotEnabledException(String s)
+  public LegacyModeNotEnabledException(String message)
   {
-    super(s);
+    super(MESSAGE + ": " + message);
   }
 
   public LegacyModeNotEnabledException(Throwable cause)
   {
-    super(cause);
+    super(MESSAGE, cause);
   }
 
   public LegacyModeNotEnabledException(String message, Throwable cause)
   {
-    super(message, cause);
+    super(MESSAGE + ": " + message, cause);
   }
 }

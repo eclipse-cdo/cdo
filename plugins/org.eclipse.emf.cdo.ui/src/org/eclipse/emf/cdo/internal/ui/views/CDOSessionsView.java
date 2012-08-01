@@ -23,9 +23,15 @@ import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IWorkbenchPage;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -33,6 +39,9 @@ import org.eclipse.swt.widgets.Control;
 public class CDOSessionsView extends ContainerView
 {
   public final static String ID = "org.eclipse.emf.cdo.ui.CDOSessionsView"; //$NON-NLS-1$
+
+  private static Map<String, ResourceOpener> resourceOpeners = Collections
+      .synchronizedMap(new HashMap<String, ResourceOpener>());
 
   private OpenSessionAction openSessionAction;
 
@@ -78,11 +87,40 @@ public class CDOSessionsView extends ContainerView
     if (object instanceof CDOResource)
     {
       CDOResource resource = (CDOResource)object;
-      CDOEditorUtil.openEditor(getSite().getPage(), resource.cdoView(), resource.getPath());
+      String path = resource.getPath();
+
+      String extension = new Path(path).getFileExtension();
+      ResourceOpener opener = resourceOpeners.get(extension);
+      if (opener != null)
+      {
+        opener.openResource(getSite().getPage(), resource);
+      }
+      else
+      {
+        CDOEditorUtil.openEditor(getSite().getPage(), resource.cdoView(), path);
+      }
     }
     else
     {
       super.doubleClicked(object);
     }
+  }
+
+  public static ResourceOpener registerResourceOpener(String resourceExtension, ResourceOpener opener)
+  {
+    return resourceOpeners.put(resourceExtension, opener);
+  }
+
+  public static ResourceOpener unregisterResourceOpener(String resourceExtension)
+  {
+    return resourceOpeners.remove(resourceExtension);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface ResourceOpener
+  {
+    public void openResource(IWorkbenchPage page, CDOResource resource);
   }
 }

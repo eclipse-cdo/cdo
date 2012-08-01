@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.ui.dialogs;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 
 import org.eclipse.emf.common.ui.dialogs.ResourceDialog;
+import org.eclipse.emf.common.util.URI;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -25,6 +26,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -99,6 +102,20 @@ public class ImportResourceDialog extends ResourceDialog
       data.right = new FormAttachment(100, CONTROL_OFFSET);
       separatorLabel2.setLayoutData(data);
     }
+
+    uriField.addModifyListener(new ModifyListener()
+    {
+      public void modifyText(ModifyEvent e)
+      {
+        List<URI> uris = getURIs();
+        if (uris.size() == 1)
+        {
+          URI uri = uris.get(0);
+          String name = uri.lastSegment();
+          targetText.setText("/" + name);
+        }
+      }
+    });
 
     return composite;
   }

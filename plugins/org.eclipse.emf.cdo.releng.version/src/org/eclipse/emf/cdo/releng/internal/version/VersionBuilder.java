@@ -173,12 +173,12 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       Markers.deleteAllMarkers(project);
 
       IModel componentModel = VersionUtil.getComponentModel(project);
-      IPath componentModelPath = componentModel.getUnderlyingResource().getProjectRelativePath();
-      boolean componentModelChanged = delta == null || delta.findMember(componentModelPath) != null;
+      // IPath componentModelPath = componentModel.getUnderlyingResource().getProjectRelativePath();
+      // boolean componentModelChanged = delta == null || delta.findMember(componentModelPath) != null;
 
       if (!arguments.isIgnoreMalformedVersions())
       {
-        if (componentModelChanged)
+        // if (componentModelChanged)
         {
           if (checkMalformedVersions(componentModel))
           {
@@ -191,7 +191,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       {
         if (!arguments.isIgnoreSchemaBuilder())
         {
-          if (delta == null || delta.findMember(DESCRIPTION_PATH) != null)
+          // if (delta == null || delta.findMember(DESCRIPTION_PATH) != null)
           {
             checkSchemaBuilder((IPluginModelBase)componentModel, projectDescription);
           }
@@ -199,7 +199,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
 
         if (!arguments.isIgnoreDebugOptions())
         {
-          if (delta == null || delta.findMember(OPTIONS_PATH) != null)
+          // if (delta == null || delta.findMember(OPTIONS_PATH) != null)
           {
             checkDebugOptions((IPluginModelBase)componentModel);
           }
@@ -207,7 +207,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
 
         if (!arguments.isIgnoreMissingDependencyRanges())
         {
-          if (componentModelChanged)
+          // if (componentModelChanged)
           {
             checkDependencyRanges((IPluginModelBase)componentModel);
           }
@@ -215,7 +215,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
 
         if (!arguments.isIgnoreMissingExportVersions())
         {
-          if (componentModelChanged)
+          // if (componentModelChanged)
           {
             checkPackageExports((IPluginModelBase)componentModel);
           }
@@ -736,11 +736,13 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
     return null;
   }
 
-  private boolean checkMalformedVersions(IModel componentModel)
+  private boolean checkMalformedVersions(IModel componentModel) throws CoreException
   {
     IResource underlyingResource = componentModel.getUnderlyingResource();
     if (underlyingResource != null)
     {
+      Markers.deleteAllMarkers(underlyingResource);
+
       IProject project = underlyingResource.getProject();
       if (project.isAccessible())
       {
@@ -889,6 +891,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
 
   private void checkSchemaBuilder(IPluginModelBase pluginModel, IFile file) throws CoreException, IOException
   {
+    Markers.deleteAllMarkers(file);
     IProjectDescription description = getProject().getDescription();
 
     IPluginBase pluginBase = pluginModel.getPluginBase();
@@ -942,6 +945,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
     IFile file = getProject().getFile(OPTIONS_PATH);
     if (file.isAccessible())
     {
+      Markers.deleteAllMarkers(file);
+
       String symbolicName = pluginModel.getBundleDescription().getSymbolicName();
       String content = VersionUtil.getContent(file);
 

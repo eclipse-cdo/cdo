@@ -144,11 +144,6 @@ public final class Markers
     return addMarker(file, message, severity);
   }
 
-  public static void deleteMarkers(IResource resource) throws CoreException
-  {
-    resource.deleteMarkers(Markers.MARKER_TYPE, false, IResource.DEPTH_ZERO);
-  }
-
   public static void deleteAllMarkers(IResource resource) throws CoreException
   {
     resource.deleteMarkers(Markers.MARKER_TYPE, false, IResource.DEPTH_INFINITE);

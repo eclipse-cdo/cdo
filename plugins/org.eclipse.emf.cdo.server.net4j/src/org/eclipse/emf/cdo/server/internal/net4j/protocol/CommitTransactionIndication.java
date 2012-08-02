@@ -34,7 +34,6 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -258,8 +257,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
 
   protected void indicatingCommit(OMMonitor monitor)
   {
-    ProgressDistributor distributor = getStore().getIndicatingCommitDistributor();
-    distributor.run(InternalCommitContext.OPS, commitContext, monitor);
+    getRepository().commit(commitContext, monitor);
   }
 
   @Override

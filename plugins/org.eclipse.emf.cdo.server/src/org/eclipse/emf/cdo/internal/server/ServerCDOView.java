@@ -613,6 +613,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       return repository.isSupportingEcore();
     }
 
+    public boolean isSerializingCommits()
+    {
+      return repository.isSerializingCommits();
+    }
+
     public boolean isEnsuringReferentialIntegrity()
     {
       return repository.isEnsuringReferentialIntegrity();

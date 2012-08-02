@@ -105,6 +105,7 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.ecore.EClass;
@@ -152,6 +153,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private boolean supportingEcore;
 
+  private boolean serializingCommits;
+
   private boolean ensuringReferentialIntegrity;
 
   private IDGenerationLocation idGenerationLocation;
@@ -189,6 +192,9 @@ public class Repository extends Container<Object> implements InternalRepository
 
   // Bugzilla 297940
   private TimeStampAuthority timeStampAuthority = new TimeStampAuthority(this);
+
+  @ExcludeFromDump
+  private transient Object commitTransactionLock = new Object();
 
   @ExcludeFromDump
   private transient Object createBranchLock = new Object();
@@ -317,6 +323,11 @@ public class Repository extends Container<Object> implements InternalRepository
   public boolean isSupportingEcore()
   {
     return supportingEcore;
+  }
+
+  public boolean isSerializingCommits()
+  {
+    return serializingCommits;
   }
 
   public boolean isEnsuringReferentialIntegrity()
@@ -875,6 +886,27 @@ public class Repository extends Container<Object> implements InternalRepository
   public void failCommit(long timestamp)
   {
     timeStampAuthority.failCommit(timestamp);
+  }
+
+  public void commit(InternalCommitContext commitContext, OMMonitor monitor)
+  {
+    if (serializingCommits)
+    {
+      synchronized (commitTransactionLock)
+      {
+        commitUnsynced(commitContext, monitor);
+      }
+    }
+    else
+    {
+      commitUnsynced(commitContext, monitor);
+    }
+  }
+
+  protected void commitUnsynced(InternalCommitContext commitContext, OMMonitor monitor)
+  {
+    ProgressDistributor distributor = store.getIndicatingCommitDistributor();
+    distributor.run(InternalCommitContext.OPS, commitContext, monitor);
   }
 
   public CDOCommitInfoHandler[] getCommitInfoHandlers()
@@ -1622,6 +1654,12 @@ public class Repository extends Container<Object> implements InternalRepository
     if (valueEcore != null)
     {
       supportingEcore = Boolean.valueOf(valueEcore);
+    }
+
+    String valueCommits = properties.get(Props.SERIALIZE_COMMITS);
+    if (valueCommits != null)
+    {
+      serializingCommits = Boolean.valueOf(valueCommits);
     }
 
     String valueIntegrity = properties.get(Props.ENSURE_REFERENTIAL_INTEGRITY);

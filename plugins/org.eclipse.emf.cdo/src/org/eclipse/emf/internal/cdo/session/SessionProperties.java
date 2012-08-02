@@ -4,13 +4,15 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.internal.cdo.session;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 
@@ -21,10 +23,12 @@ import org.eclipse.net4j.util.properties.IProperties;
 import org.eclipse.net4j.util.properties.Properties;
 import org.eclipse.net4j.util.properties.Property;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  */
-public class SessionProperties extends Properties<CDOSession>
+public class SessionProperties extends Properties<CDOSession> implements CDOCommonRepository
 {
   public static final IProperties<CDOSession> INSTANCE = new SessionProperties();
 
@@ -59,7 +63,7 @@ public class SessionProperties extends Properties<CDOSession>
     });
 
     add(new Property<CDOSession>("userID", Messages.getString("SessionPropertyTester_4"), //
-        Messages.getString("SessionPropertyTester_5"), //$NON-NLS-1$ 
+        Messages.getString("SessionPropertyTester_5"), //$NON-NLS-1$
         CATEGORY_SESSION)
     {
       @Override
@@ -190,6 +194,17 @@ public class SessionProperties extends Properties<CDOSession>
       }
     });
 
+    add(new Property<CDOSession>("serializeCommits", Messages.getString("SessionPropertyTester_38"), //
+        Messages.getString("SessionPropertyTester_39"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.getRepositoryInfo().isSerializingCommits();
+      }
+    });
+
     add(new Property<CDOSession>("ensureReferentialIntegrity", Messages.getString("SessionPropertyTester_30"), //
         Messages.getString("SessionPropertyTester_31"), //$NON-NLS-1$
         CATEGORY_REPOSITORY)
@@ -244,6 +259,81 @@ public class SessionProperties extends Properties<CDOSession>
         return builder;
       }
     });
+  }
+
+  public long getTimeStamp()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public String getName()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public String getUUID()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public Type getType()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public State getState()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public long getCreationTime()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public String getStoreType()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public Set<ObjectType> getObjectIDTypes()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public IDGenerationLocation getIDGenerationLocation()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CDOID getRootResourceID()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean isSupportingAudits()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean isSupportingBranches()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean isSupportingEcore()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean isSerializingCommits()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean isEnsuringReferentialIntegrity()
+  {
+    throw new UnsupportedOperationException();
   }
 
   public static void main(String[] args)

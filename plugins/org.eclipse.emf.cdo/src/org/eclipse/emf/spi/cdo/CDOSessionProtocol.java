@@ -328,6 +328,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private boolean repositorySupportingEcore;
 
+    private boolean repositorySerializingCommits;
+
     private boolean repositoryEnsuringReferentialIntegrity;
 
     private List<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
@@ -335,13 +337,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     private IDGenerationLocation repositoryIDGenerationLocation;
 
     /**
-     * @since 4.1
+     * @since 4.2
      */
     public OpenSessionResult(int sessionID, String userID, String repositoryUUID,
         CDOCommonRepository.Type repositoryType, CDOCommonRepository.State repositoryState, String storeType,
         Set<CDOID.ObjectType> objectIDTypes, long repositoryCreationTime, long lastUpdateTime, CDOID rootResourceID,
         boolean repositorySupportingAudits, boolean repositorySupportingBranches, boolean repositorySupportingEcore,
-        boolean repositoryEnsuringReferentialIntegrity, IDGenerationLocation repositoryIDGenerationLocation)
+        boolean repositorySerializingCommits, boolean repositoryEnsuringReferentialIntegrity,
+        IDGenerationLocation repositoryIDGenerationLocation)
     {
       this.sessionID = sessionID;
       this.userID = userID;
@@ -356,6 +359,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       this.repositorySupportingAudits = repositorySupportingAudits;
       this.repositorySupportingBranches = repositorySupportingBranches;
       this.repositorySupportingEcore = repositorySupportingEcore;
+      this.repositorySerializingCommits = repositoryEnsuringReferentialIntegrity;
       this.repositoryEnsuringReferentialIntegrity = repositoryEnsuringReferentialIntegrity;
       this.repositoryIDGenerationLocation = repositoryIDGenerationLocation;
     }
@@ -442,6 +446,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public boolean isRepositorySupportingEcore()
     {
       return repositorySupportingEcore;
+    }
+
+    /**
+     * @since 4.2
+     */
+    public boolean isRepositorySerializingCommits()
+    {
+      return repositorySerializingCommits;
     }
 
     /**

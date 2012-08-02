@@ -132,6 +132,11 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
       return session.getRepository().isSupportingEcore();
     }
 
+    public boolean isSerializingCommits()
+    {
+      return session.getRepository().isSerializingCommits();
+    }
+
     public boolean isEnsuringReferentialIntegrity()
     {
       return session.getRepository().isEnsuringReferentialIntegrity();

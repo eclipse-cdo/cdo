@@ -42,7 +42,7 @@
          id="org.eclipse.emf.cdo.session.properties"
          type="org.eclipse.emf.cdo.session.CDOSession"
          namespace="org.eclipse.emf.cdo.session"
-         properties="open,sessionID,userID,passiveUpdateEnabled,lastUpdateTime,passiveUpdateMode,repositoryName,repositoryUUID,repositoryType,repositoryState,repositoryCreationTime,supportingAudits,supportingBranches,supportingEcore,ensureReferentialIntegrity,idGenerationLocation,storeType,objectIDTypes"
+         properties="open,sessionID,userID,passiveUpdateEnabled,lastUpdateTime,passiveUpdateMode,repositoryName,repositoryUUID,repositoryType,repositoryState,repositoryCreationTime,supportingAudits,supportingBranches,supportingEcore,serializeCommits,ensureReferentialIntegrity,idGenerationLocation,storeType,objectIDTypes"
          class="org.eclipse.emf.internal.cdo.session.SessionProperties$Tester"/>
       <propertyTester
          id="org.eclipse.emf.cdo.view.properties"

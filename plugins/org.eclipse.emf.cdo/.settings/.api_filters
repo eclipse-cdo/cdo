@@ -161,6 +161,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/session/SessionProperties.java" type="org.eclipse.emf.internal.cdo.session.SessionProperties">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOCommonRepository"/>
+                <message_argument value="SessionProperties"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/util/DefaultLocksChangedEvent.java" type="org.eclipse.emf.internal.cdo.util.DefaultLocksChangedEvent">
         <filter id="574619656">
             <message_arguments>

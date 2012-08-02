@@ -157,6 +157,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     private boolean supportingEcore;
 
+    private boolean serializingCommits;
+
     private boolean ensuringReferentialIntegrity;
 
     private IDGenerationLocation idGenerationLocation;
@@ -177,6 +179,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       supportingAudits = result.isRepositorySupportingAudits();
       supportingBranches = result.isRepositorySupportingBranches();
       supportingEcore = result.isRepositorySupportingEcore();
+      serializingCommits = result.isRepositoryEnsuringReferentialIntegrity();
       ensuringReferentialIntegrity = result.isRepositoryEnsuringReferentialIntegrity();
       idGenerationLocation = result.getRepositoryIDGenerationLocation();
       this.session = session;
@@ -280,6 +283,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     public boolean isSupportingEcore()
     {
       return supportingEcore;
+    }
+
+    public boolean isSerializingCommits()
+    {
+      return serializingCommits;
     }
 
     public boolean isEnsuringReferentialIntegrity()

@@ -164,6 +164,11 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     return delegate.isSupportingEcore();
   }
 
+  public boolean isSerializingCommits()
+  {
+    return delegate.isSerializingCommits();
+  }
+
   public boolean isEnsuringReferentialIntegrity()
   {
     return delegate.isEnsuringReferentialIntegrity();
@@ -206,6 +211,7 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     out.writeBoolean(isSupportingAudits());
     out.writeBoolean(isSupportingBranches());
     out.writeBoolean(isSupportingEcore());
+    out.writeBoolean(isSerializingCommits());
     out.writeBoolean(isEnsuringReferentialIntegrity());
     out.writeEnum(getIDGenerationLocation());
   }

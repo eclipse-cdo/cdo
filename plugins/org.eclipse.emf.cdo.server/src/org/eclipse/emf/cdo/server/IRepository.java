@@ -30,7 +30,7 @@ import java.util.Set;
 
 /**
  * A CDO repository.
- * 
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -59,7 +59,7 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
 
   /**
    * Returns the EMF {@link Registry package registry} that is used by this repository.
-   * 
+   *
    * @since 2.0
    */
   public CDOPackageRegistry getPackageRegistry();
@@ -95,7 +95,7 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
 
   /**
    * Returns the time stamp of the last commit operation.
-   * 
+   *
    * @since 3.0
    */
   public long getLastCommitTimeStamp();
@@ -103,14 +103,14 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
   /**
    * Blocks the calling thread until the next commit operation has succeeded and returns the last (highest) commit time
    * stamp.
-   * 
+   *
    * @since 3.0
    */
   public long waitForCommit(long timeout);
 
   /**
    * Validates the given timeStamp against the repository time.
-   * 
+   *
    * @throws IllegalArgumentException
    *           if the given timeStamp is less than the repository creation time or greater than the current repository
    *           time.
@@ -156,7 +156,7 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
   /**
    * A marker interface to indicate valid arguments to {@link IRepository#addHandler(Handler)} and
    * {@link IRepository#removeHandler(Handler)}.
-   * 
+   *
    * @see ReadAccessHandler
    * @see WriteAccessHandler
    * @author Eike Stepper
@@ -168,7 +168,7 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
 
   /**
    * Provides a way to handle revisions that are to be sent to the client.
-   * 
+   *
    * @author Eike Stepper
    * @since 2.0
    */
@@ -176,7 +176,7 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
   {
     /**
      * Provides a way to handle revisions that are to be sent to the client.
-     * 
+     *
      * @param session
      *          The session that is going to send the revisions.
      * @param revisions
@@ -196,7 +196,7 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
 
   /**
    * Provides a way to handle commits that are received from a client.
-   * 
+   *
    * @author Eike Stepper
    * @since 2.0
    */
@@ -204,7 +204,7 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
   {
     /**
      * Provides a way to handle transactions that are to be committed to the backend store.
-     * 
+     *
      * @param transaction
      *          The transaction that is going to be committed.
      * @param commitContext
@@ -222,7 +222,7 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
 
     /**
      * Provides a way to handle transactions after they have been committed to the backend store.
-     * 
+     *
      * @param transaction
      *          The transaction that has been committed.
      * @param commitContext
@@ -239,7 +239,7 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
 
   /**
    * Contains symbolic constants that specifiy valid keys of {@link IRepository#getProperties() repository properties}.
-   * 
+   *
    * @author Eike Stepper
    * @noimplement This interface is not intended to be implemented by clients.
    * @noextend This interface is not intended to be extended by clients.
@@ -250,7 +250,7 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
     /**
      * Used to override the automatic UUID generation during first startup of a repository. Passing the empty string
      * causes the UUID of the repository to be set to its {@link IRepository#getName() name}.
-     * 
+     *
      * @since 2.0
      */
     public static final String OVERRIDE_UUID = "overrideUUID"; //$NON-NLS-1$
@@ -269,6 +269,11 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
      * @since 4.0
      */
     public static final String SUPPORTING_ECORE = "supportingEcore"; //$NON-NLS-1$
+
+    /**
+     * @since 4.2
+     */
+    public static final String SERIALIZE_COMMITS = "serializeCommits"; //$NON-NLS-1$
 
     /**
      * @since 3.0

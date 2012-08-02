@@ -102,6 +102,12 @@ public interface CDOCommonRepository extends CDOTimeProvider
   public boolean isSupportingEcore();
 
   /**
+   * Returns <code>true</code> if this repository serializes commits, <code>false</code> otherwise.
+   * @since 4.2
+   */
+  public boolean isSerializingCommits();
+
+  /**
    * Returns <code>true</code> if this repository ensures referential integrity, <code>false</code> otherwise.
    *
    * @since 4.0

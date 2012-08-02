@@ -78,7 +78,7 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
      * of this method will determine a new positive unique branch id. If the id is equal to {@link #NEW_LOCAL_BRANCH}
      * the implementor of this method will determine a new negative unique branch id, so that the new branch becomes a
      * local branch. In either case the used branch id is returned to the caller.
-     * 
+     *
      * @since 4.0
      */
     public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo);
@@ -135,6 +135,12 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
       public long getBaseTimeStamp()
       {
         return baseTimeStamp;
+      }
+
+      @Override
+      public String toString()
+      {
+        return "BranchInfo[name=" + name + ", baseBranchID=" + baseBranchID + ", baseTimeStamp=" + baseTimeStamp + "]";
       }
     }
 

@@ -23,6 +23,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -35,7 +36,7 @@ import java.util.Set;
 
 /**
  * A useful base class for implementing custom {@link IDBAdapter DB adapters}.
- * 
+ *
  * @author Eike Stepper
  */
 public abstract class DBAdapter implements IDBAdapter
@@ -545,5 +546,43 @@ public abstract class DBAdapter implements IDBAdapter
   {
     /* SQL code for duplicate keys is 23001 */
     return "23001".equals(ex.getSQLState());
+  }
+
+  /**
+   * @since 4.2
+   */
+  public String format(PreparedStatement stmt)
+  {
+    return stmt.toString();
+  }
+
+  /**
+   * @since 4.2
+   */
+  public String format(ResultSet resultSet)
+  {
+    try
+    {
+      StringBuilder builder = new StringBuilder();
+      ResultSetMetaData metaData = resultSet.getMetaData();
+      int columnCount = metaData.getColumnCount();
+      for (int i = 0; i < columnCount; i++)
+      {
+        if (i != 0)
+        {
+          builder.append(", ");
+        }
+
+        builder.append(metaData.getColumnName(i + 1).toLowerCase());
+        builder.append("=");
+        builder.append(resultSet.getObject(i + 1));
+      }
+
+      return builder.toString();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
   }
 }

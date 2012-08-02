@@ -21,8 +21,8 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
-import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
-import org.eclipse.emf.cdo.internal.common.protocol.CDODataOutputImpl;
+import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
+import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;

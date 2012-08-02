@@ -29,8 +29,8 @@ import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
-import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
-import org.eclipse.emf.cdo.internal.common.protocol.CDODataOutputImpl;
+import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
+import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 

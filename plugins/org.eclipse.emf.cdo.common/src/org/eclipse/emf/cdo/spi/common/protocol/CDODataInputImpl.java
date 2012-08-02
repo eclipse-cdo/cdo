@@ -9,7 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - bug 213402
  */
-package org.eclipse.emf.cdo.internal.common.protocol;
+package org.eclipse.emf.cdo.spi.common.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;

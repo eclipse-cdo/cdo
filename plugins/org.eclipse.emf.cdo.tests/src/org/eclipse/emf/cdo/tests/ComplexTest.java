@@ -82,8 +82,8 @@ public class ComplexTest extends AbstractCDOTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-    String path1 = getResourcePath("/resources/folder1/" + uniqueCounter);
-    String path2 = getResourcePath("/resources/folder2/" + uniqueCounter);
+    String path1 = getResourcePath("/resources/folder1/res" + uniqueCounter);
+    String path2 = getResourcePath("/resources/folder2/res" + uniqueCounter);
     ++uniqueCounter;
 
     init(path1, path2);
@@ -1036,12 +1036,12 @@ public class ComplexTest extends AbstractCDOTest
   public void testMultipleTransactions3() throws CommitException
   {
     CDOTransaction transaction1 = session.openTransaction();
-    String resource1path = getResourcePath("/resources/3/" + uniqueCounter);
+    String resource1path = getResourcePath("/resources/3/res" + uniqueCounter);
     CDOResource resource1 = transaction1.createResource(resource1path);
     transaction1.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    String resource2path = getResourcePath("/resources/4/" + uniqueCounter++);
+    String resource2path = getResourcePath("/resources/4/res" + uniqueCounter++);
     CDOResource resource2 = transaction2.createResource(resource2path);
     transaction2.commit();
 
@@ -1090,12 +1090,12 @@ public class ComplexTest extends AbstractCDOTest
   public void testMultipleTransactions2() throws CommitException
   {
     CDOTransaction transaction1 = session.openTransaction();
-    String resource1path = getResourcePath("/resources/3/" + uniqueCounter);
+    String resource1path = getResourcePath("/resources/3/res" + uniqueCounter);
     CDOResource resource1 = transaction1.createResource(resource1path);
     transaction1.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    String resource2path = getResourcePath("/resources/4/" + uniqueCounter++);
+    String resource2path = getResourcePath("/resources/4/res" + uniqueCounter++);
     CDOResource resource2 = transaction2.createResource(resource2path);
     transaction2.commit();
 

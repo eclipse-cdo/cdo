@@ -140,8 +140,6 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private Map<CDOID, EClass> detachedObjectTypes;
 
-  private int[] detachedObjectVersions;
-
   private InternalCDORevision[] dirtyObjects = new InternalCDORevision[0];
 
   private InternalCDORevision[] cachedDetachedRevisions = new InternalCDORevision[0];
@@ -253,11 +251,6 @@ public class TransactionCommitContext implements InternalCommitContext
   public Map<CDOID, EClass> getDetachedObjectTypes()
   {
     return detachedObjectTypes;
-  }
-
-  public int[] getDetachedObjectVersions()
-  {
-    return detachedObjectVersions;
   }
 
   public InternalCDORevision[] getDetachedRevisions()
@@ -423,11 +416,6 @@ public class TransactionCommitContext implements InternalCommitContext
   public void setDetachedObjectTypes(Map<CDOID, EClass> detachedObjectTypes)
   {
     this.detachedObjectTypes = detachedObjectTypes;
-  }
-
-  public void setDetachedObjectVersions(int[] detachedObjectVersions)
-  {
-    this.detachedObjectVersions = detachedObjectVersions;
   }
 
   public void setAutoReleaseLocksEnabled(boolean on)

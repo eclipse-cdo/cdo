@@ -94,11 +94,6 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext
    */
   public void setDetachedObjectTypes(Map<CDOID, EClass> detachedObjectTypes);
 
-  /**
-   * @since 4.2
-   */
-  public void setDetachedObjectVersions(int[] detachedObjectVersions);
-
   public void setAutoReleaseLocksEnabled(boolean on);
 
   public void setCommitComment(String comment);

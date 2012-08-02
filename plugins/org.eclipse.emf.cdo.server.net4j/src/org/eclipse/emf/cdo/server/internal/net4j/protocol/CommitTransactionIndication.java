@@ -192,10 +192,19 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
         monitor.worked();
       }
 
+      boolean auditing = getRepository().isSupportingAudits();
+      boolean ensuringReferentialIntegrity = getRepository().isEnsuringReferentialIntegrity();
+
       Map<CDOID, EClass> detachedObjectTypes = null;
-      if (getRepository().isEnsuringReferentialIntegrity())
+      if (auditing || ensuringReferentialIntegrity)
       {
         detachedObjectTypes = new HashMap<CDOID, EClass>();
+      }
+
+      int[] detachedObjectVersions = null;
+      if (auditing && detachedObjects.length != 0)
+      {
+        detachedObjectVersions = new int[detachedObjects.length];
       }
 
       for (int i = 0; i < detachedObjects.length; i++)
@@ -207,6 +216,11 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
         {
           EClass eClass = (EClass)in.readCDOClassifierRefAndResolve();
           detachedObjectTypes.put(id, eClass);
+        }
+
+        if (detachedObjectVersions != null)
+        {
+          detachedObjectVersions[i] = in.readInt();
         }
 
         monitor.worked();
@@ -223,6 +237,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       commitContext.setDirtyObjectDeltas(dirtyObjectDeltas);
       commitContext.setDetachedObjects(detachedObjects);
       commitContext.setDetachedObjectTypes(detachedObjectTypes);
+      commitContext.setDetachedObjectVersions(detachedObjectVersions);
       commitContext.setCommitComment(commitComment);
       commitContext.setLobs(getIndicationStream());
     }
@@ -239,7 +254,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       @Override
       protected void demandLoad(Resource resource) throws IOException
       {
-        // Do nothing: we don't want this ResourceSet to attempt demandloads.
+        // Do nothing: we don't want this ResourceSet to attempt demand-loads.
       }
     };
 

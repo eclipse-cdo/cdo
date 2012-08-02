@@ -2623,11 +2623,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       detachedObjects = filterCommittables(transaction.getDetachedObjects());
       List<CDOIDAndVersion> detached = new ArrayList<CDOIDAndVersion>(detachedObjects.size());
-      for (CDOID id : detachedObjects.keySet())
+      for (Entry<CDOID, CDOObject> entry : detachedObjects.entrySet())
       {
-        // Add "version-less" key.
-        // CDOSessionImpl.reviseRevisions() will call reviseLatest() accordingly.
-        detached.add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
+        CDOID id = entry.getKey();
+        CDOObject object = entry.getValue();
+
+        InternalCDORevision cleanRevision = cleanRevisions.get(object);
+        boolean sameBranch = cleanRevision.getBranch() == getBranch();
+        int version = sameBranch ? cleanRevision.getVersion() + 1 : CDOBranchVersion.FIRST_VERSION;
+
+        detached.add(CDOIDUtil.createIDAndVersion(id, version));
       }
 
       dirtyObjects = filterCommittables(transaction.getDirtyObjects());

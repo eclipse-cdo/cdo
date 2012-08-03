@@ -13,6 +13,8 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
@@ -201,12 +203,13 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
         detachedObjectTypes = new HashMap<CDOID, EClass>();
       }
 
-      int[] detachedObjectVersions = null;
+      CDOBranchVersion[] detachedObjectVersions = null;
       if (auditing && detachedObjects.length != 0)
       {
-        detachedObjectVersions = new int[detachedObjects.length];
+        detachedObjectVersions = new CDOBranchVersion[detachedObjects.length];
       }
 
+      CDOBranch transactionBranch = commitContext.getBranchPoint().getBranch();
       for (int i = 0; i < detachedObjects.length; i++)
       {
         CDOID id = in.readCDOID();
@@ -220,7 +223,19 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
 
         if (detachedObjectVersions != null)
         {
-          detachedObjectVersions[i] = in.readInt();
+          CDOBranch branch;
+          int version = in.readInt();
+          if (version < 0)
+          {
+            version = -version;
+            branch = in.readCDOBranch();
+          }
+          else
+          {
+            branch = transactionBranch;
+          }
+
+          detachedObjectVersions[i] = branch.getVersion(version);
         }
 
         monitor.worked();

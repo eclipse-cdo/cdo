@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -140,7 +141,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private Map<CDOID, EClass> detachedObjectTypes;
 
-  private int[] detachedObjectVersions;
+  private CDOBranchVersion[] detachedObjectVersions;
 
   private InternalCDORevision[] dirtyObjects = new InternalCDORevision[0];
 
@@ -255,7 +256,7 @@ public class TransactionCommitContext implements InternalCommitContext
     return detachedObjectTypes;
   }
 
-  public int[] getDetachedObjectVersions()
+  public CDOBranchVersion[] getDetachedObjectVersions()
   {
     return detachedObjectVersions;
   }
@@ -425,7 +426,7 @@ public class TransactionCommitContext implements InternalCommitContext
     this.detachedObjectTypes = detachedObjectTypes;
   }
 
-  public void setDetachedObjectVersions(int[] detachedObjectVersions)
+  public void setDetachedObjectVersions(CDOBranchVersion[] detachedObjectVersions)
   {
     this.detachedObjectVersions = detachedObjectVersions;
   }

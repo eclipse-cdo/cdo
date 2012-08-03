@@ -368,7 +368,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     /**
      * @since 4.2
      */
-    public int[] getDetachedObjectVersions();
+    public CDOBranchVersion[] getDetachedObjectVersions();
 
     /**
      * Returns a stream that all {@link CDOLob lobs} can be read from. The format of the data delivered through the

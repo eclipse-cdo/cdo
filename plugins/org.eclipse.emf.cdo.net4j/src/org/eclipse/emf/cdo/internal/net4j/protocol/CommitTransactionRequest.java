@@ -16,6 +16,7 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectReference;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -36,6 +37,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
+import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.internal.cdo.object.CDOObjectReferenceImpl;
@@ -190,8 +192,12 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
       TRACER.format("Writing {0} detached objects", detachedObjects.size()); //$NON-NLS-1$
     }
 
-    boolean auditing = getSession().getRepositoryInfo().isSupportingAudits();
-    boolean ensuringReferentialIntegrity = getSession().getRepositoryInfo().isEnsuringReferentialIntegrity();
+    CDORepositoryInfo repositoryInfo = getSession().getRepositoryInfo();
+    boolean auditing = repositoryInfo.isSupportingAudits();
+    boolean branching = repositoryInfo.isSupportingBranches();
+    boolean ensuringReferentialIntegrity = repositoryInfo.isEnsuringReferentialIntegrity();
+    CDOBranch transactionBranch = transaction.getBranch();
+
     for (CDOIDAndVersion detachedObject : detachedObjects)
     {
       CDOID id = detachedObject.getID();
@@ -204,7 +210,19 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
       if (auditing)
       {
-        out.writeInt(detachedObject.getVersion());
+        int version = detachedObject.getVersion();
+        if (branching && detachedObject instanceof CDORevisionKey)
+        {
+          CDOBranch branch = ((CDORevisionKey)detachedObject).getBranch();
+          if (branch != transactionBranch)
+          {
+            out.writeInt(-version);
+            out.writeCDOBranch(branch);
+            continue;
+          }
+        }
+
+        out.writeInt(version);
       }
     }
 

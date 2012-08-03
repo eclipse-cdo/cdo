@@ -105,6 +105,7 @@ import java.util.Map;
 
 /**
  * @author Eike Stepper
+ * @since 4.2
  */
 public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating implements CDODataInput
 {

@@ -73,6 +73,7 @@ import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @since 4.2
  */
 public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements CDODataOutput
 {

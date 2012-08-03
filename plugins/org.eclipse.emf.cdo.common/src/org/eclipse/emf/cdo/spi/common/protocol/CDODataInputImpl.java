@@ -223,7 +223,20 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>(size3);
     for (int i = 0; i < size3; i++)
     {
-      CDOIDAndVersion data = readCDOIDAndVersion();
+      CDOID id = readCDOID();
+      int version = readInt();
+
+      CDOIDAndVersion data;
+      if (version < 0)
+      {
+        CDOBranch branch = readCDOBranch();
+        data = CDORevisionUtil.createRevisionKey(id, branch, -version);
+      }
+      else
+      {
+        data = new CDOIDAndVersionImpl(id, version);
+      }
+
       detachedObjects.add(data);
     }
 

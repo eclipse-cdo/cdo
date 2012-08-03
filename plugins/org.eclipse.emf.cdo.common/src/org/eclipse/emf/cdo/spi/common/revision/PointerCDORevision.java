@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EClass;
  * {@link CDOBranch branch} when the object is still associated with a revision from one of the baseline branches. It
  * always has {@link #getVersion() version} {@link CDOBranchVersion#UNSPECIFIED_VERSION zero} and can only appear in
  * branches below the {@link CDOBranch#isMainBranch() main} branch.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  */
@@ -65,5 +65,17 @@ public class PointerCDORevision extends SyntheticCDORevision
   public CDOBranchVersion getTarget()
   {
     return target;
+  }
+
+  @Override
+  public String toString()
+  {
+    String prefix = super.toString() + "->";
+    if (target == null)
+    {
+      return prefix + "?";
+    }
+
+    return prefix + target.getBranch().getID() + "v" + target.getVersion();
   }
 }

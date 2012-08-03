@@ -65,11 +65,10 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
 
     CDOCommitData commitData = commitContext.getCommitData();
     InternalCDOSession session = transaction.getSession();
-    CommitTransactionResult result = null;
 
     OMMonitor monitor = new EclipseMonitor(progressMonitor);
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-    result = sessionProtocol.commitTransaction(commitContext, monitor);
+    CommitTransactionResult result = sessionProtocol.commitTransaction(commitContext, monitor);
 
     commitContext.postCommit(result);
 

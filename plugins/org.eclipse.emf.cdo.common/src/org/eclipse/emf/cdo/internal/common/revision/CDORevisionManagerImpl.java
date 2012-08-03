@@ -216,14 +216,12 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
       InternalCDORevision revision = getCachedRevisionByVersion(id, branchVersion);
       if (revision != null)
       {
-        if (timeStamp == CDORevision.UNSPECIFIED_DATE)
+        if (timeStamp == CDORevision.UNSPECIFIED_DATE || !supportingAudits)
         {
           cache.removeRevision(id, branchVersion);
         }
-        else
-        {
-          revision.setRevised(timeStamp - 1);
-        }
+
+        revision.setRevised(timeStamp - 1);
       }
     }
     finally

@@ -190,15 +190,21 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
       TRACER.format("Writing {0} detached objects", detachedObjects.size()); //$NON-NLS-1$
     }
 
+    boolean auditing = getSession().getRepositoryInfo().isSupportingAudits();
     boolean ensuringReferentialIntegrity = getSession().getRepositoryInfo().isEnsuringReferentialIntegrity();
     for (CDOIDAndVersion detachedObject : detachedObjects)
     {
       CDOID id = detachedObject.getID();
       out.writeCDOID(id);
-      if (ensuringReferentialIntegrity)
+      if (auditing || ensuringReferentialIntegrity)
       {
         EClass eClass = getObjectType(id);
         out.writeCDOClassifierRef(eClass);
+      }
+
+      if (auditing)
+      {
+        out.writeInt(detachedObject.getVersion());
       }
     }
 

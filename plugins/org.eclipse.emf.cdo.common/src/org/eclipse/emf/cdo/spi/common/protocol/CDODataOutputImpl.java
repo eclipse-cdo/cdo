@@ -188,7 +188,17 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     writeInt(detachedObjects.size());
     for (CDOIDAndVersion data : detachedObjects)
     {
-      writeCDOIDAndVersion(data);
+      writeCDOID(data.getID());
+      if (data instanceof CDORevisionKey)
+      {
+        CDORevisionKey revisionKey = (CDORevisionKey)data;
+        writeInt(-data.getVersion());
+        writeCDOBranch(revisionKey.getBranch());
+      }
+      else
+      {
+        writeInt(data.getVersion());
+      }
     }
   }
 

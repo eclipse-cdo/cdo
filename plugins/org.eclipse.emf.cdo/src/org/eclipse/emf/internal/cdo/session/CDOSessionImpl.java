@@ -1009,16 +1009,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     for (CDOIDAndVersion key : commitInfo.getDetachedObjects())
     {
       CDOID id = key.getID();
-      int version = key.getVersion();
-      if (version == CDOBranchVersion.UNSPECIFIED_VERSION)
-      {
-        revisionManager.reviseLatest(id, newBranch);
-      }
-      else
-      {
-        CDOBranchVersion branchVersion = newBranch.getVersion(version);
-        revisionManager.reviseVersion(id, branchVersion, timeStamp);
-      }
+      revisionManager.reviseLatest(id, newBranch);
     }
 
     return oldRevisions;

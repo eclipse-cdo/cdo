@@ -780,6 +780,15 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       return newLockStates;
     }
 
+    /**
+     * @since 4.1
+     */
+    public void setNewLockStates(CDOLockState[] newLockStates)
+    {
+      CheckUtil.checkArg(newLockStates, "newLockStates");
+      this.newLockStates = newLockStates;
+    }
+
     protected PostCommitReferenceAdjuster createReferenceAdjuster()
     {
       return new PostCommitReferenceAdjuster(idProvider, new CDOIDMapper(idMappings));
@@ -817,15 +826,6 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
         return idMapper.adjustReference(id, feature, index);
       }
-    }
-
-    /**
-     * @since 4.1
-     */
-    public void setNewLockStates(CDOLockState[] newLockStates)
-    {
-      CheckUtil.checkArg(newLockStates, "newLockStates");
-      this.newLockStates = newLockStates;
     }
   }
 

@@ -1142,8 +1142,9 @@ public class ResourceTest extends AbstractCDOTest
 
     try
     {
-      view.getObject(folderID);
+      CDOObject result = view.getObject(folderID);
       fail("ObjectNotFoundException expected");
+      assertEquals(null, result);
     }
     catch (ObjectNotFoundException expected)
     {
@@ -1303,8 +1304,9 @@ public class ResourceTest extends AbstractCDOTest
 
     try
     {
-      view.getObject(folderID);
+      CDOObject result = view.getObject(folderID);
       fail("ObjectNotFoundException expected");
+      assertEquals(null, result);
     }
     catch (ObjectNotFoundException expected)
     {
@@ -1388,8 +1390,9 @@ public class ResourceTest extends AbstractCDOTest
 
     try
     {
-      view.getObject(folderID);
+      CDOObject result = view.getObject(folderID);
       fail("ObjectNotFoundException expected");
+      assertEquals(null, result);
     }
     catch (ObjectNotFoundException expected)
     {

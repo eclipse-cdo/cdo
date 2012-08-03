@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -513,8 +514,8 @@ public class MergingTest extends AbstractCDOTest
     addCompany(contents);
     addCompany(contents);
     addCompany(contents);
-    long time = transaction.commit().getTimeStamp();
-    CDOBranch source = mainBranch.createBranch("source", time);
+    long time1 = transaction.commit().getTimeStamp();
+    CDOBranch source = mainBranch.createBranch("source", time1);
 
     sleep(10);
     CDOTransaction tx1 = session.openTransaction(source);
@@ -524,11 +525,14 @@ public class MergingTest extends AbstractCDOTest
     contents1.remove(1);
 
     // dumpAllRevisions(getRepository().getStore());
-    commitAndSync(tx1, transaction);
+    long time2 = commitAndSync(tx1, transaction).getTimeStamp();
+    assertEquals(true, time1 < time2);
     dumpAllRevisions(getRepository().getStore());
     tx1.close();
 
-    CDOChangeSetData result = transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    CDOBranchPoint head = source.getHead();
+    DefaultCDOMerger.PerFeature.ManyValued merger = new DefaultCDOMerger.PerFeature.ManyValued();
+    CDOChangeSetData result = transaction.merge(head, merger);
     assertEquals(false, result.isEmpty());
     assertEquals(0, result.getNewObjects().size());
     assertEquals(2, result.getChangedObjects().size());

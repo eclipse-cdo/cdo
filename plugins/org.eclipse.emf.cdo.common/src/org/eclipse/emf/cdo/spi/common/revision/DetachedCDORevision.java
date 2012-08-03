@@ -66,4 +66,10 @@ public class DetachedCDORevision extends SyntheticCDORevision
   {
     this.revised = revised;
   }
+
+  @Override
+  public String toString()
+  {
+    return super.toString() + "d";
+  }
 }

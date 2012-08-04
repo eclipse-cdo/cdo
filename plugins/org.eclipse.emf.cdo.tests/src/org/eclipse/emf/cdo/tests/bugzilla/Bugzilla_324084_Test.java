@@ -31,12 +31,19 @@ import java.util.Map;
  * CommitException with XRef on new objects after branch merge.
  * <p>
  * See bug 324084
- * 
+ *
  * @author Pascal Lehmann
  */
 @CleanRepositoriesBefore
 public class Bugzilla_324084_Test extends AbstractCDOTest
 {
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    super.doSetUp();
+    skipStoreWithoutChangeSets();
+  }
+
   @Override
   public synchronized Map<String, Object> getTestProperties()
   {

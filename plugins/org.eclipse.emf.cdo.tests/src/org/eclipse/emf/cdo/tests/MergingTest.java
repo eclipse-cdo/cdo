@@ -35,6 +35,13 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
 public class MergingTest extends AbstractCDOTest
 {
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    super.doSetUp();
+    skipStoreWithoutChangeSets();
+  }
+
   public void testFromEmptyBranches() throws Exception
   {
     CDOSession session = openSession();

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Caspar De Groot - initial API and implementation
  */
@@ -388,6 +388,8 @@ public class LockingNotificationsTest extends AbstractLockingTest
 
   public void testLockStateHeldByDurableView() throws CommitException
   {
+    skipStoreWithoutDurableLocking();
+
     {
       CDOSession session1 = openSession();
       CDOTransaction tx1 = session1.openTransaction();

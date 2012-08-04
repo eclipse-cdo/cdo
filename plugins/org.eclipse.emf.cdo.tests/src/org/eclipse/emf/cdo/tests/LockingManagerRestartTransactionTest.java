@@ -36,6 +36,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
+    skipStoreWithoutDurableLocking();
 
     session = openSession();
     transaction = session.openTransaction();

@@ -34,7 +34,7 @@ import java.util.Map;
  * List index problem during merge can cause a StaleReference in database even with XRef checking enabled.
  * <p>
  * See bug 326518
- * 
+ *
  * @author Pascal Lehmann
  */
 public class Bugzilla_326518_Test extends AbstractCDOTest
@@ -51,6 +51,8 @@ public class Bugzilla_326518_Test extends AbstractCDOTest
   @CleanRepositoriesBefore
   public void testIndexBranchMerge() throws Exception
   {
+    skipStoreWithoutQueryXRefs();
+
     // setup transaction.
     final CDOSession session = openSession();
     final CDOTransaction transaction1 = session.openTransaction();

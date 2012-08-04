@@ -30,7 +30,7 @@ import java.util.Map;
  * enabled.
  * <p>
  * See bug 325866
- * 
+ *
  * @author Pascal Lehmann
  */
 public class Bugzilla_325866_Test extends AbstractCDOTest
@@ -47,6 +47,8 @@ public class Bugzilla_325866_Test extends AbstractCDOTest
   @CleanRepositoriesBefore
   public void testXRefReattachBranch() throws Exception
   {
+    skipStoreWithoutQueryXRefs();
+
     // setup transaction.
     final CDOSession session1 = openSession();
     final CDOTransaction s1Tr1 = session1.openTransaction();

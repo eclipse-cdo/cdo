@@ -51,6 +51,13 @@ public class CommitInfoTest extends AbstractCDOTest
 
   private static final String RESOURCE_PATH = "/res";
 
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    super.doSetUp();
+    skipStoreWithoutCommitInfos();
+  }
+
   public void testLocalTimestamp() throws Exception
   {
     CDOSession session = openSession();

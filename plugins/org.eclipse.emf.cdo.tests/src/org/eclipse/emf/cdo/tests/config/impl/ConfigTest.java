@@ -15,6 +15,9 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalStore.NoChangeSets;
+import org.eclipse.emf.cdo.spi.server.InternalStore.NoCommitInfos;
+import org.eclipse.emf.cdo.spi.server.InternalStore.NoDurableLocking;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoExternalReferences;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoFeatureMaps;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoHandleRevisions;
@@ -630,6 +633,21 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   protected void skipStoreWithoutRawAccess()
   {
     skipTest(getRepository().getStore() instanceof NoRawAccess);
+  }
+
+  protected void skipStoreWithoutChangeSets()
+  {
+    skipTest(getRepository().getStore() instanceof NoChangeSets);
+  }
+
+  protected void skipStoreWithoutCommitInfos()
+  {
+    skipTest(getRepository().getStore() instanceof NoCommitInfos);
+  }
+
+  protected void skipStoreWithoutDurableLocking()
+  {
+    skipTest(getRepository().getStore() instanceof NoDurableLocking);
   }
 
   protected void clearCache(CDORevisionManager revisionManager)

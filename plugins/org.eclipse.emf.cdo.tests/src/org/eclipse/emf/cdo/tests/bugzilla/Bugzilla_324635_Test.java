@@ -28,7 +28,7 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
  * "Attempt to modify historical revision"-Exception after branch merge.
  * <p>
  * See bug 324635.
- * 
+ *
  * @author Pascal Lehmann
  */
 public class Bugzilla_324635_Test extends AbstractCDOTest
@@ -36,6 +36,8 @@ public class Bugzilla_324635_Test extends AbstractCDOTest
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testTargetGoalDeltaVersion() throws Exception
   {
+    skipStoreWithoutChangeSets();
+
     // setup 2 transactions.
     final CDOSession session1 = openSession();
     final CDOTransaction s1Tr1 = session1.openTransaction();

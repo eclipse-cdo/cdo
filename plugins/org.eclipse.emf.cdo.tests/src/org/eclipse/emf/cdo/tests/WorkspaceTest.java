@@ -99,6 +99,7 @@ public class WorkspaceTest extends AbstractCDOTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
+    skipStoreWithoutRawAccess();
     skipStoreWithoutHandleRevisions();
 
     CDOSession session = openSession();

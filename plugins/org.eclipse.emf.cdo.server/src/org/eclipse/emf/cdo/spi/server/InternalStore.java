@@ -109,4 +109,28 @@ public interface InternalStore extends IStore, ILifecycle
   public interface NoRawAccess
   {
   }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.2
+   */
+  public interface NoChangeSets
+  {
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.2
+   */
+  public interface NoCommitInfos
+  {
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.2
+   */
+  public interface NoDurableLocking
+  {
+  }
 }

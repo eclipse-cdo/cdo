@@ -33,6 +33,13 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 @CleanRepositoriesBefore
 public class Bugzilla_314264_Test extends AbstractCDOTest
 {
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    super.doSetUp();
+    skipStoreWithoutChangeSets();
+  }
+
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testMerge() throws Exception
   {

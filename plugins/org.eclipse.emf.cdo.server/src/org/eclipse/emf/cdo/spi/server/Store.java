@@ -136,6 +136,14 @@ public abstract class Store extends Lifecycle implements InternalStore
     this.supportedRevisionParallelisms = supportedRevisionParallelisms;
   }
 
+  /**
+   * @since 4.2
+   */
+  public Store(String type)
+  {
+    this.type = type;
+  }
+
   public final String getType()
   {
     return type;
@@ -430,7 +438,7 @@ public abstract class Store extends Lifecycle implements InternalStore
    * {@link ISessionManager} (indicating that a session is closed) or any of its sessions (indicating that a view is
    * closed). <b>Note:</b> Closing a session <em>implies</em> that all contained views are closed sliently without
    * firing respective events!
-   * 
+   *
    * @param session
    *          The context which the pool must be compatible with. Must not be <code>null</code>.
    * @param forReleasing
@@ -450,7 +458,7 @@ public abstract class Store extends Lifecycle implements InternalStore
    * {@link ISessionManager} (indicating that a session is closed) or any of its sessions (indicating that a view is
    * closed). <b>Note:</b> Closing a session <em>implies</em> that all contained views are closed sliently without
    * firing respective events!
-   * 
+   *
    * @param view
    *          The context which the pool must be compatible with. Must not be <code>null</code>.
    * @param forReleasing

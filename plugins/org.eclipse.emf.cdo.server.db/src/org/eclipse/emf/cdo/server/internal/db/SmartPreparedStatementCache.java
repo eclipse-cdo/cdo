@@ -19,6 +19,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Stefan Winkler
@@ -28,7 +29,7 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
 {
   private Cache cache;
 
-  private HashMap<PreparedStatement, CachedPreparedStatement> checkedOut = new HashMap<PreparedStatement, CachedPreparedStatement>();
+  private Map<PreparedStatement, CachedPreparedStatement> checkedOut = new HashMap<PreparedStatement, CachedPreparedStatement>();
 
   public SmartPreparedStatementCache(int capacity)
   {

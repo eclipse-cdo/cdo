@@ -884,10 +884,8 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
 
   private String getResourcePath(InternalCDORevision revision)
   {
-    EAttribute nameFeature = EresourcePackage.eINSTANCE.getCDOResourceNode_Name();
-
     CDOID folderID = (CDOID)revision.data().getContainerID();
-    String name = (String)revision.data().get(nameFeature, 0);
+    String name = (String)revision.data().get(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME, 0);
     if (CDOIDUtil.isNull(folderID))
     {
       if (name == null)

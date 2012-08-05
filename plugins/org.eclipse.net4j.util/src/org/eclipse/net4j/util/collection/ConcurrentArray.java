@@ -26,7 +26,7 @@ public abstract class ConcurrentArray<E>
 
   public boolean isEmpty()
   {
-    return elements == null;
+    return elements == null; // Atomic operation
   }
 
   /**
@@ -34,7 +34,8 @@ public abstract class ConcurrentArray<E>
    */
   public E[] get()
   {
-    return elements == null ? EMPTY : elements;
+    E[] result = elements; // Atomic operation
+    return result == null ? EMPTY : result;
   }
 
   public synchronized void add(E element)
@@ -104,19 +105,31 @@ public abstract class ConcurrentArray<E>
     return false;
   }
 
+  /**
+   * Synchronized through {@link #add(Object)}.
+   */
   protected boolean validate(E element)
   {
     return true;
   }
 
+  /**
+   * Synchronized through {@link #add(Object)}.
+   */
   protected void firstElementAdded()
   {
   }
 
+  /**
+   * Synchronized through {@link #remove(Object)}.
+   */
   protected void lastElementRemoved()
   {
   }
 
+  /**
+   * Synchronized through {@link #add(Object)} or {@link #remove(Object)}.
+   */
   protected abstract E[] newArray(int length);
 
   /**
@@ -146,11 +159,17 @@ public abstract class ConcurrentArray<E>
       return true;
     }
 
+    /**
+     * Synchronized through {@link #add(Object)}.
+     */
     protected boolean equals(E e1, E e2)
     {
       return e1 == e2;
     }
 
+    /**
+     * Synchronized through {@link #add(Object)}.
+     */
     protected void violatingUniqueness(E element)
     {
     }

@@ -247,6 +247,9 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
     public void run(CDOSessionProtocol sessionProtocol);
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private class RecoveringExceptionHandler implements ExceptionHandler
   {
     public void handleException(CDOSession session, int attempt, Exception exception) throws Exception
@@ -282,6 +285,9 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
     }
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private static class AutoCloser implements IListener
   {
     public void notifyEvent(IEvent event)

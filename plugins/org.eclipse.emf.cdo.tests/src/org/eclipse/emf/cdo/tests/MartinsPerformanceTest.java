@@ -8,11 +8,10 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.performance;
+package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;

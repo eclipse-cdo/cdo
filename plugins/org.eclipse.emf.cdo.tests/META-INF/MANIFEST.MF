@@ -32,6 +32,8 @@ Require-Bundle: org.eclipse.net4j.tests;bundle-version="[4.0.0,5.0.0)";visibilit
  org.eclipse.emf.cdo.tests.model6;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.defs;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.server.ocl;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
+ org.eclipse.emf.cdo.server.security;bundle-version="[4.1.0,5.0.0)";visibility:=reexport,
+ org.eclipse.emf.cdo.security;bundle-version="[4.1.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.workspace;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.admin;bundle-version="[4.1.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.server.admin;bundle-version="[4.1.0,5.0.0)";visibility:=reexport,

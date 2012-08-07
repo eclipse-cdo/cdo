@@ -39,6 +39,8 @@ import org.eclipse.emf.cdo.server.admin.CDOAdminServerUtil;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.server.ocl.OCLQueryHandler;
+import org.eclipse.emf.cdo.server.security.ISecurityManager;
+import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
@@ -94,6 +96,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   public static final String PROP_TEST_USER_MANAGER = "test.repository.UserManager";
 
   public static final String PROP_TEST_PERMISSION_MANAGER = "test.repository.PermissionManager";
+
+  public static final String PROP_TEST_SECURITY_MANAGER = "test.repository.SecurityManager";
 
   public static final String PROP_TEST_QUERY_HANDLER_PROVIDER = "test.repository.QueryHandlerProvider";
 
@@ -358,9 +362,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       }
     });
 
-    // Start default repository
-    getRepository(REPOSITORY_NAME);
-
     if (enableServerBrowser)
     {
       serverBrowser = new CDOServerBrowser(repositories);
@@ -512,6 +513,12 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       sessionManager.setPermissionManager(permissionManager);
     }
 
+    InternalSecurityManager securityManager = (InternalSecurityManager)getTestSecurityManager();
+    if (securityManager != null)
+    {
+      securityManager.setRepository(repository);
+    }
+
     IQueryHandlerProvider queryHandlerProvider = getTestQueryHandlerProvider();
     if (queryHandlerProvider != null)
     {
@@ -544,6 +551,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   protected IPermissionManager getTestPermissionManager()
   {
     return (IPermissionManager)getTestProperty(PROP_TEST_PERMISSION_MANAGER);
+  }
+
+  protected ISecurityManager getTestSecurityManager()
+  {
+    return (ISecurityManager)getTestProperty(PROP_TEST_SECURITY_MANAGER);
   }
 
   protected IQueryHandlerProvider getTestQueryHandlerProvider()

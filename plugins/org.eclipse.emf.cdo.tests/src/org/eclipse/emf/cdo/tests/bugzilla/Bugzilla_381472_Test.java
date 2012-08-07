@@ -61,6 +61,8 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
   private CDOAdmin openAdmin(final Map<String, Object> expectedProperties) throws InterruptedException
   {
+    getRepository();
+
     IManagedContainer serverContainer = getContainerConfig().getServerContainer();
     serverContainer.registerFactory(new CDOAdminHandler.Factory(ADMIN_HANDLER_TYPE)
     {
@@ -69,7 +71,6 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
       {
         return new CDOAdminHandler()
         {
-
           public String getType()
           {
             return ADMIN_HANDLER_TYPE;

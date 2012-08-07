@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
@@ -40,6 +41,8 @@ public class Bugzilla_329786_Test extends AbstractCDOTest
 {
   public void testConnectionAwareURI() throws Exception
   {
+    getRepository();
+
     Registry registry = Resource.Factory.Registry.INSTANCE;
     registry.getProtocolToFactoryMap().put(CDONet4jUtil.PROTOCOL_TCP, CDOResourceFactory.INSTANCE);
     registry.getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
@@ -61,8 +64,8 @@ public class Bugzilla_329786_Test extends AbstractCDOTest
     ResourceSet resourceSet = new ResourceSetImpl();
 
     URI sharedURI = URI.createURI(
-        CDONet4jUtil.PROTOCOL_TCP + "://localhost:2036/repo1" + getResourcePath("/sharedResource")).appendQuery(
-        CDOURIData.TRANSACTIONAL_PARAMETER + "=true");
+        CDONet4jUtil.PROTOCOL_TCP + "://localhost:2036/" + RepositoryConfig.REPOSITORY_NAME
+            + getResourcePath("/sharedResource")).appendQuery(CDOURIData.TRANSACTIONAL_PARAMETER + "=true");
     Resource sharedResource = resourceSet.createResource(sharedURI);
 
     URI localURI = URI.createFileURI(createTempFile("resource", ".model1").getCanonicalPath());

@@ -516,7 +516,10 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     InternalSecurityManager securityManager = (InternalSecurityManager)getTestSecurityManager();
     if (securityManager != null)
     {
+      JVMUtil.prepareContainer(getCurrentTest().getServerContainer()); // Needed in SecurityManager.init()
+
       securityManager.setRepository(repository);
+      LifecycleUtil.activate(securityManager);
     }
 
     IQueryHandlerProvider queryHandlerProvider = getTestQueryHandlerProvider();
@@ -565,9 +568,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   protected boolean needsCleanRepos()
   {
-    // boolean branches = Boolean.parseBoolean(getRepositoryProperties().get(IRepository.Props.SUPPORTING_BRANCHES));
-    // boolean audits = Boolean.parseBoolean(getRepositoryProperties().get(IRepository.Props.SUPPORTING_AUDITS));
-
     String repoProps = getRepositoryProperties().toString();
     boolean sameProps = repoProps.equals(lastRepoProps);
     lastRepoProps = repoProps;

@@ -20,6 +20,10 @@
         derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultAccess" eType="#//AccessObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultUserDirectory" eType="#//Directory"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultGroupDirectory"
+        eType="#//Directory"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultRoleDirectory" eType="#//Directory"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Directory" eSuperTypes="#//SecurityItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"

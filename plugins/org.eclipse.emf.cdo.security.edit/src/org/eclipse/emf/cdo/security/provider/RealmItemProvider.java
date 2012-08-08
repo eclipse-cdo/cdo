@@ -72,6 +72,9 @@ public class RealmItemProvider extends SecurityElementItemProvider implements IE
       addAllPermissionsPropertyDescriptor(object);
       addNamePropertyDescriptor(object);
       addDefaultAccessPropertyDescriptor(object);
+      addDefaultUserDirectoryPropertyDescriptor(object);
+      addDefaultGroupDirectoryPropertyDescriptor(object);
+      addDefaultRoleDirectoryPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -123,6 +126,54 @@ public class RealmItemProvider extends SecurityElementItemProvider implements IE
         getString("_UI_PropertyDescriptor_description", "_UI_Realm_defaultAccess_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         SecurityPackage.Literals.REALM__DEFAULT_ACCESS, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
         null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Default User Directory feature.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addDefaultUserDirectoryPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Realm_defaultUserDirectory_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Realm_defaultUserDirectory_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.REALM__DEFAULT_USER_DIRECTORY, true, false, true, null, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Default Group Directory feature.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addDefaultGroupDirectoryPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Realm_defaultGroupDirectory_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Realm_defaultGroupDirectory_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.REALM__DEFAULT_GROUP_DIRECTORY, true, false, true, null, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Default Role Directory feature.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addDefaultRoleDirectoryPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Realm_defaultRoleDirectory_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Realm_defaultRoleDirectory_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.REALM__DEFAULT_ROLE_DIRECTORY, true, false, true, null, null, null));
   }
 
   /**

@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.security.impl;
 
-import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Access;
+import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 

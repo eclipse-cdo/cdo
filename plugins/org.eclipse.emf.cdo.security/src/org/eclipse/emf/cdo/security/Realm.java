@@ -15,6 +15,9 @@ import org.eclipse.emf.common.util.EList;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Realm</b></em>'.
+ * @extends SecurityItemContainer
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  * <!-- end-user-doc -->
  *
  * <p>
@@ -27,6 +30,9 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.cdo.security.Realm#getAllPermissions <em>All Permissions</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Realm#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Realm#getDefaultAccess <em>Default Access</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Realm#getDefaultUserDirectory <em>Default User Directory</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Realm#getDefaultGroupDirectory <em>Default Group Directory</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.Realm#getDefaultRoleDirectory <em>Default Role Directory</em>}</li>
  * </ul>
  * </p>
  *
@@ -34,7 +40,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Realm extends SecurityElement
+public interface Realm extends SecurityElement, SecurityItemContainer
 {
   /**
    * Returns the value of the '<em><b>Items</b></em>' containment reference list.
@@ -167,5 +173,89 @@ public interface Realm extends SecurityElement
    * @generated
    */
   void setDefaultAccess(Access value);
+
+  /**
+   * Returns the value of the '<em><b>Default User Directory</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Default User Directory</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Default User Directory</em>' reference.
+   * @see #setDefaultUserDirectory(Directory)
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getRealm_DefaultUserDirectory()
+   * @model
+   * @generated
+   */
+  Directory getDefaultUserDirectory();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.security.Realm#getDefaultUserDirectory <em>Default User Directory</em>}' reference.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Default User Directory</em>' reference.
+   * @see #getDefaultUserDirectory()
+   * @generated
+   */
+  void setDefaultUserDirectory(Directory value);
+
+  /**
+   * Returns the value of the '<em><b>Default Group Directory</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Default Group Directory</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Default Group Directory</em>' reference.
+   * @see #setDefaultGroupDirectory(Directory)
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getRealm_DefaultGroupDirectory()
+   * @model
+   * @generated
+   */
+  Directory getDefaultGroupDirectory();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.security.Realm#getDefaultGroupDirectory <em>Default Group Directory</em>}' reference.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Default Group Directory</em>' reference.
+   * @see #getDefaultGroupDirectory()
+   * @generated
+   */
+  void setDefaultGroupDirectory(Directory value);
+
+  /**
+   * Returns the value of the '<em><b>Default Role Directory</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Default Role Directory</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Default Role Directory</em>' reference.
+   * @see #setDefaultRoleDirectory(Directory)
+   * @see org.eclipse.emf.cdo.security.SecurityPackage#getRealm_DefaultRoleDirectory()
+   * @model
+   * @generated
+   */
+  Directory getDefaultRoleDirectory();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.security.Realm#getDefaultRoleDirectory <em>Default Role Directory</em>}' reference.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Default Role Directory</em>' reference.
+   * @see #getDefaultRoleDirectory()
+   * @generated
+   */
+  void setDefaultRoleDirectory(Directory value);
 
 } // SecurityRealm

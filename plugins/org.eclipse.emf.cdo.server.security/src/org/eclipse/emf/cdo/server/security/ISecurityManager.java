@@ -11,22 +11,22 @@
 package org.eclipse.emf.cdo.server.security;
 
 import org.eclipse.emf.cdo.security.Realm;
-import org.eclipse.emf.cdo.security.User;
+import org.eclipse.emf.cdo.security.SecurityItemContainer;
 import org.eclipse.emf.cdo.server.IRepository;
 
 /**
  * Protects a given {@link IRepository repository}.
  *
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  * @see SecurityManagerUtil#createSecurityManager(String)
  * @author Eike Stepper
  */
-public interface ISecurityManager
+public interface ISecurityManager extends SecurityItemContainer
 {
   public IRepository getRepository();
 
   public Realm getRealm();
-
-  public User getUser(String userID);
 
   public void modify(RealmOperation operation);
 

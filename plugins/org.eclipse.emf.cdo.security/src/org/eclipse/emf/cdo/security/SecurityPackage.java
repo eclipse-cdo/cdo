@@ -29,6 +29,8 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>each enum,</li>
  *   <li>and each data type</li>
  * </ul>
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  * <!-- end-user-doc -->
  * @see org.eclipse.emf.cdo.security.SecurityFactory
  * @model kind="package"
@@ -217,13 +219,44 @@ public interface SecurityPackage extends EPackage
   int REALM__DEFAULT_ACCESS = SECURITY_ELEMENT_FEATURE_COUNT + 6;
 
   /**
-   * The number of structural features of the '<em>Realm</em>' class.
+   * The feature id for the '<em><b>Default User Directory</b></em>' reference.
    * <!-- begin-user-doc -->
+   * @since 4.2
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REALM_FEATURE_COUNT = SECURITY_ELEMENT_FEATURE_COUNT + 7;
+  int REALM__DEFAULT_USER_DIRECTORY = SECURITY_ELEMENT_FEATURE_COUNT + 7;
+
+  /**
+   * The feature id for the '<em><b>Default Group Directory</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REALM__DEFAULT_GROUP_DIRECTORY = SECURITY_ELEMENT_FEATURE_COUNT + 8;
+
+  /**
+   * The feature id for the '<em><b>Default Role Directory</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REALM__DEFAULT_ROLE_DIRECTORY = SECURITY_ELEMENT_FEATURE_COUNT + 9;
+
+  /**
+   * The number of structural features of the '<em>Realm</em>' class.
+   * <!-- begin-user-doc -->
+   * @noreference This field is not intended to be referenced by clients.
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REALM_FEATURE_COUNT = SECURITY_ELEMENT_FEATURE_COUNT + 10;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -831,6 +864,7 @@ public interface SecurityPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.Access <em>Access</em>}' enum.
    * <!-- begin-user-doc -->
+   * @noreference This field is not intended to be referenced by clients.
    * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.security.Access
    * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getAccess()
@@ -841,6 +875,7 @@ public interface SecurityPackage extends EPackage
   /**
    * The meta object id for the '<em>Access Object</em>' data type.
    * <!-- begin-user-doc -->
+   * @noreference This field is not intended to be referenced by clients.
    * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.security.Access
    * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getAccessObject()
@@ -944,6 +979,42 @@ public interface SecurityPackage extends EPackage
    * @generated
    */
   EAttribute getRealm_DefaultAccess();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.security.Realm#getDefaultUserDirectory <em>Default User Directory</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Default User Directory</em>'.
+   * @see org.eclipse.emf.cdo.security.Realm#getDefaultUserDirectory()
+   * @see #getRealm()
+   * @generated
+   */
+  EReference getRealm_DefaultUserDirectory();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.security.Realm#getDefaultGroupDirectory <em>Default Group Directory</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Default Group Directory</em>'.
+   * @see org.eclipse.emf.cdo.security.Realm#getDefaultGroupDirectory()
+   * @see #getRealm()
+   * @generated
+   */
+  EReference getRealm_DefaultGroupDirectory();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.security.Realm#getDefaultRoleDirectory <em>Default Role Directory</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Default Role Directory</em>'.
+   * @see org.eclipse.emf.cdo.security.Realm#getDefaultRoleDirectory()
+   * @see #getRealm()
+   * @generated
+   */
+  EReference getRealm_DefaultRoleDirectory();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.Directory <em>Directory</em>}'.
@@ -1447,6 +1518,8 @@ public interface SecurityPackage extends EPackage
    *   <li>each enum,</li>
    *   <li>and each data type</li>
    * </ul>
+   * @noimplement This interface is not intended to be implemented by clients.
+   * @noextend This interface is not intended to be extended by clients.
    * <!-- end-user-doc -->
    * @generated
    */
@@ -1527,6 +1600,33 @@ public interface SecurityPackage extends EPackage
      * @generated
      */
     EAttribute REALM__DEFAULT_ACCESS = eINSTANCE.getRealm_DefaultAccess();
+
+    /**
+     * The meta object literal for the '<em><b>Default User Directory</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * @since 4.2
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REALM__DEFAULT_USER_DIRECTORY = eINSTANCE.getRealm_DefaultUserDirectory();
+
+    /**
+     * The meta object literal for the '<em><b>Default Group Directory</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * @since 4.2
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REALM__DEFAULT_GROUP_DIRECTORY = eINSTANCE.getRealm_DefaultGroupDirectory();
+
+    /**
+     * The meta object literal for the '<em><b>Default Role Directory</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * @since 4.2
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REALM__DEFAULT_ROLE_DIRECTORY = eINSTANCE.getRealm_DefaultRoleDirectory();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.DirectoryImpl <em>Directory</em>}' class.

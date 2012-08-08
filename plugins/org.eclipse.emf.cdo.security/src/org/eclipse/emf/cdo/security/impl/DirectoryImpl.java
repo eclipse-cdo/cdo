@@ -11,8 +11,13 @@
 package org.eclipse.emf.cdo.security.impl;
 
 import org.eclipse.emf.cdo.security.Directory;
+import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.RealmUtil;
+import org.eclipse.emf.cdo.security.Role;
+import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.SecurityItem;
 import org.eclipse.emf.cdo.security.SecurityPackage;
+import org.eclipse.emf.cdo.security.User;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -83,6 +88,94 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
   public void setName(String newName)
   {
     eSet(SecurityPackage.Literals.DIRECTORY__NAME, newName);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public Role getRole(String id)
+  {
+    return RealmUtil.findRole(getItems(), id);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public Group getGroup(String id)
+  {
+    return RealmUtil.findGroup(getItems(), id);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public User getUser(String id)
+  {
+    return RealmUtil.findUser(getItems(), id);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public Role addRole(String id)
+  {
+    Role role = SecurityFactory.eINSTANCE.createRole(id);
+    getItems().add(role);
+    return role;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public Group addGroup(String id)
+  {
+    Group group = SecurityFactory.eINSTANCE.createGroup(id);
+    getItems().add(group);
+    return group;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public User addUser(String id)
+  {
+    User user = SecurityFactory.eINSTANCE.createUser(id);
+    getItems().add(user);
+    return user;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public User addUser(String id, String password)
+  {
+    User user = SecurityFactory.eINSTANCE.createUser(id, password);
+    getItems().add(user);
+    return user;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public Role removeRole(String id)
+  {
+    return RealmUtil.removeRole(getItems(), id);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public Group removeGroup(String id)
+  {
+    return RealmUtil.removeGroup(getItems(), id);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public User removeUser(String id)
+  {
+    return RealmUtil.removeUser(getItems(), id);
   }
 
 } // ContainerImpl

@@ -15,6 +15,8 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 
+import java.util.Iterator;
+
 /**
  * Various static helper methods for dealing with {@link Realm realms}.
  *
@@ -94,6 +96,99 @@ public final class RealmUtil
       {
         Directory directory = (Directory)item;
         Role role = findRole(directory.getItems(), roleID);
+        if (role != null)
+        {
+          return role;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static User removeUser(EList<SecurityItem> items, String userID)
+  {
+    for (Iterator<SecurityItem> it = items.iterator(); it.hasNext();)
+    {
+      SecurityItem item = it.next();
+      if (item instanceof User)
+      {
+        User user = (User)item;
+        if (ObjectUtil.equals(user.getId(), userID))
+        {
+          it.remove();
+          return user;
+        }
+      }
+      else if (item instanceof Directory)
+      {
+        Directory directory = (Directory)item;
+        User user = removeUser(directory.getItems(), userID);
+        if (user != null)
+        {
+          return user;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static Group removeGroup(EList<SecurityItem> items, String groupID)
+  {
+    for (Iterator<SecurityItem> it = items.iterator(); it.hasNext();)
+    {
+      SecurityItem item = it.next();
+      if (item instanceof Group)
+      {
+        Group group = (Group)item;
+        if (ObjectUtil.equals(group.getId(), groupID))
+        {
+          it.remove();
+          return group;
+        }
+      }
+      else if (item instanceof Directory)
+      {
+        Directory directory = (Directory)item;
+        Group group = removeGroup(directory.getItems(), groupID);
+        if (group != null)
+        {
+          return group;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static Role removeRole(EList<SecurityItem> items, String roleID)
+  {
+    for (Iterator<SecurityItem> it = items.iterator(); it.hasNext();)
+    {
+      SecurityItem item = it.next();
+      if (item instanceof Role)
+      {
+        Role role = (Role)item;
+        if (ObjectUtil.equals(role.getId(), roleID))
+        {
+          it.remove();
+          return role;
+        }
+      }
+      else if (item instanceof Directory)
+      {
+        Directory directory = (Directory)item;
+        Role role = removeRole(directory.getItems(), roleID);
         if (role != null)
         {
           return role;

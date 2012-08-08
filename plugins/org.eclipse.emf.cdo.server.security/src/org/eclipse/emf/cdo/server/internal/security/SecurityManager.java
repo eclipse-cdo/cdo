@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.security;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
@@ -23,13 +24,10 @@ import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.ClassPermission;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
-import org.eclipse.emf.cdo.security.PackagePermission;
 import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
-import org.eclipse.emf.cdo.security.RealmUtil;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityFactory;
-import org.eclipse.emf.cdo.security.SecurityItem;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.security.UserPassword;
@@ -61,9 +59,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.IUserManager;
 import org.eclipse.net4j.util.security.SecurityUtil;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.ArrayList;
@@ -81,7 +77,10 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     @Override
     protected void onActivated(ILifecycle lifecycle)
     {
-      init();
+      if (isActive())
+      {
+        init();
+      }
     }
 
     @Override
@@ -111,15 +110,11 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   private IConnector connector;
 
+  private CDONet4jSession session;
+
   private CDOTransaction transaction;
 
   private Realm realm;
-
-  private EList<SecurityItem> newUsers;
-
-  private EList<SecurityItem> newGroups;
-
-  private EList<SecurityItem> newRoles;
 
   public SecurityManager(String realmPath, IManagedContainer container)
   {
@@ -145,7 +140,10 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   public void setRepository(InternalRepository repository)
   {
     this.repository = repository;
-    init();
+    if (isActive())
+    {
+      init();
+    }
   }
 
   public Realm getRealm()
@@ -153,41 +151,164 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     return realm;
   }
 
-  public User getUser(String userID)
+  public Role getRole(String id)
+  {
+    Role item = realm.getRole(id);
+    if (item == null)
+    {
+      throw new SecurityException("Role " + id + " not found");
+    }
+
+    return item;
+  }
+
+  public Group getGroup(String id)
+  {
+    Group item = realm.getGroup(id);
+    if (item == null)
+    {
+      throw new SecurityException("Group " + id + " not found");
+    }
+
+    return item;
+  }
+
+  public User getUser(String id)
   {
     synchronized (users)
     {
-      User user = users.get(userID);
-      if (user == null)
+      User item = users.get(id);
+      if (item == null)
       {
-        EList<SecurityItem> items = realm.getItems();
-        user = RealmUtil.findUser(items, userID);
-        if (user == null)
+        item = realm.getUser(id);
+        if (item == null)
         {
-          throw new SecurityException("User " + userID + " not found");
+          throw new SecurityException("User " + id + " not found");
         }
 
-        users.put(userID, user);
+        users.put(id, item);
       }
 
-      return user;
+      return item;
     }
+  }
+
+  public Role addRole(final String id)
+  {
+    final Role[] result = { null };
+    modify(new RealmOperation()
+    {
+      public void execute(Realm realm)
+      {
+        result[0] = realm.addRole(id);
+      }
+    });
+
+    return result[0];
+  }
+
+  public Group addGroup(final String id)
+  {
+    final Group[] result = { null };
+    modify(new RealmOperation()
+    {
+      public void execute(Realm realm)
+      {
+        result[0] = realm.addGroup(id);
+      }
+    });
+
+    return result[0];
+  }
+
+  public User addUser(final String id)
+  {
+    final User[] result = { null };
+    modify(new RealmOperation()
+    {
+      public void execute(Realm realm)
+      {
+        result[0] = realm.addUser(id);
+      }
+    });
+
+    return result[0];
+  }
+
+  public User addUser(final String id, final String password)
+  {
+    final User[] result = { null };
+    modify(new RealmOperation()
+    {
+      public void execute(Realm realm)
+      {
+        result[0] = realm.addUser(id);
+      }
+    });
+
+    return result[0];
+  }
+
+  public Role removeRole(final String id)
+  {
+    final Role[] result = { null };
+    modify(new RealmOperation()
+    {
+      public void execute(Realm realm)
+      {
+        result[0] = realm.removeRole(id);
+      }
+    });
+
+    return result[0];
+  }
+
+  public Group removeGroup(final String id)
+  {
+    final Group[] result = { null };
+    modify(new RealmOperation()
+    {
+      public void execute(Realm realm)
+      {
+        result[0] = realm.removeGroup(id);
+      }
+    });
+
+    return result[0];
+  }
+
+  public User removeUser(final String id)
+  {
+    final User[] result = { null };
+    modify(new RealmOperation()
+    {
+      public void execute(Realm realm)
+      {
+        result[0] = realm.removeUser(id);
+      }
+    });
+
+    return result[0];
   }
 
   public void modify(RealmOperation operation)
   {
-    synchronized (transaction)
-    {
-      operation.execute(realm);
+    checkActive();
+    CDOTransaction transaction = session.openTransaction();
 
-      try
-      {
-        transaction.commit();
-      }
-      catch (CommitException ex)
-      {
-        throw WrappedException.wrap(ex);
-      }
+    try
+    {
+      Realm transactionRealm = transaction.getObject(realm);
+      operation.execute(transactionRealm);
+      transaction.commit();
+    }
+    catch (CommitException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+    finally
+    {
+      transaction.close();
     }
   }
 
@@ -252,7 +373,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   protected void init()
   {
-    if (!isActive() || repository == null)
+    if (repository == null)
     {
       return;
     }
@@ -273,7 +394,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     config.setConnector(connector);
     config.setRepositoryName(repositoryName);
 
-    CDONet4jSession session = config.openNet4jSession();
+    session = config.openNet4jSession();
     transaction = session.openTransaction();
 
     boolean firstTime = !transaction.hasResource(realmPath);
@@ -308,71 +429,59 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   protected Realm createRealm()
   {
-    Realm realm = SecurityFactory.eINSTANCE.createRealm();
-    realm.setName("Security Realm");
+    Realm realm = SecurityFactory.eINSTANCE.createRealm("Security Realm");
+    realm.setDefaultRoleDirectory(addDirectory(realm, "Roles"));
+    realm.setDefaultGroupDirectory(addDirectory(realm, "Groups"));
+    realm.setDefaultUserDirectory(addDirectory(realm, "Users"));
 
-    // Create directories
+    // Create roles
 
-    Directory users = SecurityFactory.eINSTANCE.createDirectory();
-    users.setName("Users");
-    realm.getItems().add(users);
-    newUsers = users.getItems();
+    Role allReaderRole = realm.addRole("All Objects Reader");
+    allReaderRole.getPermissions().add(SecurityFactory.eINSTANCE.createResourcePermission(".*", Access.READ));
 
-    Directory groups = SecurityFactory.eINSTANCE.createDirectory();
-    groups.setName("Groups");
-    realm.getItems().add(groups);
-    newGroups = groups.getItems();
+    Role allWriterRole = realm.addRole("All Objects Writer");
+    allWriterRole.getPermissions().add(SecurityFactory.eINSTANCE.createResourcePermission(".*", Access.WRITE));
 
-    Directory roles = SecurityFactory.eINSTANCE.createDirectory();
-    roles.setName("Roles");
-    realm.getItems().add(roles);
-    newRoles = roles.getItems();
+    Role treeReaderRole = realm.addRole("Resource Tree Reader");
+    treeReaderRole.getPermissions().add(
+        SecurityFactory.eINSTANCE.createPackagePermission(EresourcePackage.eINSTANCE, Access.READ));
 
-    // Create items
+    Role treeWriterRole = realm.addRole("Resource Tree Writer");
+    treeWriterRole.getPermissions().add(
+        SecurityFactory.eINSTANCE.createPackagePermission(EresourcePackage.eINSTANCE, Access.WRITE));
 
-    User admin = SecurityFactory.eINSTANCE.createUser();
-    admin.setId("Administrator");
-    newUsers.add(admin);
-
-    UserPassword adminPassword = SecurityFactory.eINSTANCE.createUserPassword();
-    adminPassword.setEncrypted("0000");
-    admin.setPassword(adminPassword);
-
-    Group admins = SecurityFactory.eINSTANCE.createGroup();
-    admins.setId("Administrators");
-    admins.getUsers().add(admin);
-    newGroups.add(admins);
-
-    // Create administration role
-
-    Role administration = SecurityFactory.eINSTANCE.createRole();
-    administration.setId("Administration");
-    administration.getAssignees().add(admins);
-    newRoles.add(administration);
-
-    PackagePermission allResources = SecurityFactory.eINSTANCE.createPackagePermission();
-    allResources.setAccess(Access.READ);
-    administration.getPermissions().add(allResources);
-    allResources.setApplicablePackage(EresourcePackage.eINSTANCE);
-
-    for (EClassifier eClassifier : SecurityPackage.eINSTANCE.getEClassifiers())
+    Role adminRole = realm.addRole("Administration");
+    for (EClass eClass : EMFUtil.getConcreteClasses(SecurityPackage.eINSTANCE))
     {
-      if (eClassifier instanceof EClass)
+      if (eClass != SecurityPackage.Literals.USER_PASSWORD)
       {
-        EClass eClass = (EClass)eClassifier;
-        if (eClass.isInterface() || eClass.isAbstract() || eClass == SecurityPackage.Literals.USER_PASSWORD)
-        {
-          continue;
-        }
-
-        ClassPermission permission = SecurityFactory.eINSTANCE.createClassPermission();
-        permission.setAccess(Access.WRITE);
-        administration.getPermissions().add(permission);
-        permission.setApplicableClass(eClass);
+        ClassPermission permission = SecurityFactory.eINSTANCE.createClassPermission(eClass, Access.WRITE);
+        adminRole.getPermissions().add(permission);
       }
     }
 
+    // Create groups
+
+    Group adminsGroup = realm.addGroup("Administrators");
+    adminsGroup.getRoles().add(treeReaderRole);
+    adminsGroup.getRoles().add(adminRole);
+
+    Group usersGroup = realm.addGroup("Users");
+    usersGroup.getRoles().add(treeReaderRole);
+
+    // Create users
+
+    User adminUser = realm.addUser("Administrator", "0000");
+    adminUser.getGroups().add(adminsGroup);
+
     return realm;
+  }
+
+  protected Directory addDirectory(Realm realm, String name)
+  {
+    Directory directory = SecurityFactory.eINSTANCE.createDirectory(name);
+    realm.getItems().add(directory);
+    return directory;
   }
 
   protected CDOPermission convertPermission(Access permission)
@@ -436,7 +545,8 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     users.clear();
     realm = null;
 
-    transaction.getSession().close();
+    session.close();
+    session = null;
     transaction = null;
 
     connector.close();
@@ -534,6 +644,11 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
         OMMonitor monitor) throws RuntimeException
     {
+      if (transaction.getSessionID() == session.getSessionID())
+      {
+        return; // Access through ISecurityManager.modify(RealmOperation)
+      }
+
       CDOBranchPoint securityContext = commitContext.getBranchPoint();
       String userID = commitContext.getUserID();
       User user = getUser(userID);

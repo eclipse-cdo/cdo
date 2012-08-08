@@ -11,11 +11,11 @@
 package org.eclipse.emf.cdo.security.impl;
 
 //import org.eclipse.emf.cdo.security.*;
+import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.ClassPermission;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
 import org.eclipse.emf.cdo.security.PackagePermission;
-import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.ResourcePermission;
 import org.eclipse.emf.cdo.security.Role;
@@ -154,6 +154,82 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   {
     RealmImpl realm = new RealmImpl();
     return realm;
+  }
+
+  public Realm createRealm(String name)
+  {
+    Realm realm = createRealm();
+    realm.setName(name);
+    return realm;
+  }
+
+  public Realm createRealm(String name, Access defaultAccess)
+  {
+    Realm realm = createRealm(name);
+    realm.setDefaultAccess(defaultAccess);
+    return realm;
+  }
+
+  public Directory createDirectory(String name)
+  {
+    Directory directory = createDirectory();
+    directory.setName(name);
+    return directory;
+  }
+
+  public Role createRole(String id)
+  {
+    Role role = createRole();
+    role.setId(id);
+    return role;
+  }
+
+  public Group createGroup(String id)
+  {
+    Group group = createGroup();
+    group.setId(id);
+    return group;
+  }
+
+  public User createUser(String id)
+  {
+    User user = createUser();
+    user.setId(id);
+    return user;
+  }
+
+  public User createUser(String id, String password)
+  {
+    UserPassword userPassword = createUserPassword();
+    userPassword.setEncrypted(password);
+
+    User user = createUser(id);
+    user.setPassword(userPassword);
+    return user;
+  }
+
+  public ClassPermission createClassPermission(EClass eClass, Access access)
+  {
+    ClassPermission permission = createClassPermission();
+    permission.setApplicableClass(eClass);
+    permission.setAccess(access);
+    return permission;
+  }
+
+  public PackagePermission createPackagePermission(EPackage ePackage, Access access)
+  {
+    PackagePermission permission = createPackagePermission();
+    permission.setApplicablePackage(ePackage);
+    permission.setAccess(access);
+    return permission;
+  }
+
+  public ResourcePermission createResourcePermission(String pattern, Access access)
+  {
+    ResourcePermission permission = createResourcePermission();
+    permission.setPattern(pattern);
+    permission.setAccess(access);
+    return permission;
   }
 
   /**

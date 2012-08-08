@@ -11,11 +11,13 @@
 package org.eclipse.emf.cdo.security.impl;
 
 import org.eclipse.emf.cdo.security.Access;
+import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
 import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.RealmUtil;
 import org.eclipse.emf.cdo.security.Role;
+import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.SecurityItem;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
@@ -39,6 +41,9 @@ import org.eclipse.emf.ecore.InternalEObject;
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getAllPermissions <em>All Permissions</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getDefaultAccess <em>Default Access</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getDefaultUserDirectory <em>Default User Directory</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getDefaultGroupDirectory <em>Default Group Directory</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getDefaultRoleDirectory <em>Default Role Directory</em>}</li>
  * </ul>
  * </p>
  *
@@ -244,6 +249,232 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   public void setDefaultAccess(Access newDefaultAccess)
   {
     eSet(SecurityPackage.Literals.REALM__DEFAULT_ACCESS, newDefaultAccess);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Directory getDefaultUserDirectory()
+  {
+    return (Directory)eGet(SecurityPackage.Literals.REALM__DEFAULT_USER_DIRECTORY, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDefaultUserDirectory(Directory newDefaultUserDirectory)
+  {
+    eSet(SecurityPackage.Literals.REALM__DEFAULT_USER_DIRECTORY, newDefaultUserDirectory);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Directory getDefaultGroupDirectory()
+  {
+    return (Directory)eGet(SecurityPackage.Literals.REALM__DEFAULT_GROUP_DIRECTORY, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDefaultGroupDirectory(Directory newDefaultGroupDirectory)
+  {
+    eSet(SecurityPackage.Literals.REALM__DEFAULT_GROUP_DIRECTORY, newDefaultGroupDirectory);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Directory getDefaultRoleDirectory()
+  {
+    return (Directory)eGet(SecurityPackage.Literals.REALM__DEFAULT_ROLE_DIRECTORY, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDefaultRoleDirectory(Directory newDefaultRoleDirectory)
+  {
+    eSet(SecurityPackage.Literals.REALM__DEFAULT_ROLE_DIRECTORY, newDefaultRoleDirectory);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public Role getRole(String id)
+  {
+    return RealmUtil.findRole(getItems(), id);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public Group getGroup(String id)
+  {
+    return RealmUtil.findGroup(getItems(), id);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public User getUser(String id)
+  {
+    return RealmUtil.findUser(getItems(), id);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected EList<SecurityItem> getRoleItems()
+  {
+    Directory directory = getDefaultRoleDirectory();
+    return directory != null ? directory.getItems() : getItems();
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected EList<SecurityItem> getGroupItems()
+  {
+    Directory directory = getDefaultGroupDirectory();
+    return directory != null ? directory.getItems() : getItems();
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected EList<SecurityItem> getUserItems()
+  {
+    Directory directory = getDefaultUserDirectory();
+    return directory != null ? directory.getItems() : getItems();
+  }
+
+  /**
+   * @since 4.2
+   */
+  public Role addRole(String id)
+  {
+    Role role = SecurityFactory.eINSTANCE.createRole(id);
+
+    EList<SecurityItem> items = getRoleItems();
+    items.add(role);
+    return role;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public Group addGroup(String id)
+  {
+    Group group = SecurityFactory.eINSTANCE.createGroup(id);
+
+    EList<SecurityItem> items = getGroupItems();
+    items.add(group);
+    return group;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public User addUser(String id)
+  {
+    User user = SecurityFactory.eINSTANCE.createUser(id);
+    return addUser(user);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public User addUser(String id, String password)
+  {
+    User user = SecurityFactory.eINSTANCE.createUser(id, password);
+    return addUser(user);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected User addUser(User user)
+  {
+    EList<SecurityItem> items = getUserItems();
+    items.add(user);
+    return user;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public Role removeRole(String id)
+  {
+    EList<SecurityItem> items = getRoleItems();
+    Role role = RealmUtil.removeRole(items, id);
+    if (role == null)
+    {
+      EList<SecurityItem> realmItems = getItems();
+      if (items != realmItems)
+      {
+        role = RealmUtil.removeRole(realmItems, id);
+      }
+    }
+
+    return role;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public Group removeGroup(String id)
+  {
+    EList<SecurityItem> items = getGroupItems();
+    Group group = RealmUtil.removeGroup(items, id);
+    if (group == null)
+    {
+      EList<SecurityItem> realmItems = getItems();
+      if (items != realmItems)
+      {
+        group = RealmUtil.removeGroup(realmItems, id);
+      }
+    }
+
+    return group;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public User removeUser(String id)
+  {
+    EList<SecurityItem> items = getUserItems();
+    User user = RealmUtil.removeUser(items, id);
+    if (user == null)
+    {
+      EList<SecurityItem> realmItems = getItems();
+      if (items != realmItems)
+      {
+        user = RealmUtil.removeUser(realmItems, id);
+      }
+    }
+
+    return user;
   }
 
   @Override

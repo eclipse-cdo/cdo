@@ -15,8 +15,6 @@ import org.eclipse.net4j.util.io.IORuntimeException;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
@@ -30,7 +28,6 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -171,24 +168,6 @@ public final class TestEMFUtil
     }
 
     return count;
-  }
-
-  public static EClass[] getConcreteClasses(EPackage ePackage)
-  {
-    List<EClass> result = new ArrayList<EClass>(0);
-    for (EClassifier classifier : ePackage.getEClassifiers())
-    {
-      if (classifier instanceof EClass)
-      {
-        EClass eClass = (EClass)classifier;
-        if (!eClass.isAbstract() && !eClass.isInterface())
-        {
-          result.add(eClass);
-        }
-      }
-    }
-
-    return result.toArray(new EClass[result.size()]);
   }
 
   public static boolean isMany(EStructuralFeature eFeature)

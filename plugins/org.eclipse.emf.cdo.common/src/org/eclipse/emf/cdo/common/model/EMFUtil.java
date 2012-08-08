@@ -53,7 +53,7 @@ import java.util.Set;
 
 /**
  * Various static helper methods for dealing with EMF meta models.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @apiviz.exclude
@@ -164,6 +164,27 @@ public final class EMFUtil
     eReference.setUpperBound(isMany ? -1 : 0);
     eClass.getEStructuralFeatures().add(eReference);
     return eReference;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static EClass[] getConcreteClasses(EPackage ePackage)
+  {
+    List<EClass> result = new ArrayList<EClass>(0);
+    for (EClassifier classifier : ePackage.getEClassifiers())
+    {
+      if (classifier instanceof EClass)
+      {
+        EClass eClass = (EClass)classifier;
+        if (!eClass.isAbstract() && !eClass.isInterface())
+        {
+          result.add(eClass);
+        }
+      }
+    }
+  
+    return result.toArray(new EClass[result.size()]);
   }
 
   public static EClass[] getPersistentClasses(EPackage ePackage)
@@ -454,7 +475,7 @@ public final class EMFUtil
   /**
    * An extension of {@link ResourceSetImpl} that allows demandLoading of resources and delegation of resource lookups,
    * to be switched on/off as desired.
-   * 
+   *
    * @since 4.0
    * @apiviz.exclude
    */

@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eike Stepper
@@ -116,7 +117,7 @@ public class CommitPerformanceTest extends AbstractCDOTest
 
   private CDOCommitInfo commit() throws Exception
   {
-    return Timer.execute(new Callable<CDOCommitInfo>()
+    return Timer.execute(TimeUnit.SECONDS, new Callable<CDOCommitInfo>()
     {
       public CDOCommitInfo call() throws Exception
       {

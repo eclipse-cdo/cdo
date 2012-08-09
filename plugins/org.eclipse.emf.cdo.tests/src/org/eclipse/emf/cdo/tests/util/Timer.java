@@ -50,7 +50,8 @@ public class Timer
   public void done(TimeUnit timeUnit)
   {
     stop();
-    System.out.println(timeUnit.convert(sum, timeUnit));
+    long converted = timeUnit.convert(sum, TimeUnit.NANOSECONDS);
+    System.out.println(converted);
   }
 
   public static <T> T execute(Callable<T> callable) throws Exception

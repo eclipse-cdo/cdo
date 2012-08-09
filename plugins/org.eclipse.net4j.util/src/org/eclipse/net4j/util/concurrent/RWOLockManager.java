@@ -79,11 +79,11 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     synchronized (this)
     {
       int count = objectsToLock.size();
-      List<LockState<OBJECT, CONTEXT>> lockStates = new ArrayList<LockState<OBJECT, CONTEXT>>(count);
 
       for (;;)
       {
-        if (canLockInContext(type, context, objectsToLock, lockStates))
+        ArrayList<LockState<OBJECT, CONTEXT>> lockStates = getLockStatesForContext(type, context, objectsToLock);
+        if (lockStates != null)
         {
           for (int i = 0; i < count; i++)
           {
@@ -346,11 +346,13 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     {
       addContextToLockStateMapping(readLockOwner, lockState);
     }
+
     CONTEXT writeLockOwner = lockState.getWriteLockOwner();
     if (writeLockOwner != null)
     {
       addContextToLockStateMapping(writeLockOwner, lockState);
     }
+
     CONTEXT writeOptionOwner = lockState.getWriteOptionOwner();
     if (writeOptionOwner != null)
     {
@@ -370,9 +372,10 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     return lockState;
   }
 
-  private boolean canLockInContext(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock,
-      List<LockState<OBJECT, CONTEXT>> lockStatesToFill)
+  private ArrayList<LockState<OBJECT, CONTEXT>> getLockStatesForContext(LockType type, CONTEXT context,
+      Collection<? extends OBJECT> objectsToLock)
   {
+    ArrayList<LockState<OBJECT, CONTEXT>> lockStates = new ArrayList<LockState<OBJECT, CONTEXT>>(objectsToLock.size());
     Iterator<? extends OBJECT> it = objectsToLock.iterator();
     for (int i = 0; i < objectsToLock.size(); i++)
     {
@@ -380,13 +383,13 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       LockState<OBJECT, CONTEXT> lockState = getOrCreateLockState(o);
       if (!lockState.canLock(type, context))
       {
-        return false;
+        return null;
       }
 
-      lockStatesToFill.add(lockState);
+      lockStates.add(lockState);
     }
 
-    return true;
+    return lockStates;
   }
 
   private void addContextToLockStateMapping(CONTEXT context, LockState<OBJECT, CONTEXT> lockState)

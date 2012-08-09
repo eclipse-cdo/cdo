@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
@@ -18,14 +19,16 @@ import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.VAT;
+import org.eclipse.emf.cdo.tests.util.Timer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+
+import java.util.concurrent.Callable;
 
 /**
  * @author Eike Stepper
@@ -111,46 +114,14 @@ public class CommitPerformanceTest extends AbstractCDOTest
     }
   }
 
-  private void commit() throws CommitException
+  private CDOCommitInfo commit() throws Exception
   {
-    Timer timer = new Timer();
-    transaction.commit();
-    timer.done();
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class Timer
-  {
-    private long sum;
-
-    private long start;
-
-    public Timer()
+    return Timer.execute(new Callable<CDOCommitInfo>()
     {
-      start();
-    }
-
-    public void start()
-    {
-      start = System.nanoTime();
-    }
-
-    public void stop()
-    {
-      if (start > 0)
+      public CDOCommitInfo call() throws Exception
       {
-        long nanos = System.nanoTime() - start;
-        sum += nanos;
-        start = 0;
+        return transaction.commit();
       }
-    }
-
-    public void done()
-    {
-      stop();
-      System.out.println(sum);
-    }
+    });
   }
 }

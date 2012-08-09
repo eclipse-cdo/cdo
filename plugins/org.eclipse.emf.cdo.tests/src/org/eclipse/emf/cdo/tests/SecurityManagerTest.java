@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
 import org.eclipse.emf.cdo.server.security.SecurityManagerUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -26,6 +28,8 @@ import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 /**
  * @author Eike Stepper
  */
+@CleanRepositoriesBefore
+@CleanRepositoriesAfter
 public class SecurityManagerTest extends AbstractCDOTest
 {
   private static final String USER_ID = "Stepper";

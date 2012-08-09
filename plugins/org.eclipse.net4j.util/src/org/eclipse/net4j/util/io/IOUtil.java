@@ -29,6 +29,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.Flushable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -272,6 +273,45 @@ public final class IOUtil
     if (closeable != null)
     {
       closeable.close();
+    }
+  }
+
+  /**
+   * @since 3.3
+   */
+  public static IOException flushSilent(Flushable flushable)
+  {
+    try
+    {
+      if (flushable != null)
+      {
+        flushable.flush();
+      }
+
+      return null;
+    }
+    catch (IOException ex)
+    {
+      OM.LOG.error(ex);
+      return ex;
+    }
+  }
+
+  /**
+   * @since 3.3
+   */
+  public static void flush(Flushable flushable) throws IORuntimeException
+  {
+    try
+    {
+      if (flushable != null)
+      {
+        flushable.flush();
+      }
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
     }
   }
 

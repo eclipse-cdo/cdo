@@ -17,6 +17,7 @@ import java.io.DataOutput;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Flushable;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.UTFDataFormatException;
@@ -25,7 +26,7 @@ import java.io.UTFDataFormatException;
  * @author Eike Stepper
  * @since 3.3
  */
-public class DataInputOutputFile implements DataInput, DataOutput, Closeable
+public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Closeable
 {
   private RandomAccessFile raf;
 

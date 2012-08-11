@@ -26,11 +26,11 @@ import java.io.IOException;
  */
 public class CommitDelegationRequest extends CommitTransactionRequest
 {
+  private static final DelegationIDProvider delegationIDProvider = new DelegationIDProvider();
+
   private CDOBranch branch;
 
   private String userID;
-
-  private static final DelegationIDProvider delegationIDProvider = new DelegationIDProvider();
 
   public CommitDelegationRequest(CDOClientProtocol protocol, InternalCDOCommitContext context)
   {

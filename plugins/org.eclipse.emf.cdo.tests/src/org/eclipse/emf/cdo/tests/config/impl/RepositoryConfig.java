@@ -676,6 +676,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       JVMUtil.prepareContainer(getCurrentTest().getServerContainer());
       super.setUp();
+
+      // Start default repository
+      getRepository(REPOSITORY_NAME);
     }
 
     @Override

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -62,7 +62,7 @@ import java.util.Set;
  * <li>Ensure indexes: cdo_class, (cdo_branch/cdo_version)?
  * <li>Remove skipMongo() - server-side CommitInfoManager
  * </ul>
- * 
+ *
  * @author Eike Stepper
  */
 public class MongoDBStore extends Store implements IMongoDBStore, //
@@ -399,9 +399,10 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
     throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
+  @Deprecated
   public boolean isLocal(CDOID id)
   {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+    throw new UnsupportedOperationException();
   }
 
   @Override

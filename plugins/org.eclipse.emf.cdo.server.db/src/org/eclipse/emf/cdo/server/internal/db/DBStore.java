@@ -461,9 +461,10 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     return idHandler.createCDOID(val);
   }
 
+  @Deprecated
   public boolean isLocal(CDOID id)
   {
-    return idHandler.isLocalCDOID(id);
+    throw new UnsupportedOperationException();
   }
 
   public CDOID getNextCDOID(LongIDStoreAccessor accessor, CDORevision revision)

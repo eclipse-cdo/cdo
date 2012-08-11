@@ -111,9 +111,10 @@ public class UUIDHandler extends Lifecycle implements IIDHandler
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public boolean isLocalCDOID(CDOID id)
   {
-    return false;
+    throw new UnsupportedOperationException();
   }
 
   public ITypeMapping getObjectTypeMapping()

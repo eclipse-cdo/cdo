@@ -122,14 +122,10 @@ public class StringIDHandler extends Lifecycle implements IIDHandler
     return CDOIDUtil.createString("" + ++lastObjectID);
   }
 
+  @Deprecated
   public boolean isLocalCDOID(CDOID id)
   {
-    if (id.getType() == CDOID.Type.OBJECT)
-    {
-      return Long.parseLong(value(id)) > nextLocalObjectID;
-    }
-
-    return false;
+    throw new UnsupportedOperationException();
   }
 
   public ITypeMapping getObjectTypeMapping()

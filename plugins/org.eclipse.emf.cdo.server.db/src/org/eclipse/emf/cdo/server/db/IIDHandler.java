@@ -48,6 +48,10 @@ public interface IIDHandler extends Comparator<CDOID>
 
   public CDOID createCDOID(String val);
 
+  /**
+   * @deprecated Not used anymore.
+   */
+  @Deprecated
   public boolean isLocalCDOID(CDOID id);
 
   public CDOID getLastObjectID();

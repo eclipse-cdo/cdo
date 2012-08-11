@@ -149,14 +149,10 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
   }
 
   @Override
+  @Deprecated
   public boolean isLocal(CDOID id)
   {
-    if (getRepository().getIDGenerationLocation() == IDGenerationLocation.CLIENT)
-    {
-      return false;
-    }
-
-    return super.isLocal(id);
+    throw new UnsupportedOperationException();
   }
 
   @Override

@@ -132,9 +132,10 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
     return lastObjectID;
   }
 
+  @Deprecated
   public boolean isLocalCDOID(CDOID id)
   {
-    return compare(id, nextLocalObjectID) > 0;
+    throw new UnsupportedOperationException();
   }
 
   public DBType getDBType()

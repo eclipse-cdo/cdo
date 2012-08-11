@@ -97,13 +97,10 @@ public abstract class LongIDStore extends Store
     return CDOIDUtil.createLong(lastObjectID.incrementAndGet());
   }
 
-  /**
-   * @since 4.0
-   */
+  @Deprecated
   public boolean isLocal(CDOID id)
   {
-    long value = CDOIDUtil.getLong(id);
-    return value > nextLocalObjectID.get();
+    throw new UnsupportedOperationException();
   }
 
   /**

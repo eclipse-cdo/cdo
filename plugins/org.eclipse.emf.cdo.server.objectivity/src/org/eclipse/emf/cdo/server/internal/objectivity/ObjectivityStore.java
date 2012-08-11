@@ -223,9 +223,10 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     return null;
   }
 
+  @Deprecated
   public boolean isLocal(CDOID id)
   {
-    return false;
+    throw new UnsupportedOperationException();
   }
 
   /**

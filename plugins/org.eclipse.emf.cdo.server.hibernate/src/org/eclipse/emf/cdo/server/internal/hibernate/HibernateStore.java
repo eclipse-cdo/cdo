@@ -312,9 +312,10 @@ public class HibernateStore extends Store implements IHibernateStore
     }
   }
 
+  @Deprecated
   public boolean isLocal(CDOID id)
   {
-    return false;
+    throw new UnsupportedOperationException();
   }
 
   public CDOID createObjectID(String val)

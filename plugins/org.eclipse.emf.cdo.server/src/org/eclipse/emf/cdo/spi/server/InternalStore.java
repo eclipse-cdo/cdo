@@ -43,8 +43,9 @@ public interface InternalStore extends IStore, ILifecycle
   public void setLastNonLocalCommitTime(long lastNonLocalCommitTime);
 
   /**
-   * @since 4.0
+   * @deprecated Not used anymore.
    */
+  @Deprecated
   public boolean isLocal(CDOID id);
 
   /**

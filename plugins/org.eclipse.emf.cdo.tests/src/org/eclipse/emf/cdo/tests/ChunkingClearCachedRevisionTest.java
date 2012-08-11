@@ -29,7 +29,7 @@ import java.util.Iterator;
 /**
  * @author Simon McDuff
  */
-public class ChunkingWithMEMTest extends AbstractCDOTest
+public class ChunkingClearCachedRevisionTest extends AbstractCDOTest
 {
   public void testReadNative() throws Exception
   {

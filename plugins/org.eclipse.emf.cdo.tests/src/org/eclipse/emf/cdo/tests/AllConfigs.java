@@ -61,7 +61,7 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(RollbackTest.class);
     testClasses.add(CrossReferenceTest.class);
     testClasses.add(ChunkingTest.class);
-    testClasses.add(ChunkingWithMEMTest.class);
+    testClasses.add(ChunkingClearCachedRevisionTest.class);
     testClasses.add(MEMStoreQueryTest.class);
     testClasses.add(PackageRegistryTest.class);
     testClasses.add(PartialCommitTest.class);

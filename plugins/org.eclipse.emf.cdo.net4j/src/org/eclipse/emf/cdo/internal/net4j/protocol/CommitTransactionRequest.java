@@ -196,7 +196,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     boolean auditing = repositoryInfo.isSupportingAudits();
     boolean branching = repositoryInfo.isSupportingBranches();
     boolean ensuringReferentialIntegrity = repositoryInfo.isEnsuringReferentialIntegrity();
-    CDOBranch transactionBranch = transaction.getBranch();
+    CDOBranch transactionBranch = getBranch();
 
     for (CDOIDAndVersion detachedObject : detachedObjects)
     {
@@ -250,6 +250,11 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
         IOUtil.copyCharacter(clob.getContents(), new OutputStreamWriter(out), size);
       }
     }
+  }
+
+  protected CDOBranch getBranch()
+  {
+    return transaction.getBranch();
   }
 
   protected EClass getObjectType(CDOID id)

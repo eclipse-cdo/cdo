@@ -78,12 +78,11 @@ class Temp extends ooObj
 
 /**
  * This class will hide access to Objectivity/Db
- * 
+ *
  * @author Ibrahim Sallam
  */
-class DbStore
+class ObjyDbStore
 {
-
   // private final String fdName = "c:\\data\\objyBranchTest.boot"; // TODO - this is windows path style, generalise it.
 
   private final String repoName = "TestRepo";
@@ -94,7 +93,7 @@ class DbStore
 
   private ObjySession objySession;
 
-  public DbStore()
+  public ObjyDbStore()
   {
     fdManager = new FdManager();
     objyConnection = ObjyConnection.INSTANCE;
@@ -133,7 +132,6 @@ class DbStore
   {
     return new Temp(System.currentTimeMillis());
   }
-
 }
 
 /**
@@ -149,7 +147,7 @@ public class ObjyBranchManagementTest
 
   private final long baseBranchTimeStamp = System.currentTimeMillis();
 
-  DbStore dbStore = null;
+  ObjyDbStore dbStore = null;
 
   BranchInfo branchInfoA = null;
 
@@ -162,7 +160,7 @@ public class ObjyBranchManagementTest
   @Before
   public void setUp()
   {
-    dbStore = new DbStore();
+    dbStore = new ObjyDbStore();
     branchInfoA = new BranchInfo(BRANCH_NAME_A, baseBranchId, baseBranchTimeStamp);
     branchInfoB = new BranchInfo(BRANCH_NAME_B, baseBranchId, baseBranchTimeStamp);
     dbStore.startup();

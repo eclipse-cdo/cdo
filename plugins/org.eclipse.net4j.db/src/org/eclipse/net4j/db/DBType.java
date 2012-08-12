@@ -548,7 +548,7 @@ public enum DBType
 
       try
       {
-        final File tempFile = TMPUtil.createTempFile("lob-", ".tmp");
+        final File tempFile = TMPUtil.createTempFile("clob_", ".tmp");
         tempFile.deleteOnExit();
 
         fw = new FileWriter(tempFile);
@@ -909,7 +909,7 @@ public enum DBType
 
       try
       {
-        final File tempFile = TMPUtil.createTempFile("lob-", ".tmp");
+        final File tempFile = TMPUtil.createTempFile("blob_", ".tmp");
         tempFile.deleteOnExit();
 
         fos = new FileOutputStream(tempFile);

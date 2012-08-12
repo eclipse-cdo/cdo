@@ -180,7 +180,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public IContainerConfig getContainerConfig()
   {
-    return getScenario().getContainerConfig();
+    IScenario scenario = getScenario();
+    return scenario.getContainerConfig();
   }
 
   /**
@@ -188,7 +189,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public boolean hasClientContainer()
   {
-    return getContainerConfig().hasClientContainer();
+    IContainerConfig containerConfig = getContainerConfig();
+    return containerConfig.hasClientContainer();
   }
 
   /**
@@ -196,7 +198,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public boolean hasServerContainer()
   {
-    return getContainerConfig().hasServerContainer();
+    IContainerConfig containerConfig = getContainerConfig();
+    return containerConfig.hasServerContainer();
   }
 
   /**
@@ -204,7 +207,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public IManagedContainer getClientContainer()
   {
-    return getContainerConfig().getClientContainer();
+    IContainerConfig containerConfig = getContainerConfig();
+    return containerConfig.getClientContainer();
   }
 
   /**
@@ -212,7 +216,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public IManagedContainer getServerContainer()
   {
-    return getContainerConfig().getServerContainer();
+    IContainerConfig containerConfig = getContainerConfig();
+    return containerConfig.getServerContainer();
   }
 
   // /////////////////////////////////////////////////////////////////////////
@@ -223,7 +228,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public IRepositoryConfig getRepositoryConfig()
   {
-    return getScenario().getRepositoryConfig();
+    IScenario scenario = getScenario();
+    return scenario.getRepositoryConfig();
   }
 
   /**
@@ -231,7 +237,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public Map<String, String> getRepositoryProperties()
   {
-    return getRepositoryConfig().getRepositoryProperties();
+    IRepositoryConfig repositoryConfig = getRepositoryConfig();
+    return repositoryConfig.getRepositoryProperties();
   }
 
   /**
@@ -239,7 +246,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public InternalRepository getRepository(String name, boolean activate)
   {
-    return getRepositoryConfig().getRepository(name, activate);
+    IRepositoryConfig repositoryConfig = getRepositoryConfig();
+    return repositoryConfig.getRepository(name, activate);
   }
 
   /**
@@ -247,7 +255,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public InternalRepository getRepository(String name)
   {
-    return getRepositoryConfig().getRepository(name);
+    IRepositoryConfig repositoryConfig = getRepositoryConfig();
+    return repositoryConfig.getRepository(name);
   }
 
   /**
@@ -255,12 +264,14 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public InternalRepository getRepository()
   {
-    return getRepositoryConfig().getRepository(IRepositoryConfig.REPOSITORY_NAME);
+    IRepositoryConfig repositoryConfig = getRepositoryConfig();
+    return repositoryConfig.getRepository(IRepositoryConfig.REPOSITORY_NAME);
   }
 
   public void registerRepository(IRepository repository)
   {
-    getRepositoryConfig().registerRepository((InternalRepository)repository);
+    IRepositoryConfig repositoryConfig = getRepositoryConfig();
+    repositoryConfig.registerRepository((InternalRepository)repository);
   }
 
   public InternalRepository restartRepository()
@@ -270,16 +281,18 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
 
   public InternalRepository restartRepository(String name)
   {
+    IRepositoryConfig repositoryConfig = getRepositoryConfig();
+
     try
     {
-      getRepositoryConfig().setRestarting(true);
+      repositoryConfig.setRestarting(true);
       InternalRepository repo = getRepository(name);
       LifecycleUtil.deactivate(repo);
       return getRepository(name);
     }
     finally
     {
-      getRepositoryConfig().setRestarting(false);
+      repositoryConfig.setRestarting(false);
     }
   }
 
@@ -291,7 +304,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public ISessionConfig getSessionConfig()
   {
-    return getScenario().getSessionConfig();
+    IScenario scenario = getScenario();
+    return scenario.getSessionConfig();
   }
 
   /**
@@ -299,7 +313,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public void startTransport() throws Exception
   {
-    getSessionConfig().startTransport();
+    ISessionConfig sessionConfig = getSessionConfig();
+    sessionConfig.startTransport();
   }
 
   /**
@@ -322,7 +337,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public void stopTransport() throws Exception
   {
-    getSessionConfig().stopTransport();
+    ISessionConfig sessionConfig = getSessionConfig();
+    sessionConfig.stopTransport();
   }
 
   /**
@@ -330,7 +346,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public String getURIProtocol()
   {
-    return getSessionConfig().getURIProtocol();
+    ISessionConfig sessionConfig = getSessionConfig();
+    return sessionConfig.getURIProtocol();
   }
 
   /**
@@ -338,7 +355,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public String getURIPrefix()
   {
-    return getSessionConfig().getURIPrefix();
+    ISessionConfig sessionConfig = getSessionConfig();
+    return sessionConfig.getURIPrefix();
   }
 
   /**
@@ -347,7 +365,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   public CDOSession openSession()
   {
     determineCodeLink();
-    return getSessionConfig().openSession();
+    ISessionConfig sessionConfig = getSessionConfig();
+    return sessionConfig.openSession();
   }
 
   /**
@@ -356,7 +375,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   public CDOSession openSession(String repositoryName)
   {
     determineCodeLink();
-    return getSessionConfig().openSession(repositoryName);
+    ISessionConfig sessionConfig = getSessionConfig();
+    return sessionConfig.openSession(repositoryName);
   }
 
   // /////////////////////////////////////////////////////////////////////////
@@ -367,7 +387,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public IModelConfig getModelConfig()
   {
-    return getScenario().getModelConfig();
+    IScenario scenario = getScenario();
+    return scenario.getModelConfig();
   }
 
   /**
@@ -375,7 +396,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public MangoFactory getMangoFactory()
   {
-    return getModelConfig().getMangoFactory();
+    IModelConfig modelConfig = getModelConfig();
+    return modelConfig.getMangoFactory();
   }
 
   /**
@@ -383,7 +405,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public MangoPackage getMangoPackage()
   {
-    return getModelConfig().getMangoPackage();
+    IModelConfig modelConfig = getModelConfig();
+    return modelConfig.getMangoPackage();
   }
 
   /**
@@ -391,7 +414,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public Model1Factory getModel1Factory()
   {
-    return getModelConfig().getModel1Factory();
+    IModelConfig modelConfig = getModelConfig();
+    return modelConfig.getModel1Factory();
   }
 
   /**
@@ -399,7 +423,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public Model1Package getModel1Package()
   {
-    return getModelConfig().getModel1Package();
+    IModelConfig modelConfig = getModelConfig();
+    return modelConfig.getModel1Package();
   }
 
   /**
@@ -407,7 +432,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public Model2Factory getModel2Factory()
   {
-    return getModelConfig().getModel2Factory();
+    IModelConfig modelConfig = getModelConfig();
+    return modelConfig.getModel2Factory();
   }
 
   /**
@@ -415,7 +441,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public Model2Package getModel2Package()
   {
-    return getModelConfig().getModel2Package();
+    IModelConfig modelConfig = getModelConfig();
+    return modelConfig.getModel2Package();
   }
 
   /**
@@ -423,7 +450,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public Model3Factory getModel3Factory()
   {
-    return getModelConfig().getModel3Factory();
+    IModelConfig modelConfig = getModelConfig();
+    return modelConfig.getModel3Factory();
   }
 
   /**
@@ -431,7 +459,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public Model3Package getModel3Package()
   {
-    return getModelConfig().getModel3Package();
+    IModelConfig modelConfig = getModelConfig();
+    return modelConfig.getModel3Package();
   }
 
   /**
@@ -439,7 +468,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public SubpackageFactory getModel3SubpackageFactory()
   {
-    return getModelConfig().getModel3SubPackageFactory();
+    IModelConfig modelConfig = getModelConfig();
+    return modelConfig.getModel3SubPackageFactory();
   }
 
   /**
@@ -447,7 +477,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public SubpackagePackage getModel3SubpackagePackage()
   {
-    return getModelConfig().getModel3SubPackagePackage();
+    IModelConfig modelConfig = getModelConfig();
+    return modelConfig.getModel3SubPackagePackage();
   }
 
   /**
@@ -455,7 +486,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public model4Factory getModel4Factory()
   {
-    return getModelConfig().getModel4Factory();
+    IModelConfig modelConfig = getModelConfig();
+    return modelConfig.getModel4Factory();
   }
 
   /**
@@ -463,7 +495,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public model4Package getModel4Package()
   {
-    return getModelConfig().getModel4Package();
+    IModelConfig modelConfig = getModelConfig();
+    return modelConfig.getModel4Package();
   }
 
   /**
@@ -471,7 +504,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public model4interfacesPackage getModel4InterfacesPackage()
   {
-    return getModelConfig().getModel4InterfacesPackage();
+    IModelConfig modelConfig = getModelConfig();
+    return modelConfig.getModel4InterfacesPackage();
   }
 
   /**
@@ -479,7 +513,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public Model5Factory getModel5Factory()
   {
-    return getModelConfig().getModel5Factory();
+    IModelConfig modelConfig = getModelConfig();
+    return modelConfig.getModel5Factory();
   }
 
   /**
@@ -487,7 +522,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public Model5Package getModel5Package()
   {
-    return getModelConfig().getModel5Package();
+    IModelConfig modelConfig = getModelConfig();
+    return modelConfig.getModel5Package();
   }
 
   /**
@@ -495,7 +531,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public Model6Factory getModel6Factory()
   {
-    return getModelConfig().getModel6Factory();
+    IModelConfig modelConfig = getModelConfig();
+    return modelConfig.getModel6Factory();
   }
 
   /**
@@ -503,7 +540,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public Model6Package getModel6Package()
   {
-    return getModelConfig().getModel6Package();
+    IModelConfig modelConfig = getModelConfig();
+    return modelConfig.getModel6Package();
   }
 
   // /////////////////////////////////////////////////////////////////////////

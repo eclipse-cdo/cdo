@@ -35,7 +35,6 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogHandler;
 import org.eclipse.net4j.util.om.log.OMLogger;
-import org.eclipse.net4j.util.om.log.OMLogger.Level;
 import org.eclipse.net4j.util.security.PasswordCredentials;
 import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.UserManager;
@@ -145,7 +144,7 @@ public class SessionTest extends AbstractCDOTest
 
     OMLogHandler logHandler = new OMLogHandler()
     {
-      public void logged(OMLogger logger, Level level, String msg, Throwable t)
+      public void logged(OMLogger logger, OMLogger.Level level, String msg, Throwable t)
       {
         fail("Detaching the resource set adapter should not log inactive transaction exception");
       }

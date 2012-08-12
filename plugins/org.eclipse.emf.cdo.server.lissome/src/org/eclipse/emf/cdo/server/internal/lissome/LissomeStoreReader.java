@@ -136,7 +136,8 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
 
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
   {
-    throw new UnsupportedOperationException();
+    Journal journal = getStore().getJournal();
+    return journal.loadPackageUnit(packageUnit);
   }
 
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,

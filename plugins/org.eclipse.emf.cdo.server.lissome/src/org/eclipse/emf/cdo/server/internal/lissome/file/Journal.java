@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.lissome.LissomeFile;
@@ -55,6 +56,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,6 +76,10 @@ public class Journal extends LissomeFile
   private static final ContextTracer TRACER = new ContextTracer(OM.JOURNAL, Journal.class);
 
   private static final long serialVersionUID = 1L;
+
+  private static final boolean ZIP_PACKAGE_BYTES = true;
+
+  private Map<String, Long> ePackagePointers = new HashMap<String, Long>();
 
   private long commitPointer;
 
@@ -167,11 +173,15 @@ public class Journal extends LissomeFile
         reader.seek(filePointer);
         filePointer = reader.readLong();
 
-        while (reader.readBoolean())
+        int size = reader.readInt();
+        for (int i = 0; i < size; i++)
         {
           InternalCDOPackageUnit packageUnit = (InternalCDOPackageUnit)reader.readCDOPackageUnit(resourceSet);
           packageUnit.setPackageRegistry(packageRegistry);
           result.add(packageUnit);
+
+          long ePackagePointer = reader.readLong();
+          ePackagePointers.put(packageUnit.getID(), ePackagePointer);
 
           EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
           mapPackage(ePackage, reader);
@@ -179,6 +189,29 @@ public class Journal extends LissomeFile
       }
 
       return result;
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+    finally
+    {
+      IOUtil.close(reader);
+    }
+  }
+
+  public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
+  {
+    LissomeFileHandle reader = openReader();
+
+    try
+    {
+      long ePackagePointer = ePackagePointers.get(packageUnit.getID());
+      reader.seek(ePackagePointer);
+      byte[] bytes = reader.readByteArray();
+
+      EPackage ePackage = createEPackage(packageUnit, bytes);
+      return EMFUtil.getAllPackages(ePackage);
     }
     catch (IOException ex)
     {
@@ -284,6 +317,18 @@ public class Journal extends LissomeFile
     }
   }
 
+  private EPackage createEPackage(InternalCDOPackageUnit packageUnit, byte[] bytes)
+  {
+    ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(getStore().getRepository().getPackageRegistry());
+    return EMFUtil.createEPackage(packageUnit.getID(), bytes, ZIP_PACKAGE_BYTES, resourceSet, false);
+  }
+
+  private byte[] getEPackageBytes(InternalCDOPackageUnit packageUnit)
+  {
+    EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
+    return EMFUtil.getEPackageBytes(ePackage, ZIP_PACKAGE_BYTES, getStore().getRepository().getPackageRegistry());
+  }
+
   public void writePackageUnits(final InternalCDOPackageUnit[] packageUnits, final OMMonitor monitor)
   {
     if (TRACER.isEnabled())
@@ -313,23 +358,34 @@ public class Journal extends LissomeFile
   protected void writePackageUnits(LissomeFileHandle writer, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
       throws IOException
   {
+    writer.writeInt(packageUnits.length);
+    for (InternalCDOPackageUnit packageUnit : packageUnits)
+    {
+      long ePackagePointer = writer.getFilePointer();
+      ePackagePointers.put(packageUnit.getID(), ePackagePointer);
+
+      byte[] bytes = getEPackageBytes(packageUnit);
+      writer.writeByteArray(bytes);
+
+      monitor.worked(3);
+    }
+
     newPackageUnitPointer = writer.getFilePointer();
     writer.writeLong(packageUnitPointer);
 
+    writer.writeInt(packageUnits.length);
     for (InternalCDOPackageUnit packageUnit : packageUnits)
     {
-      writer.writeBoolean(true); // Package unit follows
+      writer.writeCDOPackageUnit(packageUnit, false);
 
-      boolean withPackages = !packageUnit.isSystem();
-      writer.writeCDOPackageUnit(packageUnit, withPackages);
+      long ePackagePointer = ePackagePointers.get(packageUnit.getID());
+      writer.writeLong(ePackagePointer);
 
       EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
       mapPackage(ePackage);
 
-      monitor.worked(4);
+      monitor.worked(1);
     }
-
-    writer.writeBoolean(false); // No more package units follow
   }
 
   public long createBranch(final int branchID, final BranchInfo branchInfo)

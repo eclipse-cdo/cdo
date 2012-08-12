@@ -264,7 +264,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       IManagedContainer serverContainer = getCurrentTest().getServerContainer();
 
       repository.setQueryHandlerProvider(new ContainerQueryHandlerProvider(serverContainer));
-      registerRepository(repository);
       if (activate)
       {
         LifecycleUtil.activate(repository);
@@ -277,6 +276,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
 
     addResourcePathChecker(repository);
+    registerRepository(repository);
 
     return repository;
   }

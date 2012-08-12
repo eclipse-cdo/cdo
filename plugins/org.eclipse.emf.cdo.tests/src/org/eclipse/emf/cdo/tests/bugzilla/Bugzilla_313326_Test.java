@@ -33,6 +33,8 @@ public class Bugzilla_313326_Test extends AbstractCDOTest
   @CleanRepositoriesBefore
   public void testNotificationBuilderBranch() throws Exception
   {
+    skipStoreWithoutChangeSets();
+
     // setup transaction.
     final CDOSession session = openSession();
     final CDOTransaction tr1 = session.openTransaction();

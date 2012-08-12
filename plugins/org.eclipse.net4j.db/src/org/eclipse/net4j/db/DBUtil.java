@@ -345,6 +345,37 @@ public final class DBUtil
   }
 
   /**
+   * @since 4.2
+   */
+  public static void createSchema(DataSource dataSource, String name, boolean dropIfExists)
+  {
+    Connection conn = null;
+    Statement stmt = null;
+  
+    try
+    {
+      conn = dataSource.getConnection();
+      stmt = conn.createStatement();
+  
+      if (dropIfExists)
+      {
+        stmt.execute("DROP SCHEMA IF EXISTS " + name);
+      }
+  
+      stmt.execute("CREATE SCHEMA IF NOT EXISTS " + name);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      close(stmt);
+      close(conn);
+    }
+  }
+
+  /**
    * @since 4.0
    */
   public static List<Exception> dropAllTables(Connection connection, String dbName)

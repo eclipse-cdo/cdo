@@ -239,7 +239,6 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
     optimizer.handleRevisions(eClass, branch, timeStamp, exactTime, handler);
   }
 
-  @Deprecated
   public Set<CDOID> readChangeSet(OMMonitor monitor, CDOChangeSetSegment... segments)
   {
     // TODO: implement LissomeStoreReader.readChangeSet(monitor, segments)
@@ -279,27 +278,23 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
     }
   }
 
-  @Deprecated
   public void queryXRefs(QueryXRefsContext context)
   {
     // TODO: implement LissomeStoreReader.queryXRefs(context)
     throw new UnsupportedOperationException();
   }
 
-  @Deprecated
   public void queryLobs(List<byte[]> ids)
   {
     // TODO: implement LissomeStoreReader.queryLobs(ids)
   }
 
-  @Deprecated
   public void loadLob(byte[] id, OutputStream out) throws IOException
   {
     // TODO: implement LissomeStoreReader.loadLob(id, out)
     throw new UnsupportedOperationException();
   }
 
-  @Deprecated
   public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
   {
     // TODO: implement LissomeStoreReader.handleLobs(fromTime, toTime, handler)
@@ -389,14 +384,12 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
     }
   }
 
-  @Deprecated
   public LockArea getLockArea(String durableLockingID) throws LockAreaNotFoundException
   {
     // TODO: implement LissomeStoreReader.getLockArea(durableLockingID)
     throw new UnsupportedOperationException();
   }
 
-  @Deprecated
   public void getLockAreas(String userIDPrefix, Handler handler)
   {
     // TODO: implement LissomeStoreReader.getLockAreas(userIDPrefix, handler)

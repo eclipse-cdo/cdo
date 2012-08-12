@@ -23,7 +23,6 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-@Deprecated
 public class LissomeStoreChunkReader extends StoreChunkReader implements ILissomeStoreChunkReader
 {
   public LissomeStoreChunkReader(LissomeStoreReader accessor, CDORevision revision, EStructuralFeature feature)

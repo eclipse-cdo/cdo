@@ -1,0 +1,6 @@
+# Debugging and tracing options
+
+org.eclipse.emf.cdo.server.lissome/debug = true
+org.eclipse.emf.cdo.server.lissome/debug.journal = true
+org.eclipse.emf.cdo.server.lissome/debug.index = true
+org.eclipse.emf.cdo.server.lissome/debug.vob = true

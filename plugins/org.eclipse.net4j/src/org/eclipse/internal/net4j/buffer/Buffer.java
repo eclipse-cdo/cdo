@@ -16,7 +16,6 @@ import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.IErrorHandler;
-import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -39,6 +38,10 @@ public class Buffer implements InternalBuffer
   public static final int EOS_OFFSET = 1;
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_BUFFER, Buffer.class);
+
+  private static int lastID;
+
+  private int id = ++lastID;
 
   private IErrorHandler errorHandler;
 
@@ -359,7 +362,7 @@ public class Buffer implements InternalBuffer
   @Override
   public String toString()
   {
-    return MessageFormat.format("Buffer@{0}[{1}]", ReflectUtil.getID(this), state); //$NON-NLS-1$
+    return MessageFormat.format("Buffer@{0}[{1}]", id, state); //$NON-NLS-1$
   }
 
   @SuppressWarnings("deprecation")

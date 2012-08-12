@@ -39,17 +39,24 @@ import java.util.WeakHashMap;
  */
 public final class ReflectUtil
 {
-  private static final String NAMESPACE_SEPARATOR = "."; //$NON-NLS-1$
-
   public static final Class<Object> ROOT_CLASS = Object.class;
 
   public static final Class<?>[] NO_PARAMETERS = null;
 
   public static final Object[] NO_ARGUMENTS = null;
 
+  private static final String NAMESPACE_SEPARATOR = "."; //$NON-NLS-1$
+
   private static final Method HASH_CODE_METHOD = lookupHashCodeMethod();
 
   private static final Map<Object, Long> ids = new WeakHashMap<Object, Long>();
+
+  private static final Long FAKE_ID = 0L;
+
+  /**
+   * @since 3.3
+   */
+  public static boolean REMEMBER_IDS = false;
 
   public static boolean DUMP_STATICS = false;
 
@@ -237,14 +244,19 @@ public final class ReflectUtil
 
   public static synchronized Long getID(Object object)
   {
-    Long id = ids.get(object);
-    if (id == null)
+    if (REMEMBER_IDS)
     {
-      id = ++lastID;
-      ids.put(object, id);
+      Long id = ids.get(object);
+      if (id == null)
+      {
+        id = ++lastID;
+        ids.put(object, id);
+      }
+
+      return id;
     }
 
-    return id;
+    return FAKE_ID;
   }
 
   public static String getPackageName(Class<? extends Object> c)
@@ -322,7 +334,12 @@ public final class ReflectUtil
       name = "anonymous"; //$NON-NLS-1$
     }
 
-    return name + "@" + getID(object); //$NON-NLS-1$
+    if (REMEMBER_IDS)
+    {
+      return name + "@" + getID(object); //$NON-NLS-1$
+    }
+
+    return name;
   }
 
   public static void dump(Object object)

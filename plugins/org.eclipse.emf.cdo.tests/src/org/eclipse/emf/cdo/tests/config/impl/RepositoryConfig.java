@@ -262,21 +262,28 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       }
 
       IManagedContainer serverContainer = getCurrentTest().getServerContainer();
-
       repository.setQueryHandlerProvider(new ContainerQueryHandlerProvider(serverContainer));
+      registerRepository(repository);
+
       if (activate)
       {
-        LifecycleUtil.activate(repository);
-
-        if (hasAnnotation(CallAddRepository.class))
+        try
         {
-          CDOServerUtil.addRepository(serverContainer, repository);
+          LifecycleUtil.activate(repository);
+
+          if (hasAnnotation(CallAddRepository.class))
+          {
+            CDOServerUtil.addRepository(serverContainer, repository);
+          }
+        }
+        catch (Exception ex)
+        {
+          deactivateRepositories();
         }
       }
     }
 
     addResourcePathChecker(repository);
-    registerRepository(repository);
 
     return repository;
   }

@@ -74,5 +74,15 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
   public interface Props
   {
     public static final String CONNECTION_KEEPALIVE_PERIOD = "connectionKeepAlivePeriod"; //$NON-NLS-1$
+
+    /**
+     * @since 4.2
+     */
+    public static final String READER_POOL_CAPACITY = "readerPoolCapacity"; //$NON-NLS-1$
+
+    /**
+     * @since 4.2
+     */
+    public static final String WRITER_POOL_CAPACITY = "writerPoolCapacity"; //$NON-NLS-1$
   }
 }

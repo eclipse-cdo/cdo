@@ -755,7 +755,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   {
     DBStore store = getStore();
     connection = store.getConnection();
-    connectionKeepAliveTask = new ConnectionKeepAliveTask();
+    connectionKeepAliveTask = new ConnectionKeepAliveTask(this);
 
     long keepAlivePeriod = ConnectionKeepAliveTask.EXECUTION_PERIOD;
     Map<String, String> storeProps = store.getProperties();
@@ -780,7 +780,10 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   protected void doDeactivate() throws Exception
   {
     LifecycleUtil.deactivate(statementCache);
+
     connectionKeepAliveTask.cancel();
+    connectionKeepAliveTask = null;
+
     DBUtil.close(connection);
     connection = null;
   }
@@ -1363,13 +1366,25 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   /**
    * @author Stefan Winkler
    */
-  private class ConnectionKeepAliveTask extends TimerTask
+  private static final class ConnectionKeepAliveTask extends TimerTask
   {
     public static final long EXECUTION_PERIOD = 1000 * 60 * 60 * 4; // 4 hours
+
+    private DBStoreAccessor accessor;
+
+    public ConnectionKeepAliveTask(DBStoreAccessor accessor)
+    {
+      this.accessor = accessor;
+    }
 
     @Override
     public void run()
     {
+      if (accessor == null)
+      {
+        return;
+      }
+
       Statement stmt = null;
 
       try
@@ -1379,6 +1394,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
           TRACER.trace("DB connection keep-alive task activated"); //$NON-NLS-1$
         }
 
+        Connection connection = accessor.getConnection();
         stmt = connection.createStatement();
         stmt.executeQuery("SELECT 1 FROM " + CDODBSchema.PROPERTIES); //$NON-NLS-1$
       }
@@ -1389,8 +1405,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
         // Assume the connection has failed.
         try
         {
-          LifecycleUtil.deactivate(DBStoreAccessor.this);
-          LifecycleUtil.activate(DBStoreAccessor.this);
+          LifecycleUtil.deactivate(accessor);
+          LifecycleUtil.activate(accessor);
         }
         catch (Exception ex2)
         {
@@ -1405,6 +1421,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       {
         DBUtil.close(stmt);
       }
+    }
+
+    @Override
+    public boolean cancel()
+    {
+      accessor = null;
+      return super.cancel();
     }
   }
 }

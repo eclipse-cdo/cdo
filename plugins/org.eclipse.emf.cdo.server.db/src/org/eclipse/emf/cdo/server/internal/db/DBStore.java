@@ -517,6 +517,12 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     setObjectIDTypes(idHandler.getObjectIDTypes());
     connectionKeepAliveTimer = new Timer("Connection-Keep-Alive-" + this); //$NON-NLS-1$
 
+    if (properties != null)
+    {
+      configureAccessorPool(readerPool, IDBStore.Props.READER_POOL_CAPACITY);
+      configureAccessorPool(writerPool, IDBStore.Props.WRITER_POOL_CAPACITY);
+    }
+
     Set<IDBTable> createdTables = null;
     Connection connection = getConnection();
 
@@ -724,5 +730,18 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   {
     String name = getRepository().getName();
     return new DBSchema(name);
+  }
+
+  protected void configureAccessorPool(StoreAccessorPool pool, String property)
+  {
+    if (pool != null)
+    {
+      String value = properties.get(property);
+      if (value != null)
+      {
+        int capacity = Integer.parseInt(value);
+        pool.setCapacity(capacity);
+      }
+    }
   }
 }

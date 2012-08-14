@@ -136,18 +136,21 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
         TRACER.format("Reading {0} new package units", newPackageUnits.length); //$NON-NLS-1$
       }
 
-      InternalCDOPackageRegistry packageRegistry = commitContext.getPackageRegistry();
-      ResourceSet resourceSet = createResourceSet(packageRegistry);
-      for (int i = 0; i < newPackageUnits.length; i++)
+      if (newPackageUnits.length != 0)
       {
-        newPackageUnits[i] = (InternalCDOPackageUnit)in.readCDOPackageUnit(resourceSet);
-        packageRegistry.putPackageUnit(newPackageUnits[i]); // Must happen before readCDORevision!!!
-        monitor.worked();
-      }
+        InternalCDOPackageRegistry packageRegistry = commitContext.getPackageRegistry();
+        ResourceSet resourceSet = createResourceSet(packageRegistry);
+        for (int i = 0; i < newPackageUnits.length; i++)
+        {
+          newPackageUnits[i] = (InternalCDOPackageUnit)in.readCDOPackageUnit(resourceSet);
+          packageRegistry.putPackageUnit(newPackageUnits[i]); // Must happen before readCDORevision!!!
+          monitor.worked();
+        }
 
-      // When all packages are deserialized and registered, resolve them
-      // Note: EcoreUtil.resolveAll(resourceSet) does *not* do the trick
-      EMFUtil.safeResolveAll(resourceSet);
+        // When all packages are deserialized and registered, resolve them
+        // Note: EcoreUtil.resolveAll(resourceSet) does *not* do the trick
+        EMFUtil.safeResolveAll(resourceSet);
+      }
 
       // Locks on new objects
       if (TRACER.isEnabled())

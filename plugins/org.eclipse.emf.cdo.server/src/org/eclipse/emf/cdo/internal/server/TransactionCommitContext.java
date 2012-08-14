@@ -182,8 +182,6 @@ public class TransactionCommitContext implements InternalCommitContext
     ensuringReferentialIntegrity = repository.isEnsuringReferentialIntegrity();
 
     repositoryPackageRegistry = repository.getPackageRegistry(false);
-    packageRegistry = new TransactionPackageRegistry(repositoryPackageRegistry);
-    packageRegistry.activate();
   }
 
   public InternalTransaction getTransaction()
@@ -223,6 +221,12 @@ public class TransactionCommitContext implements InternalCommitContext
 
   public InternalCDOPackageRegistry getPackageRegistry()
   {
+    if (packageRegistry == null)
+    {
+      packageRegistry = new TransactionPackageRegistry(repositoryPackageRegistry);
+      packageRegistry.activate();
+    }
+
     return packageRegistry;
   }
 
@@ -1114,7 +1118,10 @@ public class TransactionCommitContext implements InternalCommitContext
     if (rollbackMessage == null)
     {
       rollbackMessage = message;
+
+      removePackageAdapters();
       unlockObjects();
+
       if (accessor != null)
       {
         try
@@ -1123,12 +1130,28 @@ public class TransactionCommitContext implements InternalCommitContext
         }
         catch (RuntimeException ex)
         {
-          OM.LOG.warn("Problem while rolling back  the transaction", ex); //$NON-NLS-1$
+          OM.LOG.warn("Problem while rolling back the transaction", ex); //$NON-NLS-1$
         }
         finally
         {
           repository.failCommit(timeStamp);
         }
+      }
+    }
+  }
+
+  private void removePackageAdapters()
+  {
+    for (int i = 0; i < newPackageUnits.length; i++)
+    {
+      try
+      {
+        InternalCDOPackageUnit packageUnit = newPackageUnits[i];
+        packageUnit.dispose();
+      }
+      catch (Throwable t)
+      {
+        OM.LOG.error(t);
       }
     }
   }
@@ -1229,8 +1252,9 @@ public class TransactionCommitContext implements InternalCommitContext
         monitor.begin(newPackageUnits.length);
         for (int i = 0; i < newPackageUnits.length; i++)
         {
-          newPackageUnits[i].setState(CDOPackageUnit.State.LOADED);
-          repositoryPackageRegistry.putPackageUnit(newPackageUnits[i]);
+          InternalCDOPackageUnit packageUnit = newPackageUnits[i];
+          packageUnit.setState(CDOPackageUnit.State.LOADED);
+          repositoryPackageRegistry.putPackageUnit(packageUnit);
           monitor.worked();
         }
       }

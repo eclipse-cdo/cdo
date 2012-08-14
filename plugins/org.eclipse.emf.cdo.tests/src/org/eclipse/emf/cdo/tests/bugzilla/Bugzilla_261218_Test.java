@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 /**
  * See bug 261218
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_261218_Test extends AbstractCDOTest
@@ -40,7 +40,7 @@ public class Bugzilla_261218_Test extends AbstractCDOTest
     resource.getContents().add(folder);
 
     IOUtil.OUT().println("Adding...");
-    for (int i = 0; i < 10000; ++i)
+    for (int i = 0; i < 10; ++i)
     {
       Category file = getModel1Factory().createCategory();
       folder.getCategories().add(file);
@@ -50,12 +50,11 @@ public class Bugzilla_261218_Test extends AbstractCDOTest
     transaction.commit();
 
     IOUtil.OUT().println("Removing...");
-    for (int i = 9999; i >= 0; --i)
+    for (int i = 9; i >= 0; --i)
     {
       folder.getCategories().remove(i);
     }
 
-    // =>90 seconds
     IOUtil.OUT().println("Committing...");
     transaction.commit();
   }

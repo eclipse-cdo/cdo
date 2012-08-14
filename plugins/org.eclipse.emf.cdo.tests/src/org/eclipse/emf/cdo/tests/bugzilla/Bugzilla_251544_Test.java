@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * Resources fetched using CDOViewImpl.getResource(getResourcePath(CDOID)) not added to ResourceSet
  * <p>
  * See bug 251544
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_251544_Test extends AbstractCDOTest
@@ -48,7 +48,7 @@ public class Bugzilla_251544_Test extends AbstractCDOTest
     orderDetail.setProduct(product);
 
     EList<OrderDetail> list = order1.getOrderDetails();
-    //
+
     resource.getContents().remove(0); // remove object by index
     list.remove(orderDetail);
     transaction.commit();

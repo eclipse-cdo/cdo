@@ -23,7 +23,7 @@ import java.text.MessageFormat;
  * this is just a wrapper with access to its wrapped object. There's no interface delegation, because the interface
  * delegation would also put the necessity to wrap resultSets and maybe even more, which seems to much overkill for a
  * simple internal implementation.
- * 
+ *
  * @author Stefan Winkler
  */
 public class WrappedPreparedStatement
@@ -50,7 +50,7 @@ public class WrappedPreparedStatement
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("UnWrapping Statement: {0}", wrappedStatement); //$NON-NLS-1$
+      TRACER.format("Unwrapping Statement: {0}", wrappedStatement); //$NON-NLS-1$
     }
 
     PreparedStatement result = wrappedStatement;

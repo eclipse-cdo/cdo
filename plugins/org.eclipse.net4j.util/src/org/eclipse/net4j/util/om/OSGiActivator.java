@@ -28,7 +28,7 @@ import java.io.ObjectStreamClass;
 
 /**
  * A default implementation of an OSGi {@link BundleActivator bundle activator} for OM {@link OMBundle bundles}.
- * 
+ *
  * @author Eike Stepper
  */
 public abstract class OSGiActivator implements BundleActivator
@@ -127,12 +127,6 @@ public abstract class OSGiActivator implements BundleActivator
     return super.clone();
   }
 
-  @Override
-  protected final void finalize() throws Throwable
-  {
-    super.finalize();
-  }
-
   /**
    * @since 2.0
    */
@@ -189,7 +183,7 @@ public abstract class OSGiActivator implements BundleActivator
 
   /**
    * Saves and loads {@link OMBundle bundle} state.
-   * 
+   *
    * @author Eike Stepper
    * @since 3.1
    */
@@ -274,7 +268,7 @@ public abstract class OSGiActivator implements BundleActivator
 
   /**
    * An OSGi {@link OSGiActivator activator} that stores {@link StateHandler bundle state} between sessions.
-   * 
+   *
    * @author Eike Stepper
    * @since 3.1
    * @apiviz.has {@link OSGiActivator.StateHandler} oneway - - stateHandler

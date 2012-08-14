@@ -128,26 +128,4 @@ public class RemoveResourceActionDelegate implements IObjectActionDelegate
       job.schedule();
     }
   }
-
-  // private Image getDeleteIcon()
-  // {
-  // if (deleteIcon == null)
-  // {
-  // deleteIcon = OM.Activator
-  //          .imageDescriptorFromPlugin(OM.BUNDLE_ID, "icons/full/elcl16/delete_edit.gif").createImage(); //$NON-NLS-1$
-  // }
-  //
-  // return deleteIcon;
-  // }
-  //
-  // @Override
-  // protected void finalize() throws Throwable
-  // {
-  // if (deleteIcon != null)
-  // {
-  // deleteIcon.dispose();
-  // }
-  //
-  // super.finalize();
-  // }
 }

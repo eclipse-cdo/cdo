@@ -19,7 +19,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
  * Provides server-side consumers with the {@link IStoreAccessor store accessor} that is valid in the context of a
  * specific {@link ISession session} during read operations or a specific {@link CommitContext commit context} during
  * write operations.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @apiviz.exclude
@@ -47,7 +47,7 @@ public final class StoreThreadLocal
 
   /**
    * Returns the session associated with the current thread.
-   * 
+   *
    * @return Never <code>null</code>.
    * @throws IllegalStateException
    *           if no session is associated with the current thread.
@@ -115,9 +115,9 @@ public final class StoreThreadLocal
     }
     finally
     {
-      ACCESSOR.set(null);
-      SESSION.set(null);
-      COMMIT_CONTEXT.set(null);
+      ACCESSOR.remove();
+      SESSION.remove();
+      COMMIT_CONTEXT.remove();
     }
   }
 }

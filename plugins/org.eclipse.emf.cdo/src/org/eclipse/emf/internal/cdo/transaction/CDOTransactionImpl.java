@@ -2239,6 +2239,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   protected void doDeactivate() throws Exception
   {
+    providingCDOID.remove();
     options().disposeConflictResolvers();
     lastSavepoint = null;
     firstSavepoint = null;

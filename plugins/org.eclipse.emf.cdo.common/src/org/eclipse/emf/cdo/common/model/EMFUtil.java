@@ -183,7 +183,7 @@ public final class EMFUtil
         }
       }
     }
-  
+
     return result.toArray(new EClass[result.size()]);
   }
 
@@ -350,7 +350,10 @@ public final class EMFUtil
     synchronized (notifier)
     {
       EList<Adapter> adapters = notifier.eAdapters();
-      adapters.add(adapter);
+      if (!adapters.contains(adapter))
+      {
+        adapters.add(adapter);
+      }
     }
   }
 

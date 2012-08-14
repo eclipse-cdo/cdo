@@ -47,6 +47,16 @@ public class Bugzilla_299190_Test extends AbstractCDOTest
     commit();
   }
 
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    session = null;
+    transaction = null;
+    resource1 = null;
+    factory = null;
+    super.doTearDown();
+  }
+
   private void purgeCaches()
   {
     // according to Eike's comment at Bug 249681, client caches are

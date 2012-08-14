@@ -90,6 +90,17 @@ public class ComplexTest extends AbstractCDOTest
     commit();
   }
 
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    factory = null;
+    session = null;
+    transaction = null;
+    resource1 = null;
+    resource2 = null;
+    super.doTearDown();
+  }
+
   private void purgeCaches()
   {
     // according to Eike's comment at Bug 249681, client caches are

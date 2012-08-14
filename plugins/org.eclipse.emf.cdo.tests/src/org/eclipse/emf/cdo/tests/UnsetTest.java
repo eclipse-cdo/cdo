@@ -512,6 +512,14 @@ public class UnsetTest extends AbstractCDOTest
     }
   }
 
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    commitAndLoadSession = null;
+    commitAndLoadTransaction = null;
+    super.doTearDown();
+  }
+
   private <T extends EObject> T commitAndLoad(T object) throws Exception
   {
     CDOSession session = openSession();

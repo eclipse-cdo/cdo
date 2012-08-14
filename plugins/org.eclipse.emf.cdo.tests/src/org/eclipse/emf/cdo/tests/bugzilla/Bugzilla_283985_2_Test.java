@@ -47,6 +47,18 @@ public class Bugzilla_283985_2_Test extends AbstractCDOTest
     order1.getOrderDetails().add(detail4);
   }
 
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    order1 = null;
+    order2 = null;
+    detail1 = null;
+    detail2 = null;
+    detail3 = null;
+    detail4 = null;
+    super.doTearDown();
+  }
+
   public void testMoveOnce() throws CommitException
   {
     {

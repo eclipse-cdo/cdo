@@ -104,6 +104,7 @@ public class Bugzilla_385268_Test extends AbstractCDOTest
     }
 
     transaction.commit();
+    remoteUser.dispose();
   }
 
   /**
@@ -120,6 +121,12 @@ public class Bugzilla_385268_Test extends AbstractCDOTest
       CDOSession session = openSession();
       transaction = session.openTransaction();
       resource = transaction.getResource(getResourcePath("test1"));
+    }
+
+    public void dispose()
+    {
+      transaction = null;
+      resource = null;
     }
 
     public void changeSupplierAndLockIt() throws InterruptedException

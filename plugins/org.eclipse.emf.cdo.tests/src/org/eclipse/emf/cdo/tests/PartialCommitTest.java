@@ -106,7 +106,29 @@ public class PartialCommitTest extends AbstractCDOTest
   protected void doTearDown() throws Exception
   {
     tx.close();
+    tx = null;
+
     session.close();
+    session = null;
+
+    resource1 = null;
+    company1 = null;
+    company2 = null;
+    company3 = null;
+    company99 = null;
+    purchaseOrder = null;
+    supplier1 = null;
+    refSingleContained1 = null;
+    refSingleContained2 = null;
+    singleContainedElement1 = null;
+    refSingleNonContained1 = null;
+    refSingleNonContained2 = null;
+    singleNonContainedElement1 = null;
+    singleNonContainedElement2 = null;
+    refMultiNonContained1 = null;
+    refMultiNonContained2 = null;
+    multiNonContainedElement1 = null;
+    multiNonContainedElement2 = null;
     super.doTearDown();
   }
 
@@ -1154,7 +1176,7 @@ public class PartialCommitTest extends AbstractCDOTest
 
   /**
    * Test the commit integrity, assuming that it is good.
-   * 
+   *
    * @param style
    *          - the checking style to be used; if null, just commit. In that case, the commit logic will choose the
    *          checking style.
@@ -1210,7 +1232,7 @@ public class PartialCommitTest extends AbstractCDOTest
 
   /**
    * Test the commit integrity, assuming that it is bad.
-   * 
+   *
    * @param style
    *          - the checking style to be used; if null, just commit. In that case, the commit logic will choose the
    *          checking style.

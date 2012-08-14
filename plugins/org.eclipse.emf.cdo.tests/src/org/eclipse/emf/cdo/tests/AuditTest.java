@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.signal.RemoteException;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.common.util.URI;
 
@@ -37,6 +38,14 @@ import java.util.List;
 public class AuditTest extends AbstractCDOTest
 {
   protected CDOSession session1;
+
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    LifecycleUtil.deactivate(session1);
+    session1 = null;
+    super.doTearDown();
+  }
 
   protected CDOSession openSession1()
   {

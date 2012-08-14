@@ -34,7 +34,7 @@ import java.util.concurrent.CountDownLatch;
  * LastCommitTimeStamp updated even when a serverSide Error occurred.
  * <p>
  * See bug 329254.
- * 
+ *
  * @author Pascal Lehmann
  * @since 4.0
  */
@@ -42,11 +42,11 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
 {
   private static final String REPOSITORY_NAME = "repo1";
 
+  private final CountDownLatch enterLatch = new CountDownLatch(1);
+
+  private final CountDownLatch leaveLatch = new CountDownLatch(1);
+
   private boolean modelInitialized;
-
-  private CountDownLatch enterLatch = new CountDownLatch(1);
-
-  private CountDownLatch leaveLatch = new CountDownLatch(1);
 
   private int sessionId2;
 

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Caspar De Groot - initial API and implementation
  */
@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
  * Bugzilla 293283/314387 - Failed writes on CDOObjects leave bad featureDeltas in transaction
- * 
+ *
  * @author Caspar De Groot
  */
 public class Bugzilla_293283_Test extends AbstractCDOTest
@@ -53,8 +53,12 @@ public class Bugzilla_293283_Test extends AbstractCDOTest
   public void tearDown() throws Exception
   {
     tx.close();
-    session.close();
+    tx = null;
 
+    session.close();
+    session = null;
+
+    order1 = null;
     super.tearDown();
   }
 

@@ -45,11 +45,21 @@ public class Net4jDBTest extends AbstractCDOTest
 {
   private static final String FIELD_NAME = "testField";
 
-  private DBStore store;
-
   private ArrayList<Pair<DBType, Object>> columns = new ArrayList<Pair<DBType, Object>>();
 
+  private DBStore store;
+
   private Connection connection;
+
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    columns.clear();
+    columns = null;
+    store = null;
+    connection = null;
+    super.doTearDown();
+  }
 
   public void testBigInt() throws Exception
   {

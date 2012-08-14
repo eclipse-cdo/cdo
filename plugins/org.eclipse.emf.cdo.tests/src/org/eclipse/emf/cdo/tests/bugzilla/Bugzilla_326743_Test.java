@@ -65,6 +65,15 @@ public class Bugzilla_326743_Test extends AbstractCDOTest
     CDOUtil.prepareDynamicEPackage(pkg);
   }
 
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    pkg = null;
+    cls = null;
+    att = null;
+    super.doTearDown();
+  }
+
   public void testDefaultValue() throws CommitException
   {
     EObject obj = EcoreUtil.create(cls);

@@ -53,7 +53,7 @@ import java.util.Map;
 
 /**
  * See bug 327604.
- * 
+ *
  * @author Martin Fluegge
  */
 @Requires(IRepositoryConfig.CAPABILITY_AUDITING)
@@ -133,6 +133,13 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
     }
 
     workspaces.clear();
+    workspaces = null;
+    transaction = null;
+    products = null;
+    customers = null;
+    salesOrders = null;
+    orderDetails = null;
+    localStore = null;
     super.doTearDown();
   }
 

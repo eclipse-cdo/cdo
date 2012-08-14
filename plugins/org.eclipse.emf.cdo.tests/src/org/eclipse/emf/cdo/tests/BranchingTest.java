@@ -70,6 +70,7 @@ public class BranchingTest extends AbstractCDOTest
   @Override
   protected void doTearDown() throws Exception
   {
+    session1 = null;
     Field disableGC = ReflectUtil.getField(AbstractCDORevisionCache.class, "disableGC");
     ReflectUtil.setValue(disableGC, null, false);
     super.doTearDown();

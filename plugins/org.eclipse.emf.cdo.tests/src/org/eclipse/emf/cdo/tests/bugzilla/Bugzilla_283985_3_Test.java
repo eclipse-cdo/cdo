@@ -72,7 +72,18 @@ public class Bugzilla_283985_3_Test extends AbstractCDOTest
   public void tearDown() throws Exception
   {
     transaction.close();
+    transaction = null;
+
     session.close();
+    session = null;
+
+    order1 = null;
+    order2 = null;
+
+    detail1 = null;
+    detail2 = null;
+    detail3 = null;
+    detail4 = null;
     super.tearDown();
   }
 

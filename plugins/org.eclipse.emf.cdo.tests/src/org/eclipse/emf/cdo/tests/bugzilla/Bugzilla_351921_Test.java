@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Stefan Winkler - initial API and implementation
  */
@@ -55,6 +55,15 @@ public class Bugzilla_351921_Test extends AbstractCDOTest
     att.setDefaultValue(null);
 
     CDOUtil.prepareDynamicEPackage(pkg);
+  }
+
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    pkg = null;
+    cls = null;
+    att = null;
+    super.doTearDown();
   }
 
   protected EAttribute getAtt()

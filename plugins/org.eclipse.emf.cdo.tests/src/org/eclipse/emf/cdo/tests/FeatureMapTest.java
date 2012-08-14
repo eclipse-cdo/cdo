@@ -128,6 +128,28 @@ public class FeatureMapTest extends AbstractCDOTest
     tx.commit();
   }
 
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    pkg = null;
+    dummy = null;
+    name = null;
+    fmapContainer = null;
+    string1 = null;
+    integer = null;
+    fMap = null;
+    string2 = null;
+    longObj = null;
+    bool = null;
+    ref1 = null;
+    ref2 = null;
+    session = null;
+    tx = null;
+    resource = null;
+    dummyObj = null;
+    super.doTearDown();
+  }
+
   public void _testAddDifferentTypes() throws CommitException
   {
     EObject fMapObj = EcoreUtil.create(fmapContainer);

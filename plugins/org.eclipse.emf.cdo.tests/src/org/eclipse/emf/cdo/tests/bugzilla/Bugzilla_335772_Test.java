@@ -75,8 +75,13 @@ public class Bugzilla_335772_Test extends AbstractCDOTest
   @Override
   protected void doTearDown() throws Exception
   {
-    customer = null;
     factory = null;
+    customer = null;
+    product1 = null;
+    product2 = null;
+    order1 = null;
+    order2 = null;
+    map = null;
     super.doTearDown();
   }
 

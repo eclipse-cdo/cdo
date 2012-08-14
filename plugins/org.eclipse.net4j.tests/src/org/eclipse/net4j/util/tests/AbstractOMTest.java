@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.tests;
 
 import org.eclipse.net4j.tests.bundle.OM;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
@@ -29,6 +30,8 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -197,10 +200,42 @@ public abstract class AbstractOMTest extends TestCase
       IOUtil.print(ex);
     }
 
+    try
+    {
+      clearReferences(getClass());
+    }
+    catch (Exception ex)
+    {
+      IOUtil.print(ex);
+    }
+
     if (!SUPPRESS_OUTPUT)
     {
       IOUtil.OUT().println();
       IOUtil.OUT().println();
+    }
+  }
+
+  protected void clearReferences(Class<?> c)
+  {
+    if (c != AbstractOMTest.class)
+    {
+      for (Field field : c.getDeclaredFields())
+      {
+        if (Modifier.isStatic(field.getModifiers()))
+        {
+          continue;
+        }
+
+        if (field.getType().isPrimitive())
+        {
+          continue;
+        }
+
+        ReflectUtil.setValue(field, this, null);
+      }
+
+      clearReferences(c.getSuperclass());
     }
   }
 

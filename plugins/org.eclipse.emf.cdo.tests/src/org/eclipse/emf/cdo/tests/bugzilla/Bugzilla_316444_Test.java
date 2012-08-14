@@ -50,13 +50,9 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
 
   private int idInitSession;
 
-  private Object monitor = new Object();
-
-  private CountDownLatch latch = new CountDownLatch(2);
-
   private boolean finishedSessionA = false;
 
-  private List<Exception> exceptions = new ArrayList<Exception>();
+  private List<Exception> exceptions;
 
   @Override
   public synchronized Map<String, Object> getTestProperties()
@@ -69,6 +65,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
   @Override
   protected void doSetUp() throws Exception
   {
+    exceptions = new ArrayList<Exception>();
     createRepository();
     super.doSetUp();
   }
@@ -77,6 +74,10 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
   {
     Repository repository = new Repository.Default()
     {
+      private Object monitor = new Object();
+
+      private CountDownLatch latch = new CountDownLatch(2);
+
       @Override
       public InternalCommitContext createCommitContext(InternalTransaction transaction)
       {

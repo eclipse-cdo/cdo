@@ -66,6 +66,18 @@ public class OCLQueryTest extends AbstractCDOTest
     resource = createTestSet(transaction);
   }
 
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    salesOrders = null;
+    orderDetails = null;
+    customers = null;
+    products = null;
+    resource = null;
+    transaction = null;
+    super.doTearDown();
+  }
+
   public void testAllProducts() throws Exception
   {
     CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1());

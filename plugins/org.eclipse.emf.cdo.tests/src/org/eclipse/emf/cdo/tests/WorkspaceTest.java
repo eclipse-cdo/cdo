@@ -132,6 +132,13 @@ public class WorkspaceTest extends AbstractCDOTest
     }
 
     workspaces.clear();
+    workspaces = null;
+    transaction = null;
+    products = null;
+    customers = null;
+    salesOrders = null;
+    orderDetails = null;
+    localStore = null;
     super.doTearDown();
   }
 

@@ -746,6 +746,18 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     try
     {
       getScenario().tearDown();
+
+      if (testProperties != null)
+      {
+        testProperties.clear();
+        testProperties = null;
+      }
+
+      if (homeProperties != null)
+      {
+        homeProperties.clear();
+        homeProperties = null;
+      }
     }
     catch (Exception ex)
     {

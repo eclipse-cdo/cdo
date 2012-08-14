@@ -47,6 +47,9 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
   protected void doTearDown() throws Exception
   {
     LifecycleUtil.deactivate(session);
+    session = null;
+    transaction = null;
+    resource = null;
     super.doTearDown();
   }
 

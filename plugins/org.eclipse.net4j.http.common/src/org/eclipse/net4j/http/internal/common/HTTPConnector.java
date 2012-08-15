@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.http.internal.common;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.connector.ConnectorException;
@@ -114,7 +115,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   /**
    * Writes operations from the {@link #outputOperations} to the passed stream. After each written operation
    * {@link #writeMoreOperations()} is asked whether to send more operations.
-   * 
+   *
    * @return <code>true</code> if more operations are in the {@link #outputOperations}, <code>false</code> otherwise.
    */
   public boolean writeOutputOperations(ExtendedDataOutputStream out) throws IOException
@@ -191,7 +192,10 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   @Override
   protected void registerChannelWithPeer(short channelID, long timeout, IProtocol<?> protocol) throws ChannelException
   {
-    ChannelOperation operation = new OpenChannelOperation(channelID, protocol.getType());
+    String protocolID = Net4jUtil.getProtocolID(protocol);
+    int protocolVersion = Net4jUtil.getProtocolVersion(protocol);
+
+    ChannelOperation operation = new OpenChannelOperation(channelID, protocolID, protocolVersion);
     outputOperations.add(operation);
 
     HTTPChannel channel = (HTTPChannel)getChannel(channelID);
@@ -322,16 +326,20 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   {
     private String protocolID;
 
-    public OpenChannelOperation(short channelID, String protocolID)
+    private int protocolVersion;
+
+    public OpenChannelOperation(short channelID, String protocolID, int protocolVersion)
     {
       super(channelID, 0);
       this.protocolID = protocolID;
+      this.protocolVersion = protocolVersion;
     }
 
     public OpenChannelOperation(ExtendedDataInputStream in) throws IOException
     {
       super(in);
       protocolID = in.readString();
+      protocolVersion = in.readInt();
     }
 
     @Override
@@ -339,6 +347,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     {
       super.write(out);
       out.writeString(protocolID);
+      out.writeInt(protocolVersion);
     }
 
     @Override
@@ -350,7 +359,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     @Override
     public void execute()
     {
-      HTTPChannel channel = (HTTPChannel)inverseOpenChannel(getChannelID(), protocolID);
+      HTTPChannel channel = (HTTPChannel)inverseOpenChannel(getChannelID(), protocolID, protocolVersion);
       if (channel == null)
       {
         throw new ConnectorException(Messages.getString("HTTPConnector.0")); //$NON-NLS-1$

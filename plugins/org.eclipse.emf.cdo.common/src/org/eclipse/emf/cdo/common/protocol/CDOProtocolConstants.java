@@ -15,7 +15,7 @@ package org.eclipse.emf.cdo.common.protocol;
 
 /**
  * Symbolic protocol constants commonly used in CDO.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -24,6 +24,11 @@ package org.eclipse.emf.cdo.common.protocol;
 public interface CDOProtocolConstants
 {
   public static final String PROTOCOL_NAME = "cdo"; //$NON-NLS-1$
+
+  /**
+   * @since 4.2
+   */
+  public static final int PROTOCOL_VERSION = 9;
 
   // //////////////////////////////////////////////////////////////////////
   // Signal IDs

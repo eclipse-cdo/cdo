@@ -11,6 +11,7 @@
 package org.eclipse.net4j.tests.signal;
 
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.protocol.IProtocol2;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.util.factory.ProductCreationException;
@@ -41,6 +42,15 @@ public class TestSignalProtocol extends SignalProtocol<Object>
 
   public static final String SIMULATED_EXCEPTION = "Simulated exception"; //$NON-NLS-1$
 
+  private int version = super.getVersion();
+
+  public TestSignalProtocol(IConnector connector, int version)
+  {
+    this();
+    this.version = version;
+    open(connector);
+  }
+
   public TestSignalProtocol(IConnector connector)
   {
     this();
@@ -50,6 +60,17 @@ public class TestSignalProtocol extends SignalProtocol<Object>
   public TestSignalProtocol()
   {
     super(PROTOCOL_NAME);
+  }
+
+  @Override
+  public int getVersion()
+  {
+    return version;
+  }
+
+  public void setVersion(int version)
+  {
+    this.version = version;
   }
 
   @Override
@@ -107,6 +128,14 @@ public class TestSignalProtocol extends SignalProtocol<Object>
    */
   public static class Factory extends ServerProtocolFactory
   {
+    private int version = IProtocol2.UNSPECIFIED_VERSION;
+
+    public Factory(int version)
+    {
+      this();
+      this.version = version;
+    }
+
     public Factory()
     {
       super(PROTOCOL_NAME);
@@ -114,7 +143,9 @@ public class TestSignalProtocol extends SignalProtocol<Object>
 
     public TestSignalProtocol create(String description) throws ProductCreationException
     {
-      return new TestSignalProtocol();
+      TestSignalProtocol protocol = new TestSignalProtocol();
+      protocol.setVersion(version);
+      return protocol;
     }
   }
 }

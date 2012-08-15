@@ -11,6 +11,7 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.tests.bugzilla.Bugzilla_241463_Test;
+import org.eclipse.net4j.tests.bugzilla.Bugzilla_259086_Test;
 import org.eclipse.net4j.tests.bugzilla.Bugzilla_262875_Test;
 import org.eclipse.net4j.util.tests.ExpectedIOTest;
 import org.eclipse.net4j.util.tests.ExtendedIOTest;
@@ -44,26 +45,22 @@ public class AllTests
     suite.addTestSuite(StringCompressorTest.class);
     suite.addTestSuite(ChannelTest.JVM.class);
     suite.addTestSuite(ChannelTest.TCP.class);
-    // suite.addTestSuite(ChannelTest.SSL.class);
     suite.addTestSuite(TCPConnectorTest.TCP.class);
-    // suite.addTestSuite(TCPConnectorTest.SSL.class);
     suite.addTestSuite(TransportTest.JVM.class);
     suite.addTestSuite(TransportTest.TCP.class);
-    // suite.addTestSuite(TransportTest.SSL.class);
     suite.addTestSuite(SignalTest.TCP.class);
-    // suite.addTestSuite(SignalTest.SSL.class);
     suite.addTestSuite(SignalMonitorTest.TCP.class);
-    // suite.addTestSuite(SignalMonitorTest.SSL.class);
     suite.addTestSuite(ExceptionTest.TCP.class);
-    // suite.addTestSuite(ExceptionTest.SSL.class);
     suite.addTestSuite(SecurityTest.class);
     suite.addTestSuite(QueueWorkerWorkSerializerTest.class);
     suite.addTestSuite(ExpectedIOTest.class);
 
     // Bugzillas
+    suite.addTestSuite(Bugzilla_241463_Test.JVM.class);
     suite.addTestSuite(Bugzilla_241463_Test.TCP.class);
-    // suite.addTestSuite(Bugzilla_241463_Test.SSL.class);
     suite.addTestSuite(Bugzilla_262875_Test.class);
+    suite.addTestSuite(Bugzilla_259086_Test.JVM.class);
+    suite.addTestSuite(Bugzilla_259086_Test.TCP.class);
 
     // Defs
     // suite.addTestSuite(TestDefTest.class);

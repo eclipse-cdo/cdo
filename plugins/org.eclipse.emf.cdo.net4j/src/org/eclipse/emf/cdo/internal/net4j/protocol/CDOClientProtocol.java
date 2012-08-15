@@ -87,6 +87,12 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     super(CDOProtocolConstants.PROTOCOL_NAME);
   }
 
+  @Override
+  public int getVersion()
+  {
+    return CDOProtocolConstants.PROTOCOL_VERSION;
+  }
+
   public CDOSession getSession()
   {
     return getInfraStructure();

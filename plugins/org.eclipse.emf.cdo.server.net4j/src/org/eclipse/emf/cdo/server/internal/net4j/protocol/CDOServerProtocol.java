@@ -52,6 +52,12 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     this.repositoryProvider = repositoryProvider;
   }
 
+  @Override
+  public int getVersion()
+  {
+    return CDOProtocolConstants.PROTOCOL_VERSION;
+  }
+
   public InternalSession getSession()
   {
     return getInfraStructure();

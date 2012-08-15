@@ -12,7 +12,7 @@ package org.eclipse.spi.net4j;
 
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.protocol.IProtocol;
+import org.eclipse.net4j.protocol.IProtocol2;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -27,7 +27,7 @@ import java.util.concurrent.ExecutorService;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IProtocol<INFRA_STRUCTURE>
+public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IProtocol2<INFRA_STRUCTURE>
 {
   private String type;
 
@@ -59,6 +59,14 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
   public final String getType()
   {
     return type;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public int getVersion()
+  {
+    return UNSPECIFIED_VERSION;
   }
 
   public ExecutorService getExecutorService()

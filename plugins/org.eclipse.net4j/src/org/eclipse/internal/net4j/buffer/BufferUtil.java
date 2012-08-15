@@ -4,11 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.internal.net4j.buffer;
+
+import org.eclipse.net4j.util.WrappedException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -17,22 +19,32 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
+import java.nio.charset.CoderResult;
 
 /**
  * @author Eike Stepper
  */
 public final class BufferUtil
 {
+  public static final String UTF8_CHAR_SET_NAME = "UTF-8"; //$NON-NLS-1$
+
+  private static final Charset CHARSET = Charset.forName(UTF8_CHAR_SET_NAME);
+
   private static final byte FALSE = (byte)0;
 
   private static final byte TRUE = (byte)1;
-
-  public static final String UTF8_CHAR_SET_NAME = "UTF-8"; //$NON-NLS-1$
 
   private BufferUtil()
   {
   }
 
+  /**
+   * @deprecated Use {@link #putString(ByteBuffer, String, boolean)}
+   */
+  @Deprecated
   public static byte[] toUTF8(String str)
   {
     if (str == null)
@@ -40,24 +52,20 @@ public final class BufferUtil
       return new byte[0];
     }
 
-    try
+    byte[] bytes = str.getBytes(CHARSET);
+    String test = new String(bytes, CHARSET);
+    if (!test.equals(str))
     {
-      byte[] bytes = str.getBytes(UTF8_CHAR_SET_NAME);
-      String test = new String(bytes, UTF8_CHAR_SET_NAME);
-      if (!str.equals(test))
-      {
-        throw new IllegalArgumentException("String not encodable: " + str); //$NON-NLS-1$
-      }
+      throw new IllegalArgumentException("String not encodable: " + str); //$NON-NLS-1$
+    }
 
-      return bytes;
-    }
-    catch (UnsupportedEncodingException ex)
-    {
-      // This should really not happen
-      throw new RuntimeException(ex);
-    }
+    return bytes;
   }
 
+  /**
+   * @deprecated Use {@link #getString(ByteBuffer)}
+   */
+  @Deprecated
   public static String fromUTF8(byte[] bytes)
   {
     try
@@ -69,6 +77,15 @@ public final class BufferUtil
       // This should really not happen
       throw new RuntimeException(ex);
     }
+  }
+
+  /**
+   * @deprecated Use {@link #putString(ByteBuffer, String, boolean)}
+   */
+  @Deprecated
+  public static void putUTF8(ByteBuffer byteBuffer, String str)
+  {
+    putString(byteBuffer, str, false);
   }
 
   public static void putObject(ByteBuffer byteBuffer, Object object) throws IOException
@@ -105,8 +122,9 @@ public final class BufferUtil
 
   public static void putByteArray(ByteBuffer byteBuffer, byte[] array)
   {
-    byteBuffer.putShort((short)array.length);
-    if (array.length != 0)
+    short length = array == null ? 0 : (short)array.length;
+    byteBuffer.putShort(length); // BYTE_ARRAY_PREFIX
+    if (length != 0)
     {
       byteBuffer.put(array);
     }
@@ -124,14 +142,81 @@ public final class BufferUtil
     return array;
   }
 
-  public static void putUTF8(ByteBuffer byteBuffer, String str)
+  public static void putString(ByteBuffer byteBuffer, String str, boolean bestEffort)
   {
-    byte[] bytes = BufferUtil.toUTF8(str);
-    if (bytes.length > byteBuffer.remaining())
+    int sizePosition = byteBuffer.position();
+    byteBuffer.putShort((short)-1); // Placeholder for size
+
+    if (str != null)
     {
-      throw new IllegalArgumentException("String too long: " + str); //$NON-NLS-1$
+      CharsetEncoder encoder = CHARSET.newEncoder();
+      CharBuffer input = CharBuffer.wrap(str);
+
+      int start = byteBuffer.position();
+      int max = -1;
+
+      for (;;)
+      {
+        CoderResult result = encoder.encode(input, byteBuffer, true);
+        if (result.isError())
+        {
+          if (result.isOverflow() && bestEffort)
+          {
+            if (max == -1)
+            {
+              max = (int)(byteBuffer.remaining() / encoder.maxBytesPerChar());
+            }
+            else
+            {
+              --max;
+            }
+
+            if (max > 0)
+            {
+              str = str.substring(0, max);
+              byteBuffer.position(start);
+              continue;
+            }
+          }
+
+          try
+          {
+            result.throwException();
+          }
+          catch (Exception ex)
+          {
+            throw WrappedException.wrap(ex);
+          }
+        }
+
+        break;
+      }
+
+      int end = byteBuffer.position();
+      short size = (short)Math.abs(end - start);
+
+      byteBuffer.position(sizePosition);
+      byteBuffer.putShort(size);
+      byteBuffer.position(end);
+    }
+  }
+
+  public static String getString(ByteBuffer byteBuffer)
+  {
+    short size = byteBuffer.getShort();
+    if (size == -1)
+    {
+      return null;
     }
 
-    putByteArray(byteBuffer, bytes);
+    if (size == 0)
+    {
+      return "";
+    }
+
+    byte[] bytes = new byte[size];
+    byteBuffer.get(bytes);
+
+    return new String(bytes, CHARSET);
   }
 }

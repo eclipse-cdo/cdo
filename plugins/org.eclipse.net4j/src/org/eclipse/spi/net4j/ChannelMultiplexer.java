@@ -17,7 +17,9 @@ import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.protocol.IProtocol;
+import org.eclipse.net4j.protocol.IProtocol2;
 import org.eclipse.net4j.protocol.IProtocolProvider;
+import org.eclipse.net4j.protocol.ProtocolVersionException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
@@ -173,9 +175,22 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     return channel;
   }
 
+  /**
+   * @deprecated Use {@link #inverseOpenChannel(short, String, int)}.
+   */
+  @Deprecated
   public InternalChannel inverseOpenChannel(short channelID, String protocolID)
   {
+    return inverseOpenChannel(channelID, protocolID, IProtocol2.UNSPECIFIED_VERSION);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public InternalChannel inverseOpenChannel(short channelID, String protocolID, int protocolVersion)
+  {
     IProtocol<?> protocol = createProtocol(protocolID, null);
+    ProtocolVersionException.checkVersion(protocol, protocolVersion);
 
     InternalChannel channel = createChannel();
     initChannel(channel, protocol);

@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.internal.jvm;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.internal.jvm.bundle.OM;
@@ -115,8 +116,10 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
   {
     try
     {
-      String protocolID = protocol == null ? null : protocol.getType();
-      JVMChannel peerChannel = (JVMChannel)peer.inverseOpenChannel(channelID, protocolID);
+      String protocolID = Net4jUtil.getProtocolID(protocol);
+      int protocolVersion = Net4jUtil.getProtocolVersion(protocol);
+
+      JVMChannel peerChannel = (JVMChannel)peer.inverseOpenChannel(channelID, protocolID, protocolVersion);
       if (peerChannel == null)
       {
         throw new ChannelException(Messages.getString("JVMConnector.2")); //$NON-NLS-1$

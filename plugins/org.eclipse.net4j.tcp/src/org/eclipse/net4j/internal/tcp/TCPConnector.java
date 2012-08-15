@@ -14,7 +14,6 @@ package org.eclipse.net4j.internal.tcp;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.internal.tcp.messages.Messages;
@@ -358,21 +357,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   @Override
   protected void registerChannelWithPeer(short channelID, long timeout, IProtocol<?> protocol) throws ChannelException
   {
-    try
-    {
-      if (!controlChannel.registerChannel(channelID, timeout, protocol))
-      {
-        throw new ChannelException("Failed to register channel with peer"); //$NON-NLS-1$
-      }
-    }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new ConnectorException(ex);
-    }
+    controlChannel.registerChannel(channelID, timeout, protocol);
   }
 
   @Override

@@ -10,7 +10,9 @@
  */
 package org.eclipse.net4j.internal.tcp;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.internal.tcp.messages.Messages;
@@ -42,19 +44,23 @@ public class ControlChannel extends Channel
 
   public static final byte OPCODE_NEGOTIATION = 1;
 
+  /**
+   * @deprecated Indicates Net4j version before 4.2. As of 4.2 Net4j uses {@link #OPCODE_REGISTRATION_VERSIONED}.
+   */
+  @Deprecated
   public static final byte OPCODE_REGISTRATION = 2;
 
   public static final byte OPCODE_REGISTRATION_ACK = 3;
 
   public static final byte OPCODE_DEREGISTRATION = 4;
 
-  public static final byte SUCCESS = 1;
+  public static final byte OPCODE_REGISTRATION_VERSIONED = 5;
 
-  public static final byte FAILURE = 0;
+  private static final String SUCCESS = "Success";
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, ControlChannel.class);
 
-  private SynchronizingCorrelator<Short, Boolean> acknowledgements = new SynchronizingCorrelator<Short, Boolean>();
+  private SynchronizingCorrelator<Short, String> acknowledgements = new SynchronizingCorrelator<Short, String>();
 
   public ControlChannel(TCPConnector connector)
   {
@@ -69,7 +75,7 @@ public class ControlChannel extends Channel
     return (TCPConnector)getMultiplexer();
   }
 
-  public boolean registerChannel(short channelID, long timeout, IProtocol<?> protocol)
+  public void registerChannel(short channelID, long timeout, IProtocol<?> protocol)
   {
     if (TRACER.isEnabled())
     {
@@ -77,22 +83,29 @@ public class ControlChannel extends Channel
     }
 
     assertValidChannelID(channelID);
-    ISynchronizer<Boolean> acknowledgement = acknowledgements.correlate(channelID);
+    ISynchronizer<String> acknowledgement = acknowledgements.correlate(channelID);
+
+    int protocolVersion = Net4jUtil.getProtocolVersion(protocol);
+    String protocolID = Net4jUtil.getProtocolID(protocol);
 
     IBuffer buffer = provideBuffer();
     ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_INDEX);
-    byteBuffer.put(OPCODE_REGISTRATION);
+    byteBuffer.put(OPCODE_REGISTRATION_VERSIONED);
     byteBuffer.putShort(channelID);
-    BufferUtil.putUTF8(byteBuffer, protocol == null ? null : protocol.getType());
+    byteBuffer.putInt(protocolVersion);
+    BufferUtil.putString(byteBuffer, protocolID, false);
     handleBuffer(buffer);
 
-    Boolean acknowledged = acknowledgement.get(timeout);
-    if (acknowledged == null)
+    String error = acknowledgement.get(timeout);
+    if (error == null)
     {
       throw new TimeoutRuntimeException(MessageFormat.format(Messages.getString("ControlChannel_0"), timeout)); //$NON-NLS-1$
     }
 
-    return acknowledged;
+    if (error != SUCCESS)
+    {
+      throw new ChannelException("Failed to register channel with peer: " + error); //$NON-NLS-1$
+    }
   }
 
   public void deregisterChannel(short channelID)
@@ -135,17 +148,23 @@ public class ControlChannel extends Channel
       }
 
       case OPCODE_REGISTRATION:
+        OM.LOG.error("Deprecated opcode: Client should use newer Net4j version"); //$NON-NLS-1$
+        getConnector().deactivate();
+        break;
+
+      case OPCODE_REGISTRATION_VERSIONED:
       {
         assertConnected();
         short channelID = byteBuffer.getShort();
         assertValidChannelID(channelID);
-        boolean success = true;
+        String error = null;
 
         try
         {
-          byte[] handlerFactoryUTF8 = BufferUtil.getByteArray(byteBuffer);
-          String protocolID = BufferUtil.fromUTF8(handlerFactoryUTF8);
-          InternalChannel channel = getConnector().inverseOpenChannel(channelID, protocolID);
+          int protocolVersion = byteBuffer.getInt();
+          String protocolID = BufferUtil.getString(byteBuffer);
+
+          InternalChannel channel = getConnector().inverseOpenChannel(channelID, protocolID, protocolVersion);
           if (channel == null)
           {
             throw new ConnectorException(Messages.getString("ControlChannel_4")); //$NON-NLS-1$
@@ -153,14 +172,14 @@ public class ControlChannel extends Channel
         }
         catch (Exception ex)
         {
-          success = false;
+          error = ex.getMessage();
           if (TRACER.isEnabled())
           {
             TRACER.trace("Problem during channel registration", ex); //$NON-NLS-1$
           }
         }
 
-        sendStatus(OPCODE_REGISTRATION_ACK, channelID, success);
+        sendStatus(OPCODE_REGISTRATION_ACK, channelID, error);
         break;
       }
 
@@ -192,8 +211,13 @@ public class ControlChannel extends Channel
       {
         assertConnected();
         short channelID = byteBuffer.getShort();
-        boolean success = byteBuffer.get() == SUCCESS;
-        acknowledgements.put(channelID, success);
+        String error = BufferUtil.getString(byteBuffer);
+        if (error == null)
+        {
+          error = SUCCESS;
+        }
+
+        acknowledgements.put(channelID, error);
         break;
       }
 
@@ -220,13 +244,13 @@ public class ControlChannel extends Channel
     // Do nothing
   }
 
-  private void sendStatus(byte opcode, short channelID, boolean status)
+  private void sendStatus(byte opcode, short channelID, String error)
   {
     IBuffer buffer = provideBuffer();
     ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_INDEX);
     byteBuffer.put(opcode);
     byteBuffer.putShort(channelID);
-    byteBuffer.put(status ? SUCCESS : FAILURE);
+    BufferUtil.putString(byteBuffer, error, true);
     handleBuffer(buffer);
   }
 

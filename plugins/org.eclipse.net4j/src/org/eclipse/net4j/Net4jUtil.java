@@ -15,6 +15,8 @@ import org.eclipse.net4j.buffer.IBufferPool;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.protocol.IProtocol;
+import org.eclipse.net4j.protocol.IProtocol2;
 import org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
@@ -34,7 +36,7 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * A utility class with various static factory and convenience methods.
- * 
+ *
  * @author Eike Stepper
  */
 public final class Net4jUtil
@@ -177,5 +179,31 @@ public final class Net4jUtil
   {
     return new TransportConfig(lifecycle, source.getReceiveExecutor(), source.getBufferProvider(),
         source.getProtocolProvider(), source.getNegotiator());
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static String getProtocolID(IProtocol<?> protocol)
+  {
+    if (protocol != null)
+    {
+      return protocol.getType();
+    }
+  
+    return null;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static int getProtocolVersion(IProtocol<?> protocol)
+  {
+    if (protocol instanceof IProtocol2)
+    {
+      return ((IProtocol2<?>)protocol).getVersion();
+    }
+
+    return IProtocol2.UNSPECIFIED_VERSION;
   }
 }

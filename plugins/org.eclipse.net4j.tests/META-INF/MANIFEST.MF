@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)";visibili
  org.eclipse.net4j.http.server;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.net4j.defs;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.net4j.util.defs;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
- org.junit;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
+ org.junit;bundle-version="[3.0.0,4.0.0)";visibility:=reexport
 Export-Package: org.eclipse.net4j.tests;version="4.1.100",
  org.eclipse.net4j.tests.apps;version="4.1.100",
  org.eclipse.net4j.tests.bugzilla;version="4.1.100",

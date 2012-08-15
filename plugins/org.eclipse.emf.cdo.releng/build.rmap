@@ -5,7 +5,7 @@
 	<!-- Properties -->
 
 	<rm:property key="platform.version" mutable="true" value="3.8"/>
-	<rm:property key="emf.version" mutable="true" value="2.8"/>
+	<rm:property key="emf.version" mutable="true" value="2.9-I-builds"/>
 	<rm:property key="orbit.version" mutable="true" value="S20120726065500"/>
 
 	<rm:property key="git.clone" mutable="true" value="${user.home}/git/cdo"/>
@@ -45,7 +45,7 @@
 		<!-- PLATFORM -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/eclipse/updates/{1}milestones">
+			<rm:uri format="{0}/eclipse/updates/{1}">
 				<bc:propertyRef key="eclipse.downloads"/>
 				<bc:propertyRef key="platform.version"/>
 			</rm:uri>
@@ -54,7 +54,7 @@
 		<!-- EMF -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emf/emf/updates/{1}milestones">
+			<rm:uri format="{0}/modeling/emf/emf/updates/{1}">
 				<bc:propertyRef key="eclipse.downloads"/>
 				<bc:propertyRef key="emf.version"/>
 			</rm:uri>

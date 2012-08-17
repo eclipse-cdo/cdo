@@ -372,7 +372,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
         if (!arguments.isIgnoreFeatureContentChanges())
         {
           List<Map.Entry<IElement, Version>> warnings = new ArrayList<Entry<IElement, Version>>();
-          int change = checkFeatureContentChanges(componentModel, element, releaseElement, warnings);
+          int change = checkFeatureContentChanges(element, releaseElement, warnings);
           if (change != NO_CHANGE)
           {
             Version nextFeatureVersion = getNextFeatureVersion(releaseVersion, nextMicroVersion, change);
@@ -572,7 +572,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
     return nextFeatureVersion;
   }
 
-  private int checkFeatureContentChanges(IModel componentModel, IElement element, IElement releasedElement,
+  private int checkFeatureContentChanges(IElement element, IElement releasedElement,
       List<Entry<IElement, Version>> warnings)
   {
     int biggestChange = NO_CHANGE;

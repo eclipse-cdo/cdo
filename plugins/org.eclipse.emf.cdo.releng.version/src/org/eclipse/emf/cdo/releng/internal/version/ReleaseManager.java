@@ -186,6 +186,13 @@ public class ReleaseManager implements IReleaseManager
 
     if (withContent)
     {
+      String licenseFeatureID = feature.getLicenseFeatureID();
+      if (licenseFeatureID.length() != 0)
+      {
+        IElement child = new Element(IElement.Type.FEATURE, licenseFeatureID, feature.getLicenseFeatureVersion());
+        element.getChildren().add(child);
+      }
+
       for (org.eclipse.pde.internal.core.ifeature.IFeatureChild versionable : feature.getIncludedFeatures())
       {
         IElement child = new Element(IElement.Type.FEATURE, versionable.getId(), versionable.getVersion());

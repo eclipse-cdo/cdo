@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -24,13 +24,31 @@ import java.util.regex.Pattern;
  */
 public class ReplaceResolution extends AbstractDocumentResolution
 {
+  private String problemType;
+
   private String replacement;
 
-  public ReplaceResolution(IMarker marker, String replacement)
+  public ReplaceResolution(IMarker marker, String problemType, String replacement)
   {
-    super(marker, replacement == null ? "Remove the reference" : "Change the version",
-        replacement == null ? Activator.CORRECTION_DELETE_GIF : Activator.CORRECTION_CHANGE_GIF);
+    super(marker, getLabel(problemType, replacement), replacement == null ? Activator.CORRECTION_DELETE_GIF
+        : Activator.CORRECTION_CHANGE_GIF);
+    this.problemType = problemType;
     this.replacement = replacement == null ? "" : replacement;
+  }
+
+  private static String getLabel(String problemType, String replacement)
+  {
+    if (Markers.SCHEMA_BUILDER_PROBLEM.equals(problemType))
+    {
+      return replacement == null ? "Remove the schema builder" : "Add the schema builder";
+    }
+
+    if (Markers.DEBUG_OPTION_PROBLEM.equals(problemType))
+    {
+      return "Change the debug option";
+    }
+
+    return replacement == null ? "Remove the reference" : "Change the version";
   }
 
   @Override
@@ -47,6 +65,11 @@ public class ReplaceResolution extends AbstractDocumentResolution
   @Override
   protected boolean isApplicable(IMarker marker)
   {
+    if (!problemType.equals(Markers.getProblemType(marker)))
+    {
+      return false;
+    }
+
     if (Markers.getQuickFixPattern(marker) == null)
     {
       return false;

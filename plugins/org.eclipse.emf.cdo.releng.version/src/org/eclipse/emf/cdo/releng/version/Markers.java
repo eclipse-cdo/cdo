@@ -28,6 +28,24 @@ public final class Markers
 {
   public static final String MARKER_TYPE = "org.eclipse.emf.cdo.releng.version.VersionProblem";
 
+  public static final String PROBLEM_TYPE = "problemType";
+
+  public static final String DEVIATION_INFO = "deviation";
+
+  public static final String MALFORMED_VERSION_PROBLEM = "malformed.version";
+
+  public static final String SCHEMA_BUILDER_PROBLEM = "schema.builder";
+
+  public static final String DEBUG_OPTION_PROBLEM = "debug.option";
+
+  public static final String DEPENDENCY_RANGE_PROBLEM = "dependency.range";
+
+  public static final String EXPORT_VERSION_PROBLEM = "export.version";
+
+  public static final String COMPONENT_VERSION_PROBLEM = "component.version";
+
+  public static final String VALIDATOR_CLASS_PROBLEM = "validator.class";
+
   public static final String QUICK_FIX_PATTERN = "quickFixPattern";
 
   public static final String QUICK_FIX_REPLACEMENT = "quickFixReplacement";
@@ -38,6 +56,11 @@ public final class Markers
 
   private Markers()
   {
+  }
+
+  public static String getProblemType(IMarker marker)
+  {
+    return getAttribute(marker, PROBLEM_TYPE);
   }
 
   public static String getQuickFixPattern(IMarker marker)
@@ -146,6 +169,19 @@ public final class Markers
 
   public static void deleteAllMarkers(IResource resource) throws CoreException
   {
-    resource.deleteMarkers(Markers.MARKER_TYPE, false, IResource.DEPTH_INFINITE);
+    resource.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_INFINITE);
+  }
+
+  public static void deleteAllMarkers(IResource resource, String problemType) throws CoreException
+  {
+    IMarker[] markers = resource.findMarkers(MARKER_TYPE, false, IResource.DEPTH_INFINITE);
+    for (IMarker marker : markers)
+    {
+      Object value = marker.getAttribute(PROBLEM_TYPE);
+      if (problemType.equals(value))
+      {
+        marker.delete();
+      }
+    }
   }
 }

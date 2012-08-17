@@ -35,8 +35,9 @@ public class VersionResolutionGenerator implements IMarkerResolutionGenerator2
     String regEx = Markers.getQuickFixPattern(marker);
     if (regEx != null)
     {
+      String problemType = Markers.getProblemType(marker);
       String replacement = Markers.getQuickFixReplacement(marker);
-      resolutions.add(new ReplaceResolution(marker, replacement));
+      resolutions.add(new ReplaceResolution(marker, problemType, replacement));
     }
 
     String ignoreOption = Markers.getQuickFixConfigureOption(marker);

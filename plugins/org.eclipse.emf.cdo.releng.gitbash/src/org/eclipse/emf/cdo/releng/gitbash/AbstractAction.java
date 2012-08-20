@@ -14,24 +14,29 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
-import java.io.File;
-
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractRepositoryAction implements IObjectActionDelegate
+public abstract class AbstractAction<TARGET> implements IObjectActionDelegate
 {
   private IWorkbenchPart targetPart;
 
-  private Repository repository;
+  private Class<TARGET> targetClass;
 
-  public AbstractRepositoryAction()
+  private TARGET target;
+
+  public AbstractAction(Class<TARGET> targetClass)
   {
+    this.targetClass = targetClass;
+  }
+
+  public IWorkbenchPart getTargetPart()
+  {
+    return targetPart;
   }
 
   public void setActivePart(IAction action, IWorkbenchPart targetPart)
@@ -41,26 +46,22 @@ public abstract class AbstractRepositoryAction implements IObjectActionDelegate
 
   public void selectionChanged(IAction action, ISelection selection)
   {
-    repository = null;
+    target = null;
     if (selection instanceof IStructuredSelection)
     {
       IStructuredSelection ssel = (IStructuredSelection)selection;
       Object element = ssel.getFirstElement();
-      if (element instanceof IAdaptable)
-      {
-        IAdaptable adaptable = (IAdaptable)element;
-        repository = (Repository)adaptable.getAdapter(Repository.class);
-      }
+      target = getAdapter(element, targetClass);
     }
   }
 
   public void run(IAction action)
   {
-    if (repository != null)
+    if (target != null)
     {
       try
       {
-        run(targetPart.getSite().getShell(), repository.getWorkTree());
+        run(targetPart.getSite().getShell(), target);
       }
       catch (Exception ex)
       {
@@ -69,5 +70,26 @@ public abstract class AbstractRepositoryAction implements IObjectActionDelegate
     }
   }
 
-  protected abstract void run(Shell shell, File workTree) throws Exception;
+  protected abstract void run(Shell shell, TARGET target) throws Exception;
+
+  @SuppressWarnings("unchecked")
+  public static <T> T getAdapter(Object adaptable, Class<T> c)
+  {
+    if (c.isInstance(adaptable))
+    {
+      return (T)adaptable;
+    }
+
+    if (adaptable instanceof IAdaptable)
+    {
+      IAdaptable a = (IAdaptable)adaptable;
+      Object adapter = a.getAdapter(c);
+      if (c.isInstance(adapter))
+      {
+        return (T)adapter;
+      }
+    }
+
+    return null;
+  }
 }

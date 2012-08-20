@@ -8,7 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.gitbash;
+package org.eclipse.emf.cdo.releng.gitbash.repository;
+
+import org.eclipse.emf.cdo.releng.gitbash.GitBash;
 
 import org.eclipse.swt.widgets.Shell;
 
@@ -17,15 +19,11 @@ import java.io.File;
 /**
  * @author Eike Stepper
  */
-public class GitResetHardAction extends AbstractRepositoryAction
+public class GitAddAllAction extends AbstractRepositoryAction
 {
-  public GitResetHardAction()
-  {
-  }
-
   @Override
   protected void run(Shell shell, File workTree) throws Exception
   {
-    GitBash.executeCommand(shell, workTree, "git reset --hard");
+    GitBash.executeCommand(shell, workTree, "git add --all");
   }
 }

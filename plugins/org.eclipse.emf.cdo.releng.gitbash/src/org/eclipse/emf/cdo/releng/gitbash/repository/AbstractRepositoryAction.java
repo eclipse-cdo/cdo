@@ -8,8 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.gitbash;
+package org.eclipse.emf.cdo.releng.gitbash.repository;
 
+import org.eclipse.emf.cdo.releng.gitbash.AbstractAction;
+
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Shell;
 
 import java.io.File;
@@ -17,15 +20,18 @@ import java.io.File;
 /**
  * @author Eike Stepper
  */
-public class GitCleanAction extends AbstractRepositoryAction
+public abstract class AbstractRepositoryAction extends AbstractAction<Repository>
 {
-  public GitCleanAction()
+  public AbstractRepositoryAction()
   {
+    super(Repository.class);
   }
 
   @Override
-  protected void run(Shell shell, File workTree) throws Exception
+  protected void run(Shell shell, Repository repository) throws Exception
   {
-    GitBash.executeCommand(shell, workTree, "git clean -f -d");
+    run(shell, repository.getWorkTree());
   }
+
+  protected abstract void run(Shell shell, File workTree) throws Exception;
 }

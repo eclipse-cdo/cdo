@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.gitbash;
+package org.eclipse.emf.cdo.releng.gitbash.revision;
 
 import org.eclipse.swt.widgets.Shell;
 
@@ -17,17 +17,12 @@ import java.io.File;
 /**
  * @author Eike Stepper
  */
-public class GitBashAction extends AbstractRepositoryAction
+public class GitRebaseAction extends AbstractRevisionAction
 {
-  public GitBashAction()
-  {
-  }
-
   @Override
-  protected void run(Shell shell, File workTree) throws Exception
+  protected void run(Shell shell, File workTree, String revision) throws Exception
   {
-    String gitBash = GitBash.getExecutable(shell);
-    Runtime.getRuntime().exec(
-        "cmd /c cd \"" + workTree.getAbsolutePath() + "\" && start cmd.exe /c \"" + gitBash + "\" --login -i");
+    System.out.println(workTree.getAbsolutePath() + " --> git rebase " + revision);
+    // GitBash.executeCommand(shell, workTree, "git rebase ");
   }
 }

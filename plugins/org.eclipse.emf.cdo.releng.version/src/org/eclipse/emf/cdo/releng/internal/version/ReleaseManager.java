@@ -215,11 +215,7 @@ public class ReleaseManager implements IReleaseManager
     String name = element.getName();
     if (element.getType() == IElement.Type.PLUGIN)
     {
-      IModel pluginModel = PluginRegistry.findModel(name);
-      if (pluginModel != null)
-      {
-        return pluginModel;
-      }
+      return PluginRegistry.findModel(name);
     }
 
     org.eclipse.pde.internal.core.FeatureModelManager manager = org.eclipse.pde.internal.core.PDECore.getDefault()

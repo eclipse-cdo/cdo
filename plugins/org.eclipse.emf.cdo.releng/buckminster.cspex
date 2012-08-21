@@ -16,7 +16,7 @@
 		<cs:dependency name="org.eclipse.emf.workspace" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.teneo.hibernate" componentType="eclipse.feature"/>
 
-		<cs:dependency name="org.eclipse.zest" componentType="eclipse.feature"/>
+		<!--
 		<cs:dependency name="org.eclipse.gef" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.gmf" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.mwe.core" componentType="eclipse.feature"/>
@@ -26,20 +26,6 @@
 		<cs:dependency name="org.eclipse.swtbot" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.swtbot.eclipse" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.swtbot.eclipse.gef" componentType="eclipse.feature"/>
-
-		<!--
-		<cs:dependency name="org.eclipse.xtext.sdk" componentType="eclipse.feature"/>
-		-->
-
-		<!--
-		<cs:dependency name="org.eclipse.rap.rwt.source" componentType="osgi.bundle"/>
-		<cs:dependency name="org.eclipse.rap.rwt.q07" componentType="osgi.bundle"/>
-		<cs:dependency name="org.eclipse.rap.rwt.q07.source" componentType="osgi.bundle"/>
-		<cs:dependency name="org.eclipse.rap.jface.source" componentType="osgi.bundle"/>
-		<cs:dependency name="org.eclipse.rap.ui.source" componentType="osgi.bundle"/>
-		<cs:dependency name="org.eclipse.rap.ui.forms.source" componentType="osgi.bundle"/>
-		<cs:dependency name="org.eclipse.rap.ui.views.source" componentType="osgi.bundle"/>
-		<cs:dependency name="org.eclipse.rap.ui.workbench.source" componentType="osgi.bundle"/>
 		-->
 
 		<cs:dependency name="com.mysql.jdbc" componentType="eclipse.feature"/>
@@ -50,13 +36,6 @@
 		<cs:dependency name="org.hibernate" componentType="eclipse.feature"/>
 		<cs:dependency name="org.dom4j" componentType="eclipse.feature"/>
 		<cs:dependency name="javax.persistence" componentType="eclipse.feature"/>
-
-		<!--
-		<cs:dependency name="com.google.collect" componentType="osgi.bundle"/>
-		<cs:dependency name="com.google.collect.source" componentType="osgi.bundle"/>
-		<cs:dependency name="com.google.inject" componentType="osgi.bundle"/>
-		<cs:dependency name="com.google.inject.source" componentType="osgi.bundle"/>
-		-->
 
 	</cs:dependencies>
 </cs:cspecExtension>

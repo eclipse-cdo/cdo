@@ -51,6 +51,7 @@
    <feature id="org.eclipse.emf.cdo.examples.hibernate" version="0.0.0">
       <category name="org.eclipse.emf.cdo.hibernate.category"/>
    </feature>
+	<!--
    <feature id="org.eclipse.emf.cdo.dawn" version="0.0.0">
       <category name="org.eclipse.emf.cdo.dawn.category"/>
    </feature>
@@ -69,6 +70,7 @@
    <feature id="org.eclipse.emf.cdo.dawn.sdk" version="0.0.0">
       <category name="org.eclipse.emf.cdo.dawn.category"/>
    </feature>
+		-->
    <feature id="org.eclipse.net4j" version="0.0.0">
       <category name="org.eclipse.net4j.category"/>
    </feature>
@@ -159,7 +161,9 @@
    <category-def name="org.eclipse.emf.releng.category" label="CDO Release Engineering"/>
    <category-def name="org.eclipse.emf.cdo.category" label="CDO Model Repository"/>
    <category-def name="org.eclipse.emf.cdo.hibernate.category" label="CDO Model Repository Hibernate (optional)"/>
+	<!--
    <category-def name="org.eclipse.emf.cdo.dawn.category" label="CDO Dawn"/>
+		-->
    <category-def name="org.eclipse.net4j.category" label="Net4j Signalling Platform"/>
    <category-def name="org.eclipse.net4j.db.category" label="Net4j DB Framework"/>
 </site>

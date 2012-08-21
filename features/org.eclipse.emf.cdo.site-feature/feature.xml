@@ -66,9 +66,19 @@
          id="org.eclipse.emf.cdo.epp"
          version="0.0.0"/>
 
+	<!--
    <includes
          id="org.eclipse.emf.cdo.dawn.sdk"
          version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.dawn.codegen.gmf"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.dawn.tests"
+         version="0.0.0"/>
+-->
 
    <includes
          id="org.eclipse.emf.cdo.sdk"
@@ -152,14 +162,6 @@
 
    <includes
          id="org.eclipse.emf.cdo.releng.workingsets"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.dawn.codegen.gmf"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.dawn.tests"
          version="0.0.0"/>
 
    <includes

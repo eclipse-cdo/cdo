@@ -435,7 +435,7 @@ public class DigestValidator extends VersionValidator
               continue;
             }
 
-            IModel componentModel = IReleaseManager.INSTANCE.getComponentModel(element);
+            IModel componentModel = IReleaseManager.INSTANCE.getComponentModel(element.trimVersion());
             if (componentModel == null)
             {
               addWarning(warnings, name + ": Component not found");

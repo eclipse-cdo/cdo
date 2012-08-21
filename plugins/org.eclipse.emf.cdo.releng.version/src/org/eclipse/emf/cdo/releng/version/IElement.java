@@ -30,11 +30,15 @@ public interface IElement
 
   public Version getVersion();
 
+  public boolean isLicenseFeature();
+
   public List<IElement> getChildren();
 
   public Set<IElement> getAllChildren(IElementResolver resolver);
 
   public IElement getChild(IElementResolver resolver, IElement key);
+
+  public IElement trimVersion();
 
   public boolean isUnresolved();
 

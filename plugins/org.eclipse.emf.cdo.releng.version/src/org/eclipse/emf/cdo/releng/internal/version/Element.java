@@ -37,6 +37,8 @@ public class Element implements IElement
 
   private Version version;
 
+  private boolean licenseFeature;
+
   private List<IElement> children = new ArrayList<IElement>();
 
   private Set<IElement> allChildren;
@@ -52,6 +54,13 @@ public class Element implements IElement
   public Element(Element.Type type, String name, String version)
   {
     this(type, name, new Version(version));
+  }
+
+  public Element(Type type, String name)
+  {
+    this.type = type;
+    this.name = name;
+    version = Version.emptyVersion;
   }
 
   public Type getType()
@@ -72,6 +81,16 @@ public class Element implements IElement
   public Version getVersion()
   {
     return version;
+  }
+
+  public boolean isLicenseFeature()
+  {
+    return licenseFeature;
+  }
+
+  public void setLicenseFeature(boolean licenseFeature)
+  {
+    this.licenseFeature = licenseFeature;
   }
 
   public List<IElement> getChildren()
@@ -108,7 +127,10 @@ public class Element implements IElement
 
       for (IElement child : topElement.getChildren())
       {
-        recurseChildren(resolver, child);
+        if (!child.isLicenseFeature())
+        {
+          recurseChildren(resolver, child);
+        }
       }
     }
   }
@@ -179,7 +201,20 @@ public class Element implements IElement
       return false;
     }
 
+    if (!version.equals(Version.emptyVersion) && !other.getVersion().equals(Version.emptyVersion))
+    {
+      if (!version.equals(other.getVersion()))
+      {
+        return false;
+      }
+    }
+
     return true;
+  }
+
+  public IElement trimVersion()
+  {
+    return new Element(type, name);
   }
 
   public boolean isUnresolved()
@@ -194,11 +229,11 @@ public class Element implements IElement
       Version resolvedVersion;
       if (type == Element.Type.PLUGIN)
       {
-        resolvedVersion = getPluginVersion(name);
+        resolvedVersion = getPluginVersion();
       }
       else
       {
-        resolvedVersion = getFeatureVersion(name);
+        resolvedVersion = getFeatureVersion();
       }
 
       if (resolvedVersion != null)
@@ -208,7 +243,7 @@ public class Element implements IElement
     }
   }
 
-  private Version getPluginVersion(String name)
+  private Version getPluginVersion()
   {
     IPluginModelBase pluginModel = PluginRegistry.findModel(name);
     if (pluginModel != null)
@@ -220,7 +255,7 @@ public class Element implements IElement
     return null;
   }
 
-  private Version getFeatureVersion(String name)
+  private Version getFeatureVersion()
   {
     IModel componentModel = IReleaseManager.INSTANCE.getComponentModel(this);
     if (componentModel != null)

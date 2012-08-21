@@ -585,7 +585,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
 
     for (IElement releasedElementsChild : releasedElement.getAllChildren(release))
     {
-      if (!allChildren.contains(releasedElementsChild))
+      if (!allChildren.contains(releasedElementsChild.trimVersion()))
       {
         addWarning(releasedElementsChild, REMOVAL, warnings);
         biggestChange = MAJOR_CHANGE; // REMOVAL
@@ -644,14 +644,14 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       return NO_CHANGE;
     }
 
-    IElement releasedElementsChild = releasedElement.getChild(release, childElement);
+    IElement releasedElementsChild = releasedElement.getChild(release, childElement.trimVersion());
     if (releasedElementsChild == null)
     {
       addWarning(childElement, ADDITION, warnings);
       return MINOR_CHANGE; // ADDITION
     }
 
-    IElement childsReleasedElement = release.getElements().get(childElement);
+    IElement childsReleasedElement = release.getElements().get(childElement.trimVersion());
     if (childsReleasedElement == null)
     {
       return NO_CHANGE;
@@ -659,10 +659,6 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
 
     Version releasedVersion = childsReleasedElement.getVersion();
     Version version = childElement.getVersion();
-    if (version == null)
-    {
-      return NO_CHANGE;
-    }
 
     if (version.getMajor() != releasedVersion.getMajor())
     {

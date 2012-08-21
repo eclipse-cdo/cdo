@@ -135,7 +135,7 @@ public class ReleaseManager implements IReleaseManager
       {
         if (!elements.containsKey(child))
         {
-          IModel childModel = getComponentModel(child);
+          IModel childModel = getComponentModel(child.trimVersion());
           if (childModel != null)
           {
             IElement topElement = createElement(childModel, true);
@@ -189,7 +189,8 @@ public class ReleaseManager implements IReleaseManager
       String licenseFeatureID = feature.getLicenseFeatureID();
       if (licenseFeatureID.length() != 0)
       {
-        IElement child = new Element(IElement.Type.FEATURE, licenseFeatureID, feature.getLicenseFeatureVersion());
+        Element child = new Element(IElement.Type.FEATURE, licenseFeatureID, feature.getLicenseFeatureVersion());
+        child.setLicenseFeature(true);
         element.getChildren().add(child);
       }
 
@@ -215,7 +216,17 @@ public class ReleaseManager implements IReleaseManager
     String name = element.getName();
     if (element.getType() == IElement.Type.PLUGIN)
     {
-      return PluginRegistry.findModel(name);
+      IPluginModelBase model = PluginRegistry.findModel(name);
+      if (!element.isUnresolved())
+      {
+        Version pluginVersion = VersionUtil.normalize(model.getBundleDescription().getVersion());
+        if (!element.getVersion().equals(pluginVersion))
+        {
+          return null;
+        }
+      }
+
+      return model;
     }
 
     org.eclipse.pde.internal.core.FeatureModelManager manager = org.eclipse.pde.internal.core.PDECore.getDefault()
@@ -227,6 +238,16 @@ public class ReleaseManager implements IReleaseManager
     {
       featureModels = manager.getExternalModels();
       featureModel = getFeatureModel(name, featureModels);
+    }
+
+    if (!element.isUnresolved())
+    {
+      org.eclipse.pde.internal.core.ifeature.IFeature feature = featureModel.getFeature();
+      Version featureVersion = VersionUtil.normalize(new Version(feature.getVersion()));
+      if (!element.getVersion().equals(featureVersion))
+      {
+        return null;
+      }
     }
 
     return featureModel;

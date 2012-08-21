@@ -1,4 +1,4 @@
 # Debugging and tracing options
 
-org.eclipse.emf.cdo.tests/debug = true
+org.eclipse.emf.cdo.tests.objectivity/debug = true
 org.eclipse.emf.cdo.tests.objectivity/debug = true

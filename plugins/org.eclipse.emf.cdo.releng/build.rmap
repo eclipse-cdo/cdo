@@ -5,10 +5,10 @@
 	<!-- Properties -->
 
 	<rm:property key="platform.version" mutable="true" value="3.8"/>
-	<rm:property key="emf.version" mutable="true" value="2.8"/>
+	<rm:property key="emf.version" mutable="true" value="2.8.x"/>
 	<rm:property key="orbit.version" mutable="true" value="R20120526062928"/>
 
-	<rm:property key="git.clone" mutable="true" value="${user.home}/git/cdo"/>
+	<rm:property key="git.clone" mutable="true" value="${user.home}/git/cdo-4.1"/>
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org"/>
 	<rm:property key="resolve.target.platform" mutable="true" value="true"/>
 	<rm:property key="build.type" mutable="true" value="N"/>
@@ -45,7 +45,7 @@
 		<!-- PLATFORM -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/eclipse/updates/{1}milestones">
+			<rm:uri format="{0}/eclipse/updates/{1}">
 				<bc:propertyRef key="eclipse.downloads"/>
 				<bc:propertyRef key="platform.version"/>
 			</rm:uri>
@@ -54,7 +54,7 @@
 		<!-- EMF -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emf/emf/updates/{1}milestones">
+			<rm:uri format="{0}/modeling/emf/emf/updates/{1}">
 				<bc:propertyRef key="eclipse.downloads"/>
 				<bc:propertyRef key="emf.version"/>
 			</rm:uri>
@@ -63,7 +63,7 @@
 		<!-- EMF Transaction, Validation, ... -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emf/updates/milestones">
+			<rm:uri format="{0}/modeling/emf/updates/releases">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
@@ -71,7 +71,7 @@
 		<!-- MWE -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emft/mwe/updates/milestones">
+			<rm:uri format="{0}/modeling/emft/mwe/updates/releases">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
@@ -87,7 +87,7 @@
 		<!-- GEF -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/tools/gef/updates/milestones">
+			<rm:uri format="{0}/tools/gef/updates/releases">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
@@ -95,7 +95,7 @@
 		<!-- Graphiti -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/graphiti/updates/milestones">
+			<rm:uri format="{0}/graphiti/updates/0.9.0">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
@@ -103,7 +103,7 @@
 		<!-- GMP -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/gmp/updates/milestones">
+			<rm:uri format="{0}/modeling/gmp/updates/releases">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
@@ -111,13 +111,13 @@
 		<!-- OCL -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/mdt/ocl/updates/milestones/4.0.0">
+			<rm:uri format="{0}/modeling/mdt/ocl/updates/releases">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/mmt/qvto/updates/milestones">
+			<rm:uri format="{0}/mmt/qvto/updates/releases">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
@@ -127,7 +127,7 @@
 			resolutionFilter="(resolve.target.platform=true)">
 			<!-- <rm:uri format="{0}/modeling/m2t/xpand/updates/milestones"> -->
 			<!-- XXX FOR Juno M2 only-->
-			<rm:uri format="{0}/modeling/m2t/xpand/updates/milestones">
+			<rm:uri format="{0}/modeling/m2t/xpand/updates/releases">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
@@ -146,7 +146,7 @@
 		<!-- MYLYN -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/mylyn/releases/latest">
+			<rm:uri format="{0}/mylyn/releases/juno">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
@@ -154,7 +154,7 @@
 		<!-- EGIT -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/egit/updates">
+			<rm:uri format="{0}/egit/updates-2.0">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>

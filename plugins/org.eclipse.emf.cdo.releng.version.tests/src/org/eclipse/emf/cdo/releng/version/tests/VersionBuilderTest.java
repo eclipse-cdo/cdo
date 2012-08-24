@@ -34,8 +34,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import junit.framework.TestCase;
 
@@ -47,8 +45,6 @@ public class VersionBuilderTest extends TestCase
   private static final PrintStream MSG = System.out;
 
   private static final String RESULTS_FILE = "results.txt";
-
-  private static final long BUILD_TIMEOUT = 10; // SECONDS
 
   private static final IWorkspace WORKSPACE = ResourcesPlugin.getWorkspace();
 
@@ -75,7 +71,16 @@ public class VersionBuilderTest extends TestCase
   {
     MSG.println("Test " + getName());
     WORKSPACE.getDescription().setAutoBuilding(false);
-    clearWorkspace();
+
+    WORKSPACE.run(new IWorkspaceRunnable()
+    {
+      public void run(IProgressMonitor monitor) throws CoreException
+      {
+        clearWorkspace();
+      }
+    }, new NullProgressMonitor());
+
+    buildWorkspace(true);
 
     boolean clean = true;
     for (String phase : PHASES)
@@ -219,24 +224,14 @@ public class VersionBuilderTest extends TestCase
 
   private IMarker[] buildWorkspace(boolean clean) throws CoreException, InterruptedException
   {
-    final CountDownLatch done = new CountDownLatch(1);
-    IProgressMonitor monitor = new NullProgressMonitor()
+    if (clean)
     {
-      @Override
-      public void done()
-      {
-        done.countDown();
-        super.done();
-      }
-    };
-
-    int kind = clean ? IncrementalProjectBuilder.CLEAN_BUILD : IncrementalProjectBuilder.INCREMENTAL_BUILD;
-    WORKSPACE.build(kind, monitor);
-
-    if (!done.await(BUILD_TIMEOUT, TimeUnit.SECONDS))
+      WORKSPACE.build(IncrementalProjectBuilder.CLEAN_BUILD, new NullProgressMonitor());
+      WORKSPACE.build(IncrementalProjectBuilder.FULL_BUILD, new NullProgressMonitor());
+    }
+    else
     {
-      monitor.setCanceled(true);
-      throw new RuntimeException("Build timed out");
+      WORKSPACE.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, new NullProgressMonitor());
     }
 
     return ROOT.findMarkers(Markers.MARKER_TYPE, false, IResource.DEPTH_INFINITE);
@@ -310,8 +305,8 @@ public class VersionBuilderTest extends TestCase
 
   private void addAttribute(StringBuilder builder, String key, Object value)
   {
-    String str = key + " = " + value;
-    msg("  " + str);
+    String str = "  " + key + " = " + value;
+    msg(str);
 
     builder.append(str);
     builder.append("\n");

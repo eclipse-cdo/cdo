@@ -116,7 +116,7 @@ public final class Markers
         return marker.getResource().getFullPath().toString();
       }
 
-      return (String)marker.getAttribute(attributeName);
+      return marker.getAttribute(attributeName).toString();
     }
     catch (CoreException ex)
     {

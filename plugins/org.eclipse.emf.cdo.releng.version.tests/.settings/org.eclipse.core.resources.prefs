@@ -1,3 +1,9 @@
 eclipse.preferences.version=1
 encoding/.project=UTF-8
 encoding//model/org.eclipse.emf.cdo.defs.ecorediag=UTF-8
+encoding//tests/00001-NoProblemAfterNewBaseline/clean/com.foo.license-feature/.project=UTF-8
+encoding//tests/00001-NoProblemAfterNewBaseline/clean/com.foo.project1-feature/.project=UTF-8
+encoding//tests/00001-NoProblemAfterNewBaseline/clean/com.foo.project1/.project=UTF-8
+encoding//tests/00001-NoProblemAfterNewBaseline/clean/com.foo.releng/.project=UTF-8
+encoding//tests/00002-ProblemAfterChange/clean/com.foo.license-feature/.project=UTF-8
+encoding//tests/00002-ProblemAfterChange/clean/com.foo.project1/.project=UTF-8

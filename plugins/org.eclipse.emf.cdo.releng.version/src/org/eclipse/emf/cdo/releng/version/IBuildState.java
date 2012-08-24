@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.version;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -28,4 +29,8 @@ public interface IBuildState
   public void setValidatorState(Serializable validatorState);
 
   public void setChangedSinceRelease(boolean changedSinceRelease);
+
+  public Map<String, String> getArguments();
+
+  public void setArguments(Map<String, String> arguments);
 }

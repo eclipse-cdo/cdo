@@ -86,6 +86,16 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
     setBoolean(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT, value);
   }
 
+  public boolean isIgnoreFeatureNature()
+  {
+    return "true".equals(get(IVersionBuilderArguments.IGNORE_FEATURE_NATURE_ARGUMENT));
+  }
+
+  public void setIgnoreFeatureNature(boolean value)
+  {
+    setBoolean(IVersionBuilderArguments.IGNORE_FEATURE_NATURE_ARGUMENT, value);
+  }
+
   public boolean isIgnoreSchemaBuilder()
   {
     return "true".equals(get(IVersionBuilderArguments.IGNORE_SCHEMA_BUILDER_ARGUMENT));
@@ -93,12 +103,12 @@ public class VersionBuilderArguments extends HashMap<String, String> implements 
 
   public void setIgnoreSchemaBuilder(boolean value)
   {
-    setBoolean(IVersionBuilderArguments.IGNORE_MALFORMED_VERSIONS_ARGUMENT, value);
+    setBoolean(IVersionBuilderArguments.IGNORE_SCHEMA_BUILDER_ARGUMENT, value);
   }
 
   public boolean isIgnoreDebugOptions()
   {
-    return "true".equals(get(IVersionBuilderArguments.IGNORE_SCHEMA_BUILDER_ARGUMENT));
+    return "true".equals(get(IVersionBuilderArguments.IGNORE_DEBUG_OPTIONS_ARGUMENT));
   }
 
   public void setIgnoreDebugOptions(boolean value)

@@ -16,8 +16,6 @@ import org.eclipse.emf.cdo.releng.version.IReleaseManager;
 import org.eclipse.emf.cdo.releng.version.VersionUtil;
 
 import org.eclipse.pde.core.IModel;
-import org.eclipse.pde.core.plugin.IPluginModelBase;
-import org.eclipse.pde.core.plugin.PluginRegistry;
 
 import org.osgi.framework.Version;
 
@@ -48,7 +46,6 @@ public class Element implements IElement
     this.type = type;
     this.name = name;
     this.version = VersionUtil.normalize(version);
-    resolveVersion();
   }
 
   public Element(Element.Type type, String name, String version)
@@ -114,16 +111,19 @@ public class Element implements IElement
 
   private void recurseChildren(IElementResolver resolver, IElement element)
   {
-    if (!allChildren.contains(element))
+    if (allChildren.add(element))
     {
       IElement topElement = resolver.resolveElement(element);
       if (topElement == null)
       {
-        allChildren.add(element);
-        return;
+        // If we fail to find it with an exact version, we try it with an omni version and use that for the children.
+        //
+        topElement = resolver.resolveElement(element.trimVersion());
+        if (topElement == null)
+        {
+          return;
+        }
       }
-
-      allChildren.add(topElement);
 
       for (IElement child : topElement.getChildren())
       {
@@ -217,50 +217,25 @@ public class Element implements IElement
     return new Element(type, name);
   }
 
-  public boolean isUnresolved()
+  public boolean isVersionUnresolved()
   {
     return version.equals(Version.emptyVersion);
   }
 
-  private void resolveVersion()
+  void resolveVersion()
   {
-    if (isUnresolved())
-    {
-      Version resolvedVersion;
-      if (type == Element.Type.PLUGIN)
-      {
-        resolvedVersion = getPluginVersion();
-      }
-      else
-      {
-        resolvedVersion = getFeatureVersion();
-      }
-
-      if (resolvedVersion != null)
-      {
-        version = resolvedVersion;
-      }
-    }
+    version = getResolvedVersion();
   }
 
-  private Version getPluginVersion()
+  public Version getResolvedVersion()
   {
-    IPluginModelBase pluginModel = PluginRegistry.findModel(name);
-    if (pluginModel != null)
+    if (isVersionUnresolved())
     {
-      Version version = pluginModel.getBundleDescription().getVersion();
-      return VersionUtil.normalize(version);
-    }
-
-    return null;
-  }
-
-  private Version getFeatureVersion()
-  {
-    IModel componentModel = IReleaseManager.INSTANCE.getComponentModel(this);
-    if (componentModel != null)
-    {
-      return VersionUtil.getComponentVersion(componentModel);
+      IModel componentModel = IReleaseManager.INSTANCE.getComponentModel(this);
+      if (componentModel != null)
+      {
+        return VersionUtil.getComponentVersion(componentModel);
+      }
     }
 
     return version;

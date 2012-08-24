@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.releng.internal.version;
 import org.eclipse.emf.cdo.releng.version.VersionUtil;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -41,6 +42,8 @@ public class Activator extends Plugin
   public static final String PLUGIN_ID = "org.eclipse.emf.cdo.releng.version";
 
   private static Activator plugin;
+
+  private static IResourceChangeListener postBuildListener;
 
   private Map<String, BuildState> buildStates;
 
@@ -78,9 +81,16 @@ public class Activator extends Plugin
   @Override
   public void stop(BundleContext context) throws Exception
   {
+    if (postBuildListener != null)
+    {
+      ResourcesPlugin.getWorkspace().removeResourceChangeListener(postBuildListener);
+      postBuildListener = null;
+    }
+
     if (!buildStates.isEmpty())
     {
       saveBuildStates();
+      buildStates = null;
     }
 
     stateFile = null;
@@ -200,5 +210,10 @@ public class Activator extends Plugin
     }
 
     return new Status(IStatus.ERROR, PLUGIN_ID, msg, t);
+  }
+
+  public static void setPostBuildListener(IResourceChangeListener postBuildListener)
+  {
+    Activator.postBuildListener = postBuildListener;
   }
 }

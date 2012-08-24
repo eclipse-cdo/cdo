@@ -18,6 +18,7 @@ import org.eclipse.pde.core.IModel;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -28,11 +29,14 @@ public interface IReleaseManager
 {
   public static final IReleaseManager INSTANCE = new ReleaseManager();
 
+  public Map<IElement, IElement> createElements(String path, boolean resolve) throws CoreException, IOException,
+      NoSuchAlgorithmException;
+
   public IRelease getRelease(IFile file) throws CoreException;
 
   public IRelease createRelease(IFile file) throws CoreException, IOException, NoSuchAlgorithmException;
 
-  public IElement createElement(IModel componentModel, boolean withFeatureContent);
+  public IElement createElement(IModel componentModel, boolean withFeatureContent, boolean resolve);
 
   public IModel getComponentModel(IElement element);
 }

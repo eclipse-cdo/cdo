@@ -36,6 +36,10 @@ public final class Markers
 
   public static final String SCHEMA_BUILDER_PROBLEM = "schema.builder";
 
+  public static final String FEATURE_NATURE_PROBLEM = "feature.nature";
+
+  public static final String VERSION_NATURE_PROBLEM = "version.nature";
+
   public static final String DEBUG_OPTION_PROBLEM = "debug.option";
 
   public static final String DEPENDENCY_RANGE_PROBLEM = "dependency.range";
@@ -48,9 +52,17 @@ public final class Markers
 
   public static final String RESOURCE_ATTRIBUTE = "<resource>";
 
+  public static final String UNREFERENCED_ELEMENT_PROBLEM = "unreferenced.element";
+
   public static final String QUICK_FIX_PATTERN = "quickFixPattern";
 
   public static final String QUICK_FIX_REPLACEMENT = "quickFixReplacement";
+
+  public static final String QUICK_FIX_ALTERNATIVE_REPLACEMENT = "quickFixAlternativeReplacement";
+
+  public static final String QUICK_FIX_NATURE = "quickFixNature";
+
+  public static final String QUICK_FIX_PROJECT = "quickFixProject";
 
   public static final String QUICK_FIX_CONFIGURE_OPTION = "quickFixConfigureOption";
 
@@ -73,6 +85,21 @@ public final class Markers
   public static String getQuickFixReplacement(IMarker marker)
   {
     return getAttribute(marker, QUICK_FIX_REPLACEMENT);
+  }
+
+  public static String getQuickFixAlternativeReplacement(IMarker marker)
+  {
+    return getAttribute(marker, QUICK_FIX_ALTERNATIVE_REPLACEMENT);
+  }
+
+  public static String getQuickFixNature(IMarker marker)
+  {
+    return getAttribute(marker, QUICK_FIX_NATURE);
+  }
+
+  public static String getQuickFixProject(IMarker marker)
+  {
+    return getAttribute(marker, QUICK_FIX_PROJECT);
   }
 
   public static String getQuickFixConfigureOption(IMarker marker)

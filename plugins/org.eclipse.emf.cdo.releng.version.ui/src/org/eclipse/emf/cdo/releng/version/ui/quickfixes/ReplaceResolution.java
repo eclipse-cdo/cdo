@@ -30,17 +30,22 @@ public class ReplaceResolution extends AbstractDocumentResolution
 
   public ReplaceResolution(IMarker marker, String problemType, String replacement)
   {
-    super(marker, getLabel(problemType, replacement), replacement == null ? Activator.CORRECTION_DELETE_GIF
+    super(marker, getLabel(marker, problemType, replacement), replacement == null ? Activator.CORRECTION_DELETE_GIF
         : Activator.CORRECTION_CHANGE_GIF);
     this.problemType = problemType;
     this.replacement = replacement == null ? "" : replacement;
   }
 
-  private static String getLabel(String problemType, String replacement)
+  private static String getLabel(IMarker marker, String problemType, String replacement)
   {
     if (Markers.SCHEMA_BUILDER_PROBLEM.equals(problemType))
     {
       return replacement == null ? "Remove the schema builder" : "Add the schema builder";
+    }
+
+    if (Markers.FEATURE_NATURE_PROBLEM.equals(problemType))
+    {
+      return "Add the feature builder";
     }
 
     if (Markers.DEBUG_OPTION_PROBLEM.equals(problemType))
@@ -48,7 +53,9 @@ public class ReplaceResolution extends AbstractDocumentResolution
       return "Change the debug option";
     }
 
-    return replacement == null ? "Remove the reference" : "Change the version";
+    return replacement == null ? "Remove the reference"
+        : Markers.getQuickFixAlternativeReplacement(marker) == null ? "Change the version"
+            : "Change to the extact version";
   }
 
   @Override
@@ -76,8 +83,13 @@ public class ReplaceResolution extends AbstractDocumentResolution
     }
 
     boolean expectedReplacement = replacement.length() != 0;
-    boolean actualReplacement = Markers.getQuickFixReplacement(marker) != null;
+    boolean actualReplacement = getQuickFixReplacement(marker) != null;
     return actualReplacement == expectedReplacement;
+  }
+
+  protected String getQuickFixReplacement(IMarker marker)
+  {
+    return Markers.getQuickFixReplacement(marker);
   }
 
   @Override
@@ -86,7 +98,7 @@ public class ReplaceResolution extends AbstractDocumentResolution
     String content = document.get();
 
     String regEx = Markers.getQuickFixPattern(marker);
-    String replacement = Markers.getQuickFixReplacement(marker);
+    String replacement = getQuickFixReplacement(marker);
 
     Pattern pattern = Pattern.compile(regEx, Pattern.MULTILINE | Pattern.DOTALL);
     Matcher matcher = pattern.matcher(content);

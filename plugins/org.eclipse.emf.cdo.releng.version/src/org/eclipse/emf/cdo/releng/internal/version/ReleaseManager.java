@@ -38,6 +38,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -105,12 +106,9 @@ public class ReleaseManager implements IReleaseManager
     }
   }
 
-  public synchronized IRelease createRelease(IFile file) throws CoreException, IOException, NoSuchAlgorithmException
+  public Map<IElement, IElement> createElements(String path, boolean resolve)
   {
-    Release release = new Release(file);
-    String path = file.getFullPath().toString();
-
-    Map<IElement, IElement> elements = release.getElements();
+    Map<IElement, IElement> elements = new HashMap<IElement, IElement>();
     for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects())
     {
       if (project.isOpen())
@@ -120,7 +118,7 @@ public class ReleaseManager implements IReleaseManager
         if (path.equals(releasePath))
         {
           IModel componentModel = VersionUtil.getComponentModel(project);
-          IElement element = createElement(componentModel, true);
+          IElement element = createElement(componentModel, true, resolve);
           elements.put(element, element);
         }
       }
@@ -138,7 +136,7 @@ public class ReleaseManager implements IReleaseManager
           IModel childModel = getComponentModel(child.trimVersion());
           if (childModel != null)
           {
-            IElement topElement = createElement(childModel, true);
+            IElement topElement = createElement(childModel, true, resolve);
             queue.add(topElement);
             elements.put(topElement, topElement);
           }
@@ -149,13 +147,22 @@ public class ReleaseManager implements IReleaseManager
         }
       }
     }
+    return elements;
+  }
+
+  public synchronized IRelease createRelease(IFile file) throws CoreException, IOException, NoSuchAlgorithmException
+  {
+    Release release = new Release(file);
+    String path = file.getFullPath().toString();
+
+    release.getElements().putAll(createElements(path, true));
 
     release.write();
     releases.put(release, file.getLocalTimeStamp());
     return release;
   }
 
-  public IElement createElement(IModel componentModel, boolean withFeatureContent)
+  public IElement createElement(IModel componentModel, boolean withFeatureContent, boolean resolve)
   {
     if (componentModel instanceof IPluginModelBase)
     {
@@ -171,11 +178,11 @@ public class ReleaseManager implements IReleaseManager
       return new Element(Type.PLUGIN, name, version);
     }
 
-    return createFeatureElement(componentModel, withFeatureContent);
+    return createFeatureElement(componentModel, withFeatureContent, resolve);
   }
 
   @SuppressWarnings("restriction")
-  private IElement createFeatureElement(IModel componentModel, boolean withContent)
+  private IElement createFeatureElement(IModel componentModel, boolean withContent, boolean resolve)
   {
     org.eclipse.pde.internal.core.ifeature.IFeatureModel featureModel = (org.eclipse.pde.internal.core.ifeature.IFeatureModel)componentModel;
     org.eclipse.pde.internal.core.ifeature.IFeature feature = featureModel.getFeature();
@@ -190,19 +197,34 @@ public class ReleaseManager implements IReleaseManager
       if (licenseFeatureID.length() != 0)
       {
         Element child = new Element(IElement.Type.FEATURE, licenseFeatureID, feature.getLicenseFeatureVersion());
+        if (resolve)
+        {
+          child.resolveVersion();
+        }
+
         child.setLicenseFeature(true);
         element.getChildren().add(child);
       }
 
       for (org.eclipse.pde.internal.core.ifeature.IFeatureChild versionable : feature.getIncludedFeatures())
       {
-        IElement child = new Element(IElement.Type.FEATURE, versionable.getId(), versionable.getVersion());
+        Element child = new Element(IElement.Type.FEATURE, versionable.getId(), versionable.getVersion());
+        if (resolve)
+        {
+          child.resolveVersion();
+        }
+
         element.getChildren().add(child);
       }
 
       for (org.eclipse.pde.internal.core.ifeature.IFeaturePlugin versionable : feature.getPlugins())
       {
-        IElement child = new Element(IElement.Type.PLUGIN, versionable.getId(), versionable.getVersion());
+        Element child = new Element(IElement.Type.PLUGIN, versionable.getId(), versionable.getVersion());
+        if (resolve)
+        {
+          child.resolveVersion();
+        }
+
         element.getChildren().add(child);
       }
     }
@@ -217,7 +239,7 @@ public class ReleaseManager implements IReleaseManager
     if (element.getType() == IElement.Type.PLUGIN)
     {
       IPluginModelBase model = PluginRegistry.findModel(name);
-      if (!element.isUnresolved())
+      if (!element.isVersionUnresolved())
       {
         Version pluginVersion = VersionUtil.normalize(model.getBundleDescription().getVersion());
         if (!element.getVersion().equals(pluginVersion))
@@ -248,7 +270,7 @@ public class ReleaseManager implements IReleaseManager
       }
     }
 
-    if (!element.isUnresolved())
+    if (!element.isVersionUnresolved())
     {
       org.eclipse.pde.internal.core.ifeature.IFeature feature = featureModel.getFeature();
       Version featureVersion = VersionUtil.normalize(new Version(feature.getVersion()));

@@ -30,6 +30,8 @@ public interface IVersionBuilderArguments extends Map<String, String>
 
   public static final String IGNORE_SCHEMA_BUILDER_ARGUMENT = "ignore.schema.builder";
 
+  public static final String IGNORE_FEATURE_NATURE_ARGUMENT = "ignore.feature.nature";
+
   public static final String IGNORE_DEBUG_OPTIONS_ARGUMENT = "ignore.debug.options";
 
   public static final String IGNORE_DEPENDENCY_RANGES_ARGUMENT = "ignore.missing.dependency.ranges";
@@ -45,6 +47,8 @@ public interface IVersionBuilderArguments extends Map<String, String>
   public String getValidatorClassName();
 
   public boolean isIgnoreMalformedVersions();
+
+  public boolean isIgnoreFeatureNature();
 
   public boolean isIgnoreSchemaBuilder();
 

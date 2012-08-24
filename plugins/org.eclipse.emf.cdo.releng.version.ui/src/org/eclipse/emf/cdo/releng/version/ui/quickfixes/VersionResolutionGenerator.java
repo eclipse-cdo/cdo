@@ -32,18 +32,53 @@ public class VersionResolutionGenerator implements IMarkerResolutionGenerator2
   {
     List<IMarkerResolution> resolutions = new ArrayList<IMarkerResolution>();
 
+    String problemType = Markers.getProblemType(marker);
     String regEx = Markers.getQuickFixPattern(marker);
     if (regEx != null)
     {
-      String problemType = Markers.getProblemType(marker);
       String replacement = Markers.getQuickFixReplacement(marker);
       resolutions.add(new ReplaceResolution(marker, problemType, replacement));
+      final String alternativeReplacement = Markers.getQuickFixAlternativeReplacement(marker);
+      if (alternativeReplacement != null)
+      {
+        resolutions.add(new ReplaceResolution(marker, problemType, alternativeReplacement)
+        {
+          @Override
+          public String getLabel()
+          {
+            return "Change to the omni version";
+          }
+
+          @Override
+          public String getDescription()
+          {
+            return "Change the version to " + alternativeReplacement;
+          }
+
+          @Override
+          protected String getQuickFixReplacement(IMarker marker)
+          {
+            return Markers.getQuickFixAlternativeReplacement(marker);
+          }
+        });
+      }
+    }
+
+    if (Markers.UNREFERENCED_ELEMENT_PROBLEM.equals(problemType))
+    {
+      resolutions.add(new RootProjectResolution(marker));
     }
 
     String ignoreOption = Markers.getQuickFixConfigureOption(marker);
     if (ignoreOption != null)
     {
       resolutions.add(new ConfigureResolution(marker, ignoreOption));
+    }
+
+    String nature = Markers.getQuickFixNature(marker);
+    if (nature != null)
+    {
+      resolutions.add(new AddNatureResolution(marker, nature));
     }
 
     return resolutions.toArray(new IMarkerResolution[resolutions.size()]);
@@ -57,6 +92,16 @@ public class VersionResolutionGenerator implements IMarkerResolutionGenerator2
     }
 
     if (Markers.getQuickFixConfigureOption(marker) != null)
+    {
+      return true;
+    }
+    if (Markers.getQuickFixNature(marker) != null)
+    {
+      return true;
+    }
+
+    String problemType = Markers.getProblemType(marker);
+    if (Markers.UNREFERENCED_ELEMENT_PROBLEM.equals(problemType))
     {
       return true;
     }

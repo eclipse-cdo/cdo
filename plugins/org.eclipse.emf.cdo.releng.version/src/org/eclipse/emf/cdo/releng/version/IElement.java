@@ -30,6 +30,8 @@ public interface IElement
 
   public Version getVersion();
 
+  public Version getResolvedVersion();
+
   public boolean isLicenseFeature();
 
   public List<IElement> getChildren();
@@ -40,13 +42,43 @@ public interface IElement
 
   public IElement trimVersion();
 
-  public boolean isUnresolved();
+  public boolean isVersionUnresolved();
 
   /**
    * @author Eike Stepper
    */
   public static enum Type
   {
-    FEATURE, PLUGIN
+    FEATURE
+    {
+      @Override
+      public String getTag()
+      {
+        return "includes";
+      }
+
+      @Override
+      public String toString()
+      {
+        return "Feature";
+      }
+    },
+
+    PLUGIN
+    {
+      @Override
+      public String getTag()
+      {
+        return "plugin";
+      }
+
+      @Override
+      public String toString()
+      {
+        return "Plug-in";
+      }
+    };
+
+    public abstract String getTag();
   }
 }

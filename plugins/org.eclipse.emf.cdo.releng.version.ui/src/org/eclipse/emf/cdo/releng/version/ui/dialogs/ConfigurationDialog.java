@@ -47,6 +47,8 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
 
   private Button ignoreMalformedVersionsButton;
 
+  private Button ignoreFeatureNatureButton;
+
   private Button ignoreSchemaBuilderButton;
 
   private Button ignoreDebugOptionsButton;
@@ -98,6 +100,10 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
     ignoreMalformedVersionsButton = new Button(composite, SWT.CHECK);
     ignoreMalformedVersionsButton.setText("Ignore malformed versions");
     ignoreMalformedVersionsButton.setSelection(values.isIgnoreMalformedVersions());
+
+    ignoreFeatureNatureButton = new Button(composite, SWT.CHECK);
+    ignoreFeatureNatureButton.setText("Ignore feature nature");
+    ignoreFeatureNatureButton.setSelection(values.isIgnoreFeatureNature());
 
     ignoreSchemaBuilderButton = new Button(composite, SWT.CHECK);
     ignoreSchemaBuilderButton.setText("Ignore schema builder");
@@ -151,6 +157,7 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
   {
     values.setReleasePath(releasePathText.getText());
     values.setIgnoreMalformedVersions(ignoreMalformedVersionsButton.getSelection());
+    values.setIgnoreFeatureNature(ignoreFeatureNatureButton.getSelection());
     values.setIgnoreSchemaBuilder(ignoreSchemaBuilderButton.getSelection());
     values.setIgnoreDebugOptions(ignoreDebugOptionsButton.getSelection());
     values.setIgnoreMissingDependencyRanges(ignoreMissingDependencyRangesButton.getSelection());
@@ -171,6 +178,11 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
   }
 
   public boolean isIgnoreMalformedVersions()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean isIgnoreFeatureNature()
   {
     throw new UnsupportedOperationException();
   }

@@ -13,6 +13,9 @@ package org.eclipse.emf.cdo.releng.internal.version;
 import org.eclipse.emf.cdo.releng.version.IBuildState;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -29,11 +32,15 @@ public class BuildState implements IBuildState, Serializable
 
   private boolean integration;
 
+  private Set<String> rootProjects;
+
   private boolean changedSinceRelease;
 
   private long validatorTimeStamp;
 
   private Serializable validatorState;
+
+  private Map<String, String> arguments;
 
   BuildState()
   {
@@ -79,6 +86,16 @@ public class BuildState implements IBuildState, Serializable
     this.integration = integration;
   }
 
+  public Set<String> getRootProjects()
+  {
+    return rootProjects;
+  }
+
+  public void setRootProjects(Set<String> rootProjects)
+  {
+    this.rootProjects = rootProjects;
+  }
+
   public long getValidatorTimeStamp()
   {
     return validatorTimeStamp;
@@ -107,5 +124,15 @@ public class BuildState implements IBuildState, Serializable
   public void setValidatorState(Serializable validatorState)
   {
     this.validatorState = validatorState;
+  }
+
+  public Map<String, String> getArguments()
+  {
+    return arguments == null ? new HashMap<String, String>() : arguments;
+  }
+
+  public void setArguments(Map<String, String> arguments)
+  {
+    this.arguments = arguments;
   }
 }

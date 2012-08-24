@@ -27,10 +27,12 @@ import org.osgi.framework.Version;
 import java.io.BufferedReader;
 import java.io.CharArrayWriter;
 import java.io.Closeable;
+import java.io.File;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -90,7 +92,7 @@ public final class VersionUtil
   public static synchronized byte[] getSHA1(IFile file) throws NoSuchAlgorithmException, CoreException, IOException
   {
     InputStream stream = null;
-  
+
     try
     {
       final MessageDigest digest = MessageDigest.getInstance("SHA-1");
@@ -106,17 +108,17 @@ public final class VersionUtil
             {
             case -1:
               return -1;
-  
+
             case 10:
             case 13:
               continue;
             }
-  
+
             digest.update((byte)ch);
             return ch;
           }
         }
-  
+
         @Override
         public int read(byte[] b, int off, int len) throws IOException
         {
@@ -125,7 +127,7 @@ public final class VersionUtil
           {
             return -1;
           }
-  
+
           for (int i = off; i < off + read; i++)
           {
             byte c = b[i];
@@ -136,35 +138,40 @@ public final class VersionUtil
                 System.arraycopy(b, i + 1, b, i, read - i - 1);
                 --i;
               }
-  
+
               --read;
             }
           }
-  
+
           digest.update(b, off, read);
           return read;
         }
       };
-  
-      while (stream.read(BUFFER) != -1)
+
+      synchronized (BUFFER)
       {
-        // Do nothing
+        while (stream.read(BUFFER) != -1)
+        {
+          // Do nothing
+        }
       }
-  
+
       return digest.digest();
     }
     finally
     {
-      if (stream != null)
+      close(stream);
+    }
+  }
+
+  public static void copy(InputStream in, OutputStream out) throws IOException
+  {
+    synchronized (BUFFER)
+    {
+      int n;
+      while ((n = in.read(BUFFER)) != -1)
       {
-        try
-        {
-          stream.close();
-        }
-        catch (Exception ex)
-        {
-          Activator.log(ex);
-        }
+        out.write(BUFFER, 0, n);
       }
     }
   }
@@ -182,6 +189,31 @@ public final class VersionUtil
         Activator.log(ex);
       }
     }
+  }
+
+  public static int delete(File file)
+  {
+    if (file == null)
+    {
+      return 0;
+    }
+
+    int deleted = 0;
+    if (file.isDirectory())
+    {
+      for (File child : file.listFiles())
+      {
+        deleted += delete(child);
+      }
+    }
+
+    if (file.delete())
+    {
+      return deleted + 1;
+    }
+
+    file.deleteOnExit();
+    return deleted;
   }
 
   public static IModel getComponentModel(IProject project)

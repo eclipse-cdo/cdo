@@ -237,7 +237,15 @@ public class ReleaseManager implements IReleaseManager
     if (featureModel == null)
     {
       featureModels = manager.getExternalModels();
-      featureModel = getFeatureModel(name, featureModels);
+      if (featureModels != null && featureModels.length != 0)
+      {
+        featureModel = getFeatureModel(name, featureModels);
+      }
+
+      if (featureModel == null)
+      {
+        throw new IllegalStateException("Could not find feature model for " + element);
+      }
     }
 
     if (!element.isUnresolved())

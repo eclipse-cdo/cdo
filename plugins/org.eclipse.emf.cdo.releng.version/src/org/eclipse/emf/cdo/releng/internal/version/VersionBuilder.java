@@ -213,7 +213,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       catch (Exception ex)
       {
         Activator.log(ex);
-        String msg = "Problem with release spec: " + releasePath;
+        String msg = "Problem with release spec: " + releasePath + " (" + ex.getMessage() + ")";
         Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR,
             "(" + releasePath.toString().replace(".", "\\.") + ")");
         return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);

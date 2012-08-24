@@ -117,6 +117,9 @@
    <feature id="org.eclipse.emf.cdo.releng.version.headless" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
+   <feature id="org.eclipse.emf.cdo.releng.version.tests" version="0.0.0">
+      <category name="org.eclipse.emf.releng.category"/>
+   </feature>
    <feature id="org.eclipse.emf.cdo.releng.version.sdk" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>

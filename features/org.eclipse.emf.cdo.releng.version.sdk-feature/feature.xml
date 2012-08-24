@@ -35,6 +35,17 @@
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
 
+   <plugin
+         id="org.eclipse.emf.cdo.releng.version.sdk"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.version.sdk.source"
+         version="0.0.0"/>
+
    <includes
          id="org.eclipse.emf.cdo.releng.version"
          version="0.0.0"/>
@@ -42,16 +53,5 @@
    <includes
          id="org.eclipse.emf.cdo.releng.version.doc"
          version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.releng.version.source"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.releng.version.sdk"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
 </feature>

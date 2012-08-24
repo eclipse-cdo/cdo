@@ -115,6 +115,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.cdo.releng.version.tests"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.releng.version.headless"
          version="0.0.0"/>
 

@@ -91,11 +91,15 @@
 			</doclet>
 
 			<fileset dir="plugins" defaultexcludes="yes">
+				<include name="org.eclipse.emf.cdo.releng.version.tests/src/org/eclipse/emf/cdo/releng/version/tests/*.java" />
 				<include name="org.eclipse.emf.cdo.releng.version/src/org/eclipse/emf/cdo/releng/version/*.java" />
 			</fileset>
 
 			<group title="Extended Version Management">
 				<package name="org.eclipse.emf.cdo.releng.version" />
+			</group>
+			<group title="Extended Version Management Tests">
+				<package name="org.eclipse.emf.cdo.releng.version.tests" />
 			</group>
 
 			<link href="${jdk.link}" />

@@ -46,6 +46,8 @@ public final class Markers
 
   public static final String VALIDATOR_CLASS_PROBLEM = "validator.class";
 
+  public static final String RESOURCE_ATTRIBUTE = "<resource>";
+
   public static final String QUICK_FIX_PATTERN = "quickFixPattern";
 
   public static final String QUICK_FIX_REPLACEMENT = "quickFixReplacement";
@@ -82,6 +84,11 @@ public final class Markers
   {
     try
     {
+      if (RESOURCE_ATTRIBUTE.equals(attributeName))
+      {
+        return marker.getResource().getFullPath().toString();
+      }
+
       return (String)marker.getAttribute(attributeName);
     }
     catch (CoreException ex)
@@ -89,6 +96,28 @@ public final class Markers
       Activator.log(ex);
       return null;
     }
+  }
+
+  public static int compareAttributes(String attributeName, IMarker m1, IMarker m2)
+  {
+    String v1 = getAttribute(m1, attributeName);
+    String v2 = getAttribute(m2, attributeName);
+
+    if (v1 == null)
+    {
+      if (v2 == null)
+      {
+        return 0;
+      }
+
+      return -1;
+    }
+    else if (v2 == null)
+    {
+      return 1;
+    }
+
+    return v1.compareTo(v2);
   }
 
   public static IMarker addMarker(IResource resource, String message) throws CoreException

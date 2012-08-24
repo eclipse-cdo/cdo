@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.internal.version;
 
+import org.eclipse.emf.cdo.releng.version.VersionUtil;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -103,17 +105,7 @@ public class Activator extends Plugin
     }
     finally
     {
-      if (stream != null)
-      {
-        try
-        {
-          stream.close();
-        }
-        catch (Exception ex)
-        {
-          log(ex);
-        }
-      }
+      VersionUtil.close(stream);
     }
   }
 

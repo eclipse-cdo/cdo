@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.version.tests;
 
 import org.eclipse.emf.cdo.releng.version.Markers;
 import org.eclipse.emf.cdo.releng.version.VersionUtil;
+import org.eclipse.emf.cdo.releng.version.ui.quickfixes.VersionResolutionGenerator;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
@@ -23,10 +24,9 @@ import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.ui.IMarkerResolution;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,9 +42,7 @@ import junit.framework.TestCase;
  */
 public class VersionBuilderTest extends TestCase
 {
-  private static final PrintStream MSG = System.out;
-
-  private static final String RESULTS_FILE = "results.txt";
+  private static final VersionResolutionGenerator FIX_GENERATOR = new VersionResolutionGenerator();
 
   private static final IWorkspace WORKSPACE = ResourcesPlugin.getWorkspace();
 
@@ -54,9 +52,9 @@ public class VersionBuilderTest extends TestCase
 
   private static final int TRIM_LENGTH = WORKSPACE_FILE.getAbsolutePath().length() + 1;
 
-  private static final String[] PHASES = { "clean", "incremental" };
-
   private static final String DELETE_SUFFIX = "-DELETE";
+
+  private static final PrintStream MSG = System.out;
 
   private BundleFile testFolder;
 
@@ -69,122 +67,122 @@ public class VersionBuilderTest extends TestCase
   @Override
   public void runBare() throws Throwable
   {
+    MSG.println("===============================================================================================");
     MSG.println("Test " + getName());
-    WORKSPACE.getDescription().setAutoBuilding(false);
+    MSG.println("===============================================================================================");
 
-    WORKSPACE.run(new IWorkspaceRunnable()
-    {
-      public void run(IProgressMonitor monitor) throws CoreException
-      {
-        clearWorkspace();
-      }
-    }, new NullProgressMonitor());
-
-    buildWorkspace(true);
+    clearWorkspace();
 
     boolean clean = true;
-    for (String phase : PHASES)
+    for (BundleFile phase : testFolder.getChildren())
     {
-      final BundleFile folder = testFolder.getChild(phase);
-      if (folder != null)
+      if (phase.isDirectory())
       {
-        MSG.println("  Update workspace for " + phase + " build");
-        WORKSPACE.run(new IWorkspaceRunnable()
-        {
-          public void run(IProgressMonitor monitor) throws CoreException
-          {
-            try
-            {
-              updateWorkspace(folder, monitor);
-            }
-            catch (IOException ex)
-            {
-              ex.printStackTrace();
-              // TODO throw CoreException?
-            }
-          }
-        }, new NullProgressMonitor());
-
-        MSG.println("  Build " + phase);
-        long start = System.currentTimeMillis();
-        IMarker[] markers = buildWorkspace(clean);
-        msg("Took " + (System.currentTimeMillis() - start) + " millis");
-
-        final BundleFile resultsFile = folder.getChild(RESULTS_FILE);
-        if (resultsFile != null)
-        {
-          MSG.println("  Check results of " + phase + " build");
-          checkResults(phase, resultsFile, markers);
-        }
-        else
-        {
-          MSG.println("  Generate results of " + phase + " build");
-          generateResults(folder, markers);
-        }
+        MSG.println("  Phase '" + phase.getName() + "'");
+        runPhase(phase, clean);
+        clean = false;
       }
-
-      clean = false;
     }
 
     MSG.println();
   }
 
-  private void clearWorkspace() throws CoreException
+  private void runPhase(BundleFile phase, boolean clean) throws Throwable
   {
-    boolean first = true;
-    for (IProject project : ROOT.getProjects())
-    {
-      if (first)
-      {
-        MSG.println("  Clear workspace");
-        first = false;
-      }
+    MSG.println("    Update workspace");
+    updateWorkspace(phase);
+    IMarker[] markers = buildWorkspace(phase, clean);
+    processMarkers(phase, markers, "build.markers");
 
-      msg("Deleting project " + project.getName());
-      project.delete(true, new NullProgressMonitor());
-    }
-
-    for (File file : WORKSPACE_FILE.listFiles())
+    int fixAttempt = 0;
+    while (markers.length != 0)
     {
-      if (file.isDirectory() && !".metadata".equals(file.getName()))
-      {
-        msg("Deleting location " + file);
-        VersionUtil.delete(file);
-      }
+      MSG.println("    Fix workspace (attempt " + ++fixAttempt + ")");
+      fixWorkspace(phase, markers);
+      markers = buildWorkspace(phase, false);
+      processMarkers(phase, markers, "fix" + fixAttempt + ".markers");
     }
   }
 
-  private void updateWorkspace(BundleFile updateFolder, IProgressMonitor monitor) throws CoreException, IOException
+  private void clearWorkspace() throws Throwable
   {
-    updateWorkspace(updateFolder, WORKSPACE_FILE, true);
-
-    for (File file : WORKSPACE_FILE.listFiles())
+    WORKSPACE.getDescription().setAutoBuilding(false);
+    WORKSPACE.run(new IWorkspaceRunnable()
     {
-      String name = file.getName();
-      if (file.isDirectory() && !".metadata".equals(name))
+      public void run(IProgressMonitor monitor) throws CoreException
       {
-        IProject project = ROOT.getProject(name);
-        if (project.exists())
+        for (IProject project : ROOT.getProjects())
         {
-          if (project.isOpen())
-          {
-            project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
-          }
-          else
-          {
-            project.open(monitor);
-          }
+          MSG.println("  Deleting project " + project.getName());
+          project.delete(true, null);
         }
-        else
+
+        for (File file : WORKSPACE_FILE.listFiles())
         {
-          project.create(monitor);
-          project.open(monitor);
+          if (file.isDirectory() && !".metadata".equals(file.getName()))
+          {
+            MSG.println("  Deleting location " + file);
+            VersionUtil.delete(file);
+          }
         }
       }
-    }
+    }, null);
   }
 
-  private void updateWorkspace(BundleFile source, File target, boolean onlyDirectories) throws IOException
+  private void updateWorkspace(final BundleFile phase) throws Throwable
+  {
+    WORKSPACE.run(new IWorkspaceRunnable()
+    {
+      public void run(IProgressMonitor monitor) throws CoreException
+      {
+        try
+        {
+          updateWorkspace(phase, WORKSPACE_FILE, 0);
+
+          for (File file : WORKSPACE_FILE.listFiles())
+          {
+            String name = file.getName();
+            if (file.isDirectory() && !".metadata".equals(name))
+            {
+              IProject project = ROOT.getProject(name);
+              if (project.exists())
+              {
+                if (project.isOpen())
+                {
+                  project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
+                }
+                else
+                {
+                  project.open(monitor);
+                }
+              }
+              else
+              {
+                project.create(monitor);
+                project.open(monitor);
+              }
+            }
+          }
+
+          // TODO Remove deleted projects
+        }
+        catch (CoreException ex)
+        {
+          throw ex;
+        }
+        catch (RuntimeException ex)
+        {
+          throw ex;
+        }
+        catch (Throwable ex)
+        {
+          throw new RuntimeException(ex);
+        }
+      }
+    }, null);
+  }
+
+  private void updateWorkspace(BundleFile source, File target, int level) throws Throwable
   {
     if (source.getName().endsWith(DELETE_SUFFIX))
     {
@@ -204,10 +202,10 @@ public class VersionBuilderTest extends TestCase
       for (BundleFile sourceChild : source.getChildren())
       {
         File targetChild = new File(target, sourceChild.getName());
-        updateWorkspace(sourceChild, targetChild, false);
+        updateWorkspace(sourceChild, targetChild, level + 1);
       }
     }
-    else if (!onlyDirectories)
+    else if (level > 1) // Exclude files on project level
     {
       if (!target.exists())
       {
@@ -222,37 +220,72 @@ public class VersionBuilderTest extends TestCase
     }
   }
 
-  private IMarker[] buildWorkspace(boolean clean) throws CoreException, InterruptedException
+  private IMarker[] buildWorkspace(BundleFile phase, boolean clean) throws Throwable
   {
+    MSG.println("    Build " + (clean ? "clean" : "incremental"));
+    long start = System.currentTimeMillis();
+
     if (clean)
     {
-      WORKSPACE.build(IncrementalProjectBuilder.CLEAN_BUILD, new NullProgressMonitor());
-      WORKSPACE.build(IncrementalProjectBuilder.FULL_BUILD, new NullProgressMonitor());
+      WORKSPACE.build(IncrementalProjectBuilder.CLEAN_BUILD, null);
+      WORKSPACE.build(IncrementalProjectBuilder.FULL_BUILD, null);
     }
     else
     {
-      WORKSPACE.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, new NullProgressMonitor());
+      WORKSPACE.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, null);
     }
 
+    msg("Took " + (System.currentTimeMillis() - start) + " millis");
     return ROOT.findMarkers(Markers.MARKER_TYPE, false, IResource.DEPTH_INFINITE);
   }
 
-  private void checkResults(String phase, BundleFile resultsFile, IMarker[] markers) throws CoreException
+  private void fixWorkspace(BundleFile phase, IMarker[] markers)
   {
-    String expectedResults = resultsFile.getContents();
-    String actualResults = createResults(markers);
-    assertEquals("After " + phase + " build", expectedResults, actualResults);
+    for (IMarker marker : markers)
+    {
+      IMarkerResolution[] resolutions = FIX_GENERATOR.getResolutions(marker);
+      if (resolutions != null && resolutions.length != 0)
+      {
+        assertTrue("Marker has resolutions but hasResolutions() returns false", FIX_GENERATOR.hasResolutions(marker));
+        for (IMarkerResolution resolution : resolutions)
+        {
+          msg("Fixing " + marker.getResource().getFullPath() + ": " + resolution.getLabel());
+          resolution.run(marker);
+        }
+      }
+    }
   }
 
-  private void generateResults(BundleFile folder, IMarker[] markers) throws CoreException, IOException
+  private void processMarkers(BundleFile phase, IMarker[] markers, String fileName) throws Throwable
   {
-    String results = createResults(markers);
-
-    BundleFile resultsFile = folder.addChild(RESULTS_FILE, false);
-    resultsFile.setContents(results);
+    BundleFile markersFile = phase.getChild(fileName);
+    if (markersFile != null)
+    {
+      MSG.println("    Check markers");
+      checkMarkers(phase, markers, markersFile);
+    }
+    else
+    {
+      MSG.println("    Generate markers");
+      generateMarkers(phase, markers, fileName);
+    }
   }
 
-  private String createResults(IMarker[] markers) throws CoreException
+  private void checkMarkers(BundleFile phase, IMarker[] markers, BundleFile markersFile) throws Throwable
+  {
+    String expected = markersFile.getContents();
+    String actual = createMarkers(markers);
+    assertEquals("After " + phase.getName() + " build", expected, actual);
+  }
+
+  private void generateMarkers(BundleFile phase, IMarker[] markers, String fileName) throws Throwable
+  {
+    String contents = createMarkers(markers);
+    BundleFile resultsFile = phase.addChild(fileName, false);
+    resultsFile.setContents(contents);
+  }
+
+  private static String createMarkers(IMarker[] markers) throws CoreException
   {
     if (markers.length == 0)
     {
@@ -303,7 +336,7 @@ public class VersionBuilderTest extends TestCase
     return builder.toString();
   }
 
-  private void addAttribute(StringBuilder builder, String key, Object value)
+  private static void addAttribute(StringBuilder builder, String key, Object value)
   {
     String str = "  " + key + " = " + value;
     msg(str);
@@ -319,6 +352,6 @@ public class VersionBuilderTest extends TestCase
 
   private static void msg(String string)
   {
-    MSG.println("    " + string);
+    MSG.println("      " + string);
   }
 }

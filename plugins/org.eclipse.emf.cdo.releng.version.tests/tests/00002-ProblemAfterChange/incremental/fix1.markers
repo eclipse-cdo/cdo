@@ -1,0 +1,20 @@
+Marker
+  <resource> = /com.foo.project1-feature/feature.xml
+  charEnd = 681
+  charStart = 665
+  lineNumber = 27
+  message = Plug-in reference 'com.foo.project1' has been changed from 1.0.0 to 1.0.100
+  problemType = component.version
+  quickFixConfigureOption = ignore.feature.content.changes
+  severity = 1
+Marker
+  <resource> = /com.foo.project1-feature/feature.xml
+  charEnd = 124
+  charStart = 119
+  lineNumber = 4
+  message = Version must be increased to 1.0.100 because the feature's references have changed
+  problemType = component.version
+  quickFixConfigureOption = ignore.feature.content.changes
+  quickFixPattern = feature.*?version\s*=\s*["'](\d+(\.\d+(\.\d+)?)?)
+  quickFixReplacement = 1.0.100
+  severity = 2

@@ -86,8 +86,6 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
   private static final Pattern DEBUG_OPTION_PATTERN = Pattern.compile("^( *)([^/ \\n\\r]+)/([^ =]+)( *=.*)$",
       Pattern.MULTILINE);
 
-  private static final String NL = System.getProperty("line.separator");
-
   private static IResourceChangeListener postBuildListener;
 
   private static final Set<String> releasePaths = new HashSet<String>();
@@ -684,8 +682,9 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
     integration = true;
     rootProjects = new HashSet<String>();
 
-    String contents = INTEGRATION_PROPERTY_KEY + " = " + integration + NL + DEVIATIONS_PROPERTY_KEY + " = "
-        + deviations + NL + ROOT_PROJECTS_KEY + " = ";
+    String lineDelimiter = VersionUtil.getLineDelimiter(propertiesFile);
+    String contents = INTEGRATION_PROPERTY_KEY + " = " + integration + lineDelimiter + DEVIATIONS_PROPERTY_KEY + " = "
+        + deviations + lineDelimiter + ROOT_PROJECTS_KEY + " = ";
 
     String charsetName = propertiesFile.getCharset();
     byte[] bytes = contents.getBytes(charsetName);
@@ -934,7 +933,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
         {
           try
           {
-            String content = VersionUtil.getContent(file);
+            String content = VersionUtil.getContents(file);
             Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
             Matcher matcher = pattern.matcher(content);
             if (matcher.find())
@@ -1118,9 +1117,10 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
         IMarker marker = Markers.addMarker(file, msg, IMarker.SEVERITY_WARNING, regex);
         marker.setAttribute(Markers.PROBLEM_TYPE, Markers.SCHEMA_BUILDER_PROBLEM);
         marker.setAttribute(Markers.QUICK_FIX_PATTERN, regex);
-        marker.setAttribute(Markers.QUICK_FIX_REPLACEMENT, NL + "\t\t<buildCommand>" + NL
-            + "\t\t\t<name>org.eclipse.pde.SchemaBuilder</name>" + NL + "\t\t\t<arguments>" + NL + "\t\t\t</arguments>"
-            + NL + "\t\t</buildCommand>" + NL + "\t\t");
+        String lineDelimiter = VersionUtil.getLineDelimiter(file);
+        marker.setAttribute(Markers.QUICK_FIX_REPLACEMENT, lineDelimiter + "\t\t<buildCommand>" + lineDelimiter
+            + "\t\t\t<name>org.eclipse.pde.SchemaBuilder</name>" + lineDelimiter + "\t\t\t<arguments>" + lineDelimiter
+            + "\t\t\t</arguments>" + lineDelimiter + "\t\t</buildCommand>" + lineDelimiter + "\t\t");
         marker
             .setAttribute(Markers.QUICK_FIX_CONFIGURE_OPTION, IVersionBuilderArguments.IGNORE_SCHEMA_BUILDER_ARGUMENT);
         return;
@@ -1153,7 +1153,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       Markers.deleteAllMarkers(file, Markers.DEBUG_OPTION_PROBLEM);
 
       String symbolicName = pluginModel.getBundleDescription().getSymbolicName();
-      String content = VersionUtil.getContent(file);
+      String content = VersionUtil.getContents(file);
 
       Matcher matcher = DEBUG_OPTION_PATTERN.matcher(content);
       while (matcher.find())

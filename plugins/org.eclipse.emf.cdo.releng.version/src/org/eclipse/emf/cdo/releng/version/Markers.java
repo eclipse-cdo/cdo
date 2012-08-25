@@ -196,7 +196,7 @@ public final class Markers
   public static IMarker addMarker(IFile file, String message, int severity, String regex) throws CoreException,
       IOException
   {
-    String string = VersionUtil.getContent(file);
+    String string = VersionUtil.getContents(file);
 
     Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
     Matcher matcher = pattern.matcher(string);
@@ -207,7 +207,7 @@ public final class Markers
       int endChar = matcher.end(1);
 
       matcher = NL_PATTERN.matcher(string);
-      int line = 0;
+      int line = 1;
       while (matcher.find())
       {
         if (matcher.start(1) > startChar)

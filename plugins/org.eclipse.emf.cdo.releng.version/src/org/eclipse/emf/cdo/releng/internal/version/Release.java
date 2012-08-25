@@ -124,6 +124,7 @@ public class Release implements IRelease
     writeRelease(builder);
 
     String xml = builder.toString();
+    xml = xml.replace("\n", VersionUtil.getLineDelimiter(file));
     ByteArrayInputStream contents = new ByteArrayInputStream(xml.getBytes("UTF-8"));
     if (file.exists())
     {

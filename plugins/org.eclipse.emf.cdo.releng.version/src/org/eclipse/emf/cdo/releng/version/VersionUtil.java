@@ -15,9 +15,13 @@ import org.eclipse.emf.cdo.releng.internal.version.Activator;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.preferences.IScopeContext;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.pde.core.IModel;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.core.plugin.PluginRegistry;
@@ -33,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -65,7 +70,7 @@ public final class VersionUtil
     return root.getFile(newPath);
   }
 
-  public static String getContent(IFile file) throws CoreException, IOException
+  public static String getContents(IFile file) throws CoreException, IOException
   {
     InputStream contents = null;
 
@@ -87,6 +92,73 @@ public final class VersionUtil
     {
       close(contents);
     }
+  }
+
+  public static String getLineDelimiter(IFile file) throws IOException
+  {
+    InputStream inputStream = null;
+    try
+    {
+      inputStream = file.getContents();
+      String encoding = file.getCharset();
+      Reader reader = encoding == null ? new InputStreamReader(inputStream) : new InputStreamReader(inputStream,
+          encoding);
+      char[] text = new char[4048];
+      char target = 0;
+      for (int count = reader.read(text); count > -1; count = reader.read(text))
+      {
+        for (int i = 0; i < count; ++i)
+        {
+          char character = text[i];
+          if (character == '\n')
+          {
+            if (target == '\n')
+            {
+              return "\n";
+            }
+            else if (target == '\r')
+            {
+              return "\r\n";
+            }
+            else
+            {
+              target = '\n';
+            }
+          }
+          else if (character == '\r')
+          {
+            if (target == '\n')
+            {
+              return "\n\r";
+            }
+            else if (target == '\r')
+            {
+              return "\r";
+            }
+            else
+            {
+              target = '\r';
+            }
+          }
+        }
+      }
+    }
+    catch (Exception exception)
+    {
+      // If we can't determine it by reading the file,
+      // look at the preferences instead.
+    }
+    finally
+    {
+      if (inputStream != null)
+      {
+        inputStream.close();
+      }
+    }
+
+    return Platform.getPreferencesService().getString(Platform.PI_RUNTIME, Platform.PREF_LINE_SEPARATOR,
+        System.getProperty(Platform.PREF_LINE_SEPARATOR),
+        new IScopeContext[] { new ProjectScope(file.getProject()), InstanceScope.INSTANCE });
   }
 
   public static synchronized byte[] getSHA1(IFile file) throws NoSuchAlgorithmException, CoreException, IOException

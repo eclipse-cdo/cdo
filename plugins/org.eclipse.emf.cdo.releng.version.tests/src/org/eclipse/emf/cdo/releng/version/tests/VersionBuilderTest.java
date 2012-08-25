@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.releng.version.Markers;
 import org.eclipse.emf.cdo.releng.version.VersionUtil;
 import org.eclipse.emf.cdo.releng.version.ui.quickfixes.VersionResolutionGenerator;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -285,7 +286,7 @@ public class VersionBuilderTest extends TestCase
     resultsFile.setContents(contents);
   }
 
-  private static String createMarkers(IMarker[] markers) throws CoreException
+  private static String createMarkers(IMarker[] markers) throws Throwable
   {
     if (markers.length == 0)
     {
@@ -315,17 +316,90 @@ public class VersionBuilderTest extends TestCase
       }
     });
 
+    IFile lastContentsFile = null;
+    String contents = null;
+
     StringBuilder builder = new StringBuilder();
     for (IMarker marker : markers)
     {
       msg("Marker");
       builder.append("Marker\n");
-      addAttribute(builder, Markers.RESOURCE_ATTRIBUTE, marker.getResource().getFullPath());
+
+      IFile file = (IFile)marker.getResource();
+      addAttribute(builder, Markers.RESOURCE_ATTRIBUTE, file.getFullPath());
 
       Map<String, Object> attributes = marker.getAttributes();
       List<String> keys = new ArrayList<String>(attributes.keySet());
-      Collections.sort(keys);
+      keys.remove(IMarker.LINE_NUMBER);
 
+      if (keys.remove(IMarker.CHAR_START))
+      {
+        int indexStart = (Integer)attributes.get(IMarker.CHAR_START);
+        int indexEnd = -1;
+        if (keys.remove(IMarker.CHAR_END))
+        {
+          indexEnd = (Integer)attributes.get(IMarker.CHAR_END);
+        }
+
+        if (file != lastContentsFile)
+        {
+          contents = VersionUtil.getContents(file);
+          lastContentsFile = file;
+        }
+
+        int size = contents.length();
+        for (int i = 0, lf = 1, cr = 1, column = 0; i < size; ++i, ++column)
+        {
+          char c = contents.charAt(i);
+          if (c == '\n')
+          {
+            ++lf;
+            column = 1;
+          }
+          else if (c == '\r')
+          {
+            ++cr;
+            column = 1;
+          }
+
+          if (i == indexStart || i == indexEnd)
+          {
+            String value = "(" + Math.max(cr, lf) + "," + column + ")";
+
+            if (i == indexStart)
+            {
+              addAttribute(builder, "<" + IMarker.CHAR_START + ">", value);
+              if (indexEnd == -1)
+              {
+                break;
+              }
+            }
+            else
+            {
+              addAttribute(builder, "<" + IMarker.CHAR_END + ">", value);
+              break;
+            }
+          }
+        }
+
+      }
+
+      if (keys.remove(IMarker.SEVERITY))
+      {
+        addAttribute(builder, "<" + IMarker.SEVERITY + ">", attributes.get(IMarker.SEVERITY));
+      }
+
+      if (keys.remove(IMarker.MESSAGE))
+      {
+        addAttribute(builder, "<" + IMarker.MESSAGE + ">", attributes.get(IMarker.MESSAGE));
+      }
+
+      if (keys.remove(Markers.PROBLEM_TYPE))
+      {
+        addAttribute(builder, Markers.PROBLEM_TYPE, attributes.get(Markers.PROBLEM_TYPE));
+      }
+
+      Collections.sort(keys);
       for (String key : keys)
       {
         Object value = attributes.get(key);

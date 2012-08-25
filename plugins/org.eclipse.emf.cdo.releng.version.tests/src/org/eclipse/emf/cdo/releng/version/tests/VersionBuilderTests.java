@@ -11,8 +11,10 @@
 package org.eclipse.emf.cdo.releng.version.tests;
 
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 
 import junit.framework.Test;
+import junit.framework.TestResult;
 import junit.framework.TestSuite;
 
 /**
@@ -20,17 +22,60 @@ import junit.framework.TestSuite;
  */
 public class VersionBuilderTests extends TestSuite
 {
-  public static Test suite()
-  {
-    TestSuite suite = new TestSuite("VersionBuilderTests [Workspace: "
-        + ResourcesPlugin.getWorkspace().getRoot().getLocation() + "]");
+  private static final IPath WORKSPACE = ResourcesPlugin.getWorkspace().getRoot().getLocation();
 
-    BundleFile testsFolder = Activator.getRootFile().getChild("tests");
-    for (BundleFile testFolder : testsFolder.getChildren())
+  private boolean openWorkspaceFolder;
+
+  private VersionBuilderTests()
+  {
+    super("VersionBuilderTests [Workspace: " + WORKSPACE + "]");
+
+    BundleFile rootFile = Activator.getRootFile();
+    if (addTests(rootFile.getChild("test")))
     {
-      suite.addTest(new VersionBuilderTest(testFolder));
+      openWorkspaceFolder = true;
+    }
+    else
+    {
+      addTests(rootFile.getChild("tests"));
+    }
+  }
+
+  private boolean addTests(BundleFile container)
+  {
+    boolean added = false;
+    for (BundleFile testFolder : container.getChildren())
+    {
+      if (testFolder.isDirectory())
+      {
+        addTest(new VersionBuilderTest(testFolder));
+        added = true;
+      }
     }
 
-    return suite;
+    return added;
+  }
+
+  @Override
+  public void run(TestResult result)
+  {
+    super.run(result);
+    if (openWorkspaceFolder)
+    {
+      try
+      {
+        // TODO Support operating systems other than Windows
+        Runtime.getRuntime().exec("explorer.exe \"" + WORKSPACE.toOSString() + "\"");
+      }
+      catch (Exception ex)
+      {
+        Activator.log(ex);
+      }
+    }
+  }
+
+  public static Test suite()
+  {
+    return new VersionBuilderTests();
   }
 }

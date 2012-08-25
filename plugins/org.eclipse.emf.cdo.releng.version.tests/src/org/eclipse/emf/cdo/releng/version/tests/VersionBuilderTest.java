@@ -95,15 +95,21 @@ public class VersionBuilderTest extends TestCase
     MSG.println("    Update workspace");
     updateWorkspace(phase);
     IMarker[] markers = buildWorkspace(phase, clean);
-    processMarkers(phase, markers, "build.markers");
+    String lastContents = processMarkers(phase, markers, "build.markers");
 
     int fixAttempt = 0;
-    while (markers.length != 0) // TODO Can be inifinite?
+    while (markers.length != 0)
     {
       MSG.println("    Fix workspace (attempt " + ++fixAttempt + ")");
       fixWorkspace(phase, markers);
       markers = buildWorkspace(phase, false);
-      processMarkers(phase, markers, "fix" + fixAttempt + ".markers");
+      String contents = processMarkers(phase, markers, "fix" + fixAttempt + ".markers");
+      if (contents.equals(lastContents))
+      {
+        break;
+      }
+
+      lastContents = contents;
     }
   }
 
@@ -259,33 +265,33 @@ public class VersionBuilderTest extends TestCase
     }
   }
 
-  private void processMarkers(BundleFile phase, IMarker[] markers, String fileName) throws Throwable
+  private String processMarkers(BundleFile phase, IMarker[] markers, String fileName) throws Throwable
   {
     BundleFile markersFile = phase.getChild(fileName);
     if (markersFile != null)
     {
       MSG.println("    Check markers");
-      checkMarkers(phase, markers, markersFile);
+      return checkMarkers(phase, markers, markersFile);
     }
-    else
-    {
-      MSG.println("    Generate markers");
-      generateMarkers(phase, markers, fileName);
-    }
+
+    MSG.println("    Generate markers");
+    return generateMarkers(phase, markers, fileName);
   }
 
-  private void checkMarkers(BundleFile phase, IMarker[] markers, BundleFile markersFile) throws Throwable
+  private String checkMarkers(BundleFile phase, IMarker[] markers, BundleFile markersFile) throws Throwable
   {
     String expected = markersFile.getContents();
     String actual = createMarkers(markers);
     assertEquals("After " + phase.getName() + " build", expected, actual);
+    return actual;
   }
 
-  private void generateMarkers(BundleFile phase, IMarker[] markers, String fileName) throws Throwable
+  private String generateMarkers(BundleFile phase, IMarker[] markers, String fileName) throws Throwable
   {
     String contents = createMarkers(markers);
     BundleFile resultsFile = phase.addChild(fileName, false);
     resultsFile.setContents(contents);
+    return contents;
   }
 
   private static String createMarkers(IMarker[] markers) throws Throwable

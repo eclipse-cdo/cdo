@@ -57,6 +57,8 @@ public class VersionBuilderTest extends TestCase
 
   private static final PrintStream MSG = System.out;
 
+  private static String lineDelimiter;
+
   private BundleFile testFolder;
 
   public VersionBuilderTest(BundleFile testFolder)
@@ -322,10 +324,17 @@ public class VersionBuilderTest extends TestCase
     StringBuilder builder = new StringBuilder();
     for (IMarker marker : markers)
     {
-      msg("Marker");
-      builder.append("Marker\n");
-
       IFile file = (IFile)marker.getResource();
+
+      if (lineDelimiter == null)
+      {
+        lineDelimiter = VersionUtil.getLineDelimiter(file);
+      }
+
+      msg("Marker");
+      builder.append("Marker");
+      builder.append(lineDelimiter);
+
       addAttribute(builder, Markers.RESOURCE_ATTRIBUTE + " ", file.getFullPath());
 
       Map<String, Object> attributes = marker.getAttributes();
@@ -432,7 +441,7 @@ public class VersionBuilderTest extends TestCase
     msg(str);
 
     builder.append(str);
-    builder.append("\n");
+    builder.append(lineDelimiter);
   }
 
   private static String getRelativePath(File file)

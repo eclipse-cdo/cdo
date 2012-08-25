@@ -1491,7 +1491,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
         IMarker marker = addFeatureChildMarker(file, Markers.COMPONENT_VERSION_PROBLEM, tag, name, msg,
             element.isLicenseFeature(), componentReferenceType == ComponentReferenceType.ADDED, replacementVersion,
             severity);
-        if (severity != IMarker.SEVERITY_ERROR)
+        if (severity == IMarker.SEVERITY_ERROR)
         {
           marker.setAttribute(Markers.QUICK_FIX_CONFIGURE_OPTION,
               IVersionBuilderArguments.IGNORE_CONTENT_CHANGES_ARGUMENT);

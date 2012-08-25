@@ -1,5 +1,5 @@
 Marker
-  <resource>  = /com.foo.project1/META-INF/MANIFEST.MF
+  <resource>  = com.foo.project1/META-INF/MANIFEST.MF
   <charStart> = (4,18)
   <charEnd>   = (4,23)
   <severity>  = ERROR
@@ -7,3 +7,4 @@ Marker
   problemType = component.version
   quickFixPattern = Bundle-Version: *(\d+(\.\d+(\.\d+)?)?)
   quickFixReplacement = 1.0.100
+  FIX-1 = Change the version (Change the version to 1.0.100)

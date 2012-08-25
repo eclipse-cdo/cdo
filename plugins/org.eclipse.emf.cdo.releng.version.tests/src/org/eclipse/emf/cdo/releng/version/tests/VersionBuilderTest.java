@@ -26,6 +26,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMarkerResolution;
+import org.eclipse.ui.IMarkerResolution2;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -258,7 +259,7 @@ public class VersionBuilderTest extends TestCase
         assertTrue("Marker has resolutions but hasResolutions() returns false", FIX_GENERATOR.hasResolutions(marker));
         for (IMarkerResolution resolution : resolutions)
         {
-          msg("Fixing " + marker.getResource().getFullPath() + ": " + resolution.getLabel());
+          msg(resolution.getLabel() + ": " + marker.getResource().getFullPath().makeRelative());
           resolution.run(marker);
         }
       }
@@ -341,7 +342,7 @@ public class VersionBuilderTest extends TestCase
       builder.append("Marker");
       builder.append(lineDelimiter);
 
-      addAttribute(builder, Markers.RESOURCE_ATTRIBUTE + " ", file.getFullPath());
+      addAttribute(builder, Markers.RESOURCE_ATTRIBUTE + " ", file.getFullPath().makeRelative());
 
       Map<String, Object> attributes = marker.getAttributes();
       List<String> keys = new ArrayList<String>(attributes.keySet());
@@ -421,9 +422,44 @@ public class VersionBuilderTest extends TestCase
         Object value = attributes.get(key);
         addAttribute(builder, key, value);
       }
+
+      IMarkerResolution[] resolutions = FIX_GENERATOR.getResolutions(marker);
+      if (resolutions != null && resolutions.length != 0)
+      {
+        assertTrue("Marker has resolutions but hasResolutions() returns false", FIX_GENERATOR.hasResolutions(marker));
+        for (int j = 0; j < resolutions.length; j++)
+        {
+          IMarkerResolution resolution = resolutions[j];
+          addFix(builder, j + 1, resolution);
+        }
+      }
     }
 
     return builder.toString();
+  }
+
+  private static void addAttribute(StringBuilder builder, String key, Object value)
+  {
+    String str = "  " + key + " = " + value;
+    msg(str);
+
+    builder.append(str);
+    builder.append(lineDelimiter);
+  }
+
+  private static void addFix(StringBuilder builder, int j, IMarkerResolution resolution)
+  {
+    String str = "  FIX-" + j + " = " + resolution.getLabel();
+    if (resolution instanceof IMarkerResolution2)
+    {
+      IMarkerResolution2 resolution2 = (IMarkerResolution2)resolution;
+      str += " (" + resolution2.getDescription() + ")";
+    }
+
+    msg(str);
+
+    builder.append(str);
+    builder.append(lineDelimiter);
   }
 
   private static Object getSeverityLabel(int severity)
@@ -439,15 +475,6 @@ public class VersionBuilderTest extends TestCase
     default:
       throw new IllegalStateException("Illegal severity code " + severity);
     }
-  }
-
-  private static void addAttribute(StringBuilder builder, String key, Object value)
-  {
-    String str = "  " + key + " = " + value;
-    msg(str);
-
-    builder.append(str);
-    builder.append(lineDelimiter);
   }
 
   private static String getRelativePath(File file)

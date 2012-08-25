@@ -109,6 +109,12 @@ public final class Markers
 
   public static String getAttribute(IMarker marker, String attributeName)
   {
+    Object value = getAttributeValue(marker, attributeName);
+    return value == null ? null : value.toString();
+  }
+
+  public static Comparable<?> getAttributeValue(IMarker marker, String attributeName)
+  {
     try
     {
       if (RESOURCE_ATTRIBUTE.equals(attributeName))
@@ -116,8 +122,7 @@ public final class Markers
         return marker.getResource().getFullPath().toString();
       }
 
-      Object value = marker.getAttribute(attributeName);
-      return value == null ? null : value.toString();
+      return (Comparable<?>)marker.getAttribute(attributeName);
     }
     catch (CoreException ex)
     {
@@ -126,10 +131,11 @@ public final class Markers
     }
   }
 
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   public static int compareAttributes(String attributeName, IMarker m1, IMarker m2)
   {
-    String v1 = getAttribute(m1, attributeName);
-    String v2 = getAttribute(m2, attributeName);
+    Comparable v1 = getAttributeValue(m1, attributeName);
+    Comparable v2 = getAttributeValue(m2, attributeName);
 
     if (v1 == null)
     {
@@ -140,7 +146,8 @@ public final class Markers
 
       return -1;
     }
-    else if (v2 == null)
+
+    if (v2 == null)
     {
       return 1;
     }

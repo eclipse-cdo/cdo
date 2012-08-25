@@ -96,7 +96,7 @@ public class VersionBuilderTest extends TestCase
     processMarkers(phase, markers, "build.markers");
 
     int fixAttempt = 0;
-    while (markers.length != 0)
+    while (markers.length != 0) // TODO Can be inifinite?
     {
       MSG.println("    Fix workspace (attempt " + ++fixAttempt + ")");
       fixWorkspace(phase, markers);
@@ -326,7 +326,7 @@ public class VersionBuilderTest extends TestCase
       builder.append("Marker\n");
 
       IFile file = (IFile)marker.getResource();
-      addAttribute(builder, Markers.RESOURCE_ATTRIBUTE, file.getFullPath());
+      addAttribute(builder, Markers.RESOURCE_ATTRIBUTE + " ", file.getFullPath());
 
       Map<String, Object> attributes = marker.getAttributes();
       List<String> keys = new ArrayList<String>(attributes.keySet());
@@ -376,7 +376,7 @@ public class VersionBuilderTest extends TestCase
             }
             else
             {
-              addAttribute(builder, "<" + IMarker.CHAR_END + ">", value);
+              addAttribute(builder, "<" + IMarker.CHAR_END + ">  ", value);
               break;
             }
           }
@@ -386,12 +386,13 @@ public class VersionBuilderTest extends TestCase
 
       if (keys.remove(IMarker.SEVERITY))
       {
-        addAttribute(builder, "<" + IMarker.SEVERITY + ">", attributes.get(IMarker.SEVERITY));
+        int severity = (Integer)attributes.get(IMarker.SEVERITY);
+        addAttribute(builder, "<" + IMarker.SEVERITY + "> ", getSeverityLabel(severity));
       }
 
       if (keys.remove(IMarker.MESSAGE))
       {
-        addAttribute(builder, "<" + IMarker.MESSAGE + ">", attributes.get(IMarker.MESSAGE));
+        addAttribute(builder, "<" + IMarker.MESSAGE + ">  ", attributes.get(IMarker.MESSAGE));
       }
 
       if (keys.remove(Markers.PROBLEM_TYPE))
@@ -408,6 +409,21 @@ public class VersionBuilderTest extends TestCase
     }
 
     return builder.toString();
+  }
+
+  private static Object getSeverityLabel(int severity)
+  {
+    switch (severity)
+    {
+    case IMarker.SEVERITY_INFO:
+      return "INFO";
+    case IMarker.SEVERITY_WARNING:
+      return "WARNING";
+    case IMarker.SEVERITY_ERROR:
+      return "ERROR";
+    default:
+      throw new IllegalStateException("Illegal severity code " + severity);
+    }
   }
 
   private static void addAttribute(StringBuilder builder, String key, Object value)

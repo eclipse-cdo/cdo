@@ -4,7 +4,7 @@
 	<!-- GENERATION WARNING -->
 
 	<property file="${user.home}/org.eclipse.emf.cdo.releng.doc_4.2.properties" />
-	<property name="path.tp" value=".target" />
+	<property name="path.tp" value=".buckminster/tp" />
 	<property name="path.supplemental" value="${user.home}/git/local/org.eclipse.emf.cdo.releng.doc.supplemental" />
 
 	<property name="jdk.link" value="http://download.oracle.com/javase/1.5.0/docs/api" />

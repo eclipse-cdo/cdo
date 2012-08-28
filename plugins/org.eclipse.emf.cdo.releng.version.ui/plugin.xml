@@ -90,4 +90,13 @@
       </markerResolutionGenerator>
    </extension>
 
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.eclipse.emf.cdo.releng.version.ui.preferences.VersionBuilderPreferencePage"
+            id="org.eclipse.emf.cdo.releng.version.ui.preferences.VersionBuilderPreferencePage"
+            name="Extended Version Management">
+      </page>
+   </extension>
+
 </plugin>

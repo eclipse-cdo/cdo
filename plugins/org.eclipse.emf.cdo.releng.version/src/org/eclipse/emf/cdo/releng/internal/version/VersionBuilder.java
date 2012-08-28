@@ -203,6 +203,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
           arguments = null;
         }
       };
+
       project.getWorkspace().addResourceChangeListener(postBuildListener, IResourceChangeEvent.POST_BUILD);
       Activator.setPostBuildListener(postBuildListener);
     }
@@ -230,6 +231,11 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       {
         String msg = "Path to release spec file is not configured";
         Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, "(" + VersionUtil.BUILDER_ID + ")");
+        return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+      }
+
+      if (Activator.getIgnoredReleases().contains(releasePathArg))
+      {
         return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
       }
 
@@ -263,8 +269,13 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       {
         Activator.log(ex);
         String msg = "Problem with release spec: " + releasePath + " (" + ex.getMessage() + ")";
-        Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR,
-            "(" + releasePath.toString().replace(".", "\\.") + ")");
+        IMarker marker = Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, "("
+            + releasePath.toString().replace(".", "\\.") + ")");
+        if (marker != null)
+        {
+          marker.setAttribute(Markers.PROBLEM_TYPE, Markers.RELEASE_PATH_PROBLEM);
+        }
+
         return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
       }
 

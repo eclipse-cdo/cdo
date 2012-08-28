@@ -32,6 +32,8 @@ public final class Markers
 
   public static final String DEVIATION_INFO = "deviation";
 
+  public static final String RELEASE_PATH_PROBLEM = "release.path";
+
   public static final String MALFORMED_VERSION_PROBLEM = "malformed.version";
 
   public static final String SCHEMA_BUILDER_PROBLEM = "schema.builder";

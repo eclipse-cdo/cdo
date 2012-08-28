@@ -11,15 +11,24 @@
 package org.eclipse.emf.cdo.releng.version;
 
 import org.eclipse.emf.cdo.releng.internal.version.Activator;
+import org.eclipse.emf.cdo.releng.internal.version.VersionBuilderArguments;
 
+import org.eclipse.core.resources.IBuildConfiguration;
+import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.pde.core.IModel;
@@ -40,6 +49,8 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -50,6 +61,8 @@ public final class VersionUtil
 
   public static final boolean DEBUG = Boolean.valueOf(System.getProperty("org.eclipse.emf.cdo.releng.version.debug",
       "false"));
+
+  private static final IWorkspace WORKSPACE = ResourcesPlugin.getWorkspace();
 
   private static final byte[] BUFFER = new byte[8192];
 
@@ -342,5 +355,62 @@ public final class VersionUtil
     Version version = new Version(((org.eclipse.pde.internal.core.ifeature.IFeatureModel)componentModel).getFeature()
         .getVersion());
     return normalize(version);
+  }
+
+  public static void cleanReleaseProjects(final String releasePath)
+  {
+    new Job("Cleaning workspace")
+    {
+      @Override
+      protected IStatus run(IProgressMonitor monitor)
+      {
+        try
+        {
+          IBuildConfiguration[] buildConfigs = getBuildConfigs(releasePath);
+          WORKSPACE.build(buildConfigs, IncrementalProjectBuilder.CLEAN_BUILD, true, monitor);
+          return Status.OK_STATUS;
+        }
+        catch (CoreException ex)
+        {
+          return ex.getStatus();
+        }
+      }
+    }.schedule();
+  }
+
+  private static IBuildConfiguration[] getBuildConfigs(String releasePath)
+  {
+    List<IBuildConfiguration> buildConfigs = new ArrayList<IBuildConfiguration>();
+    for (IProject project : WORKSPACE.getRoot().getProjects())
+    {
+      if (project.isAccessible())
+      {
+        try
+        {
+          ICommand[] commands = project.getDescription().getBuildSpec();
+          for (ICommand command : commands)
+          {
+            if (BUILDER_ID.equals(command.getBuilderName()))
+            {
+              VersionBuilderArguments arguments = new VersionBuilderArguments(project);
+              String projectReleasePath = arguments.getReleasePath();
+              if (releasePath.equals(projectReleasePath))
+              {
+                IBuildConfiguration buildConfig = project.getActiveBuildConfig();
+                buildConfigs.add(buildConfig);
+              }
+  
+              break;
+            }
+          }
+        }
+        catch (Exception ex)
+        {
+          Activator.log(ex);
+        }
+      }
+    }
+  
+    return buildConfigs.toArray(new IBuildConfiguration[buildConfigs.size()]);
   }
 }

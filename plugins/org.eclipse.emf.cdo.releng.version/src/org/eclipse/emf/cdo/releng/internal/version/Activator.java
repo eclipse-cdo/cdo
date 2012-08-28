@@ -30,9 +30,11 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -41,13 +43,17 @@ public class Activator extends Plugin
 {
   public static final String PLUGIN_ID = "org.eclipse.emf.cdo.releng.version";
 
+  private static final String IGNORED_RELEASES = "ignoredReleases.bin";
+
+  private static final String BUILD_STATES = "buildStates.bin";
+
   private static Activator plugin;
 
   private static IResourceChangeListener postBuildListener;
 
-  private Map<String, BuildState> buildStates;
+  private IgnoredReleases ignoredReleases;
 
-  private File stateFile;
+  private Map<String, BuildState> buildStates;
 
   public Activator()
   {
@@ -61,8 +67,23 @@ public class Activator extends Plugin
 
     try
     {
-      File stateFolder = Platform.getStateLocation(getBundle()).toFile();
-      stateFile = new File(stateFolder, "buildStates.bin");
+      File stateFile = getStateFile(IGNORED_RELEASES);
+      if (stateFile.exists())
+      {
+        loadIgnoredReleases();
+      }
+    }
+    finally
+    {
+      if (ignoredReleases == null)
+      {
+        ignoredReleases = new IgnoredReleases();
+      }
+    }
+
+    try
+    {
+      File stateFile = getStateFile(BUILD_STATES);
       if (stateFile.exists())
       {
         loadBuildStates();
@@ -93,9 +114,54 @@ public class Activator extends Plugin
       buildStates = null;
     }
 
-    stateFile = null;
     plugin = null;
     super.stop(context);
+  }
+
+  private File getStateFile(String name)
+  {
+    File stateFolder = Platform.getStateLocation(getBundle()).toFile();
+    return new File(stateFolder, name);
+  }
+
+  private void loadIgnoredReleases()
+  {
+    ObjectInputStream stream = null;
+
+    try
+    {
+      File stateFile = getStateFile(IGNORED_RELEASES);
+      stream = new ObjectInputStream(new FileInputStream(stateFile));
+      ignoredReleases = (IgnoredReleases)stream.readObject();
+    }
+    catch (Exception ex)
+    {
+      log(ex);
+    }
+    finally
+    {
+      VersionUtil.close(stream);
+    }
+  }
+
+  private void saveIgnoredReleases()
+  {
+    ObjectOutputStream stream = null;
+
+    try
+    {
+      File stateFile = getStateFile(IGNORED_RELEASES);
+      stream = new ObjectOutputStream(new FileOutputStream(stateFile));
+      stream.writeObject(ignoredReleases);
+    }
+    catch (Exception ex)
+    {
+      log(ex);
+    }
+    finally
+    {
+      VersionUtil.close(stream);
+    }
   }
 
   private void loadBuildStates()
@@ -104,7 +170,9 @@ public class Activator extends Plugin
 
     try
     {
+      File stateFile = getStateFile(BUILD_STATES);
       stream = new ObjectInputStream(new FileInputStream(stateFile));
+
       @SuppressWarnings("unchecked")
       Map<String, BuildState> object = (Map<String, BuildState>)stream.readObject();
       buildStates = object;
@@ -136,6 +204,7 @@ public class Activator extends Plugin
 
     try
     {
+      File stateFile = getStateFile(BUILD_STATES);
       stream = new ObjectOutputStream(new FileOutputStream(stateFile));
       stream.writeObject(buildStates);
     }
@@ -145,18 +214,13 @@ public class Activator extends Plugin
     }
     finally
     {
-      if (stream != null)
-      {
-        try
-        {
-          stream.close();
-        }
-        catch (Exception ex)
-        {
-          log(ex);
-        }
-      }
+      VersionUtil.close(stream);
     }
+  }
+
+  public static Set<String> getIgnoredReleases()
+  {
+    return plugin.ignoredReleases;
   }
 
   public static BuildState getBuildState(IProject project)
@@ -215,5 +279,41 @@ public class Activator extends Plugin
   public static void setPostBuildListener(IResourceChangeListener postBuildListener)
   {
     Activator.postBuildListener = postBuildListener;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class IgnoredReleases extends HashSet<String>
+  {
+    private static final long serialVersionUID = 1L;
+
+    public IgnoredReleases()
+    {
+    }
+
+    @Override
+    public boolean add(String releasePath)
+    {
+      if (super.add(releasePath))
+      {
+        plugin.saveIgnoredReleases();
+        return true;
+      }
+
+      return false;
+    }
+
+    @Override
+    public boolean remove(Object releasePath)
+    {
+      if (super.remove(releasePath))
+      {
+        plugin.saveIgnoredReleases();
+        return true;
+      }
+
+      return false;
+    }
   }
 }

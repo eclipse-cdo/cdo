@@ -68,6 +68,10 @@ public class VersionResolutionGenerator implements IMarkerResolutionGenerator2
     {
       resolutions.add(new RootProjectResolution(marker));
     }
+    else if (Markers.RELEASE_PATH_PROBLEM.equals(problemType))
+    {
+      resolutions.add(new ReleasePathResolution(marker));
+    }
 
     String ignoreOption = Markers.getQuickFixConfigureOption(marker);
     if (ignoreOption != null)
@@ -102,6 +106,11 @@ public class VersionResolutionGenerator implements IMarkerResolutionGenerator2
 
     String problemType = Markers.getProblemType(marker);
     if (Markers.UNREFERENCED_ELEMENT_PROBLEM.equals(problemType))
+    {
+      return true;
+    }
+
+    if (Markers.RELEASE_PATH_PROBLEM.equals(problemType))
     {
       return true;
     }

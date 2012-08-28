@@ -73,9 +73,9 @@ Specifying the test cases is an iterative process. It comprises
 5) the repetition from 2).
 
 Unfortunately the reflective nature of JUnit prevents the re-execution of selected dynamic test cases.
-In the process of specification a test case it may be handy to execute that specific specific test case
-without the entire suite. This can be achieved by just moving the test case folder from the "tests"
-folder into the "test" folder. Later it should be moved back.
+In the process of specifying a test case it may be handy to execute that specific test case without
+its entire suite. This can be achieved by just moving the test case folder from the "tests" folder
+into the "test" folder. Later it should be moved back.
 
 ---
 

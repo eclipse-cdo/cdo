@@ -57,6 +57,16 @@ public final class VersionUtil
   {
   }
 
+  public static boolean equals(Object o1, Object o2)
+  {
+    if (o1 == null)
+    {
+      return o2 == null;
+    }
+
+    return o1.equals(o2);
+  }
+
   public static Version normalize(Version version)
   {
     return new Version(version.getMajor(), version.getMinor(), version.getMicro());

@@ -8,7 +8,7 @@ Marker
   quickFixConfigureOption = ignore.feature.content.changes
   quickFixPattern = feature.*?version\s*=\s*["'](\d+(\.\d+(\.\d+)?)?)
   quickFixReplacement = 1.0.100
-  FIX = Change the version (Change the version to 1.0.100)
+  *FIX = Change the version (Change the version to 1.0.100)
   FIX = Configure the project to ignore the problem (Set ignore.feature.content.changes = true in '/com.foo.project1-feature/.project')
 Marker
   <resource>  = com.foo.project1-feature/feature.xml

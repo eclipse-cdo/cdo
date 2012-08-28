@@ -25,7 +25,7 @@ to a string and this string is compared to the contents of the file "build.marke
 phase folder. If they are not identical the test case fails. If the "build.markers" file does
 not exist it is created and initialized with the serialized string.
 
-										The "*.markers" files must be verified manually!
+                   The "*.markers" files must be verified manually!
 
 The content of this file could look like this:
 

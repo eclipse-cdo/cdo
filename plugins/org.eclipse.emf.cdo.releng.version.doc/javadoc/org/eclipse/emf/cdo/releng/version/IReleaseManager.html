@@ -39,7 +39,7 @@ function windowTitle()
 <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
   <TR ALIGN="center" VALIGN="top">
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/IReleaseManager.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IRelease.html" title="interface in org.eclipse.emf.cdo.releng.version"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionUtil.html" title="class in org.eclipse.emf.cdo.releng.version"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Markers.html" title="class in org.eclipse.emf.cdo.releng.version"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/releng/version/IReleaseManager.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="IReleaseManager.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -96,15 +96,15 @@ Interface IReleaseManager</H2>
   <DT>public interface <B>IReleaseManager</B>
 </DL>
 
-<map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="IReleaseManager.html" title="&#171;interface&#187; IReleaseManager" alt="" coords="5,5,128,45"/>
-</map>
-
-<CENTER><IMG SRC="IReleaseManager.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
-
 
 
 <P>
+<DL>
+<DT><B>No Implement</B></DT>
+  <DD>This interface is not intended to be implemented by clients.</DD>
+<DT><B>No Extend</B></DT>
+  <DD>This interface is not intended to be extended by clients.</DD>
+</DL>
 <HR>
 
 <P>
@@ -137,8 +137,18 @@ Interface IReleaseManager</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IElement.html" title="interface in org.eclipse.emf.cdo.releng.version">IElement</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IReleaseManager.html#createElement(org.eclipse.pde.core.IModel, boolean)">createElement</A></B>(org.eclipse.pde.core.IModel&nbsp;componentModel,
-              boolean&nbsp;withFeatureContent)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IReleaseManager.html#createElement(org.eclipse.pde.core.IModel, boolean, boolean)">createElement</A></B>(org.eclipse.pde.core.IModel&nbsp;componentModel,
+              boolean&nbsp;withFeatureContent,
+              boolean&nbsp;resolve)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IElement.html" title="interface in org.eclipse.emf.cdo.releng.version">IElement</A>,<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IElement.html" title="interface in org.eclipse.emf.cdo.releng.version">IElement</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IReleaseManager.html#createElements(java.lang.String, boolean)">createElements</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;path,
+               boolean&nbsp;resolve)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -200,6 +210,25 @@ static final <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IRele
 </TR>
 </TABLE>
 
+<A NAME="createElements(java.lang.String, boolean)"><!-- --></A><H3>
+createElements</H3>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IElement.html" title="interface in org.eclipse.emf.cdo.releng.version">IElement</A>,<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IElement.html" title="interface in org.eclipse.emf.cdo.releng.version">IElement</A>&gt; <B>createElements</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;path,
+                                      boolean&nbsp;resolve)
+                                      throws <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</A>,
+                                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A>,
+                                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/security/NoSuchAlgorithmException.html?is-external=true" title="class or interface in java.security">NoSuchAlgorithmException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html?is-external=true" title="class or interface in org.eclipse.core.runtime">CoreException</A></CODE>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/security/NoSuchAlgorithmException.html?is-external=true" title="class or interface in java.security">NoSuchAlgorithmException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="getRelease(org.eclipse.core.resources.IFile)"><!-- --></A><H3>
 getRelease</H3>
 <PRE>
@@ -232,11 +261,12 @@ createRelease</H3>
 </DL>
 <HR>
 
-<A NAME="createElement(org.eclipse.pde.core.IModel, boolean)"><!-- --></A><H3>
+<A NAME="createElement(org.eclipse.pde.core.IModel, boolean, boolean)"><!-- --></A><H3>
 createElement</H3>
 <PRE>
 <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IElement.html" title="interface in org.eclipse.emf.cdo.releng.version">IElement</A> <B>createElement</B>(org.eclipse.pde.core.IModel&nbsp;componentModel,
-                       boolean&nbsp;withFeatureContent)</PRE>
+                       boolean&nbsp;withFeatureContent,
+                       boolean&nbsp;resolve)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -267,7 +297,7 @@ org.eclipse.pde.core.IModel <B>getComponentModel</B>(<A HREF="../../../../../../
 <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
   <TR ALIGN="center" VALIGN="top">
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/IReleaseManager.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
@@ -284,7 +314,7 @@ org.eclipse.pde.core.IModel <B>getComponentModel</B>(<A HREF="../../../../../../
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IRelease.html" title="interface in org.eclipse.emf.cdo.releng.version"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionUtil.html" title="class in org.eclipse.emf.cdo.releng.version"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Markers.html" title="class in org.eclipse.emf.cdo.releng.version"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/releng/version/IReleaseManager.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="IReleaseManager.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

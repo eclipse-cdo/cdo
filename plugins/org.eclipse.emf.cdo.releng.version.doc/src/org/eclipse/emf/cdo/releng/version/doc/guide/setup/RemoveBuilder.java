@@ -8,11 +8,15 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
+package org.eclipse.emf.cdo.releng.version.doc.guide.setup;
 
 /**
- * Version Management
+ * Removing Version Management from Projects
+ * <p>
  *
- * @number 2
+ * @number 3
+ * @author Eike Stepper
  */
-package org.eclipse.emf.cdo.releng.version.doc.guide;
-
+public class RemoveBuilder
+{
+}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Extended Version Management Documentation" topic="html/Overview.html">
+<toc label="Version Management Tool Documentation" topic="html/Overview.html">
   <topic label="Overview" href="html/Overview.html" />
   <topic label="Version Management" href="html/guide/index.html">
     <topic label="Understanding Versions" href="html/guide/Understanding.html" />
@@ -21,10 +21,10 @@
   </topic>
   <topic label="Reference" href="html/reference/index.html">
     <topic label="API Reference" href="javadoc/overview-summary.html">
-      <topic label="Extended Version Management" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html" icon="plugin">
+      <topic label="Version Management Tool" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.releng.version" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html" icon="package" />
       </topic>
-      <topic label="Extended Version Management Tests" href="javadoc/org/eclipse/emf/cdo/releng/version/tests/package-summary.html" icon="plugin">
+      <topic label="Version Management Tool Tests" href="javadoc/org/eclipse/emf/cdo/releng/version/tests/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.releng.version.tests" href="javadoc/org/eclipse/emf/cdo/releng/version/tests/package-summary.html" icon="package" />
       </topic>
     </topic>

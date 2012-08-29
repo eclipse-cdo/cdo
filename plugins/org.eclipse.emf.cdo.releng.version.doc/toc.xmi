@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="ASCII"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:article="http://www.eclipse.org/ARTICLE/1.0">
-  <article:Plugin name="org.eclipse.emf.cdo.releng.version" label="Extended Version Management">
+  <article:Plugin name="org.eclipse.emf.cdo.releng.version" label="Version Management Tool">
     <packages name="org.eclipse.emf.cdo.releng.version"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.releng.version.digest" label="Extended Version Management Digest Validator"/>
-  <article:Plugin name="org.eclipse.emf.cdo.releng.version.tests" label="Extended Version Management Tests">
+  <article:Plugin name="org.eclipse.emf.cdo.releng.version.digest" label="Version Management Tool Digest Validator"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.version.tests" label="Version Management Tool Tests">
     <packages name="org.eclipse.emf.cdo.releng.version.tests"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.releng.version.ui" label="Extended Version Management UI"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.version.ui" label="Version Management Tool UI"/>
 </xmi:XMI>

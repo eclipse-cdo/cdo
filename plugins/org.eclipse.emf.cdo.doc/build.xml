@@ -112,6 +112,7 @@
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/spi/common/id/*.java" />
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/spi/common/lock/*.java" />
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/spi/common/model/*.java" />
+				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/spi/common/protocol/*.java" />
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/spi/common/revision/*.java" />
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/edit/*.java" />
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/eresource/provider/*.java" />
@@ -128,6 +129,12 @@
 				<include name="org.eclipse.emf.cdo.server.db/src/org/eclipse/emf/cdo/server/db/mapping/*.java" />
 				<include name="org.eclipse.emf.cdo.server.db4o/src/org/eclipse/emf/cdo/server/db4o/*.java" />
 				<include name="org.eclipse.emf.cdo.server.hibernate/src/org/eclipse/emf/cdo/server/hibernate/*.java" />
+				<include name="org.eclipse.emf.cdo.server.lissome/src/org/eclipse/emf/cdo/server/internal/lissome/*.java" />
+				<include name="org.eclipse.emf.cdo.server.lissome/src/org/eclipse/emf/cdo/server/internal/lissome/bundle/*.java" />
+				<include name="org.eclipse.emf.cdo.server.lissome/src/org/eclipse/emf/cdo/server/internal/lissome/db/*.java" />
+				<include name="org.eclipse.emf.cdo.server.lissome/src/org/eclipse/emf/cdo/server/internal/lissome/file/*.java" />
+				<include name="org.eclipse.emf.cdo.server.lissome/src/org/eclipse/emf/cdo/server/internal/lissome/optimizer/*.java" />
+				<include name="org.eclipse.emf.cdo.server.lissome/src/org/eclipse/emf/cdo/server/lissome/*.java" />
 				<include name="org.eclipse.emf.cdo.server.mongodb/src/org/eclipse/emf/cdo/server/mongodb/*.java" />
 				<include name="org.eclipse.emf.cdo.server.net4j/src/org/eclipse/emf/cdo/server/net4j/*.java" />
 				<include name="org.eclipse.emf.cdo.server.objectivity/src/org/eclipse/emf/cdo/server/objectivity/*.java" />
@@ -230,6 +237,7 @@
 				<package name="org.eclipse.emf.cdo.spi.common.id" />
 				<package name="org.eclipse.emf.cdo.spi.common.lock" />
 				<package name="org.eclipse.emf.cdo.spi.common.model" />
+				<package name="org.eclipse.emf.cdo.spi.common.protocol" />
 				<package name="org.eclipse.emf.cdo.spi.common.revision" />
 			</group>
 			<group title="CDO Model Repository Security">
@@ -259,6 +267,14 @@
 			<group title="CDO Model Repository Server JDBC Support">
 				<package name="org.eclipse.emf.cdo.server.db" />
 				<package name="org.eclipse.emf.cdo.server.db.mapping" />
+			</group>
+			<group title="CDO Model Repository Server Lissome Support">
+				<package name="org.eclipse.emf.cdo.server.internal.lissome" />
+				<package name="org.eclipse.emf.cdo.server.internal.lissome.bundle" />
+				<package name="org.eclipse.emf.cdo.server.internal.lissome.db" />
+				<package name="org.eclipse.emf.cdo.server.internal.lissome.file" />
+				<package name="org.eclipse.emf.cdo.server.internal.lissome.optimizer" />
+				<package name="org.eclipse.emf.cdo.server.lissome" />
 			</group>
 			<group title="CDO Model Repository Server MongoDB Support">
 				<package name="org.eclipse.emf.cdo.server.mongodb" />

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<TITLE>Checking whether or not the PDE Schema Builder is Needed (Version Management Tool Documentation)</TITLE>
+
+<LINK REL="STYLESHEET" HREF="../../book.css" CHARSET="ISO-8859-1" TYPE="text/css">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Checking whether or not the PDE Schema Builder is Needed (Version Management Tool Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs"><a href="../../Overview.html" title="Version Management Tool Documentation">Version Management Tool Documentation</a> > <a href="../index.html" title="Category in Version Management Tool Documentation">Version Management</a> > <a href="index.html" title="Category in Version Management Tool Documentation">Version Manager Checks</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Checking whether or not the PDE Schema Builder is Needed</h1></td>
+		<td align="right" valign="middle" nowrap><a href="ReferencedElements.html" title="Backward to Checking whether Components are Managed and Used"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="../../reference/index.html" title="Forward to Reference"><img src="../../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ The PDE supports a schema builder to process the extension point schema associated with extension points defined in a plug-in.
+ That builder isn't needed when the plug-in doesn't define extension points but should be present when extension points are defined.
+ The version manager generates a warning when the builder is present but isn't needed or when the builder is needed but isn't present.
+ A quick fix for the warning will add or remove the PDE's schema builder as appropriate;
+ it changes the builder specified in the <code>.project</code> file.
+ Alternatively, a quick fix to configure the project to ignore the warning can be applied;
+ it changes the Version Management Tool builder's arguments in the <code>.project</code> file.
+ </p>
+
+<p align="right">
+<a href="ReferencedElements.html" title="Backward to Checking whether Components are Managed and Used"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="../../reference/index.html" title="Forward to Reference"><img src="../../../images/forward.png" border="0"></a></p>
+<HR>
+<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

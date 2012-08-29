@@ -71,6 +71,7 @@
     <packages name="org.eclipse.emf.cdo.spi.common.id"/>
     <packages name="org.eclipse.emf.cdo.spi.common.lock"/>
     <packages name="org.eclipse.emf.cdo.spi.common.model"/>
+    <packages name="org.eclipse.emf.cdo.spi.common.protocol"/>
     <packages name="org.eclipse.emf.cdo.spi.common.revision"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.security" label="CDO Model Repository Security">
@@ -106,6 +107,14 @@
     <packages name="org.eclipse.emf.cdo.server.db"/>
     <packages name="org.eclipse.emf.cdo.server.db.mapping"/>
     <extensionPoints name="mappingStrategies"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.server.lissome" label="CDO Model Repository Server Lissome Support">
+    <packages name="org.eclipse.emf.cdo.server.internal.lissome"/>
+    <packages name="org.eclipse.emf.cdo.server.internal.lissome.bundle"/>
+    <packages name="org.eclipse.emf.cdo.server.internal.lissome.db"/>
+    <packages name="org.eclipse.emf.cdo.server.internal.lissome.file"/>
+    <packages name="org.eclipse.emf.cdo.server.internal.lissome.optimizer"/>
+    <packages name="org.eclipse.emf.cdo.server.lissome"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.mongodb" label="CDO Model Repository Server MongoDB Support">
     <packages name="org.eclipse.emf.cdo.server.mongodb"/>

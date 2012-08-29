@@ -4,7 +4,7 @@
 <HEAD>
 
 <TITLE>
-VersionUtil (Extended Version Management Documentation)
+VersionUtil (Version Management Tool Documentation)
 </TITLE>
 
 <META NAME="date" CONTENT="">
@@ -16,7 +16,7 @@ VersionUtil (Extended Version Management Documentation)
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="VersionUtil (Extended Version Management Documentation)";
+        parent.document.title="VersionUtil (Version Management Tool Documentation)";
     }
 }
 </SCRIPT>
@@ -101,6 +101,12 @@ Class VersionUtil</H2>
   <DD>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>
 </DL>
 
+<map id="APIVIZ" name="APIVIZ">
+<area shape="rect" id="node1" href="VersionUtil.html" title="&#171;static&#187; VersionUtil" alt="" coords="5,5,91,45"/>
+</map>
+
+<CENTER><IMG SRC="VersionUtil.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+
 
 
 <P>
@@ -144,6 +150,14 @@ Class VersionUtil</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionUtil.html#cleanReleaseProjects(java.lang.String)">cleanReleaseProjects</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;releasePath)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionUtil.html#close(java.io.Closeable)">close</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</A>&nbsp;closeable)</CODE>
 
 <BR>
@@ -162,6 +176,15 @@ Class VersionUtil</H2>
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionUtil.html#delete(java.io.File)">delete</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionUtil.html#equals(java.lang.Object, java.lang.Object)">equals</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;o1,
+       <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;o2)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -282,6 +305,18 @@ public static final boolean <B>DEBUG</B></PRE>
 <B>Method Detail</B></FONT></TH>
 </TR>
 </TABLE>
+
+<A NAME="equals(java.lang.Object, java.lang.Object)"><!-- --></A><H3>
+equals</H3>
+<PRE>
+public static boolean <B>equals</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;o1,
+                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;o2)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
 
 <A NAME="normalize(org.osgi.framework.Version)"><!-- --></A><H3>
 normalize</H3>
@@ -417,6 +452,17 @@ public static org.eclipse.pde.internal.core.ifeature.IFeatureModel <B>getFeature
 getComponentVersion</H3>
 <PRE>
 public static org.osgi.framework.Version <B>getComponentVersion</B>(org.eclipse.pde.core.IModel&nbsp;componentModel)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="cleanReleaseProjects(java.lang.String)"><!-- --></A><H3>
+cleanReleaseProjects</H3>
+<PRE>
+public static void <B>cleanReleaseProjects</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;releasePath)</PRE>
 <DL>
 <DD><DL>
 </DL>

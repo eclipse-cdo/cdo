@@ -23,11 +23,11 @@
                class="org.eclipse.emf.cdo.releng.version.ui.actions.AddNatureAction"
                enablesFor="*"
                id="org.eclipse.emf.cdo.releng.AddNatureAction"
-               label="Add Extended Version Management"
+               label="Add Version Management"
                menubarPath="org.eclipse.ui.projectConfigure/additions"
                state="true"
                style="push"
-               tooltip="Add the extended version management builder to the selected project(s)">
+               tooltip="Add the Version Management builder to the selected project(s)">
          </action>
          <visibility>
             <not>
@@ -46,11 +46,11 @@
                class="org.eclipse.emf.cdo.releng.version.ui.actions.ConfigureBuilderAction"
                enablesFor="*"
                id="org.eclipse.emf.cdo.releng.ConfigureBuilderAction"
-               label="Configure Extended Version Management"
+               label="Configure Version Management"
                menubarPath="org.eclipse.ui.projectConfigure/additions"
                state="true"
                style="push"
-               tooltip="Configure the extended version management builder of the selected project(s)">
+               tooltip="Configure the Version Management builder of the selected project(s)">
          </action>
          <visibility>
 	            <objectState
@@ -67,11 +67,11 @@
                class="org.eclipse.emf.cdo.releng.version.ui.actions.RemoveNatureAction"
                enablesFor="*"
                id="org.eclipse.emf.cdo.releng.RemoveNatureAction"
-               label="Remove Extended Version Management"
+               label="Remove Version Management"
                menubarPath="org.eclipse.ui.projectConfigure/additions"
                state="true"
                style="push"
-               tooltip="Remove the extended version management builder from the selected project(s)">
+               tooltip="Remove the Version Management builder from the selected project(s)">
          </action>
          <visibility>
 	            <objectState
@@ -95,7 +95,7 @@
       <page
             class="org.eclipse.emf.cdo.releng.version.ui.preferences.VersionBuilderPreferencePage"
             id="org.eclipse.emf.cdo.releng.version.ui.preferences.VersionBuilderPreferencePage"
-            name="Extended Version Management">
+            name="Version Management">
       </page>
    </extension>
 

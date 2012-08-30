@@ -56,9 +56,12 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
+import org.eclipse.emf.cdo.eresource.CDOFileResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
@@ -874,6 +877,59 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     return createResource(path);
+  }
+
+  public synchronized CDOTextResource createTextResource(String path)
+  {
+    CDOTextResource resource = EresourceFactory.eINSTANCE.createCDOTextResource();
+    createFileResource(path, resource);
+    return resource;
+  }
+
+  public synchronized CDOTextResource getOrCreateTextResource(String path)
+  {
+    CDOTextResource resource = getTextResource(path);
+    if (resource == null)
+    {
+      resource = createTextResource(path);
+    }
+
+    return resource;
+  }
+
+  public synchronized CDOBinaryResource createBinaryResource(String path)
+  {
+    CDOBinaryResource resource = EresourceFactory.eINSTANCE.createCDOBinaryResource();
+    createFileResource(path, resource);
+    return resource;
+  }
+
+  public synchronized CDOBinaryResource getOrCreateBinaryResource(String path)
+  {
+    CDOBinaryResource resource = getBinaryResource(path);
+    if (resource == null)
+    {
+      resource = createBinaryResource(path);
+    }
+
+    return resource;
+  }
+
+  private void createFileResource(String path, CDOFileResource<?> resource)
+  {
+    int lastSlash = path.lastIndexOf('/');
+    if (lastSlash == -1)
+    {
+      resource.setName(path);
+      getRootResource().getContents().add(resource);
+    }
+    else
+    {
+      resource.setName(path.substring(lastSlash + 1));
+
+      CDOResourceFolder folder = getOrCreateResourceFolder(path.substring(0, lastSlash));
+      folder.getNodes().add(resource);
+    }
   }
 
   /**

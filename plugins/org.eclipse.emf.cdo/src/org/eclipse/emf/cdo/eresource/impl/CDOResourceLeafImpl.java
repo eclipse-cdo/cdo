@@ -20,15 +20,15 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @since 4.1
  * @noextend This class is not intended to be subclassed by clients. <!-- end-user-doc -->
- *           <p>
- *           </p>
+ * <p>
+ * </p>
+ *
  * @generated
  */
 public abstract class CDOResourceLeafImpl extends CDOResourceNodeImpl implements CDOResourceLeaf
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   protected CDOResourceLeafImpl()
@@ -38,7 +38,6 @@ public abstract class CDOResourceLeafImpl extends CDOResourceNodeImpl implements
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   @Override

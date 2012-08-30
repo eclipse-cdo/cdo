@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="eresource"
-    nsURI="http://www.eclipse.org/emf/CDO/Eresource/4.0.0" nsPrefix="eresource">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="eresource" nsURI="http://www.eclipse.org/emf/CDO/Eresource/4.0.0"
+    nsPrefix="eresource">
   <eClassifiers xsi:type="ecore:EClass" name="CDOResourceNode" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="folder" eType="#//CDOResourceFolder"
         eOpposite="#//CDOResourceFolder/nodes"/>
@@ -20,6 +19,12 @@
       <eParameters name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     </eOperations>
     <eOperations name="addResource" eType="#//CDOResource">
+      <eParameters name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    </eOperations>
+    <eOperations name="addTextResource" eType="#//CDOTextResource">
+      <eParameters name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    </eOperations>
+    <eOperations name="addBinaryResource" eType="#//CDOBinaryResource">
       <eParameters name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"

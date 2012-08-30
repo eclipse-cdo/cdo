@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>.
- * 
+ *
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
  * @generated
@@ -34,8 +34,8 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static EtypesFactory init()
@@ -43,7 +43,7 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
     try
     {
       EtypesFactory theEtypesFactory = (EtypesFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/Etypes/4.0.0"); //$NON-NLS-1$ 
+          .getEFactory("http://www.eclipse.org/emf/CDO/Etypes/4.0.0"); //$NON-NLS-1$
       if (theEtypesFactory != null)
       {
         return theEtypesFactory;
@@ -57,8 +57,8 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public EtypesFactoryImpl()
@@ -68,7 +68,6 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("cast")
@@ -86,7 +85,6 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -107,7 +105,6 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -128,7 +125,6 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Annotation createAnnotation()
@@ -139,9 +135,9 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public CDOLob<?> createLobFromString(EDataType eDataType, String initialValue)
   {
@@ -150,7 +146,7 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
@@ -161,7 +157,7 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
@@ -172,7 +168,7 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
@@ -183,7 +179,6 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOClob createClobFromString(EDataType eDataType, String initialValue)
@@ -193,7 +188,6 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String convertClobToString(EDataType eDataType, Object instanceValue)
@@ -203,7 +197,6 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EtypesPackage getEtypesPackage()
@@ -213,7 +206,6 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

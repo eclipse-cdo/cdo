@@ -24,23 +24,23 @@ import org.eclipse.emf.ecore.EObject;
  * 
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
- *           <p>
- *           The following features are implemented:
- *           <ul>
- *           <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getSource <em>Source</em>}</li>
- *           <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getDetails <em>Details</em>}</li>
- *           <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getModelElement <em>Model Element</em>}</li>
- *           <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getContents <em>Contents</em>}</li>
- *           <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getReferences <em>References</em>}</li>
- *           </ul>
- *           </p>
+ * <p>
+ * The following features are implemented:
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getSource <em>Source</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getDetails <em>Details</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getModelElement <em>Model Element</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getContents <em>Contents</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getReferences <em>References</em>}</li>
+ * </ul>
+ * </p>
+ *
  * @generated
  */
 public class AnnotationImpl extends ModelElementImpl implements Annotation
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected AnnotationImpl()
@@ -50,7 +50,6 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -61,7 +60,6 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getSource()
@@ -71,7 +69,6 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setSource(String newSource)
@@ -81,7 +78,6 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -92,7 +88,6 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ModelElement getModelElement()
@@ -102,7 +97,6 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setModelElement(ModelElement newModelElement)
@@ -112,7 +106,6 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -123,7 +116,6 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

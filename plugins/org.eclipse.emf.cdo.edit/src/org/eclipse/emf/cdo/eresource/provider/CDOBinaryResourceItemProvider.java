@@ -46,8 +46,8 @@ public class CDOBinaryResourceItemProvider extends CDOFileResourceItemProvider i
     ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
-   * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * This constructs an instance from a factory and a notifier.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public CDOBinaryResourceItemProvider(AdapterFactory adapterFactory)
@@ -56,8 +56,8 @@ public class CDOBinaryResourceItemProvider extends CDOFileResourceItemProvider i
   }
 
   /**
-   * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * This returns the property descriptors for the adapted class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -73,8 +73,8 @@ public class CDOBinaryResourceItemProvider extends CDOFileResourceItemProvider i
   }
 
   /**
-   * This adds a property descriptor for the Contents feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * This adds a property descriptor for the Contents feature.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void addContentsPropertyDescriptor(Object object)
@@ -91,8 +91,8 @@ public class CDOBinaryResourceItemProvider extends CDOFileResourceItemProvider i
   }
 
   /**
-   * This returns CDOBinaryResource.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * This returns CDOBinaryResource.gif.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -115,9 +115,9 @@ public class CDOBinaryResourceItemProvider extends CDOFileResourceItemProvider i
   }
 
   /**
-   * This handles model notifications by calling {@link #updateChildren} to update any cached children and by creating a
-   * viewer notification, which it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * This handles model notifications by calling {@link #updateChildren} to update any cached
+   * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -135,9 +135,9 @@ public class CDOBinaryResourceItemProvider extends CDOFileResourceItemProvider i
   }
 
   /**
-   * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children that can be created under
-   * this object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+   * that can be created under this object.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override

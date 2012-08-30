@@ -24,6 +24,10 @@
 			<name>org.eclipse.emf.cdo.releng.version.VersionBuilder</name>
 			<arguments>
 				<dictionary>
+					<key>ignore.missing.export.versions</key>
+					<value>true</value>
+				</dictionary>
+				<dictionary>
 					<key>release.path</key>
 					<value>/org.eclipse.emf.cdo.releng/release.xml</value>
 				</dictionary>

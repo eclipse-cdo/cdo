@@ -24,19 +24,19 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Model Element</b></em>'.
  * 
  * @since 4.0 <!-- end-user-doc -->
- *        <p>
- *        The following features are implemented:
- *        <ul>
- *        <li>{@link org.eclipse.emf.cdo.etypes.impl.ModelElementImpl#getAnnotations <em>Annotations</em>}</li>
- *        </ul>
- *        </p>
+ * <p>
+ * The following features are implemented:
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.etypes.impl.ModelElementImpl#getAnnotations <em>Annotations</em>}</li>
+ * </ul>
+ * </p>
+ *
  * @generated
  */
 public abstract class ModelElementImpl extends CDOObjectImpl implements ModelElement
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ModelElementImpl()
@@ -46,7 +46,6 @@ public abstract class ModelElementImpl extends CDOObjectImpl implements ModelEle
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -57,7 +56,6 @@ public abstract class ModelElementImpl extends CDOObjectImpl implements ModelEle
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -68,7 +66,6 @@ public abstract class ModelElementImpl extends CDOObjectImpl implements ModelEle
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

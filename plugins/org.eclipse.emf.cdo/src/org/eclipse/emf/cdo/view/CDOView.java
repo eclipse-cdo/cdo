@@ -24,9 +24,12 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
+import org.eclipse.emf.cdo.eresource.CDOFileResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUpdatable;
@@ -179,6 +182,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
 
   /**
    * Returns <code>true</code> if a resource with the given path exists in the repository, <code>false</code>.
+   * Applies to {@link CDOFileResource file resources}, as well.
    *
    * @see #getResource(String, boolean)
    */
@@ -195,6 +199,16 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
    * @see ResourceSet#getResource(URI, boolean)
    */
   public CDOResource getResource(String path);
+
+  /**
+   * @since 4.2
+   */
+  public CDOTextResource getTextResource(String path);
+
+  /**
+   * @since 4.2
+   */
+  public CDOBinaryResource getBinaryResource(String path);
 
   /**
    * Returns the resource node with the given path.

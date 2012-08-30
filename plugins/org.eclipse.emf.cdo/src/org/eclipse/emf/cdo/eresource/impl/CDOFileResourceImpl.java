@@ -23,18 +23,18 @@ import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO File Resource</b></em>'.
- * 
+ *
  * @since 4.1
  * @noextend This class is not intended to be subclassed by clients. <!-- end-user-doc -->
- *           <p>
- *           </p>
- * @generated
+ * <p>
+ * </p>
+ *
+ * @generated NOT
  */
 public abstract class CDOFileResourceImpl<IO> extends CDOResourceLeafImpl implements CDOFileResource<IO>
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CDOFileResourceImpl()
@@ -44,7 +44,6 @@ public abstract class CDOFileResourceImpl<IO> extends CDOResourceLeafImpl implem
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -82,7 +81,7 @@ public abstract class CDOFileResourceImpl<IO> extends CDOResourceLeafImpl implem
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public abstract CDOLob<IO> getContents();

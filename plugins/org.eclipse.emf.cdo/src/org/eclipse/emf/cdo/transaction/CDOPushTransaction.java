@@ -21,9 +21,11 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOObjectHandler;
@@ -61,7 +63,7 @@ import java.util.Set;
 /**
  * A {@link CDOTransaction transaction} that persists changes to the object graph locally on commit and can later load
  * these changes and push them to the {@link CDOCommonRepository repository}.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
@@ -472,6 +474,54 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public CDOResourceNode getResourceNode(String path)
   {
     return delegate.getResourceNode(path);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public CDOTextResource createTextResource(String path)
+  {
+    return delegate.createTextResource(path);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public CDOTextResource getOrCreateTextResource(String path)
+  {
+    return delegate.getOrCreateTextResource(path);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public CDOBinaryResource createBinaryResource(String path)
+  {
+    return delegate.createBinaryResource(path);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public CDOBinaryResource getOrCreateBinaryResource(String path)
+  {
+    return delegate.getOrCreateBinaryResource(path);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public CDOTextResource getTextResource(String path)
+  {
+    return delegate.getTextResource(path);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public CDOBinaryResource getBinaryResource(String path)
+  {
+    return delegate.getBinaryResource(path);
   }
 
   public ResourceSet getResourceSet()

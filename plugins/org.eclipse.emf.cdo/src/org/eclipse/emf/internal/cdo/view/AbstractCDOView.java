@@ -30,9 +30,11 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
@@ -519,6 +521,16 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
 
       throw ex;
     }
+  }
+
+  public CDOTextResource getTextResource(String path)
+  {
+    return (CDOTextResource)getResourceNode(path);
+  }
+
+  public CDOBinaryResource getBinaryResource(String path)
+  {
+    return (CDOBinaryResource)getResourceNode(path);
   }
 
   /**

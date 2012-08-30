@@ -32,21 +32,21 @@ import java.util.List;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource Node</b></em>'.
  * 
  * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
- *           <p>
- *           The following features are implemented:
- *           <ul>
- *           <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl#getFolder <em>Folder</em>}</li>
- *           <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl#getName <em>Name</em>}</li>
- *           <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl#getPath <em>Path</em>}</li>
- *           </ul>
- *           </p>
+ * <p>
+ * The following features are implemented:
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl#getFolder <em>Folder</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl#getPath <em>Path</em>}</li>
+ * </ul>
+ * </p>
+ *
  * @generated
  */
 public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDOResourceNode
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CDOResourceNodeImpl()
@@ -56,7 +56,6 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -67,7 +66,6 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -78,7 +76,6 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOResourceFolder getFolder()
@@ -88,7 +85,6 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setFolderGen(CDOResourceFolder newFolder)
@@ -130,7 +126,6 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -140,7 +135,6 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setNameGen(String newName)

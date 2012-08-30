@@ -10,15 +10,18 @@
  */
 package org.eclipse.emf.cdo.eresource.impl;
 
+import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.spi.cdo.FSMUtil;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.io.IOException;
@@ -26,22 +29,23 @@ import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource Folder</b></em>'.
- * 
+ *
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
- *           <p>
- *           The following features are implemented:
- *           <ul>
- *           <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceFolderImpl#getNodes <em>Nodes</em>}</li>
- *           </ul>
- *           </p>
+ * <p>
+ * The following features are implemented:
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceFolderImpl#getNodes <em>Nodes</em>}</li>
+ * </ul>
+ * </p>
+ *
  * @generated
  */
 public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDOResourceFolder
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected CDOResourceFolderImpl()
@@ -58,8 +62,8 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -69,8 +73,8 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -81,8 +85,8 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
 
   /**
    * <!-- begin-user-doc -->
-   * 
-   * @since 4.0 <!-- end-user-doc -->
+   * @since 4.0
+   * <!-- end-user-doc -->
    * @generated NOT
    */
   public CDOResourceFolder addResourceFolder(String name)
@@ -92,13 +96,38 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
 
   /**
    * <!-- begin-user-doc -->
-   * 
-   * @since 4.0 <!-- end-user-doc -->
+   * @since 4.0
+   * <!-- end-user-doc -->
    * @generated NOT
    */
   public CDOResource addResource(String name)
   {
-    return cdoView().toTransaction().createResource(getPath() + CDOURIUtil.SEGMENT_SEPARATOR + name);
+    InternalCDOTransaction transaction = cdoView().toTransaction();
+    return transaction.createResource(getPath() + CDOURIUtil.SEGMENT_SEPARATOR + name);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CDOTextResource addTextResource(String name)
+  {
+    InternalCDOTransaction transaction = cdoView().toTransaction();
+    return transaction.createTextResource(getPath() + CDOURIUtil.SEGMENT_SEPARATOR + name);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CDOBinaryResource addBinaryResource(String name)
+  {
+    InternalCDOTransaction transaction = cdoView().toTransaction();
+    return transaction.createBinaryResource(getPath() + CDOURIUtil.SEGMENT_SEPARATOR + name);
   }
 
   /**

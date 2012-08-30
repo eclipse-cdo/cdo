@@ -24,8 +24,10 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetDataProvider;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -43,7 +45,7 @@ import java.util.Set;
 
 /**
  * A read-write view to the <em>current</em> (i.e. latest) state of the object graph in the repository.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -91,6 +93,26 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
   public CDOResource createResource(String path);
 
   public CDOResource getOrCreateResource(String path);
+
+  /**
+   * @since 4.2
+   */
+  public CDOTextResource createTextResource(String path);
+
+  /**
+   * @since 4.2
+   */
+  public CDOTextResource getOrCreateTextResource(String path);
+
+  /**
+   * @since 4.2
+   */
+  public CDOBinaryResource createBinaryResource(String path);
+
+  /**
+   * @since 4.2
+   */
+  public CDOBinaryResource getOrCreateBinaryResource(String path);
 
   /**
    * @since 4.0
@@ -157,7 +179,7 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
 
   /**
    * Returns the comment to be used in the next commit operation.
-   * 
+   *
    * @see CDOCommitInfo#getComment()
    * @since 3.0
    */
@@ -165,7 +187,7 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
 
   /**
    * Sets the comment to be used in the next commit operation.
-   * 
+   *
    * @see CDOCommitInfo#getComment()
    * @since 3.0
    */
@@ -195,7 +217,7 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
 
   /**
    * Encapsulates a set of notifying {@link CDOTransaction transaction} configuration options.
-   * 
+   *
    * @author Simon McDuff
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
@@ -204,7 +226,7 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
   {
     /**
      * Returns the {@link CDOTransaction transaction} of this options object.
-     * 
+     *
      * @since 4.0
      */
     public CDOTransaction getContainer();
@@ -250,7 +272,7 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
     /**
      * An {@link IOptionsEvent options event} fired from transaction {@link CDOTransaction#options() options} when the
      * {@link Options#addConflictResolver(CDOConflictResolver) conflict resolvers} option has changed.
-     * 
+     *
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
@@ -262,7 +284,7 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
     /**
      * An {@link IOptionsEvent options event} fired from transaction {@link CDOTransaction#options() options} when the
      * {@link Options#setAutoReleaseLocksEnabled(boolean) auto release locks} option has changed.
-     * 
+     *
      * @author Eike Stepper
      * @since 3.0
      * @noextend This interface is not intended to be extended by clients.

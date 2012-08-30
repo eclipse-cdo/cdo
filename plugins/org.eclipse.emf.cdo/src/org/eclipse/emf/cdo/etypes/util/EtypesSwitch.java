@@ -32,15 +32,15 @@ import java.util.List;
 public class EtypesSwitch<T>
 {
   /**
-   * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached model package
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected static EtypesPackage modelPackage;
 
   /**
-   * Creates an instance of the switch. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the switch.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public EtypesSwitch()
@@ -54,7 +54,6 @@ public class EtypesSwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -66,7 +65,6 @@ public class EtypesSwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -76,14 +74,16 @@ public class EtypesSwitch<T>
     {
       return doSwitch(theEClass.getClassifierID(), theEObject);
     }
-    List<EClass> eSuperTypes = theEClass.getESuperTypes();
-    return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
+    else
+    {
+      List<EClass> eSuperTypes = theEClass.getESuperTypes();
+      return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
+    }
   }
 
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -96,9 +96,7 @@ public class EtypesSwitch<T>
       ModelElement modelElement = (ModelElement)theEObject;
       T result = caseModelElement(modelElement);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case EtypesPackage.ANNOTATION:
@@ -106,13 +104,9 @@ public class EtypesSwitch<T>
       Annotation annotation = (Annotation)theEObject;
       T result = caseAnnotation(annotation);
       if (result == null)
-      {
         result = caseModelElement(annotation);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     default:
@@ -121,11 +115,10 @@ public class EtypesSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Model Element</em>'. <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>Model Element</em>'.
+   * <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Model Element</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -136,11 +129,10 @@ public class EtypesSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Annotation</em>'. <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>Annotation</em>'.
+   * <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Annotation</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -151,12 +143,11 @@ public class EtypesSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'. <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
+   * <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch, but this is the last case
    * anyway. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
    * @generated

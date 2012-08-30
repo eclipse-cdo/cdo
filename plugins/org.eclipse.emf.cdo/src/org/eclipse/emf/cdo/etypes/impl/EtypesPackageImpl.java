@@ -38,35 +38,30 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass modelElementEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass annotationEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EDataType lobEDataType = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EDataType blobEDataType = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EDataType clobEDataType = null;
@@ -91,18 +86,17 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * <p>
-   * This method is used to initialize {@link EtypesPackage#eINSTANCE} when that field is accessed. Clients should not
-   * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
    * 
+   * <p>This method is used to initialize {@link EtypesPackage#eINSTANCE} when that field is accessed.
+   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -138,7 +132,6 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getModelElement()
@@ -148,7 +141,6 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getModelElement_Annotations()
@@ -158,7 +150,6 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getAnnotation()
@@ -168,7 +159,6 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getAnnotation_Source()
@@ -178,7 +168,6 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getAnnotation_Details()
@@ -188,7 +177,6 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getAnnotation_ModelElement()
@@ -198,7 +186,6 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getAnnotation_Contents()
@@ -208,7 +195,6 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getAnnotation_References()
@@ -229,7 +215,6 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EDataType getBlob()
@@ -239,7 +224,6 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EDataType getClob()
@@ -249,7 +233,6 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EtypesFactory getEtypesFactory()
@@ -259,15 +242,14 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
-   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the meta-model objects for the package.  This method is
+   * guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void createPackageContents()
@@ -295,15 +277,14 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
-   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Complete the initialization of the package and its meta-model.  This
+   * method is guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void initializePackageContents()

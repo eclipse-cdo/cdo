@@ -19,12 +19,14 @@ import org.eclipse.emf.common.util.EList;
  * @apiviz.composedOf {@link CDOResourceNode} - - nodes
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
- *              <p>
- *              The following features are supported:
- *              <ul>
- *              <li>{@link org.eclipse.emf.cdo.eresource.CDOResourceFolder#getNodes <em>Nodes</em>}</li>
- *              </ul>
- *              </p>
+ *
+ * <p>
+ * The following features are supported:
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResourceFolder#getNodes <em>Nodes</em>}</li>
+ * </ul>
+ * </p>
+ *
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResourceFolder()
  * @model
  * @generated
@@ -32,15 +34,15 @@ import org.eclipse.emf.common.util.EList;
 public interface CDOResourceFolder extends CDOResourceNode
 {
   /**
-   * Returns the value of the '<em><b>Nodes</b></em>' containment reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.eresource.CDOResourceNode}. It is bidirectional and its opposite is '
-   * {@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getFolder <em>Folder</em>}'. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.eresource.CDOResourceNode}.
+   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getFolder <em>Folder</em>}'.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Nodes</em>' containment reference list isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Nodes</em>' containment reference list.
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResourceFolder_Nodes()
    * @see org.eclipse.emf.cdo.eresource.CDOResourceNode#getFolder
@@ -66,5 +68,21 @@ public interface CDOResourceFolder extends CDOResourceNode
    * @generated
    */
   CDOResource addResource(String name);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  CDOTextResource addTextResource(String name);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  CDOBinaryResource addBinaryResource(String name);
 
 } // CDOResourceFolder

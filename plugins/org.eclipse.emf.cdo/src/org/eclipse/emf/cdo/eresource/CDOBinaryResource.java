@@ -20,26 +20,28 @@ import java.io.InputStream;
  * @since 4.1
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
- *              <p>
- *              The following features are supported:
- *              <ul>
- *              <li>{@link org.eclipse.emf.cdo.eresource.CDOBinaryResource#getContents <em>Contents</em>}</li>
- *              </ul>
- *              </p>
+ *
+ * <p>
+ * The following features are supported:
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.CDOBinaryResource#getContents <em>Contents</em>}</li>
+ * </ul>
+ * </p>
+ *
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOBinaryResource()
  * @model
- * @generated
+ * @generated NOT
  */
 public interface CDOBinaryResource extends CDOFileResource<InputStream>
 {
   /**
-   * Returns the value of the '<em><b>Contents</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Contents</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Contents</em>' attribute isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   *
    * @return the value of the '<em>Contents</em>' attribute.
    * @see #setContents(CDOBlob)
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOBinaryResource_Contents()
@@ -49,11 +51,9 @@ public interface CDOBinaryResource extends CDOFileResource<InputStream>
   CDOBlob getContents();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOBinaryResource#getContents <em>Contents</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
-   * @param value
-   *          the new value of the '<em>Contents</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOBinaryResource#getContents <em>Contents</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Contents</em>' attribute.
    * @see #getContents()
    * @generated
    */

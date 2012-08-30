@@ -42,70 +42,60 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass cdoResourceNodeEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass cdoResourceFolderEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass cdoResourceEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass cdoResourceLeafEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass cdoFileResourceEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass cdoBinaryResourceEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass cdoTextResourceEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EDataType resourceSetEDataType = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EDataType uriEDataType = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EDataType diagnosticEDataType = null;
@@ -130,18 +120,17 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * <p>
-   * This method is used to initialize {@link EresourcePackage#eINSTANCE} when that field is accessed. Clients should
-   * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
-   * --> <!-- end-user-doc -->
    * 
+   * <p>This method is used to initialize {@link EresourcePackage#eINSTANCE} when that field is accessed.
+   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+   * <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -243,7 +232,6 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCDOResource()
@@ -253,7 +241,6 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getCDOResource_ResourceSet()
@@ -263,7 +250,6 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getCDOResource_URI()
@@ -273,7 +259,6 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCDOResource_Contents()
@@ -283,7 +268,6 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getCDOResource_Modified()
@@ -293,7 +277,6 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getCDOResource_Loaded()
@@ -303,7 +286,6 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getCDOResource_TrackingModification()
@@ -313,7 +295,6 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getCDOResource_Errors()
@@ -323,7 +304,6 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getCDOResource_Warnings()
@@ -333,7 +313,6 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getCDOResource_TimeStamp()
@@ -409,7 +388,6 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EDataType getResourceSet()
@@ -419,7 +397,6 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EDataType getURI()
@@ -429,7 +406,6 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EDataType getDiagnostic()
@@ -439,7 +415,6 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EresourceFactory getEresourceFactory()
@@ -449,15 +424,14 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
-   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the meta-model objects for the package.  This method is
+   * guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void createPackageContents()
@@ -504,15 +478,14 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
-   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Complete the initialization of the package and its meta-model.  This
+   * method is guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void initializePackageContents()
@@ -572,6 +545,14 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
     addEParameter(op, theEcorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
     op = addEOperation(cdoResourceFolderEClass, this.getCDOResource(), "addResource", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+    addEParameter(op, theEcorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+    op = addEOperation(cdoResourceFolderEClass, this.getCDOTextResource(),
+        "addTextResource", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+    addEParameter(op, theEcorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+    op = addEOperation(cdoResourceFolderEClass, this.getCDOBinaryResource(),
+        "addBinaryResource", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
     addEParameter(op, theEcorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
     initEClass(cdoResourceEClass, CDOResource.class,
@@ -652,7 +633,8 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
   }
 
   /**
-   * Initializes the annotations for <b>http://www.eclipse.org/CDO/DBStore</b>. <!-- begin-user-doc -->
+   * Initializes the annotations for <b>http://www.eclipse.org/CDO/DBStore</b>.
+   * <!-- begin-user-doc -->
    * 
    * @since 4.0 <!-- end-user-doc -->
    * @generated

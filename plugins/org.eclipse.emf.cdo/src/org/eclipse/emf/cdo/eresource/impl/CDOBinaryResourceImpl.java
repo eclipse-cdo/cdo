@@ -23,19 +23,19 @@ import java.io.InputStream;
  *
  * @since 4.1
  * @noextend This class is not intended to be subclassed by clients. <!-- end-user-doc -->
- *           <p>
- *           The following features are implemented:
- *           <ul>
- *           <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOBinaryResourceImpl#getContents <em>Contents</em>}</li>
- *           </ul>
- *           </p>
- * @generated
+ * <p>
+ * The following features are implemented:
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOBinaryResourceImpl#getContents <em>Contents</em>}</li>
+ * </ul>
+ * </p>
+ *
+ * @generated NOT
  */
 public class CDOBinaryResourceImpl extends CDOFileResourceImpl<InputStream> implements CDOBinaryResource
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   protected CDOBinaryResourceImpl()
@@ -45,7 +45,6 @@ public class CDOBinaryResourceImpl extends CDOFileResourceImpl<InputStream> impl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   @Override
@@ -56,7 +55,6 @@ public class CDOBinaryResourceImpl extends CDOFileResourceImpl<InputStream> impl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   @Override
@@ -67,7 +65,6 @@ public class CDOBinaryResourceImpl extends CDOFileResourceImpl<InputStream> impl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public void setContents(CDOBlob newContents)

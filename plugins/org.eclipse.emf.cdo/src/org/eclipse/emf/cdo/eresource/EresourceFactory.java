@@ -25,14 +25,15 @@ import org.eclipse.emf.ecore.EFactory;
 public interface EresourceFactory extends EFactory
 {
   /**
-   * The singleton instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The singleton instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   EresourceFactory eINSTANCE = org.eclipse.emf.cdo.eresource.impl.EresourceFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>CDO Resource Folder</em>'. <!-- begin-user-doc -->
+   * Returns a new object of class '<em>CDO Resource Folder</em>'.
+   * <!-- begin-user-doc -->
    * 
    * @since 2.0<!-- end-user-doc -->
    * @return a new object of class '<em>CDO Resource Folder</em>'.
@@ -41,15 +42,16 @@ public interface EresourceFactory extends EFactory
   CDOResourceFolder createCDOResourceFolder();
 
   /**
-   * Returns a new object of class '<em>CDO Resource</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns a new object of class '<em>CDO Resource</em>'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return a new object of class '<em>CDO Resource</em>'.
    * @generated
    */
   CDOResource createCDOResource();
 
   /**
-   * Returns a new object of class '<em>CDO Binary Resource</em>'. <!-- begin-user-doc -->
+   * Returns a new object of class '<em>CDO Binary Resource</em>'.
+   * <!-- begin-user-doc -->
    * 
    * @since 4.1 <!-- end-user-doc -->
    * @return a new object of class '<em>CDO Binary Resource</em>'.
@@ -58,7 +60,8 @@ public interface EresourceFactory extends EFactory
   CDOBinaryResource createCDOBinaryResource();
 
   /**
-   * Returns a new object of class '<em>CDO Text Resource</em>'. <!-- begin-user-doc -->
+   * Returns a new object of class '<em>CDO Text Resource</em>'.
+   * <!-- begin-user-doc -->
    * 
    * @since 4.1 <!-- end-user-doc -->
    * @return a new object of class '<em>CDO Text Resource</em>'.
@@ -67,8 +70,8 @@ public interface EresourceFactory extends EFactory
   CDOTextResource createCDOTextResource();
 
   /**
-   * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the package supported by this factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the package supported by this factory.
    * @generated
    */

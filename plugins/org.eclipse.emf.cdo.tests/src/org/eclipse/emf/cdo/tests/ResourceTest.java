@@ -14,10 +14,14 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lob.CDOBlob;
+import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
@@ -32,6 +36,8 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -44,8 +50,14 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.CharArrayReader;
+import java.io.CharArrayWriter;
+import java.io.InputStream;
+import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -1662,6 +1674,68 @@ public class ResourceTest extends AbstractCDOTest
     catch (Exception expected)
     {
       // SUCCCESS
+    }
+  }
+
+  public void testTextResource() throws Exception
+  {
+    final char[] document = "This can be a looooong document".toCharArray();
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOTextResource resource = transaction.createTextResource(getResourcePath("/my/resource1"));
+    resource.setContents(new CDOClob(new CharArrayReader(document)));
+    transaction.commit();
+    session.close();
+
+    session = openSession();
+    transaction = session.openTransaction();
+    resource = transaction.getTextResource(getResourcePath("/my/resource1"));
+
+    CDOClob clob = resource.getContents();
+    Reader reader = null;
+
+    try
+    {
+      reader = clob.getContents();
+      CharArrayWriter writer = new CharArrayWriter();
+      IOUtil.copyCharacter(reader, writer);
+      assertEquals(true, Arrays.equals(document, writer.toCharArray()));
+    }
+    finally
+    {
+      IOUtil.close(reader);
+    }
+  }
+
+  public void testBinaryResource() throws Exception
+  {
+    final byte[] document = "This can be a looooong document".getBytes();
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOBinaryResource resource = transaction.createBinaryResource(getResourcePath("/my/resource1"));
+    resource.setContents(new CDOBlob(new ByteArrayInputStream(document)));
+    transaction.commit();
+    session.close();
+
+    session = openSession();
+    transaction = session.openTransaction();
+    resource = transaction.getBinaryResource(getResourcePath("/my/resource1"));
+
+    CDOBlob blob = resource.getContents();
+    InputStream inputStream = null;
+
+    try
+    {
+      inputStream = blob.getContents();
+      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+      IOUtil.copyBinary(inputStream, outputStream);
+      assertEquals(true, Arrays.equals(document, outputStream.toByteArray()));
+    }
+    finally
+    {
+      IOUtil.close(inputStream);
     }
   }
 

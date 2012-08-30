@@ -99,6 +99,9 @@ public class H2Adapter extends DBAdapter
     return "23001".equals(sqlState) || "23505".equals(sqlState);
   }
 
+  /**
+   * @since 4.1
+   */
   @Override
   public String format(PreparedStatement stmt)
   {

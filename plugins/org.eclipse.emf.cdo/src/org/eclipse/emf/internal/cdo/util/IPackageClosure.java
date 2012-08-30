@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -24,6 +24,4 @@ public interface IPackageClosure
   public static final Set<EPackage> EMPTY_CLOSURE = Collections.emptySet();
 
   public Set<EPackage> calculate(Collection<EPackage> ePackages);
-
-  public Set<EPackage> calculate(EPackage ePackage);
 }

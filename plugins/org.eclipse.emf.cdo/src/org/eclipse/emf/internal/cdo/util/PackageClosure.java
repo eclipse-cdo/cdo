@@ -18,7 +18,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EPackage;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,11 +30,6 @@ public abstract class PackageClosure implements IPackageClosure
 
   protected PackageClosure()
   {
-  }
-
-  public Set<EPackage> calculate(EPackage ePackage)
-  {
-    return calculate(Collections.singletonList(ePackage));
   }
 
   public Set<EPackage> calculate(Collection<EPackage> ePackages)

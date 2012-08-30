@@ -41,8 +41,6 @@ public class CompletePackageClosure extends PackageClosure
 
   private boolean excludeEcore;
 
-  private Set<EPackage> visitedPackages;
-
   public CompletePackageClosure()
   {
   }
@@ -63,127 +61,133 @@ public class CompletePackageClosure extends PackageClosure
         return;
       }
 
-      this.visitedPackages = visitedPackages;
-      Set<EClassifier> visitedClassifiers = new HashSet<EClassifier>();
+      Set<Object> visited = new HashSet<Object>();
       for (EClassifier classifier : ePackage.getEClassifiers())
       {
-        handleEClassifier(classifier, visitedClassifiers);
+        handleEClassifier(classifier, visitedPackages, visited);
       }
 
-      for (EClassifier classifier : visitedClassifiers)
+      for (Object object : visited)
       {
-        final EPackage p = classifier.getEPackage();
-        if (p != null)
+        if (object instanceof EClassifier)
         {
-          if (visitedPackages.add(p))
+          EClassifier classifier = (EClassifier)object;
+          final EPackage p = classifier.getEPackage();
+          if (p != null)
           {
-            if (TRACER.isEnabled())
+            if (visitedPackages.add(p))
             {
-              TRACER.trace("Found package " + p.getNsURI()); //$NON-NLS-1$
+              if (TRACER.isEnabled())
+              {
+                TRACER.trace("Found package " + p.getNsURI()); //$NON-NLS-1$
+              }
             }
           }
-        }
-        else
-        {
-          OM.LOG.warn(MessageFormat.format(Messages.getString("CompletePackageClosure.0"), classifier.getName())); //$NON-NLS-1$
+          else
+          {
+            OM.LOG.warn(MessageFormat.format(Messages.getString("CompletePackageClosure.0"), classifier.getName())); //$NON-NLS-1$
+          }
         }
       }
     }
   }
 
-  protected void handleEClassifier(EClassifier classifier, Set<EClassifier> visited)
+  protected void handleEClassifier(EClassifier classifier, Set<EPackage> visitedPackages, Set<Object> visited)
   {
     if (classifier != null && visited.add(classifier))
     {
       handleEPackage(classifier.getEPackage(), visitedPackages);
-      handleETypeParameters(classifier.getETypeParameters(), visited);
+      handleETypeParameters(classifier.getETypeParameters(), visitedPackages, visited);
       if (classifier instanceof EClass)
       {
         EClass eClass = (EClass)classifier;
-        handleEStructuralFeatures(eClass.getEStructuralFeatures(), visited);
-        handleEOperations(eClass.getEOperations(), visited);
-        handleEGenericTypes(eClass.getEGenericSuperTypes(), visited);
+        handleEStructuralFeatures(eClass.getEStructuralFeatures(), visitedPackages, visited);
+        handleEOperations(eClass.getEOperations(), visitedPackages, visited);
+        handleEGenericTypes(eClass.getEGenericSuperTypes(), visitedPackages, visited);
       }
     }
   }
 
-  protected void handleEStructuralFeatures(List<EStructuralFeature> structuralFeatures, Set<EClassifier> visited)
+  protected void handleEStructuralFeatures(List<EStructuralFeature> structuralFeatures, Set<EPackage> visitedPackages,
+      Set<Object> visited)
   {
     if (structuralFeatures != null)
     {
       for (EStructuralFeature structuralFeature : structuralFeatures)
       {
-        handleEGenericType(structuralFeature.getEGenericType(), visited);
+        handleEGenericType(structuralFeature.getEGenericType(), visitedPackages, visited);
       }
     }
   }
 
-  protected void handleEOperations(List<EOperation> operations, Set<EClassifier> visited)
+  protected void handleEOperations(List<EOperation> operations, Set<EPackage> visitedPackages, Set<Object> visited)
   {
     if (operations != null)
     {
       for (EOperation operation : operations)
       {
-        handleEGenericType(operation.getEGenericType(), visited);
-        handleETypeParameters(operation.getETypeParameters(), visited);
-        handleEParameters(operation.getEParameters(), visited);
-        handleEGenericTypes(operation.getEGenericExceptions(), visited);
+        handleEGenericType(operation.getEGenericType(), visitedPackages, visited);
+        handleETypeParameters(operation.getETypeParameters(), visitedPackages, visited);
+        handleEParameters(operation.getEParameters(), visitedPackages, visited);
+        handleEGenericTypes(operation.getEGenericExceptions(), visitedPackages, visited);
       }
     }
   }
 
-  protected void handleEParameters(List<EParameter> parameters, Set<EClassifier> visited)
+  protected void handleEParameters(List<EParameter> parameters, Set<EPackage> visitedPackages, Set<Object> visited)
   {
     if (parameters != null)
     {
       for (EParameter parameter : parameters)
       {
-        handleEClassifier(parameter.getEType(), visited);
-        handleEGenericType(parameter.getEGenericType(), visited);
+        handleEClassifier(parameter.getEType(), visitedPackages, visited);
+        handleEGenericType(parameter.getEGenericType(), visitedPackages, visited);
       }
     }
   }
 
-  protected void handleEGenericTypes(EList<EGenericType> genericTypes, Set<EClassifier> visited)
+  protected void handleEGenericTypes(EList<EGenericType> genericTypes, Set<EPackage> visitedPackages,
+      Set<Object> visited)
   {
     if (genericTypes != null)
     {
       for (EGenericType genericType : genericTypes)
       {
-        handleEGenericType(genericType, visited);
+        handleEGenericType(genericType, visitedPackages, visited);
       }
     }
   }
 
-  protected void handleEGenericType(EGenericType genericType, Set<EClassifier> visited)
+  protected void handleEGenericType(EGenericType genericType, Set<EPackage> visitedPackages, Set<Object> visited)
   {
-    if (genericType != null)
+    if (genericType != null && visited.add(genericType))
     {
-      handleEClassifier(genericType.getEClassifier(), visited);
-      handleEClassifier(genericType.getERawType(), visited);
-      handleEGenericType(genericType.getELowerBound(), visited);
-      handleEGenericType(genericType.getEUpperBound(), visited);
-      handleEGenericTypes(genericType.getETypeArguments(), visited);
-      handleETypeParameter(genericType.getETypeParameter(), visited);
+      handleEClassifier(genericType.getEClassifier(), visitedPackages, visited);
+      handleEClassifier(genericType.getERawType(), visitedPackages, visited);
+      handleEGenericType(genericType.getELowerBound(), visitedPackages, visited);
+      handleEGenericType(genericType.getEUpperBound(), visitedPackages, visited);
+      handleEGenericTypes(genericType.getETypeArguments(), visitedPackages, visited);
+      handleETypeParameter(genericType.getETypeParameter(), visitedPackages, visited);
     }
   }
 
-  protected void handleETypeParameters(EList<ETypeParameter> typeParameters, Set<EClassifier> visited)
+  protected void handleETypeParameters(EList<ETypeParameter> typeParameters, Set<EPackage> visitedPackages,
+      Set<Object> visited)
   {
     if (typeParameters != null)
     {
       for (ETypeParameter typeParameter : typeParameters)
       {
-        handleETypeParameter(typeParameter, visited);
+        handleETypeParameter(typeParameter, visitedPackages, visited);
       }
     }
   }
 
-  protected void handleETypeParameter(ETypeParameter typeParameter, Set<EClassifier> visited)
+  protected void handleETypeParameter(ETypeParameter typeParameter, Set<EPackage> visitedPackages, Set<Object> visited)
   {
     if (typeParameter != null)
     {
-      handleEGenericTypes(typeParameter.getEBounds(), visited);
+      handleEGenericTypes(typeParameter.getEBounds(), visitedPackages, visited);
     }
   }
 }

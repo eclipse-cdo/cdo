@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -14,7 +14,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -25,14 +24,6 @@ public class CrossReferencesPackageClosure extends PackageClosure
 {
   public CrossReferencesPackageClosure()
   {
-  }
-
-  @Override
-  public Set<EPackage> calculate(EPackage ePackage)
-  {
-    Set<EPackage> visited = new HashSet<EPackage>();
-    handleEPackage(ePackage, visited);
-    return visited;
   }
 
   @Override

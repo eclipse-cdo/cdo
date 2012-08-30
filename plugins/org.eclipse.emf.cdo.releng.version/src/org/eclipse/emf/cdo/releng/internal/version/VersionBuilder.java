@@ -155,6 +155,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
               references = new HashSet<IElement>();
               elementReferences.put(child, references);
             }
+
             references.add(element);
           }
         }
@@ -184,8 +185,15 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
   @Override
   protected final IProject[] build(int kind, Map<String, String> args, IProgressMonitor monitor) throws CoreException
   {
-    arguments = new VersionBuilderArguments(args);
     List<IProject> buildDpependencies = new ArrayList<IProject>();
+    build(kind, args, monitor, buildDpependencies);
+    return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+  }
+
+  private void build(int kind, Map<String, String> args, IProgressMonitor monitor, List<IProject> buildDpependencies)
+      throws CoreException
+  {
+    arguments = new VersionBuilderArguments(args);
     VersionValidator validator = null;
 
     IProject project = getProject();
@@ -209,12 +217,13 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
     }
 
     BuildState buildState = Activator.getBuildState(project);
+    byte[] releaseSpecDigest = buildState.getReleaseSpecDigest();
+
     VersionBuilderArguments oldVersionBuilderArguments = new VersionBuilderArguments(buildState.getArguments());
     buildState.setArguments(arguments);
-    byte[] releaseSpecDigest = buildState.getReleaseSpecDigest();
-    final boolean fullBuild = releaseSpecDigest == null || kind == FULL_BUILD || kind == CLEAN_BUILD
-        || !oldVersionBuilderArguments.equals(arguments);
-    IResourceDelta delta = fullBuild ? null : getDelta(project);
+
+    IResourceDelta delta = releaseSpecDigest == null || kind == FULL_BUILD || kind == CLEAN_BUILD
+        || !oldVersionBuilderArguments.equals(arguments) ? null : getDelta(project);
 
     monitor.beginTask("", 1);
     monitor.subTask("Checking version validity of " + project.getName());
@@ -222,6 +231,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
     try
     {
       IModel componentModel = VersionUtil.getComponentModel(project);
+
       /*
        * Determine release data to validate against
        */
@@ -231,12 +241,12 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       {
         String msg = "Path to release spec file is not configured";
         Markers.addMarker(projectDescription, msg, IMarker.SEVERITY_ERROR, "(" + VersionUtil.BUILDER_ID + ")");
-        return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+        return;
       }
 
       if (Activator.getIgnoredReleases().contains(releasePathArg))
       {
-        return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+        return;
       }
 
       IPath releasePath = new Path(releasePathArg);
@@ -276,7 +286,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
           marker.setAttribute(Markers.PROBLEM_TYPE, Markers.RELEASE_PATH_PROBLEM);
         }
 
-        return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+        return;
       }
 
       /*
@@ -386,7 +396,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
 
         if (hasAPIToolsMarker((IPluginModelBase)componentModel))
         {
-          return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+          return;
         }
       }
       else
@@ -410,7 +420,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
         {
           if (checkMalformedVersions(componentModel))
           {
-            return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+            return;
           }
         }
       }
@@ -427,7 +437,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
           System.out.println("Project has not been released: " + project.getName());
         }
 
-        return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+        return;
       }
 
       Markers.deleteAllMarkers(componentModelFile, Markers.VERSION_NATURE_PROBLEM);
@@ -484,7 +494,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
 
         if (element.getType() == IElement.Type.PLUGIN)
         {
-          return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+          return;
         }
       }
 
@@ -492,7 +502,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       {
         addVersionMarker(componentModelFile, "Version has been decreased after release " + releaseVersion,
             releaseVersion);
-        return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+        return;
       }
 
       if (element.getType() == IElement.Type.FEATURE)
@@ -509,7 +519,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
           if (!problems.isEmpty())
           {
             createMarkers(componentModelFile, problems, ComponentReferenceType.UNRESOLVED);
-            return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+            return;
 
           }
           ComponentReferenceType change = checkFeatureContentChanges(element, releaseElement, problems);
@@ -529,19 +539,19 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
               createMarkers(componentModelFile, problems, change);
             }
 
-            return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+            return;
           }
 
           if (!elementVersion.equals(releaseVersion))
           {
-            return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+            return;
           }
         }
       }
 
       if (microVersionProperlyIncreased)
       {
-        return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+        return;
       }
 
       /*
@@ -576,8 +586,19 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
           marker.setAttribute(Markers.PROBLEM_TYPE, Markers.VALIDATOR_CLASS_PROBLEM);
         }
 
-        return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
+        return;
       }
+
+      String validatorVersion = validator.getVersion();
+      if (!VersionUtil.equals(validatorClassName, buildState.getValidatorClass())
+          || !VersionUtil.equals(validatorVersion, buildState.getValidatorVersion()))
+      {
+        buildState.setValidatorState(null);
+        delta = null;
+      }
+
+      buildState.setValidatorClass(validatorClassName);
+      buildState.setValidatorVersion(validatorVersion);
 
       /*
        * Do the validation
@@ -614,8 +635,6 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       release = null;
       monitor.done();
     }
-
-    return buildDpependencies.toArray(new IProject[buildDpependencies.size()]);
   }
 
   private void createMarkers(IFile componentModelFile, List<Problem> problems, ComponentReferenceType change)

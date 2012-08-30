@@ -38,6 +38,8 @@ import org.eclipse.pde.core.plugin.PluginRegistry;
 import org.osgi.framework.Version;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.CharArrayWriter;
 import java.io.Closeable;
 import java.io.File;
@@ -45,8 +47,11 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -78,6 +83,39 @@ public final class VersionUtil
     }
 
     return o1.equals(o2);
+  }
+
+  public static byte[] serialize(Serializable object)
+  {
+    try
+    {
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+  
+      ObjectOutputStream stream = new ObjectOutputStream(baos);
+      stream.writeObject(object);
+      stream.flush();
+  
+      return baos.toByteArray();
+    }
+    catch (Exception ex)
+    {
+      Activator.log(ex);
+      return null;
+    }
+  }
+
+  public static Serializable deserialize(byte[] bytes)
+  {
+    try
+    {
+      ObjectInputStream stream = new ObjectInputStream(new ByteArrayInputStream(bytes));
+      return (Serializable)stream.readObject();
+    }
+    catch (Exception ex)
+    {
+      Activator.log(ex);
+      return null;
+    }
   }
 
   public static Version normalize(Version version)

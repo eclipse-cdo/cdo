@@ -63,6 +63,12 @@ public class DigestValidator extends VersionValidator
   }
 
   @Override
+  public String getVersion()
+  {
+    return Activator.getVersion();
+  }
+
+  @Override
   public void updateBuildState(IBuildState buildState, IRelease release, IProject project, IResourceDelta delta,
       IModel componentModel, IProgressMonitor monitor) throws Exception
   {
@@ -74,7 +80,7 @@ public class DigestValidator extends VersionValidator
     long timeStamp = releaseDigest.getTimeStamp();
     if (timeStamp != buildState.getValidatorTimeStamp())
     {
-      // Trigger full build if the release digest to use is different from the one used for the last build
+      // Trigger full validation if the release digest to use is different from the one used for the last build
       delta = null;
 
       // Avoid triggering full builds after this (full) build

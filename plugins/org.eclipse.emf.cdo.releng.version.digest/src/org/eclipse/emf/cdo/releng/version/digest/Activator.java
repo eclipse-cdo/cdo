@@ -26,6 +26,8 @@ public class Activator extends Plugin
 
   private static Activator plugin;
 
+  private String version;
+
   public Activator()
   {
   }
@@ -35,13 +37,20 @@ public class Activator extends Plugin
   {
     super.start(context);
     plugin = this;
+    version = getBundle().getVersion().toString();
   }
 
   @Override
   public void stop(BundleContext context) throws Exception
   {
+    version = null;
     plugin = null;
     super.stop(context);
+  }
+
+  public static String getVersion()
+  {
+    return plugin.version;
   }
 
   public static void log(String message)

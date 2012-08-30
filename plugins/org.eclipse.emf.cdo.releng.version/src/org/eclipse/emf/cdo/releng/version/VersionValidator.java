@@ -20,12 +20,14 @@ import org.eclipse.pde.core.IModel;
  */
 public abstract class VersionValidator
 {
+  public abstract String getVersion();
+
+  public abstract void updateBuildState(IBuildState buildState, IRelease release, IProject project,
+      IResourceDelta delta, IModel componentModel, IProgressMonitor monitor) throws Exception;
+
   public void abort(IBuildState buildState, IProject project, Exception exception, IProgressMonitor monitor)
       throws Exception
   {
     buildState.setValidatorState(null);
   }
-
-  public abstract void updateBuildState(IBuildState buildState, IRelease release, IProject project,
-      IResourceDelta delta, IModel componentModel, IProgressMonitor monitor) throws Exception;
 }

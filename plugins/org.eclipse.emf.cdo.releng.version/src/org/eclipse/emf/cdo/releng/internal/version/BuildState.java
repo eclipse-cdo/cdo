@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.internal.version;
 
 import org.eclipse.emf.cdo.releng.version.IBuildState;
+import org.eclipse.emf.cdo.releng.version.VersionUtil;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -23,6 +24,8 @@ import java.util.Set;
 public class BuildState implements IBuildState, Serializable
 {
   private static final long serialVersionUID = 1L;
+
+  private Map<String, String> arguments;
 
   private byte[] releaseSpecDigest;
 
@@ -38,12 +41,26 @@ public class BuildState implements IBuildState, Serializable
 
   private long validatorTimeStamp;
 
-  private Serializable validatorState;
+  private String validatorClass;
 
-  private Map<String, String> arguments;
+  private String validatorVersion;
+
+  private byte[] validatorBytes;
+
+  private transient Serializable validatorState;
 
   BuildState()
   {
+  }
+
+  public Map<String, String> getArguments()
+  {
+    return arguments == null ? new HashMap<String, String>() : arguments;
+  }
+
+  public void setArguments(Map<String, String> arguments)
+  {
+    this.arguments = arguments;
   }
 
   public byte[] getReleaseSpecDigest()
@@ -106,6 +123,26 @@ public class BuildState implements IBuildState, Serializable
     this.validatorTimeStamp = validatorTimeStamp;
   }
 
+  public String getValidatorClass()
+  {
+    return validatorClass;
+  }
+
+  public void setValidatorClass(String validatorClass)
+  {
+    this.validatorClass = validatorClass;
+  }
+
+  public String getValidatorVersion()
+  {
+    return validatorVersion;
+  }
+
+  public void setValidatorVersion(String validatorVersion)
+  {
+    this.validatorVersion = validatorVersion;
+  }
+
   public boolean isChangedSinceRelease()
   {
     return changedSinceRelease;
@@ -118,21 +155,28 @@ public class BuildState implements IBuildState, Serializable
 
   public Serializable getValidatorState()
   {
+    if (validatorState == null)
+    {
+      if (validatorBytes != null)
+      {
+        validatorState = VersionUtil.deserialize(validatorBytes);
+      }
+    }
+
     return validatorState;
   }
 
   public void setValidatorState(Serializable validatorState)
   {
     this.validatorState = validatorState;
+    validatorBytes = null;
   }
 
-  public Map<String, String> getArguments()
+  void serializeValidatorState()
   {
-    return arguments == null ? new HashMap<String, String>() : arguments;
-  }
-
-  public void setArguments(Map<String, String> arguments)
-  {
-    this.arguments = arguments;
+    if (validatorBytes == null && validatorState != null)
+    {
+      validatorBytes = VersionUtil.serialize(validatorState);
+    }
   }
 }

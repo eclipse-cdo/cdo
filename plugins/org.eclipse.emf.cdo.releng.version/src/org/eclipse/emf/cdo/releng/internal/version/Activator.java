@@ -27,12 +27,12 @@ import org.osgi.framework.BundleContext;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -51,9 +51,9 @@ public class Activator extends Plugin
 
   private static IResourceChangeListener postBuildListener;
 
-  private IgnoredReleases ignoredReleases;
+  private static IgnoredReleases ignoredReleases;
 
-  private Map<String, BuildState> buildStates;
+  private static BuildStates buildStates;
 
   public Activator()
   {
@@ -67,11 +67,11 @@ public class Activator extends Plugin
 
     try
     {
-      File stateFile = getStateFile(IGNORED_RELEASES);
-      if (stateFile.exists())
-      {
-        loadIgnoredReleases();
-      }
+      ignoredReleases = load(IGNORED_RELEASES);
+    }
+    catch (Throwable t)
+    {
+      //$FALL-THROUGH$
     }
     finally
     {
@@ -83,18 +83,23 @@ public class Activator extends Plugin
 
     try
     {
-      File stateFile = getStateFile(BUILD_STATES);
-      if (stateFile.exists())
-      {
-        loadBuildStates();
-        stateFile.delete(); // Future indication for possible workspace crash
-      }
+      buildStates = load(BUILD_STATES);
+    }
+    catch (Throwable t)
+    {
+      //$FALL-THROUGH$
     }
     finally
     {
+      File stateFile = getStateFile(BUILD_STATES);
+      if (stateFile.exists())
+      {
+        stateFile.delete(); // Future indication for possible workspace crash
+      }
+
       if (buildStates == null)
       {
-        buildStates = new HashMap<String, BuildState>();
+        buildStates = new BuildStates();
       }
     }
   }
@@ -110,127 +115,50 @@ public class Activator extends Plugin
 
     if (!buildStates.isEmpty())
     {
-      saveBuildStates();
-      buildStates = null;
+      IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+      for (Iterator<Entry<String, BuildState>> it = buildStates.entrySet().iterator(); it.hasNext();)
+      {
+        Entry<String, BuildState> entry = it.next();
+        String projectName = entry.getKey();
+        IProject project = root.getProject(projectName);
+        if (!project.exists())
+        {
+          it.remove();
+        }
+        else
+        {
+          BuildState buildState = entry.getValue();
+          buildState.serializeValidatorState();
+        }
+      }
+
+      save(BUILD_STATES, buildStates);
     }
 
+    ignoredReleases = null;
+    buildStates = null;
     plugin = null;
     super.stop(context);
   }
 
-  private File getStateFile(String name)
+  public static void setPostBuildListener(IResourceChangeListener postBuildListener)
   {
-    File stateFolder = Platform.getStateLocation(getBundle()).toFile();
-    return new File(stateFolder, name);
-  }
-
-  private void loadIgnoredReleases()
-  {
-    ObjectInputStream stream = null;
-
-    try
-    {
-      File stateFile = getStateFile(IGNORED_RELEASES);
-      stream = new ObjectInputStream(new FileInputStream(stateFile));
-      ignoredReleases = (IgnoredReleases)stream.readObject();
-    }
-    catch (Exception ex)
-    {
-      log(ex);
-    }
-    finally
-    {
-      VersionUtil.close(stream);
-    }
-  }
-
-  private void saveIgnoredReleases()
-  {
-    ObjectOutputStream stream = null;
-
-    try
-    {
-      File stateFile = getStateFile(IGNORED_RELEASES);
-      stream = new ObjectOutputStream(new FileOutputStream(stateFile));
-      stream.writeObject(ignoredReleases);
-    }
-    catch (Exception ex)
-    {
-      log(ex);
-    }
-    finally
-    {
-      VersionUtil.close(stream);
-    }
-  }
-
-  private void loadBuildStates()
-  {
-    ObjectInputStream stream = null;
-
-    try
-    {
-      File stateFile = getStateFile(BUILD_STATES);
-      stream = new ObjectInputStream(new FileInputStream(stateFile));
-
-      @SuppressWarnings("unchecked")
-      Map<String, BuildState> object = (Map<String, BuildState>)stream.readObject();
-      buildStates = object;
-    }
-    catch (Exception ex)
-    {
-      log(ex);
-    }
-    finally
-    {
-      VersionUtil.close(stream);
-    }
-  }
-
-  private void saveBuildStates()
-  {
-    IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-    for (Iterator<Entry<String, BuildState>> it = buildStates.entrySet().iterator(); it.hasNext();)
-    {
-      Entry<String, BuildState> entry = it.next();
-      IProject project = root.getProject(entry.getKey());
-      if (!project.exists())
-      {
-        it.remove();
-      }
-    }
-
-    ObjectOutputStream stream = null;
-
-    try
-    {
-      File stateFile = getStateFile(BUILD_STATES);
-      stream = new ObjectOutputStream(new FileOutputStream(stateFile));
-      stream.writeObject(buildStates);
-    }
-    catch (Exception ex)
-    {
-      log(ex);
-    }
-    finally
-    {
-      VersionUtil.close(stream);
-    }
+    Activator.postBuildListener = postBuildListener;
   }
 
   public static Set<String> getIgnoredReleases()
   {
-    return plugin.ignoredReleases;
+    return ignoredReleases;
   }
 
   public static BuildState getBuildState(IProject project)
   {
     String name = project.getName();
-    BuildState buildState = plugin.buildStates.get(name);
+    BuildState buildState = buildStates.get(name);
     if (buildState == null)
     {
       buildState = new BuildState();
-      plugin.buildStates.put(name, buildState);
+      buildStates.put(name, buildState);
     }
 
     return buildState;
@@ -239,7 +167,7 @@ public class Activator extends Plugin
   public static void clearBuildState(IProject project)
   {
     String name = project.getName();
-    plugin.buildStates.remove(name);
+    buildStates.remove(name);
   }
 
   public static void log(String message)
@@ -276,9 +204,49 @@ public class Activator extends Plugin
     return new Status(IStatus.ERROR, PLUGIN_ID, msg, t);
   }
 
-  public static void setPostBuildListener(IResourceChangeListener postBuildListener)
+  private static File getStateFile(String name)
   {
-    Activator.postBuildListener = postBuildListener;
+    File stateFolder = Platform.getStateLocation(plugin.getBundle()).toFile();
+    return new File(stateFolder, name);
+  }
+
+  private static <T> T load(String fileName) throws IOException, ClassNotFoundException
+  {
+    ObjectInputStream stream = null;
+
+    try
+    {
+      File stateFile = getStateFile(fileName);
+      stream = new ObjectInputStream(new FileInputStream(stateFile));
+
+      @SuppressWarnings("unchecked")
+      T object = (T)stream.readObject();
+      return object;
+    }
+    finally
+    {
+      VersionUtil.close(stream);
+    }
+  }
+
+  private static void save(String fileName, Object object)
+  {
+    ObjectOutputStream stream = null;
+
+    try
+    {
+      File file = getStateFile(fileName);
+      stream = new ObjectOutputStream(new FileOutputStream(file));
+      stream.writeObject(object);
+    }
+    catch (Throwable ex)
+    {
+      log(ex);
+    }
+    finally
+    {
+      VersionUtil.close(stream);
+    }
   }
 
   /**
@@ -297,7 +265,7 @@ public class Activator extends Plugin
     {
       if (super.add(releasePath))
       {
-        plugin.saveIgnoredReleases();
+        save();
         return true;
       }
 
@@ -309,11 +277,28 @@ public class Activator extends Plugin
     {
       if (super.remove(releasePath))
       {
-        plugin.saveIgnoredReleases();
+        save();
         return true;
       }
 
       return false;
+    }
+
+    private void save()
+    {
+      Activator.save(IGNORED_RELEASES, ignoredReleases);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class BuildStates extends HashMap<String, BuildState>
+  {
+    private static final long serialVersionUID = 2L;
+
+    public BuildStates()
+    {
     }
   }
 }

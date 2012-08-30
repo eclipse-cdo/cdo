@@ -403,7 +403,10 @@ public class MergingTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testFromBranchWithChangesInSource_100() throws Exception
+  /**
+   * Bug 314605.
+   */
+  public void _testFromBranchWithChangesInSource_100() throws Exception
   {
     disableConsole();
     for (int i = 0; i < 100; i++)

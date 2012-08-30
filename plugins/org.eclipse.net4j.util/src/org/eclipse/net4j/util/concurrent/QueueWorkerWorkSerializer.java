@@ -20,6 +20,7 @@ public class QueueWorkerWorkSerializer extends QueueRunner implements IWorkSeria
 {
   public QueueWorkerWorkSerializer()
   {
+    setDaemon(true);
     activate();
   }
 

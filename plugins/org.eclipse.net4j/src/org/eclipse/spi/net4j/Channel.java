@@ -321,11 +321,6 @@ public class Channel extends Lifecycle implements InternalChannel
    */
   protected class ReceiveSerializer extends QueueWorkerWorkSerializer
   {
-    // CompletionWorkSerializer throws "One command already pending"
-    // CompletionWorkSerializer
-    // AsynchronousWorkSerializer
-    // SynchronousWorkSerializer
-
     @Override
     protected String getThreadName()
     {

@@ -27,7 +27,9 @@ import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.net4j.util.WrappedException;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -71,7 +73,7 @@ public class DetachTest extends AbstractCDOTest
     Company c1 = getModel1Factory().createCompany();
     c1.setName("Test");
     resource.getContents().add(c1);
-    transaction.commit(); // (1)
+    transaction.commit(); // (2)
 
     final URI uriC1 = EcoreUtil.getURI(c1);
     final CDOID id = CDOUtil.getCDOObject(c1).cdoID();
@@ -399,5 +401,42 @@ public class DetachTest extends AbstractCDOTest
     resource.delete(null);
     assertEquals(true, resource.isExisting());
     transaction.commit();
+  }
+
+  /**
+   * Bug 357469.
+   */
+  public void _testDetachConcurrently() throws Exception
+  {
+    String path = getResourcePath("/test1");
+
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(path);
+      resource.getContents().add(getModel1Factory().createCompany());
+      transaction.commit();
+      session.close();
+    }
+
+    CDOSession session1 = openSession();
+    session1.options().setPassiveUpdateEnabled(false);
+    CDOTransaction transaction1 = session1.openTransaction();
+    CDOResource resource1 = transaction1.getResource(path);
+    EList<EObject> contents1 = resource1.getContents();
+    contents1.get(0);
+
+    CDOSession session2 = openSession();
+    session2.options().setPassiveUpdateEnabled(false);
+    CDOTransaction transaction2 = session2.openTransaction();
+    CDOResource resource2 = transaction2.getResource(path);
+    EList<EObject> contents2 = resource2.getContents();
+    contents2.get(0);
+
+    contents1.remove(0);
+    transaction1.commit();
+
+    contents2.remove(0);
+    transaction2.commit();
   }
 }

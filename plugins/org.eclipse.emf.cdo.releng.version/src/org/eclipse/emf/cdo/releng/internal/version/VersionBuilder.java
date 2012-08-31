@@ -1285,6 +1285,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       String regex = name.replace(".", "\\.") + ";version=\"([0123456789\\.]*)\"";
 
       IMarker marker = Markers.addMarker(file, message, IMarker.SEVERITY_ERROR, regex);
+      marker.setAttribute(Markers.PROBLEM_TYPE, Markers.EXPORT_VERSION_PROBLEM);
       marker.setAttribute(Markers.QUICK_FIX_PATTERN, regex);
       marker.setAttribute(Markers.QUICK_FIX_REPLACEMENT, versionString);
       marker.setAttribute(Markers.QUICK_FIX_CONFIGURE_OPTION, IVersionBuilderArguments.IGNORE_EXPORT_VERSIONS_ARGUMENT);

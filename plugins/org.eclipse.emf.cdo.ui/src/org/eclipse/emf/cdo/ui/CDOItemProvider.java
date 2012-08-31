@@ -17,9 +17,11 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
+import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseSessionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CommitTransactionAction;
@@ -241,6 +243,16 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       return SharedIcons.getImage(SharedIcons.OBJ_RESOURCE);
     }
 
+    if (obj instanceof CDOTextResource)
+    {
+      return SharedIcons.getImage(SharedIcons.OBJ_TEXT_RESOURCE);
+    }
+
+    if (obj instanceof CDOBinaryResource)
+    {
+      return SharedIcons.getImage(SharedIcons.OBJ_BINARY_RESOURCE);
+    }
+
     return super.getImage(obj);
   }
 
@@ -274,13 +286,21 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       {
         fillView(manager, (CDOView)object);
       }
+      else if (object instanceof CDOResourceFolder)
+      {
+        fillResourceFolder(manager, (CDOResourceFolder)object);
+      }
       else if (object instanceof CDOResource)
       {
         fillResource(manager, (CDOResource)object);
       }
-      else if (object instanceof CDOResourceFolder)
+      else if (object instanceof CDOTextResource)
       {
-        fillResourceFolder(manager, (CDOResourceFolder)object);
+        fillTextResource(manager, (CDOTextResource)object);
+      }
+      else if (object instanceof CDOBinaryResource)
+      {
+        fillBinaryResource(manager, (CDOBinaryResource)object);
       }
     }
   }
@@ -296,6 +316,22 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
    * @since 3.0
    */
   protected void fillResource(IMenuManager manager, CDOResource resource)
+  {
+    manager.add(new OpenResourceEditorAction(page, resource));
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void fillTextResource(IMenuManager manager, CDOTextResource resource)
+  {
+    manager.add(new OpenResourceEditorAction(page, resource));
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void fillBinaryResource(IMenuManager manager, CDOBinaryResource resource)
   {
     manager.add(new OpenResourceEditorAction(page, resource));
   }
@@ -387,12 +423,15 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     manager.add(new OpenViewEditorAction(page, view));
     manager.add(new LoadResourceAction(page, view));
     manager.add(new ExportResourceAction(page, view));
+
     manager.add(new Separator());
     if (!view.isReadOnly())
     {
       CDOResource rootResource = view.getRootResource();
-      manager.add(new CreateResourceNodeAction(this, page, view, rootResource, false));
-      manager.add(new CreateResourceNodeAction(this, page, view, rootResource, true));
+      manager.add(new CreateResourceNodeAction(this, page, view, rootResource, CreateResourceNodeAction.Type.FOLDER));
+      manager.add(new CreateResourceNodeAction(this, page, view, rootResource, CreateResourceNodeAction.Type.MODEL));
+      manager.add(new CreateResourceNodeAction(this, page, view, rootResource, CreateResourceNodeAction.Type.TEXT));
+      manager.add(new CreateResourceNodeAction(this, page, view, rootResource, CreateResourceNodeAction.Type.BINARY));
       manager.add(new ImportResourceAction(page, view));
       manager.add(new CommitTransactionAction(page, view));
       manager.add(new RollbackTransactionAction(page, view));

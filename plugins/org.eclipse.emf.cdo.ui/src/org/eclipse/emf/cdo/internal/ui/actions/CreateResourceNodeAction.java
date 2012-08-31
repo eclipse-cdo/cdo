@@ -19,10 +19,12 @@ import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
+import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
@@ -30,38 +32,29 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class CreateResourceNodeAction extends ViewAction
 {
-  private static final String TITLE_RESOURCE = Messages.getString("CreateResourceAction.0"); //$NON-NLS-1$
-
-  private static final String TITLE_FOLDER = Messages.getString("CreateResourceNodeAction.0"); //$NON-NLS-1$
-
-  private static final String TOOL_TIP_RESOURCE = Messages.getString("CreateResourceAction.1"); //$NON-NLS-1$
-
-  private static final String TOOL_TIP_FOLDER = Messages.getString("CreateResourceNodeAction.1"); //$NON-NLS-1$
-
   private CDOItemProvider itemProvider;
 
   private CDOResourceNode selectedNode;
 
-  private boolean createFolder;
+  private Type type;
 
   private String resourceNodeName;
 
   public CreateResourceNodeAction(CDOItemProvider itemProvider, IWorkbenchPage page, CDOView view,
-      CDOResourceNode node, boolean createFolder)
+      CDOResourceNode node, Type type)
   {
-    super(page, createFolder ? TITLE_FOLDER + INTERACTIVE : TITLE_RESOURCE + INTERACTIVE,
-        createFolder ? TOOL_TIP_FOLDER : TOOL_TIP_RESOURCE, null, view);
+    super(page, type.getTitle() + INTERACTIVE, type.getTooltip(), type.getImageDescriptor(), view);
     selectedNode = node;
     this.itemProvider = itemProvider;
-    this.createFolder = createFolder;
+    this.type = type;
   }
 
   @Override
   protected void preRun() throws Exception
   {
-    InputDialog dialog = new InputDialog(getShell(), createFolder ? TITLE_FOLDER : TITLE_RESOURCE,
-        createFolder ? "Enter folder name" : Messages.getString("CreateResourceAction.2"), "res" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            + (ViewAction.lastResourceNumber + 1), new ResourceNodeNameInputValidator(selectedNode));
+    InputDialog dialog = new InputDialog(getShell(), type.getTitle(), Messages.getString("CreateResourceNodeAction.8"),
+        (type == Type.FOLDER ? "folder" : "resource") + (ViewAction.lastResourceNumber + 1),
+        new ResourceNodeNameInputValidator(selectedNode));
 
     if (dialog.open() == InputDialog.OK)
     {
@@ -80,8 +73,9 @@ public class CreateResourceNodeAction extends ViewAction
     CDOTransaction transaction = getTransaction();
     CDOResourceNode node = null;
 
-    if (createFolder)
+    switch (type)
     {
+    case FOLDER:
       node = EresourceFactory.eINSTANCE.createCDOResourceFolder();
       node.setName(resourceNodeName);
       if (selectedNode instanceof CDOResourceFolder)
@@ -90,11 +84,12 @@ public class CreateResourceNodeAction extends ViewAction
       }
       else
       {
-        ((CDOResource)selectedNode).getContents().add(node);
+        ((CDOResource)selectedNode).getContents().add(node); // selectedNode is root resource
       }
-    }
-    else
-    {
+
+      break;
+
+    case MODEL:
       if (selectedNode instanceof CDOResourceFolder)
       {
         node = transaction.createResource(selectedNode.getPath() + "/" + resourceNodeName); //$NON-NLS-1$
@@ -103,6 +98,32 @@ public class CreateResourceNodeAction extends ViewAction
       {
         node = transaction.createResource(resourceNodeName);
       }
+
+      break;
+
+    case TEXT:
+      if (selectedNode instanceof CDOResourceFolder)
+      {
+        node = transaction.createTextResource(selectedNode.getPath() + "/" + resourceNodeName); //$NON-NLS-1$
+      }
+      else
+      {
+        node = transaction.createTextResource(resourceNodeName);
+      }
+
+      break;
+
+    case BINARY:
+      if (selectedNode instanceof CDOResourceFolder)
+      {
+        node = transaction.createBinaryResource(selectedNode.getPath() + "/" + resourceNodeName); //$NON-NLS-1$
+      }
+      else
+      {
+        node = transaction.createBinaryResource(resourceNodeName);
+      }
+
+      break;
     }
 
     transaction.commit();
@@ -110,10 +131,56 @@ public class CreateResourceNodeAction extends ViewAction
     itemProvider.refreshViewer(true);
     itemProvider.selectElement(node, true);
 
-    if (!createFolder)
+    if (type == Type.MODEL)
     {
       String resourcePath = node.getPath();
       CDOEditorUtil.openEditor(getPage(), transaction, resourcePath);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static enum Type
+  {
+    FOLDER(Messages.getString("Title.Folder"), Messages.getString("Tooltip.Folder"), SharedIcons
+        .getDescriptor(SharedIcons.ETOOL_NEW_RESOURCE_FOLDER)),
+
+    MODEL(Messages.getString("Title.Model"), Messages.getString("Tooltip.Model"), SharedIcons
+        .getDescriptor(SharedIcons.ETOOL_NEW_RESOURCE)),
+
+    TEXT(Messages.getString("Title.Text"), Messages.getString("Tooltip.Text"), SharedIcons
+        .getDescriptor(SharedIcons.ETOOL_NEW_TEXT_RESOURCE)),
+
+    BINARY(Messages.getString("Title.Binary"), Messages.getString("Tooltip.Binary"), SharedIcons
+        .getDescriptor(SharedIcons.ETOOL_NEW_BINARY_RESOURCE));
+
+    private String title;
+
+    private String tooltip;
+
+    private ImageDescriptor imageDescriptor;
+
+    private Type(String title, String tooltip, ImageDescriptor imageDescriptor)
+    {
+      this.title = title;
+      this.tooltip = tooltip;
+      this.imageDescriptor = imageDescriptor;
+    }
+
+    public String getTitle()
+    {
+      return title;
+    }
+
+    public String getTooltip()
+    {
+      return tooltip;
+    }
+
+    public ImageDescriptor getImageDescriptor()
+    {
+      return imageDescriptor;
     }
   }
 }

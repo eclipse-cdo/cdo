@@ -145,11 +145,18 @@
                tooltip="%action.tooltip.8">
          </action>
          <action
-               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceFolderActionDelegate"
-               icon="icons/full/elcl16/NewCDOResourceFolder.gif"
-               id="org.eclipse.emf.cdo.ui.ide.newResourceFolderAction"
-               label="%action.label.4"
-               tooltip="%action.tooltip.3">
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewBinaryResourceActionDelegate"
+               icon="icons/full/elcl16/NewCDOBinaryResource.gif"
+               id="org.eclipse.emf.cdo.ui.ide.createBinaryResourceAction"
+               label="%action.label.16"
+               tooltip="%action.tooltip.13">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewTextResourceActionDelegate"
+               icon="icons/full/elcl16/NewCDOTextResource.gif"
+               id="org.eclipse.emf.cdo.ui.ide.createTextResourceAction"
+               label="%action.label.15"
+               tooltip="%action.tooltip.12">
          </action>
          <action
                class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceActionDelegate"
@@ -157,6 +164,13 @@
                id="org.eclipse.emf.cdo.ui.ide.createResourceAction"
                label="%action.label.3"
                tooltip="%action.tooltip.2">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceFolderActionDelegate"
+               icon="icons/full/elcl16/NewCDOResourceFolder.gif"
+               id="org.eclipse.emf.cdo.ui.ide.newResourceFolderAction"
+               label="%action.label.4"
+               tooltip="%action.tooltip.3">
          </action>
       </objectContribution>
       <objectContribution

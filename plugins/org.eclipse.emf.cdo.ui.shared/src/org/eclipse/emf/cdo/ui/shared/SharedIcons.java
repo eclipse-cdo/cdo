@@ -42,6 +42,26 @@ public class SharedIcons
 
   public static final String ETOOL_OPEN_EDITOR = ETOOL + "open_editor" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
+  /**
+   * @since 4.1
+   */
+  public static final String ETOOL_NEW_RESOURCE = ETOOL + "NewCDOResource" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
+  /**
+   * @since 4.1
+   */
+  public static final String ETOOL_NEW_TEXT_RESOURCE = ETOOL + "NewCDOTextResource" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
+  /**
+   * @since 4.1
+   */
+  public static final String ETOOL_NEW_BINARY_RESOURCE = ETOOL + "NewCDOBinaryResource" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
+  /**
+   * @since 4.1
+   */
+  public static final String ETOOL_NEW_RESOURCE_FOLDER = ETOOL + "NewCDOResourceFolder" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
   public static final String OBJ_SESSION = OBJ + "cdo_session" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
   public static final String OBJ_SESSION_SYNCING = OBJ + "cdo_session_syncing" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
@@ -59,6 +79,16 @@ public class SharedIcons
   public static final String OBJ_EPACKAGE = OBJ + "EPackage" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
   public static final String OBJ_RESOURCE = OBJ + "CDOResource" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
+  /**
+   * @since 4.1
+   */
+  public static final String OBJ_TEXT_RESOURCE = OBJ + "CDOTextResource" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
+  /**
+   * @since 4.1
+   */
+  public static final String OBJ_BINARY_RESOURCE = OBJ + "CDOBinaryResource" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
   public static final String OBJ_RESOURCE_FOLDER = OBJ + "CDOResourceFolder" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 

@@ -14,7 +14,7 @@ import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Resource Folder</b></em>'.
- * 
+ *
  * @apiviz.landmark
  * @apiviz.composedOf {@link CDOResourceNode} - - nodes
  * @noextend This interface is not intended to be extended by clients.
@@ -53,7 +53,7 @@ public interface CDOResourceFolder extends CDOResourceNode
 
   /**
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 4.0 <!-- end-user-doc -->
    * @model
    * @generated
@@ -62,7 +62,7 @@ public interface CDOResourceFolder extends CDOResourceNode
 
   /**
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 4.0 <!-- end-user-doc -->
    * @model
    * @generated
@@ -71,6 +71,7 @@ public interface CDOResourceFolder extends CDOResourceNode
 
   /**
    * <!-- begin-user-doc -->
+   * @since 4.2
    * <!-- end-user-doc -->
    * @model
    * @generated
@@ -79,6 +80,7 @@ public interface CDOResourceFolder extends CDOResourceNode
 
   /**
    * <!-- begin-user-doc -->
+   * @since 4.2
    * <!-- end-user-doc -->
    * @model
    * @generated

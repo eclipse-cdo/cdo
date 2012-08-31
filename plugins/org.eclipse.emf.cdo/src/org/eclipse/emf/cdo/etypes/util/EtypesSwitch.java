@@ -24,7 +24,7 @@ import java.util.List;
  * {@link #doSwitch(EObject) doSwitch(object)} to invoke the <code>caseXXX</code> method for each class of the model,
  * starting with the actual class of the object and proceeding up the inheritance hierarchy until a non-null result is
  * returned, which is the result of the switch.
- * 
+ *
  * @since 4.0 <!-- end-user-doc -->
  * @see org.eclipse.emf.cdo.etypes.EtypesPackage
  * @generated
@@ -66,7 +66,7 @@ public class EtypesSwitch<T>
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the first non-null result returned by a <code>caseXXX</code> call.
-   * @generated
+   * @generated NOT
    */
   protected T doSwitch(EClass theEClass, EObject theEObject)
   {
@@ -74,11 +74,9 @@ public class EtypesSwitch<T>
     {
       return doSwitch(theEClass.getClassifierID(), theEObject);
     }
-    else
-    {
-      List<EClass> eSuperTypes = theEClass.getESuperTypes();
-      return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
-    }
+
+    List<EClass> eSuperTypes = theEClass.getESuperTypes();
+    return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
   }
 
   /**
@@ -96,7 +94,9 @@ public class EtypesSwitch<T>
       ModelElement modelElement = (ModelElement)theEObject;
       T result = caseModelElement(modelElement);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case EtypesPackage.ANNOTATION:
@@ -104,9 +104,13 @@ public class EtypesSwitch<T>
       Annotation annotation = (Annotation)theEObject;
       T result = caseAnnotation(annotation);
       if (result == null)
+      {
         result = caseModelElement(annotation);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

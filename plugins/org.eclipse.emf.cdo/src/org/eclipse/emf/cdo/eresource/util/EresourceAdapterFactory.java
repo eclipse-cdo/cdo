@@ -107,7 +107,7 @@ public class EresourceAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
-    public Adapter caseCDOFileResource(CDOFileResource object)
+    public Adapter caseCDOFileResource(CDOFileResource<?> object)
     {
       return createCDOFileResourceAdapter();
     }
@@ -148,7 +148,7 @@ public class EresourceAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.eresource.CDOResourceNode <em>CDO Resource Node</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * 
+   *
    * @since 2.0<!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.eresource.CDOResourceNode
@@ -163,7 +163,7 @@ public class EresourceAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.eresource.CDOResourceFolder <em>CDO Resource Folder</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * 
+   *
    * @since 2.0<!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.eresource.CDOResourceFolder
@@ -191,7 +191,7 @@ public class EresourceAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.eresource.CDOResourceLeaf <em>CDO Resource Leaf</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.eresource.CDOResourceLeaf
@@ -206,7 +206,7 @@ public class EresourceAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.eresource.CDOFileResource <em>CDO File Resource</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.eresource.CDOFileResource
@@ -221,7 +221,7 @@ public class EresourceAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.eresource.CDOBinaryResource <em>CDO Binary Resource</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.eresource.CDOBinaryResource
@@ -236,7 +236,7 @@ public class EresourceAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.eresource.CDOTextResource <em>CDO Text Resource</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.eresource.CDOTextResource

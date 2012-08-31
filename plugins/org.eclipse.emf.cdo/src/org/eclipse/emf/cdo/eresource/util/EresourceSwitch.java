@@ -69,7 +69,7 @@ public class EresourceSwitch<T>
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the first non-null result returned by a <code>caseXXX</code> call.
-   * @generated
+   * @generated NOT
    */
   protected T doSwitch(EClass theEClass, EObject theEObject)
   {
@@ -77,11 +77,9 @@ public class EresourceSwitch<T>
     {
       return doSwitch(theEClass.getClassifierID(), theEObject);
     }
-    else
-    {
-      List<EClass> eSuperTypes = theEClass.getESuperTypes();
-      return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
-    }
+
+    List<EClass> eSuperTypes = theEClass.getESuperTypes();
+    return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
   }
 
   /**
@@ -99,7 +97,9 @@ public class EresourceSwitch<T>
       CDOResourceNode cdoResourceNode = (CDOResourceNode)theEObject;
       T result = caseCDOResourceNode(cdoResourceNode);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case EresourcePackage.CDO_RESOURCE_FOLDER:
@@ -107,9 +107,13 @@ public class EresourceSwitch<T>
       CDOResourceFolder cdoResourceFolder = (CDOResourceFolder)theEObject;
       T result = caseCDOResourceFolder(cdoResourceFolder);
       if (result == null)
+      {
         result = caseCDOResourceNode(cdoResourceFolder);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case EresourcePackage.CDO_RESOURCE:
@@ -117,11 +121,17 @@ public class EresourceSwitch<T>
       CDOResource cdoResource = (CDOResource)theEObject;
       T result = caseCDOResource(cdoResource);
       if (result == null)
+      {
         result = caseCDOResourceLeaf(cdoResource);
+      }
       if (result == null)
+      {
         result = caseCDOResourceNode(cdoResource);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case EresourcePackage.CDO_RESOURCE_LEAF:
@@ -129,21 +139,31 @@ public class EresourceSwitch<T>
       CDOResourceLeaf cdoResourceLeaf = (CDOResourceLeaf)theEObject;
       T result = caseCDOResourceLeaf(cdoResourceLeaf);
       if (result == null)
+      {
         result = caseCDOResourceNode(cdoResourceLeaf);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case EresourcePackage.CDO_FILE_RESOURCE:
     {
-      CDOFileResource cdoFileResource = (CDOFileResource)theEObject;
+      CDOFileResource<?> cdoFileResource = (CDOFileResource<?>)theEObject;
       T result = caseCDOFileResource(cdoFileResource);
       if (result == null)
+      {
         result = caseCDOResourceLeaf(cdoFileResource);
+      }
       if (result == null)
+      {
         result = caseCDOResourceNode(cdoFileResource);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case EresourcePackage.CDO_BINARY_RESOURCE:
@@ -151,13 +171,21 @@ public class EresourceSwitch<T>
       CDOBinaryResource cdoBinaryResource = (CDOBinaryResource)theEObject;
       T result = caseCDOBinaryResource(cdoBinaryResource);
       if (result == null)
+      {
         result = caseCDOFileResource(cdoBinaryResource);
+      }
       if (result == null)
+      {
         result = caseCDOResourceLeaf(cdoBinaryResource);
+      }
       if (result == null)
+      {
         result = caseCDOResourceNode(cdoBinaryResource);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case EresourcePackage.CDO_TEXT_RESOURCE:
@@ -165,13 +193,21 @@ public class EresourceSwitch<T>
       CDOTextResource cdoTextResource = (CDOTextResource)theEObject;
       T result = caseCDOTextResource(cdoTextResource);
       if (result == null)
+      {
         result = caseCDOFileResource(cdoTextResource);
+      }
       if (result == null)
+      {
         result = caseCDOResourceLeaf(cdoTextResource);
+      }
       if (result == null)
+      {
         result = caseCDOResourceNode(cdoTextResource);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:
@@ -183,7 +219,7 @@ public class EresourceSwitch<T>
    * Returns the result of interpreting the object as an instance of '<em>CDO Resource Node</em>'.
    * <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch.
-   * 
+   *
    * @since 2.0<!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>CDO Resource Node</em>'.
@@ -199,7 +235,7 @@ public class EresourceSwitch<T>
    * Returns the result of interpreting the object as an instance of '<em>CDO Resource Folder</em>'.
    * <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch.
-   * 
+   *
    * @since 2.0 <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>CDO Resource Folder</em>'.
@@ -229,7 +265,7 @@ public class EresourceSwitch<T>
    * Returns the result of interpreting the object as an instance of '<em>CDO Resource Leaf</em>'.
    * <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch.
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>CDO Resource Leaf</em>'.
@@ -245,14 +281,14 @@ public class EresourceSwitch<T>
    * Returns the result of interpreting the object as an instance of '<em>CDO File Resource</em>'.
    * <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch.
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>CDO File Resource</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
+   * @generated NOT
    */
-  public T caseCDOFileResource(CDOFileResource object)
+  public T caseCDOFileResource(CDOFileResource<?> object)
   {
     return null;
   }
@@ -261,7 +297,7 @@ public class EresourceSwitch<T>
    * Returns the result of interpreting the object as an instance of '<em>CDO Binary Resource</em>'.
    * <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch.
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>CDO Binary Resource</em>'.
@@ -277,7 +313,7 @@ public class EresourceSwitch<T>
    * Returns the result of interpreting the object as an instance of '<em>CDO Text Resource</em>'.
    * <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch.
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>CDO Text Resource</em>'.

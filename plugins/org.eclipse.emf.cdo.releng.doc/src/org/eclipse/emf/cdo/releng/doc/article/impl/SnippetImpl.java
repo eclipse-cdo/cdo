@@ -50,7 +50,7 @@ import java.util.regex.Pattern;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.SnippetImpl#getFormatter <em>Formatter</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class SnippetImpl extends EmbeddableElementImpl implements Snippet
@@ -60,7 +60,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
   /**
    * The cached value of the '{@link #getCallouts() <em>Callouts</em>}' containment reference list. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getCallouts()
    * @generated
    * @ordered
@@ -70,7 +70,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
   /**
    * The cached value of the '{@link #getFormatter() <em>Formatter</em>}' containment reference. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getFormatter()
    * @generated
    * @ordered
@@ -79,7 +79,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected SnippetImpl()
@@ -162,7 +162,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -173,7 +173,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EList<Callout> getCallouts()
@@ -188,7 +188,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Formatter getFormatter()
@@ -198,7 +198,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public NotificationChain basicSetFormatter(Formatter newFormatter, NotificationChain msgs)
@@ -223,7 +223,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setFormatter(Formatter newFormatter)
@@ -256,7 +256,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -280,7 +280,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -298,7 +298,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -316,7 +316,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -338,7 +338,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -358,7 +358,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -395,53 +395,54 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
       title = formatter.getDefaultTitle(embedderTag);
     }
 
-    out.write("\n\n");
+    out.write(NL);
+    out.write(NL);
 
     String html = formatter.getSnippetHtml(out, id, title);
     html = processCallouts(id, html, imagePath);
 
-    out.write("<div class=\"snippet\" style=\"margin-left:24px;\" align=\"left\">\n");
-    out.write("  <a name=\"snippet_" + id + "\"></a>\n");
-    out.write("  <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n");
-    out.write("    <tr>\n");
-    out.write("      <td><img src=\"" + formatter.getTopLeftEditorIcon(imagePath) + "\"></td>\n");
+    out.write("<div class=\"snippet\" style=\"margin-left:24px;\" align=\"left\">" + NL);
+    out.write("  <a name=\"snippet_" + id + "\"></a>" + NL);
+    out.write("  <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">" + NL);
+    out.write("    <tr>" + NL);
+    out.write("      <td><img src=\"" + formatter.getTopLeftEditorIcon(imagePath) + "\"></td>" + NL);
     out.write("      <td style=\"background-image:url(" + imagePath
         + "editor-top1.png); background-repeat:repeat-x;\" width=\"1px\"><font face=\"Segoe UI,Arial\" size=\"-1\">"
-        + title + "</font></td>\n");
-    out.write("      <td width=\"1px\"><img src=\"" + imagePath + "editor-close.png\"></td>\n");
+        + title + "</font></td>" + NL);
+    out.write("      <td width=\"1px\"><img src=\"" + imagePath + "editor-close.png\"></td>" + NL);
     out.write("      <td style=\"background-image:url(" + imagePath
-        + "editor-top2.png); background-repeat:repeat-x;\">&nbsp;</td>\n");
-    out.write("      <td><img src=\"" + imagePath + "editor-top-right.png\"></td>\n");
-    out.write("    </tr>\n");
-    out.write("    <tr>\n");
+        + "editor-top2.png); background-repeat:repeat-x;\">&nbsp;</td>" + NL);
+    out.write("      <td><img src=\"" + imagePath + "editor-top-right.png\"></td>" + NL);
+    out.write("    </tr>" + NL);
+    out.write("    <tr>" + NL);
     out.write("      <td style=\"background-image:url(" + imagePath
-        + "editor-left.png); background-repeat:repeat-y;\">&nbsp;</td>\n");
-    out.write("      <td colspan=\"3\" align=\"left\" valign=\"top\" nowrap>\n");
-    out.write("        <div style=\"margin:10px 0px 10px 0px;\">\n");
-    out.write("          <code>\n");
+        + "editor-left.png); background-repeat:repeat-y;\">&nbsp;</td>" + NL);
+    out.write("      <td colspan=\"3\" align=\"left\" valign=\"top\" nowrap>" + NL);
+    out.write("        <div style=\"margin:10px 0px 10px 0px;\">" + NL);
+    out.write("          <code>" + NL);
 
     out.write(html);
-    out.write("\n");
+    out.write("" + NL);
 
-    out.write("          </code>\n");
-    out.write("        </div>\n");
-    out.write("      </td>\n");
+    out.write("          </code>" + NL);
+    out.write("        </div>" + NL);
+    out.write("      </td>" + NL);
     out.write("      <td style=\"background-image:url(" + imagePath
-        + "editor-right.png); background-repeat:repeat-y;\">&nbsp;</td>\n");
-    out.write("    </tr>\n");
-    out.write("    <tr>\n");
-    out.write("      <td><img src=\"" + imagePath + "editor-bottom-left.png\"></td>\n");
+        + "editor-right.png); background-repeat:repeat-y;\">&nbsp;</td>" + NL);
+    out.write("    </tr>" + NL);
+    out.write("    <tr>" + NL);
+    out.write("      <td><img src=\"" + imagePath + "editor-bottom-left.png\"></td>" + NL);
     out.write("      <td style=\"background-image:url(" + imagePath
-        + "editor-bottom.png); background-repeat:repeat-x;\" colspan=\"3\">&nbsp;</td>\n");
-    out.write("      <td><img src=\"" + imagePath + "editor-bottom-right.png\"></td>\n");
-    out.write("    </tr>\n");
-    out.write("  </table>\n");
-    out.write("</div>\n");
+        + "editor-bottom.png); background-repeat:repeat-x;\" colspan=\"3\">&nbsp;</td>" + NL);
+    out.write("      <td><img src=\"" + imagePath + "editor-bottom-right.png\"></td>" + NL);
+    out.write("    </tr>" + NL);
+    out.write("  </table>" + NL);
+    out.write("</div>" + NL);
 
     EList<Callout> callouts = getCallouts();
     if (!callouts.isEmpty())
     {
-      out.write("<p>\n");
+      out.write("<p>" + NL);
       for (Callout callout : callouts)
       {
         String image = getCalloutImage(id, callout.getIndex(), false, "Jump to snippet...", imagePath);
@@ -456,11 +457,11 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
           ex.printStackTrace();
         }
 
-        out.write("</div>\n");
+        out.write("</div>" + NL);
       }
     }
 
-    out.write("<p>\n");
+    out.write("<p>" + NL);
   }
 
   private StructuralElement getStructuralElement(Embedding embedder)

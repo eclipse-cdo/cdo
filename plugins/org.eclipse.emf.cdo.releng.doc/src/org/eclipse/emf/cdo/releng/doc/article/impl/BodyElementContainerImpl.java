@@ -38,15 +38,17 @@ import java.util.Collection;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementContainerImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class BodyElementContainerImpl extends EObjectImpl implements BodyElementContainer
 {
+  protected static final String NL = System.getProperty("line.separator");
+
   /**
    * The cached value of the '{@link #getElements() <em>Elements</em>}' containment reference list. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getElements()
    * @generated
    * @ordered
@@ -55,7 +57,7 @@ public abstract class BodyElementContainerImpl extends EObjectImpl implements Bo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected BodyElementContainerImpl()
@@ -65,7 +67,7 @@ public abstract class BodyElementContainerImpl extends EObjectImpl implements Bo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -76,7 +78,7 @@ public abstract class BodyElementContainerImpl extends EObjectImpl implements Bo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EList<BodyElement> getElements()
@@ -91,7 +93,7 @@ public abstract class BodyElementContainerImpl extends EObjectImpl implements Bo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -108,7 +110,7 @@ public abstract class BodyElementContainerImpl extends EObjectImpl implements Bo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -124,7 +126,7 @@ public abstract class BodyElementContainerImpl extends EObjectImpl implements Bo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -140,7 +142,7 @@ public abstract class BodyElementContainerImpl extends EObjectImpl implements Bo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -159,7 +161,7 @@ public abstract class BodyElementContainerImpl extends EObjectImpl implements Bo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -176,7 +178,7 @@ public abstract class BodyElementContainerImpl extends EObjectImpl implements Bo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -281,7 +283,8 @@ public abstract class BodyElementContainerImpl extends EObjectImpl implements Bo
       element.generate(out, linkSource);
     }
 
-    out.write("\n\n");
+    out.write(NL);
+    out.write(NL);
   }
 
 } // BodyElementContainerImpl

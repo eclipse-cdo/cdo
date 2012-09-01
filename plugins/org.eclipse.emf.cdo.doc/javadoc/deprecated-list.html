@@ -239,7 +239,7 @@ function windowTitle()
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#commitDelegation(org.eclipse.emf.cdo.common.branch.CDOBranch, java.lang.String, java.lang.String, org.eclipse.emf.cdo.common.commit.CDOCommitData, java.util.Map, java.util.Collection, org.eclipse.net4j.util.om.monitor.OMMonitor)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.commitDelegation(CDOBranch, String, String, CDOCommitData, Map<CDOID, EClass>, Collection<CDOLob<?>>, OMMonitor)</A>
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore. Use <CODE>#commitDelegation(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#commitDelegation(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler3.committedTransaction(CDOTransaction, CDOCommitContext)</A>
@@ -249,7 +249,7 @@ function windowTitle()
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#commitTransaction(int, java.lang.String, boolean, org.eclipse.emf.cdo.common.id.CDOIDProvider, org.eclipse.emf.cdo.common.commit.CDOCommitData, java.util.Collection, org.eclipse.net4j.util.om.monitor.OMMonitor)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.commitTransaction(int, String, boolean, CDOIDProvider, CDOCommitData, Collection<CDOLob<?>>, OMMonitor)</A>
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore. Use <CODE>#commitTransaction(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#commitTransaction(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/net4j/CDONet4jUtil.html#createSessionConfiguration()">org.eclipse.emf.cdo.net4j.CDONet4jUtil.createSessionConfiguration()</A>
@@ -384,7 +384,7 @@ function windowTitle()
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#lockObjects(java.util.List, int, org.eclipse.emf.cdo.common.branch.CDOBranch, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.lockObjects(List<InternalCDORevision>, int, CDOBranch, IRWLockManager.LockType, long)</A>
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore. Use <CODE>#lockObjects2(List, int, CDOBranch, LockType, boolean, long)</CODE> instead.</I>&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#lockObjects2(List, int, CDOBranch, LockType, boolean, long)</CODE> instead.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#open(org.eclipse.emf.cdo.server.IStore, org.eclipse.emf.cdo.workspace.CDOWorkspaceBase, org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)">org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil.open(IStore, CDOWorkspaceBase, CDOSessionConfigurationFactory)</A>
@@ -453,7 +453,7 @@ function windowTitle()
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#unlockObjects(org.eclipse.emf.cdo.view.CDOView, java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.unlockObjects(CDOView, Collection<CDOID>, IRWLockManager.LockType)</A>
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore. Use <CODE>#unlockObjects2(CDOView, Collection, LockType, boolean)</CODE> instead.</I>&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#unlockObjects2(CDOView, Collection, LockType, boolean)</CODE> instead.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspaceBase.html#updateAfterCommit(org.eclipse.emf.cdo.transaction.CDOTransaction)">org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceBase.updateAfterCommit(CDOTransaction)</A>

@@ -42,7 +42,7 @@ import java.util.List;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyImpl#getCategory <em>Category</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class BodyImpl extends StructuralElementImpl implements Body
@@ -50,7 +50,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   /**
    * The cached value of the '{@link #getElements() <em>Elements</em>}' containment reference list. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getElements()
    * @generated
    * @ordered
@@ -59,7 +59,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected BodyImpl()
@@ -85,16 +85,16 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
     Tag[] seeTags = doc.tags("@see");
     if (seeTags.length > 0)
     {
-      elements.add(new TextImpl(new TextTag(seeTags[0], "<p><b>See Also:</b></p>\n<ul>\n")));
+      elements.add(new TextImpl(new TextTag(seeTags[0], "<p><b>See Also:</b></p>" + NL + "<ul>" + NL)));
 
       for (Tag tag : seeTags)
       {
         elements.add(new TextImpl(new TextTag(seeTags[0], "\t<li>")));
         elements.add(new UnresolvedBodyElement(tag));
-        elements.add(new TextImpl(new TextTag(seeTags[0], "</li>\n")));
+        elements.add(new TextImpl(new TextTag(seeTags[0], "</li>" + NL)));
       }
 
-      elements.add(new TextImpl(new TextTag(seeTags[0], "</ul>\n")));
+      elements.add(new TextImpl(new TextTag(seeTags[0], "</ul>" + NL)));
     }
   }
 
@@ -107,7 +107,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -118,7 +118,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EList<BodyElement> getElements()
@@ -133,7 +133,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public Category getCategory()
@@ -154,7 +154,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -171,7 +171,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -187,7 +187,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -205,7 +205,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -224,7 +224,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -241,7 +241,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -259,7 +259,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -280,7 +280,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -333,7 +333,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
         out.write(tag.text());
       }
 
-      out.write("</p>\n");
+      out.write("</p>" + NL);
     }
 
     EList<BodyElement> elements = getElements();
@@ -343,23 +343,23 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
 
   protected void generateHeader(PrintWriter out)
   {
-    out.write("<table border=\"0\">\n");
-    out.write("\t<tr>\n");
+    out.write("<table border=\"0\">" + NL);
+    out.write("\t<tr>" + NL);
     out.write("\t\t<td width=\"100%\"><h1>");
     out.write(getTitle());
-    out.write("</h1></td>\n");
+    out.write("</h1></td>" + NL);
     out.write("\t\t<td align=\"right\" valign=\"middle\" nowrap>");
     generateNav(out);
-    out.write("</td>\n");
-    out.write("\t</tr>\n");
-    out.write("</table>\n");
+    out.write("</td>" + NL);
+    out.write("\t</tr>" + NL);
+    out.write("</table>" + NL);
   }
 
   protected void generateFooter(PrintWriter out)
   {
-    out.write("<p align=\"right\">\n");
+    out.write("<p align=\"right\">" + NL);
     generateNav(out);
-    out.write("</p>\n");
+    out.write("</p>" + NL);
   }
 
   private void generateNav(PrintWriter out)

@@ -2466,7 +2466,7 @@ Static variable in interface org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/e
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#commitDelegation(org.eclipse.emf.cdo.common.branch.CDOBranch, java.lang.String, java.lang.String, org.eclipse.emf.cdo.common.commit.CDOCommitData, java.util.Map, java.util.Collection, org.eclipse.net4j.util.om.monitor.OMMonitor)"><B>commitDelegation(CDOBranch, String, String, CDOCommitData, Map&lt;CDOID, EClass&gt;, Collection&lt;CDOLob&lt;?&gt;&gt;, OMMonitor)</B></A> - 
 Method in interface org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</A>
-<DD><B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>#commitDelegation(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>
+<DD><B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#commitDelegation(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>
 <DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#commitDelegation(org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)"><B>commitDelegation(InternalCDOTransaction.InternalCDOCommitContext, OMMonitor)</B></A> - 
 Method in interface org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</A>
 <DD>&nbsp;
@@ -2534,7 +2534,7 @@ Method in interface org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/c
 <DD>Called by a <code>CDOTransaction</code> <b>before</b> it is being committed.
 <DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#commitTransaction(int, java.lang.String, boolean, org.eclipse.emf.cdo.common.id.CDOIDProvider, org.eclipse.emf.cdo.common.commit.CDOCommitData, java.util.Collection, org.eclipse.net4j.util.om.monitor.OMMonitor)"><B>commitTransaction(int, String, boolean, CDOIDProvider, CDOCommitData, Collection&lt;CDOLob&lt;?&gt;&gt;, OMMonitor)</B></A> - 
 Method in interface org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</A>
-<DD><B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>#commitTransaction(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>
+<DD><B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#commitTransaction(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>
 <DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#commitTransaction(org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)"><B>commitTransaction(InternalCDOTransaction.InternalCDOCommitContext, OMMonitor)</B></A> - 
 Method in interface org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</A>
 <DD>&nbsp;
@@ -12283,7 +12283,7 @@ Method in interface org.eclipse.emf.cdo.view.<A HREF="./org/eclipse/emf/cdo/view
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#lockObjects(java.util.List, int, org.eclipse.emf.cdo.common.branch.CDOBranch, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long)"><B>lockObjects(List&lt;InternalCDORevision&gt;, int, CDOBranch, IRWLockManager.LockType, long)</B></A> - 
 Method in interface org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</A>
-<DD><B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>#lockObjects2(List, int, CDOBranch, LockType, boolean, long)</CODE> instead.</I>
+<DD><B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#lockObjects2(List, int, CDOBranch, LockType, boolean, long)</CODE> instead.</I>
 <DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#lockObjects2(java.util.List, int, org.eclipse.emf.cdo.common.branch.CDOBranch, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, boolean, long)"><B>lockObjects2(List&lt;CDORevisionKey&gt;, int, CDOBranch, IRWLockManager.LockType, boolean, long)</B></A> - 
 Method in interface org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</A>
 <DD>&nbsp;
@@ -17017,7 +17017,7 @@ Method in interface org.eclipse.emf.cdo.view.<A HREF="./org/eclipse/emf/cdo/view
 <DD>Unlocks all locked objects of this view.
 <DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#unlockObjects(org.eclipse.emf.cdo.view.CDOView, java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)"><B>unlockObjects(CDOView, Collection&lt;CDOID&gt;, IRWLockManager.LockType)</B></A> - 
 Method in interface org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</A>
-<DD><B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>#unlockObjects2(CDOView, Collection, LockType, boolean)</CODE> instead.</I>
+<DD><B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#unlockObjects2(CDOView, Collection, LockType, boolean)</CODE> instead.</I>
 <DT><A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#unlockObjects2(org.eclipse.emf.cdo.view.CDOView, java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, boolean)"><B>unlockObjects2(CDOView, Collection&lt;CDOID&gt;, IRWLockManager.LockType, boolean)</B></A> - 
 Method in interface org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</A>
 <DD>&nbsp;

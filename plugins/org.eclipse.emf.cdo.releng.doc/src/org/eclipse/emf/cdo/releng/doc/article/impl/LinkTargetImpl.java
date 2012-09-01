@@ -31,14 +31,16 @@ import java.io.PrintWriter;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.LinkTargetImpl#getTooltip <em>Tooltip</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class LinkTargetImpl extends EObjectImpl implements LinkTarget
 {
+  protected static final String NL = System.getProperty("line.separator");
+
   /**
    * The default value of the '{@link #getId() <em>Id</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getId()
    * @generated
    * @ordered
@@ -48,7 +50,7 @@ public abstract class LinkTargetImpl extends EObjectImpl implements LinkTarget
   /**
    * The default value of the '{@link #getDefaultLabel() <em>Default Label</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getDefaultLabel()
    * @generated
    * @ordered
@@ -58,7 +60,7 @@ public abstract class LinkTargetImpl extends EObjectImpl implements LinkTarget
   /**
    * The default value of the '{@link #getTooltip() <em>Tooltip</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getTooltip()
    * @generated
    * @ordered
@@ -67,7 +69,7 @@ public abstract class LinkTargetImpl extends EObjectImpl implements LinkTarget
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected LinkTargetImpl()
@@ -77,7 +79,7 @@ public abstract class LinkTargetImpl extends EObjectImpl implements LinkTarget
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -88,14 +90,14 @@ public abstract class LinkTargetImpl extends EObjectImpl implements LinkTarget
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public abstract Object getId();
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public String getDefaultLabel()
@@ -105,21 +107,21 @@ public abstract class LinkTargetImpl extends EObjectImpl implements LinkTarget
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public abstract String getTooltip();
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public abstract String linkFrom(StructuralElement source);
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -139,7 +141,7 @@ public abstract class LinkTargetImpl extends EObjectImpl implements LinkTarget
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

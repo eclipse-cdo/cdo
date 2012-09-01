@@ -57,6 +57,7 @@ import java.util.regex.Pattern;
  */
 public class AssembleScripts
 {
+
   public static final boolean INCLUDE_SPI = true;
 
   private static final String EXPORT_PACKAGE = "Export-Package";
@@ -348,9 +349,9 @@ public class AssembleScripts
 
   public static void writeGenerationWarning(BufferedWriter writer) throws IOException
   {
-    writer.write("\t<!-- =========================================== -->\n");
-    writer.write("\t<!-- THIS FILE HAS BEEN GENERATED, DO NOT CHANGE -->\n");
-    writer.write("\t<!-- =========================================== -->\n");
+    writer.write("\t<!-- =========================================== -->" + NL);
+    writer.write("\t<!-- THIS FILE HAS BEEN GENERATED, DO NOT CHANGE -->" + NL);
+    writer.write("\t<!-- =========================================== -->" + NL);
   }
 
   /**
@@ -446,46 +447,46 @@ public class AssembleScripts
         out = new FileWriter(target);
         BufferedWriter writer = new BufferedWriter(out);
 
-        writer.write("<?xml version=\"1.0\"?>\n");
-        writer.write("<project name=\"JavaDocLib\" default=\"delegate\" basedir=\"..\">\n");
+        writer.write("<?xml version=\"1.0\"?>" + NL);
+        writer.write("<project name=\"JavaDocLib\" default=\"delegate\" basedir=\"..\">" + NL);
 
-        writer.write("\n");
+        writer.write("" + NL);
         writeGenerationWarning(writer);
-        writer.write("\n");
+        writer.write("" + NL);
 
         // Generate delegator
-        writer.write("\t<target name=\"delegate\">\n");
+        writer.write("\t<target name=\"delegate\">" + NL);
 
         List<JavaDoc> javaDocs = (List<JavaDoc>)getJavaDocsSortedByDependencies();
         for (JavaDoc javaDoc : javaDocs)
         {
           writer.write("\t\t<ant antfile=\"plugins/" + javaDoc.getProject().getName()
-              + "/build.xml\" target=\"${delegate.target}\" />\n");
+              + "/build.xml\" target=\"${delegate.target}\" />" + NL);
         }
 
-        writer.write("\t</target>\n");
-        writer.write("\n");
+        writer.write("\t</target>" + NL);
+        writer.write("" + NL);
 
         // Generate toc
-        writer.write("\t<target name=\"toc\">\n");
-        writer.write("\t\t<concat destfile=\"plugins/org.eclipse.emf.cdo.releng/help/toc.html\">\n");
-        writer.write("\t\t\t<path path=\"plugins/org.eclipse.emf.cdo.releng.doc/help/tocHeader.html\" />\n");
+        writer.write("\t<target name=\"toc\">" + NL);
+        writer.write("\t\t<concat destfile=\"plugins/org.eclipse.emf.cdo.releng/help/toc.html\">" + NL);
+        writer.write("\t\t\t<path path=\"plugins/org.eclipse.emf.cdo.releng.doc/help/tocHeader.html\" />" + NL);
 
         Collections.reverse(javaDocs);
         for (JavaDoc javaDoc : javaDocs)
         {
           if (javaDoc.isWeb())
           {
-            writer.write("\t\t\t<path path=\"plugins/" + javaDoc.getProject().getName() + "/toc.html\" />\n");
+            writer.write("\t\t\t<path path=\"plugins/" + javaDoc.getProject().getName() + "/toc.html\" />" + NL);
           }
         }
 
-        writer.write("\t\t\t<path path=\"plugins/org.eclipse.emf.cdo.releng.doc/help/tocFooter.html\" />\n");
-        writer.write("\t\t</concat>\n");
-        writer.write("\t</target>\n");
-        writer.write("\n");
+        writer.write("\t\t\t<path path=\"plugins/org.eclipse.emf.cdo.releng.doc/help/tocFooter.html\" />" + NL);
+        writer.write("\t\t</concat>" + NL);
+        writer.write("\t</target>" + NL);
+        writer.write("" + NL);
 
-        writer.write("</project>\n");
+        writer.write("</project>" + NL);
         writer.flush();
       }
       finally
@@ -516,7 +517,7 @@ public class AssembleScripts
           if (javaDoc.isWeb())
           {
             writer.write(projectFolder.getName());
-            writer.write("\n");
+            writer.write("" + NL);
           }
         }
 
@@ -558,17 +559,17 @@ public class AssembleScripts
 
             writer.write("<b><a href=\"../../" + javaDoc.getProject().getName() + "/javadoc/"
                 + sortedPackageNames.get(0).replace('.', '/') + "/package-summary.html\" target=\"debugDetails\">"
-                + sourcePlugin.getLabel() + "</a></b>\n");
-            writer.write("<ul>\n");
+                + sourcePlugin.getLabel() + "</a></b>" + NL);
+            writer.write("<ul>" + NL);
 
             for (String packageName : sortedPackageNames)
             {
               writer.write("\t<li><a href=\"../../" + javaDoc.getProject().getName() + "/javadoc/"
                   + packageName.replace('.', '/') + "/package-summary.html\" target=\"debugDetails\">" + packageName
-                  + "</a>\n");
+                  + "</a>" + NL);
             }
 
-            writer.write("</ul>\n");
+            writer.write("</ul>" + NL);
           }
         }
 
@@ -724,7 +725,7 @@ public class AssembleScripts
         writer.write(NL);
         writer.write("/**" + NL);
 
-        String[] lines = comment.split("\n");
+        String[] lines = comment.split("" + NL);
         for (String line : lines)
         {
           writer.write(" * ");
@@ -882,36 +883,36 @@ public class AssembleScripts
             {
               if (articlePackages.isEmpty())
               {
-                writer.write("\t<property name=\"article.skip\" value=\"true\" />\n");
+                writer.write("\t<property name=\"article.skip\" value=\"true\" />" + NL);
               }
             }
             else if ("<!-- SCHEMA SKIP -->".equals(id))
             {
               if (schemaPlugins.isEmpty())
               {
-                writer.write("\t<property name=\"schema.skip\" value=\"true\" />\n");
+                writer.write("\t<property name=\"schema.skip\" value=\"true\" />" + NL);
               }
             }
             else if ("<!-- JAVA SKIP -->".equals(id))
             {
               if (packageNames.isEmpty())
               {
-                writer.write("\t<property name=\"java.skip\" value=\"true\" />\n");
+                writer.write("\t<property name=\"java.skip\" value=\"true\" />" + NL);
               }
             }
             else if ("<!-- SOURCE FOLDERS -->".equals(id))
             {
               for (String sourceFolder : sort(sourceFolders))
               {
-                writer.write("\t\t\t\t<include name=\"" + sourceFolder + "/*.java\" />\n");
+                writer.write("\t\t\t\t<include name=\"" + sourceFolder + "/*.java\" />" + NL);
               }
             }
             else if ("<!-- COPY DOC FILES -->".equals(id))
             {
               CharArrayWriter buffer = new CharArrayWriter();
-              buffer.write("\t\t<copy todir=\"${javadoc.destdir}\" verbose=\"true\" failonerror=\"false\">\n");
-              buffer.write("\t\t\t<cutdirsmapper dirs=\"2\" />\n");
-              buffer.write("\t\t\t<fileset dir=\"plugins\" defaultexcludes=\"true\">\n");
+              buffer.write("\t\t<copy todir=\"${javadoc.destdir}\" verbose=\"true\" failonerror=\"false\">" + NL);
+              buffer.write("\t\t\t<cutdirsmapper dirs=\"2\" />" + NL);
+              buffer.write("\t\t\t<fileset dir=\"plugins\" defaultexcludes=\"true\">" + NL);
 
               boolean exist = false;
               for (String sourceFolder : sort(sourceFolders))
@@ -920,15 +921,15 @@ public class AssembleScripts
                 if (docFiles.isDirectory())
                 {
                   exist = true;
-                  buffer.write("\t\t\t\t<include name=\"" + sourceFolder + "/doc-files/**\" />\n");
+                  buffer.write("\t\t\t\t<include name=\"" + sourceFolder + "/doc-files/**\" />" + NL);
                 }
               }
 
               if (exist)
               {
-                buffer.write("\t\t\t</fileset>\n");
-                buffer.write("\t\t</copy>\n");
-                buffer.write("\n");
+                buffer.write("\t\t\t</fileset>" + NL);
+                buffer.write("\t\t</copy>" + NL);
+                buffer.write("" + NL);
                 writer.write(buffer.toCharArray());
               }
             }
@@ -936,21 +937,21 @@ public class AssembleScripts
             {
               for (String packageName : sort(packageNames))
               {
-                writer.write("\t\t\t<package name=\"" + packageName + "\" />\n");
+                writer.write("\t\t\t<package name=\"" + packageName + "\" />" + NL);
               }
             }
             else if ("<!-- PACKAGE EXCLUDES -->".equals(id))
             {
               for (String packageExclude : sort(packageExcludes))
               {
-                writer.write("\t\t\t<excludepackage name=\"" + packageExclude + "\" />\n");
+                writer.write("\t\t\t<excludepackage name=\"" + packageExclude + "\" />" + NL);
               }
             }
             else if ("<!-- ARTICLE PACKAGES -->".equals(id))
             {
               for (String articlePackage : sort(articlePackages))
               {
-                writer.write("\t\t\t<package name=\"" + articlePackage + "\" />\n");
+                writer.write("\t\t\t<package name=\"" + articlePackage + "\" />" + NL);
               }
 
               for (String dependency : sort(getAllDependencies()))
@@ -958,7 +959,7 @@ public class AssembleScripts
                 JavaDoc javaDoc = ANTLIB.getJavaDoc(dependency);
                 for (String articlePackage : sort(javaDoc.getArticlePackages()))
                 {
-                  writer.write("\t\t\t<package name=\"" + articlePackage + "\" />\n");
+                  writer.write("\t\t\t<package name=\"" + articlePackage + "\" />" + NL);
                 }
               }
             }
@@ -967,7 +968,7 @@ public class AssembleScripts
               for (String schemaPlugin : sort(schemaPlugins))
               {
                 writer.write("\t\t<pde.convertSchemaToHTML destination=\"${schemadoc.destdir}\" manifest=\"plugins/"
-                    + schemaPlugin + "/plugin.xml\" />\n");
+                    + schemaPlugin + "/plugin.xml\" />" + NL);
               }
             }
             else if ("<!-- JAVADOC DEPENDENCIES -->".equals(id))
@@ -975,14 +976,14 @@ public class AssembleScripts
               for (String dependency : sort(getAllDependencies()))
               {
                 writer.write("\t\t\t<link href=\"MAKE-RELATIVE/" + dependency
-                    + "/javadoc\" offline=\"true\" packagelistloc=\"plugins/" + dependency + "/javadoc\" />\n");
+                    + "/javadoc\" offline=\"true\" packagelistloc=\"plugins/" + dependency + "/javadoc\" />" + NL);
               }
             }
             else if ("<!-- ARTICLE DEPENDENCIES -->".equals(id))
             {
               for (String dependency : sort(getAllDependencies()))
               {
-                writer.write("\t\t\t\t<include name=\"" + dependency + "/src/**/*.java\" />\n");
+                writer.write("\t\t\t\t<include name=\"" + dependency + "/src/**/*.java\" />" + NL);
               }
             }
             else if ("<!-- GROUPS -->".equals(id))
@@ -992,21 +993,21 @@ public class AssembleScripts
                 List<String> sortedPackageNames = sourcePlugin.getSortedPackageNames();
                 if (!sortedPackageNames.isEmpty())
                 {
-                  writer.write("\t\t\t<group title=\"" + sourcePlugin.getLabel() + "\">\n");
+                  writer.write("\t\t\t<group title=\"" + sourcePlugin.getLabel() + "\">" + NL);
 
                   for (String packageName : sortedPackageNames)
                   {
-                    writer.write("\t\t\t\t<package name=\"" + packageName + "\" />\n");
+                    writer.write("\t\t\t\t<package name=\"" + packageName + "\" />" + NL);
                   }
 
-                  writer.write("\t\t\t</group>\n");
+                  writer.write("\t\t\t</group>" + NL);
                 }
               }
             }
             else
             {
               writer.write(line);
-              writer.write("\n");
+              writer.write("" + NL);
             }
           }
 

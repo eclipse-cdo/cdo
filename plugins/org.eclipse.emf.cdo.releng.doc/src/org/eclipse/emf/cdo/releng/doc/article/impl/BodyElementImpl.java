@@ -33,14 +33,16 @@ import com.sun.javadoc.Tag;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementImpl#getTag <em>Tag</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
 {
+  protected static final String NL = System.getProperty("line.separator");
+
   /**
    * The default value of the '{@link #getTag() <em>Tag</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getTag()
    * @generated
    * @ordered
@@ -52,7 +54,7 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected BodyElementImpl()
@@ -67,7 +69,7 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -78,7 +80,7 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public BodyElementContainer getContainer()
@@ -92,7 +94,7 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public NotificationChain basicSetContainer(BodyElementContainer newContainer, NotificationChain msgs)
@@ -103,7 +105,7 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setContainer(BodyElementContainer newContainer)
@@ -140,7 +142,7 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public Tag getTag()
@@ -150,7 +152,7 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -170,7 +172,7 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -186,7 +188,7 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -203,7 +205,7 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -221,7 +223,7 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -238,7 +240,7 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -255,7 +257,7 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

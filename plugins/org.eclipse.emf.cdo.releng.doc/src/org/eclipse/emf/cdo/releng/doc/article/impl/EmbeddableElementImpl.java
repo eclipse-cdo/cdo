@@ -35,14 +35,16 @@ import com.sun.javadoc.Doc;
  * </li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class EmbeddableElementImpl extends EObjectImpl implements EmbeddableElement
 {
+  protected static final String NL = System.getProperty("line.separator");
+
   /**
    * The default value of the '{@link #getId() <em>Id</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getId()
    * @generated
    * @ordered
@@ -51,7 +53,7 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
 
   /**
    * The default value of the '{@link #getDoc() <em>Doc</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDoc()
    * @generated
    * @ordered
@@ -62,7 +64,7 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected EmbeddableElementImpl()
@@ -79,7 +81,7 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -90,7 +92,7 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public Object getId()
@@ -100,7 +102,7 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Documentation getDocumentation()
@@ -114,7 +116,7 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public NotificationChain basicSetDocumentation(Documentation newDocumentation, NotificationChain msgs)
@@ -125,7 +127,7 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setDocumentation(Documentation newDocumentation)
@@ -162,7 +164,7 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public Doc getDoc()
@@ -172,7 +174,7 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -192,7 +194,7 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -208,7 +210,7 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -225,7 +227,7 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -245,7 +247,7 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -262,7 +264,7 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -279,7 +281,7 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

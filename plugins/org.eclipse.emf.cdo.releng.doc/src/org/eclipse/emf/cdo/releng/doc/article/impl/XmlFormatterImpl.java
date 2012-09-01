@@ -38,7 +38,7 @@ import java.io.PrintWriter;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.XmlFormatterImpl#getFile <em>File</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
@@ -52,7 +52,7 @@ public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
   /**
    * The default value of the '{@link #getFile() <em>File</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getFile()
    * @generated
    * @ordered
@@ -61,7 +61,7 @@ public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
 
   /**
    * The cached value of the '{@link #getFile() <em>File</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getFile()
    * @generated
    * @ordered
@@ -70,7 +70,7 @@ public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected XmlFormatterImpl()
@@ -80,7 +80,7 @@ public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -91,7 +91,7 @@ public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public File getFile()
@@ -101,7 +101,7 @@ public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setFile(File newFile)
@@ -116,7 +116,7 @@ public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -132,7 +132,7 @@ public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -149,7 +149,7 @@ public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -166,7 +166,7 @@ public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -182,7 +182,7 @@ public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -242,6 +242,8 @@ public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
    */
   private static final class XmlHandler extends DefaultHandler implements LexicalHandler
   {
+    private static final String NL = System.getProperty("line.separator");
+
     StringBuilder builder = new StringBuilder();
 
     StringBuilder element;
@@ -259,7 +261,8 @@ public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
     public void startDocument() throws SAXException
     {
       builder
-          .append("<font color=\"#0000e1\">&lt;?xml version=<font color=\"#000080\">'1.0'</font> encoding=<font color=\"#000080\">'UTF-8'</font>?&gt;</font><br/>\n");
+          .append("<font color=\"#0000e1\">&lt;?xml version=<font color=\"#000080\">'1.0'</font> encoding=<font color=\"#000080\">'UTF-8'</font>?&gt;</font><br/>"
+              + NL);
     }
 
     @Override
@@ -379,7 +382,7 @@ public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
         return "&nbsp;";
 
       case '\n':
-        return "<br/>\n";
+        return "<br/>" + NL;
       }
 
       return new String(new char[] { c });

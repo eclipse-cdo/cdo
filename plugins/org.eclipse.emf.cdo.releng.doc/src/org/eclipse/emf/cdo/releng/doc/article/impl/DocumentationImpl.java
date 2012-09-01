@@ -66,7 +66,7 @@ import java.util.List;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl#getPlugins <em>Plugins</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class DocumentationImpl extends StructuralElementImpl implements Documentation
@@ -84,7 +84,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   /**
    * The cached value of the '{@link #getEmbeddableElements() <em>Embeddable Elements</em>}' containment reference list.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getEmbeddableElements()
    * @generated
    * @ordered
@@ -94,7 +94,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   /**
    * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' reference list. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #getDependencies()
    * @generated
    * @ordered
@@ -104,7 +104,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   /**
    * The default value of the '{@link #getProject() <em>Project</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getProject()
    * @generated
    * @ordered
@@ -114,7 +114,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   /**
    * The cached value of the '{@link #getProject() <em>Project</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getProject()
    * @generated
    * @ordered
@@ -124,7 +124,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   /**
    * The cached value of the '{@link #getPlugins() <em>Plugins</em>}' containment reference list. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getPlugins()
    * @generated
    * @ordered
@@ -143,7 +143,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected DocumentationImpl()
@@ -371,7 +371,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -382,7 +382,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Context getContext()
@@ -396,7 +396,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public NotificationChain basicSetContext(Context newContext, NotificationChain msgs)
@@ -407,7 +407,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setContext(Context newContext)
@@ -444,7 +444,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EList<EmbeddableElement> getEmbeddableElements()
@@ -459,7 +459,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EList<Documentation> getDependencies()
@@ -474,7 +474,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getProject()
@@ -484,7 +484,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EList<Plugin> getPlugins()
@@ -498,7 +498,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -521,7 +521,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -541,7 +541,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -557,7 +557,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -581,7 +581,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -607,7 +607,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -630,7 +630,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -654,7 +654,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -842,22 +842,22 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
         if (LOCAL)
         {
-          write("<LINK REL=stylesheet TYPE=\"text/css\" HREF=\"toc.css\">\n");
-          write("\n");
+          write("<LINK REL=stylesheet TYPE=\"text/css\" HREF=\"toc.css\">" + NL);
+          write("" + NL);
 
-          write("<script type=\"text/javascript\">\n");
-          write("  function toggle(id)\n");
-          write("  {\n");
-          write("    e = document.getElementById(id);\n");
-          write("    e.style.display = (e.style.display == \"\" ? \"none\" : \"\");\n");
-          write("    img = document.getElementById(\"img_\" + id);\n");
-          write("    img.src = (e.style.display == \"none\" ? \"plus.gif\" : \"minus.gif\");\n");
-          write("  }\n");
-          write("</script>\n");
-          write("\n");
+          write("<script type=\"text/javascript\">" + NL);
+          write("  function toggle(id)" + NL);
+          write("  {" + NL);
+          write("    e = document.getElementById(id);" + NL);
+          write("    e.style.display = (e.style.display == \"\" ? \"none\" : \"\");" + NL);
+          write("    img = document.getElementById(\"img_\" + id);" + NL);
+          write("    img.src = (e.style.display == \"none\" ? \"plus.gif\" : \"minus.gif\");" + NL);
+          write("  }" + NL);
+          write("</script>" + NL);
+          write("" + NL);
 
-          write("<font face=\"Segoe UI,Arial\" size=\"-1\">\n");
-          write("\n");
+          write("<font face=\"Segoe UI,Arial\" size=\"-1\">" + NL);
+          write("" + NL);
         }
       }
 
@@ -866,8 +866,8 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
       {
         if (LOCAL)
         {
-          write("\n");
-          write("</font>\n");
+          write("" + NL);
+          write("</font>" + NL);
         }
 
         super.close();
@@ -908,7 +908,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
         writeImage("empty.gif");
         writeImage(icon != null ? icon + ".gif" : "article.gif");
         writeHref(label, href);
-        write("</span></div>\n");
+        write("</span></div>" + NL);
       }
 
       @Override
@@ -932,10 +932,10 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
         }
 
         writeHref(label, href);
-        write("</span></div>\n");
+        write("</span></div>" + NL);
 
         writePrefix();
-        write("<div id=\"" + id + "\" style=\"display:none; margin-left:20px;\">\n");
+        write("<div id=\"" + id + "\" style=\"display:none; margin-left:20px;\">" + NL);
         ++level;
       }
 
@@ -944,7 +944,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
       {
         --level;
         writePrefix();
-        write("</div>\n");
+        write("</div>" + NL);
       }
     }
 
@@ -956,15 +956,15 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
       public Xml(File project) throws IOException
       {
         super(project, "toc.xml");
-        write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-        write("<?NLS TYPE=\"org.eclipse.help.toc\"?>\n\n");
+        write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + NL);
+        write("<?NLS TYPE=\"org.eclipse.help.toc\"?>" + NL + NL);
       }
 
       @Override
       public void writeSingle(String label, String href, String icon) throws IOException
       {
         writePrefix();
-        write("<topic label=\"" + label + "\" href=\"" + href + "\"" + icon(icon) + " />\n");
+        write("<topic label=\"" + label + "\" href=\"" + href + "\"" + icon(icon) + " />" + NL);
       }
 
       @Override
@@ -973,11 +973,11 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
         writePrefix();
         if (level == 0)
         {
-          write("<toc label=\"" + label + "\" topic=\"" + href + "\">\n");
+          write("<toc label=\"" + label + "\" topic=\"" + href + "\">" + NL);
         }
         else
         {
-          write("<topic label=\"" + label + "\" href=\"" + href + "\"" + icon(icon) + ">\n");
+          write("<topic label=\"" + label + "\" href=\"" + href + "\"" + icon(icon) + ">" + NL);
         }
 
         ++level;
@@ -991,11 +991,11 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
         writePrefix();
         if (level == 0)
         {
-          write("</toc>\n");
+          write("</toc>" + NL);
         }
         else
         {
-          write("</topic>\n");
+          write("</topic>" + NL);
         }
       }
 

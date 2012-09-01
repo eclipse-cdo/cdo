@@ -32,7 +32,7 @@ import java.io.PrintWriter;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.ImageImpl#getFile <em>File</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ImageImpl extends BodyElementImpl implements Image
@@ -40,7 +40,7 @@ public class ImageImpl extends BodyElementImpl implements Image
   /**
    * The default value of the '{@link #getFile() <em>File</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getFile()
    * @generated
    * @ordered
@@ -51,7 +51,7 @@ public class ImageImpl extends BodyElementImpl implements Image
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ImageImpl()
@@ -67,7 +67,7 @@ public class ImageImpl extends BodyElementImpl implements Image
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -78,7 +78,7 @@ public class ImageImpl extends BodyElementImpl implements Image
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public File getFile()
@@ -88,7 +88,7 @@ public class ImageImpl extends BodyElementImpl implements Image
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -104,7 +104,7 @@ public class ImageImpl extends BodyElementImpl implements Image
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -130,7 +130,7 @@ public class ImageImpl extends BodyElementImpl implements Image
 
     out.write("<p align=\"center\"><img src=\"");
     out.write(link);
-    out.write("\"></p>\n");
+    out.write("\"></p>" + NL);
   }
 
 } // ImageImpl

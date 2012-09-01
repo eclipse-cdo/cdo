@@ -33,7 +33,7 @@ import java.io.PrintWriter;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.TocImpl#getLevels <em>Levels</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class TocImpl extends BodyElementImpl implements Toc
@@ -41,7 +41,7 @@ public class TocImpl extends BodyElementImpl implements Toc
   /**
    * The default value of the '{@link #getLevels() <em>Levels</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getLevels()
    * @generated
    * @ordered
@@ -51,7 +51,7 @@ public class TocImpl extends BodyElementImpl implements Toc
   /**
    * The cached value of the '{@link #getLevels() <em>Levels</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getLevels()
    * @generated
    * @ordered
@@ -60,7 +60,7 @@ public class TocImpl extends BodyElementImpl implements Toc
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected TocImpl()
@@ -81,7 +81,7 @@ public class TocImpl extends BodyElementImpl implements Toc
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -92,7 +92,7 @@ public class TocImpl extends BodyElementImpl implements Toc
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public int getLevels()
@@ -102,7 +102,7 @@ public class TocImpl extends BodyElementImpl implements Toc
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -118,7 +118,7 @@ public class TocImpl extends BodyElementImpl implements Toc
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -134,7 +134,7 @@ public class TocImpl extends BodyElementImpl implements Toc
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -165,14 +165,14 @@ public class TocImpl extends BodyElementImpl implements Toc
       element = element.getDocumentation();
     }
 
-    out.write("<p>\n");
-    out.write("<table border=\"0\">\n");
+    out.write("<p>" + NL);
+    out.write("<table border=\"0\">" + NL);
 
     String imagePath = linkSource.getImagePath() + "/";
     generate(out, linkSource, imagePath, element.getDepth(), element, 0);
 
-    out.write("</table>\n");
-    out.write("</p>\n");
+    out.write("</table>" + NL);
+    out.write("</p>" + NL);
   }
 
   private void generate(PrintWriter out, StructuralElement linkSource, String imagePath, int depth,
@@ -224,7 +224,7 @@ public class TocImpl extends BodyElementImpl implements Toc
       int colspan = depth - level + 2;
       out.write("&nbsp;</td><td colspan=\"" + colspan + "\">");
       element.generateLink(out, linkSource, null);
-      out.write("</td></tr>\n");
+      out.write("</td></tr>" + NL);
     }
 
     for (StructuralElement child : element.getSortedChildren())

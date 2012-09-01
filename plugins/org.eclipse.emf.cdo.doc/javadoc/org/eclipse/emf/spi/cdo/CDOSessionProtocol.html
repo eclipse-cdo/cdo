@@ -271,7 +271,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
                  <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>#commitDelegation(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I></TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#commitDelegation(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -303,7 +303,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
                   <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>#commitTransaction(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I></TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#commitTransaction(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -483,7 +483,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
             long&nbsp;timeout)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>#lockObjects2(List, int, CDOBranch, LockType, boolean, long)</CODE> instead.</I></TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#lockObjects2(List, int, CDOBranch, LockType, boolean, long)</CODE> instead.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -610,7 +610,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
               <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;lockType)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>#unlockObjects2(CDOView, Collection, LockType, boolean)</CODE> instead.</I></TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#unlockObjects2(CDOView, Collection, LockType, boolean)</CODE> instead.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -920,7 +920,7 @@ lockObjects</H3>
                                                             long&nbsp;timeout)
                                                  throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</A></PRE>
 <DL>
-<DD><B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>#lockObjects2(List, int, CDOBranch, LockType, boolean, long)</CODE> instead.</I>
+<DD><B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#lockObjects2(List, int, CDOBranch, LockType, boolean, long)</CODE> instead.</I>
 <P>
 <DD><DL>
 </DL>
@@ -991,7 +991,7 @@ unlockObjects</H3>
                               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;&nbsp;objectIDs,
                               <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;lockType)</PRE>
 <DL>
-<DD><B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>#unlockObjects2(CDOView, Collection, LockType, boolean)</CODE> instead.</I>
+<DD><B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#unlockObjects2(CDOView, Collection, LockType, boolean)</CODE> instead.</I>
 <P>
 <DD><DL>
 </DL>
@@ -1126,7 +1126,7 @@ commitTransaction</H3>
                                                                         <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/lob/CDOLob.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLob</A>&lt;?&gt;&gt;&nbsp;lobs,
                                                                         <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</PRE>
 <DL>
-<DD><B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>#commitTransaction(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>
+<DD><B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#commitTransaction(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>
 <P>
 <DD><DL>
 </DL>
@@ -1168,7 +1168,7 @@ commitDelegation</H3>
                                                                        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/lob/CDOLob.html" title="class in org.eclipse.emf.cdo.common.lob">CDOLob</A>&lt;?&gt;&gt;&nbsp;lobs,
                                                                        <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</PRE>
 <DL>
-<DD><B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>#commitDelegation(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>
+<DD><B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#commitDelegation(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>
 <P>
 <DD><DL>
 </DL>

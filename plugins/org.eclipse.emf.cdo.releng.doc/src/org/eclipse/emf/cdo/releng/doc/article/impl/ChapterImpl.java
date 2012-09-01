@@ -33,14 +33,14 @@ import java.util.List;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.ChapterImpl#getArticle <em>Article</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ChapterImpl extends BodyImpl implements Chapter
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ChapterImpl()
@@ -61,7 +61,7 @@ public class ChapterImpl extends BodyImpl implements Chapter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -72,7 +72,7 @@ public class ChapterImpl extends BodyImpl implements Chapter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public Article getArticle()
@@ -87,7 +87,7 @@ public class ChapterImpl extends BodyImpl implements Chapter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -103,7 +103,7 @@ public class ChapterImpl extends BodyImpl implements Chapter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -165,7 +165,7 @@ public class ChapterImpl extends BodyImpl implements Chapter
       int level = getChapterNumbers().length + 1;
       out.write("<h" + level + ">");
       out.write(anchor + getTitleWithNumber());
-      out.write("</h" + level + ">\n");
+      out.write("</h" + level + ">" + NL);
 
       super.generate(out);
     }

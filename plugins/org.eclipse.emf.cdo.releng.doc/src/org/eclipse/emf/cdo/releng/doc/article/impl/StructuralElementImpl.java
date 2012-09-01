@@ -48,7 +48,7 @@ import java.util.List;
  * </li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class StructuralElementImpl extends LinkTargetImpl implements StructuralElement
@@ -56,7 +56,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
   /**
    * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getChildren()
    * @generated
    * @ordered
@@ -66,7 +66,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
   /**
    * The default value of the '{@link #getTitle() <em>Title</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getTitle()
    * @generated
    * @ordered
@@ -76,7 +76,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
   /**
    * The cached value of the '{@link #getTitle() <em>Title</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getTitle()
    * @generated
    * @ordered
@@ -85,7 +85,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * The default value of the '{@link #getDoc() <em>Doc</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDoc()
    * @generated
    * @ordered
@@ -108,7 +108,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected StructuralElementImpl()
@@ -155,7 +155,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -166,7 +166,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EList<StructuralElement> getChildren()
@@ -181,7 +181,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public StructuralElement getParent()
@@ -195,7 +195,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public NotificationChain basicSetParent(StructuralElement newParent, NotificationChain msgs)
@@ -206,7 +206,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setParent(StructuralElement newParent)
@@ -243,7 +243,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getTitle()
@@ -253,7 +253,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public Documentation getDocumentation()
@@ -269,7 +269,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public Doc getDoc()
@@ -287,7 +287,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -310,7 +310,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -328,7 +328,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -345,7 +345,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -369,7 +369,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -391,7 +391,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -411,7 +411,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -435,7 +435,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -606,42 +606,43 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
       file.getParentFile().mkdirs();
       out = new PrintWriter(file);
 
-      out.write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n");
-      out.write("<HTML>\n");
-      out.write("\n");
-      out.write("<HEAD>\n");
+      out.write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">"
+          + NL);
+      out.write("<HTML>" + NL);
+      out.write("" + NL);
+      out.write("<HEAD>" + NL);
       out.write("<TITLE>");
       out.write(title);
-      out.write("</TITLE>\n");
-      out.write("\n");
-      out.write("<LINK REL=\"STYLESHEET\" HREF=\"" + css + "\" CHARSET=\"ISO-8859-1\" TYPE=\"text/css\">\n");
-      out.write("\n");
-      out.write("<SCRIPT type=\"text/javascript\">\n");
-      out.write("function windowTitle()\n");
-      out.write("{\n");
-      out.write("    if (location.href.indexOf('is-external=true') == -1) {\n");
-      out.write("        parent.document.title=\"" + title + "\";\n");
-      out.write("    }\n");
-      out.write("}\n");
-      out.write("</SCRIPT>\n");
-      out.write("<NOSCRIPT></NOSCRIPT>\n");
-      out.write("</HEAD>\n");
-      out.write("\n");
-      out.write("<BODY BGCOLOR=\"white\" onload=\"windowTitle();\">\n");
+      out.write("</TITLE>" + NL);
+      out.write("" + NL);
+      out.write("<LINK REL=\"STYLESHEET\" HREF=\"" + css + "\" CHARSET=\"ISO-8859-1\" TYPE=\"text/css\">" + NL);
+      out.write("" + NL);
+      out.write("<SCRIPT type=\"text/javascript\">" + NL);
+      out.write("function windowTitle()" + NL);
+      out.write("{" + NL);
+      out.write("    if (location.href.indexOf('is-external=true') == -1) {" + NL);
+      out.write("        parent.document.title=\"" + title + "\";" + NL);
+      out.write("    }" + NL);
+      out.write("}" + NL);
+      out.write("</SCRIPT>" + NL);
+      out.write("<NOSCRIPT></NOSCRIPT>" + NL);
+      out.write("</HEAD>" + NL);
+      out.write(NL);
+      out.write("<BODY BGCOLOR=\"white\" onload=\"windowTitle();\">" + NL);
 
       out.write("<!-- ");
       out.write("<div class=\"help_breadcrumbs\">");
       generateBreadCrumbs(out, this);
       out.write("</div>");
-      out.write(" -->\n");
-      out.write("\n");
+      out.write(" -->" + NL);
+      out.write(NL);
 
       generate(out);
 
-      out.write("<HR>\n");
-      out.write("<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>\n");
-      out.write("</BODY>\n");
-      out.write("</HTML>\n");
+      out.write("<HR>" + NL);
+      out.write("<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>" + NL);
+      out.write("</BODY>" + NL);
+      out.write("</HTML>" + NL);
     }
     finally
     {

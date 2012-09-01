@@ -145,4 +145,12 @@
      </factory>
   </extension>
 
+   <extension
+         id="org.eclipse.core.filesystem.cdo.workspace"
+         point="org.eclipse.core.filesystem.filesystems">
+      <filesystem scheme="cdo.lob">
+         <run class="org.eclipse.emf.cdo.internal.ui.views.CDOLobEditorInput$LobFileSystem"/>
+      </filesystem>
+   </extension>
+
 </plugin>

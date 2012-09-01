@@ -204,7 +204,7 @@ Class ConcurrentArray&lt;E&gt;</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#firstElementAdded()">firstElementAdded</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Synchronized through <A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#add(E)"><CODE>add(Object)</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -228,7 +228,7 @@ Class ConcurrentArray&lt;E&gt;</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#lastElementRemoved()">lastElementRemoved</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Synchronized through <A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#remove(E)"><CODE>remove(Object)</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -236,7 +236,7 @@ Class ConcurrentArray&lt;E&gt;</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#newArray(int)">newArray</A></B>(int&nbsp;length)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Synchronized through <A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#add(E)"><CODE>add(Object)</CODE></A> or <A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#remove(E)"><CODE>remove(Object)</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -252,7 +252,7 @@ Class ConcurrentArray&lt;E&gt;</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#validate(E)">validate</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html" title="type parameter in ConcurrentArray">E</A>&nbsp;element)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Synchronized through <A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#add(E)"><CODE>add(Object)</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -364,6 +364,8 @@ validate</H3>
 <PRE>
 protected boolean <B>validate</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html" title="type parameter in ConcurrentArray">E</A>&nbsp;element)</PRE>
 <DL>
+<DD>Synchronized through <A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#add(E)"><CODE>add(Object)</CODE></A>.
+<P>
 <DD><DL>
 </DL>
 </DD>
@@ -375,6 +377,8 @@ firstElementAdded</H3>
 <PRE>
 protected void <B>firstElementAdded</B>()</PRE>
 <DL>
+<DD>Synchronized through <A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#add(E)"><CODE>add(Object)</CODE></A>.
+<P>
 <DD><DL>
 </DL>
 </DD>
@@ -386,6 +390,8 @@ lastElementRemoved</H3>
 <PRE>
 protected void <B>lastElementRemoved</B>()</PRE>
 <DL>
+<DD>Synchronized through <A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#remove(E)"><CODE>remove(Object)</CODE></A>.
+<P>
 <DD><DL>
 </DL>
 </DD>
@@ -397,6 +403,8 @@ newArray</H3>
 <PRE>
 protected abstract <A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html" title="type parameter in ConcurrentArray">E</A>[] <B>newArray</B>(int&nbsp;length)</PRE>
 <DL>
+<DD>Synchronized through <A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#add(E)"><CODE>add(Object)</CODE></A> or <A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#remove(E)"><CODE>remove(Object)</CODE></A>.
+<P>
 <DD><DL>
 </DL>
 </DD>

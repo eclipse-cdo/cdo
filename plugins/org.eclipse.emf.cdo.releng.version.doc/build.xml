@@ -250,6 +250,8 @@
 
 			<package name="org.eclipse.emf.cdo.releng.version.doc" />
 			<package name="org.eclipse.emf.cdo.releng.version.doc.guide" />
+			<package name="org.eclipse.emf.cdo.releng.version.doc.guide.checks" />
+			<package name="org.eclipse.emf.cdo.releng.version.doc.guide.setup" />
 			<package name="org.eclipse.emf.cdo.releng.version.doc.online" />
 			<package name="org.eclipse.emf.cdo.releng.version.doc.reference" />
 			<package name="org.eclipse.emf.cdo.releng.version.doc.reference.api" />

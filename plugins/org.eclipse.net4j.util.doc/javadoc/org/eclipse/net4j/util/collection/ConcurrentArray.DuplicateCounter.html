@@ -203,7 +203,7 @@ Class ConcurrentArray.DuplicateCounter&lt;E&gt;</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.DuplicateCounter.html#validate(E)">validate</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.DuplicateCounter.html" title="type parameter in ConcurrentArray.DuplicateCounter">E</A>&nbsp;element)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Synchronized through <A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#add(E)"><CODE>ConcurrentArray.add(Object)</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.collection.ConcurrentArray"><!-- --></A>
@@ -270,6 +270,9 @@ validate</H3>
 <PRE>
 protected boolean <B>validate</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.DuplicateCounter.html" title="type parameter in ConcurrentArray.DuplicateCounter">E</A>&nbsp;element)</PRE>
 <DL>
+<DD><B>Description copied from class: <CODE><A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#validate(E)">ConcurrentArray</A></CODE></B></DD>
+<DD>Synchronized through <A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#add(E)"><CODE>ConcurrentArray.add(Object)</CODE></A>.
+<P>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html#validate(E)">validate</A></CODE> in class <CODE><A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.html" title="class in org.eclipse.net4j.util.collection">ConcurrentArray</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/ConcurrentArray.DuplicateCounter.html" title="type parameter in ConcurrentArray.DuplicateCounter">E</A>&gt;</CODE></DL>
 </DD>

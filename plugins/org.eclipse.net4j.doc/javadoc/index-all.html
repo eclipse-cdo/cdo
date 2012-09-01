@@ -165,6 +165,9 @@ Constructor for class org.eclipse.net4j.channel.<A HREF="./org/eclipse/net4j/cha
 <DT><A HREF="./org/eclipse/net4j/channel/ChannelOutputStream.html#ChannelOutputStream(org.eclipse.net4j.channel.IChannel, org.eclipse.net4j.buffer.IBufferProvider)"><B>ChannelOutputStream(IChannel, IBufferProvider)</B></A> - 
 Constructor for class org.eclipse.net4j.channel.<A HREF="./org/eclipse/net4j/channel/ChannelOutputStream.html" title="class in org.eclipse.net4j.channel">ChannelOutputStream</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/protocol/ProtocolVersionException.html#checkVersion(org.eclipse.net4j.protocol.IProtocol, int)"><B>checkVersion(IProtocol&lt;?&gt;, int)</B></A> - 
+Static method in exception org.eclipse.net4j.protocol.<A HREF="./org/eclipse/net4j/protocol/ProtocolVersionException.html" title="class in org.eclipse.net4j.protocol">ProtocolVersionException</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/buffer/IBuffer.html#clear()"><B>clear()</B></A> - 
 Method in interface org.eclipse.net4j.buffer.<A HREF="./org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</A>
 <DD>Turns the state of this buffer from any state into <A HREF="./org/eclipse/net4j/buffer/BufferState.html#INITIAL"><CODE>INITIAL</CODE></A>.
@@ -934,11 +937,17 @@ Method in interface org.eclipse.net4j.protocol.<A HREF="./org/eclipse/net4j/prot
 <DT><A HREF="./org/eclipse/net4j/signal/Signal.html#getProtocol()"><B>getProtocol()</B></A> - 
 Method in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal">Signal</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/Net4jUtil.html#getProtocolID(org.eclipse.net4j.protocol.IProtocol)"><B>getProtocolID(IProtocol&lt;?&gt;)</B></A> - 
+Static method in class org.eclipse.net4j.<A HREF="./org/eclipse/net4j/Net4jUtil.html" title="class in org.eclipse.net4j">Net4jUtil</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/signal/wrapping/StreamWrapperInjector.html#getProtocolID()"><B>getProtocolID()</B></A> - 
 Method in class org.eclipse.net4j.signal.wrapping.<A HREF="./org/eclipse/net4j/signal/wrapping/StreamWrapperInjector.html" title="class in org.eclipse.net4j.signal.wrapping">StreamWrapperInjector</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/ITransportConfig.html#getProtocolProvider()"><B>getProtocolProvider()</B></A> - 
 Method in interface org.eclipse.net4j.<A HREF="./org/eclipse/net4j/ITransportConfig.html" title="interface in org.eclipse.net4j">ITransportConfig</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/Net4jUtil.html#getProtocolVersion(org.eclipse.net4j.protocol.IProtocol)"><B>getProtocolVersion(IProtocol&lt;?&gt;)</B></A> - 
+Static method in class org.eclipse.net4j.<A HREF="./org/eclipse/net4j/Net4jUtil.html" title="class in org.eclipse.net4j">Net4jUtil</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/buffer/IBufferProvider.Introspection.html#getProvidedBuffers()"><B>getProvidedBuffers()</B></A> - 
 Method in interface org.eclipse.net4j.buffer.<A HREF="./org/eclipse/net4j/buffer/IBufferProvider.Introspection.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider.Introspection</A>
@@ -1091,6 +1100,12 @@ Method in class org.eclipse.spi.net4j.<A HREF="./org/eclipse/spi/net4j/Channel.h
 Method in class org.eclipse.spi.net4j.<A HREF="./org/eclipse/spi/net4j/Connector.html" title="class in org.eclipse.spi.net4j">Connector</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/spi/net4j/Protocol.html#getUserID()"><B>getUserID()</B></A> - 
+Method in class org.eclipse.spi.net4j.<A HREF="./org/eclipse/spi/net4j/Protocol.html" title="class in org.eclipse.spi.net4j">Protocol</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/protocol/IProtocol2.html#getVersion()"><B>getVersion()</B></A> - 
+Method in interface org.eclipse.net4j.protocol.<A HREF="./org/eclipse/net4j/protocol/IProtocol2.html" title="interface in org.eclipse.net4j.protocol">IProtocol2</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/spi/net4j/Protocol.html#getVersion()"><B>getVersion()</B></A> - 
 Method in class org.eclipse.spi.net4j.<A HREF="./org/eclipse/spi/net4j/Protocol.html" title="class in org.eclipse.spi.net4j">Protocol</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/signal/wrapping/GZIPStreamWrapperInjector.html" title="class in org.eclipse.net4j.signal.wrapping"><B>GZIPStreamWrapperInjector</B></A> - Class in <A HREF="./org/eclipse/net4j/signal/wrapping/package-summary.html">org.eclipse.net4j.signal.wrapping</A><DD>An <A HREF="./org/eclipse/net4j/signal/wrapping/StreamWrapperInjector.html" title="class in org.eclipse.net4j.signal.wrapping"><CODE>injector</CODE></A> that injects <A HREF="../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/GZIPStreamWrapper.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io"><CODE>GZIPStreamWrapper</CODE></A> instances.<DT><A HREF="./org/eclipse/net4j/signal/wrapping/GZIPStreamWrapperInjector.html#GZIPStreamWrapperInjector(java.lang.String)"><B>GZIPStreamWrapperInjector(String)</B></A> - 
@@ -1261,8 +1276,11 @@ Method in class org.eclipse.spi.net4j.<A HREF="./org/eclipse/spi/net4j/ChannelMu
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/spi/net4j/ChannelMultiplexer.html#inverseOpenChannel(short, java.lang.String)"><B>inverseOpenChannel(short, String)</B></A> - 
 Method in class org.eclipse.spi.net4j.<A HREF="./org/eclipse/spi/net4j/ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</A>
+<DD><B>Deprecated.</B>&nbsp;<I>Use <A HREF="./org/eclipse/spi/net4j/ChannelMultiplexer.html#inverseOpenChannel(short, java.lang.String, int)"><CODE>ChannelMultiplexer.inverseOpenChannel(short, String, int)</CODE></A>.</I>
+<DT><A HREF="./org/eclipse/spi/net4j/ChannelMultiplexer.html#inverseOpenChannel(short, java.lang.String, int)"><B>inverseOpenChannel(short, String, int)</B></A> - 
+Method in class org.eclipse.spi.net4j.<A HREF="./org/eclipse/spi/net4j/ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</A>
 <DD>&nbsp;
-<DT><A HREF="./org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol"><B>IProtocol</B></A>&lt;<A HREF="./org/eclipse/net4j/protocol/IProtocol.html" title="type parameter in IProtocol">INFRA_STRUCTURE</A>&gt; - Interface in <A HREF="./org/eclipse/net4j/protocol/package-summary.html">org.eclipse.net4j.protocol</A><DD>A <A HREF="./org/eclipse/net4j/protocol/IProtocol.html#getType()"><CODE>typed</CODE></A> <A HREF="./org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer"><CODE>buffer handler</CODE></A> for a <A HREF="./org/eclipse/net4j/protocol/IProtocol.html#getChannel()"><CODE>channel</CODE></A>.<DT><A HREF="./org/eclipse/net4j/protocol/IProtocolProvider.html" title="interface in org.eclipse.net4j.protocol"><B>IProtocolProvider</B></A> - Interface in <A HREF="./org/eclipse/net4j/protocol/package-summary.html">org.eclipse.net4j.protocol</A><DD>Provides <A HREF="./org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol"><CODE>protocol</CODE></A> instances for given types.<DT><A HREF="./org/eclipse/net4j/ILocationAware.html#isClient()"><B>isClient()</B></A> - 
+<DT><A HREF="./org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol"><B>IProtocol</B></A>&lt;<A HREF="./org/eclipse/net4j/protocol/IProtocol.html" title="type parameter in IProtocol">INFRA_STRUCTURE</A>&gt; - Interface in <A HREF="./org/eclipse/net4j/protocol/package-summary.html">org.eclipse.net4j.protocol</A><DD>A <A HREF="./org/eclipse/net4j/protocol/IProtocol.html#getType()"><CODE>typed</CODE></A> <A HREF="./org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer"><CODE>buffer handler</CODE></A> for a <A HREF="./org/eclipse/net4j/protocol/IProtocol.html#getChannel()"><CODE>channel</CODE></A>.<DT><A HREF="./org/eclipse/net4j/protocol/IProtocol2.html" title="interface in org.eclipse.net4j.protocol"><B>IProtocol2</B></A>&lt;<A HREF="./org/eclipse/net4j/protocol/IProtocol2.html" title="type parameter in IProtocol2">INFRA_STRUCTURE</A>&gt; - Interface in <A HREF="./org/eclipse/net4j/protocol/package-summary.html">org.eclipse.net4j.protocol</A><DD>A <A HREF="./org/eclipse/net4j/protocol/IProtocol2.html#getVersion()"><CODE>versioned</CODE></A> <A HREF="./org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol"><CODE>protocol</CODE></A>.<DT><A HREF="./org/eclipse/net4j/protocol/IProtocolProvider.html" title="interface in org.eclipse.net4j.protocol"><B>IProtocolProvider</B></A> - Interface in <A HREF="./org/eclipse/net4j/protocol/package-summary.html">org.eclipse.net4j.protocol</A><DD>Provides <A HREF="./org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol"><CODE>protocol</CODE></A> instances for given types.<DT><A HREF="./org/eclipse/net4j/ILocationAware.html#isClient()"><B>isClient()</B></A> - 
 Method in interface org.eclipse.net4j.<A HREF="./org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</A>
 <DD>Same as <code><A HREF="./org/eclipse/net4j/ILocationAware.html#getLocation()"><CODE>ILocationAware.getLocation()</CODE></A> == <A HREF="./org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><CODE>ILocationAware.Location.CLIENT</CODE></A></code>.
 <DT><A HREF="./org/eclipse/spi/net4j/Channel.html#isClient()"><B>isClient()</B></A> - 
@@ -1511,6 +1529,18 @@ Static variable in class org.eclipse.spi.net4j.<A HREF="./org/eclipse/spi/net4j/
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/spi/net4j/Protocol.html" title="class in org.eclipse.spi.net4j"><B>Protocol</B></A>&lt;<A HREF="./org/eclipse/spi/net4j/Protocol.html" title="type parameter in Protocol">INFRA_STRUCTURE</A>&gt; - Class in <A HREF="./org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</A><DD>&nbsp;<DT><A HREF="./org/eclipse/spi/net4j/Protocol.html#Protocol(java.lang.String)"><B>Protocol(String)</B></A> - 
 Constructor for class org.eclipse.spi.net4j.<A HREF="./org/eclipse/spi/net4j/Protocol.html" title="class in org.eclipse.spi.net4j">Protocol</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/protocol/ProtocolVersionException.html" title="class in org.eclipse.net4j.protocol"><B>ProtocolVersionException</B></A> - Exception in <A HREF="./org/eclipse/net4j/protocol/package-summary.html">org.eclipse.net4j.protocol</A><DD>An exception that indicates mismatch between the versions of two protocol peer implementations.<DT><A HREF="./org/eclipse/net4j/protocol/ProtocolVersionException.html#ProtocolVersionException()"><B>ProtocolVersionException()</B></A> - 
+Constructor for exception org.eclipse.net4j.protocol.<A HREF="./org/eclipse/net4j/protocol/ProtocolVersionException.html" title="class in org.eclipse.net4j.protocol">ProtocolVersionException</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/protocol/ProtocolVersionException.html#ProtocolVersionException(java.lang.String)"><B>ProtocolVersionException(String)</B></A> - 
+Constructor for exception org.eclipse.net4j.protocol.<A HREF="./org/eclipse/net4j/protocol/ProtocolVersionException.html" title="class in org.eclipse.net4j.protocol">ProtocolVersionException</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/protocol/ProtocolVersionException.html#ProtocolVersionException(java.lang.Throwable)"><B>ProtocolVersionException(Throwable)</B></A> - 
+Constructor for exception org.eclipse.net4j.protocol.<A HREF="./org/eclipse/net4j/protocol/ProtocolVersionException.html" title="class in org.eclipse.net4j.protocol">ProtocolVersionException</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/protocol/ProtocolVersionException.html#ProtocolVersionException(java.lang.String, java.lang.Throwable)"><B>ProtocolVersionException(String, Throwable)</B></A> - 
+Constructor for exception org.eclipse.net4j.protocol.<A HREF="./org/eclipse/net4j/protocol/ProtocolVersionException.html" title="class in org.eclipse.net4j.protocol">ProtocolVersionException</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/buffer/IBufferProvider.html#provideBuffer()"><B>provideBuffer()</B></A> - 
 Method in interface org.eclipse.net4j.buffer.<A HREF="./org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</A>
@@ -1976,6 +2006,9 @@ Static variable in interface org.eclipse.net4j.http.common.<A HREF="./org/eclips
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/spi/net4j/Channel.html#unregisterFromMultiplexer()"><B>unregisterFromMultiplexer()</B></A> - 
 Method in class org.eclipse.spi.net4j.<A HREF="./org/eclipse/spi/net4j/Channel.html" title="class in org.eclipse.spi.net4j">Channel</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/protocol/IProtocol2.html#UNSPECIFIED_VERSION"><B>UNSPECIFIED_VERSION</B></A> - 
+Static variable in interface org.eclipse.net4j.protocol.<A HREF="./org/eclipse/net4j/protocol/IProtocol2.html" title="interface in org.eclipse.net4j.protocol">IProtocol2</A>
 <DD>&nbsp;
 </DL>
 <HR>

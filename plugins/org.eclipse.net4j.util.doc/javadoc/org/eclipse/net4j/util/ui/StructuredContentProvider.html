@@ -176,6 +176,23 @@ Class StructuredContentProvider&lt;INPUT&gt;</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#expandElement(java.lang.Object, int)">expandElement</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element,
+              int&nbsp;level)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#getBoldFont()">getBoldFont</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Display</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#getDisplay()">getDisplay</A></B>()</CODE>
 
@@ -240,7 +257,7 @@ Class StructuredContentProvider&lt;INPUT&gt;</H2>
               boolean&nbsp;updateLabels)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#refreshElement(java.lang.Object, boolean)"><CODE>refreshElement(Object, boolean)</CODE></A></I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -460,9 +477,12 @@ public void <B>refreshElement</B>(<A HREF="http://download.oracle.com/javase/1.5
 <A NAME="refreshSynced(java.lang.Object, boolean)"><!-- --></A><H3>
 refreshSynced</H3>
 <PRE>
-public void <B>refreshSynced</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element,
-                          boolean&nbsp;updateLabels)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>public void <B>refreshSynced</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element,
+                                     boolean&nbsp;updateLabels)</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#refreshElement(java.lang.Object, boolean)"><CODE>refreshElement(Object, boolean)</CODE></A></I>
+<P>
 <DD><DL>
 </DL>
 </DD>
@@ -523,6 +543,23 @@ public void <B>selectElement</B>(<A HREF="http://download.oracle.com/javase/1.5.
 </DL>
 <HR>
 
+<A NAME="expandElement(java.lang.Object, int)"><!-- --></A><H3>
+expandElement</H3>
+<PRE>
+public void <B>expandElement</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element,
+                          int&nbsp;level)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.3</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="getDisplay()"><!-- --></A><H3>
 getDisplay</H3>
 <PRE>
@@ -548,6 +585,22 @@ protected <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/r
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>3.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getBoldFont()"><!-- --></A><H3>
+getBoldFont</H3>
+<PRE>
+protected <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</A> <B>getBoldFont</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.3</DD>
 </DL>
 </DD>
 </DL>

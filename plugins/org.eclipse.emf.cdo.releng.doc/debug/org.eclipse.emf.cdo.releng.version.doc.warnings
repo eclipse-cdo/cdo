@@ -5,7 +5,7 @@ Class description missing: org.eclipse.emf.cdo.releng.version.IElementResolver.c
 Class description missing: org.eclipse.emf.cdo.releng.version.IRelease.class(IRelease.java:22)
 Class description missing: org.eclipse.emf.cdo.releng.version.IReleaseManager.class(IReleaseManager.java:28)
 Class description missing: org.eclipse.emf.cdo.releng.version.Markers.class(Markers.java:27)
-Class description missing: org.eclipse.emf.cdo.releng.version.VersionUtil.class(VersionUtil.java:58)
+Class description missing: org.eclipse.emf.cdo.releng.version.VersionUtil.class(VersionUtil.java:63)
 Class description missing: org.eclipse.emf.cdo.releng.version.VersionValidator.class(VersionValidator.java:21)
 Class description missing: org.eclipse.emf.cdo.releng.version.tests.Activator.class(Activator.java:23)
 Class description missing: org.eclipse.emf.cdo.releng.version.tests.BundleFile.class(BundleFile.java:36)

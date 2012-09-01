@@ -90,11 +90,14 @@ The Net4j transport layer concepts for dealing with protocols.
 <P>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="../buffer/IBufferHandler.html" title="&#171;interface&#187; IBufferHandler (org.eclipse.net4j.buffer)" alt="" coords="24,70,184,125"/>
-<area shape="rect" id="node2" href="../ILocationAware.html" title="&#171;interface&#187; ILocationAware (org.eclipse.net4j)" alt="" coords="41,149,167,203"/>
-<area shape="rect" id="node3" href="IProtocol.html" title="&#171;interface&#187; IProtocol" alt="" coords="232,156,317,196"/>
-<area shape="rect" id="node4" href="IProtocolProvider.html" title="&#171;interface&#187; IProtocolProvider" alt="" coords="45,5,163,45"/>
-<area shape="rect" id="node5" title="&#171;interface&#187; IUserAware (org.eclipse.net4j.util.security)" alt="" coords="6,227,202,282"/>
+<area shape="rect" id="node1" title="&#171;exception&#187; IllegalStateException (java.lang)" alt="" coords="32,306,176,361"/>
+<area shape="rect" id="node2" href="../buffer/IBufferHandler.html" title="&#171;interface&#187; IBufferHandler (org.eclipse.net4j.buffer)" alt="" coords="24,70,184,125"/>
+<area shape="rect" id="node3" href="../ILocationAware.html" title="&#171;interface&#187; ILocationAware (org.eclipse.net4j)" alt="" coords="41,149,167,203"/>
+<area shape="rect" id="node4" href="IProtocol.html" title="&#171;interface&#187; IProtocol" alt="" coords="276,156,361,196"/>
+<area shape="rect" id="node5" href="IProtocol2.html" title="&#171;interface&#187; IProtocol2" alt="" coords="435,156,520,196"/>
+<area shape="rect" id="node6" href="IProtocolProvider.html" title="&#171;interface&#187; IProtocolProvider" alt="" coords="45,5,163,45"/>
+<area shape="rect" id="node7" title="&#171;interface&#187; IUserAware (org.eclipse.net4j.util.security)" alt="" coords="6,227,202,282"/>
+<area shape="rect" id="node8" href="ProtocolVersionException.html" title="&#171;exception&#187; ProtocolVersionException" alt="" coords="233,313,405,353"/>
 </map>
 
 <CENTER><IMG SRC="package-summary.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -109,8 +112,26 @@ The Net4j transport layer concepts for dealing with protocols.
 <TD>A <A HREF="../../../../org/eclipse/net4j/protocol/IProtocol.html#getType()"><CODE>typed</CODE></A> <A HREF="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer"><CODE>buffer handler</CODE></A> for a <A HREF="../../../../org/eclipse/net4j/protocol/IProtocol.html#getChannel()"><CODE>channel</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/protocol/IProtocol2.html" title="interface in org.eclipse.net4j.protocol">IProtocol2&lt;INFRA_STRUCTURE&gt;</A></B></TD>
+<TD>A <A HREF="../../../../org/eclipse/net4j/protocol/IProtocol2.html#getVersion()"><CODE>versioned</CODE></A> <A HREF="../../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol"><CODE>protocol</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/protocol/IProtocolProvider.html" title="interface in org.eclipse.net4j.protocol">IProtocolProvider</A></B></TD>
 <TD>Provides <A HREF="../../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol"><CODE>protocol</CODE></A> instances for given types.</TD>
+</TR>
+</TABLE>
+&nbsp;
+
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Exception Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/net4j/protocol/ProtocolVersionException.html" title="class in org.eclipse.net4j.protocol">ProtocolVersionException</A></B></TD>
+<TD>An exception that indicates mismatch between the versions of two protocol peer implementations.</TD>
 </TR>
 </TABLE>
 &nbsp;

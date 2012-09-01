@@ -50,13 +50,13 @@ public final class Markers
 
   public static final String EXPORT_VERSION_PROBLEM = "export.version";
 
+  public static final String UNREFERENCED_ELEMENT_PROBLEM = "unreferenced.element";
+
   public static final String COMPONENT_VERSION_PROBLEM = "component.version";
 
   public static final String VALIDATOR_CLASS_PROBLEM = "validator.class";
 
   public static final String RESOURCE_ATTRIBUTE = "<resource>";
-
-  public static final String UNREFERENCED_ELEMENT_PROBLEM = "unreferenced.element";
 
   public static final String QUICK_FIX_PATTERN = "quickFixPattern";
 

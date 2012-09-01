@@ -37,6 +37,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 2.0
  */
@@ -316,6 +318,8 @@ public class Channel extends Lifecycle implements InternalChannel
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 4.1
    */
@@ -329,6 +333,8 @@ public class Channel extends Lifecycle implements InternalChannel
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    */
   protected class ReceiverWork implements Runnable

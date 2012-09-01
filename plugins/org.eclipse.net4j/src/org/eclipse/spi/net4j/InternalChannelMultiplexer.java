@@ -16,6 +16,8 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 2.0
  */

@@ -42,6 +42,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 2.0
  */

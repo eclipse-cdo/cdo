@@ -21,6 +21,8 @@ import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  */
 public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle
@@ -61,7 +63,7 @@ public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle
   /**
    * An {@link IEvent event} fired from a {@link InternalChannel channel} when a {@link IBuffer buffer} is enqueued or
    * dequeued.
-   * 
+   *
    * @author Eike Stepper
    * @since 3.0
    * @noextend This interface is not intended to be extended by clients.
@@ -77,7 +79,7 @@ public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle
 
     /**
      * Enumerates the possible {@link InternalChannel#getSendQueue() send queue} {@link SendQueueEvent event} types.
-     * 
+     *
      * @author Eike Stepper
      */
     public enum Type

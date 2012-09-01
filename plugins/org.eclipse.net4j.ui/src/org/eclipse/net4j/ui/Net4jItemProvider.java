@@ -28,6 +28,8 @@ import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.swt.graphics.Image;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 4.1
  */
@@ -77,6 +79,8 @@ public class Net4jItemProvider extends ContainerItemProvider<IContainer<Object>>
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    */
   public static class RemoveAction extends LongRunningAction

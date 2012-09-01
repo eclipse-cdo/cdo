@@ -14,6 +14,8 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.security.INegotiatorAware;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  */
 public interface InternalConnector extends IConnector, INegotiatorAware, InternalChannelMultiplexer

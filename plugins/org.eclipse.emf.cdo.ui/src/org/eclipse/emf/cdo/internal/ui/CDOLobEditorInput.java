@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.ui.views;
+package org.eclipse.emf.cdo.internal.ui;
 
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
@@ -56,7 +56,7 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
 {
   private static final String SCHEME = "cdo.lob";
 
-  private static final Map<CDOLobEditorInput, URI> inputs = new WeakHashMap<CDOLobEditorInput, URI>();
+  private static final Map<CDOLobEditorInput, LobFileStore> fileStores = new WeakHashMap<CDOLobEditorInput, LobFileStore>();
 
   private static int lastID;
 
@@ -77,9 +77,9 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
       throw WrappedException.wrap(ex);
     }
 
-    synchronized (inputs)
+    synchronized (fileStores)
     {
-      inputs.put(this, uri);
+      fileStores.put(this, null);
     }
   }
 
@@ -118,6 +118,49 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
     return uri;
   }
 
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (resource == null ? 0 : resource.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+
+    if (obj == null)
+    {
+      return false;
+    }
+
+    if (!(obj instanceof CDOLobEditorInput))
+    {
+      return false;
+    }
+
+    CDOLobEditorInput other = (CDOLobEditorInput)obj;
+    if (resource == null)
+    {
+      if (other.resource != null)
+      {
+        return false;
+      }
+    }
+    else if (!resource.equals(other.resource))
+    {
+      return false;
+    }
+
+    return true;
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -126,7 +169,27 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
     @Override
     public IFileStore getStore(URI uri)
     {
-      return new LobFileStore(uri);
+      synchronized (fileStores)
+      {
+        for (Entry<CDOLobEditorInput, LobFileStore> entry : fileStores.entrySet())
+        {
+          CDOLobEditorInput editorInput = entry.getKey();
+          if (uri.equals(editorInput.getURI()))
+          {
+            LobFileStore store = entry.getValue();
+            if (store == null)
+            {
+              CDOFileResource<?> resource = editorInput.getResource();
+              store = new LobFileStore(resource, uri);
+              fileStores.put(editorInput, store);
+            }
+
+            return store;
+          }
+        }
+      }
+
+      throw new IllegalStateException("No editor input is cached for " + uri);
     }
   }
 
@@ -137,14 +200,15 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
   {
     private static final String[] NO_CHILDREN = new String[0];
 
-    private final URI uri;
-
     private CDOFileResource<?> resource;
+
+    private final URI uri;
 
     private FileInfo info;
 
-    public LobFileStore(URI uri)
+    public LobFileStore(CDOFileResource<?> resource, URI uri)
     {
+      this.resource = resource;
       this.uri = uri;
     }
 
@@ -152,43 +216,6 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
     public URI toURI()
     {
       return uri;
-    }
-
-    private CDOFileResource<?> getResource()
-    {
-      if (resource == null)
-      {
-        synchronized (inputs)
-        {
-          for (Entry<CDOLobEditorInput, URI> entry : inputs.entrySet())
-          {
-            if (uri.equals(entry.getValue()))
-            {
-              resource = entry.getKey().getResource();
-              break;
-            }
-          }
-        }
-      }
-
-      return resource;
-    }
-
-    private String getEncoding(CDOTextResource textResource)
-    {
-      String encoding = textResource.getEncoding();
-      if (encoding == null)
-      {
-        try
-        {
-          encoding = ResourcesPlugin.getWorkspace().getRoot().getDefaultCharset();
-        }
-        catch (CoreException ex)
-        {
-          OM.LOG.error(ex);
-        }
-      }
-      return encoding;
     }
 
     @Override
@@ -213,7 +240,6 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
     {
       try
       {
-        CDOFileResource<?> resource = getResource();
         if (resource instanceof CDOTextResource)
         {
           CDOTextResource textResource = (CDOTextResource)resource;
@@ -254,7 +280,6 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
     @Override
     public OutputStream openOutputStream(int options, IProgressMonitor monitor) throws CoreException
     {
-      final CDOFileResource<?> resource = getResource();
       return new ByteArrayOutputStream()
       {
         @Override
@@ -282,7 +307,7 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
     @Override
     public String getName()
     {
-      return getResource().getName();
+      return resource.getName();
     }
 
     @Override
@@ -301,6 +326,24 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
     public String[] childNames(int options, IProgressMonitor monitor) throws CoreException
     {
       return NO_CHILDREN; // This is a flat file system
+    }
+
+    private String getEncoding(CDOTextResource textResource)
+    {
+      String encoding = textResource.getEncoding();
+      if (encoding == null)
+      {
+        try
+        {
+          encoding = ResourcesPlugin.getWorkspace().getRoot().getDefaultCharset();
+        }
+        catch (CoreException ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
+
+      return encoding;
     }
   }
 }

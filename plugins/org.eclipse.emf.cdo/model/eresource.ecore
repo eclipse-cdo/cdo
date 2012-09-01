@@ -70,5 +70,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="CDOTextResource" eSuperTypes="#//CDOFileResource">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="contents" lowerBound="1"
         eType="ecore:EDataType etypes.ecore#//Clob"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="encoding" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

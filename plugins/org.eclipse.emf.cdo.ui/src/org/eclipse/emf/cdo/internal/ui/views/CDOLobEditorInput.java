@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOFileResource;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
+import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IORuntimeException;
@@ -26,6 +27,7 @@ import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.filesystem.provider.FileInfo;
 import org.eclipse.core.filesystem.provider.FileStore;
 import org.eclipse.core.filesystem.provider.FileSystem;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.PlatformObject;
@@ -172,6 +174,23 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
       return resource;
     }
 
+    private String getEncoding(CDOTextResource textResource)
+    {
+      String encoding = textResource.getEncoding();
+      if (encoding == null)
+      {
+        try
+        {
+          encoding = ResourcesPlugin.getWorkspace().getRoot().getDefaultCharset();
+        }
+        catch (CoreException ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
+      return encoding;
+    }
+
     @Override
     public IFileInfo fetchInfo(int options, IProgressMonitor monitor) throws CoreException
     {
@@ -197,7 +216,8 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
         CDOFileResource<?> resource = getResource();
         if (resource instanceof CDOTextResource)
         {
-          CDOClob clob = ((CDOTextResource)resource).getContents();
+          CDOTextResource textResource = (CDOTextResource)resource;
+          CDOClob clob = textResource.getContents();
           if (clob == null)
           {
             return new ByteArrayInputStream(new byte[0]);
@@ -207,7 +227,8 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
           CharArrayWriter writer = new CharArrayWriter();
           IOUtil.copyCharacter(reader, writer);
 
-          byte[] bytes = writer.toString().getBytes("UTF-8");
+          String encoding = getEncoding(textResource);
+          byte[] bytes = writer.toString().getBytes(encoding);
           return new ByteArrayInputStream(bytes);
         }
 
@@ -241,9 +262,12 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
         {
           if (resource instanceof CDOTextResource)
           {
-            String string = toString("UTF-8");
+            CDOTextResource textResource = (CDOTextResource)resource;
+            String encoding = getEncoding(textResource);
+
+            String string = toString(encoding);
             CDOClob clob = new CDOClob(new CharArrayReader(string.toCharArray()));
-            ((CDOTextResource)resource).setContents(clob);
+            textResource.setContents(clob);
           }
           else
           {

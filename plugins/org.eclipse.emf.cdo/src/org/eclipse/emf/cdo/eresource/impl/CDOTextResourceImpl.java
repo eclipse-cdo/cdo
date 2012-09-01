@@ -27,10 +27,11 @@ import java.io.Reader;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOTextResourceImpl#getContents <em>Contents</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOTextResourceImpl#getEncoding <em>Encoding</em>}</li>
  * </ul>
  * </p>
  *
- * @generated NOT
+ * @generated
  */
 public class CDOTextResourceImpl extends CDOFileResourceImpl<Reader> implements CDOTextResource
 {
@@ -70,6 +71,28 @@ public class CDOTextResourceImpl extends CDOFileResourceImpl<Reader> implements 
   public void setContents(CDOClob newContents)
   {
     eSet(EresourcePackage.Literals.CDO_TEXT_RESOURCE__CONTENTS, newContents);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getEncoding()
+  {
+    return (String)eGet(EresourcePackage.Literals.CDO_TEXT_RESOURCE__ENCODING, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setEncoding(String newEncoding)
+  {
+    eSet(EresourcePackage.Literals.CDO_TEXT_RESOURCE__ENCODING, newEncoding);
   }
 
 } // CDOTextResourceImpl

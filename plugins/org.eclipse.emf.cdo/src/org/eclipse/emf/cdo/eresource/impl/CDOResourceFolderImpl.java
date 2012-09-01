@@ -114,8 +114,9 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
    */
   public CDOTextResource addTextResource(String name)
   {
-    InternalCDOTransaction transaction = cdoView().toTransaction();
-    return transaction.createTextResource(getPath() + CDOURIUtil.SEGMENT_SEPARATOR + name);
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -126,8 +127,9 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
    */
   public CDOBinaryResource addBinaryResource(String name)
   {
-    InternalCDOTransaction transaction = cdoView().toTransaction();
-    return transaction.createBinaryResource(getPath() + CDOURIUtil.SEGMENT_SEPARATOR + name);
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
   }
 
   /**

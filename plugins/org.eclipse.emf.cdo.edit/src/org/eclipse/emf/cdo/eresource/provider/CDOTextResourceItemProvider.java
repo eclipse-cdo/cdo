@@ -68,6 +68,7 @@ public class CDOTextResourceItemProvider extends CDOFileResourceItemProvider imp
       super.getPropertyDescriptors(object);
 
       addContentsPropertyDescriptor(object);
+      addEncodingPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -86,6 +87,25 @@ public class CDOTextResourceItemProvider extends CDOFileResourceItemProvider imp
         getString(
             "_UI_PropertyDescriptor_description", "_UI_CDOTextResource_contents_feature", "_UI_CDOTextResource_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         EresourcePackage.Literals.CDO_TEXT_RESOURCE__CONTENTS, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Encoding feature.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addEncodingPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_CDOTextResource_encoding_feature"), //$NON-NLS-1$
+        getString(
+            "_UI_PropertyDescriptor_description", "_UI_CDOTextResource_encoding_feature", "_UI_CDOTextResource_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        EresourcePackage.Literals.CDO_TEXT_RESOURCE__ENCODING, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
@@ -127,6 +147,7 @@ public class CDOTextResourceItemProvider extends CDOFileResourceItemProvider imp
     switch (notification.getFeatureID(CDOTextResource.class))
     {
     case EresourcePackage.CDO_TEXT_RESOURCE__CONTENTS:
+    case EresourcePackage.CDO_TEXT_RESOURCE__ENCODING:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

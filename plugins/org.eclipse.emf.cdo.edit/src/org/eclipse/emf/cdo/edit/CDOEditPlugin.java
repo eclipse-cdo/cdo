@@ -15,7 +15,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 
 /**
- * This is the central singleton for the Etypes edit plugin.
+ * This is the central singleton for the Eresource edit plugin.
  * <!-- begin-user-doc -->
  * 
  * @since 4.0 <!-- end-user-doc -->
@@ -44,7 +44,7 @@ public final class CDOEditPlugin extends EMFPlugin
    */
   public CDOEditPlugin()
   {
-    super(new ResourceLocator[] { EcoreEditPlugin.INSTANCE, });
+    super(new ResourceLocator[] { EcoreEditPlugin.INSTANCE, CDOEditPlugin.INSTANCE, });
   }
 
   /**

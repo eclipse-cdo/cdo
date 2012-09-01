@@ -387,6 +387,16 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCDOTextResource_Encoding()
+  {
+    return (EAttribute)cdoTextResourceEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -469,6 +479,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
     cdoTextResourceEClass = createEClass(CDO_TEXT_RESOURCE);
     createEAttribute(cdoTextResourceEClass, CDO_TEXT_RESOURCE__CONTENTS);
+    createEAttribute(cdoTextResourceEClass, CDO_TEXT_RESOURCE__ENCODING);
 
     // Create data types
     resourceSetEDataType = createEDataType(RESOURCE_SET);
@@ -616,6 +627,10 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
         getCDOTextResource_Contents(),
         theEtypesPackage.getClob(),
         "contents", null, 1, 1, CDOTextResource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEAttribute(
+        getCDOTextResource_Encoding(),
+        theEcorePackage.getEString(),
+        "encoding", null, 0, 1, CDOTextResource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
     // Initialize data types
     initEDataType(resourceSetEDataType, ResourceSet.class,

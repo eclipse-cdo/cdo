@@ -180,6 +180,10 @@
         <element xmi:type="ecore:EAttribute" href="eresource.ecore#//CDOTextResource/contents"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_zQGIEQhJEeG8oLd3HT-0sg"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_OMkBsfRvEeGr-qxGOh-Q8Q" type="2001">
+        <element xmi:type="ecore:EAttribute" href="eresource.ecore#//CDOTextResource/encoding"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_OMkBsvRvEeGr-qxGOh-Q8Q"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_eqOQQghJEeG8oLd3HT-0sg"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_eqOQQwhJEeG8oLd3HT-0sg"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_eqOQRAhJEeG8oLd3HT-0sg"/>

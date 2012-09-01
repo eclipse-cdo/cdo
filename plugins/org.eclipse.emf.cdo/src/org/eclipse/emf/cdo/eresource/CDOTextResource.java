@@ -16,20 +16,23 @@ import java.io.Reader;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Text Resource</b></em>'.
- * 
+ *
  * @since 4.1
- * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
+ * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.eresource.CDOTextResource#getContents <em>Contents</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.CDOTextResource#getEncoding <em>Encoding</em>}</li>
  * </ul>
  * </p>
  *
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOTextResource()
  * @model
- * @generated NOT
+ * @generated
  */
 public interface CDOTextResource extends CDOFileResource<Reader>
 {
@@ -57,5 +60,33 @@ public interface CDOTextResource extends CDOFileResource<Reader>
    * @generated
    */
   void setContents(CDOClob value);
+
+  /**
+   * Returns the value of the '<em><b>Encoding</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Encoding</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Encoding</em>' attribute.
+   * @see #setEncoding(String)
+   * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOTextResource_Encoding()
+   * @model
+   * @generated
+   */
+  String getEncoding();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOTextResource#getEncoding <em>Encoding</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Encoding</em>' attribute.
+   * @see #getEncoding()
+   * @generated
+   */
+  void setEncoding(String value);
 
 } // CDOTextResource

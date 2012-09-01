@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
@@ -37,6 +39,8 @@ public interface InternalCDOCommitInfoManager extends CDOCommitInfoManager, ILif
       String comment, CDOCommitData commitData);
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    */
   public interface CommitInfoLoader

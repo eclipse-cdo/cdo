@@ -53,7 +53,7 @@
 	         classname="org.eclipse.pde.internal.core.ant.ConvertSchemaToHTML"
 	         classpathref="javadoc.classpath" />
 
-	<target name="build.java">
+	<target name="build.java" unless="java.skip">
 		<echo message="Building JavaDoc for org.eclipse.emf.cdo.doc" />
 
 		<delete includeemptydirs="true" failonerror="false">
@@ -129,11 +129,6 @@
 				<include name="org.eclipse.emf.cdo.server.db/src/org/eclipse/emf/cdo/server/db/mapping/*.java" />
 				<include name="org.eclipse.emf.cdo.server.db4o/src/org/eclipse/emf/cdo/server/db4o/*.java" />
 				<include name="org.eclipse.emf.cdo.server.hibernate/src/org/eclipse/emf/cdo/server/hibernate/*.java" />
-				<include name="org.eclipse.emf.cdo.server.lissome/src/org/eclipse/emf/cdo/server/internal/lissome/*.java" />
-				<include name="org.eclipse.emf.cdo.server.lissome/src/org/eclipse/emf/cdo/server/internal/lissome/bundle/*.java" />
-				<include name="org.eclipse.emf.cdo.server.lissome/src/org/eclipse/emf/cdo/server/internal/lissome/db/*.java" />
-				<include name="org.eclipse.emf.cdo.server.lissome/src/org/eclipse/emf/cdo/server/internal/lissome/file/*.java" />
-				<include name="org.eclipse.emf.cdo.server.lissome/src/org/eclipse/emf/cdo/server/internal/lissome/optimizer/*.java" />
 				<include name="org.eclipse.emf.cdo.server.lissome/src/org/eclipse/emf/cdo/server/lissome/*.java" />
 				<include name="org.eclipse.emf.cdo.server.mongodb/src/org/eclipse/emf/cdo/server/mongodb/*.java" />
 				<include name="org.eclipse.emf.cdo.server.net4j/src/org/eclipse/emf/cdo/server/net4j/*.java" />
@@ -258,25 +253,20 @@
 				<package name="org.eclipse.emf.cdo.server.admin" />
 				<package name="org.eclipse.emf.cdo.server.spi.admin" />
 			</group>
-			<group title="CDO Model Repository Server DB4O Support">
-				<package name="org.eclipse.emf.cdo.server.db4o" />
-			</group>
-			<group title="CDO Model Repository Server Hibernate Support">
-				<package name="org.eclipse.emf.cdo.server.hibernate" />
-			</group>
-			<group title="CDO Model Repository Server JDBC Support">
+			<group title="CDO Model Repository Server DB Store">
 				<package name="org.eclipse.emf.cdo.server.db" />
 				<package name="org.eclipse.emf.cdo.server.db.mapping" />
 			</group>
-			<group title="CDO Model Repository Server Lissome Support">
-				<package name="org.eclipse.emf.cdo.server.internal.lissome" />
-				<package name="org.eclipse.emf.cdo.server.internal.lissome.bundle" />
-				<package name="org.eclipse.emf.cdo.server.internal.lissome.db" />
-				<package name="org.eclipse.emf.cdo.server.internal.lissome.file" />
-				<package name="org.eclipse.emf.cdo.server.internal.lissome.optimizer" />
+			<group title="CDO Model Repository Server DB4O Store">
+				<package name="org.eclipse.emf.cdo.server.db4o" />
+			</group>
+			<group title="CDO Model Repository Server Hibernate Store">
+				<package name="org.eclipse.emf.cdo.server.hibernate" />
+			</group>
+			<group title="CDO Model Repository Server Lissome Store">
 				<package name="org.eclipse.emf.cdo.server.lissome" />
 			</group>
-			<group title="CDO Model Repository Server MongoDB Support">
+			<group title="CDO Model Repository Server MongoDB Store">
 				<package name="org.eclipse.emf.cdo.server.mongodb" />
 			</group>
 			<group title="CDO Model Repository Server Net4j Support">
@@ -285,7 +275,7 @@
 			<group title="CDO Model Repository Server OCL Support">
 				<package name="org.eclipse.emf.cdo.server.ocl" />
 			</group>
-			<group title="CDO Model Repository Server Objectivity Support">
+			<group title="CDO Model Repository Server Objectivity Store">
 				<package name="org.eclipse.emf.cdo.server.objectivity" />
 			</group>
 			<group title="CDO Model Repository Server Security Support">

@@ -23,6 +23,8 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import java.io.IOException;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
@@ -58,6 +60,8 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
   public void handleBranchCreated(InternalCDOBranch branch);
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 3.0
    */
@@ -90,6 +94,8 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
     public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler);
 
     /**
+     * If the meaning of this type isn't clear, there really should be more of a description here...
+     *
      * @author Eike Stepper
      * @since 3.0
      */
@@ -145,6 +151,7 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
     }
 
     /**
+     * If the meaning of this type isn't clear, there really should be more of a description here...
      * @author Eike Stepper
      * @since 3.0
      */

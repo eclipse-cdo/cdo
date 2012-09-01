@@ -36,6 +36,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import java.util.StringTokenizer;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  */
 public class AnnotationHandler implements InternalSecurityManager.CommitHandler

@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.security;
 
 /**
+ * Provides {@link SecurityItem security items} such as {@link User users} or {@link Role roles} by their given IDs.
+ *
  * @author Eike Stepper
  * @since 4.2
  */

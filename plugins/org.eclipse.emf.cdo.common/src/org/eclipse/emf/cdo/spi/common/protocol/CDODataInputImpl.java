@@ -104,6 +104,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 4.2
  */

@@ -16,6 +16,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.pde.core.IModel;
 
 /**
+ * The abstract base class that all version validator implementations must extend.
+ *
  * @author Eike Stepper
  */
 public abstract class VersionValidator

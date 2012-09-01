@@ -27,6 +27,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.io.IOException;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 3.0
  */

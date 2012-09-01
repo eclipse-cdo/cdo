@@ -114,6 +114,10 @@ Packages that use <A HREF="../../../../../org/eclipse/emf/cdo/server/package-sum
 <TD>Server concepts for dealing with Hibernate stores and accessors.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.server.lissome"><B>org.eclipse.emf.cdo.server.lissome</B></A></TD>
+<TD>Server concepts for dealing with DB stores and accessors.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.server.mem"><B>org.eclipse.emf.cdo.server.mem</B></A></TD>
 <TD>Server concepts for dealing with in-memory stores.&nbsp;</TD>
 </TR>
@@ -543,6 +547,72 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/server/package-summary.ht
 </TABLE>
 &nbsp;
 <P>
+<A NAME="org.eclipse.emf.cdo.server.lissome"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</A> used by <A HREF="../../../../../org/eclipse/emf/cdo/server/lissome/package-summary.html">org.eclipse.emf.cdo.server.lissome</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/server/class-use/IQueryHandlerProvider.html#org.eclipse.emf.cdo.server.lissome"><B>IQueryHandlerProvider</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides the consumer with <A HREF="../../../../../org/eclipse/emf/cdo/server/IQueryHandler.html" title="interface in org.eclipse.emf.cdo.server"><CODE>query handlers</CODE></A> that are capable of executing <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view"><CODE>queries</CODE></A> represented by specific <A HREF="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util"><CODE>query infos</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/server/class-use/ISession.html#org.eclipse.emf.cdo.server.lissome"><B>ISession</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The server-side representation of a client <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/server/class-use/IStore.html#org.eclipse.emf.cdo.server.lissome"><B>IStore</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents the physical data storage back-end of a CDO <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><CODE>repository</CODE></A>, such as a database or a file
+ system folder.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/server/class-use/IStore.CanHandleClientAssignedIDs.html#org.eclipse.emf.cdo.server.lissome"><B>IStore.CanHandleClientAssignedIDs</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A marker interface for <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server"><CODE>stores</CODE></A> that can handle <A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><CODE>IDs</CODE></A> assigned by a
+ <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html#CLIENT"><CODE>client</CODE></A>, typically <A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html#UUID"><CODE>UUIDs</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreAccessor.html#org.eclipse.emf.cdo.server.lissome"><B>IStoreAccessor</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents a <i>connection</i> to a physical data storage back-end.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreAccessor.DurableLocking.html#org.eclipse.emf.cdo.server.lissome"><B>IStoreAccessor.DurableLocking</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An extension interface for <A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><CODE>store accessors</CODE></A> that support <i>durable locking</i>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreAccessor.DurableLocking2.html#org.eclipse.emf.cdo.server.lissome"><B>IStoreAccessor.DurableLocking2</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An extension interface for <A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><CODE>store accessors</CODE></A> that support <i>durable locking</i>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreChunkReader.html#org.eclipse.emf.cdo.server.lissome"><B>IStoreChunkReader</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reads <A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreChunkReader.Chunk.html" title="class in org.eclipse.emf.cdo.server"><CODE>chunks</CODE></A> of
+ <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)"><CODE>partially loaded</CODE></A> lists from a physical data storage backend.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/server/class-use/ITransaction.html#org.eclipse.emf.cdo.server.lissome"><B>ITransaction</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The server-side representation of a client <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
 <A NAME="org.eclipse.emf.cdo.server.mem"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -849,6 +919,13 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/server/package-summary.ht
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents the state of a single, logical commit operation which is driven through multiple calls to several
  methods on the <A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><CODE>IStoreAccessor</CODE></A> API.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreAccessor.QueryResourcesContext.html#org.eclipse.emf.cdo.spi.server"><B>IStoreAccessor.QueryResourcesContext</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents the query execution state of a <A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryResources(org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)"><CODE>resources
+ query</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreAccessor.QueryResourcesContext.ExactMatch.html#org.eclipse.emf.cdo.spi.server"><B>IStoreAccessor.QueryResourcesContext.ExactMatch</B></A></B>

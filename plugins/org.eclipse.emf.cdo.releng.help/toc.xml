@@ -14,11 +14,6 @@
       <topic label="Using Buckminster" href="html/releng/provisioning/Buckminster.html" />
       <topic label="Maintaining the Releng Component" href="html/releng/provisioning/RelengComponent.html" />
     </topic>
-    <topic label="Versioning" href="html/releng/versioning/index.html">
-      <topic label="Understanding Versions" href="html/releng/versioning/Understanding.html" />
-      <topic label="Using API Tools" href="html/releng/versioning/APITools.html" />
-      <topic label="Using the CDO Version Tools" href="html/releng/versioning/CDOVersionTools.html" />
-    </topic>
     <topic label="Building" href="html/releng/building/index.html">
       <topic label="Building on Hudson" href="html/releng/building/OnHudson.html" />
       <topic label="Building Locally" href="html/releng/building/Locally.html" />
@@ -45,16 +40,6 @@
   </topic>
   <topic label="Reference" href="html/reference/index.html">
     <topic label="API Reference" href="javadoc/overview-summary.html">
-      <topic label="CDO Release Engineering Version Tool" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.emf.cdo.releng.version" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html" icon="package" />
-        <topic label="org.eclipse.emf.cdo.releng.version.test" href="javadoc/org/eclipse/emf/cdo/releng/version/test/package-summary.html" icon="package" />
-      </topic>
-      <topic label="CDO Release Engineering Version Tool (Digest Validator UI)" href="javadoc/org/eclipse/emf/cdo/releng/version/digest/ui/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.emf.cdo.releng.version.digest.ui" href="javadoc/org/eclipse/emf/cdo/releng/version/digest/ui/package-summary.html" icon="package" />
-      </topic>
-      <topic label="CDO Release Engineering Version Tool (Digest Validator)" href="javadoc/org/eclipse/emf/cdo/releng/version/digest/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.emf.cdo.releng.version.digest" href="javadoc/org/eclipse/emf/cdo/releng/version/digest/package-summary.html" icon="package" />
-      </topic>
     </topic>
   </topic>
   <topic label="Online Docs" href="html/online/index.html">

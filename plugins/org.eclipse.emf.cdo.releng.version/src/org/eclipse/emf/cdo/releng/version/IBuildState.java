@@ -10,10 +10,14 @@
  */
 package org.eclipse.emf.cdo.releng.version;
 
+import org.eclipse.core.resources.IProject;
+
 import java.io.Serializable;
 import java.util.Map;
 
 /**
+ * Provides access to those parts of a {@link IProject project}'s build state that {@link VersionValidator version validators} need to access.
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

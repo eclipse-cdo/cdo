@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 3.0
  */
@@ -64,6 +66,8 @@ public interface InternalStore extends IStore, ILifecycle
   public void setCreationTime(long creationTime);
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 4.0
    */
@@ -72,6 +76,8 @@ public interface InternalStore extends IStore, ILifecycle
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 4.0
    */
@@ -80,6 +86,8 @@ public interface InternalStore extends IStore, ILifecycle
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 4.0
    */
@@ -88,6 +96,8 @@ public interface InternalStore extends IStore, ILifecycle
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 4.0
    */
@@ -96,6 +106,8 @@ public interface InternalStore extends IStore, ILifecycle
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 4.0
    */
@@ -104,6 +116,8 @@ public interface InternalStore extends IStore, ILifecycle
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 4.0
    */
@@ -112,6 +126,8 @@ public interface InternalStore extends IStore, ILifecycle
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 4.2
    */
@@ -120,6 +136,8 @@ public interface InternalStore extends IStore, ILifecycle
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 4.2
    */
@@ -128,6 +146,8 @@ public interface InternalStore extends IStore, ILifecycle
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 4.2
    */

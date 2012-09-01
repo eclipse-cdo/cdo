@@ -22,6 +22,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Provides static utility methods that may be helpful when dealing with {@link IMarker markers}.
+ *
  * @author Eike Stepper
  */
 public final class Markers

@@ -24,9 +24,6 @@
       <topic label="Version Management Tool" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.releng.version" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html" icon="package" />
       </topic>
-      <topic label="Version Management Tool Tests" href="javadoc/org/eclipse/emf/cdo/releng/version/tests/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.emf.cdo.releng.version.tests" href="javadoc/org/eclipse/emf/cdo/releng/version/tests/package-summary.html" icon="package" />
-      </topic>
     </topic>
   </topic>
   <topic label="Online Docs" href="html/online/index.html">

@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @since 2.0
  * @author Eike Stepper
  */

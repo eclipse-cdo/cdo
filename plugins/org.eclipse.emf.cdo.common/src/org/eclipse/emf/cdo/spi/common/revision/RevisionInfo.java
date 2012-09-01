@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 3.0
  */
@@ -327,6 +329,8 @@ public abstract class RevisionInfo
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 3.0
    */
@@ -336,6 +340,8 @@ public abstract class RevisionInfo
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 3.0
    */
@@ -410,6 +416,8 @@ public abstract class RevisionInfo
     }
 
     /**
+     * If the meaning of this type isn't clear, there really should be more of a description here...
+     *
      * @author Eike Stepper
      * @since 3.0
      */
@@ -460,6 +468,8 @@ public abstract class RevisionInfo
     }
 
     /**
+     * If the meaning of this type isn't clear, there really should be more of a description here...
+     *
      * @author Eike Stepper
      * @since 3.0
      */
@@ -550,6 +560,8 @@ public abstract class RevisionInfo
     }
 
     /**
+     * If the meaning of this type isn't clear, there really should be more of a description here...
+     *
      * @author Eike Stepper
      * @since 3.0
      */
@@ -586,6 +598,8 @@ public abstract class RevisionInfo
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 3.0
    */

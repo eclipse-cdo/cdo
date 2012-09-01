@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.spi.server;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 2.0
  */

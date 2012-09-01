@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 2.0
  */
@@ -35,6 +37,8 @@ public class ContainerQueryHandlerProvider implements IQueryHandlerProvider
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @since 3.0
    */
   public IQueryHandler getQueryHandler(CDOQueryInfo info)

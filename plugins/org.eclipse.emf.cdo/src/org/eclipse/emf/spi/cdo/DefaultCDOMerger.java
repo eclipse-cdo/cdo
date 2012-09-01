@@ -44,6 +44,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 3.0
  */
@@ -300,6 +302,8 @@ public class DefaultCDOMerger implements CDOMerger
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    */
   public static abstract class Conflict
@@ -308,6 +312,8 @@ public class DefaultCDOMerger implements CDOMerger
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    */
   public static class ChangedInSourceAndTargetConflict extends Conflict
@@ -346,6 +352,8 @@ public class DefaultCDOMerger implements CDOMerger
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    */
   public static class ChangedInSourceAndDetachedInTargetConflict extends Conflict
@@ -376,6 +384,8 @@ public class DefaultCDOMerger implements CDOMerger
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    */
   public static class ChangedInTargetAndDetachedInSourceConflict extends Conflict
@@ -406,6 +416,8 @@ public class DefaultCDOMerger implements CDOMerger
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    */
   public static class PerFeature extends DefaultCDOMerger
@@ -540,6 +552,8 @@ public class DefaultCDOMerger implements CDOMerger
     }
 
     /**
+     * If the meaning of this type isn't clear, there really should be more of a description here...
+     *
      * @author Eike Stepper
      */
     public static class ManyValued extends PerFeature

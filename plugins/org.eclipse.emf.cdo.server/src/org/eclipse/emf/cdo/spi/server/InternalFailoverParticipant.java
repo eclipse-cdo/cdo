@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.spi.server;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

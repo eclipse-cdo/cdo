@@ -17,6 +17,8 @@ import org.eclipse.net4j.util.factory.Factory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  */
 public abstract class SecurityManagerFactory extends Factory
@@ -31,6 +33,8 @@ public abstract class SecurityManagerFactory extends Factory
   public abstract ISecurityManager create(String realmPath) throws ProductCreationException;
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    */
   public static class Default extends SecurityManagerFactory
@@ -50,6 +54,8 @@ public abstract class SecurityManagerFactory extends Factory
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    */
   public static class Annotation extends SecurityManagerFactory

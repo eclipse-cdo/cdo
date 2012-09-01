@@ -41,6 +41,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 2.0
  */

@@ -19,6 +19,8 @@ import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import java.io.IOException;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

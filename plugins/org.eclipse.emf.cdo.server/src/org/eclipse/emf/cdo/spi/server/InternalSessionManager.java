@@ -24,6 +24,8 @@ import org.eclipse.net4j.util.security.IUserManager;
 import java.util.List;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

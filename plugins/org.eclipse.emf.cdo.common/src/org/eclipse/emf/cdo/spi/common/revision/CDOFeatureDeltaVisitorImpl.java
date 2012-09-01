@@ -23,6 +23,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Simon McDuff
  * @since 3.0
  */
@@ -84,6 +86,8 @@ public class CDOFeatureDeltaVisitorImpl implements CDOFeatureDeltaVisitor
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 4.0
    */

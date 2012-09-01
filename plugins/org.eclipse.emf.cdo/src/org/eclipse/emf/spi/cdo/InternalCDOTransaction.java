@@ -36,6 +36,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Simon McDuff
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -157,6 +159,8 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 4.1
    */
@@ -189,6 +193,8 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 4.1
    */

@@ -14,12 +14,16 @@ package org.eclipse.emf.cdo.spi.common.revision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Simon McDuff
  * @since 3.0
  */
 public interface InternalCDOFeatureDelta extends CDOFeatureDelta
 {
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    */
   public interface WithIndex
@@ -30,6 +34,8 @@ public interface InternalCDOFeatureDelta extends CDOFeatureDelta
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    */
   public interface ListIndexAffecting
@@ -41,6 +47,8 @@ public interface InternalCDOFeatureDelta extends CDOFeatureDelta
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    */
   public interface ListTargetAdding

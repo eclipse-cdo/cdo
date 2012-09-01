@@ -54,7 +54,7 @@
 	         classname="org.eclipse.pde.internal.core.ant.ConvertSchemaToHTML"
 	         classpathref="javadoc.classpath" />
 
-	<target name="build.java">
+	<target name="build.java" unless="java.skip">
 		<echo message="Building JavaDoc for org.eclipse.emf.cdo.releng.version.doc" />
 
 		<delete includeemptydirs="true" failonerror="false">
@@ -91,15 +91,11 @@
 			</doclet>
 
 			<fileset dir="plugins" defaultexcludes="yes">
-				<include name="org.eclipse.emf.cdo.releng.version.tests/src/org/eclipse/emf/cdo/releng/version/tests/*.java" />
 				<include name="org.eclipse.emf.cdo.releng.version/src/org/eclipse/emf/cdo/releng/version/*.java" />
 			</fileset>
 
 			<group title="Version Management Tool">
 				<package name="org.eclipse.emf.cdo.releng.version" />
-			</group>
-			<group title="Version Management Tool Tests">
-				<package name="org.eclipse.emf.cdo.releng.version.tests" />
 			</group>
 
 			<link href="${jdk.link}" />

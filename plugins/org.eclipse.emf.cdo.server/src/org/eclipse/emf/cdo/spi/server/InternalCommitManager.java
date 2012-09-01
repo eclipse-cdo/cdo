@@ -15,6 +15,8 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import java.util.concurrent.ExecutionException;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

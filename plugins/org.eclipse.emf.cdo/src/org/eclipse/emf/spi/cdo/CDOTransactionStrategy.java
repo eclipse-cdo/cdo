@@ -20,6 +20,8 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Simon McDuff
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -35,7 +37,7 @@ public interface CDOTransactionStrategy
 
   /**
    * TODO Better use an {@link OMMonitor}?
-   * 
+   *
    * @since 3.0
    */
   public CDOCommitInfo commit(InternalCDOTransaction transaction, IProgressMonitor progressMonitor) throws Exception;

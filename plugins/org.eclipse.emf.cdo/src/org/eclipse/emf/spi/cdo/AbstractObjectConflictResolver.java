@@ -56,6 +56,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 2.0
  */
@@ -112,7 +114,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
    * Resolves the conflict of a single object in the current transaction. Depending on the decision taken to resolve the
    * conflict, it may be necessary to adjust the notification that will be sent to the adapters in the current
    * transaction. This can be achieved by adjusting the {@link CDORevisionDelta} in <code>deltas</code>.
-   * 
+   *
    * @since 4.0
    */
   protected void resolveConflict(CDOObject conflict, CDORevision oldRemoteRevision, CDORevisionDelta localDelta,
@@ -155,7 +157,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
   /**
    * A conflict resolver implementation that takes all the new remote state of the conflicting objects and then applies
    * the locally existing changes of the current transaction.
-   * 
+   *
    * @author Eike Stepper
    * @since 2.0
    */
@@ -198,6 +200,8 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 2.0
    */
@@ -283,6 +287,8 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
         List<CDORevisionDelta> remoteDeltas);
 
     /**
+     * If the meaning of this type isn't clear, there really should be more of a description here...
+     *
      * @author Eike Stepper
      * @since 4.0
      */
@@ -341,6 +347,8 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 2.0
    * @deprecated As of 4.0 use CDOMergingConflictResolver

@@ -55,7 +55,7 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItemProvider.html" title="interface in org.eclipse.emf.cdo.security"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.Literals.html" title="interface in org.eclipse.emf.cdo.security"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/security/SecurityPackage.html" target="_top"><B>FRAMES</B></A>  &nbsp;
@@ -140,7 +140,6 @@ Interface SecurityPackage</H2>
    <li>each enum,</li>
    <li>and each data type</li>
  </ul>
- <!-- end-user-doc -->
 <P>
 
 <P>
@@ -149,6 +148,11 @@ Interface SecurityPackage</H2>
   <DD></DD>
 <DT><B>Model</B></DT>
   <DD>kind="package"</DD>
+<DT><B>No Implement</B></DT>
+  <DD>This interface is not intended to be implemented by clients.</DD>
+<DT><B>No Extend</B></DT>
+  <DD>This interface is not intended to be extended by clients.
+ <!-- end-user-doc --></DD>
 </DL>
 <HR>
 
@@ -173,8 +177,7 @@ Interface SecurityPackage</H2>
    each feature of each class,
    each enum,
    and each data type
- 
- <!</TD>
+ </TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.ecore.EPackage"><!-- --></A>
@@ -578,6 +581,30 @@ Interface SecurityPackage</H2>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Default Access</b></em>' attribute</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#REALM__DEFAULT_GROUP_DIRECTORY">REALM__DEFAULT_GROUP_DIRECTORY</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Default Group Directory</b></em>' reference</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#REALM__DEFAULT_ROLE_DIRECTORY">REALM__DEFAULT_ROLE_DIRECTORY</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Default Role Directory</b></em>' reference</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#REALM__DEFAULT_USER_DIRECTORY">REALM__DEFAULT_USER_DIRECTORY</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Default User Directory</b></em>' reference</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -1132,6 +1159,30 @@ Interface SecurityPackage</H2>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultAccess()"><CODE><em>Default Access</em></CODE></A>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_DefaultGroupDirectory()">getRealm_DefaultGroupDirectory</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultGroupDirectory()"><CODE><em>Default Group Directory</em></CODE></A>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_DefaultRoleDirectory()">getRealm_DefaultRoleDirectory</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultRoleDirectory()"><CODE><em>Default Role Directory</em></CODE></A>'</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_DefaultUserDirectory()">getRealm_DefaultUserDirectory</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultUserDirectory()"><CODE><em>Default User Directory</em></CODE></A>'</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -1768,6 +1819,66 @@ static final int <B>REALM__DEFAULT_ACCESS</B></PRE>
 </DL>
 <HR>
 
+<A NAME="REALM__DEFAULT_USER_DIRECTORY"><!-- --></A><H3>
+REALM__DEFAULT_USER_DIRECTORY</H3>
+<PRE>
+static final int <B>REALM__DEFAULT_USER_DIRECTORY</B></PRE>
+<DL>
+<DD>The feature id for the '<em><b>Default User Directory</b></em>' reference.
+ <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2
+ <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.REALM__DEFAULT_USER_DIRECTORY">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="REALM__DEFAULT_GROUP_DIRECTORY"><!-- --></A><H3>
+REALM__DEFAULT_GROUP_DIRECTORY</H3>
+<PRE>
+static final int <B>REALM__DEFAULT_GROUP_DIRECTORY</B></PRE>
+<DL>
+<DD>The feature id for the '<em><b>Default Group Directory</b></em>' reference.
+ <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2
+ <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.REALM__DEFAULT_GROUP_DIRECTORY">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="REALM__DEFAULT_ROLE_DIRECTORY"><!-- --></A><H3>
+REALM__DEFAULT_ROLE_DIRECTORY</H3>
+<PRE>
+static final int <B>REALM__DEFAULT_ROLE_DIRECTORY</B></PRE>
+<DL>
+<DD>The feature id for the '<em><b>Default Role Directory</b></em>' reference.
+ <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2
+ <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.REALM__DEFAULT_ROLE_DIRECTORY">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
 <A NAME="REALM_FEATURE_COUNT"><!-- --></A><H3>
 REALM_FEATURE_COUNT</H3>
 <PRE>
@@ -1775,13 +1886,15 @@ static final int <B>REALM_FEATURE_COUNT</B></PRE>
 <DL>
 <DD>The number of structural features of the '<em>Realm</em>' class.
  <!-- begin-user-doc -->
- <!-- end-user-doc -->
 <P>
 <DL>
 <DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.REALM_FEATURE_COUNT">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
+<DT><B>No Reference</B></DT>
+  <DD>This field is not intended to be referenced by clients.
+ <!-- end-user-doc --></DD>
 </DL>
 </DL>
 <HR>
@@ -2981,13 +3094,15 @@ static final int <B>ACCESS</B></PRE>
 <DL>
 <DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security"><CODE><em>Access</em></CODE></A>' enum.
  <!-- begin-user-doc -->
- <!-- end-user-doc -->
 <P>
 <DL>
 <DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security"><CODE>Access</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/security/impl/SecurityPackageImpl.html#getAccess()"><CODE>SecurityPackageImpl.getAccess()</CODE></A>, 
 <A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.ACCESS">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
+<DT><B>No Reference</B></DT>
+  <DD>This field is not intended to be referenced by clients.
+ <!-- end-user-doc --></DD>
 </DL>
 </DL>
 <HR>
@@ -2999,13 +3114,15 @@ static final int <B>ACCESS_OBJECT</B></PRE>
 <DL>
 <DD>The meta object id for the '<em>Access Object</em>' data type.
  <!-- begin-user-doc -->
- <!-- end-user-doc -->
 <P>
 <DL>
 <DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security"><CODE>Access</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/security/impl/SecurityPackageImpl.html#getAccessObject()"><CODE>SecurityPackageImpl.getAccessObject()</CODE></A>, 
 <A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.security.SecurityPackage.ACCESS_OBJECT">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
+<DT><B>No Reference</B></DT>
+  <DD>This field is not intended to be referenced by clients.
+ <!-- end-user-doc --></DD>
 </DL>
 </DL>
 
@@ -3208,6 +3325,78 @@ getRealm_DefaultAccess</H3>
 <DD><DL>
 
 <DT><B>Returns:</B><DD>the meta object for the attribute '<em>Default Access</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultAccess()"><CODE>Realm.getDefaultAccess()</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm()"><CODE>getRealm()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getRealm_DefaultUserDirectory()"><!-- --></A><H3>
+getRealm_DefaultUserDirectory</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A> <B>getRealm_DefaultUserDirectory</B>()</PRE>
+<DL>
+<DD>Returns the meta object for the reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultUserDirectory()"><CODE><em>Default User Directory</em></CODE></A>'.
+ <!-- begin-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for the reference '<em>Default User Directory</em>'.<DT><B>Since:</B></DT>
+  <DD>4.2
+ <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultUserDirectory()"><CODE>Realm.getDefaultUserDirectory()</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm()"><CODE>getRealm()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getRealm_DefaultGroupDirectory()"><!-- --></A><H3>
+getRealm_DefaultGroupDirectory</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A> <B>getRealm_DefaultGroupDirectory</B>()</PRE>
+<DL>
+<DD>Returns the meta object for the reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultGroupDirectory()"><CODE><em>Default Group Directory</em></CODE></A>'.
+ <!-- begin-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for the reference '<em>Default Group Directory</em>'.<DT><B>Since:</B></DT>
+  <DD>4.2
+ <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultGroupDirectory()"><CODE>Realm.getDefaultGroupDirectory()</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm()"><CODE>getRealm()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getRealm_DefaultRoleDirectory()"><!-- --></A><H3>
+getRealm_DefaultRoleDirectory</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A> <B>getRealm_DefaultRoleDirectory</B>()</PRE>
+<DL>
+<DD>Returns the meta object for the reference '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultRoleDirectory()"><CODE><em>Default Role Directory</em></CODE></A>'.
+ <!-- begin-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for the reference '<em>Default Role Directory</em>'.<DT><B>Since:</B></DT>
+  <DD>4.2
+ <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultRoleDirectory()"><CODE>Realm.getDefaultRoleDirectory()</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm()"><CODE>getRealm()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
@@ -4244,7 +4433,7 @@ getSecurityFactory</H3>
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItemProvider.html" title="interface in org.eclipse.emf.cdo.security"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.Literals.html" title="interface in org.eclipse.emf.cdo.security"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/security/SecurityPackage.html" target="_top"><B>FRAMES</B></A>  &nbsp;

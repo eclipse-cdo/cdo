@@ -58,6 +58,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Provides static utility methods for {@link Version versions}, I/O tasks and access to the {@link IElement component} model.
+ *
  * @author Eike Stepper
  */
 public final class VersionUtil
@@ -90,11 +92,11 @@ public final class VersionUtil
     try
     {
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
-  
+
       ObjectOutputStream stream = new ObjectOutputStream(baos);
       stream.writeObject(object);
       stream.flush();
-  
+
       return baos.toByteArray();
     }
     catch (Exception ex)
@@ -437,7 +439,7 @@ public final class VersionUtil
                 IBuildConfiguration buildConfig = project.getActiveBuildConfig();
                 buildConfigs.add(buildConfig);
               }
-  
+
               break;
             }
           }
@@ -448,7 +450,7 @@ public final class VersionUtil
         }
       }
     }
-  
+
     return buildConfigs.toArray(new IBuildConfiguration[buildConfigs.size()]);
   }
 }

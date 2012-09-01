@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * A light abstraction of a component, i.e. a plug-in or a feature.
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -45,6 +47,8 @@ public interface IElement
   public boolean isVersionUnresolved();
 
   /**
+   * Enumerates the possible types of a {@link IElement component}.
+   *
    * @author Eike Stepper
    */
   public static enum Type

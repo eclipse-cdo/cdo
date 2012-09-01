@@ -122,6 +122,10 @@ Class StoreAccessorBase</H2>
 
 
 <P>
+If the meaning of this type isn't clear, there really should be more of a description here...
+<P>
+
+<P>
 <DL>
 <DT><B>Since:</B></DT>
   <DD>4.0</DD>
@@ -143,7 +147,7 @@ Class StoreAccessorBase</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorBase.CommitDataRevisionHandler.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorBase.CommitDataRevisionHandler</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.cdo.server.IStoreAccessor"><!-- --></A>
@@ -637,7 +641,7 @@ public final void <B>commit</B>(<A HREF="../../../../../../../../org.eclipse.net
  <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#commit(org.eclipse.net4j.util.om.monitor.OMMonitor)"><CODE>IStoreAccessor.commit(OMMonitor)</CODE></A> could be called from different threads.
  <p>
  <b>Note</b>: Implementors should detect if dirty write occurred. In this case it should throw an exception.
- 
+
  <pre>
  if (revision.getVersion() != revisionDelta.getOriginVersion())
  {

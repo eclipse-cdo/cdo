@@ -39,7 +39,7 @@ function windowTitle()
 <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
   <TR ALIGN="center" VALIGN="top">
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Package</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-use.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;PREV PACKAGE&nbsp;
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/tests/package-summary.html"><B>NEXT PACKAGE</B></A></FONT></TD>
+&nbsp;NEXT PACKAGE</FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/releng/version/package-summary.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="package-summary.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -82,6 +82,10 @@ function windowTitle()
 <H2>
 Package org.eclipse.emf.cdo.releng.version
 </H2>
+<A NAME="package_description"><!-- --></A>
+Types needed for extenders.
+
+<P>
 
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="VersionValidator.html" title="VersionValidator" alt="" coords="8,454,125,479"/>
@@ -104,23 +108,23 @@ Package org.eclipse.emf.cdo.releng.version
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IBuildState.html" title="interface in org.eclipse.emf.cdo.releng.version">IBuildState</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Provides access to those parts of a <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IProject.html?is-external=true" title="class or interface in org.eclipse.core.resources"><CODE>project</CODE></A>'s build state that <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionValidator.html" title="class in org.eclipse.emf.cdo.releng.version"><CODE>version validators</CODE></A> need to access.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IElement.html" title="interface in org.eclipse.emf.cdo.releng.version">IElement</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A light abstraction of a component, i.e. a plug-in or a feature.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IElementResolver.html" title="interface in org.eclipse.emf.cdo.releng.version">IElementResolver</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Resolves <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IElement.html" title="interface in org.eclipse.emf.cdo.releng.version"><CODE>components</CODE></A> by a given component key.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IRelease.html" title="interface in org.eclipse.emf.cdo.releng.version">IRelease</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Represents the released state of a set of <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IElement.html" title="interface in org.eclipse.emf.cdo.releng.version"><CODE>components</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IReleaseManager.html" title="interface in org.eclipse.emf.cdo.releng.version">IReleaseManager</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Manages the <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IRelease.html" title="interface in org.eclipse.emf.cdo.releng.version"><CODE>releases</CODE></A> that are specified by the version managed <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IElement.html" title="interface in org.eclipse.emf.cdo.releng.version"><CODE>components</CODE></A> in the <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IWorkspace.html?is-external=true" title="class or interface in org.eclipse.core.resources"><CODE>workspace</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -134,15 +138,15 @@ Package org.eclipse.emf.cdo.releng.version
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/Markers.html" title="class in org.eclipse.emf.cdo.releng.version">Markers</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Provides static utility methods that may be helpful when dealing with <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IMarker.html?is-external=true" title="class or interface in org.eclipse.core.resources"><CODE>markers</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionUtil.html" title="class in org.eclipse.emf.cdo.releng.version">VersionUtil</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Provides static utility methods for <CODE>versions</CODE>, I/O tasks and access to the <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IElement.html" title="interface in org.eclipse.emf.cdo.releng.version"><CODE>component</CODE></A> model.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/VersionValidator.html" title="class in org.eclipse.emf.cdo.releng.version">VersionValidator</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>The abstract base class that all version validator implementations must extend.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -156,10 +160,13 @@ Package org.eclipse.emf.cdo.releng.version
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IElement.Type.html" title="enum in org.eclipse.emf.cdo.releng.version">IElement.Type</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Enumerates the possible types of a <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/IElement.html" title="interface in org.eclipse.emf.cdo.releng.version"><CODE>component</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
+
+<P>
+<P>
 
 <P>
 <DL>
@@ -177,7 +184,7 @@ Package org.eclipse.emf.cdo.releng.version
 <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
   <TR ALIGN="center" VALIGN="top">
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Package</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-use.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
   <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
@@ -194,7 +201,7 @@ Package org.eclipse.emf.cdo.releng.version
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;PREV PACKAGE&nbsp;
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/releng/version/tests/package-summary.html"><B>NEXT PACKAGE</B></A></FONT></TD>
+&nbsp;NEXT PACKAGE</FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/releng/version/package-summary.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="package-summary.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

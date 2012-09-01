@@ -116,7 +116,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccess
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/LongIDStoreAccessor.html" title="class in org.eclipse.emf.cdo.spi.server">LongIDStoreAccessor</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -124,7 +124,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccess
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessor.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessor</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -156,7 +156,16 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccess
 <TD><CODE><B>StoreAccessorPool.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorPool.html#addStoreAccessor(org.eclipse.emf.cdo.spi.server.StoreAccessorBase)">addStoreAccessor</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorBase.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorBase</A>&nbsp;storeAccessor)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Passivates the given <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessor.html" title="class in org.eclipse.emf.cdo.spi.server"><CODE>store accessor</CODE></A> and adds it to this pool.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Passivates the given <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessor.html" title="class in org.eclipse.emf.cdo.spi.server"><CODE>store accessor</CODE></A> and adds it to this pool if the pool size is smaller than the <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorPool.html#getCapacity()"><CODE>capacity</CODE></A>,
+ or disposes of the store accessor otherwise.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>StoreAccessorPool.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorPool.html#disposeStoreAccessor(org.eclipse.emf.cdo.spi.server.StoreAccessorBase)">disposeStoreAccessor</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorBase.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorBase</A>&nbsp;accessor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">

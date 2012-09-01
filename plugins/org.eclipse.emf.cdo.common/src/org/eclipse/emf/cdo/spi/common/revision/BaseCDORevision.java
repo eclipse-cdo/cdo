@@ -59,6 +59,8 @@ import java.text.MessageFormat;
 import java.util.Map;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This class is not intended to be subclassed by clients.

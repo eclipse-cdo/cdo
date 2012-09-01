@@ -68,6 +68,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -141,7 +143,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   /**
    * @since 4.0
-   * @deprecated Not called anymore. Use {@link #lockObjects2(List, int, CDOBranch, LockType, boolean, long)} instead.
+   * @deprecated Not called anymore. Use {@link CDOSessionProtocol#lockObjects2(List, int, CDOBranch, LockType, boolean, long)} instead.
    */
   @Deprecated
   public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
@@ -161,7 +163,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   /**
    * @since 3.0
-   * @deprecated Not called anymore. Use {@link #unlockObjects2(CDOView, Collection, LockType, boolean)} instead.
+   * @deprecated Not called anymore. Use {@link CDOSessionProtocol#unlockObjects2(CDOView, Collection, LockType, boolean)} instead.
    */
   @Deprecated
   public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType);
@@ -200,7 +202,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   /**
    * @since 4.0
-   * @deprecated Not called anymore. Use {@link #commitTransaction(InternalCDOCommitContext, OMMonitor)} instead.
+   * @deprecated Not called anymore. Use {@link CDOSessionProtocol#commitTransaction(InternalCDOCommitContext, OMMonitor)} instead.
    */
   @Deprecated
   public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
@@ -213,7 +215,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   /**
    * @since 4.0
-   * @deprecated Not called anymore. Use {@link #commitDelegation(InternalCDOCommitContext, OMMonitor)} instead.
+   * @deprecated Not called anymore. Use {@link CDOSessionProtocol#commitDelegation(InternalCDOCommitContext, OMMonitor)} instead.
    */
   @Deprecated
   public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
@@ -294,6 +296,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public void enableLockNotifications(int viewID, boolean enable);
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 3.0
    * @noinstantiate This class is not intended to be instantiated by clients.
@@ -497,6 +501,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 3.0
    */
@@ -580,6 +586,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    */
   public final class RepositoryTimeResult
@@ -660,6 +668,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 3.0
    */
@@ -795,6 +805,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     }
 
     /**
+     * If the meaning of this type isn't clear, there really should be more of a description here...
+     *
      * @author Simon McDuff
      */
     protected static class PostCommitReferenceAdjuster implements CDOReferenceAdjuster
@@ -830,6 +842,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @since 4.0
    */
   public static final class LockObjectsResult
@@ -913,6 +927,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @since 4.1
    */
   public static final class UnlockObjectsResult

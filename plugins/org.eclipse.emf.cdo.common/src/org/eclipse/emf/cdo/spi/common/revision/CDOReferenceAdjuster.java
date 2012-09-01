@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Simon McDuff
  * @since 4.0
  */

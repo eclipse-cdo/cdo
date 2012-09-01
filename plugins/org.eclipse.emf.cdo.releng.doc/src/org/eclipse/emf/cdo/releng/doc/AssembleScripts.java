@@ -892,6 +892,13 @@ public class AssembleScripts
                 writer.write("\t<property name=\"schema.skip\" value=\"true\" />\n");
               }
             }
+            else if ("<!-- JAVA SKIP -->".equals(id))
+            {
+              if (packageNames.isEmpty())
+              {
+                writer.write("\t<property name=\"java.skip\" value=\"true\" />\n");
+              }
+            }
             else if ("<!-- SOURCE FOLDERS -->".equals(id))
             {
               for (String sourceFolder : sort(sourceFolders))

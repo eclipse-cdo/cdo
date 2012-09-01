@@ -59,6 +59,8 @@ import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 4.0
  */
@@ -270,6 +272,8 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
   }
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 3.0
    */

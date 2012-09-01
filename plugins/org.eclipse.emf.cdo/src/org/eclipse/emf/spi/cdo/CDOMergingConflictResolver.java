@@ -30,6 +30,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 4.0
  * @deprecated This conflict resolver is still under development. It's not safe to use it.

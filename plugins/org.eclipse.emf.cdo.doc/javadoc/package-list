@@ -36,6 +36,7 @@ org.eclipse.emf.cdo.server.db.mapping
 org.eclipse.emf.cdo.server.db4o
 org.eclipse.emf.cdo.server.embedded
 org.eclipse.emf.cdo.server.hibernate
+org.eclipse.emf.cdo.server.lissome
 org.eclipse.emf.cdo.server.mem
 org.eclipse.emf.cdo.server.mongodb
 org.eclipse.emf.cdo.server.net4j
@@ -53,6 +54,7 @@ org.eclipse.emf.cdo.spi.common.commit
 org.eclipse.emf.cdo.spi.common.id
 org.eclipse.emf.cdo.spi.common.lock
 org.eclipse.emf.cdo.spi.common.model
+org.eclipse.emf.cdo.spi.common.protocol
 org.eclipse.emf.cdo.spi.common.revision
 org.eclipse.emf.cdo.spi.server
 org.eclipse.emf.cdo.spi.workspace

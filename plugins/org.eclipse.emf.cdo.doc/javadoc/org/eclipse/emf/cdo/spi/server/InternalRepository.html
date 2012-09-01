@@ -119,6 +119,10 @@ Interface InternalRepository</H2>
 
 
 <P>
+If the meaning of this type isn't clear, there really should be more of a description here...
+<P>
+
+<P>
 <DL>
 <DT><B>Since:</B></DT>
   <DD>3.0</DD>
@@ -214,6 +218,15 @@ Interface InternalRepository</H2>
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html#commit(org.eclipse.emf.cdo.spi.server.InternalCommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)">commit</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</A>&nbsp;commitContext,
+       <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -641,7 +654,7 @@ Interface InternalRepository</H2>
 <TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.common.<A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getCreationTime()">getCreationTime</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getIDGenerationLocation()">getIDGenerationLocation</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getName()">getName</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getObjectIDTypes()">getObjectIDTypes</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getRootResourceID()">getRootResourceID</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getState()">getState</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getStoreType()">getStoreType</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getType()">getType</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getUUID()">getUUID</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isEnsuringReferentialIntegrity()">isEnsuringReferentialIntegrity</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingAudits()">isSupportingAudits</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingBranches()">isSupportingBranches</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingEcore()">isSupportingEcore</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getCreationTime()">getCreationTime</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getIDGenerationLocation()">getIDGenerationLocation</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getName()">getName</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getObjectIDTypes()">getObjectIDTypes</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getRootResourceID()">getRootResourceID</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getState()">getState</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getStoreType()">getStoreType</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getType()">getType</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getUUID()">getUUID</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isEnsuringReferentialIntegrity()">isEnsuringReferentialIntegrity</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSerializingCommits()">isSerializingCommits</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingAudits()">isSupportingAudits</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingBranches()">isSupportingBranches</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingEcore()">isSupportingEcore</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.util.CDOTimeProvider"><!-- --></A>
@@ -1128,6 +1141,23 @@ void <B>failCommit</B>(long&nbsp;timeStamp)</PRE>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="commit(org.eclipse.emf.cdo.spi.server.InternalCommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)"><!-- --></A><H3>
+commit</H3>
+<PRE>
+void <B>commit</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</A>&nbsp;commitContext,
+            <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>

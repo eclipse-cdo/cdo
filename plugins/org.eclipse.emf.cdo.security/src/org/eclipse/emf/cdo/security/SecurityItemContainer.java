@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.security;
 
 /**
+ * A {@link SecurityItemProvider security item provider} that {@link SecurityItem items} such as {@link User users} or {@link Role roles} can be added to or removed from.
  * @author Eike Stepper
  * @since 4.2
  */

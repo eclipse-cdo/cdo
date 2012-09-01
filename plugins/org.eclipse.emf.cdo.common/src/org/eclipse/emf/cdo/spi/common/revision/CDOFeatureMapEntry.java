@@ -14,12 +14,14 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMap;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @since 3.0
  * @author Martin Taal
  */
 public interface CDOFeatureMapEntry extends FeatureMap.Entry
 {
-  void setEStructuralFeature(EStructuralFeature feature);
+  public void setEStructuralFeature(EStructuralFeature feature);
 
-  void setValue(Object value);
+  public void setValue(Object value);
 }

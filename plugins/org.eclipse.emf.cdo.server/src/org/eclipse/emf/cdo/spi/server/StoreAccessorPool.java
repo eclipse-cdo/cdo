@@ -21,6 +21,8 @@ import org.eclipse.net4j.util.om.log.OMLogger;
 import java.util.LinkedList;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 2.0
  */

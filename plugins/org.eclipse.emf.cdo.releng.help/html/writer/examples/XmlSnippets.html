@@ -100,6 +100,12 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Period&nbsp;at&nbsp;which&nbsp;to&nbsp;execute&nbsp;an&nbsp;SQL&nbsp;statement&nbsp;to&nbsp;keep&nbsp;DB&nbsp;connection&nbsp;alive,&nbsp;in&nbsp;minutes&nbsp;--&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="connectionKeepAlivePeriod"</font>&nbsp;value<font color="#000080">="60"</font>/&gt;</font><br/>
 <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Maximum&nbsp;number&nbsp;of&nbsp;store&nbsp;accessors&nbsp;(JDBC&nbsp;connections)&nbsp;to&nbsp;keep&nbsp;in&nbsp;the&nbsp;reader&nbsp;pool.&nbsp;The&nbsp;default&nbsp;value&nbsp;is&nbsp;15.&nbsp;&nbsp;--&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="readerPoolCapacity"</font>&nbsp;value<font color="#000080">="20"</font>/&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Maximum&nbsp;number&nbsp;of&nbsp;store&nbsp;accessors&nbsp;(JDBC&nbsp;connections)&nbsp;to&nbsp;keep&nbsp;in&nbsp;the&nbsp;writer&nbsp;pool.&nbsp;The&nbsp;default&nbsp;value&nbsp;is&nbsp;15.&nbsp;&nbsp;--&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="writerPoolCapacity"</font>&nbsp;value<font color="#000080">="20"</font>/&gt;</font><br/>
+<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;mappingStrategy&nbsp;type<font color="#000080">="horizontal"</font>&gt;</font>&nbsp;<a name="callout_cdoServerXml_1_code" href="#callout_cdoServerXml_1" alt="The mapping strategy &quot;horizontal&quot; delegates to a mapping strategy chosen to match the repository
           properties supportingAudits and supportingBranches." title="The mapping strategy &quot;horizontal&quot; delegates to a mapping strategy chosen to match the repository
           properties supportingAudits and supportingBranches."><img src="../../../images/callout-1.png" width="16" height="16" border="0" align="top"></a>&nbsp;<br/>

@@ -1314,6 +1314,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   /**
+   * For internal use only.
+   *
    * @author Eike Stepper
    * @since 4.1
    */
@@ -1443,6 +1445,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   /**
+   * For internal use only.
+   *
    * @author Andras Peteri
    * @since 4.1
    */

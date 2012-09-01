@@ -18,6 +18,8 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Simon McDuff
  * @since 2.0
  */
@@ -27,7 +29,7 @@ public interface InternalCDOList extends CDOList
 
   /**
    * Adjusts references according to the passed adjuster and resynchronizes indexes.
-   * 
+   *
    * @since 4.0
    */
   public boolean adjustReferences(CDOReferenceAdjuster adjuster, EStructuralFeature feature);

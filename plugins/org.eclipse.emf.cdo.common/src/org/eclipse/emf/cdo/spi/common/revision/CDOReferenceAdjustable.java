@@ -12,6 +12,8 @@
 package org.eclipse.emf.cdo.spi.common.revision;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Simon McDuff
  * @since 4.0
  */

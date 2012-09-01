@@ -20,6 +20,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.util.Map;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.

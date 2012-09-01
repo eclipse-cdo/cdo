@@ -296,6 +296,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/server/DelegatingQueryResourcesContext.java" type="org.eclipse.emf.cdo.spi.server.DelegatingQueryResourcesContext">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="QueryResourcesContext"/>
+                <message_argument value="CDOBranchPoint"/>
+                <message_argument value="DelegatingQueryResourcesContext"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/server/DurableLockArea.java" type="org.eclipse.emf.cdo.spi.server.DurableLockArea">
         <filter id="574619656">
             <message_arguments>

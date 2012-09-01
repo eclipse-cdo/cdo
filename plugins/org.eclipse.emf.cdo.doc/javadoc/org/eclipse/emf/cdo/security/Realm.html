@@ -92,7 +92,7 @@ org.eclipse.emf.cdo.security</FONT>
 <BR>
 Interface Realm</H2>
 <DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>, <A HREF="../../../../../org/eclipse/emf/cdo/etypes/ModelElement.html" title="interface in org.eclipse.emf.cdo.etypes">ModelElement</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityElement.html" title="interface in org.eclipse.emf.cdo.security">SecurityElement</A></DD>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>, <A HREF="../../../../../org/eclipse/emf/cdo/etypes/ModelElement.html" title="interface in org.eclipse.emf.cdo.etypes">ModelElement</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityElement.html" title="interface in org.eclipse.emf.cdo.security">SecurityElement</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItemContainer.html" title="interface in org.eclipse.emf.cdo.security">SecurityItemContainer</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItemProvider.html" title="interface in org.eclipse.emf.cdo.security">SecurityItemProvider</A></DD>
 </DL>
 <DL>
 <DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/security/impl/RealmImpl.html" title="class in org.eclipse.emf.cdo.security.impl">RealmImpl</A></DD>
@@ -100,14 +100,15 @@ Interface Realm</H2>
 <HR>
 <DL>
   <DT>public interface <B>Realm</B>
-  <DD>extends <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityElement.html" title="interface in org.eclipse.emf.cdo.security">SecurityElement</A>
+  <DD>extends <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityElement.html" title="interface in org.eclipse.emf.cdo.security">SecurityElement</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItemContainer.html" title="interface in org.eclipse.emf.cdo.security">SecurityItemContainer</A>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="SecurityPackage.html" title="&#171;interface&#187; SecurityPackage" alt="" coords="5,184,125,224"/>
-<area shape="rect" id="node2" href="SecurityElement.html" title="&#171;interface&#187; SecurityElement" alt="" coords="106,5,224,45"/>
-<area shape="rect" id="node3" href="Realm.html" title="&#171;interface&#187; Realm" alt="" coords="123,88,208,128"/>
-<area shape="rect" id="node4" href="impl/RealmImpl.html" title="RealmImpl (org.eclipse.emf.cdo.security.impl)" alt="" coords="156,184,377,224"/>
+<area shape="rect" id="node2" href="SecurityItemContainer.html" title="&#171;interface&#187; SecurityItemContainer" alt="" coords="9,5,159,45"/>
+<area shape="rect" id="node3" href="SecurityElement.html" title="&#171;interface&#187; SecurityElement" alt="" coords="189,5,307,45"/>
+<area shape="rect" id="node4" href="Realm.html" title="&#171;interface&#187; Realm" alt="" coords="123,88,208,128"/>
+<area shape="rect" id="node5" href="impl/RealmImpl.html" title="RealmImpl (org.eclipse.emf.cdo.security.impl)" alt="" coords="156,184,377,224"/>
 </map>
 
 <CENTER><IMG SRC="Realm.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -117,6 +118,20 @@ Interface Realm</H2>
 <P>
 <!-- begin-user-doc -->
  A representation of the model object '<em><b>Realm</b></em>'.
+<P>
+
+<P>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm()"><CODE>SecurityPackage.getRealm()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Extends</B></DT>
+  <DD>SecurityItemContainer</DD>
+<DT><B>Model</B></DT>
+  <DD></DD>
+<DT><B>No Implement</B></DT>
+  <DD>This interface is not intended to be implemented by clients.</DD>
+<DT><B>No Extend</B></DT>
+  <DD>This interface is not intended to be extended by clients.
  <!-- end-user-doc -->
 
  <p>
@@ -129,16 +144,11 @@ Interface Realm</H2>
    <li><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getAllPermissions()"><CODE><em>All Permissions</em></CODE></A></li>
    <li><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getName()"><CODE><em>Name</em></CODE></A></li>
    <li><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultAccess()"><CODE><em>Default Access</em></CODE></A></li>
+   <li><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultUserDirectory()"><CODE><em>Default User Directory</em></CODE></A></li>
+   <li><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultGroupDirectory()"><CODE><em>Default Group Directory</em></CODE></A></li>
+   <li><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultRoleDirectory()"><CODE><em>Default Role Directory</em></CODE></A></li>
  </ul>
- </p>
-<P>
-
-<P>
-<DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm()"><CODE>SecurityPackage.getRealm()</CODE></A><DT><B>Generated</B></DT>
-  <DD></DD>
-<DT><B>Model</B></DT>
-  <DD></DD>
+ </p></DD>
 </DL>
 <HR>
 
@@ -194,6 +204,30 @@ Interface Realm</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultGroupDirectory()">getDefaultGroupDirectory</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the value of the '<em><b>Default Group Directory</b></em>' reference</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultRoleDirectory()">getDefaultRoleDirectory</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the value of the '<em><b>Default Role Directory</b></em>' reference</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultUserDirectory()">getDefaultUserDirectory</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the value of the '<em><b>Default User Directory</b></em>' reference</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItem.html" title="interface in org.eclipse.emf.cdo.security">SecurityItem</A>&gt;</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getItems()">getItems</A></B>()</CODE>
 
@@ -215,6 +249,30 @@ Interface Realm</H2>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the value of the '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultAccess()"><CODE><em>Default Access</em></CODE></A>' attribute</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#setDefaultGroupDirectory(org.eclipse.emf.cdo.security.Directory)">setDefaultGroupDirectory</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</A>&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the value of the '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultGroupDirectory()"><CODE><em>Default Group Directory</em></CODE></A>' reference</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#setDefaultRoleDirectory(org.eclipse.emf.cdo.security.Directory)">setDefaultRoleDirectory</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</A>&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the value of the '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultRoleDirectory()"><CODE><em>Default Role Directory</em></CODE></A>' reference</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#setDefaultUserDirectory(org.eclipse.emf.cdo.security.Directory)">setDefaultUserDirectory</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</A>&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the value of the '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultUserDirectory()"><CODE><em>Default User Directory</em></CODE></A>' reference</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -268,6 +326,24 @@ Interface Realm</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eAdapters()" title="class or interface in org.eclipse.emf.common.notify">eAdapters</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eDeliver()" title="class or interface in org.eclipse.emf.common.notify">eDeliver</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eNotify(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify">eNotify</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eSetDeliver(boolean)" title="class or interface in org.eclipse.emf.common.notify">eSetDeliver</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.security.SecurityItemContainer"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.security.<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItemContainer.html" title="interface in org.eclipse.emf.cdo.security">SecurityItemContainer</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItemContainer.html#addGroup(java.lang.String)">addGroup</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItemContainer.html#addRole(java.lang.String)">addRole</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItemContainer.html#addUser(java.lang.String)">addUser</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItemContainer.html#addUser(java.lang.String, java.lang.String)">addUser</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItemContainer.html#removeGroup(java.lang.String)">removeGroup</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItemContainer.html#removeRole(java.lang.String)">removeRole</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItemContainer.html#removeUser(java.lang.String)">removeUser</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.security.SecurityItemProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.security.<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItemProvider.html" title="interface in org.eclipse.emf.cdo.security">SecurityItemProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItemProvider.html#getGroup(java.lang.String)">getGroup</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItemProvider.html#getRole(java.lang.String)">getRole</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityItemProvider.html#getUser(java.lang.String)">getUser</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -513,6 +589,162 @@ void <B>setDefaultAccess</B>(<A HREF="../../../../../org/eclipse/emf/cdo/securit
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>value</CODE> - the new value of the '<em>Default Access</em>' attribute.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultAccess()"><CODE>getDefaultAccess()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getDefaultUserDirectory()"><!-- --></A><H3>
+getDefaultUserDirectory</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</A> <B>getDefaultUserDirectory</B>()</PRE>
+<DL>
+<DD>Returns the value of the '<em><b>Default User Directory</b></em>' reference.
+ <!-- begin-user-doc -->
+ <p>
+ If the meaning of the '<em>Default User Directory</em>' reference isn't clear,
+ there really should be more of a description here...
+ </p>
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the value of the '<em>Default User Directory</em>' reference.<DT><B>Since:</B></DT>
+  <DD>4.2
+ <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#setDefaultUserDirectory(org.eclipse.emf.cdo.security.Directory)"><CODE>setDefaultUserDirectory(Directory)</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_DefaultUserDirectory()"><CODE>SecurityPackage.getRealm_DefaultUserDirectory()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Model</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setDefaultUserDirectory(org.eclipse.emf.cdo.security.Directory)"><!-- --></A><H3>
+setDefaultUserDirectory</H3>
+<PRE>
+void <B>setDefaultUserDirectory</B>(<A HREF="../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</A>&nbsp;value)</PRE>
+<DL>
+<DD>Sets the value of the '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultUserDirectory()"><CODE><em>Default User Directory</em></CODE></A>' reference.
+ <!-- begin-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>value</CODE> - the new value of the '<em>Default User Directory</em>' reference.<DT><B>Since:</B></DT>
+  <DD>4.2
+ <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultUserDirectory()"><CODE>getDefaultUserDirectory()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getDefaultGroupDirectory()"><!-- --></A><H3>
+getDefaultGroupDirectory</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</A> <B>getDefaultGroupDirectory</B>()</PRE>
+<DL>
+<DD>Returns the value of the '<em><b>Default Group Directory</b></em>' reference.
+ <!-- begin-user-doc -->
+ <p>
+ If the meaning of the '<em>Default Group Directory</em>' reference isn't clear,
+ there really should be more of a description here...
+ </p>
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the value of the '<em>Default Group Directory</em>' reference.<DT><B>Since:</B></DT>
+  <DD>4.2
+ <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#setDefaultGroupDirectory(org.eclipse.emf.cdo.security.Directory)"><CODE>setDefaultGroupDirectory(Directory)</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_DefaultGroupDirectory()"><CODE>SecurityPackage.getRealm_DefaultGroupDirectory()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Model</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setDefaultGroupDirectory(org.eclipse.emf.cdo.security.Directory)"><!-- --></A><H3>
+setDefaultGroupDirectory</H3>
+<PRE>
+void <B>setDefaultGroupDirectory</B>(<A HREF="../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</A>&nbsp;value)</PRE>
+<DL>
+<DD>Sets the value of the '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultGroupDirectory()"><CODE><em>Default Group Directory</em></CODE></A>' reference.
+ <!-- begin-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>value</CODE> - the new value of the '<em>Default Group Directory</em>' reference.<DT><B>Since:</B></DT>
+  <DD>4.2
+ <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultGroupDirectory()"><CODE>getDefaultGroupDirectory()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getDefaultRoleDirectory()"><!-- --></A><H3>
+getDefaultRoleDirectory</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</A> <B>getDefaultRoleDirectory</B>()</PRE>
+<DL>
+<DD>Returns the value of the '<em><b>Default Role Directory</b></em>' reference.
+ <!-- begin-user-doc -->
+ <p>
+ If the meaning of the '<em>Default Role Directory</em>' reference isn't clear,
+ there really should be more of a description here...
+ </p>
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the value of the '<em>Default Role Directory</em>' reference.<DT><B>Since:</B></DT>
+  <DD>4.2
+ <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#setDefaultRoleDirectory(org.eclipse.emf.cdo.security.Directory)"><CODE>setDefaultRoleDirectory(Directory)</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/security/SecurityPackage.html#getRealm_DefaultRoleDirectory()"><CODE>SecurityPackage.getRealm_DefaultRoleDirectory()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Model</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setDefaultRoleDirectory(org.eclipse.emf.cdo.security.Directory)"><!-- --></A><H3>
+setDefaultRoleDirectory</H3>
+<PRE>
+void <B>setDefaultRoleDirectory</B>(<A HREF="../../../../../org/eclipse/emf/cdo/security/Directory.html" title="interface in org.eclipse.emf.cdo.security">Directory</A>&nbsp;value)</PRE>
+<DL>
+<DD>Sets the value of the '<A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultRoleDirectory()"><CODE><em>Default Role Directory</em></CODE></A>' reference.
+ <!-- begin-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>value</CODE> - the new value of the '<em>Default Role Directory</em>' reference.<DT><B>Since:</B></DT>
+  <DD>4.2
+ <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/security/Realm.html#getDefaultRoleDirectory()"><CODE>getDefaultRoleDirectory()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DD>

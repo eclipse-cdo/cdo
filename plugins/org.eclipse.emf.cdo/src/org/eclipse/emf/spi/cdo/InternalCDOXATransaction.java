@@ -27,6 +27,8 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -67,6 +69,8 @@ public interface InternalCDOXATransaction extends CDOXATransaction, InternalCDOU
   public InternalCDOXACommitContext getCommitContext(CDOTransaction transaction);
 
   /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
    * @author Eike Stepper
    * @since 2.0
    */
@@ -99,6 +103,8 @@ public interface InternalCDOXATransaction extends CDOXATransaction, InternalCDOU
     public void setProgressMonitor(IProgressMonitor progressMonitor);
 
     /**
+     * If the meaning of this type isn't clear, there really should be more of a description here...
+     *
      * @author Simon McDuff
      * @since 3.0
      */

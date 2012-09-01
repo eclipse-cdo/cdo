@@ -54,7 +54,7 @@
 	         classname="org.eclipse.pde.internal.core.ant.ConvertSchemaToHTML"
 	         classpathref="javadoc.classpath" />
 
-	<target name="build.java">
+	<target name="build.java" unless="java.skip">
 		<echo message="Building JavaDoc for org.eclipse.net4j.doc" />
 
 		<delete includeemptydirs="true" failonerror="false">

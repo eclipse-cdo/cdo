@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
+import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
@@ -112,6 +113,33 @@ public final class CDOUtil
     }
 
     return false;
+  }
+
+  /**
+   * Returns the map used to cache the EObject that is identified by the {@link CDOResourceImpl#getEObjectByID(String) value}
+   * of its ID feature.
+   * @return the map used to cache the EObject that is identified by the value of its ID feature.
+   * @see #setIntrinsicIDToEObjectMap
+   * @since 4.2
+   */
+  public Map<String, EObject> getIntrinsicIDToEObjectMap(CDOResource resource)
+  {
+    return ((CDOResourceImpl)resource).getIntrinsicIDToEObjectMap();
+  }
+
+  /**
+   * Sets the map used to cache the EObject identified by the value of its ID feature.
+   * This cache is only activated if the map is not <code>null</code>.
+   * The map will be lazily loaded by the {@link CDOResourceImpl#getEObjectByID(String) getEObjectByID} method.
+   * It is up to the client to clear the cache when it becomes invalid,
+   * e.g., when the ID of a previously mapped EObject is changed.
+   * @param intrinsicIDToEObjectMap the new map or <code>null</code>.
+   * @see #getIntrinsicIDToEObjectMap
+   * @since 4.2
+   */
+  public void setIntrinsicIDToEObjectMap(CDOResource resource, Map<String, EObject> intrinsicIDToEObjectMap)
+  {
+    ((CDOResourceImpl)resource).setIntrinsicIDToEObjectMap(intrinsicIDToEObjectMap);
   }
 
   /**

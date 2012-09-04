@@ -1045,6 +1045,7 @@ public interface EresourcePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Encoding</b></em>' attribute feature.
      * <!-- begin-user-doc -->
+     * @since 4.2
      * <!-- end-user-doc -->
      * @generated
      */

@@ -55,6 +55,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.EcoreUtil.ContentTreeIterator;
+import org.eclipse.emf.ecore.util.EcoreUtil.ProperContentIterator;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
@@ -157,6 +160,13 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
    * @ADDED
    */
   private transient CDOViewProvider viewProvider;
+
+  /**
+   * A map to retrieve the EObject based on the value of its ID feature.
+   * @see #setIntrinsicIDToEObjectMap(Map)
+   * @ADDED
+   */
+  private transient Map<String, EObject> intrinsicIDToEObjectMap;
 
   /**
    * @ADDED
@@ -682,7 +692,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
       }
     }
 
-    return null;
+    return getEObjectByID(uriFragment);
   }
 
   private EObject getEObject(List<String> uriFragmentPath)
@@ -697,6 +707,9 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
     return eObject;
   }
 
+  /**
+   * @since 4.2
+   */
   private EObject getEObjectForURIFragmentRootSegment(String uriFragmentRootSegment)
   {
     int position = 0;
@@ -719,6 +732,98 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
     }
 
     return null;
+  }
+
+  /**
+   * Returns the map used to cache the EObject that is identified by the {@link #getEObjectByID(String) value}
+   * of its ID feature.
+   * @return the map used to cache the EObject that is identified by the value of its ID feature.
+   * @see #setIntrinsicIDToEObjectMap
+   * @since 4.2
+   * @ADDED
+   */
+  public Map<String, EObject> getIntrinsicIDToEObjectMap()
+  {
+    return intrinsicIDToEObjectMap;
+  }
+
+  /**
+   * Sets the map used to cache the EObject identified by the value of its ID feature.
+   * This cache is only activated if the map is not <code>null</code>.
+   * The map will be lazily loaded by the {@link #getEObjectByID(String) getEObjectByID} method.
+   * It is up to the client to clear the cache when it becomes invalid,
+   * e.g., when the ID of a previously mapped EObject is changed.
+   * @param intrinsicIDToEObjectMap the new map or <code>null</code>.
+   * @see #getIntrinsicIDToEObjectMap
+   * @since 4.2
+   * @ADDED
+   */
+  public void setIntrinsicIDToEObjectMap(Map<String, EObject> intrinsicIDToEObjectMap)
+  {
+    this.intrinsicIDToEObjectMap = intrinsicIDToEObjectMap;
+  }
+
+  /**
+   * Returns the object based on the fragment as an ID.
+   * @since 4.2
+   * @ADDED
+   */
+  protected EObject getEObjectByID(String id)
+  {
+    Map<String, EObject> map = getIntrinsicIDToEObjectMap();
+    if (map != null)
+    {
+      EObject eObject = map.get(id);
+      if (eObject != null)
+      {
+        return eObject;
+      }
+    }
+
+    EObject result = null;
+    for (TreeIterator<EObject> i = getAllProperContents(getContents()); i.hasNext();)
+    {
+      EObject eObject = i.next();
+      String eObjectId = EcoreUtil.getID(eObject);
+      if (eObjectId != null)
+      {
+        if (map != null)
+        {
+          map.put(eObjectId, eObject);
+        }
+
+        if (eObjectId.equals(id))
+        {
+          result = eObject;
+          if (map == null)
+          {
+            break;
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * @since 4.2
+   * @ADDED
+   */
+  protected TreeIterator<EObject> getAllProperContents(List<EObject> contents)
+  {
+    return new ContentTreeIterator<EObject>(contents, false)
+    {
+      private static final long serialVersionUID = 1L;
+
+      @SuppressWarnings("unchecked")
+      @Override
+      public Iterator<EObject> getChildren(Object object)
+      {
+        return object == this.object ? ((List<EObject>)object).iterator() : new ProperContentIterator<EObject>(
+            (EObject)object);
+      }
+    };
   }
 
   /**

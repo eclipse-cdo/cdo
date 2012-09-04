@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
 import java.io.ByteArrayInputStream;
@@ -78,6 +79,72 @@ public final class EMFUtil
 
   private EMFUtil()
   {
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static URI getPositionalURI(InternalEObject internalEObject)
+  {
+    List<String> uriFragmentPath = new ArrayList<String>();
+    Resource resource;
+    for (InternalEObject container = internalEObject.eInternalContainer(); (resource = internalEObject
+        .eDirectResource()) == null && container != null; container = internalEObject.eInternalContainer())
+    {
+      String segment = getPositionalURIFragmentSegment(container, internalEObject.eContainingFeature(), internalEObject);
+      uriFragmentPath.add(segment);
+      internalEObject = container;
+    }
+
+    StringBuilder builder = new StringBuilder("/");
+    builder.append(resource.getContents().indexOf(internalEObject));
+    for (int i = uriFragmentPath.size() - 1; i >= 0; --i)
+    {
+      builder.append('/');
+      builder.append(uriFragmentPath.get(i));
+    }
+
+    return resource.getURI().appendFragment(builder.toString());
+  }
+
+  /**
+   * @since 4.2
+   */
+  private static String getPositionalURIFragmentSegment(EObject container, EStructuralFeature eStructuralFeature,
+      InternalEObject eObject)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append('@');
+    builder.append(eStructuralFeature.getName());
+
+    if (eStructuralFeature instanceof EAttribute)
+    {
+      FeatureMap featureMap = (FeatureMap)container.eGet(eStructuralFeature, false);
+      for (int i = 0, size = featureMap.size(); i < size; ++i)
+      {
+        if (featureMap.getValue(i) == eObject)
+        {
+          EStructuralFeature entryFeature = featureMap.getEStructuralFeature(i);
+          if (entryFeature instanceof EReference && ((EReference)entryFeature).isContainment())
+          {
+            builder.append('.');
+            builder.append(i);
+            return builder.toString();
+          }
+        }
+      }
+
+      builder.append(".-1");
+    }
+    else if (eStructuralFeature.isMany())
+    {
+      EList<?> eList = (EList<?>)container.eGet(eStructuralFeature, false);
+      int index = eList.indexOf(eObject);
+      builder.append('.');
+      builder.append(index);
+    }
+
+    return builder.toString();
   }
 
   public static EPackage getGeneratedEPackage(EPackage ePackage)

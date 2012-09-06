@@ -19,6 +19,8 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
@@ -47,6 +49,10 @@ import java.util.Set;
  */
 public class TransferMappingComposite extends Composite implements IListener
 {
+  private static final String UP = "..";
+
+  private static final Path UP_PATH = new Path(UP);
+
   private CDOTransfer transfer;
 
   private CDOTransferMapping mapping;
@@ -57,13 +63,13 @@ public class TransferMappingComposite extends Composite implements IListener
 
   private Combo transferType;
 
-  private Label status;
+  private Text status;
 
   private Text relativePath;
 
   private Combo resolution;
 
-  public TransferMappingComposite(Composite parent, int style, CDOTransfer transfer)
+  public TransferMappingComposite(Composite parent, int style, final CDOTransfer transfer)
   {
     super(parent, style);
     this.transfer = transfer;
@@ -73,16 +79,16 @@ public class TransferMappingComposite extends Composite implements IListener
     gl_composite.marginWidth = 10;
     setLayout(gl_composite);
 
-    Label lblSourcePath = new Label(this, SWT.NONE);
-    lblSourcePath.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-    lblSourcePath.setText("Source Path:");
+    Label sourcePathLabel = new Label(this, SWT.NONE);
+    sourcePathLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+    sourcePathLabel.setText("Source Path:");
 
     sourcePath = new Text(this, SWT.BORDER | SWT.READ_ONLY);
     sourcePath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-    Label lblType = new Label(this, SWT.NONE);
-    lblType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-    lblType.setText("Type:");
+    Label transferTypeLabel = new Label(this, SWT.NONE);
+    transferTypeLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+    transferTypeLabel.setText("Type:");
 
     transferType = new Combo(this, SWT.NONE);
     transferType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -94,7 +100,8 @@ public class TransferMappingComposite extends Composite implements IListener
         if (mapping != null)
         {
           String text = transferType.getText();
-          mapping.setTransferType(CDOTransferType.REGISTRY.get(text));
+          CDOTransferType type = CDOTransferType.REGISTRY.get(text);
+          mapping.setTransferType(type);
         }
       }
     });
@@ -110,30 +117,34 @@ public class TransferMappingComposite extends Composite implements IListener
       transferType.add(type.toString());
     }
 
-    Label lblTargetPath = new Label(this, SWT.NONE);
-    lblTargetPath.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-    lblTargetPath.setText("Target Path:");
+    Label targetPathLabel = new Label(this, SWT.NONE);
+    targetPathLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+    targetPathLabel.setText("Target Path:");
 
     targetPath = new Text(this, SWT.BORDER | SWT.READ_ONLY);
     targetPath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-    Label lblStatus = new Label(this, SWT.NONE);
-    lblStatus.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-    lblStatus.setText("Status:");
+    Label statusLabel = new Label(this, SWT.NONE);
+    statusLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+    statusLabel.setText("Status:");
 
-    status = new Label(this, SWT.NONE);
+    status = new Text(this, SWT.BORDER | SWT.READ_ONLY);
     status.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
-    Label lblRelativePath = new Label(this, SWT.NONE);
-    lblRelativePath.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-    lblRelativePath.setText("Relative Path:");
+    Label relativePathLabel = new Label(this, SWT.NONE);
+    relativePathLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+    relativePathLabel.setText("Relative Path:");
+
+    GridData gd_pathPane = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+    gd_pathPane.heightHint = 27;
+
+    GridLayout pathPaneLayout = new GridLayout(4, false);
+    pathPaneLayout.marginWidth = 0;
+    pathPaneLayout.marginHeight = 0;
 
     Composite pathPane = new Composite(this, SWT.NONE);
-    pathPane.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-    GridLayout gl_pathPane = new GridLayout(3, false);
-    gl_pathPane.marginWidth = 0;
-    gl_pathPane.marginHeight = 0;
-    pathPane.setLayout(gl_pathPane);
+    pathPane.setLayoutData(gd_pathPane);
+    pathPane.setLayout(pathPaneLayout);
 
     relativePath = new Text(pathPane, SWT.BORDER);
     relativePath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -149,24 +160,90 @@ public class TransferMappingComposite extends Composite implements IListener
       }
     });
 
-    Button btnNewButton = new Button(pathPane, SWT.NONE);
-    btnNewButton.setBounds(0, 0, 75, 25);
-    btnNewButton.setText("<");
+    Button leftButton = new Button(pathPane, SWT.NONE);
+    leftButton.setBounds(0, 0, 75, 25);
+    leftButton.setText("<");
+    leftButton.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        IPath path = new Path(relativePath.getText());
+        if (path.isEmpty() || UP.equals(path.segment(0)))
+        {
+          path = UP_PATH.append(path);
+        }
+        else
+        {
+          path = path.removeFirstSegments(1);
+        }
 
-    Button btnNewButton_1 = new Button(pathPane, SWT.NONE);
-    btnNewButton_1.setBounds(0, 0, 75, 25);
-    btnNewButton_1.setText(">");
+        mapping.setRelativePath(path);
+      }
+    });
 
-    Label lblResolution = new Label(this, SWT.NONE);
-    lblResolution.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-    lblResolution.setText("Resolution:");
+    Button rightButton = new Button(pathPane, SWT.NONE);
+    rightButton.setBounds(0, 0, 75, 25);
+    rightButton.setText(">");
+    rightButton.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        IPath path = new Path(relativePath.getText());
+        if (UP.equals(path.segment(0)))
+        {
+          path = path.removeFirstSegments(1);
+        }
+        else if (path.isEmpty())
+        {
+          path = new Path(mapping.getSource().getName());
+        }
+        else
+        {
+          path = new Path("folder").append(path);
+        }
+
+        mapping.setRelativePath(path);
+      }
+    });
+
+    Button renameButton = new Button(pathPane, SWT.NONE);
+    renameButton.setText("+");
+    renameButton.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        String sourceName = mapping.getSource().getName();
+
+        IPath path = new Path(relativePath.getText());
+        if (path.isEmpty() || UP.equals(path.segment(0)))
+        {
+          path = new Path(sourceName);
+        }
+
+        String name = path.lastSegment();
+        int i = 1;
+        while (transfer.getTargetSystem().getElement(path) != null) // TODO This condition is still wrong
+        {
+          path = path.removeLastSegments(1).append(name + i);
+        }
+
+        mapping.setRelativePath(path);
+      }
+    });
+
+    Label resolutionLabel = new Label(this, SWT.NONE);
+    resolutionLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+    resolutionLabel.setText("Resolution:");
 
     resolution = new Combo(this, SWT.NONE);
     resolution.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
-    Label lblUnmappedReferences = new Label(this, SWT.NONE);
-    lblUnmappedReferences.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
-    lblUnmappedReferences.setText("Unmapped References:");
+    Label unmappedReferencesLabel = new Label(this, SWT.NONE);
+    unmappedReferencesLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+    unmappedReferencesLabel.setText("Unmapped References:");
 
     TableViewer tableViewer = new TableViewer(this, SWT.BORDER | SWT.FULL_SELECTION);
     Table table = tableViewer.getTable();
@@ -174,34 +251,35 @@ public class TransferMappingComposite extends Composite implements IListener
     table.setHeaderVisible(true);
     table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-    TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
-    TableColumn tblclmnUri = tableViewerColumn.getColumn();
-    tblclmnUri.setWidth(373);
-    tblclmnUri.setText("URI");
+    TableViewerColumn uriViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
+    TableColumn uriColumn = uriViewerColumn.getColumn();
+    uriColumn.setWidth(373);
+    uriColumn.setText("URI");
 
-    TableViewerColumn tableViewerColumn_1 = new TableViewerColumn(tableViewer, SWT.NONE);
-    TableColumn tblclmnNewColumn = tableViewerColumn_1.getColumn();
-    tblclmnNewColumn.setWidth(341);
-    tblclmnNewColumn.setText("Transformation");
+    TableViewerColumn transformationViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
+    TableColumn transformationColumn = transformationViewerColumn.getColumn();
+    transformationColumn.setWidth(341);
+    transformationColumn.setText("Transformation");
 
-    Composite composite_1 = new Composite(this, SWT.NONE);
-    GridLayout gl_composite_1 = new GridLayout(1, false);
-    gl_composite_1.marginWidth = 0;
-    gl_composite_1.marginHeight = 0;
-    composite_1.setLayout(gl_composite_1);
-    composite_1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
+    GridLayout transformationButtonsPaneLayout = new GridLayout(1, false);
+    transformationButtonsPaneLayout.marginWidth = 0;
+    transformationButtonsPaneLayout.marginHeight = 0;
 
-    Button mapSource = new Button(composite_1, SWT.NONE);
+    Composite transformationButtonsPane = new Composite(this, SWT.NONE);
+    transformationButtonsPane.setLayout(transformationButtonsPaneLayout);
+    transformationButtonsPane.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
+
+    Button mapSource = new Button(transformationButtonsPane, SWT.NONE);
     mapSource.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     mapSource.setBounds(0, 0, 75, 25);
     mapSource.setText("Map From Source");
 
-    Button replaceTarget = new Button(composite_1, SWT.NONE);
+    Button replaceTarget = new Button(transformationButtonsPane, SWT.NONE);
     replaceTarget.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     replaceTarget.setBounds(0, 0, 75, 25);
     replaceTarget.setText("Replace With Target");
 
-    Button keepAsIs = new Button(composite_1, SWT.NONE);
+    Button keepAsIs = new Button(transformationButtonsPane, SWT.NONE);
     keepAsIs.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     keepAsIs.setBounds(0, 0, 75, 25);
     keepAsIs.setText("Keep As Is");
@@ -214,6 +292,11 @@ public class TransferMappingComposite extends Composite implements IListener
     transfer = null;
     mapping = null;
     super.dispose();
+  }
+
+  public CDOTransfer getTransfer()
+  {
+    return transfer;
   }
 
   public CDOTransferMapping getMapping()
@@ -243,6 +326,36 @@ public class TransferMappingComposite extends Composite implements IListener
         relativePath.setText(StringUtil.EMPTY);
       }
     }
+  }
+
+  public Text getSourcePath()
+  {
+    return sourcePath;
+  }
+
+  public Text getTargetPath()
+  {
+    return targetPath;
+  }
+
+  public Combo getTransferType()
+  {
+    return transferType;
+  }
+
+  public Text getStatus()
+  {
+    return status;
+  }
+
+  public Text getRelativePath()
+  {
+    return relativePath;
+  }
+
+  public Combo getResolution()
+  {
+    return resolution;
   }
 
   @Override
@@ -291,6 +404,7 @@ public class TransferMappingComposite extends Composite implements IListener
           public void run()
           {
             relativePath.setText(value);
+            status.setText(mapping.getStatus().toString());
           }
         });
       }

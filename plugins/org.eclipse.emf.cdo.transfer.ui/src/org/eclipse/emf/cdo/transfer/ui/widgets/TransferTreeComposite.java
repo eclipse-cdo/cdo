@@ -32,7 +32,7 @@ public class TransferTreeComposite extends Composite
 {
   private CDOTransfer transfer;
 
-  private TreeViewer treeViewer;
+  private TreeViewer viewer;
 
   public TransferTreeComposite(Composite parent, int style, CDOTransfer transfer)
   {
@@ -40,36 +40,36 @@ public class TransferTreeComposite extends Composite
     this.transfer = transfer;
 
     setLayout(new FillLayout(SWT.VERTICAL));
-    treeViewer = new TreeViewer(this, SWT.NONE);
+    viewer = new TreeViewer(this, SWT.NONE);
 
-    Tree tree = treeViewer.getTree();
+    Tree tree = viewer.getTree();
     tree.setLinesVisible(true);
     tree.setHeaderVisible(true);
 
-    TreeViewerColumn sourceViewerColumn = new TreeViewerColumn(treeViewer, SWT.NONE);
+    TreeViewerColumn sourceViewerColumn = new TreeViewerColumn(viewer, SWT.NONE);
     TreeColumn sourceColumn = sourceViewerColumn.getColumn();
     sourceColumn.setWidth(350);
-    sourceColumn.setText("Source");
+    sourceColumn.setText("From " + transfer.getSourceSystem());
 
-    TreeViewerColumn typeViewerColumn = new TreeViewerColumn(treeViewer, SWT.NONE);
+    TreeViewerColumn typeViewerColumn = new TreeViewerColumn(viewer, SWT.NONE);
     TreeColumn typeColumn = typeViewerColumn.getColumn();
     typeColumn.setWidth(100);
     typeColumn.setText("Type");
 
-    TreeViewerColumn targetViewerColumn = new TreeViewerColumn(treeViewer, SWT.NONE);
+    TreeViewerColumn targetViewerColumn = new TreeViewerColumn(viewer, SWT.NONE);
     TreeColumn targetColumn = targetViewerColumn.getColumn();
     targetColumn.setWidth(450);
-    targetColumn.setText("Target");
+    targetColumn.setText("To " + transfer.getTargetSystem());
 
-    TreeViewerColumn statusViewerColumn = new TreeViewerColumn(treeViewer, SWT.NONE);
+    TreeViewerColumn statusViewerColumn = new TreeViewerColumn(viewer, SWT.NONE);
     TreeColumn statusColumn = statusViewerColumn.getColumn();
     statusColumn.setWidth(100);
     statusColumn.setText("Status");
 
-    treeViewer.setAutoExpandLevel(TreeViewer.ALL_LEVELS);
-    treeViewer.setContentProvider(new TransferContentProvider());
-    treeViewer.setLabelProvider(new TransferLabelProvider(transfer));
-    treeViewer.setInput(transfer.getRootMapping());
+    viewer.setAutoExpandLevel(TreeViewer.ALL_LEVELS);
+    viewer.setContentProvider(new TransferContentProvider());
+    viewer.setLabelProvider(new TransferLabelProvider(transfer));
+    viewer.setInput(transfer.getRootMapping());
   }
 
   public CDOTransfer getTransfer()
@@ -79,18 +79,18 @@ public class TransferTreeComposite extends Composite
 
   public TreeViewer getViewer()
   {
-    return treeViewer;
+    return viewer;
   }
 
   public CDOTransferMapping getSelectedMapping()
   {
-    IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
+    IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
     return (CDOTransferMapping)selection.getFirstElement();
   }
 
   @Override
   public boolean setFocus()
   {
-    return treeViewer.getTree().setFocus();
+    return viewer.getTree().setFocus();
   }
 }

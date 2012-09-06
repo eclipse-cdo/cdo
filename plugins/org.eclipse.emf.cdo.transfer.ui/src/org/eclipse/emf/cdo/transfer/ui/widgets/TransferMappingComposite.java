@@ -237,9 +237,11 @@ public class TransferMappingComposite extends Composite implements IListener
     Label resolutionLabel = new Label(this, SWT.NONE);
     resolutionLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
     resolutionLabel.setText("Resolution:");
+    resolutionLabel.setVisible(false);
 
     resolution = new Combo(this, SWT.NONE);
     resolution.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+    resolution.setVisible(false);
 
     Label unmappedReferencesLabel = new Label(this, SWT.NONE);
     unmappedReferencesLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));

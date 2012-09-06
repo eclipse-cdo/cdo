@@ -19,8 +19,6 @@ import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
-import org.eclipse.jface.viewers.TreePath;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
@@ -407,12 +405,12 @@ public final class UIUtil
         {
           ISelection selection = viewer.getSelection();
 
-          TreePath[] paths = null;
-          if (viewer instanceof TreeViewer)
-          {
-            TreeViewer treeViewer = (TreeViewer)viewer;
-            paths = treeViewer.getExpandedTreePaths();
-          }
+          // TreePath[] paths = null;
+          // if (viewer instanceof TreeViewer)
+          // {
+          // TreeViewer treeViewer = (TreeViewer)viewer;
+          // paths = treeViewer.getExpandedTreePaths();
+          // }
 
           try
           {
@@ -424,10 +422,10 @@ public final class UIUtil
           }
           finally
           {
-            if (paths != null)
-            {
-              ((TreeViewer)viewer).setExpandedElements(paths);
-            }
+            // if (paths != null)
+            // {
+            // ((TreeViewer)viewer).setExpandedElements(paths);
+            // }
 
             viewer.setSelection(selection);
           }

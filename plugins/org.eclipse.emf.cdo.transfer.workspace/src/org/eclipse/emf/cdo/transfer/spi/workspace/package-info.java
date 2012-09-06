@@ -13,5 +13,5 @@
  * Client concepts for dealing with transfers of {@link org.eclipse.emf.cdo.eresource.CDOResourceLeaf resources}
  * between {@link org.eclipse.emf.cdo.transfer.CDOTransferSystem systems}.
  */
-package org.eclipse.emf.cdo.transfer.workspace;
+package org.eclipse.emf.cdo.transfer.spi.workspace;
 

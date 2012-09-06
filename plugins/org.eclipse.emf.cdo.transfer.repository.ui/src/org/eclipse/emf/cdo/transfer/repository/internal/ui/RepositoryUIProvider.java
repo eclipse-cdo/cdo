@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.transfer.repository.internal.ui;
 
 import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
-import org.eclipse.emf.cdo.transfer.repository.RepositoryTransferSystem;
+import org.eclipse.emf.cdo.transfer.spi.repository.RepositoryTransferSystem;
 import org.eclipse.emf.cdo.transfer.spi.ui.NativeObjectLabelProvider;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;

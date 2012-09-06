@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.transfer.internal.workspace;
 import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
 import org.eclipse.emf.cdo.transfer.spi.ui.NativeObjectLabelProvider;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider;
-import org.eclipse.emf.cdo.transfer.workspace.WorkspaceTransferSystem;
+import org.eclipse.emf.cdo.transfer.spi.workspace.WorkspaceTransferSystem;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
 

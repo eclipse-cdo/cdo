@@ -71,7 +71,7 @@ public abstract class CDOTransferElement
     return system.getElement(path.removeLastSegments(1));
   }
 
-  public final CDOTransferElement[] getChildren() throws IOException
+  public final CDOTransferElement[] getChildren()
   {
     if (isDirectory())
     {
@@ -81,18 +81,18 @@ public abstract class CDOTransferElement
     return NO_CHILDREN;
   }
 
-  public final CDOTransferElement getChild(IPath path) throws IOException
+  public final CDOTransferElement getChild(IPath path)
   {
     IPath childPath = getPath().append(path.makeRelative());
     return system.getElement(childPath);
   }
 
-  public final CDOTransferElement getChild(String path) throws IOException
+  public final CDOTransferElement getChild(String path)
   {
     return getChild(new Path(path));
   }
 
-  public final InputStream openInputStream() throws IOException
+  public final InputStream openInputStream()
   {
     checkNotDirectory();
     return doOpenInputStream();
@@ -156,11 +156,11 @@ public abstract class CDOTransferElement
     return getPath().toString();
   }
 
-  protected abstract CDOTransferElement[] doGetChildren() throws IOException;
+  protected abstract CDOTransferElement[] doGetChildren();
 
-  protected abstract InputStream doOpenInputStream() throws IOException;
+  protected abstract InputStream doOpenInputStream();
 
-  private void checkNotDirectory() throws IOException
+  private void checkNotDirectory()
   {
     if (isDirectory())
     {

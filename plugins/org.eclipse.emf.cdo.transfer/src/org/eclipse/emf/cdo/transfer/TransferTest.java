@@ -14,8 +14,6 @@ import org.eclipse.emf.cdo.spi.transfer.FileSystemTransferSystem;
 
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
-import java.io.IOException;
-
 /**
  * @author Eike Stepper
  * @since 4.2
@@ -24,7 +22,7 @@ public class TransferTest
 {
   public static final CDOTransferSystem FILE_SYSTEM = new FileSystemTransferSystem();
 
-  public static void main(String[] args) throws IOException
+  public static void main(String[] args) throws Exception
   {
     CDOTransfer transfer = createTransfer();
     dump(transfer.getRootMapping());
@@ -34,7 +32,7 @@ public class TransferTest
     transfer.perform();
   }
 
-  public static CDOTransfer createTransfer() throws IOException
+  public static CDOTransfer createTransfer()
   {
     CDOTransfer transfer = new CDOTransfer(FILE_SYSTEM, FILE_SYSTEM);
     transfer.getRootMapping().setRelativePath("C:/develop/transfer");

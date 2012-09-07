@@ -30,7 +30,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
@@ -134,23 +133,23 @@ public class CDOTransfer implements INotifier
     return result;
   }
 
-  public CDOTransferMapping map(IPath sourcePath) throws IOException
+  public CDOTransferMapping map(IPath sourcePath)
   {
     CDOTransferElement source = sourceSystem.getElement(sourcePath);
     return map(source);
   }
 
-  public CDOTransferMapping map(String sourcePath) throws IOException
+  public CDOTransferMapping map(String sourcePath)
   {
     return map(new Path(sourcePath));
   }
 
-  public CDOTransferMapping map(CDOTransferElement source) throws IOException
+  public CDOTransferMapping map(CDOTransferElement source)
   {
     return map(source, rootMapping);
   }
 
-  protected CDOTransferMapping map(CDOTransferElement source, CDOTransferMapping parent) throws IOException
+  protected CDOTransferMapping map(CDOTransferElement source, CDOTransferMapping parent)
   {
     CDOTransferMapping mapping = mappings.get(source);
     if (mapping == null)
@@ -175,7 +174,7 @@ public class CDOTransfer implements INotifier
     mapping.getChildren();
   }
 
-  protected CDOTransferMapping createMapping(CDOTransferElement source, CDOTransferMapping parent) throws IOException
+  protected CDOTransferMapping createMapping(CDOTransferElement source, CDOTransferMapping parent)
   {
     return new CDOTransferMappingImpl(this, source, parent);
   }
@@ -217,14 +216,14 @@ public class CDOTransfer implements INotifier
     }
   }
 
-  public void perform() throws IOException
+  public void perform()
   {
     validate(rootMapping);
     perform(rootMapping);
     modelTransferContext.save();
   }
 
-  protected void perform(CDOTransferMapping mapping) throws IOException
+  protected void perform(CDOTransferMapping mapping)
   {
     CDOTransferType transferType = mapping.getTransferType();
     if (transferType == CDOTransferType.FOLDER)
@@ -246,7 +245,7 @@ public class CDOTransfer implements INotifier
     }
   }
 
-  protected void performFolder(CDOTransferMapping mapping) throws IOException
+  protected void performFolder(CDOTransferMapping mapping)
   {
     if (mapping.getStatus() == CDOTransferMapping.Status.NEW)
     {
@@ -259,12 +258,12 @@ public class CDOTransfer implements INotifier
     }
   }
 
-  protected void performModel(CDOTransferMapping mapping) throws IOException
+  protected void performModel(CDOTransferMapping mapping)
   {
     modelTransferContext.perform(mapping);
   }
 
-  protected void performBinary(CDOTransferMapping mapping) throws IOException
+  protected void performBinary(CDOTransferMapping mapping)
   {
     IPath path = mapping.getFullPath();
     InputStream source = mapping.getSource().openInputStream();
@@ -279,7 +278,7 @@ public class CDOTransfer implements INotifier
     }
   }
 
-  protected void performText(CDOTransferMapping mapping, String encoding) throws IOException
+  protected void performText(CDOTransferMapping mapping, String encoding)
   {
     IPath path = mapping.getFullPath();
     InputStream source = mapping.getSource().openInputStream();
@@ -619,7 +618,7 @@ public class CDOTransfer implements INotifier
       return sourceResourceSet.getResource(uri, true);
     }
 
-    protected Resource getTargetResource(CDOTransferMapping mapping) throws IOException
+    protected Resource getTargetResource(CDOTransferMapping mapping)
     {
       IPath path = mapping.getFullPath();
       ResourceSet targetResourceSet = getTargetResourceSet();
@@ -659,7 +658,7 @@ public class CDOTransfer implements INotifier
       return registry.getFactory(uri) != null;
     }
 
-    protected void perform(CDOTransferMapping mapping) throws IOException
+    protected void perform(CDOTransferMapping mapping)
     {
       Resource sourceResource = getSourceResource(mapping);
       Resource targetResource = getTargetResource(mapping);
@@ -671,7 +670,7 @@ public class CDOTransfer implements INotifier
       contents.addAll(targetContents);
     }
 
-    protected void save() throws IOException
+    protected void save()
     {
       for (Resource resource : elementResources.values())
       {

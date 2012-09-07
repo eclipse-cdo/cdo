@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.transfer.ui.widgets;
 
 import org.eclipse.emf.cdo.transfer.CDOTransfer;
+import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.transfer.CDOTransferMapping;
 import org.eclipse.emf.cdo.transfer.CDOTransferType;
 
@@ -25,6 +26,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
@@ -42,7 +44,6 @@ import org.eclipse.swt.widgets.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -256,44 +257,8 @@ public class TransferDetailsComposite extends Composite implements IListener
     org.eclipse.swt.widgets.List list = unmappedModels.getList();
     list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-    // unmappedModels = new TableViewer(this, SWT.BORDER | SWT.FULL_SELECTION);
-    // Table table = unmappedModels.getTable();
-    // table.setLinesVisible(true);
-    // table.setHeaderVisible(true);
-    // table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-    //
-    // TableViewerColumn uriViewerColumn = new TableViewerColumn(unmappedModels, SWT.NONE);
-    // TableColumn uriColumn = uriViewerColumn.getColumn();
-    // uriColumn.setWidth(373);
-    // uriColumn.setText("URI");
-    //
-    // TableViewerColumn transformationViewerColumn = new TableViewerColumn(unmappedModels, SWT.NONE);
-    // TableColumn transformationColumn = transformationViewerColumn.getColumn();
-    // transformationColumn.setWidth(341);
-    // transformationColumn.setText("Transformation");
-
-    unmappedModels.setContentProvider(new StructuredContentProvider<CDOTransfer>()
-    {
-      public Object[] getElements(Object inputElement)
-      {
-        CDOTransfer transfer = getInput();
-        Set<Resource> resources = transfer.getModelTransferContext().resolve();
-
-        int size = resources.size();
-        URI[] uris = new URI[size];
-
-        Iterator<Resource> it = resources.iterator();
-        for (int i = 0; i < size; i++)
-        {
-          Resource resource = it.next();
-          uris[i] = resource.getURI();
-        }
-
-        return uris;
-      }
-    });
-
-    unmappedModels.setLabelProvider(new LabelProvider());
+    unmappedModels.setContentProvider(new UnmappedModelsContentProvider());
+    unmappedModels.setLabelProvider(new UnmappedModelsLabelProvider());
     unmappedModels.setInput(transfer);
 
     GridLayout transformationButtonsPaneLayout = new GridLayout(1, false);
@@ -313,7 +278,12 @@ public class TransferDetailsComposite extends Composite implements IListener
       @Override
       public void widgetSelected(SelectionEvent e)
       {
+        IStructuredSelection selection = (IStructuredSelection)unmappedModels.getSelection();
+        Resource resource = (Resource)selection.getFirstElement();
 
+        URI uri = resource.getURI();
+        CDOTransferElement element = transfer.getSourceSystem().getElement(uri);
+        transfer.map(element);
       }
     });
 
@@ -458,6 +428,36 @@ public class TransferDetailsComposite extends Composite implements IListener
           }
         });
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class UnmappedModelsContentProvider extends StructuredContentProvider<CDOTransfer>
+  {
+    public Object[] getElements(Object inputElement)
+    {
+      CDOTransfer transfer = getInput();
+      Set<Resource> resources = transfer.getModelTransferContext().resolve();
+      return resources.toArray(new Resource[resources.size()]);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class UnmappedModelsLabelProvider extends LabelProvider
+  {
+    @Override
+    public String getText(Object element)
+    {
+      if (element instanceof Resource)
+      {
+        Resource resource = (Resource)element;
+        return resource.getURI().toString();
+      }
+      return super.getText(element);
     }
   }
 }

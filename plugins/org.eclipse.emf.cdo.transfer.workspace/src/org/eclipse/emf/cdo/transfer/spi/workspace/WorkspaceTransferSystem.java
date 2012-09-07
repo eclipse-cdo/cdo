@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
 
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.io.IORuntimeException;
 
 import org.eclipse.emf.common.util.URI;
 
@@ -26,7 +27,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -81,7 +81,18 @@ public class WorkspaceTransferSystem extends CDOTransferSystem
   }
 
   @Override
-  public void createFolder(IPath path) throws IOException
+  public CDOTransferElement getElement(URI uri)
+  {
+    if (uri.isPlatformResource())
+    {
+      return getElement(uri.path());
+    }
+
+    return null;
+  }
+
+  @Override
+  public void createFolder(IPath path)
   {
     try
     {
@@ -90,12 +101,12 @@ public class WorkspaceTransferSystem extends CDOTransferSystem
     }
     catch (CoreException ex)
     {
-      throw new IOException(ex);
+      throw new IORuntimeException(ex);
     }
   }
 
   @Override
-  public void createBinary(IPath path, InputStream source) throws IOException
+  public void createBinary(IPath path, InputStream source)
   {
     try
     {
@@ -104,12 +115,12 @@ public class WorkspaceTransferSystem extends CDOTransferSystem
     }
     catch (CoreException ex)
     {
-      throw new IOException(ex);
+      throw new IORuntimeException(ex);
     }
   }
 
   @Override
-  public void createText(IPath path, InputStream source, String encoding) throws IOException
+  public void createText(IPath path, InputStream source, String encoding)
   {
     try
     {
@@ -119,7 +130,7 @@ public class WorkspaceTransferSystem extends CDOTransferSystem
     }
     catch (CoreException ex)
     {
-      throw new IOException(ex);
+      throw new IORuntimeException(ex);
     }
   }
 
@@ -161,7 +172,7 @@ public class WorkspaceTransferSystem extends CDOTransferSystem
     }
 
     @Override
-    protected CDOTransferElement[] doGetChildren() throws IOException
+    protected CDOTransferElement[] doGetChildren()
     {
       try
       {
@@ -178,12 +189,12 @@ public class WorkspaceTransferSystem extends CDOTransferSystem
       }
       catch (CoreException ex)
       {
-        throw new IOException(ex);
+        throw new IORuntimeException(ex);
       }
     }
 
     @Override
-    protected InputStream doOpenInputStream() throws IOException
+    protected InputStream doOpenInputStream()
     {
       try
       {
@@ -191,12 +202,12 @@ public class WorkspaceTransferSystem extends CDOTransferSystem
       }
       catch (CoreException ex)
       {
-        throw new IOException(ex);
+        throw new IORuntimeException(ex);
       }
     }
 
     // @Override
-    // protected OutputStream doOpenOutputStream() throws IOException
+    // protected OutputStream doOpenOutputStream()
     // {
     // return new ByteArrayOutputStream()
     // {

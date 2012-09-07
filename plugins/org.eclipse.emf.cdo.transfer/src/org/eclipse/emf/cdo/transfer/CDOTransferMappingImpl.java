@@ -15,7 +15,6 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +38,6 @@ class CDOTransferMappingImpl implements CDOTransferMapping
   private IPath relativePath;
 
   public CDOTransferMappingImpl(CDOTransfer transfer, CDOTransferElement source, CDOTransferMapping parent)
-      throws IOException
   {
     this.transfer = transfer;
     this.source = source;

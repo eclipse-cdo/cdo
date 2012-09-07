@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -64,15 +63,17 @@ public abstract class CDOTransferSystem
 
   public abstract CDOTransferElement getElement(IPath path);
 
-  public abstract void createFolder(IPath path) throws IOException;
+  public abstract CDOTransferElement getElement(URI uri);
 
-  public Resource createModel(ResourceSet resourceSet, IPath path) throws IOException
+  public abstract void createFolder(IPath path);
+
+  public Resource createModel(ResourceSet resourceSet, IPath path)
   {
     URI uri = getURI(path);
     return resourceSet.createResource(uri);
   }
 
-  public abstract void createBinary(IPath path, InputStream source) throws IOException;
+  public abstract void createBinary(IPath path, InputStream source);
 
-  public abstract void createText(IPath path, InputStream source, String encoding) throws IOException;
+  public abstract void createText(IPath path, InputStream source, String encoding);
 }

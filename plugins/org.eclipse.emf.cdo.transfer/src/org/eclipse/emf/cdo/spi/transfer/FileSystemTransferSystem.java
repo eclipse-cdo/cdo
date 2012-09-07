@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.spi.transfer;
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
 
+import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.URI;
@@ -68,23 +69,39 @@ public class FileSystemTransferSystem extends CDOTransferSystem
   }
 
   @Override
-  public void createFolder(IPath path) throws IOException
+  public CDOTransferElement getElement(URI uri)
+  {
+    if (uri.isFile())
+    {
+      return getElement(uri.path());
+    }
+
+    return null;
+  }
+
+  @Override
+  public void createFolder(IPath path)
   {
     File file = getFile(path);
     mkDir(file);
   }
 
   @Override
-  public void createBinary(IPath path, InputStream source) throws IOException
+  public void createBinary(IPath path, InputStream source)
   {
     File file = getFile(path);
     mkParent(file);
 
-    OutputStream target = new FileOutputStream(file);
+    OutputStream target = null;
 
     try
     {
+      target = new FileOutputStream(file);
       IOUtil.copy(source, target);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException();
     }
     finally
     {
@@ -93,16 +110,21 @@ public class FileSystemTransferSystem extends CDOTransferSystem
   }
 
   @Override
-  public void createText(IPath path, InputStream source, String encoding) throws IOException
+  public void createText(IPath path, InputStream source, String encoding)
   {
     File file = getFile(path);
     mkParent(file);
 
-    Writer target = new FileWriter(file);
+    Writer target = null;
 
     try
     {
+      target = new FileWriter(file);
       IOUtil.copyCharacter(new InputStreamReader(source, encoding), target);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException();
     }
     finally
     {
@@ -121,7 +143,7 @@ public class FileSystemTransferSystem extends CDOTransferSystem
     return new File(path.toOSString());
   }
 
-  protected void mkParent(File file) throws IOException
+  protected void mkParent(File file)
   {
     File parent = file.getParentFile();
     if (parent != null)
@@ -130,20 +152,20 @@ public class FileSystemTransferSystem extends CDOTransferSystem
     }
   }
 
-  protected void mkDir(File file) throws IOException
+  protected void mkDir(File file)
   {
     if (file.exists())
     {
       if (!file.isDirectory())
       {
-        throw new IOException("Not a folder " + file);
+        throw new IORuntimeException("Not a folder " + file);
       }
     }
     else
     {
       if (!file.mkdirs())
       {
-        throw new IOException("Could not create folder " + file);
+        throw new IORuntimeException("Could not create folder " + file);
       }
     }
   }
@@ -180,7 +202,7 @@ public class FileSystemTransferSystem extends CDOTransferSystem
     }
 
     @Override
-    protected CDOTransferElement[] doGetChildren() throws IOException
+    protected CDOTransferElement[] doGetChildren()
     {
       File[] children = file.listFiles();
       CDOTransferElement[] result = new Element[children.length];
@@ -195,9 +217,16 @@ public class FileSystemTransferSystem extends CDOTransferSystem
     }
 
     @Override
-    protected InputStream doOpenInputStream() throws IOException
+    protected InputStream doOpenInputStream()
     {
-      return new FileInputStream(file);
+      try
+      {
+        return new FileInputStream(file);
+      }
+      catch (IOException ex)
+      {
+        throw new IORuntimeException(ex);
+      }
     }
   }
 }

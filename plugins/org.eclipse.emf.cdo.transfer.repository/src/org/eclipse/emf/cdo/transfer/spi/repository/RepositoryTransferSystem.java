@@ -146,6 +146,17 @@ public class RepositoryTransferSystem extends CDOTransferSystem
   }
 
   @Override
+  public CDOTransferElement getElement(URI uri)
+  {
+    if (CDOURIUtil.PROTOCOL_NAME.equals(uri.scheme()))
+    {
+      return getElement(uri.path());
+    }
+
+    return null;
+  }
+
+  @Override
   public void createFolder(IPath path) throws IOException
   {
     ((CDOTransaction)view).createResourceFolder(path.toString());

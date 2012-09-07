@@ -18,9 +18,14 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.ui.StructuredContentProvider;
+
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
@@ -40,6 +45,7 @@ import org.eclipse.swt.widgets.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -47,7 +53,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 4.2
  */
-public class TransferMappingComposite extends Composite implements IListener
+public class TransferDetailsComposite extends Composite implements IListener
 {
   private static final String UP = "..";
 
@@ -69,7 +75,9 @@ public class TransferMappingComposite extends Composite implements IListener
 
   private Combo resolution;
 
-  public TransferMappingComposite(Composite parent, int style, final CDOTransfer transfer)
+  private TableViewer unmappedModels;
+
+  public TransferDetailsComposite(Composite parent, int style, final CDOTransfer transfer)
   {
     super(parent, style);
     this.transfer = transfer;
@@ -243,25 +251,49 @@ public class TransferMappingComposite extends Composite implements IListener
     resolution.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
     resolution.setVisible(false);
 
-    Label unmappedReferencesLabel = new Label(this, SWT.NONE);
-    unmappedReferencesLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
-    unmappedReferencesLabel.setText("Unmapped References:");
+    Label unmappedModelsLabel = new Label(this, SWT.NONE);
+    unmappedModelsLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+    unmappedModelsLabel.setText("Unmapped Models:");
 
-    TableViewer tableViewer = new TableViewer(this, SWT.BORDER | SWT.FULL_SELECTION);
-    Table table = tableViewer.getTable();
+    unmappedModels = new TableViewer(this, SWT.BORDER | SWT.FULL_SELECTION);
+    Table table = unmappedModels.getTable();
     table.setLinesVisible(true);
     table.setHeaderVisible(true);
     table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-    TableViewerColumn uriViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
+    TableViewerColumn uriViewerColumn = new TableViewerColumn(unmappedModels, SWT.NONE);
     TableColumn uriColumn = uriViewerColumn.getColumn();
     uriColumn.setWidth(373);
     uriColumn.setText("URI");
 
-    TableViewerColumn transformationViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
+    TableViewerColumn transformationViewerColumn = new TableViewerColumn(unmappedModels, SWT.NONE);
     TableColumn transformationColumn = transformationViewerColumn.getColumn();
     transformationColumn.setWidth(341);
     transformationColumn.setText("Transformation");
+
+    unmappedModels.setContentProvider(new StructuredContentProvider<CDOTransfer>()
+    {
+      public Object[] getElements(Object inputElement)
+      {
+        CDOTransfer transfer = getInput();
+        Set<Resource> resources = transfer.getModelTransferContext().resolve();
+
+        int size = resources.size();
+        URI[] uris = new URI[size];
+
+        Iterator<Resource> it = resources.iterator();
+        for (int i = 0; i < size; i++)
+        {
+          Resource resource = it.next();
+          uris[i] = resource.getURI();
+        }
+
+        return uris;
+      }
+    });
+
+    unmappedModels.setLabelProvider(new LabelProvider());
+    unmappedModels.setInput(transfer);
 
     GridLayout transformationButtonsPaneLayout = new GridLayout(1, false);
     transformationButtonsPaneLayout.marginWidth = 0;
@@ -382,23 +414,25 @@ public class TransferMappingComposite extends Composite implements IListener
   {
     if (event instanceof CDOTransfer.TransferTypeChangedEvent)
     {
-      CDOTransfer.TransferTypeChangedEvent e2 = (CDOTransfer.TransferTypeChangedEvent)event;
-      final String value = e2.getNewType().toString();
-      if (!ObjectUtil.equals(value, transferType.getText()))
+      CDOTransfer.TransferTypeChangedEvent e = (CDOTransfer.TransferTypeChangedEvent)event;
+      final String value = e.getNewType().toString();
+      getDisplay().asyncExec(new Runnable()
       {
-        getDisplay().asyncExec(new Runnable()
+        public void run()
         {
-          public void run()
+          if (!ObjectUtil.equals(value, transferType.getText()))
           {
             transferType.setText(value);
           }
-        });
-      }
+
+          unmappedModels.refresh();
+        }
+      });
     }
     else if (event instanceof CDOTransfer.RelativePathChangedEvent)
     {
-      CDOTransfer.RelativePathChangedEvent e2 = (CDOTransfer.RelativePathChangedEvent)event;
-      final String value = e2.getNewPath().toString();
+      CDOTransfer.RelativePathChangedEvent e = (CDOTransfer.RelativePathChangedEvent)event;
+      final String value = e.getNewPath().toString();
       if (!ObjectUtil.equals(value, relativePath.getText()))
       {
         getDisplay().asyncExec(new Runnable()

@@ -56,7 +56,7 @@ public class CDOTransfer implements INotifier
 
   private CDOTransferType defaultTransferType = CDOTransferType.UNKNOWN;
 
-  private ModelTransferContext modelTransferContext = new ModelTransferContext();
+  private ModelTransferContext modelTransferContext = createModelTransferContext();
 
   public CDOTransfer(CDOTransferSystem sourceSystem, CDOTransferSystem targetSystem)
   {
@@ -97,31 +97,6 @@ public class CDOTransfer implements INotifier
   public ModelTransferContext getModelTransferContext()
   {
     return modelTransferContext;
-  }
-
-  protected ResourceSet createResourceSet(CDOTransferSystem system)
-  {
-    Resource.Factory.Registry registry = new ResourceFactoryRegistryImpl()
-    {
-      {
-        getProtocolToFactoryMap().putAll(Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap());
-        getExtensionToFactoryMap().putAll(Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap());
-        getContentTypeToFactoryMap().putAll(Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap());
-
-        getExtensionToFactoryMap().remove(Resource.Factory.Registry.DEFAULT_EXTENSION);
-        getContentTypeToFactoryMap().remove(Resource.Factory.Registry.DEFAULT_CONTENT_TYPE_IDENTIFIER);
-      }
-
-      @Override
-      protected Factory delegatedGetFactory(URI uri, String contentTypeIdentifier)
-      {
-        return null;
-      }
-    };
-
-    ResourceSet resourceSet = new ResourceSetImpl();
-    resourceSet.setResourceFactoryRegistry(registry);
-    return resourceSet;
   }
 
   public final CDOTransferMapping getRootMapping()
@@ -194,15 +169,20 @@ public class CDOTransfer implements INotifier
     return mapping;
   }
 
+  protected void unmap(CDOTransferMapping mapping)
+  {
+    mappings.remove(mapping.getSource());
+    mapping.getChildren();
+  }
+
   protected CDOTransferMapping createMapping(CDOTransferElement source, CDOTransferMapping parent) throws IOException
   {
     return new CDOTransferMappingImpl(this, source, parent);
   }
 
-  protected void unmap(CDOTransferMapping mapping)
+  protected ModelTransferContext createModelTransferContext()
   {
-    mappings.remove(mapping.getSource());
-    mapping.getChildren();
+    return new ModelTransferContext();
   }
 
   protected CDOTransferType getTransferType(CDOTransferElement source)
@@ -314,132 +294,53 @@ public class CDOTransfer implements INotifier
     }
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  public class ModelTransferContext
+  protected void childrenChanged(CDOTransferMapping mapping, CDOTransferMapping child, ChildrenChangedEvent.Kind kind)
   {
-    private ResourceSet sourceResourceSet;
-
-    private ResourceSet targetResourceSet;
-
-    private Map<CDOTransferElement, Resource> resources = new HashMap<CDOTransferElement, Resource>();
-
-    private Set<Resource> resourcesToSave = new HashSet<Resource>();
-
-    protected ModelTransferContext()
+    if (child.getTransferType() == CDOTransferType.MODEL)
     {
-    }
-
-    public final ResourceSet getSourceResourceSet()
-    {
-      if (sourceResourceSet == null)
+      if (kind == ChildrenChangedEvent.Kind.MAPPED)
       {
-        sourceResourceSet = sourceSystem.provideResourceSet();
-        if (sourceResourceSet == null)
-        {
-          sourceResourceSet = createResourceSet(sourceSystem);
-        }
+        modelTransferContext.addModelMapping(child);
       }
-
-      return sourceResourceSet;
-    }
-
-    public final ResourceSet getTargetResourceSet()
-    {
-      if (targetResourceSet == null)
+      else
       {
-        targetResourceSet = targetSystem.provideResourceSet();
-        if (targetResourceSet == null)
-        {
-          targetResourceSet = createResourceSet(targetSystem);
-        }
+        modelTransferContext.removeModelMapping(child);
       }
-
-      return targetResourceSet;
     }
 
-    public void registerSourceExtension(String extension, Resource.Factory factory)
+    IListener[] listeners = notifier.getListeners();
+    if (listeners != null)
     {
-      Map<String, Object> map = getSourceResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap();
-      map.put(extension, factory);
+      notifier.fireEvent(new ChildrenChangedEvent(mapping, child, kind), listeners);
     }
+  }
 
-    public void registerSourceProtocol(String protocol, Resource.Factory factory)
+  protected void relativePathChanged(CDOTransferMapping mapping, IPath oldPath, IPath newPath)
+  {
+    IListener[] listeners = notifier.getListeners();
+    if (listeners != null)
     {
-      Map<String, Object> map = getSourceResourceSet().getResourceFactoryRegistry().getProtocolToFactoryMap();
-      map.put(protocol, factory);
+      notifier.fireEvent(new RelativePathChangedEvent(mapping, oldPath, newPath), listeners);
     }
+  }
 
-    public void registerSourceContentType(String contentType, Resource.Factory factory)
+  protected void transferTypeChanged(CDOTransferMapping mapping, CDOTransferType oldType, CDOTransferType newType)
+  {
+    if (oldType == CDOTransferType.MODEL)
     {
-      Map<String, Object> map = getSourceResourceSet().getResourceFactoryRegistry().getContentTypeToFactoryMap();
-      map.put(contentType, factory);
+      modelTransferContext.removeModelMapping(mapping);
     }
 
-    public void registerTargetExtension(String extension, Resource.Factory factory)
+    if (newType == CDOTransferType.MODEL)
     {
-      Map<String, Object> map = getTargetResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap();
-      map.put(extension, factory);
+      modelTransferContext.addModelMapping(mapping);
     }
 
-    public void registerTargetProtocol(String protocol, Resource.Factory factory)
+    IListener[] listeners = notifier.getListeners();
+    if (listeners != null)
     {
-      Map<String, Object> map = getTargetResourceSet().getResourceFactoryRegistry().getProtocolToFactoryMap();
-      map.put(protocol, factory);
+      notifier.fireEvent(new TransferTypeChangedEvent(mapping, oldType, newType), listeners);
     }
-
-    public void registerTargetContentType(String contentType, Resource.Factory factory)
-    {
-      Map<String, Object> map = getTargetResourceSet().getResourceFactoryRegistry().getContentTypeToFactoryMap();
-      map.put(contentType, factory);
-    }
-
-    protected Resource getSourceResource(CDOTransferMapping mapping)
-    {
-      URI uri = mapping.getSource().getURI();
-      ResourceSet sourceResourceSet = getSourceResourceSet();
-      return sourceResourceSet.getResource(uri, true);
-    }
-
-    protected Resource getTargetResource(CDOTransferMapping mapping) throws IOException
-    {
-      IPath path = mapping.getFullPath();
-      ResourceSet targetResourceSet = getTargetResourceSet();
-      return targetSystem.createModel(targetResourceSet, path);
-    }
-
-    protected boolean hasResourceFactory(CDOTransferElement source)
-    {
-      URI uri = source.getURI();
-      // TODO Derive resourceSet from element.getSystem()?
-      Registry registry = getSourceResourceSet().getResourceFactoryRegistry();
-      return registry.getFactory(uri) != null;
-    }
-
-    protected void perform(CDOTransferMapping mapping) throws IOException
-    {
-      Resource sourceResource = getSourceResource(mapping);
-      Resource targetResource = getTargetResource(mapping);
-
-      EList<EObject> sourceContents = sourceResource.getContents();
-      Collection<EObject> targetContents = EcoreUtil.copyAll(sourceContents);
-
-      EList<EObject> contents = targetResource.getContents();
-      contents.addAll(targetContents);
-      resourcesToSave.add(targetResource);
-    }
-
-    protected void save() throws IOException
-    {
-      for (Resource resource : resourcesToSave)
-      {
-        resource.save(null);
-      }
-
-      resourcesToSave.clear();
-    }
-
   }
 
   /**
@@ -575,6 +476,207 @@ public class CDOTransfer implements INotifier
     public CDOTransferType getNewType()
     {
       return newType;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public class ModelTransferContext
+  {
+    private ResourceSet sourceResourceSet;
+
+    private ResourceSet targetResourceSet;
+
+    private Map<CDOTransferElement, Resource> elementResources = new HashMap<CDOTransferElement, Resource>();
+
+    private Map<Resource, CDOTransferElement> resourceElements = new HashMap<Resource, CDOTransferElement>();
+
+    private Set<Resource> unmappedModels;
+
+    protected ModelTransferContext()
+    {
+    }
+
+    public final ResourceSet getSourceResourceSet()
+    {
+      if (sourceResourceSet == null)
+      {
+        sourceResourceSet = sourceSystem.provideResourceSet();
+        if (sourceResourceSet == null)
+        {
+          sourceResourceSet = createResourceSet(sourceSystem);
+        }
+      }
+
+      return sourceResourceSet;
+    }
+
+    public final ResourceSet getTargetResourceSet()
+    {
+      if (targetResourceSet == null)
+      {
+        targetResourceSet = targetSystem.provideResourceSet();
+        if (targetResourceSet == null)
+        {
+          targetResourceSet = createResourceSet(targetSystem);
+        }
+      }
+
+      return targetResourceSet;
+    }
+
+    public void registerSourceExtension(String extension, Resource.Factory factory)
+    {
+      Map<String, Object> map = getSourceResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap();
+      map.put(extension, factory);
+    }
+
+    public void registerSourceProtocol(String protocol, Resource.Factory factory)
+    {
+      Map<String, Object> map = getSourceResourceSet().getResourceFactoryRegistry().getProtocolToFactoryMap();
+      map.put(protocol, factory);
+    }
+
+    public void registerSourceContentType(String contentType, Resource.Factory factory)
+    {
+      Map<String, Object> map = getSourceResourceSet().getResourceFactoryRegistry().getContentTypeToFactoryMap();
+      map.put(contentType, factory);
+    }
+
+    public void registerTargetExtension(String extension, Resource.Factory factory)
+    {
+      Map<String, Object> map = getTargetResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap();
+      map.put(extension, factory);
+    }
+
+    public void registerTargetProtocol(String protocol, Resource.Factory factory)
+    {
+      Map<String, Object> map = getTargetResourceSet().getResourceFactoryRegistry().getProtocolToFactoryMap();
+      map.put(protocol, factory);
+    }
+
+    public void registerTargetContentType(String contentType, Resource.Factory factory)
+    {
+      Map<String, Object> map = getTargetResourceSet().getResourceFactoryRegistry().getContentTypeToFactoryMap();
+      map.put(contentType, factory);
+    }
+
+    public Set<Resource> resolve()
+    {
+      if (unmappedModels == null)
+      {
+        unmappedModels = new HashSet<Resource>();
+
+        ResourceSet resourceSet = getSourceResourceSet();
+        EList<Resource> resources = resourceSet.getResources();
+        resources.clear();
+
+        Set<Resource> mappedModels = resourceElements.keySet();
+        resources.addAll(mappedModels);
+        EcoreUtil.resolveAll(resourceSet);
+
+        for (Resource resource : resources)
+        {
+          if (!mappedModels.contains(resource))
+          {
+            unmappedModels.add(resource);
+          }
+        }
+      }
+
+      return unmappedModels;
+    }
+
+    protected void addModelMapping(CDOTransferMapping mapping)
+    {
+      CDOTransferElement element = mapping.getSource();
+      URI uri = element.getURI();
+
+      ResourceSet resourceSet = getSourceResourceSet();
+      Resource resource = resourceSet.getResource(uri, true);
+      elementResources.put(element, resource);
+      resourceElements.put(resource, element);
+      unmappedModels = null;
+    }
+
+    protected void removeModelMapping(CDOTransferMapping mapping)
+    {
+      CDOTransferElement element = mapping.getSource();
+      Resource resource = elementResources.remove(element);
+      resourceElements.remove(resource);
+      resource.unload();
+
+      ResourceSet resourceSet = getSourceResourceSet();
+      resourceSet.getResources().remove(resource);
+      unmappedModels = null;
+    }
+
+    protected Resource getSourceResource(CDOTransferMapping mapping)
+    {
+      URI uri = mapping.getSource().getURI();
+      ResourceSet sourceResourceSet = getSourceResourceSet();
+      return sourceResourceSet.getResource(uri, true);
+    }
+
+    protected Resource getTargetResource(CDOTransferMapping mapping) throws IOException
+    {
+      IPath path = mapping.getFullPath();
+      ResourceSet targetResourceSet = getTargetResourceSet();
+      return targetSystem.createModel(targetResourceSet, path);
+    }
+
+    protected ResourceSet createResourceSet(CDOTransferSystem system)
+    {
+      Resource.Factory.Registry registry = new ResourceFactoryRegistryImpl()
+      {
+        {
+          getProtocolToFactoryMap().putAll(Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap());
+          getExtensionToFactoryMap().putAll(Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap());
+          getContentTypeToFactoryMap().putAll(Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap());
+
+          getExtensionToFactoryMap().remove(Resource.Factory.Registry.DEFAULT_EXTENSION);
+          getContentTypeToFactoryMap().remove(Resource.Factory.Registry.DEFAULT_CONTENT_TYPE_IDENTIFIER);
+        }
+
+        @Override
+        protected Factory delegatedGetFactory(URI uri, String contentTypeIdentifier)
+        {
+          return null;
+        }
+      };
+
+      ResourceSet resourceSet = new ResourceSetImpl();
+      resourceSet.setResourceFactoryRegistry(registry);
+      return resourceSet;
+    }
+
+    protected boolean hasResourceFactory(CDOTransferElement source)
+    {
+      URI uri = source.getURI();
+      // TODO Derive resourceSet from element.getSystem()?
+      Registry registry = getSourceResourceSet().getResourceFactoryRegistry();
+      return registry.getFactory(uri) != null;
+    }
+
+    protected void perform(CDOTransferMapping mapping) throws IOException
+    {
+      Resource sourceResource = getSourceResource(mapping);
+      Resource targetResource = getTargetResource(mapping);
+
+      EList<EObject> sourceContents = sourceResource.getContents();
+      Collection<EObject> targetContents = EcoreUtil.copyAll(sourceContents);
+
+      EList<EObject> contents = targetResource.getContents();
+      contents.addAll(targetContents);
+    }
+
+    protected void save() throws IOException
+    {
+      for (Resource resource : elementResources.values())
+      {
+        resource.save(null);
+      }
     }
   }
 }

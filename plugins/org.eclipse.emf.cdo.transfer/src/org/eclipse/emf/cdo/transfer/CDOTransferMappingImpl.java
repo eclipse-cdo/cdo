@@ -10,10 +10,7 @@
  */
 package org.eclipse.emf.cdo.transfer;
 
-import org.eclipse.emf.cdo.transfer.CDOTransfer.ChildrenChangedEvent.Kind;
-
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -50,7 +47,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     relativePath = new Path(source.getName());
 
     CDOTransferType transferType = transfer.getTransferType(source);
-    setTransferType(transferType);
+    this.transferType = transferType;
 
     if (parent != null)
     {
@@ -71,8 +68,8 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     this.transfer = transfer;
     source = null;
     parent = null;
+    transferType = CDOTransferType.FOLDER;
     relativePath = Path.EMPTY;
-    setTransferType(CDOTransferType.FOLDER);
   }
 
   public CDOTransfer getTransfer()
@@ -126,12 +123,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     {
       IPath oldPath = this.relativePath;
       this.relativePath = relativePath;
-
-      IListener[] listeners = transfer.notifier.getListeners();
-      if (listeners != null)
-      {
-        transfer.notifier.fireEvent(new CDOTransfer.RelativePathChangedEvent(this, oldPath, relativePath), listeners);
-      }
+      transfer.relativePathChanged(this, oldPath, relativePath);
     }
   }
 
@@ -193,7 +185,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     if (!children.contains(child))
     {
       children.add(child);
-      fireChildrenChangedEvent(child, CDOTransfer.ChildrenChangedEvent.Kind.MAPPED);
+      transfer.childrenChanged(this, child, CDOTransfer.ChildrenChangedEvent.Kind.MAPPED);
     }
   }
 
@@ -201,7 +193,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
   {
     if (children != null && children.remove(child))
     {
-      fireChildrenChangedEvent(child, CDOTransfer.ChildrenChangedEvent.Kind.UNMAPPED);
+      transfer.childrenChanged(this, child, CDOTransfer.ChildrenChangedEvent.Kind.UNMAPPED);
     }
   }
 
@@ -210,15 +202,6 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     if (children == null)
     {
       children = new ArrayList<CDOTransferMapping>();
-    }
-  }
-
-  private void fireChildrenChangedEvent(CDOTransferMapping child, Kind kind)
-  {
-    IListener[] listeners = transfer.notifier.getListeners();
-    if (listeners != null)
-    {
-      transfer.notifier.fireEvent(new CDOTransfer.ChildrenChangedEvent(this, child, kind), listeners);
     }
   }
 
@@ -247,12 +230,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
 
       CDOTransferType oldType = this.transferType;
       this.transferType = transferType;
-
-      IListener[] listeners = transfer.notifier.getListeners();
-      if (listeners != null)
-      {
-        transfer.notifier.fireEvent(new CDOTransfer.TransferTypeChangedEvent(this, oldType, transferType), listeners);
-      }
+      transfer.transferTypeChanged(this, oldType, transferType);
     }
   }
 

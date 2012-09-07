@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.spi.transfer.FileSystemTransferSystem;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -30,10 +29,8 @@ public class TransferTest
     CDOTransfer transfer = createTransfer();
     dump(transfer.getRootMapping());
 
-    Map<String, Object> map = transfer.getTargetResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap();
-    map.put("ecore", new EcoreResourceFactoryImpl());
-    map.put("genmodel", new EcoreResourceFactoryImpl());
-
+    transfer.getModelTransferContext().registerTargetExtension("ecore", new EcoreResourceFactoryImpl());
+    transfer.getModelTransferContext().registerTargetExtension("genmodel", new EcoreResourceFactoryImpl());
     transfer.perform();
   }
 
@@ -42,10 +39,8 @@ public class TransferTest
     CDOTransfer transfer = new CDOTransfer(FILE_SYSTEM, FILE_SYSTEM);
     transfer.getRootMapping().setRelativePath("C:/develop/transfer");
     transfer.setDefaultTransferType(CDOTransferType.UTF8);
-
-    Map<String, Object> map = transfer.getSourceResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap();
-    map.put("ecore", new EcoreResourceFactoryImpl());
-    map.put("genmodel", new EcoreResourceFactoryImpl());
+    transfer.getModelTransferContext().registerSourceExtension("ecore", new EcoreResourceFactoryImpl());
+    transfer.getModelTransferContext().registerSourceExtension("genmodel", new EcoreResourceFactoryImpl());
 
     CDOTransferMapping mapping = transfer.map("C:/develop/git/cdo/plugins/org.eclipse.emf.cdo.tests.model2");
     mapping.setRelativePath("");

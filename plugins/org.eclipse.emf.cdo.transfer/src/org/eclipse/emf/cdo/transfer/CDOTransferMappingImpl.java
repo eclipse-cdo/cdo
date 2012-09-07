@@ -240,10 +240,10 @@ class CDOTransferMappingImpl implements CDOTransferMapping
   {
     if (!ObjectUtil.equals(this.transferType, transferType))
     {
-      if (transferType == CDOTransferType.MODEL && !transfer.hasResourceFactory(source))
-      {
-        throw new IllegalStateException("No resource factory registered for " + this);
-      }
+      // if (transferType == CDOTransferType.MODEL && !transfer.getModelTransferContext().hasResourceFactory(source))
+      // {
+      // throw new IllegalStateException("No resource factory registered for " + this);
+      // }
 
       CDOTransferType oldType = this.transferType;
       this.transferType = transferType;

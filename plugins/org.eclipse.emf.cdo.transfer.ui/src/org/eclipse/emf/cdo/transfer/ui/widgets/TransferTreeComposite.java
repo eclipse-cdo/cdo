@@ -40,7 +40,7 @@ public class TransferTreeComposite extends Composite
     this.transfer = transfer;
 
     setLayout(new FillLayout(SWT.VERTICAL));
-    viewer = new TreeViewer(this, SWT.NONE);
+    viewer = new TreeViewer(this, SWT.FULL_SELECTION);
 
     Tree tree = viewer.getTree();
     tree.setLinesVisible(true);

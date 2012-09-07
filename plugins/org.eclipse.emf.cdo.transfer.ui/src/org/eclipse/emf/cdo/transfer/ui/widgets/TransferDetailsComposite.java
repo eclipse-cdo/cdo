@@ -26,8 +26,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -39,8 +38,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 
 import java.util.ArrayList;
@@ -75,7 +72,7 @@ public class TransferDetailsComposite extends Composite implements IListener
 
   private Combo resolution;
 
-  private TableViewer unmappedModels;
+  private ListViewer unmappedModels;
 
   public TransferDetailsComposite(Composite parent, int style, final CDOTransfer transfer)
   {
@@ -255,21 +252,25 @@ public class TransferDetailsComposite extends Composite implements IListener
     unmappedModelsLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
     unmappedModelsLabel.setText("Unmapped Models:");
 
-    unmappedModels = new TableViewer(this, SWT.BORDER | SWT.FULL_SELECTION);
-    Table table = unmappedModels.getTable();
-    table.setLinesVisible(true);
-    table.setHeaderVisible(true);
-    table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    unmappedModels = new ListViewer(this, SWT.BORDER);
+    org.eclipse.swt.widgets.List list = unmappedModels.getList();
+    list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-    TableViewerColumn uriViewerColumn = new TableViewerColumn(unmappedModels, SWT.NONE);
-    TableColumn uriColumn = uriViewerColumn.getColumn();
-    uriColumn.setWidth(373);
-    uriColumn.setText("URI");
-
-    TableViewerColumn transformationViewerColumn = new TableViewerColumn(unmappedModels, SWT.NONE);
-    TableColumn transformationColumn = transformationViewerColumn.getColumn();
-    transformationColumn.setWidth(341);
-    transformationColumn.setText("Transformation");
+    // unmappedModels = new TableViewer(this, SWT.BORDER | SWT.FULL_SELECTION);
+    // Table table = unmappedModels.getTable();
+    // table.setLinesVisible(true);
+    // table.setHeaderVisible(true);
+    // table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    //
+    // TableViewerColumn uriViewerColumn = new TableViewerColumn(unmappedModels, SWT.NONE);
+    // TableColumn uriColumn = uriViewerColumn.getColumn();
+    // uriColumn.setWidth(373);
+    // uriColumn.setText("URI");
+    //
+    // TableViewerColumn transformationViewerColumn = new TableViewerColumn(unmappedModels, SWT.NONE);
+    // TableColumn transformationColumn = transformationViewerColumn.getColumn();
+    // transformationColumn.setWidth(341);
+    // transformationColumn.setText("Transformation");
 
     unmappedModels.setContentProvider(new StructuredContentProvider<CDOTransfer>()
     {
@@ -307,6 +308,14 @@ public class TransferDetailsComposite extends Composite implements IListener
     mapSource.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     mapSource.setBounds(0, 0, 75, 25);
     mapSource.setText("Map From Source");
+    mapSource.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+
+      }
+    });
 
     Button replaceTarget = new Button(transformationButtonsPane, SWT.NONE);
     replaceTarget.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -390,6 +399,11 @@ public class TransferDetailsComposite extends Composite implements IListener
   public Combo getResolution()
   {
     return resolution;
+  }
+
+  public ListViewer getUnmappedModels()
+  {
+    return unmappedModels;
   }
 
   @Override

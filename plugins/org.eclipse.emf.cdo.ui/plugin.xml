@@ -130,7 +130,7 @@
            name="%perspective.name">
      </perspective>
   </extension>
-  
+
   <extension
         point="org.eclipse.core.runtime.adapters">
      <factory

@@ -108,6 +108,16 @@ public class SharedIcons
 
   public static final String OBJ_BRANCH = OBJ + "branch.png"; //$NON-NLS-1$
 
+  /**
+   * @since 4.1
+   */
+  public static final String OBJ_FOLDER = OBJ + "folder.gif"; //$NON-NLS-1$
+
+  /**
+   * @since 4.1
+   */
+  public static final String OBJ_FILE = OBJ + "file.gif"; //$NON-NLS-1$
+
   public static final String VIEW_SESSIONS = VIEW + "cdo_sessions" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
   public static final String WIZBAN_PACKAGE_MANAGER = WIZBAN + "PackageManager" + IMAGE_FORMAT_GIF; //$NON-NLS-1$

@@ -179,8 +179,7 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
             LobFileStore store = entry.getValue();
             if (store == null)
             {
-              CDOFileResource<?> resource = editorInput.getResource();
-              store = new LobFileStore(resource, uri);
+              store = createStore(uri, editorInput);
               fileStores.put(editorInput, store);
             }
 
@@ -190,6 +189,12 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
       }
 
       throw new IllegalStateException("No editor input is cached for " + uri);
+    }
+
+    protected LobFileStore createStore(URI uri, CDOLobEditorInput editorInput)
+    {
+      CDOFileResource<?> resource = editorInput.getResource();
+      return new LobFileStore(resource, uri);
     }
   }
 

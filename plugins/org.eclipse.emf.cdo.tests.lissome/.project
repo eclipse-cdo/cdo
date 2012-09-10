@@ -20,7 +20,7 @@
 			<arguments>
 				<dictionary>
 					<key>release.path</key>
-					<value>/org.eclipse.emf.cdo.releng/release.xml</value>
+					<value>/org.eclipse.emf.cdo.releng.release/release.xml</value>
 				</dictionary>
 			</arguments>
 		</buildCommand>

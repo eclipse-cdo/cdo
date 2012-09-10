@@ -10,12 +10,13 @@
  */
 package org.eclipse.emf.cdo.transfer;
 
+import org.eclipse.net4j.util.io.IORuntimeException;
+
 import org.eclipse.emf.common.util.URI;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -164,7 +165,7 @@ public abstract class CDOTransferElement
   {
     if (isDirectory())
     {
-      throw new IOException("Not supported for directories");
+      throw new IORuntimeException("Not supported for directories");
     }
   }
 }

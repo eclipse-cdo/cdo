@@ -14,6 +14,7 @@ import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.event.Notifier;
+import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.EList;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
@@ -672,9 +674,16 @@ public class CDOTransfer implements INotifier
 
     protected void save()
     {
-      for (Resource resource : elementResources.values())
+      try
       {
-        resource.save(null);
+        for (Resource resource : elementResources.values())
+        {
+          resource.save(null);
+        }
+      }
+      catch (IOException ex)
+      {
+        throw new IORuntimeException(ex);
       }
     }
   }

@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.transfer.CDOTransferType;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.EList;
@@ -157,26 +158,40 @@ public class RepositoryTransferSystem extends CDOTransferSystem
   }
 
   @Override
-  public void createFolder(IPath path) throws IOException
+  public void createFolder(IPath path)
   {
     ((CDOTransaction)view).createResourceFolder(path.toString());
   }
 
   @Override
-  public void createBinary(IPath path, InputStream source) throws IOException
+  public void createBinary(IPath path, InputStream source)
   {
-    CDOBlob blob = new CDOBlob(source);
-    CDOBinaryResource resource = ((CDOTransaction)view).createBinaryResource(path.toString());
-    resource.setContents(blob);
+    try
+    {
+      CDOBlob blob = new CDOBlob(source);
+      CDOBinaryResource resource = ((CDOTransaction)view).createBinaryResource(path.toString());
+      resource.setContents(blob);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
   }
 
   @Override
-  public void createText(IPath path, InputStream source, String encoding) throws IOException
+  public void createText(IPath path, InputStream source, String encoding)
   {
-    CDOClob clob = new CDOClob(new InputStreamReader(source, encoding));
-    CDOTextResource resource = ((CDOTransaction)view).createTextResource(path.toString());
-    resource.setContents(clob);
-    resource.setEncoding(encoding);
+    try
+    {
+      CDOClob clob = new CDOClob(new InputStreamReader(source, encoding));
+      CDOTextResource resource = ((CDOTransaction)view).createTextResource(path.toString());
+      resource.setContents(clob);
+      resource.setEncoding(encoding);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
   }
 
   @Override
@@ -217,7 +232,7 @@ public class RepositoryTransferSystem extends CDOTransferSystem
     }
 
     @Override
-    protected CDOTransferElement[] doGetChildren() throws IOException
+    protected CDOTransferElement[] doGetChildren()
     {
       EList<EObject> children = rootResource.getContents();
       int size = children.size();
@@ -233,7 +248,7 @@ public class RepositoryTransferSystem extends CDOTransferSystem
     }
 
     @Override
-    protected InputStream doOpenInputStream() throws IOException
+    protected InputStream doOpenInputStream()
     {
       throw new UnsupportedOperationException();
     }
@@ -271,7 +286,7 @@ public class RepositoryTransferSystem extends CDOTransferSystem
     }
 
     @Override
-    protected CDOTransferElement[] doGetChildren() throws IOException
+    protected CDOTransferElement[] doGetChildren()
     {
       EList<CDOResourceNode> children = ((CDOResourceFolder)node).getNodes();
       int size = children.size();
@@ -287,32 +302,39 @@ public class RepositoryTransferSystem extends CDOTransferSystem
     }
 
     @Override
-    protected InputStream doOpenInputStream() throws IOException
+    protected InputStream doOpenInputStream()
     {
-      if (node instanceof CDOBinaryResource)
+      try
       {
-        CDOBinaryResource resource = (CDOBinaryResource)node;
-        return resource.getContents().getContents();
+        if (node instanceof CDOBinaryResource)
+        {
+          CDOBinaryResource resource = (CDOBinaryResource)node;
+          return resource.getContents().getContents();
+        }
+
+        if (node instanceof CDOTextResource)
+        {
+          CDOTextResource resource = (CDOTextResource)node;
+          Reader reader = resource.getContents().getContents();
+          CharArrayWriter buffer = new CharArrayWriter(); // TODO Make more scalable
+
+          try
+          {
+            IOUtil.copyCharacter(reader, buffer);
+          }
+          finally
+          {
+            IOUtil.close(reader);
+          }
+
+          String encoding = resource.getEncoding();
+          byte[] bytes = buffer.toString().getBytes(encoding);
+          return new ByteArrayInputStream(bytes);
+        }
       }
-
-      if (node instanceof CDOTextResource)
+      catch (IOException ex)
       {
-        CDOTextResource resource = (CDOTextResource)node;
-        Reader reader = resource.getContents().getContents();
-        CharArrayWriter buffer = new CharArrayWriter(); // TODO Make more scalable
-
-        try
-        {
-          IOUtil.copyCharacter(reader, buffer);
-        }
-        finally
-        {
-          IOUtil.close(reader);
-        }
-
-        String encoding = resource.getEncoding();
-        byte[] bytes = buffer.toString().getBytes(encoding);
-        return new ByteArrayInputStream(bytes);
+        throw new IORuntimeException(ex);
       }
 
       throw new IllegalStateException("Not a file resource: " + node);

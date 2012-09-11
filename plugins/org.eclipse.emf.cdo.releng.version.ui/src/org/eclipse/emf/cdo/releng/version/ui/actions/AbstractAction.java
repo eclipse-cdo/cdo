@@ -87,8 +87,7 @@ public abstract class AbstractAction<ARGS> implements IObjectActionDelegate
     catch (Exception ex)
     {
       Activator.log(ex);
-      MessageDialog.openError(shell, "CDO Release Engineering Version Tool",
-          "An error occured. Consult the error log for details.");
+      MessageDialog.openError(shell, "Version Management", "An error occured. Consult the error log for details.");
     }
   }
 

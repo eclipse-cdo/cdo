@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
+import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.io.IOUtil;
@@ -41,6 +42,8 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -49,6 +52,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -431,6 +435,55 @@ public class ResourceTest extends AbstractCDOTest
       assertEquals(transaction, resource.cdoView());
       assertNull(resource.cdoRevision());
     }
+  }
+
+  public void testRemoveResourceByIndex() throws Exception
+  {
+    final int trees = 5;
+    final int depth = 5;
+    int count = 0;
+
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+      for (int i = 0; i < trees; i++)
+      {
+        Category tree = createCategoryTree(depth);
+        if (count == 0)
+        {
+          count = 1 + countObjects(tree);
+        }
+
+        resource.getContents().add(tree);
+      }
+
+      transaction.commit();
+      session.close();
+    }
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    transaction.options().setStrongReferencePolicy(CDOAdapterPolicy.ALL);
+
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
+    EList<EObject> contents = resource.getContents();
+    int expected = ((InternalCDOTransaction)transaction).getObjects().size() + count;
+
+    contents.remove(3);
+    assertEquals(expected, ((InternalCDOTransaction)transaction).getObjects().size());
+  }
+
+  private int countObjects(EObject tree)
+  {
+    int count = 0;
+    for (TreeIterator<EObject> it = tree.eAllContents(); it.hasNext();)
+    {
+      it.next();
+      ++count;
+    }
+
+    return count;
   }
 
   public void testAttachResource() throws Exception

@@ -264,7 +264,7 @@ public class ResourceTest extends AbstractCDOTest
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOTransaction transaction = session.openTransaction(resourceSet);
     CDOResource rootResource = (CDOResource)resourceSet.getEObject(rootResourceURI, true);
-    assertProxy(rootResource);
+    // assertProxy(rootResource);
     assertSame(rootResource, transaction.getRootResource());
 
     CDOResource resource = (CDOResource)resourceSet.getEObject(resourceURI, true);

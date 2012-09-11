@@ -14,10 +14,6 @@
 			<name>org.eclipse.emf.cdo.releng.version.VersionBuilder</name>
 			<arguments>
 				<dictionary>
-					<key>ignore.feature.content.changes</key>
-					<value>true</value>
-				</dictionary>
-				<dictionary>
 					<key>release.path</key>
 					<value>/org.eclipse.emf.cdo.releng.release/release.xml</value>
 				</dictionary>

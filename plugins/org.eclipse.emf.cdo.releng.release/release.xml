@@ -186,7 +186,6 @@
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.0" license="true"/>
 		<plugin name="org.eclipse.emf.cdo.releng.version" version="1.0.0"/>
 		<plugin name="org.eclipse.emf.cdo.releng.version.digest" version="1.0.0"/>
-		<plugin name="org.eclipse.emf.cdo.releng.version.digest.ui" version="0.0.0"/> <!-- UNRESOLVED -->
 	</feature>
 	<feature name="org.eclipse.emf.cdo.releng.windowtitle" version="1.0.0">
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.0" license="true"/>
@@ -350,9 +349,6 @@
 		<feature name="org.eclipse.net4j.db.h2" version="4.1.0"/>
 		<plugin name="org.eclipse.net4j.util" version="3.2.0"/>
 		<plugin name="org.eclipse.net4j.db" version="4.1.0"/>
-	</feature>
-	<feature name="org.eclipse.net4j.db.db2" version="4.1.0">
-		<plugin name="org.eclipse.net4j.db.mysql" version="4.0.100"/>
 	</feature>
 	<feature name="org.eclipse.net4j.db.derby" version="4.1.0">
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.0" license="true"/>
@@ -562,7 +558,6 @@
 	<plugin name="org.eclipse.emf.cdo.releng.tasks" version="1.0.0"/>
 	<plugin name="org.eclipse.emf.cdo.releng.version" version="1.0.0"/>
 	<plugin name="org.eclipse.emf.cdo.releng.version.digest" version="1.0.0"/>
-	<plugin name="org.eclipse.emf.cdo.releng.version.digest.ui" version="0.0.0"/> <!-- UNRESOLVED -->
 	<plugin name="org.eclipse.emf.cdo.releng.windowtitle" version="1.0.0"/>
 	<plugin name="org.eclipse.emf.cdo.releng.winexplorer" version="1.0.0"/>
 	<plugin name="org.eclipse.emf.cdo.releng.workingsets" version="1.0.0"/>

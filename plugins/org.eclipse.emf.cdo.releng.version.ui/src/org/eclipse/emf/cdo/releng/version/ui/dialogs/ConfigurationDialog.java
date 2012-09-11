@@ -169,52 +169,52 @@ public class ConfigurationDialog extends TitleAreaDialog implements IVersionBuil
 
   public String getReleasePath()
   {
-    throw new UnsupportedOperationException();
+    return values.getReleasePath();
   }
 
   public String getValidatorClassName()
   {
-    throw new UnsupportedOperationException();
+    return values.getValidatorClassName();
   }
 
   public boolean isIgnoreMalformedVersions()
   {
-    throw new UnsupportedOperationException();
+    return values.isIgnoreMalformedVersions();
   }
 
   public boolean isIgnoreFeatureNature()
   {
-    throw new UnsupportedOperationException();
+    return values.isIgnoreFeatureNature();
   }
 
   public boolean isIgnoreSchemaBuilder()
   {
-    throw new UnsupportedOperationException();
+    return values.isIgnoreSchemaBuilder();
   }
 
   public boolean isIgnoreDebugOptions()
   {
-    throw new UnsupportedOperationException();
+    return values.isIgnoreDebugOptions();
   }
 
   public boolean isIgnoreMissingDependencyRanges()
   {
-    throw new UnsupportedOperationException();
+    return values.isIgnoreMissingDependencyRanges();
   }
 
   public boolean isIgnoreMissingExportVersions()
   {
-    throw new UnsupportedOperationException();
+    return values.isIgnoreMissingExportVersions();
   }
 
   public boolean isIgnoreFeatureContentRedundancy()
   {
-    throw new UnsupportedOperationException();
+    return values.isIgnoreFeatureContentRedundancy();
   }
 
   public boolean isIgnoreFeatureContentChanges()
   {
-    throw new UnsupportedOperationException();
+    return values.isIgnoreFeatureContentChanges();
   }
 
   public void applyTo(IProject project) throws CoreException

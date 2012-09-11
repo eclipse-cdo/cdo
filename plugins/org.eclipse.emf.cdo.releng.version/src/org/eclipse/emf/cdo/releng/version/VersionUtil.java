@@ -32,6 +32,8 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.pde.core.IModel;
+import org.eclipse.pde.core.build.IBuild;
+import org.eclipse.pde.core.build.IBuildModel;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.core.plugin.PluginRegistry;
 
@@ -452,5 +454,48 @@ public final class VersionUtil
     }
 
     return buildConfigs.toArray(new IBuildConfiguration[buildConfigs.size()]);
+  }
+
+  public static IBuild getBuild(IModel componentModel) throws CoreException
+  {
+    IBuildModel buildModel = getBuildModel(componentModel);
+
+    IBuild build = buildModel.getBuild();
+    if (build == null)
+    {
+      throw new IllegalStateException("Could not determine build model for " + getName(componentModel));
+    }
+
+    return build;
+  }
+
+  @SuppressWarnings("restriction")
+  public static IBuildModel getBuildModel(IModel componentModel) throws CoreException
+  {
+    IProject project = componentModel.getUnderlyingResource().getProject();
+    if (project != null)
+    {
+      IFile buildFile = org.eclipse.pde.internal.core.project.PDEProject.getBuildProperties(project);
+      if (buildFile.exists())
+      {
+        IBuildModel buildModel = new org.eclipse.pde.internal.core.build.WorkspaceBuildModel(buildFile);
+        buildModel.load();
+        return buildModel;
+      }
+    }
+    
+    throw new IllegalStateException("Could not determine build model for " + getName(componentModel));
+  }
+
+  @SuppressWarnings("restriction")
+  private static String getName(IModel componentModel)
+  {
+    if (componentModel instanceof IPluginModelBase)
+    {
+      IPluginModelBase pluginModel = (IPluginModelBase)componentModel;
+      return pluginModel.getBundleDescription().getSymbolicName();
+    }
+
+    return ((org.eclipse.pde.internal.core.ifeature.IFeatureModel)componentModel).getFeature().getId();
   }
 }

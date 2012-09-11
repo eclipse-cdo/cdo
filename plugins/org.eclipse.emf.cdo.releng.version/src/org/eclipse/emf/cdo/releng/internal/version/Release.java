@@ -54,6 +54,8 @@ public class Release implements IRelease
 
   public static final String VERSION_ATTRIBUTE = "version";
 
+  public static final String LICENSE_ATTRIBUTE = "license";
+
   private static final String INDENT = "\t";
 
   private IFile file;
@@ -177,7 +179,7 @@ public class Release implements IRelease
     Version version = element.getVersion();
 
     builder.append(indent + "<" + element.getTag() + " " + NAME_ATTRIBUTE + "=\"" + name + "\" " + VERSION_ATTRIBUTE
-        + "=\"" + version + "\"");
+        + "=\"" + version + "\"" + (element.isLicenseFeature() ? " license=\"true\"" : ""));
 
     List<IElement> content = element.getChildren();
     if (content.isEmpty())
@@ -276,8 +278,15 @@ public class Release implements IRelease
     {
       String name = getString(attributes, NAME_ATTRIBUTE);
       Version version = new Version(getString(attributes, VERSION_ATTRIBUTE));
-
-      return new Element(type, name, version);
+      Element element = new Element(type, name, version);
+      
+      String license = getString(attributes, LICENSE_ATTRIBUTE);
+      if ("true".equals(license))
+      {
+        element.setLicenseFeature(true);
+      }
+      
+      return element;
     }
 
     @Override
@@ -292,7 +301,7 @@ public class Release implements IRelease
     private String getString(Attributes attributes, String name) throws SAXException
     {
       String value = attributes.getValue(name);
-      if (value != null)
+      if (value != null || LICENSE_ATTRIBUTE.equals(name))
       {
         return value;
       }

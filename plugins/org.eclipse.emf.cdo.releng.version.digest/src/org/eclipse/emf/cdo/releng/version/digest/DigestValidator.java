@@ -30,7 +30,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.pde.core.IModel;
 import org.eclipse.pde.core.build.IBuild;
 import org.eclipse.pde.core.build.IBuildEntry;
-import org.eclipse.pde.core.build.IBuildModel;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 
 import org.osgi.framework.Version;
@@ -522,7 +521,7 @@ public class DigestValidator extends VersionValidator
       considered.clear();
       considered.add("");
 
-      IBuild build = getBuild(componentModel);
+      IBuild build = VersionUtil.getBuild(componentModel);
       IBuildEntry binIncludes = build.getEntry(IBuildEntry.BIN_INCLUDES);
       if (binIncludes != null)
       {
@@ -565,45 +564,6 @@ public class DigestValidator extends VersionValidator
       }
 
       return false;
-    }
-
-    @SuppressWarnings("restriction")
-    private IBuild getBuild(IModel componentModel) throws CoreException
-    {
-      IProject project = componentModel.getUnderlyingResource().getProject();
-      IFile buildFile = org.eclipse.pde.internal.core.project.PDEProject.getBuildProperties(project);
-
-      IBuildModel buildModel = null;
-      if (buildFile.exists())
-      {
-        buildModel = new org.eclipse.pde.internal.core.build.WorkspaceBuildModel(buildFile);
-        buildModel.load();
-      }
-
-      if (buildModel == null)
-      {
-        throw new IllegalStateException("Could not determine build model for " + getName(componentModel));
-      }
-
-      IBuild build = buildModel.getBuild();
-      if (build == null)
-      {
-        throw new IllegalStateException("Could not determine build model for " + getName(componentModel));
-      }
-
-      return build;
-    }
-
-    @SuppressWarnings("restriction")
-    private String getName(IModel componentModel)
-    {
-      if (componentModel instanceof IPluginModelBase)
-      {
-        IPluginModelBase pluginModel = (IPluginModelBase)componentModel;
-        return pluginModel.getBundleDescription().getSymbolicName();
-      }
-
-      return ((org.eclipse.pde.internal.core.ifeature.IFeatureModel)componentModel).getFeature().getId();
     }
 
     private void consider(String path)

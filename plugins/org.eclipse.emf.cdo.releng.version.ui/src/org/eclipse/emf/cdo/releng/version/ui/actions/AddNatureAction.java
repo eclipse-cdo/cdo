@@ -34,9 +34,8 @@ import org.eclipse.pde.core.IModel;
 import org.eclipse.pde.core.build.IBuild;
 import org.eclipse.pde.core.build.IBuildEntry;
 import org.eclipse.pde.core.build.IBuildModel;
-import org.eclipse.pde.core.plugin.IPlugin;
+import org.eclipse.pde.core.plugin.IPluginBase;
 import org.eclipse.pde.core.plugin.IPluginImport;
-import org.eclipse.pde.core.plugin.IPluginModel;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.core.plugin.PluginRegistry;
 
@@ -123,8 +122,8 @@ public class AddNatureAction extends AbstractAction<IVersionBuilderArguments>
         }
         else
         {
-          IPlugin plugin = ((IPluginModel)componentModel).getPlugin();
-          for (IPluginImport pluginImport : plugin.getImports())
+          IPluginBase pluginBase = ((IPluginModelBase)componentModel).getPluginBase();
+          for (IPluginImport pluginImport : pluginBase.getImports())
           {
             String importedPluginID = pluginImport.getId();
             String version = pluginImport.getVersion();

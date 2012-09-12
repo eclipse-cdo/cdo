@@ -38,9 +38,9 @@ public interface IElement
 
   public List<IElement> getChildren();
 
-  public Set<IElement> getAllChildren(IElementResolver resolver);
+  public Set<IElement> getAllChildren(IElementResolver resolver, IElementResolver otherResolver);
 
-  public IElement getChild(IElementResolver resolver, IElement key);
+  public IElement getChild(IElementResolver resolver, IElementResolver otherResolver, IElement key);
 
   public IElement trimVersion();
 

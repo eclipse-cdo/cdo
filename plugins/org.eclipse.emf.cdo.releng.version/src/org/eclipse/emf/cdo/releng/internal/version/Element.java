@@ -95,21 +95,21 @@ public class Element implements IElement
     return children;
   }
 
-  public Set<IElement> getAllChildren(IElementResolver resolver)
+  public Set<IElement> getAllChildren(IElementResolver resolver, IElementResolver otherResolver)
   {
     if (allChildren == null)
     {
       allChildren = new HashSet<IElement>();
       for (IElement child : children)
       {
-        recurseChildren(resolver, child);
+        recurseChildren(resolver, otherResolver, child);
       }
     }
 
     return allChildren;
   }
 
-  private void recurseChildren(IElementResolver resolver, IElement element)
+  private void recurseChildren(IElementResolver resolver, IElementResolver otherResolver, IElement element)
   {
     if (allChildren.add(element))
     {
@@ -125,19 +125,36 @@ public class Element implements IElement
         }
       }
 
+      IElement otherTopElement = otherResolver.resolveElement(element);
+      if (otherTopElement == null)
+      {
+        // If we fail to find it with an exact version, we try it with an omni version and use that for the children.
+        //
+        otherTopElement = resolver.resolveElement(element.trimVersion());
+        if (otherTopElement == null)
+        {
+          return;
+        }
+      }
+
+      if (otherTopElement.isVersionUnresolved())
+      {
+        return;
+      }
+
       for (IElement child : topElement.getChildren())
       {
         if (!child.isLicenseFeature())
         {
-          recurseChildren(resolver, child);
+          recurseChildren(resolver, otherResolver, child);
         }
       }
     }
   }
 
-  public IElement getChild(IElementResolver resolver, IElement key)
+  public IElement getChild(IElementResolver resolver, IElementResolver otherResolver, IElement key)
   {
-    Set<IElement> allChildren = getAllChildren(resolver);
+    Set<IElement> allChildren = getAllChildren(resolver, otherResolver);
     for (IElement child : allChildren)
     {
       if (child.equals(key))

@@ -51,9 +51,9 @@ public class VersionBuilderTest extends TestCase
 
   private static final IWorkspaceRoot ROOT = WORKSPACE.getRoot();
 
-  private static final File WORKSPACE_FILE = ROOT.getLocation().toFile();
+  private static final File WORKSPACE_FOLDER = ROOT.getLocation().toFile();
 
-  private static final int TRIM_LENGTH = WORKSPACE_FILE.getAbsolutePath().length() + 1;
+  private static final int TRIM_LENGTH = WORKSPACE_FOLDER.getAbsolutePath().length();
 
   private static final String DELETE_SUFFIX = "-DELETE";
 
@@ -149,7 +149,7 @@ public class VersionBuilderTest extends TestCase
           project.delete(true, null);
         }
 
-        for (File file : WORKSPACE_FILE.listFiles())
+        for (File file : WORKSPACE_FOLDER.listFiles())
         {
           if (file.isDirectory() && !".metadata".equals(file.getName()))
           {
@@ -169,9 +169,9 @@ public class VersionBuilderTest extends TestCase
       {
         try
         {
-          updateWorkspace(phase, WORKSPACE_FILE, 0);
+          updateWorkspace(phase, WORKSPACE_FOLDER, 0);
 
-          for (File file : WORKSPACE_FILE.listFiles())
+          for (File file : WORKSPACE_FOLDER.listFiles())
           {
             String name = file.getName();
             if (file.isDirectory() && !".metadata".equals(name))
@@ -196,7 +196,13 @@ public class VersionBuilderTest extends TestCase
             }
           }
 
-          // TODO Remove deleted projects
+          for (IProject project : ROOT.getProjects())
+          {
+            if (phase.getChild(project.getName() + DELETE_SUFFIX) != null)
+            {
+              project.delete(true, null);
+            }
+          }
         }
         catch (CoreException ex)
         {
@@ -216,9 +222,10 @@ public class VersionBuilderTest extends TestCase
 
   private void updateWorkspace(BundleFile source, File target, int level) throws Throwable
   {
+    String relativePath = getRelativePath(target);
     if (source.getName().endsWith(DELETE_SUFFIX))
     {
-      msg("- " + getRelativePath(target));
+      msg("- " + relativePath.substring(0, relativePath.length() - DELETE_SUFFIX.length()));
       VersionUtil.delete(target);
       return;
     }
@@ -227,7 +234,7 @@ public class VersionBuilderTest extends TestCase
     {
       if (!target.exists())
       {
-        msg("+ " + getRelativePath(target));
+        msg("+ " + relativePath);
         target.mkdir();
       }
 
@@ -241,11 +248,11 @@ public class VersionBuilderTest extends TestCase
     {
       if (!target.exists())
       {
-        msg("+ " + getRelativePath(target));
+        msg("+ " + relativePath);
       }
       else
       {
-        msg("* " + getRelativePath(target));
+        msg("* " + relativePath);
       }
 
       source.copyTo(target);

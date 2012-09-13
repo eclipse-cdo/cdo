@@ -10,8 +10,11 @@
  */
 package org.eclipse.emf.cdo.transfer;
 
+import org.eclipse.emf.cdo.internal.transfer.bundle.OM;
+
 import org.eclipse.net4j.util.ObjectUtil;
 
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -110,15 +113,37 @@ public class CDOTransferType implements Comparable<CDOTransferType>
     {
       return (Text)type;
     }
-  
+
     if (type == null)
     {
       Text text = new Text(encoding);
       MAP.put(encoding, text);
       return text;
     }
-  
+
     throw new IllegalArgumentException("Illegal encoding: " + encoding);
+  }
+
+  static
+  {
+    try
+    {
+      for (Charset charset : Charset.availableCharsets().values())
+      {
+        try
+        {
+          text(charset.toString());
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
   }
 
   /**

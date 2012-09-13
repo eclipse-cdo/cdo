@@ -22,7 +22,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Factory;
-import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryRegistryImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -607,11 +606,15 @@ public class CDOTransfer implements INotifier
     {
       CDOTransferElement element = mapping.getSource();
       Resource resource = elementResources.remove(element);
-      resourceElements.remove(resource);
-      resource.unload();
+      if (resource != null)
+      {
+        resourceElements.remove(resource);
+        resource.unload();
 
-      ResourceSet resourceSet = getSourceResourceSet();
-      resourceSet.getResources().remove(resource);
+        ResourceSet resourceSet = getSourceResourceSet();
+        resourceSet.getResources().remove(resource);
+      }
+
       unmappedModels = null;
     }
 
@@ -631,34 +634,17 @@ public class CDOTransfer implements INotifier
 
     protected ResourceSet createResourceSet(CDOTransferSystem system)
     {
-      Resource.Factory.Registry registry = new ResourceFactoryRegistryImpl()
-      {
-        {
-          getProtocolToFactoryMap().putAll(Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap());
-          getExtensionToFactoryMap().putAll(Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap());
-          getContentTypeToFactoryMap().putAll(Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap());
-
-          getExtensionToFactoryMap().remove(Resource.Factory.Registry.DEFAULT_EXTENSION);
-          getContentTypeToFactoryMap().remove(Resource.Factory.Registry.DEFAULT_CONTENT_TYPE_IDENTIFIER);
-        }
-
-        @Override
-        protected Factory delegatedGetFactory(URI uri, String contentTypeIdentifier)
-        {
-          return null;
-        }
-      };
-
       ResourceSet resourceSet = new ResourceSetImpl();
-      resourceSet.setResourceFactoryRegistry(registry);
+      resourceSet.setResourceFactoryRegistry(new ResourceFactoryRegistryWithoutDefaults());
       return resourceSet;
     }
 
     protected boolean hasResourceFactory(CDOTransferElement source)
     {
       URI uri = source.getURI();
+
       // TODO Derive resourceSet from element.getSystem()?
-      Registry registry = getSourceResourceSet().getResourceFactoryRegistry();
+      Resource.Factory.Registry registry = getSourceResourceSet().getResourceFactoryRegistry();
       return registry.getFactory(uri) != null;
     }
 
@@ -687,6 +673,28 @@ public class CDOTransfer implements INotifier
       {
         throw new IORuntimeException(ex);
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  protected static class ResourceFactoryRegistryWithoutDefaults extends ResourceFactoryRegistryImpl
+  {
+    public ResourceFactoryRegistryWithoutDefaults()
+    {
+      getProtocolToFactoryMap().putAll(Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap());
+      getExtensionToFactoryMap().putAll(Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap());
+      getContentTypeToFactoryMap().putAll(Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap());
+
+      getExtensionToFactoryMap().remove(Resource.Factory.Registry.DEFAULT_EXTENSION);
+      getContentTypeToFactoryMap().remove(Resource.Factory.Registry.DEFAULT_CONTENT_TYPE_IDENTIFIER);
+    }
+
+    @Override
+    protected Factory delegatedGetFactory(URI uri, String contentTypeIdentifier)
+    {
+      return null;
     }
   }
 }

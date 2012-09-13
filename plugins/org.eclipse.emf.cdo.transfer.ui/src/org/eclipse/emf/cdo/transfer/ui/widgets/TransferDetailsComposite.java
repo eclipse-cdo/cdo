@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.transfer.CDOTransfer;
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.transfer.CDOTransferMapping;
 import org.eclipse.emf.cdo.transfer.CDOTransferType;
+import org.eclipse.emf.cdo.transfer.ui.TransferTypeContentProvider;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -26,9 +27,13 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -42,9 +47,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -59,13 +63,15 @@ public class TransferDetailsComposite extends Composite implements IListener
 
   private CDOTransfer transfer;
 
+  private CDOTransferType[] transferTypes;
+
   private CDOTransferMapping mapping;
 
   private Text sourcePath;
 
   private Text targetPath;
 
-  private Combo transferType;
+  private ComboViewer transferType;
 
   private Text status;
 
@@ -80,6 +86,7 @@ public class TransferDetailsComposite extends Composite implements IListener
     super(parent, style);
     this.transfer = transfer;
     this.transfer.addListener(this);
+    initTransferTypes(transfer);
 
     GridLayout gl_composite = new GridLayout(4, false);
     gl_composite.marginWidth = 10;
@@ -96,33 +103,22 @@ public class TransferDetailsComposite extends Composite implements IListener
     transferTypeLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
     transferTypeLabel.setText("Type:");
 
-    transferType = new Combo(this, SWT.NONE);
-    transferType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-    transferType.addSelectionListener(new SelectionAdapter()
+    transferType = new ComboViewer(this, SWT.NONE);
+    transferType.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+    transferType.setContentProvider(new TransferTypeContentProvider());
+    transferType.setLabelProvider(new LabelProvider());
+    transferType.addSelectionChangedListener(new ISelectionChangedListener()
     {
-      @Override
-      public void widgetSelected(SelectionEvent e)
+      public void selectionChanged(SelectionChangedEvent event)
       {
         if (mapping != null)
         {
-          String text = transferType.getText();
-          CDOTransferType type = CDOTransferType.REGISTRY.get(text);
+          IStructuredSelection selection = (IStructuredSelection)transferType.getSelection();
+          CDOTransferType type = (CDOTransferType)selection.getFirstElement();
           mapping.setTransferType(type);
         }
       }
     });
-
-    Set<CDOTransferType> usedTransferTypes = transfer.getUsedTransferTypes();
-    usedTransferTypes.addAll(CDOTransferType.STANDARD_TYPES);
-    usedTransferTypes.addAll(CDOTransferType.STANDARD_TYPES);
-
-    List<CDOTransferType> transferTypes = new ArrayList<CDOTransferType>(usedTransferTypes);
-    Collections.sort(transferTypes);
-
-    for (CDOTransferType type : transferTypes)
-    {
-      transferType.add(type.toString());
-    }
 
     Label targetPathLabel = new Label(this, SWT.NONE);
     targetPathLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -327,17 +323,23 @@ public class TransferDetailsComposite extends Composite implements IListener
       {
         sourcePath.setText(mapping.getSource().getPath().toString());
         targetPath.setText(mapping.getFullPath().toString());
-        transferType.setText(mapping.getTransferType().toString());
         status.setText(mapping.getStatus().toString());
         relativePath.setText(mapping.getRelativePath().toString());
+
+        CDOTransferType type = mapping.getTransferType();
+        transferType.setInput(type != CDOTransferType.FOLDER ? transferTypes : CDOTransferType.FOLDER);
+        transferType.setSelection(new StructuredSelection(type));
+        transferType.getCombo().setEnabled(type != CDOTransferType.FOLDER);
       }
       else
       {
         sourcePath.setText(StringUtil.EMPTY);
         targetPath.setText(StringUtil.EMPTY);
-        transferType.setText(StringUtil.EMPTY);
         status.setText(StringUtil.EMPTY);
         relativePath.setText(StringUtil.EMPTY);
+
+        transferType.setInput(TransferTypeContentProvider.NO_TANSFER_TYPES);
+        transferType.setSelection(StructuredSelection.EMPTY);
       }
     }
   }
@@ -352,7 +354,7 @@ public class TransferDetailsComposite extends Composite implements IListener
     return targetPath;
   }
 
-  public Combo getTransferType()
+  public ComboViewer getTransferType()
   {
     return transferType;
   }
@@ -400,14 +402,15 @@ public class TransferDetailsComposite extends Composite implements IListener
     if (event instanceof CDOTransfer.TransferTypeChangedEvent)
     {
       CDOTransfer.TransferTypeChangedEvent e = (CDOTransfer.TransferTypeChangedEvent)event;
-      final String value = e.getNewType().toString();
+      final CDOTransferType newType = e.getNewType();
       getDisplay().asyncExec(new Runnable()
       {
         public void run()
         {
-          if (!ObjectUtil.equals(value, transferType.getText()))
+          Object currentType = ((IStructuredSelection)transferType.getSelection()).getFirstElement();
+          if (currentType != newType)
           {
-            transferType.setText(value);
+            transferType.setSelection(new StructuredSelection(newType));
           }
 
           unmappedModels.refresh();
@@ -430,6 +433,15 @@ public class TransferDetailsComposite extends Composite implements IListener
         });
       }
     }
+  }
+
+  protected void initTransferTypes(final CDOTransfer transfer)
+  {
+    Set<CDOTransferType> set = new HashSet<CDOTransferType>(CDOTransferType.REGISTRY.values());
+    set.remove(CDOTransferType.FOLDER);
+
+    transferTypes = set.toArray(new CDOTransferType[set.size()]);
+    Arrays.sort(transferTypes);
   }
 
   /**

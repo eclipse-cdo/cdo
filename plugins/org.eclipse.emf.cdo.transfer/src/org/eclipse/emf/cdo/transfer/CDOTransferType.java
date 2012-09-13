@@ -15,12 +15,9 @@ import org.eclipse.emf.cdo.internal.transfer.bundle.OM;
 import org.eclipse.net4j.util.ObjectUtil;
 
 import java.nio.charset.Charset;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -32,15 +29,6 @@ public class CDOTransferType implements Comparable<CDOTransferType>
    * Must be declared/initialized <b>before</b> any transfer types!
    */
   private static final Map<String, CDOTransferType> MAP = new HashMap<String, CDOTransferType>();
-
-  public static final CDOTransferType UNKNOWN = new CDOTransferType()
-  {
-    @Override
-    public String toString()
-    {
-      return "<Unknown>";
-    }
-  };
 
   public static final CDOTransferType FOLDER = new CDOTransferType()
   {
@@ -70,9 +58,6 @@ public class CDOTransferType implements Comparable<CDOTransferType>
   };
 
   public static final Text UTF8 = text("UTF-8");
-
-  public static final Set<CDOTransferType> STANDARD_TYPES = new HashSet<CDOTransferType>(Arrays.asList(UNKNOWN, FOLDER,
-      MODEL, BINARY, UTF8));
 
   public static final Map<String, CDOTransferType> REGISTRY = Collections.unmodifiableMap(MAP);
 

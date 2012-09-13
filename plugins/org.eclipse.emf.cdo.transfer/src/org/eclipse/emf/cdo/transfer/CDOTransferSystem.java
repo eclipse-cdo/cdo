@@ -51,7 +51,7 @@ public abstract class CDOTransferSystem
       return CDOTransferType.FOLDER;
     }
 
-    return CDOTransferType.UNKNOWN;
+    return null;
   }
 
   public abstract URI getURI(IPath path);

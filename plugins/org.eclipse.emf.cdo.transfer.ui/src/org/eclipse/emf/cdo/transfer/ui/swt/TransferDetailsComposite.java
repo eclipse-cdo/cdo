@@ -11,8 +11,11 @@
 package org.eclipse.emf.cdo.transfer.ui.swt;
 
 import org.eclipse.emf.cdo.transfer.CDOTransfer;
+import org.eclipse.emf.cdo.transfer.CDOTransfer.ModelTransferContext;
+import org.eclipse.emf.cdo.transfer.CDOTransfer.ModelTransferResolution;
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.transfer.CDOTransferMapping;
+import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
 import org.eclipse.emf.cdo.transfer.CDOTransferType;
 import org.eclipse.emf.cdo.transfer.ui.TransferTypeContentProvider;
 
@@ -21,6 +24,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -28,6 +32,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -39,6 +44,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -46,6 +52,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -80,6 +87,12 @@ public class TransferDetailsComposite extends Composite implements IListener
   private Combo resolution;
 
   private ListViewer unmappedModels;
+
+  private Button mapSource;
+
+  private Button replaceTarget;
+
+  private Button keepAsIs;
 
   public TransferDetailsComposite(Composite parent, int style, final CDOTransfer transfer)
   {
@@ -252,11 +265,21 @@ public class TransferDetailsComposite extends Composite implements IListener
 
     unmappedModels = new ListViewer(this, SWT.BORDER);
     org.eclipse.swt.widgets.List list = unmappedModels.getList();
+    list.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
     list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
     unmappedModels.setContentProvider(new UnmappedModelsContentProvider());
-    unmappedModels.setLabelProvider(new UnmappedModelsLabelProvider());
+    unmappedModels.setLabelProvider(new UnmappedModelsLabelProvider(transfer));
     unmappedModels.setInput(transfer);
+    unmappedModels.addSelectionChangedListener(new ISelectionChangedListener()
+    {
+      public void selectionChanged(SelectionChangedEvent event)
+      {
+        IStructuredSelection selection = (IStructuredSelection)unmappedModels.getSelection();
+        Resource resource = (Resource)selection.getFirstElement();
+        updateTransformationButtons(resource);
+      }
+    });
 
     GridLayout transformationButtonsPaneLayout = new GridLayout(1, false);
     transformationButtonsPaneLayout.marginWidth = 0;
@@ -266,7 +289,7 @@ public class TransferDetailsComposite extends Composite implements IListener
     transformationButtonsPane.setLayout(transformationButtonsPaneLayout);
     transformationButtonsPane.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
 
-    Button mapSource = new Button(transformationButtonsPane, SWT.NONE);
+    mapSource = new Button(transformationButtonsPane, SWT.NONE);
     mapSource.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     mapSource.setBounds(0, 0, 75, 25);
     mapSource.setText("Map From Source");
@@ -284,15 +307,31 @@ public class TransferDetailsComposite extends Composite implements IListener
       }
     });
 
-    Button replaceTarget = new Button(transformationButtonsPane, SWT.NONE);
+    replaceTarget = new Button(transformationButtonsPane, SWT.NONE);
     replaceTarget.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     replaceTarget.setBounds(0, 0, 75, 25);
     replaceTarget.setText("Replace With Target");
 
-    Button keepAsIs = new Button(transformationButtonsPane, SWT.NONE);
+    keepAsIs = new Button(transformationButtonsPane, SWT.NONE);
     keepAsIs.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     keepAsIs.setBounds(0, 0, 75, 25);
     keepAsIs.setText("Keep As Is");
+    keepAsIs.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        IStructuredSelection selection = (IStructuredSelection)unmappedModels.getSelection();
+        Resource resource = (Resource)selection.getFirstElement();
+
+        URI uri = resource.getURI();
+        transfer.getModelTransferContext().setResolution(uri, new ModelTransferResolution()
+        {
+        });
+      }
+    });
+
+    updateTransformationButtons(null);
   }
 
   @Override
@@ -395,6 +434,16 @@ public class TransferDetailsComposite extends Composite implements IListener
         notifyMappingEvent(e);
       }
     }
+    else if (event instanceof CDOTransfer.UnmappedModelsEvent)
+    {
+      getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          unmappedModels.refresh();
+        }
+      });
+    }
   }
 
   protected void notifyMappingEvent(CDOTransfer.MappingEvent event)
@@ -444,6 +493,26 @@ public class TransferDetailsComposite extends Composite implements IListener
     Arrays.sort(transferTypes);
   }
 
+  protected void updateTransformationButtons(Resource resource)
+  {
+    if (resource == null)
+    {
+      mapSource.setEnabled(false);
+      replaceTarget.setEnabled(false);
+      keepAsIs.setEnabled(false);
+      return;
+    }
+
+    URI uri = resource.getURI();
+    CDOTransferSystem sourceSystem = transfer.getSourceSystem();
+    CDOTransferElement sourceElement = sourceSystem.getElement(uri);
+    mapSource.setEnabled(sourceElement != null);
+
+    ModelTransferContext context = transfer.getModelTransferContext();
+    ModelTransferResolution resolution = context.getResolution(uri);
+    keepAsIs.setEnabled(resolution == null); // TODO Test type of resolution
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -460,8 +529,24 @@ public class TransferDetailsComposite extends Composite implements IListener
   /**
    * @author Eike Stepper
    */
-  public static class UnmappedModelsLabelProvider extends LabelProvider
+  public static class UnmappedModelsLabelProvider extends LabelProvider implements IColorProvider
   {
+    public static final Color GRAY = UIUtil.getDisplay().getSystemColor(SWT.COLOR_GRAY);
+
+    public static final Color RED = UIUtil.getDisplay().getSystemColor(SWT.COLOR_RED);
+
+    private CDOTransfer transfer;
+
+    public UnmappedModelsLabelProvider(CDOTransfer transfer)
+    {
+      this.transfer = transfer;
+    }
+
+    public CDOTransfer getTransfer()
+    {
+      return transfer;
+    }
+
     @Override
     public String getText(Object element)
     {
@@ -472,6 +557,29 @@ public class TransferDetailsComposite extends Composite implements IListener
       }
 
       return super.getText(element);
+    }
+
+    public Color getForeground(Object element)
+    {
+      if (element instanceof Resource)
+      {
+        Resource resource = (Resource)element;
+        URI uri = resource.getURI();
+
+        ModelTransferContext context = transfer.getModelTransferContext();
+        ModelTransferResolution resolution = context.getResolution(uri);
+        if (resolution != null) // TODO Test type of resolution
+        {
+          return GRAY;
+        }
+      }
+
+      return RED;
+    }
+
+    public Color getBackground(Object element)
+    {
+      return null;
     }
   }
 }

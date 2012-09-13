@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.transfer.ui;
 import org.eclipse.emf.cdo.transfer.CDOTransfer;
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
-import org.eclipse.emf.cdo.transfer.internal.ui.TransferView;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider.Factory;
 
@@ -24,6 +23,7 @@ import org.eclipse.net4j.util.ui.dnd.DNDDropAdapter;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.widgets.Shell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,12 +108,21 @@ public class TransferDropAdapter extends DNDDropAdapter<Object>
 
   protected boolean performTransfer(CDOTransfer transfer)
   {
-    if (TransferView.INSTANCE == null)
+    Shell shell = getViewer().getControl().getShell();
+    TransferDialog dialog = new TransferDialog(shell, transfer);
+    if (dialog.open() == TransferDialog.OK)
     {
-      return false;
+      transfer.perform();
+      return true;
     }
 
-    TransferView.INSTANCE.setTransfer(transfer);
+    // if (TransferView.INSTANCE == null)
+    // {
+    // return false;
+    // }
+    //
+    // TransferView.INSTANCE.setTransfer(transfer);
+
     return false;
   }
 

@@ -15,12 +15,19 @@ import org.eclipse.emf.cdo.transfer.CDOTransferMapping;
 import org.eclipse.emf.cdo.transfer.ui.TransferContentProvider;
 import org.eclipse.emf.cdo.transfer.ui.TransferLabelProvider;
 
+import org.eclipse.net4j.ui.shared.SharedIcons;
+
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 
@@ -70,6 +77,21 @@ public class TransferTreeComposite extends Composite
     viewer.setContentProvider(new TransferContentProvider());
     viewer.setLabelProvider(new TransferLabelProvider(transfer));
     viewer.setInput(transfer.getRootMapping());
+
+    MenuManager manager = new MenuManager();
+    Menu menu = manager.createContextMenu(tree);
+    manager.addMenuListener(new IMenuListener()
+    {
+      public void menuAboutToShow(IMenuManager manager)
+      {
+        IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+        CDOTransferMapping mapping = (CDOTransferMapping)selection.getFirstElement();
+        manager.add(new UnmapAction(mapping));
+      }
+    });
+
+    manager.setRemoveAllWhenShown(true);
+    tree.setMenu(menu);
   }
 
   public CDOTransfer getTransfer()
@@ -92,5 +114,30 @@ public class TransferTreeComposite extends Composite
   public boolean setFocus()
   {
     return viewer.getTree().setFocus();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class UnmapAction extends Action
+  {
+    private CDOTransferMapping mapping;
+
+    public UnmapAction(CDOTransferMapping mapping)
+    {
+      super("Unmap", SharedIcons.getDescriptor(SharedIcons.ETOOL_DELETE));
+      this.mapping = mapping;
+    }
+
+    public CDOTransferMapping getMapping()
+    {
+      return mapping;
+    }
+
+    @Override
+    public void run()
+    {
+      mapping.unmap();
+    }
   }
 }

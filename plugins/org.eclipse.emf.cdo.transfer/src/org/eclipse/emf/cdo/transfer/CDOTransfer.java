@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.transfer;
 
+import org.eclipse.emf.cdo.spi.transfer.ResourceFactoryRegistryWithoutDefaults;
+
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
@@ -21,9 +23,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.Resource.Factory;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceFactoryRegistryImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
@@ -54,7 +54,7 @@ public class CDOTransfer implements INotifier
 
   private final Map<CDOTransferElement, CDOTransferMapping> mappings = new HashMap<CDOTransferElement, CDOTransferMapping>();
 
-  private CDOTransferType defaultTransferType = CDOTransferType.UNKNOWN;
+  private CDOTransferType defaultTransferType = CDOTransferType.BINARY;
 
   private ModelTransferContext modelTransferContext = createModelTransferContext();
 
@@ -182,7 +182,7 @@ public class CDOTransfer implements INotifier
 
   protected ModelTransferContext createModelTransferContext()
   {
-    return new ModelTransferContext();
+    return new ModelTransferContext(this);
   }
 
   protected CDOTransferType getTransferType(CDOTransferElement source)
@@ -198,7 +198,7 @@ public class CDOTransfer implements INotifier
     }
 
     CDOTransferType type = sourceSystem.getDefaultTransferType(source);
-    if (type == CDOTransferType.UNKNOWN)
+    if (type == null)
     {
       type = getDefaultTransferType();
     }
@@ -484,8 +484,23 @@ public class CDOTransfer implements INotifier
   /**
    * @author Eike Stepper
    */
-  public class ModelTransferContext
+  public static class UnmappedModelsEvent extends Event
   {
+    private static final long serialVersionUID = 1L;
+
+    private UnmappedModelsEvent(CDOTransfer transfer)
+    {
+      super(transfer);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class ModelTransferContext
+  {
+    private final CDOTransfer transfer;
+
     private ResourceSet sourceResourceSet;
 
     private ResourceSet targetResourceSet;
@@ -496,14 +511,23 @@ public class CDOTransfer implements INotifier
 
     private Set<Resource> unmappedModels;
 
-    protected ModelTransferContext()
+    private Map<URI, ModelTransferResolution> resolutions = new HashMap<URI, ModelTransferResolution>();
+
+    protected ModelTransferContext(CDOTransfer transfer)
     {
+      this.transfer = transfer;
+    }
+
+    public final CDOTransfer getTransfer()
+    {
+      return transfer;
     }
 
     public final ResourceSet getSourceResourceSet()
     {
       if (sourceResourceSet == null)
       {
+        CDOTransferSystem sourceSystem = transfer.getSourceSystem();
         sourceResourceSet = sourceSystem.provideResourceSet();
         if (sourceResourceSet == null)
         {
@@ -518,6 +542,7 @@ public class CDOTransfer implements INotifier
     {
       if (targetResourceSet == null)
       {
+        CDOTransferSystem targetSystem = transfer.getTargetSystem();
         targetResourceSet = targetSystem.provideResourceSet();
         if (targetResourceSet == null)
         {
@@ -585,9 +610,32 @@ public class CDOTransfer implements INotifier
             unmappedModels.add(resource);
           }
         }
+
+        fireUnmappedModelsEvent();
       }
 
       return unmappedModels;
+    }
+
+    public ModelTransferResolution getResolution(URI uri)
+    {
+      return resolutions.get(uri);
+    }
+
+    public ModelTransferResolution setResolution(URI uri, ModelTransferResolution resolution)
+    {
+      ModelTransferResolution old = resolutions.put(uri, resolution);
+      if (resolution != old)
+      {
+        fireUnmappedModelsEvent();
+      }
+
+      return old;
+    }
+
+    protected void fireUnmappedModelsEvent()
+    {
+      transfer.notifier.fireEvent(new UnmappedModelsEvent(transfer));
     }
 
     protected void addModelMapping(CDOTransferMapping mapping)
@@ -600,6 +648,7 @@ public class CDOTransfer implements INotifier
       elementResources.put(element, resource);
       resourceElements.put(resource, element);
       unmappedModels = null;
+      fireUnmappedModelsEvent();
     }
 
     protected void removeModelMapping(CDOTransferMapping mapping)
@@ -616,6 +665,7 @@ public class CDOTransfer implements INotifier
       }
 
       unmappedModels = null;
+      fireUnmappedModelsEvent();
     }
 
     protected Resource getSourceResource(CDOTransferMapping mapping)
@@ -629,6 +679,7 @@ public class CDOTransfer implements INotifier
     {
       IPath path = mapping.getFullPath();
       ResourceSet targetResourceSet = getTargetResourceSet();
+      CDOTransferSystem targetSystem = transfer.getTargetSystem();
       return targetSystem.createModel(targetResourceSet, path);
     }
 
@@ -679,22 +730,8 @@ public class CDOTransfer implements INotifier
   /**
    * @author Eike Stepper
    */
-  protected static class ResourceFactoryRegistryWithoutDefaults extends ResourceFactoryRegistryImpl
+  public interface ModelTransferResolution
   {
-    public ResourceFactoryRegistryWithoutDefaults()
-    {
-      getProtocolToFactoryMap().putAll(Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap());
-      getExtensionToFactoryMap().putAll(Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap());
-      getContentTypeToFactoryMap().putAll(Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap());
 
-      getExtensionToFactoryMap().remove(Resource.Factory.Registry.DEFAULT_EXTENSION);
-      getContentTypeToFactoryMap().remove(Resource.Factory.Registry.DEFAULT_CONTENT_TYPE_IDENTIFIER);
-    }
-
-    @Override
-    protected Factory delegatedGetFactory(URI uri, String contentTypeIdentifier)
-    {
-      return null;
-    }
   }
 }

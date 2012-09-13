@@ -36,9 +36,23 @@ public abstract class OM
    */
   public static final class Activator extends UIActivator
   {
+    public static Activator INSTANCE;
+
     public Activator()
     {
       super(BUNDLE);
+    }
+
+    @Override
+    protected void doStart() throws Exception
+    {
+      INSTANCE = this;
+    }
+
+    @Override
+    protected void doStop() throws Exception
+    {
+      INSTANCE = null;
     }
   }
 }

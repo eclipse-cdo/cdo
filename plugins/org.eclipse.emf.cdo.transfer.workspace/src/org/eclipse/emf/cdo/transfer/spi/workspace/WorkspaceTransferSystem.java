@@ -27,6 +27,7 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 
 import java.io.InputStream;
 
@@ -95,7 +96,7 @@ public class WorkspaceTransferSystem extends CDOTransferSystem
       switch (type)
       {
       case org.eclipse.team.core.Team.BINARY:
-        return CDOTransferType.FOLDER;
+        return CDOTransferType.BINARY;
       case org.eclipse.team.core.Team.TEXT:
         String encoding = getEncoding(file);
         return CDOTransferType.text(encoding);
@@ -115,7 +116,7 @@ public class WorkspaceTransferSystem extends CDOTransferSystem
   public CDOTransferElement getElement(IPath path)
   {
     IResource resource = ROOT.findMember(path);
-    if (resource.exists())
+    if (resource != null && resource.exists())
     {
       return new Element(this, resource);
     }
@@ -128,7 +129,8 @@ public class WorkspaceTransferSystem extends CDOTransferSystem
   {
     if (uri.isPlatformResource())
     {
-      return getElement(uri.path());
+      IPath path = new Path(uri.path()).removeFirstSegments(1).makeAbsolute();
+      return getElement(path);
     }
 
     return null;

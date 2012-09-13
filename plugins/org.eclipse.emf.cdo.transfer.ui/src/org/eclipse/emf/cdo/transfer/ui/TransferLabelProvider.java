@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.transfer.CDOTransfer;
 import org.eclipse.emf.cdo.transfer.CDOTransferMapping;
 import org.eclipse.emf.cdo.transfer.CDOTransferMapping.Status;
 import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
+import org.eclipse.emf.cdo.transfer.CDOTransferType;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -115,8 +116,16 @@ public class TransferLabelProvider extends LabelProvider implements ITableLabelP
       {
       case 0:
         return null;
+
       case 1:
+        CDOTransferType transferType = mapping.getTransferType();
+        if (transferType == CDOTransferType.FOLDER)
+        {
+          return TransferLabelProvider.GRAY;
+        }
+
         return null;
+
       case 2:
       case 3:
         Status status = mapping.getStatus();

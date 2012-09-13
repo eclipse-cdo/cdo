@@ -17,6 +17,6 @@ Export-Package: org.eclipse.emf.cdo.transfer.internal.ui;version="4.2.0";x-inter
  org.eclipse.emf.cdo.transfer.internal.ui.bundle;version="4.2.0";x-internal:=true,
  org.eclipse.emf.cdo.transfer.spi.ui;version="4.2.0",
  org.eclipse.emf.cdo.transfer.ui;version="4.2.0",
- org.eclipse.emf.cdo.transfer.ui.widgets;version="4.2.0"
+ org.eclipse.emf.cdo.transfer.ui.swt;version="4.2.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.emf.cdo.transfer.internal.ui.bundle.OM$Activator

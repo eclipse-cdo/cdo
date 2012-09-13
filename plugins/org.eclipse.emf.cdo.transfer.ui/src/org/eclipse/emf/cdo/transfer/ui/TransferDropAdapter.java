@@ -103,13 +103,18 @@ public class TransferDropAdapter extends DNDDropAdapter<Object>
       transfer.map(sourceElement);
     }
 
+    return performTransfer(transfer);
+  }
+
+  protected boolean performTransfer(CDOTransfer transfer)
+  {
     if (TransferView.INSTANCE == null)
     {
       return false;
     }
 
     TransferView.INSTANCE.setTransfer(transfer);
-    return true;
+    return false;
   }
 
   protected List<CDOTransferElement> getSourceElements(Object data)

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.transfer.ui.widgets;
+package org.eclipse.emf.cdo.transfer.ui.swt;
 
 import org.eclipse.emf.cdo.transfer.CDOTransfer;
 import org.eclipse.emf.cdo.transfer.CDOTransferMapping;

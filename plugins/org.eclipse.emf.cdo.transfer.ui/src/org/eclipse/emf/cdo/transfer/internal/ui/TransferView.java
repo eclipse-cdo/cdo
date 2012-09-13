@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.transfer.CDOTransfer;
 import org.eclipse.emf.cdo.transfer.CDOTransferMapping;
 import org.eclipse.emf.cdo.transfer.CDOTransferType;
 import org.eclipse.emf.cdo.transfer.spi.workspace.WorkspaceTransferSystem;
-import org.eclipse.emf.cdo.transfer.ui.widgets.TransferComposite;
+import org.eclipse.emf.cdo.transfer.ui.swt.TransferComposite;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;

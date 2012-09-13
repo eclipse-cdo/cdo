@@ -157,7 +157,7 @@
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
    <feature id="org.eclipse.emf.cdo.epp" version="0.0.0">
-      <category name="org.eclipse.emf.cdo.hidden.category"/>
+      <category name="hidden_category"/>
    </feature>
    <category-def name="org.eclipse.emf.releng.category" label="CDO Release Engineering"/>
    <category-def name="org.eclipse.emf.cdo.category" label="CDO Model Repository"/>
@@ -165,5 +165,5 @@
    <category-def name="org.eclipse.emf.cdo.dawn.category" label="CDO Dawn"/>
    <category-def name="org.eclipse.net4j.category" label="Net4j Signalling Platform"/>
    <category-def name="org.eclipse.net4j.db.category" label="Net4j DB Framework"/>
-   <category-def name="org.eclipse.emf.cdo.hidden.category"/>
+   <category-def name="hidden_category"/>
 </site>

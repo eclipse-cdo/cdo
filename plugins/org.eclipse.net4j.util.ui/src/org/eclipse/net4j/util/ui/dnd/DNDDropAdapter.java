@@ -38,11 +38,27 @@ public abstract class DNDDropAdapter<TYPE> extends ViewerDropAdapter
   }
 
   /**
+   * @since 3.3
+   */
+  protected DNDDropAdapter(StructuredViewer viewer)
+  {
+    super(viewer);
+  }
+
+  /**
    * @since 3.0
    */
   public Transfer[] getTransfers()
   {
     return transfers;
+  }
+
+  /**
+   * @since 3.3
+   */
+  protected void setTransfers(Transfer[] transfers)
+  {
+    this.transfers = transfers;
   }
 
   @Override
@@ -97,7 +113,15 @@ public abstract class DNDDropAdapter<TYPE> extends ViewerDropAdapter
       return false;
     }
 
-    for (Transfer transfer : transfers)
+    return validateTransfer(type);
+  }
+
+  /**
+   * @since 3.3
+   */
+  protected boolean validateTransfer(TransferData type)
+  {
+    for (Transfer transfer : getTransfers())
     {
       if (transfer.isSupportedType(type))
       {

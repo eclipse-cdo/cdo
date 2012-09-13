@@ -188,15 +188,17 @@ public class CDOTransfer implements INotifier
 
   protected CDOTransferType getTransferType(CDOTransferElement source)
   {
-    CDOTransferType type = source.getSystem().getDefaultTransferType(source);
-    if (type == CDOTransferType.UNKNOWN)
+    if (source.isDirectory())
     {
-      if (modelTransferContext.hasResourceFactory(source))
-      {
-        return CDOTransferType.MODEL;
-      }
+      return CDOTransferType.FOLDER;
     }
 
+    if (modelTransferContext.hasResourceFactory(source))
+    {
+      return CDOTransferType.MODEL;
+    }
+
+    CDOTransferType type = sourceSystem.getDefaultTransferType(source);
     if (type == CDOTransferType.UNKNOWN)
     {
       type = getDefaultTransferType();

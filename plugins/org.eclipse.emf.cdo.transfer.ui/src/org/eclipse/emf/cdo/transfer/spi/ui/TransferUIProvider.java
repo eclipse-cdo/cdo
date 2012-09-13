@@ -10,12 +10,17 @@
  */
 package org.eclipse.emf.cdo.transfer.spi.ui;
 
+import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
 
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.swt.dnd.Transfer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -23,16 +28,13 @@ import org.eclipse.jface.viewers.ILabelProvider;
  */
 public interface TransferUIProvider
 {
-  public static final TransferUIProvider CONTAINER = new TransferUIProvider()
-  {
-    public ILabelProvider createLabelProvider(CDOTransferSystem system)
-    {
-      TransferUIProvider provider = Factory.get(system.getType());
-      return provider.createLabelProvider(system);
-    }
-  };
-
   public ILabelProvider createLabelProvider(CDOTransferSystem system);
+
+  public void addSupportedTransfers(List<Transfer> transfers);
+
+  public List<CDOTransferElement> convertTransferData(Object data);
+
+  public CDOTransferElement convertTransferTarget(Object target);
 
   /**
    * @author Eike Stepper
@@ -48,9 +50,20 @@ public interface TransferUIProvider
 
     public abstract TransferUIProvider create(String description) throws ProductCreationException;
 
-    public static TransferUIProvider get(String type)
+    public static TransferUIProvider get(IManagedContainer container, String type)
     {
-      return (TransferUIProvider)IPluginContainer.INSTANCE.getElement(PRODUCT_GROUP, type, null);
+      return (TransferUIProvider)container.getElement(PRODUCT_GROUP, type, null);
+    }
+
+    public static TransferUIProvider[] getAll(IManagedContainer container)
+    {
+      List<TransferUIProvider> uiProviders = new ArrayList<TransferUIProvider>();
+      for (String type : container.getFactoryTypes(PRODUCT_GROUP))
+      {
+        uiProviders.add((TransferUIProvider)container.getElement(PRODUCT_GROUP, type, null));
+      }
+
+      return uiProviders.toArray(new TransferUIProvider[uiProviders.size()]);
     }
   }
 }

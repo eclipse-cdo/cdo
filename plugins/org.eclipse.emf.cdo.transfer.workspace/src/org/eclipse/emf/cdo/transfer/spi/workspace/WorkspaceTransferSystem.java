@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.transfer.spi.workspace;
 
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
+import org.eclipse.emf.cdo.transfer.CDOTransferType;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IORuntimeException;
@@ -35,6 +36,8 @@ import java.io.InputStream;
  */
 public class WorkspaceTransferSystem extends CDOTransferSystem
 {
+  public static final WorkspaceTransferSystem INSTANCE = new WorkspaceTransferSystem();
+
   public static final String TYPE = "workspace";
 
   private static final IWorkspaceRoot ROOT = ResourcesPlugin.getWorkspace().getRoot();
@@ -60,6 +63,46 @@ public class WorkspaceTransferSystem extends CDOTransferSystem
     {
       throw WrappedException.wrap(ex);
     }
+  }
+
+  protected String getEncoding(IFile file)
+  {
+    try
+    {
+      return file.getCharset();
+    }
+    catch (CoreException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+  }
+
+  @Override
+  public CDOTransferType getDefaultTransferType(CDOTransferElement element)
+  {
+    if (element instanceof Element)
+    {
+      Element node = (Element)element;
+      if (node.isDirectory())
+      {
+        return CDOTransferType.FOLDER;
+      }
+
+      IFile file = (IFile)node.getNativeObject();
+
+      // TODO Team is optional, handle its absence.
+      int type = org.eclipse.team.core.Team.getFileContentManager().getType(file);
+      switch (type)
+      {
+      case org.eclipse.team.core.Team.BINARY:
+        return CDOTransferType.FOLDER;
+      case org.eclipse.team.core.Team.TEXT:
+        String encoding = getEncoding(file);
+        return CDOTransferType.text(encoding);
+      }
+    }
+
+    return super.getDefaultTransferType(element);
   }
 
   @Override

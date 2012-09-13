@@ -8,21 +8,17 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.transfer.repository.internal.ui;
+package org.eclipse.emf.cdo.transfer.internal.ui;
 
-import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.spi.transfer.FileSystemTransferSystem;
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
-import org.eclipse.emf.cdo.transfer.spi.repository.RepositoryTransferSystem;
-import org.eclipse.emf.cdo.transfer.spi.ui.NativeObjectLabelProvider;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider;
-import org.eclipse.emf.cdo.ui.CDOItemProvider;
-import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.Transfer;
 
 import java.util.List;
@@ -30,47 +26,32 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class RepositoryUIProvider implements TransferUIProvider
+public class FileSystemUIProvider implements TransferUIProvider
 {
-  public RepositoryUIProvider()
+  public FileSystemUIProvider()
   {
   }
 
   public ILabelProvider createLabelProvider(CDOTransferSystem system)
   {
-    ILabelProvider delegate = new CDOItemProvider(null);
-    return new NativeObjectLabelProvider(delegate);
+    // Return null to fall back to default labels
+    return null;
   }
 
   public void addSupportedTransfers(List<Transfer> transfers)
   {
-    // TODO: implement RepositoryUIProvider.addSupportedTransfers(transfers)
+    transfers.add(FileTransfer.getInstance());
   }
 
   public List<CDOTransferElement> convertTransferData(Object data)
   {
-    // TODO: implement RepositoryUIProvider.convertTransferData(data)
+    // TODO: implement FileSystemUIProvider.convertTransferData(data)
     return null;
   }
 
   public CDOTransferElement convertTransferTarget(Object target)
   {
-    if (target instanceof CDOTransaction)
-    {
-      CDOTransferSystem system = new RepositoryTransferSystem((CDOTransaction)target);
-      return system.getElement("/");
-    }
-
-    if (target instanceof CDOResourceFolder)
-    {
-      CDOResourceFolder folder = (CDOResourceFolder)target;
-      String path = folder.getPath();
-
-      CDOView view = folder.cdoView();
-      CDOTransferSystem system = new RepositoryTransferSystem(view);
-      return system.getElement(path);
-    }
-
+    // TODO: implement FileSystemUIProvider.convertTransferTarget(target)
     return null;
   }
 
@@ -81,13 +62,13 @@ public class RepositoryUIProvider implements TransferUIProvider
   {
     public Factory()
     {
-      super(RepositoryTransferSystem.TYPE);
+      super(FileSystemTransferSystem.TYPE);
     }
 
     @Override
     public TransferUIProvider create(String description) throws ProductCreationException
     {
-      return new RepositoryUIProvider();
+      return new FileSystemUIProvider();
     }
   }
 }

@@ -44,6 +44,39 @@ public class TransferComposite extends SashForm implements ISelectionChangedList
     setWeights(new int[] { 2, 1 });
   }
 
+  public CDOTransfer getTransfer()
+  {
+    if (transferTreeComposite != null)
+    {
+      CDOTransfer transfer = transferTreeComposite.getTransfer();
+      if (transfer != null)
+      {
+        return transfer;
+      }
+    }
+
+    if (transferDetailsComposite != null)
+    {
+      CDOTransfer transfer = transferDetailsComposite.getTransfer();
+      if (transfer != null)
+      {
+        return transfer;
+      }
+    }
+
+    return null;
+  }
+
+  public TransferTreeComposite getTransferTreeComposite()
+  {
+    return transferTreeComposite;
+  }
+
+  public TransferDetailsComposite getTransferDetailsComposite()
+  {
+    return transferDetailsComposite;
+  }
+
   public void selectionChanged(SelectionChangedEvent event)
   {
     CDOTransferMapping mapping = transferTreeComposite.getSelectedMapping();

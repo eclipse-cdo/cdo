@@ -37,6 +37,8 @@ import java.io.Writer;
  */
 public class FileSystemTransferSystem extends CDOTransferSystem
 {
+  public static final FileSystemTransferSystem INSTANCE = new FileSystemTransferSystem();
+
   public static final String TYPE = "fs";
 
   public FileSystemTransferSystem()

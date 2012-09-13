@@ -28,24 +28,58 @@ import java.io.IOException;
  */
 public class TransferView extends ViewPart
 {
+  public static TransferView INSTANCE;
+
+  private Composite parent;
+
   private TransferComposite transferComposite;
 
   public TransferView()
   {
   }
 
+  public TransferComposite getTransferComposite()
+  {
+    return transferComposite;
+  }
+
+  public void setTransfer(CDOTransfer transfer)
+  {
+    if (transferComposite != null && transferComposite.getTransfer() != transfer)
+    {
+      transferComposite.dispose();
+      transferComposite = null;
+    }
+
+    if (transferComposite == null && transfer != null)
+    {
+      transferComposite = new TransferComposite(parent, transfer);
+      parent.layout();
+    }
+  }
+
   @Override
   public void createPartControl(Composite parent)
   {
+    this.parent = parent;
+
     try
     {
       CDOTransfer transfer = createTransfer();
-      transferComposite = new TransferComposite(parent, transfer);
+      setTransfer(transfer);
+      INSTANCE = this;
     }
     catch (Exception ex)
     {
       ex.printStackTrace();
     }
+  }
+
+  @Override
+  public void dispose()
+  {
+    INSTANCE = null;
+    super.dispose();
   }
 
   @Override
@@ -59,7 +93,7 @@ public class TransferView extends ViewPart
 
   public static CDOTransfer createTransfer() throws IOException
   {
-    CDOTransfer transfer = new CDOTransfer(new WorkspaceTransferSystem(), new FileSystemTransferSystem());
+    CDOTransfer transfer = new CDOTransfer(WorkspaceTransferSystem.INSTANCE, FileSystemTransferSystem.INSTANCE);
     transfer.getRootMapping().setRelativePath("C:/develop/transfer");
     transfer.setDefaultTransferType(CDOTransferType.UTF8);
 

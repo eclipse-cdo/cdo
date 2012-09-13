@@ -13,8 +13,11 @@ package org.eclipse.emf.cdo.transfer.ui;
 import org.eclipse.emf.cdo.transfer.CDOTransfer;
 import org.eclipse.emf.cdo.transfer.CDOTransferMapping;
 import org.eclipse.emf.cdo.transfer.CDOTransferMapping.Status;
+import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider;
 
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -42,7 +45,10 @@ public class TransferLabelProvider extends LabelProvider implements ITableLabelP
   public TransferLabelProvider(CDOTransfer transfer)
   {
     this.transfer = transfer;
-    sourceSystemLabelProvider = TransferUIProvider.CONTAINER.createLabelProvider(transfer.getSourceSystem());
+
+    CDOTransferSystem sourceSystem = transfer.getSourceSystem();
+    TransferUIProvider provider = TransferUIProvider.Factory.get(getContainer(), sourceSystem.getType());
+    sourceSystemLabelProvider = provider.createLabelProvider(sourceSystem);
   }
 
   public CDOTransfer getTransfer()
@@ -134,5 +140,10 @@ public class TransferLabelProvider extends LabelProvider implements ITableLabelP
   public Color getBackground(Object element, int columnIndex)
   {
     return null;
+  }
+
+  protected IManagedContainer getContainer()
+  {
+    return IPluginContainer.INSTANCE;
   }
 }

@@ -61,9 +61,12 @@ public class TransferContentProvider implements ITreeContentProvider, IListener
   public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
   {
     this.viewer = (TreeViewer)viewer;
+
+    // boolean refreshViewer = false;
     if (input != null)
     {
       input.getTransfer().removeListener(this);
+      // refreshViewer = true;
     }
 
     if (newInput instanceof CDOTransferMapping)

@@ -114,6 +114,7 @@ public class TransferDetailsComposite extends Composite implements IListener
 
     Set<CDOTransferType> usedTransferTypes = transfer.getUsedTransferTypes();
     usedTransferTypes.addAll(CDOTransferType.STANDARD_TYPES);
+    usedTransferTypes.addAll(CDOTransferType.STANDARD_TYPES);
 
     List<CDOTransferType> transferTypes = new ArrayList<CDOTransferType>(usedTransferTypes);
     Collections.sort(transferTypes);
@@ -457,6 +458,7 @@ public class TransferDetailsComposite extends Composite implements IListener
         Resource resource = (Resource)element;
         return resource.getURI().toString();
       }
+
       return super.getText(element);
     }
   }

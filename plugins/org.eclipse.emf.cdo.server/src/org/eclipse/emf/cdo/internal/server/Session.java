@@ -323,10 +323,10 @@ public class Session extends Container<IView> implements InternalSession
   {
     InternalCDORevisionManager revisionManager = getManager().getRepository().getRevisionManager();
     EClass eClass = revision.getEClass();
-    EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(eClass);
-    for (int i = 0; i < features.length; i++)
+    EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
+    for (int i = 0; i < allPersistentFeatures.length; i++)
     {
-      EStructuralFeature feature = features[i];
+      EStructuralFeature feature = allPersistentFeatures[i];
       // TODO Clarify feature maps
       if (feature instanceof EReference && !feature.isMany() && ((EReference)feature).isContainment())
       {

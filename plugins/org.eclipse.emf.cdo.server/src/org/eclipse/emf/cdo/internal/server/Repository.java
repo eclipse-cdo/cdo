@@ -571,10 +571,10 @@ public class Repository extends Container<Object> implements InternalRepository
   protected void ensureChunks(InternalCDORevision revision, int referenceChunk, IStoreAccessor accessor)
   {
     EClass eClass = revision.getEClass();
-    EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(eClass);
-    for (int i = 0; i < features.length; i++)
+    EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
+    for (int i = 0; i < allPersistentFeatures.length; i++)
     {
-      EStructuralFeature feature = features[i];
+      EStructuralFeature feature = allPersistentFeatures[i];
       if (feature.isMany())
       {
         MoveableList<Object> list = revision.getList(feature);
@@ -588,7 +588,9 @@ public class Repository extends Container<Object> implements InternalRepository
   {
     if (!revision.isUnchunked())
     {
-      for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(revision.getEClass()))
+      EClass eClass = revision.getEClass();
+      EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
+      for (EStructuralFeature feature : allPersistentFeatures)
       {
         if (feature.isMany())
         {

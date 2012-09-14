@@ -144,17 +144,17 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
   private void initFeatures()
   {
-    EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(eClass);
+    EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
 
-    if (features == null)
+    if (allPersistentFeatures == null)
     {
       valueMappings = Collections.emptyList();
       listMappings = Collections.emptyList();
     }
     else
     {
-      valueMappings = createValueMappings(features);
-      listMappings = createListMappings(features);
+      valueMappings = createValueMappings(allPersistentFeatures);
+      listMappings = createListMappings(allPersistentFeatures);
     }
   }
 

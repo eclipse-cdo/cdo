@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.event.Notifier;
+import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
@@ -224,7 +226,7 @@ public class CDOTransfer implements INotifier
   {
     validate(rootMapping);
     perform(rootMapping);
-    modelTransferContext.save();
+    modelTransferContext.performFinish();
   }
 
   protected void perform(CDOTransferMapping mapping)
@@ -710,30 +712,30 @@ public class CDOTransfer implements INotifier
     protected void perform(CDOTransferMapping mapping)
     {
       Resource sourceResource = getSourceResource(mapping);
-      Resource targetResource = getTargetResource(mapping);
+      Resource targetResource = getTargetResource(mapping); // Create target resource
 
       EList<EObject> sourceContents = sourceResource.getContents();
-      Collection<EObject> targetContents = EcoreUtil.copyAll(sourceContents); // copier.copyAll(sourceContents);
+      Collection<EObject> targetContents = copier.copyAll(sourceContents);
 
       EList<EObject> contents = targetResource.getContents();
       contents.addAll(targetContents);
     }
 
-    protected void save()
+    protected void performFinish()
     {
       copier.copyReferences();
 
-      // try
-      // {
-      // for (Resource resource : elementResources.values())
-      // {
-      // resource.save(null);
-      // }
-      // }
-      // catch (IOException ex)
-      // {
-      // throw new IORuntimeException(ex);
-      // }
+      try
+      {
+        for (Resource resource : getTargetResourceSet().getResources())
+        {
+          resource.save(null);
+        }
+      }
+      catch (IOException ex)
+      {
+        throw new IORuntimeException(ex);
+      }
     }
 
     /**

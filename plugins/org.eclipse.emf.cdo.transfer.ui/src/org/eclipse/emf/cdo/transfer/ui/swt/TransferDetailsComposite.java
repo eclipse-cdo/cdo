@@ -327,7 +327,21 @@ public class TransferDetailsComposite extends Composite implements IListener
         URI uri = resource.getURI();
         transfer.getModelTransferContext().setResolution(uri, new ModelTransferResolution()
         {
+          // XXX
         });
+      }
+    });
+
+    Button refresh = new Button(transformationButtonsPane, SWT.NONE);
+    refresh.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+    refresh.setBounds(0, 0, 75, 25);
+    refresh.setText("Refresh");
+    refresh.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        unmappedModels.refresh();
       }
     });
 
@@ -521,7 +535,8 @@ public class TransferDetailsComposite extends Composite implements IListener
     public Object[] getElements(Object inputElement)
     {
       CDOTransfer transfer = getInput();
-      Set<Resource> resources = transfer.getModelTransferContext().resolve();
+      ModelTransferContext context = transfer.getModelTransferContext();
+      Set<Resource> resources = context.resolve();
       return resources.toArray(new Resource[resources.size()]);
     }
   }

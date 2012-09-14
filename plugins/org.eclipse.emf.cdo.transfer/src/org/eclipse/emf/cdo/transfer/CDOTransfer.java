@@ -16,9 +16,10 @@ import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.event.Notifier;
-import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -26,11 +27,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
@@ -513,9 +514,15 @@ public class CDOTransfer implements INotifier
 
     private Map<URI, ModelTransferResolution> resolutions = new HashMap<URI, ModelTransferResolution>();
 
+    private ResolveProxyAdapter resolveProxyAdapter;
+
+    private Copier copier;
+
     protected ModelTransferContext(CDOTransfer transfer)
     {
       this.transfer = transfer;
+      resolveProxyAdapter = new ResolveProxyAdapter();
+      copier = createCopier();
     }
 
     public final CDOTransfer getTransfer()
@@ -593,24 +600,18 @@ public class CDOTransfer implements INotifier
     {
       if (unmappedModels == null)
       {
-        unmappedModels = new HashSet<Resource>();
+        Set<Resource> mappedModels = resourceElements.keySet();
 
         ResourceSet resourceSet = getSourceResourceSet();
         EList<Resource> resources = resourceSet.getResources();
-        resources.clear();
 
-        Set<Resource> mappedModels = resourceElements.keySet();
-        resources.addAll(mappedModels);
-        EcoreUtil.resolveAll(resourceSet);
+        // if (resources.addAll(mappedModels))
+        // {
+        // EcoreUtil.resolveAll(resourceSet);
+        // }
 
-        for (Resource resource : resources)
-        {
-          if (!mappedModels.contains(resource))
-          {
-            unmappedModels.add(resource);
-          }
-        }
-
+        unmappedModels = new HashSet<Resource>(resources);
+        unmappedModels.removeAll(mappedModels);
         fireUnmappedModelsEvent();
       }
 
@@ -683,10 +684,17 @@ public class CDOTransfer implements INotifier
       return targetSystem.createModel(targetResourceSet, path);
     }
 
+    protected Copier createCopier()
+    {
+      return new Copier();
+    }
+
     protected ResourceSet createResourceSet(CDOTransferSystem system)
     {
       ResourceSet resourceSet = new ResourceSetImpl();
       resourceSet.setResourceFactoryRegistry(new ResourceFactoryRegistryWithoutDefaults());
+      resourceSet.eAdapters().add(resolveProxyAdapter);
+
       return resourceSet;
     }
 
@@ -705,7 +713,7 @@ public class CDOTransfer implements INotifier
       Resource targetResource = getTargetResource(mapping);
 
       EList<EObject> sourceContents = sourceResource.getContents();
-      Collection<EObject> targetContents = EcoreUtil.copyAll(sourceContents);
+      Collection<EObject> targetContents = EcoreUtil.copyAll(sourceContents); // copier.copyAll(sourceContents);
 
       EList<EObject> contents = targetResource.getContents();
       contents.addAll(targetContents);
@@ -713,16 +721,130 @@ public class CDOTransfer implements INotifier
 
     protected void save()
     {
-      try
+      copier.copyReferences();
+
+      // try
+      // {
+      // for (Resource resource : elementResources.values())
+      // {
+      // resource.save(null);
+      // }
+      // }
+      // catch (IOException ex)
+      // {
+      // throw new IORuntimeException(ex);
+      // }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class ResolveProxyAdapter extends AdapterImpl
+    {
+      private LoadResourceAdapter loadResourceAdapter;
+
+      public ResolveProxyAdapter()
       {
-        for (Resource resource : elementResources.values())
+        loadResourceAdapter = new LoadResourceAdapter();
+      }
+
+      @Override
+      public void notifyChanged(Notification msg)
+      {
+        int eventType = msg.getEventType();
+        switch (eventType)
         {
-          resource.save(null);
+        case Notification.SET:
+        {
+          Resource oldValue = (Resource)msg.getOldValue();
+          if (oldValue != null)
+          {
+            removeResource(oldValue);
+          }
+          Resource newValue = (Resource)msg.getNewValue();
+          if (newValue != null)
+          {
+            addResource(newValue);
+          }
+          break;
+        }
+        case Notification.ADD:
+        {
+          Resource newValue = (Resource)msg.getNewValue();
+          if (newValue != null)
+          {
+            addResource(newValue);
+          }
+          break;
+        }
+        case Notification.ADD_MANY:
+        {
+          @SuppressWarnings("unchecked")
+          Collection<Resource> newValues = (Collection<Resource>)msg.getNewValue();
+          for (Resource newValue : newValues)
+          {
+            addResource(newValue);
+          }
+          break;
+        }
+        case Notification.REMOVE:
+        {
+          Resource oldValue = (Resource)msg.getOldValue();
+          if (oldValue != null)
+          {
+            removeResource(oldValue);
+          }
+          break;
+        }
+        case Notification.REMOVE_MANY:
+        {
+          @SuppressWarnings("unchecked")
+          Collection<Resource> oldValues = (Collection<Resource>)msg.getOldValue();
+          for (Resource oldContentValue : oldValues)
+          {
+            removeResource(oldContentValue);
+          }
+          break;
+        }
         }
       }
-      catch (IOException ex)
+
+      private void addResource(Resource resource)
       {
-        throw new IORuntimeException(ex);
+        EcoreUtil.resolveAll(resource);
+        resource.eAdapters().add(loadResourceAdapter);
+      }
+
+      private void removeResource(Resource resource)
+      {
+      }
+
+      /**
+       * @author Eike Stepper
+       */
+      public static class LoadResourceAdapter extends AdapterImpl
+      {
+        @Override
+        public void notifyChanged(Notification msg)
+        {
+          if (msg.getFeatureID(Resource.class) == Resource.RESOURCE__IS_LOADED)
+          {
+            int eventType = msg.getEventType();
+            switch (eventType)
+            {
+            case Notification.SET:
+            {
+              boolean isLoaded = msg.getNewBooleanValue();
+              if (isLoaded)
+              {
+                Resource resource = (Resource)msg.getNotifier();
+                EcoreUtil.resolveAll(resource);
+              }
+              break;
+            }
+            }
+          }
+        }
       }
     }
   }

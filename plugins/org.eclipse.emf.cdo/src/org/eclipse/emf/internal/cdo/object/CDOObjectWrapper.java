@@ -13,7 +13,7 @@ package org.eclipse.emf.internal.cdo.object;
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
-import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -45,6 +45,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -221,10 +222,26 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
     return instance.eContainerFeatureID();
   }
 
-  public Object getInstanceValue(InternalEObject instance, EStructuralFeature feature,
-      CDOPackageRegistry packageRegistry)
+  public Object getInstanceValue(InternalEObject instance, EStructuralFeature feature)
   {
     return instance.eGet(feature);
+  }
+
+  public boolean isSetInstanceValue(InternalEObject instance, EStructuralFeature feature)
+  {
+    // Single-valued features that need special handling
+    if (feature == EMFUtil.ETYPED_ELEMENT_EGENERIC_TYPE || feature == EMFUtil.ECLASSIFIER_INSTANCE_TYPE_NAME)
+    {
+      return getInstanceValue(instance, feature) != null;
+    }
+
+    // Many-valued features that need special handling
+    if (feature == EMFUtil.ECLASS_EGENERIC_SUPER_TYPES || feature == EMFUtil.EOPERATION_EGENERIC_EXCEPTIONS)
+    {
+      return !((List<?>)getInstanceValue(instance, feature)).isEmpty();
+    }
+
+    return instance.eIsSet(feature);
   }
 
   public void setInstanceResource(Resource.Internal resource)

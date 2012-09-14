@@ -2058,33 +2058,39 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         importNewRevisions(in, revisions, idMappings);
         List<InternalCDORevisionDelta> revisionDeltas = importRevisionDeltas(in);
 
-        // Re-map temp IDs
-        CDOIDMapper idMapper = new CDOIDMapper(idMappings);
-        for (InternalCDORevision revision : revisions)
+        if (!idMappings.isEmpty())
         {
-          revision.adjustReferences(idMapper);
+          // Re-map temp IDs
+          CDOIDMapper idMapper = new CDOIDMapper(idMappings);
+          for (InternalCDORevision revision : revisions)
+          {
+            revision.adjustReferences(idMapper);
+          }
+
+          for (InternalCDORevisionDelta delta : revisionDeltas)
+          {
+            delta.adjustReferences(idMapper);
+          }
         }
 
-        for (InternalCDORevisionDelta delta : revisionDeltas)
+        if (!revisions.isEmpty())
         {
-          delta.adjustReferences(idMapper);
-        }
+          // Create new objects
+          List<InternalCDOObject> newObjects = new ArrayList<InternalCDOObject>();
+          for (InternalCDORevision revision : revisions)
+          {
+            InternalCDOObject object = newInstance(revision);
+            registerObject(object);
+            registerAttached(object, true);
 
-        // Create new objects
-        List<InternalCDOObject> newObjects = new ArrayList<InternalCDOObject>();
-        for (InternalCDORevision revision : revisions)
-        {
-          InternalCDOObject object = newInstance(revision);
-          registerObject(object);
-          registerAttached(object, true);
+            newObjects.add(object);
+          }
 
-          newObjects.add(object);
-        }
-
-        // Post-load new objects (important for legacy objects!)
-        for (InternalCDOObject object : newObjects)
-        {
-          object.cdoInternalPostLoad();
+          // Post-load new objects (important for legacy objects!)
+          for (InternalCDOObject object : newObjects)
+          {
+            object.cdoInternalPostLoad();
+          }
         }
 
         // Apply deltas

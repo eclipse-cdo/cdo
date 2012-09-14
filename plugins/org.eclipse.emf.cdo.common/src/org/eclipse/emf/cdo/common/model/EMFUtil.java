@@ -71,11 +71,48 @@ public final class EMFUtil
    */
   public static final String CDO_ANNOTATION_KEY_PERSISTENT = "persistent";
 
-  private static final EReference EOPERATION_EEXCEPTIONS = EcorePackage.eINSTANCE.getEOperation_EExceptions();
+  /**
+   * @since 4.2
+   */
+  public static final EReference EOPERATION_EEXCEPTIONS = EcorePackage.eINSTANCE.getEOperation_EExceptions();
 
-  private static final EReference ETYPED_ELEMENT_ETYPE = EcorePackage.eINSTANCE.getETypedElement_EType();
+  /**
+   * @since 4.2
+   */
+  public static final EReference ETYPED_ELEMENT_ETYPE = EcorePackage.eINSTANCE.getETypedElement_EType();
 
-  private static final EReference ECLASS_ESUPER_TYPES = EcorePackage.eINSTANCE.getEClass_ESuperTypes();
+  /**
+   * @since 4.2
+   */
+  public static final EReference ECLASS_ESUPER_TYPES = EcorePackage.eINSTANCE.getEClass_ESuperTypes();
+
+  /**
+   * @since 4.2
+   */
+  public static final EAttribute ECLASSIFIER_INSTANCE_CLASS_NAME = EcorePackage.eINSTANCE
+      .getEClassifier_InstanceClassName();
+
+  /**
+   * @since 4.2
+   */
+  public static final EReference EOPERATION_EGENERIC_EXCEPTIONS = EcorePackage.eINSTANCE
+      .getEOperation_EGenericExceptions();
+
+  /**
+   * @since 4.2
+   */
+  public static final EReference ETYPED_ELEMENT_EGENERIC_TYPE = EcorePackage.eINSTANCE.getETypedElement_EGenericType();
+
+  /**
+   * @since 4.2
+   */
+  public static final EReference ECLASS_EGENERIC_SUPER_TYPES = EcorePackage.eINSTANCE.getEClass_EGenericSuperTypes();
+
+  /**
+   * @since 4.2
+   */
+  public static final EAttribute ECLASSIFIER_INSTANCE_TYPE_NAME = EcorePackage.eINSTANCE
+      .getEClassifier_InstanceTypeName();
 
   private EMFUtil()
   {
@@ -290,7 +327,8 @@ public final class EMFUtil
    */
   public static boolean isPersistent(EStructuralFeature feature)
   {
-    if (feature == ECLASS_ESUPER_TYPES || feature == ETYPED_ELEMENT_ETYPE || feature == EOPERATION_EEXCEPTIONS)
+    if (feature == ECLASS_ESUPER_TYPES || feature == ETYPED_ELEMENT_ETYPE || feature == EOPERATION_EEXCEPTIONS
+        || feature == ECLASSIFIER_INSTANCE_CLASS_NAME)
     {
       // http://www.eclipse.org/newsportal/article.php?id=26780&group=eclipse.tools.emf#26780
       return false;

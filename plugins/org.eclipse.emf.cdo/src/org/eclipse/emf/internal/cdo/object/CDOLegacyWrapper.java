@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
-import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -190,10 +189,10 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       return;
     }
 
-    EClass eClass = revision.getEClass();
-
     // This loop adjusts the opposite wrapper objects to support dangling references. See Bugzilla_251263_Test
-    for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(eClass))
+    EClass eClass = revision.getEClass();
+    EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
+    for (EStructuralFeature feature : allPersistentFeatures)
     {
       EReference oppositeReference = ((EStructuralFeature.Internal)feature).getEOpposite();
       if (oppositeReference != null && !oppositeReference.isContainment() && EMFUtil.isPersistent(oppositeReference))
@@ -242,11 +241,12 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     instanceToRevisionContainment();
 
     EClass eClass = revision.getEClass();
-    for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(eClass))
+    EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
+    for (EStructuralFeature feature : allPersistentFeatures)
     {
       if (feature.isUnsettable())
       {
-        if (!instance.eIsSet(feature))
+        if (!isSetInstanceValue(instance, feature))
         {
           if (feature.isMany())
           {
@@ -325,11 +325,11 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     instanceToRevisionContainment();
 
     // Handle values
-    CDOPackageRegistry packageRegistry = cdoView().getSession().getPackageRegistry();
     EClass eClass = revision.getEClass();
-    for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(eClass))
+    EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
+    for (EStructuralFeature feature : allPersistentFeatures)
     {
-      instanceToRevisionFeature(feature, packageRegistry);
+      instanceToRevisionFeature(feature);
     }
 
     revision.setUnchunked();
@@ -354,15 +354,17 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
-  protected void instanceToRevisionFeature(EStructuralFeature feature, CDOPackageRegistry packageRegistry)
+  protected void instanceToRevisionFeature(EStructuralFeature feature)
   {
-    Object instanceValue = getInstanceValue(instance, feature, packageRegistry);
-    CDOObjectImpl.instanceToRevisionFeature(view, this, feature, instanceValue);
+    if (isSetInstanceValue(instance, feature))
+    {
+      Object instanceValue = getInstanceValue(instance, feature);
+      CDOObjectImpl.instanceToRevisionFeature(view, this, feature, instanceValue);
+    }
   }
 
   protected void revisionToInstance()
   {
-
     if (underConstruction)
     {
       // Return if revisionToInstance was called before to avoid doubled calls
@@ -392,7 +394,9 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
       revisionToInstanceContainer();
 
-      for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(revision.getEClass()))
+      EClass eClass = revision.getEClass();
+      EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
+      for (EStructuralFeature feature : allPersistentFeatures)
       {
         revisionToInstanceFeature(feature);
       }
@@ -527,7 +531,16 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         }
         else
         {
-          eSet(feature, object);
+          if (object != null)
+          {
+            eSet(feature, object);
+          }
+          else
+          {
+            // TODO Unset for features with non-null default values would not lead to null values.
+            // Probably CDORevisionData.NIL has to be used, but that impacts all IStores. Deferred ;-(
+            eUnset(feature);
+          }
         }
       }
       else
@@ -764,13 +777,13 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    */
   protected void resolveAllProxies()
   {
-    CDOPackageRegistry packageRegistry = cdoView().getSession().getPackageRegistry();
     EClass eClass = revision.getEClass();
-    for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(eClass))
+    EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
+    for (EStructuralFeature feature : allPersistentFeatures)
     {
       if (feature instanceof EReference)
       {
-        resolveProxies(feature, packageRegistry);
+        resolveProxies(feature);
       }
     }
   }
@@ -779,9 +792,9 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    * IMPORTANT: Compile errors in this method might indicate an old version of EMF. Legacy support is only enabled for
    * EMF with fixed bug #247130. These compile errors do not affect native models!
    */
-  protected void resolveProxies(EStructuralFeature feature, CDOPackageRegistry packageRegistry)
+  protected void resolveProxies(EStructuralFeature feature)
   {
-    Object value = getInstanceValue(instance, feature, packageRegistry);
+    Object value = getInstanceValue(instance, feature);
     if (value != null)
     {
       if (feature.isMany())

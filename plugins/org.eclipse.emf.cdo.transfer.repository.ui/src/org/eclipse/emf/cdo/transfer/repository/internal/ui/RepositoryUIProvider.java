@@ -57,7 +57,7 @@ public class RepositoryUIProvider implements TransferUIProvider
   {
     if (target instanceof CDOTransaction)
     {
-      CDOTransferSystem system = RepositoryTransferSystem.getInstance((CDOTransaction)target);
+      CDOTransferSystem system = new RepositoryTransferSystem((CDOTransaction)target);
       return system.getElement("");
     }
 
@@ -67,7 +67,7 @@ public class RepositoryUIProvider implements TransferUIProvider
       String path = folder.getPath();
 
       CDOView view = folder.cdoView();
-      CDOTransferSystem system = RepositoryTransferSystem.getInstance(view);
+      CDOTransferSystem system = new RepositoryTransferSystem(view);
       return system.getElement(path);
     }
 

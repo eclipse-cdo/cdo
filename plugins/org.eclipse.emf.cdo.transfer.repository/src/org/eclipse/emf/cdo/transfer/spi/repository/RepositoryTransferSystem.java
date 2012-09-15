@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.transfer.spi.repository;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
@@ -26,15 +25,9 @@ import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
 import org.eclipse.emf.cdo.transfer.CDOTransferType;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOView;
-import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
-import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
-import org.eclipse.net4j.util.lifecycle.ILifecycle;
-import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
-import org.eclipse.net4j.util.ref.ReferenceValueMap;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -50,9 +43,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.Map;
-import java.util.Set;
-import java.util.WeakHashMap;
 
 /**
  * @author Eike Stepper
@@ -62,15 +52,9 @@ public class RepositoryTransferSystem extends CDOTransferSystem
 {
   public static final String TYPE = "repository";
 
-  private static final Map<CDOView, RepositoryTransferSystem> INSTANCES = new WeakHashMap<CDOView, RepositoryTransferSystem>();
-
-  private static final IListener VIEW_LISTENER = new ViewListener();
-
   private final CDOView view;
 
-  private final Map<IPath, CDOResourceNode> resourceNodeCache = new ReferenceValueMap.Soft<IPath, CDOResourceNode>();
-
-  private RepositoryTransferSystem(CDOView view)
+  public RepositoryTransferSystem(CDOView view)
   {
     super(view.isReadOnly());
     this.view = view;
@@ -94,7 +78,7 @@ public class RepositoryTransferSystem extends CDOTransferSystem
       CDOBranch branch = view.getBranch();
       CDOSession session = view.getSession();
       CDOTransaction transaction = session.openTransaction(branch);
-      return getInstance(transaction);
+      return new RepositoryTransferSystem(transaction);
     }
 
     return this;
@@ -141,7 +125,6 @@ public class RepositoryTransferSystem extends CDOTransferSystem
   @Override
   public CDOTransferElement getElement(IPath path)
   {
-    System.out.println("Get element for: " + path);
     if (path.isEmpty())
     {
       return new RootElement(this, view.getRootResource());
@@ -215,63 +198,6 @@ public class RepositoryTransferSystem extends CDOTransferSystem
   public String toString()
   {
     return "Repository " + view.getSession().getRepositoryInfo().getName();
-  }
-
-  protected void handleViewInvalidation(CDOViewInvalidationEvent event)
-  {
-    Set<CDOObject> dirtyObjects = event.getDirtyObjects();
-  }
-
-  public static RepositoryTransferSystem getInstance(CDOView view)
-  {
-    synchronized (INSTANCES)
-    {
-      RepositoryTransferSystem instance = INSTANCES.get(view);
-      if (instance == null)
-      {
-        instance = new RepositoryTransferSystem(view);
-        view.addListener(VIEW_LISTENER);
-        INSTANCES.put(view, instance);
-      }
-
-      return instance;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static class ViewListener extends LifecycleEventAdapter
-  {
-    @Override
-    protected void onDeactivated(ILifecycle view)
-    {
-      synchronized (INSTANCES)
-      {
-        INSTANCES.remove(view);
-      }
-    }
-
-    @Override
-    protected void notifyOtherEvent(IEvent event)
-    {
-      if (event instanceof CDOViewInvalidationEvent)
-      {
-        CDOViewInvalidationEvent e = (CDOViewInvalidationEvent)event;
-        CDOView view = e.getSource();
-
-        RepositoryTransferSystem instance;
-        synchronized (INSTANCES)
-        {
-          instance = INSTANCES.get(view);
-        }
-
-        if (instance != null)
-        {
-          instance.handleViewInvalidation(e);
-        }
-      }
-    }
   }
 
   /**

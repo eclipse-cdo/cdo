@@ -24,7 +24,7 @@
 <stringAttribute key="selected_workspace_plugins" value="org.eclipse.emf.cdo.ui@default:default,org.eclipse.net4j.util@default:default,org.eclipse.emf.cdo.ui.ide@default:default,org.eclipse.emf.cdo.team@default:default,org.eclipse.net4j.tcp@default:default,org.eclipse.emf.cdo.tests.model1@default:default,org.eclipse.net4j.util.ui@default:default,org.eclipse.emf.cdo.common@default:default,org.eclipse.emf.cdo@default:default,org.eclipse.emf.cdo.tests.model1.edit@default:default,org.eclipse.emf.cdo.doc@default:default,org.eclipse.net4j@default:default,org.eclipse.net4j.jms.api@default:default,org.eclipse.emf.cdo.edit@default:default"/>
 <booleanAttribute key="show_selected_only" value="false"/>
 <stringAttribute key="templateConfig" value="${target_home}\configuration\config.ini"/>
-<booleanAttribute key="tracing" value="true"/>
+<booleanAttribute key="tracing" value="false"/>
 <mapAttribute key="tracingOptions">
 <mapEntry key="org.eclipse.core.contenttype/debug" value="false"/>
 <mapEntry key="org.eclipse.core.expressions/tracePropertyResolving" value="false"/>

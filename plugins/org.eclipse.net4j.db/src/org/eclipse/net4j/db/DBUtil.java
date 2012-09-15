@@ -351,17 +351,17 @@ public final class DBUtil
   {
     Connection conn = null;
     Statement stmt = null;
-  
+
     try
     {
       conn = dataSource.getConnection();
       stmt = conn.createStatement();
-  
+
       if (dropIfExists)
       {
         stmt.execute("DROP SCHEMA IF EXISTS " + name);
       }
-  
+
       stmt.execute("CREATE SCHEMA IF NOT EXISTS " + name);
     }
     catch (SQLException ex)
@@ -627,7 +627,11 @@ public final class DBUtil
    */
   public static int update(PreparedStatement stmt, boolean exactlyOne) throws SQLException
   {
-    trace(stmt.toString());
+    if (DBUtil.isTracerEnabled())
+    {
+      trace(stmt.toString());
+    }
+
     int result = stmt.executeUpdate();
 
     // basic check of update result
@@ -1072,12 +1076,20 @@ public final class DBUtil
    */
   public static String trace(String sql)
   {
-    if (TRACER.isEnabled())
+    if (isTracerEnabled())
     {
       TRACER.trace(sql);
     }
 
     return sql;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static boolean isTracerEnabled()
+  {
+    return TRACER.isEnabled();
   }
 
   /**

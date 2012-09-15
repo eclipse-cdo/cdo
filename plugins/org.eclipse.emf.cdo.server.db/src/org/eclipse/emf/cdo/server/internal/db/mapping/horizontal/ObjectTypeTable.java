@@ -77,12 +77,21 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
     {
       stmt = statementCache.getPreparedStatement(sqlSelect, ReuseProbability.MAX);
       idHandler.setCDOID(stmt, 1, id);
-      DBUtil.trace(stmt.toString());
+
+      if (DBUtil.isTracerEnabled())
+      {
+        DBUtil.trace(stmt.toString());
+      }
+
       ResultSet resultSet = stmt.executeQuery();
 
       if (!resultSet.next())
       {
-        DBUtil.trace("ClassID for CDOID " + id + " not found"); //$NON-NLS-1$ //$NON-NLS-2$
+        if (DBUtil.isTracerEnabled())
+        {
+          DBUtil.trace("ClassID for CDOID " + id + " not found"); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+
         return null;
       }
 
@@ -113,7 +122,12 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
       idHandler.setCDOID(stmt, 1, id);
       idHandler.setCDOID(stmt, 2, getMetaDataManager().getMetaID(type, timeStamp));
       stmt.setLong(3, timeStamp);
-      DBUtil.trace(stmt.toString());
+
+      if (DBUtil.isTracerEnabled())
+      {
+        DBUtil.trace(stmt.toString());
+      }
+
       int result = stmt.executeUpdate();
 
       if (result != 1)
@@ -145,9 +159,13 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
     {
       stmt = statementCache.getPreparedStatement(sqlDelete, ReuseProbability.MAX);
       idHandler.setCDOID(stmt, 1, id);
-      DBUtil.trace(stmt.toString());
-      int result = stmt.executeUpdate();
 
+      if (DBUtil.isTracerEnabled())
+      {
+        DBUtil.trace(stmt.toString());
+      }
+
+      int result = stmt.executeUpdate();
       if (result != 1)
       {
         throw new DBException("Object type could not be deleted: " + id); //$NON-NLS-1$

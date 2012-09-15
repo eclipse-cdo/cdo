@@ -26,6 +26,7 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.LimitedInputStream;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -74,7 +75,7 @@ public abstract class StoreAccessor extends StoreAccessorBase
 
     try
     {
-      monitor.begin(1 + newPackageUnits.length + 2 + newObjects.length + detachedObjects.length + dirtyCount);
+      monitor.begin(1 + newPackageUnits.length + 2 + newObjects.length + detachedObjects.length + dirtyCount + 1);
       writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, monitor.fork());
 
       if (newPackageUnits.length != 0)
@@ -115,6 +116,8 @@ public abstract class StoreAccessor extends StoreAccessorBase
       ExtendedDataInputStream in = context.getLobs();
       if (in != null)
       {
+        Async async = monitor.forkAsync();
+
         try
         {
           int count = in.readInt();
@@ -136,6 +139,14 @@ public abstract class StoreAccessor extends StoreAccessorBase
         {
           throw WrappedException.wrap(ex);
         }
+        finally
+        {
+          async.stop();
+        }
+      }
+      else
+      {
+        monitor.worked();
       }
     }
     finally

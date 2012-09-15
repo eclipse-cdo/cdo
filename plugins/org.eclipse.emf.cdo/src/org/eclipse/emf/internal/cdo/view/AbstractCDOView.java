@@ -1203,6 +1203,8 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     }
   }
 
+  private Map<String, CDOID> resourcePathCache = new HashMap<String, CDOID>();
+
   /*
    * Synchronized through InvlidationRunner.run()
    */
@@ -1210,6 +1212,9 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
       List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects, List<CDORevisionDelta> deltas,
       Map<CDOObject, CDORevisionDelta> revisionDeltas, Set<CDOObject> detachedObjects)
   {
+    boolean hasConflictResolvers = this instanceof CDOTransaction
+        && ((CDOTransaction)this).options().getConflictResolvers().length != 0;
+
     Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = null;
     for (CDORevisionKey key : allChangedObjects)
     {
@@ -1217,17 +1222,25 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
       if (key instanceof CDORevisionDelta)
       {
         delta = (CDORevisionDelta)key;
-        // Copy the revision delta if we are a transaction, so that conflict resolvers can modify it.
-        if (this instanceof CDOTransaction)
+        // Copy the revision delta so that conflict resolvers can modify it.
+        if (hasConflictResolvers)
         {
           delta = new CDORevisionDeltaImpl(delta, true);
         }
 
         deltas.add(delta);
+
+        if (resourcePathCache != null && EresourcePackage.Literals.CDO_RESOURCE_NODE.isSuperTypeOf(delta.getEClass()))
+        {
+          if (delta.getFeatureDelta(EresourcePackage.Literals.CDO_RESOURCE_NODE__FOLDER) != null
+              || delta.getFeatureDelta(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME) != null)
+          {
+            resourcePathCache.clear();
+          }
+        }
       }
 
       CDOObject changedObject = objects.get(key.getID());
-
       if (changedObject != null)
       {
         Pair<CDORevision, CDORevisionDelta> oldInfo = new Pair<CDORevision, CDORevisionDelta>(

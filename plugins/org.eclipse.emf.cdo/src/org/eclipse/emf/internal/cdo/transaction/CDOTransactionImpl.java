@@ -1212,6 +1212,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       throw new CommitException(t);
     }
+    finally
+    {
+      clearResourcePathCacheIfNecessary(null);
+    }
   }
 
   public synchronized CDOCommitInfo commit() throws CommitException

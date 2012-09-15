@@ -1,0 +1,91 @@
+<class-diagram version="1.0.10" icons="true" automaticImage="PNG" always-add-relationships="false" 
+  generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <interface id="1" corner="BOTTOM_RIGHT" language="java" name="org.eclipse.net4j.util.om.OMPlatform" 
+    project="org.eclipse.net4j.util" file="/org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/OMPlatform.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="144" y="669"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <interface id="2" corner="BOTTOM_RIGHT" language="java" name="org.eclipse.net4j.util.om.OMBundle" 
+    project="org.eclipse.net4j.util" file="/org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/OMBundle.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="473" y="669"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <interface id="3" corner="BOTTOM_RIGHT" language="java" name="org.eclipse.net4j.util.om.trace.OMTraceHandler" 
+    project="org.eclipse.net4j.util" 
+    file="/org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/trace/OMTraceHandler.java" binary="false">    
+    <position height="-1" width="-1" x="145" y="91"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <interface id="4" corner="BOTTOM_RIGHT" language="java" name="org.eclipse.net4j.util.om.trace.OMTracer" 
+    project="org.eclipse.net4j.util" file="/org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/trace/OMTracer.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="472" y="342"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <interface id="5" corner="BOTTOM_RIGHT" language="java" name="org.eclipse.net4j.util.om.trace.OMTraceHandlerEvent" 
+    project="org.eclipse.net4j.util" 
+    file="/org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/trace/OMTraceHandlerEvent.java" binary="false">    
+    <position height="-1" width="-1" x="473" y="91"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <class id="6" corner="BOTTOM_RIGHT" language="java" name="org.eclipse.net4j.util.om.trace.ContextTracer" 
+    project="org.eclipse.net4j.util" 
+    file="/org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/trace/ContextTracer.java" binary="false">    
+    <position height="-1" width="-1" x="848" y="342"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <dependency id="7">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="8">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="9">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <association id="10">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="11" name="delegate"/>      
+      <multiplicity id="12" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="13">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="14">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

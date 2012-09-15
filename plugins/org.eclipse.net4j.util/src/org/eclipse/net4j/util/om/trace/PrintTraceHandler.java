@@ -58,16 +58,16 @@ public class PrintTraceHandler implements OMTraceHandler
    * Pattern arguments:
    * <p>
    * <ul>
-   * <li>0} --> String <b>tracerName</b><br>
-   * <li>1} --> String <b>tracerShort</b><br>
-   * <li>2} --> String <b>contextName</b><br>
-   * <li>3} --> String <b>contextShort</b><br>
-   * <li>4} --> long <b>timeStamp</b><br>
-   * <li>5} --> String <b>message</b><br>
-   * <li>6} --> String <b>threadName</b><br>
-   * <li>7} --> long <b>threadID</b><br>
-   * <li>8} --> int <b>threadPriority</b><br>
-   * <li>9} --> Thread.State <b>threadState</b><br>
+   * <li>{0} --> String <b>tracerName</b>
+   * <li>{1} --> String <b>tracerShort</b>
+   * <li>{2} --> String <b>contextName</b>
+   * <li>{3} --> String <b>contextShort</b>
+   * <li>{4} --> long <b>timeStamp</b>
+   * <li>{5} --> String <b>message</b>
+   * <li>{6} --> String <b>threadName</b>
+   * <li>{7} --> long <b>threadID</b>
+   * <li>{8} --> int <b>threadPriority</b>
+   * <li>{9} --> Thread.State <b>threadState</b>
    * </ul>
    */
   public void setPattern(String pattern)
@@ -106,16 +106,16 @@ public class PrintTraceHandler implements OMTraceHandler
    * Pattern arguments:
    * <p>
    * <ul>
-   * <li>0} --> String <b>tracerName</b><br>
-   * <li>1} --> String <b>tracerShort</b><br>
-   * <li>2} --> String <b>contextName</b><br>
-   * <li>3} --> String <b>contextShort</b><br>
-   * <li>4} --> long <b>timeStamp</b><br>
-   * <li>5} --> String <b>message</b><br>
-   * <li>6} --> String <b>threadName</b><br>
-   * <li>7} --> long <b>threadID</b><br>
-   * <li>8} --> int <b>threadPriority</b><br>
-   * <li>9} --> Thread.State <b>threadState</b><br>
+   * <li>{0} --> String <b>tracerName</b>
+   * <li>{1} --> String <b>tracerShort</b>
+   * <li>{2} --> String <b>contextName</b>
+   * <li>{3} --> String <b>contextShort</b>
+   * <li>{4} --> long <b>timeStamp</b>
+   * <li>{5} --> String <b>message</b>
+   * <li>{6} --> String <b>threadName</b>
+   * <li>{7} --> long <b>threadID</b>
+   * <li>{8} --> int <b>threadPriority</b>
+   * <li>{9} --> Thread.State <b>threadState</b>
    * </ul>
    */
   public static String format(String pattern, OMTraceHandlerEvent event)

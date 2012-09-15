@@ -1,0 +1,83 @@
+<class-diagram version="1.0.10" icons="true" automaticImage="PNG" always-add-relationships="false" 
+  generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <interface id="1" corner="BOTTOM_RIGHT" language="java" name="org.eclipse.net4j.util.om.OMPlatform" 
+    project="org.eclipse.net4j.util" file="/org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/OMPlatform.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="445" y="212"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <interface id="2" corner="BOTTOM_RIGHT" language="java" name="org.eclipse.net4j.util.om.OMBundle" 
+    project="org.eclipse.net4j.util" file="/org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/OMBundle.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="750" y="211"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <interface id="3" corner="BOTTOM_RIGHT" language="java" name="org.eclipse.net4j.util.om.log.OMLogHandler" 
+    project="org.eclipse.net4j.util" file="/org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/log/OMLogHandler.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="145" y="273"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <interface id="4" corner="BOTTOM_RIGHT" language="java" name="org.eclipse.net4j.util.om.log.OMLogFilter" 
+    project="org.eclipse.net4j.util" file="/org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/log/OMLogFilter.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="146" y="163"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <enumeration id="5" corner="BOTTOM_RIGHT" language="java" name="org.eclipse.net4j.util.om.log.OMLogger.Level" 
+    project="org.eclipse.net4j.util" file="/org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/log/OMLogger.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="1026" y="506"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </enumeration>  
+  <interface id="6" corner="BOTTOM_RIGHT" language="java" name="org.eclipse.net4j.util.om.log.OMLogger" 
+    project="org.eclipse.net4j.util" file="/org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/log/OMLogger.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="1026" y="211"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <dependency id="7">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="8">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="9">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <nesting id="10">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="5"/>  
+  </nesting>  
+  <dependency id="11">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

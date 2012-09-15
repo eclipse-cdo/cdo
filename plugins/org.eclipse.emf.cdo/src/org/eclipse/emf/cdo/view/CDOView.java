@@ -50,6 +50,7 @@ import org.eclipse.emf.ecore.resource.URIHandler;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -220,12 +221,37 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
   public CDOResourceNode getResourceNode(String path) throws CDOException;
 
   /**
+   * @since 4.2
+   */
+  public CDOResourceFolder getResourceFolder(String path);
+
+  /**
    * Returns the root resource of the repository.
    * <p>
    * The root resource is a special resource with only {@link CDOResourceNode CDOResourceNodes} in its contents list.
    * You can use it as the main entry into the new resource and folder structure.
    */
   public CDOResource getRootResource();
+
+  /**
+   * Sets the new {@link Map map} to be used as a cache for various <code>get*Resource*(String path)</code> methods.
+   * <p>
+   * Can be used to reset/clear the resource path cache by passing a <code>new HashMap&lt;String, CDOID&gt;()</code>.
+   * Smarter maps could implement a LRU eviction policy to limit the map capacity.
+   * Passing <code>null</code> disables resource path caching.
+   * <p>
+   * The default value is <code>new HashMap&lt;String, CDOID&gt;()</code>.
+   *
+   * @see #getResourceNode(String)
+   * @see #getResource(String)
+   * @see #getResource(String, boolean)
+   * @see #getBinaryResource(String)
+   * @see #getTextResource(String)
+   * @see #getResourceFolder(String)
+   * @see #hasResource(String)
+   * @since 4.2
+   */
+  public void setResourcePathCache(Map<String, CDOID> resourcePathCache);
 
   /**
    * Returns a list of the resources in the given folder with a name equal to or starting with the value of the name

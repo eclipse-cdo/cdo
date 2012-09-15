@@ -342,7 +342,13 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
+  @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo)
+  {
+    sendCommitNotification(sender, commitInfo, true);
+  }
+
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache)
   {
     for (InternalSession session : getSessions())
     {
@@ -350,7 +356,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       {
         try
         {
-          session.sendCommitNotification(commitInfo);
+          session.sendCommitNotification(commitInfo, clearResourcePathCache);
         }
         catch (Exception ex)
         {

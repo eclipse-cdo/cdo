@@ -161,8 +161,15 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
 
   /**
    * @since 4.0
+   * @deprecated As of 4.2 use {@link #sendCommitNotification(InternalSession, CDOCommitInfo, boolean)}
    */
+  @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo);
+
+  /**
+   * @since 4.2
+   */
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache);
 
   public void setRootResourceID(CDOID rootResourceID);
 

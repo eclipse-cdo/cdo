@@ -791,7 +791,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
                 volatile int counter = 1;
 
                 @Override
-                public void handleCommitNotification(CDOCommitInfo commitInfo)
+                public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache)
                 {
                   long delay = getTestDelayed2CommitHandling();
                   if (delay != 0L && counter++ % 2 == 0)
@@ -799,7 +799,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
                     AbstractOMTest.sleep(delay);
                   }
 
-                  super.handleCommitNotification(commitInfo);
+                  super.handleCommitNotification(commitInfo, clearResourcePathCache);
                 }
               };
             }

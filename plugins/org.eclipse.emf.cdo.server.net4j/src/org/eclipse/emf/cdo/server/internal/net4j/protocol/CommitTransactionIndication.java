@@ -197,6 +197,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
         monitor.worked();
       }
 
+      boolean clearResourcePathCache = in.readBoolean();
       boolean auditing = getRepository().isSupportingAudits();
       boolean ensuringReferentialIntegrity = getRepository().isEnsuringReferentialIntegrity();
 
@@ -249,6 +250,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
         detachedObjectTypes = null;
       }
 
+      commitContext.setClearResourcePathCache(clearResourcePathCache);
       commitContext.setNewPackageUnits(newPackageUnits);
       commitContext.setLocksOnNewObjects(locksOnNewObjects);
       commitContext.setNewObjects(newObjects);

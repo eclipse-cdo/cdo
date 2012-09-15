@@ -83,7 +83,16 @@ public interface InternalSessionManager extends ISessionManager
 
   public void sendBranchNotification(InternalSession sender, InternalCDOBranch branch);
 
+  /**
+   * @deprecated As of 4.2 use {@link #sendCommitNotification(InternalSession, CDOCommitInfo, boolean)}
+   */
+  @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo);
+
+  /**
+   * @since 4.2
+   */
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache);
 
   /**
    * @since 4.1

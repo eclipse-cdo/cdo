@@ -398,7 +398,13 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
-  public void sendCommitNotification(final CDOCommitInfo commitInfo) throws Exception
+  @Deprecated
+  public void sendCommitNotification(CDOCommitInfo commitInfo) throws Exception
+  {
+    sendCommitNotification(commitInfo, true);
+  }
+
+  public void sendCommitNotification(final CDOCommitInfo commitInfo, boolean clearResourcePathCache) throws Exception
   {
     if (protocol == null)
     {
@@ -481,7 +487,7 @@ public class Session extends Container<IView> implements InternalSession
           }
         };
       }
-    });
+    }, clearResourcePathCache);
 
     synchronized (lastUpdateTimeLock)
     {

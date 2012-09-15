@@ -179,8 +179,15 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
 
   /**
    * @since 3.0
+   * @deprecated As of 4.2 use {@link #handleCommitNotification(CDOCommitInfo, boolean)}
    */
+  @Deprecated
   public void handleCommitNotification(CDOCommitInfo commitInfo);
+
+  /**
+   * @since 4.2
+   */
+  public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache);
 
   /**
    * @since 4.1
@@ -189,8 +196,15 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
 
   /**
    * @since 3.0
+   * @deprecated As of 4.2 use {@link #invalidate(CDOCommitInfo, InternalCDOTransaction, boolean)}
    */
+  @Deprecated
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender);
+
+  /**
+   * @since 4.2
+   */
+  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache);
 
   /**
    * @since 3.0

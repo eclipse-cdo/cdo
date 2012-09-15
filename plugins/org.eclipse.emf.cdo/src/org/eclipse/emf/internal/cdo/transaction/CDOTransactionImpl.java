@@ -176,7 +176,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -545,7 +544,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         ancestorProvider, targetProvider, keepVersions, result.getChangeSetData().getChangedObjects());
 
     // Delta notifications
-    Collection<CDORevisionDelta> notificationDeltas = lastSavepoint.getRevisionDeltas().values();
+    Collection<CDORevisionDelta> notificationDeltas = lastSavepoint.getRevisionDeltas2().values();
     if (!notificationDeltas.isEmpty() || !detachedSet.isEmpty())
     {
       sendDeltaNotifications(notificationDeltas, detachedSet, oldRevisions);
@@ -645,7 +644,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     Map<CDOID, InternalCDORevision> oldRevisions = new HashMap<CDOID, InternalCDORevision>();
 
     Map<CDOID, CDOObject> dirtyObjects = lastSavepoint.getDirtyObjects();
-    ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas();
+    Map<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas2();
 
     for (CDORevisionKey key : changedObjects)
     {
@@ -1320,7 +1319,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
       }
 
-      Map<CDOID, CDORevisionDelta> revisionDeltas = itrSavepoint.getRevisionDeltas();
+      Map<CDOID, CDORevisionDelta> revisionDeltas = itrSavepoint.getRevisionDeltas2();
       if (!revisionDeltas.isEmpty())
       {
         for (CDORevisionDelta dirtyObject : revisionDeltas.values())
@@ -1437,7 +1436,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     for (InternalCDOSavepoint itrSavepoint = firstSavepoint; itrSavepoint != savepoint; itrSavepoint = itrSavepoint
         .getNextSavepoint())
     {
-      for (CDORevisionDelta delta : itrSavepoint.getRevisionDeltas().values())
+      for (CDORevisionDelta delta : itrSavepoint.getRevisionDeltas2().values())
       {
         CDOID id = delta.getID();
         boolean isNew = isObjectNew(id);
@@ -1741,11 +1740,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     if (needToSaveFeatureDelta)
     {
-      CDORevisionDelta revisionDelta = lastSavepoint.getRevisionDeltas().get(id);
+      CDORevisionDelta revisionDelta = lastSavepoint.getRevisionDeltas2().get(id);
       if (revisionDelta == null)
       {
         revisionDelta = CDORevisionUtil.createDelta(object.cdoRevision());
-        lastSavepoint.getRevisionDeltas().put(id, revisionDelta);
+        lastSavepoint.getRevisionDeltas2().put(id, revisionDelta);
       }
 
       ((InternalCDORevisionDelta)revisionDelta).addFeatureDelta(featureDelta);
@@ -1761,7 +1760,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public synchronized void registerRevisionDelta(CDORevisionDelta revisionDelta)
   {
-    lastSavepoint.getRevisionDeltas().putIfAbsent(revisionDelta.getID(), revisionDelta);
+    Map<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas2();
+    CDOID id = revisionDelta.getID();
+    if (!revisionDeltas.containsKey(id))
+    {
+      revisionDeltas.put(id, revisionDelta);
+    }
   }
 
   public synchronized void registerDirty(InternalCDOObject object, CDOFeatureDelta featureDelta)
@@ -1909,7 +1913,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     copyUncommitted(lastSavepoint.getAllNewObjects(), commitContext.getNewObjects(), newSavepoint.getNewObjects());
     copyUncommitted(lastSavepoint.getAllDirtyObjects(), commitContext.getDirtyObjects(), newSavepoint.getDirtyObjects());
     copyUncommitted(lastSavepoint.getAllRevisionDeltas(), commitContext.getRevisionDeltas(),
-        newSavepoint.getRevisionDeltas());
+        newSavepoint.getRevisionDeltas2());
     copyUncommitted(lastSavepoint.getAllDetachedObjects(), commitContext.getDetachedObjects(),
         newSavepoint.getDetachedObjects());
     lastSavepoint = newSavepoint;
@@ -1963,7 +1967,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     while (savepoint != null)
     {
       Collection<CDOObject> newObjects = savepoint.getNewObjects().values();
-      Collection<CDORevisionDelta> revisionDeltas = savepoint.getRevisionDeltas().values();
+      Collection<CDORevisionDelta> revisionDeltas = savepoint.getRevisionDeltas2().values();
       if (newObjects.isEmpty() && revisionDeltas.isEmpty())
       {
         savepoint = savepoint.getNextSavepoint();
@@ -2897,7 +2901,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         if (result.getRollbackMessage() != null)
         {
           CDOCommitInfo commitInfo = new FailureCommitInfo(timeStamp, result.getPreviousTimeStamp());
-          session.invalidate(commitInfo, transaction);
+          session.invalidate(commitInfo, transaction, result.isClearResourcePathCache());
           return;
         }
 
@@ -2927,7 +2931,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
 
         CDOCommitInfo commitInfo = makeCommitInfo(timeStamp, result.getPreviousTimeStamp());
-        session.invalidate(commitInfo, transaction);
+        session.invalidate(commitInfo, transaction, result.isClearResourcePathCache());
 
         // Bug 290032 - Sticky views
         if (session.isSticky())

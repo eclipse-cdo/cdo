@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * One in a sequence of possibly several points in time of a {@link CDOTransaction transaction} that encapsulates the
  * changes to transactional objects and that later changes can be {@link #rollback() rolled back} to.
- * 
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -61,7 +61,7 @@ public interface CDOSavepoint extends CDOUserSavepoint, CDOChangeSetDataProvider
 
   /**
    * Bug 283985 (Re-attachment)
-   * 
+   *
    * @since 3.0
    */
   public Map<CDOID, CDOObject> getReattachedObjects();
@@ -72,9 +72,25 @@ public interface CDOSavepoint extends CDOUserSavepoint, CDOChangeSetDataProvider
   public Map<CDOID, CDOObject> getDirtyObjects();
 
   /**
+   * The returned map delegates to {@link #getRevisionDeltas2()} and does <b>not</b> support the following methods:
+   *
+   * <ul>
+   * <li> {@link ConcurrentMap#putIfAbsent(Object, Object)}
+   * <li> {@link ConcurrentMap#remove(Object, Object)}
+   * <li> {@link ConcurrentMap#replace(Object, Object)}
+   * <li> {@link ConcurrentMap#replace(Object, Object, Object)}
+   * </ul>
+   *
    * @since 3.0
+   * @deprecated As of 4.2 use {@link #getRevisionDeltas2()} instead.
    */
+  @Deprecated
   public ConcurrentMap<CDOID, CDORevisionDelta> getRevisionDeltas();
+
+  /**
+   * @since 4.2
+   */
+  public Map<CDOID, CDORevisionDelta> getRevisionDeltas2();
 
   /**
    * @since 3.0
@@ -83,7 +99,7 @@ public interface CDOSavepoint extends CDOUserSavepoint, CDOChangeSetDataProvider
 
   /**
    * Return the list of new objects from this point without objects that are removed.
-   * 
+   *
    * @since 3.0
    */
   public Map<CDOID, CDOObject> getAllNewObjects();
@@ -95,14 +111,14 @@ public interface CDOSavepoint extends CDOUserSavepoint, CDOChangeSetDataProvider
 
   /**
    * Return the list of new objects from this point.
-   * 
+   *
    * @since 3.0
    */
   public Map<CDOID, CDOObject> getAllDirtyObjects();
 
   /**
    * Return the list of all deltas without objects that are removed.
-   * 
+   *
    * @since 3.0
    */
   public Map<CDOID, CDORevisionDelta> getAllRevisionDeltas();

@@ -41,6 +41,7 @@ import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.internal.cdo.object.CDOObjectReferenceImpl;
+import org.eclipse.emf.internal.cdo.view.AbstractCDOView;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -82,6 +83,8 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
   private int viewID;
 
   private CDOTransaction transaction;
+
+  private boolean clearResourcePathCache;
 
   public CommitTransactionRequest(CDOClientProtocol protocol, InternalCDOCommitContext context)
   {
@@ -182,10 +185,19 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
       TRACER.format("Writing {0} dirty objects", changedObjects.size()); //$NON-NLS-1$
     }
 
+    CDOID rootResourceID = transaction.getSession().getRepositoryInfo().getRootResourceID();
     for (CDORevisionKey changedObject : changedObjects)
     {
-      out.writeCDORevisionDelta((CDORevisionDelta)changedObject);
+      CDORevisionDelta delta = (CDORevisionDelta)changedObject;
+      if (!clearResourcePathCache && AbstractCDOView.canHaveResourcePathImpact(delta, rootResourceID))
+      {
+        clearResourcePathCache = true;
+      }
+
+      out.writeCDORevisionDelta(delta);
     }
+
+    out.writeBoolean(clearResourcePathCache);
 
     if (TRACER.isEnabled())
     {
@@ -301,7 +313,8 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
         }
       }
 
-      return new CommitTransactionResult(idProvider, rollbackMessage, branchPoint, previousTimeStamp, xRefs);
+      return new CommitTransactionResult(idProvider, rollbackMessage, branchPoint, previousTimeStamp, xRefs,
+          clearResourcePathCache);
     }
 
     return null;

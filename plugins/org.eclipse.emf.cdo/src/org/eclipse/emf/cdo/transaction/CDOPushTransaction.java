@@ -524,6 +524,22 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.getBinaryResource(path);
   }
 
+  /**
+   * @since 4.2
+   */
+  public CDOResourceFolder getResourceFolder(String path)
+  {
+    return delegate.getResourceFolder(path);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public void setResourcePathCache(Map<String, CDOID> resourcePathCache)
+  {
+    delegate.setResourcePathCache(resourcePathCache);
+  }
+
   public ResourceSet getResourceSet()
   {
     return delegate.getResourceSet();

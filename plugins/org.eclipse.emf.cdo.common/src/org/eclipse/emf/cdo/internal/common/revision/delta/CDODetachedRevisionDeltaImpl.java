@@ -62,6 +62,11 @@ public class CDODetachedRevisionDeltaImpl implements CDORevisionDelta
     throw new UnsupportedOperationException();
   }
 
+  public boolean isResourcePathChange()
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public CDORevisionDelta copy()
   {
     return this;

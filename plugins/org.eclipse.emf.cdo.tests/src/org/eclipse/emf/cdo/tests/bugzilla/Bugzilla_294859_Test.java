@@ -33,7 +33,7 @@ import java.util.Date;
 
 /**
  * Bug 294859 - Deltas for local changes to objects in CONFLICT state, are not added to tx
- * 
+ *
  * @author Caspar De Groot
  */
 public class Bugzilla_294859_Test extends AbstractCDOTest
@@ -78,7 +78,7 @@ public class Bugzilla_294859_Test extends AbstractCDOTest
     // Verify that the delta representing the LAST LOCAL change is in the TX
     //
     CDOSavepointImpl savepoint = (CDOSavepointImpl)((InternalCDOTransaction)tx).getLastSavepoint();
-    CDORevisionDelta revDelta = savepoint.getRevisionDeltas().get(cdoPurchaseOrder.cdoID());
+    CDORevisionDelta revDelta = savepoint.getRevisionDeltas2().get(cdoPurchaseOrder.cdoID());
     assertNotNull(revDelta);
     assertEquals(true, revDelta.getFeatureDeltas().size() == 1);
     CDOFeatureDelta featDelta = revDelta.getFeatureDeltas().get(0);

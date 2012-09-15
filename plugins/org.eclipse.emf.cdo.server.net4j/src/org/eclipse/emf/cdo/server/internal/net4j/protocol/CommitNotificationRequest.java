@@ -25,15 +25,20 @@ public class CommitNotificationRequest extends CDOServerRequest
 {
   private CDOCommitInfo commitInfo;
 
-  public CommitNotificationRequest(CDOServerProtocol serverProtocol, CDOCommitInfo commitInfo)
+  private boolean clearResourcePathCache;
+
+  public CommitNotificationRequest(CDOServerProtocol serverProtocol, CDOCommitInfo commitInfo,
+      boolean clearResourcePathCache)
   {
     super(serverProtocol, CDOProtocolConstants.SIGNAL_COMMIT_NOTIFICATION);
     this.commitInfo = commitInfo;
+    this.clearResourcePathCache = clearResourcePathCache;
   }
 
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
     out.writeCDOCommitInfo(commitInfo); // Exposes revision to client side
+    out.writeBoolean(clearResourcePathCache);
   }
 }

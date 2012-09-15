@@ -34,6 +34,8 @@ public class CommitNotificationIndication extends CDOClientIndication
   {
     InternalCDOSession session = getSession();
     CDOCommitInfo commitInfo = in.readCDOCommitInfo();
-    session.handleCommitNotification(commitInfo);
+    boolean clearResourcePathCache = in.readBoolean();
+
+    session.handleCommitNotification(commitInfo, clearResourcePathCache);
   }
 }

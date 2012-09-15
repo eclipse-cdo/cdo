@@ -446,9 +446,15 @@ public abstract class DelegatingRepository implements InternalRepository
     getDelegate().failCommit(timeStamp);
   }
 
+  @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo)
   {
     getDelegate().sendCommitNotification(sender, commitInfo);
+  }
+
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache)
+  {
+    getDelegate().sendCommitNotification(sender, commitInfo, clearResourcePathCache);
   }
 
   public void setRootResourceID(CDOID rootResourceID)

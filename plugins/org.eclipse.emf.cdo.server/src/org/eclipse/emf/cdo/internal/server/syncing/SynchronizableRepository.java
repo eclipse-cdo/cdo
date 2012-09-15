@@ -425,7 +425,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       String comment = "<replicate raw commits>"; //$NON-NLS-1$
       CDOCommitInfo commitInfo = manager.createCommitInfo(branch, toCommitTime, fromCommitTime, SYSTEM_USER_ID,
           comment, data);
-      sessionManager.sendCommitNotification(replicatorSession, commitInfo);
+      sessionManager.sendCommitNotification(replicatorSession, commitInfo, true);
     }
 
     CDOLockChangeInfo lockChangeInfo = CDOLockUtil.createLockChangeInfo();

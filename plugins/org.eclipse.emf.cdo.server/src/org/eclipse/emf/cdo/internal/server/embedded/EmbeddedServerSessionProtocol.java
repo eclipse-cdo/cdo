@@ -93,6 +93,11 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
     clientSession.handleCommitNotification(commitInfo);
   }
 
+  public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache) throws Exception
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public void sendLockNotification(CDOLockChangeInfo lockChangeInfo)
   {
     EmbeddedClientSession clientSession = clientSessionProtocol.getSession();

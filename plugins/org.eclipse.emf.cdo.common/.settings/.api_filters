@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.common" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="923795461">
+            <message_arguments>
+                <message_argument value="4.2.0"/>
+                <message_argument value="4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/model/CDOModelConstants.java" type="org.eclipse.emf.cdo.common.model.CDOModelConstants">
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.model.CDOModelConstants"/>
+                <message_argument value="BLOB_CLASS_NAME"/>
+                <message_argument value="Blob"/>
+            </message_arguments>
+        </filter>
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.model.CDOModelConstants"/>
+                <message_argument value="CLOB_CLASS_NAME"/>
+                <message_argument value="Clob"/>
+            </message_arguments>
+        </filter>
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.model.CDOModelConstants"/>
+                <message_argument value="CORE_PACKAGE_URI"/>
+                <message_argument value="http://www.eclipse.org/emf/2002/Ecore"/>
+            </message_arguments>
+        </filter>
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.model.CDOModelConstants"/>
+                <message_argument value="RESOURCE_CLASS_NAME"/>
+                <message_argument value="CDOResource"/>
+            </message_arguments>
+        </filter>
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.model.CDOModelConstants"/>
+                <message_argument value="RESOURCE_FOLDER_CLASS_NAME"/>
+                <message_argument value="CDOResourceFolder"/>
+            </message_arguments>
+        </filter>
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.model.CDOModelConstants"/>
+                <message_argument value="RESOURCE_NODE_CLASS_NAME"/>
+                <message_argument value="CDOResourceNode"/>
+            </message_arguments>
+        </filter>
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.model.CDOModelConstants"/>
+                <message_argument value="RESOURCE_NODE_NAME_ATTRIBUTE"/>
+                <message_argument value="name"/>
+            </message_arguments>
+        </filter>
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.model.CDOModelConstants"/>
+                <message_argument value="RESOURCE_PACKAGE_URI"/>
+                <message_argument value="http://www.eclipse.org/emf/CDO/Eresource/4.0.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.model.CDOModelConstants"/>
+                <message_argument value="ROOT_CLASS_NAME"/>
+                <message_argument value="EObject"/>
+            </message_arguments>
+        </filter>
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.model.CDOModelConstants"/>
+                <message_argument value="TYPES_PACKAGE_URI"/>
+                <message_argument value="http://www.eclipse.org/emf/CDO/Etypes/4.0.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

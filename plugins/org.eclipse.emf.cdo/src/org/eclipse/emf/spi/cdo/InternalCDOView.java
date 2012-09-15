@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
@@ -82,10 +83,18 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
   public void handleObjectStateChanged(InternalCDOObject object, CDOState oldState, CDOState newState);
 
   /**
-   * @since 4.0
+   * @deprecated As of 4.2. use {@link #invalidate(CDOBranch, long, List, List, Map, boolean, boolean)}
    */
+  @Deprecated
   public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
       List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions, boolean async);
+
+  /**
+   * @since 4.2
+   */
+  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
+      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions, boolean async,
+      boolean clearResourcePathCache);
 
   /**
    * @since 3.0
@@ -98,6 +107,11 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
   public void collectViewedRevisions(Map<CDOID, InternalCDORevision> revisions);
 
   public void remapObject(CDOID oldID);
+
+  /**
+   * @since 4.2
+   */
+  public void clearResourcePathCacheIfNecessary(CDORevisionDelta delta);
 
   public CDOID getResourceNodeID(String path);
 

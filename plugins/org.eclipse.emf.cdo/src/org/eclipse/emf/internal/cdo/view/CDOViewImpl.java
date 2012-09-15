@@ -238,7 +238,7 @@ public class CDOViewImpl extends AbstractCDOView
 
     basicSetBranchPoint(branchPoint);
     doInvalidate(branchPoint.getBranch(), CDOBranchPoint.UNSPECIFIED_DATE, allChangedObjects, allDetachedObjects,
-        oldRevisions);
+        oldRevisions, true);
 
     IListener[] listeners = getListeners();
     if (listeners != null)
@@ -785,30 +785,46 @@ public class CDOViewImpl extends AbstractCDOView
   /*
    * Must not by synchronized on the view!
    */
+  @Deprecated
   public/* synchronized */void invalidate(CDOBranch branch, long lastUpdateTime,
       List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
       Map<CDOID, InternalCDORevision> oldRevisions, boolean async)
+  {
+    invalidate(branch, lastUpdateTime, allChangedObjects, allDetachedObjects, oldRevisions, async, true);
+  }
+
+  /*
+   * Must not by synchronized on the view!
+   */
+  public/* synchronized */void invalidate(CDOBranch branch, long lastUpdateTime,
+      List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
+      Map<CDOID, InternalCDORevision> oldRevisions, boolean async, boolean clearResourcePathCache)
   {
     if (async)
     {
       QueueRunner runner = getInvalidationRunner();
       runner.addWork(new InvalidationRunnable(branch, lastUpdateTime, allChangedObjects, allDetachedObjects,
-          oldRevisions));
+          oldRevisions, clearResourcePathCache));
     }
     else
     {
-      doInvalidate(branch, lastUpdateTime, allChangedObjects, allDetachedObjects, oldRevisions);
+      doInvalidate(branch, lastUpdateTime, allChangedObjects, allDetachedObjects, oldRevisions, clearResourcePathCache);
     }
   }
 
   protected synchronized void doInvalidate(CDOBranch branch, long lastUpdateTime,
       List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
-      Map<CDOID, InternalCDORevision> oldRevisions)
+      Map<CDOID, InternalCDORevision> oldRevisions, boolean clearResourcePathCache)
   {
     try
     {
       if (ObjectUtil.equals(branch, getBranch()))
       {
+        if (clearResourcePathCache)
+        {
+          clearResourcePathCacheIfNecessary(null);
+        }
+
         Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = null;
         List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>();
         Map<CDOObject, CDORevisionDelta> revisionDeltas = new HashMap<CDOObject, CDORevisionDelta>();
@@ -1536,14 +1552,18 @@ public class CDOViewImpl extends AbstractCDOView
 
     private final Map<CDOID, InternalCDORevision> oldRevisions;
 
+    private boolean clearResourcePathCache;
+
     private InvalidationRunnable(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
-        List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions)
+        List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions,
+        boolean clearResourcePathCache)
     {
       this.branch = branch;
       this.lastUpdateTime = lastUpdateTime;
       this.allChangedObjects = allChangedObjects;
       this.allDetachedObjects = allDetachedObjects;
       this.oldRevisions = oldRevisions;
+      this.clearResourcePathCache = clearResourcePathCache;
     }
 
     public void run()
@@ -1551,7 +1571,8 @@ public class CDOViewImpl extends AbstractCDOView
       try
       {
         invalidationRunnerActive = true;
-        doInvalidate(branch, lastUpdateTime, allChangedObjects, allDetachedObjects, oldRevisions);
+        doInvalidate(branch, lastUpdateTime, allChangedObjects, allDetachedObjects, oldRevisions,
+            clearResourcePathCache);
       }
       finally
       {

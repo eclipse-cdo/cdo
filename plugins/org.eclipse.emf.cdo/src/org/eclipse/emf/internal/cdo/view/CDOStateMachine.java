@@ -67,7 +67,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Eike Stepper
@@ -677,7 +676,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       InternalCDOSavepoint savepoint = transaction.getFirstSavepoint();
       while (savepoint.getNextSavepoint() != null)
       {
-        CDORevisionDelta delta = savepoint.getRevisionDeltas().get(id);
+        CDORevisionDelta delta = savepoint.getRevisionDeltas2().get(id);
         if (delta != null)
         {
           delta.apply(cleanRevision);
@@ -725,7 +724,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     private void processRevisionDeltas(InternalEObject reattachedObject, InternalCDOTransaction transaction)
     {
       InternalCDOSavepoint lastSavepoint = transaction.getLastSavepoint();
-      ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas();
+      Map<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas2();
       for (Iterator<Entry<CDOID, CDORevisionDelta>> it = revisionDeltas.entrySet().iterator(); it.hasNext();)
       {
         Entry<CDOID, CDORevisionDelta> entry = it.next();

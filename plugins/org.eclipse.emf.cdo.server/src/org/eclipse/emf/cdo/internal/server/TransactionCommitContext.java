@@ -129,6 +129,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private String commitComment;
 
+  private boolean clearResourcePathCache;
+
   private InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[0];
 
   private CDOLockState[] locksOnNewObjects = new CDOLockState[0];
@@ -228,6 +230,11 @@ public class TransactionCommitContext implements InternalCommitContext
     }
 
     return packageRegistry;
+  }
+
+  public boolean isClearResourcePathCache()
+  {
+    return clearResourcePathCache;
   }
 
   public InternalCDOPackageUnit[] getNewPackageUnits()
@@ -398,6 +405,11 @@ public class TransactionCommitContext implements InternalCommitContext
     // Make the store writer available in a ThreadLocal variable
     StoreThreadLocal.setAccessor(accessor);
     StoreThreadLocal.setCommitContext(this);
+  }
+
+  public void setClearResourcePathCache(boolean clearResourcePathCache)
+  {
+    this.clearResourcePathCache = clearResourcePathCache;
   }
 
   public void setNewPackageUnits(InternalCDOPackageUnit[] newPackageUnits)
@@ -626,7 +638,7 @@ public class TransactionCommitContext implements InternalCommitContext
       InternalSession sender = transaction.getSession();
       CDOCommitInfo commitInfo = success ? createCommitInfo() : createFailureCommitInfo();
 
-      repository.sendCommitNotification(sender, commitInfo);
+      repository.sendCommitNotification(sender, commitInfo, clearResourcePathCache);
     }
     catch (Exception ex)
     {

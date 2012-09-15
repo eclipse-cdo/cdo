@@ -24,13 +24,14 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.text.MessageFormat;
 import java.util.List;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource Node</b></em>'.
- * 
+ *
  * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
@@ -94,7 +95,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public void setFolder(CDOResourceFolder newFolder)
@@ -144,7 +145,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public void setName(String newName)
@@ -176,7 +177,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public String getPath()
@@ -197,7 +198,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public void setPath(String newPath)
@@ -245,7 +246,9 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   {
     try
     {
-      cdoView().getResourceNodeID(newPath);
+      InternalCDOView view = cdoView();
+      view.clearResourcePathCacheIfNecessary(null);
+      view.getResourceNodeID(newPath);
     }
     catch (Exception ex)
     {

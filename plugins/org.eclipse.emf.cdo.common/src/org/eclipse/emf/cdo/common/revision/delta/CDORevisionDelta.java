@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Represents the change delta between two {@link CDORevision revisions} of a CDO object. The detailed
  * {@link CDOFeatureDelta feature deltas} are returned by the {@link #getFeatureDeltas()} method.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -43,7 +43,7 @@ public interface CDORevisionDelta extends CDORevisionKey
    * This constant is only passed into conflict resolvers to indicate that a conflict was caused by remote detachment of
    * an object. Calling any method on this marker instance will result in an {@link UnsupportedOperationException} being
    * thrown.
-   * 
+   *
    * @since 4.0
    */
   public static final CDORevisionDelta DETACHED = new CDODetachedRevisionDeltaImpl();

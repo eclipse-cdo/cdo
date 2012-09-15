@@ -27,6 +27,8 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
@@ -127,6 +129,9 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
       return new CDOObjectHandler[length];
     }
   };
+
+  @ExcludeFromDump
+  private transient Map<String, CDOID> resourcePathCache = new HashMap<String, CDOID>();
 
   @ExcludeFromDump
   private transient CDOID lastLookupID;
@@ -321,7 +326,6 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     CDOID id = getResourceNodeID(path);
     if (id != null) // Should always be true
     {
-
       InternalCDOObject object = getObject(id);
       if (object instanceof CDOResourceNode)
       {
@@ -330,6 +334,59 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     }
 
     throw new CDOException("Resource node not found: " + path);
+  }
+
+  private CDOID getCachedResourceNodeID(String path)
+  {
+    if (resourcePathCache != null)
+    {
+      return resourcePathCache.get(path);
+    }
+
+    return null;
+  }
+
+  private void setCachedResourceNodeID(String path, CDOID id)
+  {
+    if (resourcePathCache != null)
+    {
+      if (id == null)
+      {
+        resourcePathCache.remove(path);
+      }
+      else
+      {
+        resourcePathCache.put(path, id);
+      }
+    }
+  }
+
+  public synchronized void setResourcePathCache(Map<String, CDOID> resourcePathCache)
+  {
+    this.resourcePathCache = resourcePathCache;
+  }
+
+  /**
+   * If <code>delta == null</code> the cache is cleared unconditionally.
+   * If <code>delta != null</code> the cache is cleared only if the delta can have an impact on the resource tree structure.
+   */
+  public synchronized void clearResourcePathCacheIfNecessary(CDORevisionDelta delta)
+  {
+    if (resourcePathCache != null && !resourcePathCache.isEmpty())
+    {
+      if (delta == null)
+      {
+        resourcePathCache.clear();
+      }
+      else
+      {
+        CDOID rootResourceID = getSession().getRepositoryInfo().getRootResourceID();
+        if (canHaveResourcePathImpact(delta, rootResourceID))
+        {
+          resourcePathCache.clear();
+        }
+      }
+    }
   }
 
   /**
@@ -342,21 +399,38 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
       throw new IllegalArgumentException(Messages.getString("CDOViewImpl.1")); //$NON-NLS-1$
     }
 
-    CDOID folderID = null;
-    if (CDOURIUtil.SEGMENT_SEPARATOR.equals(path))
+    CDOID id = getCachedResourceNodeID(path);
+    if (id == null)
     {
-      folderID = getResourceNodeIDChecked(null, null);
-    }
-    else
-    {
-      List<String> names = CDOURIUtil.analyzePath(path);
-      for (String name : names)
+      if (CDOURIUtil.SEGMENT_SEPARATOR.equals(path))
       {
-        folderID = getResourceNodeIDChecked(folderID, name);
+        id = getResourceNodeIDChecked(null, null);
+        setCachedResourceNodeID(path, id);
+      }
+      else
+      {
+        List<String> names = CDOURIUtil.analyzePath(path);
+        path = "";
+
+        for (String name : names)
+        {
+          path = path.length() == 0 ? name : path + "/" + name;
+
+          CDOID cached = getCachedResourceNodeID(path);
+          if (cached != null)
+          {
+            id = cached;
+          }
+          else
+          {
+            id = getResourceNodeIDChecked(id, name);
+            setCachedResourceNodeID(path, id);
+          }
+        }
       }
     }
 
-    return folderID;
+    return id;
   }
 
   /**
@@ -364,13 +438,13 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
    */
   private CDOID getResourceNodeIDChecked(CDOID folderID, String name)
   {
-    folderID = getResourceNodeID(folderID, name);
-    if (folderID == null)
+    CDOID id = getResourceNodeID(folderID, name);
+    if (id == null)
     {
       throw new CDOException(MessageFormat.format(Messages.getString("CDOViewImpl.2"), name)); //$NON-NLS-1$
     }
 
-    return folderID;
+    return id;
   }
 
   /**
@@ -432,16 +506,21 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
 
   protected synchronized CDOID getRootOrTopLevelResourceNodeID(String name)
   {
+    if (name == null)
+    {
+      if (rootResource != null)
+      {
+        return rootResource.cdoID();
+      }
+
+      return getSession().getRepositoryInfo().getRootResourceID();
+    }
+
     CDOQuery resourceQuery = createResourcesQuery(null, name, true);
     resourceQuery.setMaxResults(1);
     List<CDOID> ids = resourceQuery.getResult(CDOID.class);
     if (ids.isEmpty())
     {
-      if (name == null)
-      {
-        throw new CDOException(Messages.getString("CDOViewImpl.6")); //$NON-NLS-1$
-      }
-
       throw new CDOException(MessageFormat.format(Messages.getString("CDOViewImpl.7"), name)); //$NON-NLS-1$
     }
 
@@ -495,7 +574,7 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     return getResource(path, true);
   }
 
-  public synchronized CDOResource getResource(String path, boolean loadInDemand)
+  public synchronized CDOResource getResource(String path, boolean loadOnDemand)
   {
     checkActive();
     URI uri = CDOURIUtil.createResourceURI(this, path);
@@ -504,7 +583,7 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
 
     try
     {
-      return (CDOResource)resourceSet.getResource(uri, loadInDemand);
+      return (CDOResource)resourceSet.getResource(uri, loadOnDemand);
     }
     catch (RuntimeException ex)
     {
@@ -531,6 +610,11 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
   public CDOBinaryResource getBinaryResource(String path)
   {
     return (CDOBinaryResource)getResourceNode(path);
+  }
+
+  public CDOResourceFolder getResourceFolder(String path)
+  {
+    return (CDOResourceFolder)getResourceNode(path);
   }
 
   /**
@@ -1203,10 +1287,8 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     }
   }
 
-  private Map<String, CDOID> resourcePathCache = new HashMap<String, CDOID>();
-
   /*
-   * Synchronized through InvlidationRunner.run()
+   * Synchronized through InvalidationRunner.run()
    */
   protected Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> invalidate(long lastUpdateTime,
       List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects, List<CDORevisionDelta> deltas,
@@ -1229,15 +1311,6 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
         }
 
         deltas.add(delta);
-
-        if (resourcePathCache != null && EresourcePackage.Literals.CDO_RESOURCE_NODE.isSuperTypeOf(delta.getEClass()))
-        {
-          if (delta.getFeatureDelta(EresourcePackage.Literals.CDO_RESOURCE_NODE__FOLDER) != null
-              || delta.getFeatureDelta(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME) != null)
-          {
-            resourcePathCache.clear();
-          }
-        }
       }
 
       CDOObject changedObject = objects.get(key.getID());
@@ -1472,9 +1545,68 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     viewSet = null;
     objects = null;
     store = null;
+    resourcePathCache = null;
     lastLookupID = null;
     lastLookupObject = null;
     super.doDeactivate();
+  }
+
+  public static boolean canHaveResourcePathImpact(CDORevisionDelta delta, CDOID rootResourceID)
+  {
+    EClass eClass = delta.getEClass();
+    if (EresourcePackage.Literals.CDO_RESOURCE_NODE.isSuperTypeOf(eClass))
+    {
+      if (delta.getFeatureDelta(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME) != null)
+      {
+        return true;
+      }
+    }
+
+    if (eClass == EresourcePackage.Literals.CDO_RESOURCE_FOLDER)
+    {
+      CDOListFeatureDelta featureDelta = (CDOListFeatureDelta)delta
+          .getFeatureDelta(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES);
+      if (canHaveResourcePathImpact(featureDelta))
+      {
+        return true;
+      }
+    }
+
+    if (eClass == EresourcePackage.Literals.CDO_RESOURCE)
+    {
+      if (rootResourceID.equals(delta.getID()))
+      {
+        CDOListFeatureDelta featureDelta = (CDOListFeatureDelta)delta
+            .getFeatureDelta(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS);
+        if (canHaveResourcePathImpact(featureDelta))
+        {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  private static boolean canHaveResourcePathImpact(CDOListFeatureDelta featureDelta)
+  {
+    if (featureDelta != null)
+    {
+      for (CDOFeatureDelta listChange : featureDelta.getListChanges())
+      {
+        CDOFeatureDelta.Type type = listChange.getType();
+        switch (type)
+        {
+        case REMOVE:
+        case CLEAR:
+        case SET:
+        case UNSET:
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   /**

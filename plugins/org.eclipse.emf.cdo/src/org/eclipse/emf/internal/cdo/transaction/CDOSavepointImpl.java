@@ -34,13 +34,13 @@ import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
@@ -79,7 +79,23 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
 
   private Map<CDOID, CDOObject> dirtyObjects = new HashMap<CDOID, CDOObject>();
 
-  private ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = new ConcurrentHashMap<CDOID, CDORevisionDelta>();
+  private Map<CDOID, CDORevisionDelta> revisionDeltas = new HashMap<CDOID, CDORevisionDelta>()
+  {
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public CDORevisionDelta put(CDOID id, CDORevisionDelta delta)
+    {
+      transaction.clearResourcePathCacheIfNecessary(delta);
+      return super.put(id, delta);
+    }
+
+    @Override
+    public void putAll(Map<? extends CDOID, ? extends CDORevisionDelta> m)
+    {
+      throw new UnsupportedOperationException();
+    }
+  };
 
   private boolean wasDirty;
 
@@ -174,7 +190,106 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public ConcurrentMap<CDOID, CDORevisionDelta> getRevisionDeltas()
+  {
+    return new ConcurrentMap<CDOID, CDORevisionDelta>()
+    {
+      public int size()
+      {
+        return revisionDeltas.size();
+      }
+
+      public boolean isEmpty()
+      {
+        return revisionDeltas.isEmpty();
+      }
+
+      public boolean containsKey(Object key)
+      {
+        return revisionDeltas.containsKey(key);
+      }
+
+      public boolean containsValue(Object value)
+      {
+        return revisionDeltas.containsValue(value);
+      }
+
+      public CDORevisionDelta get(Object key)
+      {
+        return revisionDeltas.get(key);
+      }
+
+      public CDORevisionDelta put(CDOID key, CDORevisionDelta value)
+      {
+        return revisionDeltas.put(key, value);
+      }
+
+      public CDORevisionDelta remove(Object key)
+      {
+        return revisionDeltas.remove(key);
+      }
+
+      public void putAll(Map<? extends CDOID, ? extends CDORevisionDelta> m)
+      {
+        revisionDeltas.putAll(m);
+      }
+
+      public void clear()
+      {
+        revisionDeltas.clear();
+      }
+
+      public Set<CDOID> keySet()
+      {
+        return revisionDeltas.keySet();
+      }
+
+      public Collection<CDORevisionDelta> values()
+      {
+        return revisionDeltas.values();
+      }
+
+      public Set<java.util.Map.Entry<CDOID, CDORevisionDelta>> entrySet()
+      {
+        return revisionDeltas.entrySet();
+      }
+
+      @Override
+      public boolean equals(Object o)
+      {
+        return revisionDeltas.equals(o);
+      }
+
+      @Override
+      public int hashCode()
+      {
+        return revisionDeltas.hashCode();
+      }
+
+      public CDORevisionDelta putIfAbsent(CDOID key, CDORevisionDelta value)
+      {
+        return null;
+      }
+
+      public boolean remove(Object key, Object value)
+      {
+        return false;
+      }
+
+      public boolean replace(CDOID key, CDORevisionDelta oldValue, CDORevisionDelta newValue)
+      {
+        return false;
+      }
+
+      public CDORevisionDelta replace(CDOID key, CDORevisionDelta value)
+      {
+        return null;
+      }
+    };
+  }
+
+  public Map<CDOID, CDORevisionDelta> getRevisionDeltas2()
   {
     return revisionDeltas;
   }
@@ -304,7 +419,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     {
       if (getPreviousSavepoint() == null)
       {
-        return Collections.unmodifiableMap(getRevisionDeltas());
+        return Collections.unmodifiableMap(getRevisionDeltas2());
       }
 
       // We need to combined the result for all delta in different Savepoint
@@ -312,7 +427,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
       for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint
           .getNextSavepoint())
       {
-        for (CDORevisionDelta revisionDelta : savepoint.getRevisionDeltas().values())
+        for (CDORevisionDelta revisionDelta : savepoint.getRevisionDeltas2().values())
         {
           CDOID id = revisionDelta.getID();
           if (!isNewObject(id))

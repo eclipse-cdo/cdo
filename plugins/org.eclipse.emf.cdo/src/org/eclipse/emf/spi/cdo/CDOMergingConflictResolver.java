@@ -74,7 +74,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
 
     InternalCDOTransaction transaction = (InternalCDOTransaction)getTransaction();
     InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
-    Map<CDOID, CDORevisionDelta> localDeltas = transaction.getLastSavepoint().getRevisionDeltas();
+    Map<CDOID, CDORevisionDelta> localDeltas = transaction.getLastSavepoint().getRevisionDeltas2();
 
     for (CDORevisionKey key : result.getChangedObjects())
     {

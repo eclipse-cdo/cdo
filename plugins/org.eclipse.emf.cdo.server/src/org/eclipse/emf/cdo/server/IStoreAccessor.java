@@ -319,6 +319,11 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public InternalCDOPackageRegistry getPackageRegistry();
 
     /**
+     * @since 4.2
+     */
+    public boolean isClearResourcePathCache();
+
+    /**
      * Returns an array of the new package units that are part of the commit operation represented by this
      * <code>CommitContext</code>.
      */

@@ -944,9 +944,15 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
+  @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo)
   {
-    sessionManager.sendCommitNotification(sender, commitInfo);
+    sendCommitNotification(sender, commitInfo, true);
+  }
+
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache)
+  {
+    sessionManager.sendCommitNotification(sender, commitInfo, clearResourcePathCache);
 
     for (CDOCommitInfoHandler handler : getCommitInfoHandlers())
     {

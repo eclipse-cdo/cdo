@@ -76,7 +76,16 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOPermissionP
 
   public void sendBranchNotification(InternalCDOBranch branch) throws Exception;
 
+  /**
+   * @deprecated As of 4.2 use {@link #sendCommitNotification(CDOCommitInfo, boolean)}
+   */
+  @Deprecated
   public void sendCommitNotification(CDOCommitInfo commitInfo) throws Exception;
+
+  /**
+   * @since 4.2
+   */
+  public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache) throws Exception;
 
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception;
 

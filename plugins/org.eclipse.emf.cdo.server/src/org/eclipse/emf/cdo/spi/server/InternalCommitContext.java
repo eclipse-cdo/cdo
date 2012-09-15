@@ -79,6 +79,11 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext
    */
   public InternalCDORevision[] getDetachedRevisions();
 
+  /**
+   * @since 4.2
+   */
+  public void setClearResourcePathCache(boolean clearResourcePathCache);
+
   public void setNewPackageUnits(InternalCDOPackageUnit[] newPackageUnits);
 
   /**

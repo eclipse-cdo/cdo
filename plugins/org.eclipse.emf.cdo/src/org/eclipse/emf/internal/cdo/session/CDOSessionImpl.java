@@ -645,7 +645,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     for (InternalCDOView view : branchViews)
     {
       view.invalidate(view.getBranch(), result.getLastUpdateTime(), changedObjects, detachedObjects, oldRevisions,
-          false);
+          false, true);
     }
   }
 
@@ -842,12 +842,18 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     getBranchManager().handleBranchCreated(branch);
   }
 
+  @Deprecated
   public void handleCommitNotification(CDOCommitInfo commitInfo)
+  {
+    handleCommitNotification(commitInfo, true);
+  }
+
+  public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache)
   {
     try
     {
       registerPackageUnits(commitInfo.getNewPackageUnits());
-      invalidate(commitInfo, null);
+      invalidate(commitInfo, null, clearResourcePathCache);
     }
     catch (RuntimeException ex)
     {
@@ -1046,10 +1052,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return null;
   }
 
-  /**
-   * @since 2.0
-   */
+  @Deprecated
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
+  {
+    invalidate(commitInfo, sender, true);
+  }
+
+  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache)
   {
     long previousTimeStamp = commitInfo.getPreviousTimeStamp();
     long lastUpdateTime = getLastUpdateTime();
@@ -1061,8 +1070,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     synchronized (outOfSequenceInvalidations)
     {
-      outOfSequenceInvalidations.put(previousTimeStamp, new Pair<CDOCommitInfo, InternalCDOTransaction>(commitInfo,
-          sender));
+      outOfSequenceInvalidations.put(previousTimeStamp, new OutOfSequenceInvalidation(commitInfo, sender,
+          clearResourcePathCache));
     }
 
     long nextPreviousTimeStamp = lastUpdateTime;
@@ -1070,18 +1079,18 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     {
       synchronized (outOfSequenceInvalidations)
       {
-        Pair<CDOCommitInfo, InternalCDOTransaction> currentPair = outOfSequenceInvalidations
-            .remove(nextPreviousTimeStamp);
+        OutOfSequenceInvalidation currentInvalidation = outOfSequenceInvalidations.remove(nextPreviousTimeStamp);
 
         // If we don't have the invalidation that follows the last one we processed,
         // then there is nothing we can do right now
-        if (currentPair == null)
+        if (currentInvalidation == null)
         {
           break;
         }
 
-        final CDOCommitInfo currentCommitInfo = currentPair.getElement1();
-        final InternalCDOTransaction currentSender = currentPair.getElement2();
+        final CDOCommitInfo currentCommitInfo = currentInvalidation.getCommitInfo();
+        final InternalCDOTransaction currentSender = currentInvalidation.getSender();
+        final boolean currentClearResourcePathCache = currentInvalidation.isClearResourcePathCache();
         nextPreviousTimeStamp = currentCommitInfo.getTimeStamp();
 
         if (sender == null)
@@ -1091,13 +1100,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           {
             public void run()
             {
-              invalidateOrdered(currentCommitInfo, currentSender);
+              invalidateOrdered(currentCommitInfo, currentSender, currentClearResourcePathCache);
             }
           });
         }
         else
         {
-          invalidateOrdered(currentCommitInfo, currentSender);
+          invalidateOrdered(currentCommitInfo, currentSender, currentClearResourcePathCache);
         }
       }
     }
@@ -1117,7 +1126,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return invalidationRunner;
   }
 
-  private void invalidateOrdered(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
+  private void invalidateOrdered(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache)
   {
     Map<CDOID, InternalCDORevision> oldRevisions = null;
     boolean success = commitInfo.getBranch() != null;
@@ -1140,7 +1149,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     {
       if (view != sender)
       {
-        invalidateView(commitInfo, view, oldRevisions);
+        invalidateView(commitInfo, view, oldRevisions, clearResourcePathCache);
       }
       else
       {
@@ -1150,7 +1159,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   }
 
   private void invalidateView(CDOCommitInfo commitInfo, InternalCDOView view,
-      Map<CDOID, InternalCDORevision> oldRevisions)
+      Map<CDOID, InternalCDORevision> oldRevisions, boolean clearResourcePathCache)
   {
     try
     {
@@ -1158,7 +1167,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       long lastUpdateTime = commitInfo.getTimeStamp();
       List<CDORevisionKey> allChangedObjects = commitInfo.getChangedObjects();
       List<CDOIDAndVersion> allDetachedObjects = commitInfo.getDetachedObjects();
-      view.invalidate(branch, lastUpdateTime, allChangedObjects, allDetachedObjects, oldRevisions, true);
+      view.invalidate(branch, lastUpdateTime, allChangedObjects, allDetachedObjects, oldRevisions, true,
+          clearResourcePathCache);
     }
     catch (RuntimeException ex)
     {
@@ -1370,8 +1380,42 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   /**
    * @author Eike Stepper
    */
-  private static final class OutOfSequenceInvalidations extends
-      HashMap<Long, Pair<CDOCommitInfo, InternalCDOTransaction>>
+  private static final class OutOfSequenceInvalidation
+  {
+    private CDOCommitInfo commitInfo;
+
+    private InternalCDOTransaction sender;
+
+    private boolean clearResourcePathCache;
+
+    public OutOfSequenceInvalidation(CDOCommitInfo commitInfo, InternalCDOTransaction sender,
+        boolean clearResourcePathCache)
+    {
+      this.commitInfo = commitInfo;
+      this.sender = sender;
+      this.clearResourcePathCache = clearResourcePathCache;
+    }
+
+    public CDOCommitInfo getCommitInfo()
+    {
+      return commitInfo;
+    }
+
+    public InternalCDOTransaction getSender()
+    {
+      return sender;
+    }
+
+    public boolean isClearResourcePathCache()
+    {
+      return clearResourcePathCache;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class OutOfSequenceInvalidations extends HashMap<Long, OutOfSequenceInvalidation>
   {
     private static final long serialVersionUID = 1L;
   }

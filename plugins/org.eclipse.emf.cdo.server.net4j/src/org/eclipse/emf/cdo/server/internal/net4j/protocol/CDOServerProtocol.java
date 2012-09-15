@@ -133,11 +133,17 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     }
   }
 
+  @Deprecated
   public void sendCommitNotification(CDOCommitInfo commitInfo) throws Exception
+  {
+    sendCommitNotification(commitInfo, true);
+  }
+
+  public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache) throws Exception
   {
     if (LifecycleUtil.isActive(getChannel()))
     {
-      new CommitNotificationRequest(this, commitInfo).sendAsync();
+      new CommitNotificationRequest(this, commitInfo, clearResourcePathCache).sendAsync();
     }
     else
     {

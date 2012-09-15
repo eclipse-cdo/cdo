@@ -691,17 +691,31 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private CDOLockState[] newLockStates;
 
+    private boolean clearResourcePathCache;
+
     /**
      * @since 4.0
+     * @deprecated As of 4.2
      */
+    @Deprecated
     public CommitTransactionResult(CDOIDProvider idProvider, String rollbackMessage, CDOBranchPoint branchPoint,
         long previousTimeStamp, List<CDOObjectReference> xRefs)
+    {
+      this(idProvider, rollbackMessage, branchPoint, previousTimeStamp, xRefs, true);
+    }
+
+    /**
+     * @since 4.2
+     */
+    public CommitTransactionResult(CDOIDProvider idProvider, String rollbackMessage, CDOBranchPoint branchPoint,
+        long previousTimeStamp, List<CDOObjectReference> xRefs, boolean clearResourcePathCache)
     {
       this.idProvider = idProvider;
       this.rollbackMessage = rollbackMessage;
       this.branchPoint = branchPoint;
       this.previousTimeStamp = previousTimeStamp;
       this.xRefs = xRefs;
+      this.clearResourcePathCache = clearResourcePathCache;
     }
 
     /**
@@ -767,6 +781,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public List<CDOObjectReference> getXRefs()
     {
       return xRefs;
+    }
+
+    /**
+     * @since 4.2
+     */
+    public boolean isClearResourcePathCache()
+    {
+      return clearResourcePathCache;
     }
 
     public Map<CDOID, CDOID> getIDMappings()

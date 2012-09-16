@@ -208,7 +208,9 @@ public class DigestValidator extends VersionValidator
         for (IResourceDelta memberDelta : delta.getAffectedChildren())
         {
           IResource memberResource = memberDelta.getResource();
-          DigestValidatorState memberState = validatorState.getChild(memberResource.getName());
+          DigestValidatorState memberState = validatorState != null ? validatorState.getChild(memberResource.getName())
+              : null;
+
           DigestValidatorState newMemberState = validateDelta(memberDelta, memberState, componentModel, monitor);
           if (newMemberState != null)
           {
@@ -217,13 +219,16 @@ public class DigestValidator extends VersionValidator
           }
         }
 
-        IContainer container = (IContainer)resource;
-        for (DigestValidatorState oldChild : validatorState.getChildren())
+        if (validatorState != null)
         {
-          IResource member = container.findMember(oldChild.getName());
-          if (member != null)
+          IContainer container = (IContainer)resource;
+          for (DigestValidatorState oldChild : validatorState.getChildren())
           {
-            memberStates.add(oldChild);
+            IResource member = container.findMember(oldChild.getName());
+            if (member != null)
+            {
+              memberStates.add(oldChild);
+            }
           }
         }
 

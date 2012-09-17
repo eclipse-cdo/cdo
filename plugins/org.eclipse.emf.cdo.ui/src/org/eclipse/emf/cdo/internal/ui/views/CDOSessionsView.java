@@ -10,23 +10,27 @@
  */
 package org.eclipse.emf.cdo.internal.ui.views;
 
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
-import org.eclipse.emf.cdo.internal.ui.actions.OpenResourceEditorAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenSessionAction;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transfer.ui.TransferDropAdapter;
+import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
+import org.eclipse.net4j.util.ui.views.ContainerNameSorter;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPage;
@@ -64,6 +68,35 @@ public class CDOSessionsView extends ContainerView
   }
 
   @Override
+  protected ViewerSorter createViewerSorter()
+  {
+    return new ContainerNameSorter()
+    {
+      @Override
+      public int compare(Viewer viewer, Object e1, Object e2)
+      {
+        if (e1 instanceof CDOResourceFolder)
+        {
+          if (e2 instanceof CDOResourceLeaf)
+          {
+            return -1;
+          }
+        }
+
+        if (e1 instanceof CDOResourceLeaf)
+        {
+          if (e2 instanceof CDOResourceFolder)
+          {
+            return 1;
+          }
+        }
+
+        return super.compare(viewer, e1, e2);
+      }
+    };
+  }
+
+  @Override
   protected IManagedContainer getContainer()
   {
     return IPluginContainer.INSTANCE;
@@ -96,9 +129,10 @@ public class CDOSessionsView extends ContainerView
     if (object instanceof CDOResourceLeaf)
     {
       CDOResourceLeaf resource = (CDOResourceLeaf)object;
-      String path = resource.getPath();
 
-      String extension = new Path(path).getFileExtension();
+      String name = resource.getName();
+      String extension = new Path(name).getFileExtension();
+
       ResourceOpener opener = resourceOpeners.get(extension);
       if (opener != null)
       {
@@ -106,8 +140,7 @@ public class CDOSessionsView extends ContainerView
       }
       else
       {
-        OpenResourceEditorAction action = new OpenResourceEditorAction(page, resource);
-        action.run();
+        CDOEditorUtil.openEditor(page, resource);
       }
     }
     else
@@ -133,260 +166,4 @@ public class CDOSessionsView extends ContainerView
   {
     public void openResource(IWorkbenchPage page, CDOResourceLeaf resource);
   }
-
-  // /**
-  // * @author Eike Stepper
-  // */
-  // public static class CDOResourceDropAdapter extends DNDDropAdapter<Object>
-  // {
-  // public static final Transfer[] TRANSFERS = { ResourceTransfer.getInstance(), FileTransfer.getInstance() };
-  //
-  // protected CDOResourceDropAdapter(StructuredViewer viewer)
-  // {
-  // super(TRANSFERS, viewer);
-  // }
-  //
-  // @Override
-  // protected boolean validateTarget(Object target, int operation)
-  // {
-  // if (getTargetResourceNode(target) != null)
-  // {
-  // overrideOperation(DND.DROP_COPY);
-  // return true;
-  // }
-  //
-  // return false;
-  // }
-  //
-  // @Override
-  // protected boolean performDrop(Object data, Object target)
-  // {
-  // CDOResourceNode container = getTargetResourceNode(target);
-  // String containerPath = container.getPath();
-  //
-  // List<Source> sources = Source.getSources((Object[])data);
-  // for (Source source : sources)
-  // {
-  // // System.out.println(source.getName() + " --> " + originalOperation);
-  // }
-  //
-  // return true;
-  // }
-  //
-  // protected CDOResourceNode getTargetResourceNode(Object target)
-  // {
-  // if (target instanceof CDOTransaction)
-  // {
-  // return ((CDOTransaction)target).getRootResource();
-  // }
-  //
-  // if (target instanceof CDOResourceFolder)
-  // {
-  // return (CDOResourceFolder)target;
-  // }
-  //
-  // return null;
-  // }
-  //
-  // public static CDOResourceDropAdapter support(StructuredViewer viewer)
-  // {
-  // CDOResourceDropAdapter dropAdapter = new CDOResourceDropAdapter(viewer);
-  // viewer.addDropSupport(DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_DEFAULT, TRANSFERS, dropAdapter);
-  // return dropAdapter;
-  // }
-  //
-  // /**
-  // * @author Eike Stepper
-  // */
-  // public static abstract class Source
-  // {
-  // public abstract String getName();
-  //
-  // public abstract String getPath();
-  //
-  // public abstract boolean isDirectory();
-  //
-  // public final InputStream getInputStream() throws IOException
-  // {
-  // checkNotDirectory();
-  // return openInputStream();
-  // }
-  //
-  // public final OutputStream getOutputStream() throws IOException
-  // {
-  // checkNotDirectory();
-  // return openOutputStream();
-  // }
-  //
-  // protected abstract InputStream openInputStream() throws IOException;
-  //
-  // protected abstract OutputStream openOutputStream() throws IOException;
-  //
-  // private void checkNotDirectory() throws IOException
-  // {
-  // if (isDirectory())
-  // {
-  // throw new IOException("Not supported for directories");
-  // }
-  // }
-  //
-  // public static Source getSource(Object data)
-  // {
-  // if (data instanceof IResource)
-  // {
-  // IResource resource = (IResource)data;
-  // return new ResourceSource(resource);
-  // }
-  //
-  // if (data instanceof String)
-  // {
-  // File file = new File((String)data);
-  // return new FileSource(file);
-  // }
-  //
-  // return null;
-  // }
-  //
-  // public static List<Source> getSources(Object[] data)
-  // {
-  // List<Source> sources = new ArrayList<Source>();
-  //
-  // String commonPath = null;
-  // for (int i = 0; i < data.length; i++)
-  // {
-  // Object element = data[i];
-  // Source source = getSource(element);
-  // if (source != null && !source.isDirectory())
-  // {
-  // String path = source.getPath();
-  // if (commonPath == null)
-  // {
-  // commonPath = path;
-  // }
-  // else
-  // {
-  // if (!commonPath.equals(path))
-  // {
-  // return new ArrayList<Source>();
-  // }
-  // }
-  //
-  // sources.add(source);
-  // }
-  // }
-  //
-  // return sources;
-  // }
-  //
-  // /**
-  // * @author Eike Stepper
-  // */
-  // private static class ResourceSource extends Source
-  // {
-  // private IResource resource;
-  //
-  // public ResourceSource(IResource resource)
-  // {
-  // this.resource = resource;
-  // }
-  //
-  // @Override
-  // public String getName()
-  // {
-  // return resource.getName();
-  // }
-  //
-  // @Override
-  // public String getPath()
-  // {
-  // return resource.getParent().getFullPath().toString();
-  // }
-  //
-  // @Override
-  // public boolean isDirectory()
-  // {
-  // return resource instanceof org.eclipse.core.resources.IContainer;
-  // }
-  //
-  // @Override
-  // protected InputStream openInputStream() throws IOException
-  // {
-  // try
-  // {
-  // return ((IFile)resource).getContents();
-  // }
-  // catch (CoreException ex)
-  // {
-  // throw new IOException(ex);
-  // }
-  // }
-  //
-  // @Override
-  // protected OutputStream openOutputStream() throws IOException
-  // {
-  // return new ByteArrayOutputStream()
-  // {
-  // @Override
-  // public void close() throws IOException
-  // {
-  // if (resource.exists())
-  // {
-  // try
-  // {
-  // ((IFile)resource).setContents(new ByteArrayInputStream(toByteArray()), true, true, null);
-  // }
-  // catch (CoreException ex)
-  // {
-  // throw new IOException(ex);
-  // }
-  // }
-  // }
-  // };
-  // }
-  // }
-  //
-  // /**
-  // * @author Eike Stepper
-  // */
-  // private static class FileSource extends Source
-  // {
-  // private File file;
-  //
-  // public FileSource(File file)
-  // {
-  // this.file = file;
-  // }
-  //
-  // @Override
-  // public String getName()
-  // {
-  // return file.getName();
-  // }
-  //
-  // @Override
-  // public String getPath()
-  // {
-  // return file.getParentFile().getPath();
-  // }
-  //
-  // @Override
-  // public boolean isDirectory()
-  // {
-  // return file.isDirectory();
-  // }
-  //
-  // @Override
-  // protected InputStream openInputStream() throws IOException
-  // {
-  // return new FileInputStream(file);
-  // }
-  //
-  // @Override
-  // protected OutputStream openOutputStream() throws IOException
-  // {
-  // return new FileOutputStream(file);
-  // }
-  // }
-  // }
-  // }
 }

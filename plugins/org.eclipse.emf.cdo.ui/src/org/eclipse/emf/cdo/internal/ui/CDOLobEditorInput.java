@@ -13,9 +13,11 @@ package org.eclipse.emf.cdo.internal.ui;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
-import org.eclipse.emf.cdo.eresource.CDOFileResource;
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IORuntimeException;
@@ -58,19 +60,22 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
 
   private static final Map<CDOLobEditorInput, LobFileStore> fileStores = new WeakHashMap<CDOLobEditorInput, LobFileStore>();
 
-  private static int lastID;
-
-  private CDOFileResource<?> resource;
+  private CDOResourceLeaf resource;
 
   private URI uri;
 
-  public CDOLobEditorInput(CDOFileResource<?> resource)
+  public CDOLobEditorInput(CDOResourceLeaf resource)
   {
     this.resource = resource;
 
     try
     {
-      uri = new URI(SCHEME + "://" + ++lastID);
+      CDOView view = resource.cdoView();
+      org.eclipse.emf.common.util.URI resourceURI = resource.getURI();
+      String path = resourceURI.authority() + "/" + resourceURI.path() + "?session=" + view.getSessionID() + "&view="
+          + view.getViewID();
+
+      uri = new URI(SCHEME + "://" + path);
     }
     catch (URISyntaxException ex)
     {
@@ -79,11 +84,12 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
 
     synchronized (fileStores)
     {
+      fileStores.remove(this);
       fileStores.put(this, null);
     }
   }
 
-  public CDOFileResource<?> getResource()
+  public CDOResourceLeaf getResource()
   {
     return resource;
   }
@@ -110,7 +116,7 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
 
   public String getToolTipText()
   {
-    return resource.getPath();
+    return resource.getURI().toString();
   }
 
   public URI getURI()
@@ -123,7 +129,7 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (resource == null ? 0 : resource.hashCode());
+    result = prime * result + (uri == null ? 0 : uri.hashCode());
     return result;
   }
 
@@ -146,14 +152,14 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
     }
 
     CDOLobEditorInput other = (CDOLobEditorInput)obj;
-    if (resource == null)
+    if (uri == null)
     {
-      if (other.resource != null)
+      if (other.uri != null)
       {
         return false;
       }
     }
-    else if (!resource.equals(other.resource))
+    else if (!uri.equals(other.uri))
     {
       return false;
     }
@@ -193,7 +199,7 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
 
     protected LobFileStore createStore(URI uri, CDOLobEditorInput editorInput)
     {
-      CDOFileResource<?> resource = editorInput.getResource();
+      CDOResourceLeaf resource = editorInput.getResource();
       return new LobFileStore(resource, uri);
     }
   }
@@ -205,13 +211,13 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
   {
     private static final String[] NO_CHILDREN = new String[0];
 
-    private CDOFileResource<?> resource;
+    private CDOResourceLeaf resource;
 
     private final URI uri;
 
     private FileInfo info;
 
-    public LobFileStore(CDOFileResource<?> resource, URI uri)
+    public LobFileStore(CDOResourceLeaf resource, URI uri)
     {
       this.resource = resource;
       this.uri = uri;
@@ -263,16 +269,24 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
           return new ByteArrayInputStream(bytes);
         }
 
-        CDOBlob blob = ((CDOBinaryResource)resource).getContents();
-        if (blob == null)
+        if (resource instanceof CDOBinaryResource)
         {
-          return new ByteArrayInputStream(new byte[0]);
+          CDOBlob blob = ((CDOBinaryResource)resource).getContents();
+          if (blob == null)
+          {
+            return new ByteArrayInputStream(new byte[0]);
+          }
+
+          InputStream inputStream = blob.getContents();
+          ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+          IOUtil.copy(inputStream, outputStream);
+
+          byte[] bytes = outputStream.toByteArray();
+          return new ByteArrayInputStream(bytes);
         }
 
-        InputStream inputStream = blob.getContents();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        IOUtil.copy(inputStream, outputStream);
-
+        ((CDOResource)resource).save(outputStream, null);
         byte[] bytes = outputStream.toByteArray();
         return new ByteArrayInputStream(bytes);
       }
@@ -299,7 +313,7 @@ public class CDOLobEditorInput extends PlatformObject implements IURIEditorInput
             CDOClob clob = new CDOClob(new CharArrayReader(string.toCharArray()));
             textResource.setContents(clob);
           }
-          else
+          else if (resource instanceof CDOBinaryResource)
           {
             byte[] bytes = toByteArray();
             CDOBlob blob = new CDOBlob(new ByteArrayInputStream(bytes));

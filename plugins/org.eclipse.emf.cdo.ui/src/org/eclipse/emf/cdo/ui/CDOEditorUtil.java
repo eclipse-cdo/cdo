@@ -11,22 +11,34 @@
  */
 package org.eclipse.emf.cdo.ui;
 
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.internal.ui.CDOEditorInputImpl;
+import org.eclipse.emf.cdo.internal.ui.CDOLobEditorInput;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IEditorRegistry;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * Some utility methods to cope with CDOEditor and CDOEditorInput
@@ -40,6 +52,12 @@ public final class CDOEditorUtil
    * @since 4.1
    */
   public static final String EDITOR_ID = "org.eclipse.emf.cdo.ui.CDOEditor"; //$NON-NLS-1$
+
+  private static final IEditorRegistry EDITOR_REGISTRY = PlatformUI.getWorkbench().getEditorRegistry();
+
+  private static final Map<CDOResourceLeaf, String> EDITOR_OVERRIDES = new WeakHashMap<CDOResourceLeaf, String>();
+
+  private static final String TEXT_EDITOR_ID = "org.eclipse.ui.DefaultTextEditor";
 
   private static String editorID = EDITOR_ID;
 
@@ -64,7 +82,7 @@ public final class CDOEditorUtil
   }
 
   /**
-   * Returns an implementation of CDOEditorInput interface
+   * Returns an implementation of the CDOEditorInput interface.
    */
   public static CDOEditorInput createCDOEditorInput(CDOView view, String resourcePath, boolean viewOwned)
   {
@@ -75,7 +93,7 @@ public final class CDOEditorUtil
    * Opens the specified resource in CDOEditor
    *
    * @param page
-   *          The page in which the editor will be open
+   *          The page in which the editor will be opened
    * @param view
    *          the CDOView that will be used to access the resource
    * @param resourcePath
@@ -98,8 +116,8 @@ public final class CDOEditorUtil
           }
           else
           {
-            IEditorInput input = CDOEditorUtil.createCDOEditorInput(view, resourcePath, false);
-            page.openEditor(input, CDOEditorUtil.getEditorID());
+            IEditorInput input = createCDOEditorInput(view, resourcePath, false);
+            page.openEditor(input, editorID);
           }
         }
         catch (Exception ex)
@@ -128,7 +146,7 @@ public final class CDOEditorUtil
     {
       try
       {
-        if (ObjectUtil.equals(editorReference.getId(), CDOEditorUtil.getEditorID()))
+        if (ObjectUtil.equals(editorReference.getId(), editorID))
         {
           IEditorInput editorInput = editorReference.getEditorInput();
           if (editorInput instanceof CDOEditorInput)
@@ -154,6 +172,157 @@ public final class CDOEditorUtil
   }
 
   /**
+   * @since 4.2
+   */
+  public static void populateMenu(IMenuManager manager, CDOResourceLeaf resource, IWorkbenchPage page)
+  {
+    String effectiveEditorID = getEffectiveEditorID(resource);
+    manager.add(new OpenEditorAction(page, effectiveEditorID, resource, false));
+
+    String[] editorIDs = getAllEditorIDs(resource);
+    if (editorIDs.length > 1 || editorIDs.length == 1 && !editorIDs[0].equals(effectiveEditorID))
+    {
+      MenuManager subMenu = new MenuManager("Open With");
+      manager.add(subMenu);
+
+      for (String id : editorIDs)
+      {
+        OpenEditorAction action = new OpenEditorAction(page, id, resource, true);
+        subMenu.add(action);
+        if (id.equals(effectiveEditorID))
+        {
+          action.setChecked(true);
+        }
+      }
+    }
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static String getEffectiveEditorID(CDOResourceLeaf resource)
+  {
+    String editorID = EDITOR_OVERRIDES.get(resource);
+    if (editorID != null)
+    {
+      return editorID;
+    }
+
+    if (resource instanceof CDOResource)
+    {
+      return EDITOR_ID;
+    }
+
+    String name = resource.getName();
+    IEditorDescriptor editorDescriptor = EDITOR_REGISTRY.getDefaultEditor(name);
+    if (editorDescriptor != null)
+    {
+      return editorDescriptor.getId();
+    }
+
+    return TEXT_EDITOR_ID;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static String[] getAllEditorIDs(CDOResourceLeaf resource)
+  {
+    List<String> editorIDs = new ArrayList<String>();
+    if (resource instanceof CDOResource)
+    {
+      editorIDs.add(EDITOR_ID);
+    }
+
+    String name = resource.getName();
+    for (IEditorDescriptor editorDescriptor : EDITOR_REGISTRY.getEditors(name))
+    {
+      editorIDs.add(editorDescriptor.getId());
+    }
+
+    if (!editorIDs.contains(TEXT_EDITOR_ID))
+    {
+      editorIDs.add(TEXT_EDITOR_ID);
+    }
+
+    Collections.sort(editorIDs);
+    return editorIDs.toArray(new String[editorIDs.size()]);
+  }
+
+  /**
+   * Returns an implementation of the IEditorInput interface.
+   *
+   * @since 4.2
+   */
+  public static IEditorInput createEditorInput(String editorID, CDOResourceLeaf resource, boolean viewOwned)
+  {
+    if (resource instanceof CDOResource)
+    {
+      if (EDITOR_ID.equals(editorID))
+      {
+        CDOView view = resource.cdoView();
+        String path = resource.getPath();
+        return createCDOEditorInput(view, path, viewOwned);
+      }
+    }
+
+    return new CDOLobEditorInput(resource);
+  }
+
+  /**
+   * Returns an implementation of the IEditorInput interface.
+   *
+   * @since 4.2
+   */
+  public static IEditorInput createEditorInput(String editorID, CDOResourceLeaf resource)
+  {
+    return createEditorInput(editorID, resource, false);
+  }
+
+  /**
+   * Opens the specified resource in CDOEditor
+   *
+   * @param page
+   *          The page in which the editor will be opened
+   * @since 4.2
+   */
+  public static void openEditor(IWorkbenchPage page, CDOResourceLeaf resource)
+  {
+    String editorID = CDOEditorUtil.getEffectiveEditorID(resource);
+    if (editorID != null)
+    {
+      openEditor(page, editorID, resource);
+    }
+  }
+
+  /**
+   * Opens the specified resource in CDOEditor
+   *
+   * @param page
+   *          The page in which the editor will be opened
+   * @since 4.2
+   */
+  public static void openEditor(final IWorkbenchPage page, final String editorID, final CDOResourceLeaf resource)
+  {
+    Display display = page.getWorkbenchWindow().getShell().getDisplay();
+    display.asyncExec(new Runnable()
+    {
+      public void run()
+      {
+        try
+        {
+          IEditorInput editorInput = createEditorInput(editorID, resource);
+          page.openEditor(editorInput, editorID);
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
+    });
+  }
+
+  /**
    * Refreshes all editor's viewers that are using certain CDOView.
    *
    * @param page
@@ -171,6 +340,53 @@ public final class CDOEditorUtil
       {
         editor.refreshViewer(null);
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static class OpenEditorAction extends Action
+  {
+    private IWorkbenchPage page;
+
+    private String editorID;
+
+    private CDOResourceLeaf resource;
+
+    private boolean overrideOnRun;
+
+    public OpenEditorAction(IWorkbenchPage page, String editorID, CDOResourceLeaf resource, boolean overrideOnRun)
+    {
+      this.page = page;
+      this.editorID = editorID;
+      this.resource = resource;
+      this.overrideOnRun = overrideOnRun;
+
+      IEditorDescriptor editorDescriptor = EDITOR_REGISTRY.findEditor(editorID);
+      String label = editorDescriptor.getLabel();
+      if (overrideOnRun)
+      {
+        setText(label);
+      }
+      else
+      {
+        setText("Open With " + label);
+      }
+
+      setImageDescriptor(editorDescriptor.getImageDescriptor());
+      setToolTipText("Open the " + label + " editor on this resource");
+    }
+
+    @Override
+    public void run()
+    {
+      if (overrideOnRun)
+      {
+        EDITOR_OVERRIDES.put(resource, editorID);
+      }
+
+      openEditor(page, editorID, resource);
     }
   }
 }

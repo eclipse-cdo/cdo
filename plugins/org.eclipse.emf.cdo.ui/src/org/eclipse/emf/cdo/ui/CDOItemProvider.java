@@ -20,13 +20,14 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseSessionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CommitTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CreateBranchAction;
-import org.eclipse.emf.cdo.internal.ui.actions.CreateResourceNodeAction;
+import org.eclipse.emf.cdo.internal.ui.actions.NewResourceNodeAction;
 import org.eclipse.emf.cdo.internal.ui.actions.DisableViewDurabilityAction;
 import org.eclipse.emf.cdo.internal.ui.actions.EnableViewDurabilityAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ExportResourceAction;
@@ -35,10 +36,8 @@ import org.eclipse.emf.cdo.internal.ui.actions.LoadResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ManagePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenAuditAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenDurableViewAction;
-import org.eclipse.emf.cdo.internal.ui.actions.OpenResourceEditorAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenViewAction;
-import org.eclipse.emf.cdo.internal.ui.actions.OpenViewEditorAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterFilesystemPackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterSinglePackageAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterWorkspacePackagesAction;
@@ -69,10 +68,16 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.resource.LocalResourceManager;
+import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.IEditorRegistry;
+import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -94,6 +99,12 @@ import java.util.List;
  */
 public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 {
+  private static final IEditorRegistry EDITOR_REGISTRY = PlatformUI.getWorkbench().getEditorRegistry();
+
+  private IPropertyListener editorRegistryListener;
+
+  private ResourceManager resourceManager;
+
   private IWorkbenchPage page;
 
   public CDOItemProvider(IWorkbenchPage page, IElementFilter rootElementFilter)
@@ -105,6 +116,24 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   public CDOItemProvider(IWorkbenchPage page)
   {
     this(page, null);
+  }
+
+  @Override
+  public void dispose()
+  {
+    if (editorRegistryListener != null)
+    {
+      EDITOR_REGISTRY.removePropertyListener(editorRegistryListener);
+      resourceManager = null;
+    }
+
+    if (resourceManager != null)
+    {
+      resourceManager.dispose();
+      resourceManager = null;
+    }
+
+    super.dispose();
   }
 
   @Override
@@ -235,25 +264,69 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
     if (obj instanceof CDOResourceFolder)
     {
-      return SharedIcons.getImage(SharedIcons.OBJ_RESOURCE_FOLDER);
+      return SharedIcons.getImage(SharedIcons.OBJ_FOLDER);
     }
 
-    if (obj instanceof CDOResource)
+    if (obj instanceof CDOResourceLeaf)
     {
-      return SharedIcons.getImage(SharedIcons.OBJ_RESOURCE);
-    }
+      String name = ((CDOResourceLeaf)obj).getName();
+      Image image = getWorkbenchImage(name);
+      if (image != null)
+      {
+        return image;
+      }
 
-    if (obj instanceof CDOTextResource)
-    {
-      return SharedIcons.getImage(SharedIcons.OBJ_TEXT_RESOURCE);
-    }
+      if (obj instanceof CDOResource)
+      {
+        return SharedIcons.getImage(SharedIcons.OBJ_RESOURCE);
+      }
 
-    if (obj instanceof CDOBinaryResource)
-    {
-      return SharedIcons.getImage(SharedIcons.OBJ_BINARY_RESOURCE);
+      if (obj instanceof CDOTextResource)
+      {
+        return SharedIcons.getImage(SharedIcons.OBJ_TEXT_RESOURCE);
+      }
+
+      if (obj instanceof CDOBinaryResource)
+      {
+        return SharedIcons.getImage(SharedIcons.OBJ_BINARY_RESOURCE);
+      }
     }
 
     return super.getImage(obj);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected Image getWorkbenchImage(String name)
+  {
+    ImageDescriptor imageDescriptor = EDITOR_REGISTRY.getImageDescriptor(name);
+    if (imageDescriptor != null)
+    {
+      if (editorRegistryListener == null)
+      {
+        editorRegistryListener = new EditorRegistryListener(this);
+        EDITOR_REGISTRY.addPropertyListener(editorRegistryListener);
+      }
+
+      ResourceManager resourceManager = getResourceManager();
+      return (Image)resourceManager.get(imageDescriptor);
+    }
+
+    return null;
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected ResourceManager getResourceManager()
+  {
+    if (resourceManager == null)
+    {
+      resourceManager = new LocalResourceManager(JFaceResources.getResources());
+    }
+
+    return resourceManager;
   }
 
   @Override
@@ -274,7 +347,6 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   @Override
   protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
   {
-    super.fillContextMenu(manager, selection);
     if (selection.size() == 1)
     {
       Object object = selection.getFirstElement();
@@ -290,19 +362,14 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       {
         fillResourceFolder(manager, (CDOResourceFolder)object);
       }
-      else if (object instanceof CDOResource)
+      else if (object instanceof CDOResourceLeaf)
       {
-        fillResource(manager, (CDOResource)object);
-      }
-      else if (object instanceof CDOTextResource)
-      {
-        fillTextResource(manager, (CDOTextResource)object);
-      }
-      else if (object instanceof CDOBinaryResource)
-      {
-        fillBinaryResource(manager, (CDOBinaryResource)object);
+        fillResourceLeaf(manager, object);
       }
     }
+
+    manager.add(new Separator());
+    super.fillContextMenu(manager, selection);
   }
 
   /**
@@ -313,11 +380,32 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   }
 
   /**
+   * @since 4.2
+   */
+  protected void fillResourceLeaf(IMenuManager manager, Object object)
+  {
+    CDOEditorUtil.populateMenu(manager, (CDOResourceLeaf)object, page);
+
+    if (object instanceof CDOResource)
+    {
+      fillResource(manager, (CDOResource)object);
+    }
+    else if (object instanceof CDOTextResource)
+    {
+      fillTextResource(manager, (CDOTextResource)object);
+    }
+    else if (object instanceof CDOBinaryResource)
+    {
+      fillBinaryResource(manager, (CDOBinaryResource)object);
+    }
+  }
+
+  /**
    * @since 3.0
    */
   protected void fillResource(IMenuManager manager, CDOResource resource)
   {
-    manager.add(new OpenResourceEditorAction(page, resource));
+    // manager.add(new OpenResourceEditorAction(page, resource));
   }
 
   /**
@@ -325,7 +413,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
    */
   protected void fillTextResource(IMenuManager manager, CDOTextResource resource)
   {
-    manager.add(new OpenResourceEditorAction(page, resource));
+    // manager.add(new OpenResourceEditorAction(page, resource));
   }
 
   /**
@@ -333,7 +421,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
    */
   protected void fillBinaryResource(IMenuManager manager, CDOBinaryResource resource)
   {
-    manager.add(new OpenResourceEditorAction(page, resource));
+    // manager.add(new OpenResourceEditorAction(page, resource));
   }
 
   /**
@@ -420,19 +508,23 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
    */
   protected void fillView(IMenuManager manager, CDOView view)
   {
-    manager.add(new OpenViewEditorAction(page, view));
-    manager.add(new LoadResourceAction(page, view));
-    manager.add(new ExportResourceAction(page, view));
-
-    manager.add(new Separator());
     if (!view.isReadOnly())
     {
       CDOResource rootResource = view.getRootResource();
-      manager.add(new CreateResourceNodeAction(this, page, view, rootResource, CreateResourceNodeAction.Type.FOLDER));
-      manager.add(new CreateResourceNodeAction(this, page, view, rootResource, CreateResourceNodeAction.Type.MODEL));
-      manager.add(new CreateResourceNodeAction(this, page, view, rootResource, CreateResourceNodeAction.Type.TEXT));
-      manager.add(new CreateResourceNodeAction(this, page, view, rootResource, CreateResourceNodeAction.Type.BINARY));
+      manager.add(new NewResourceNodeAction(this, page, view, rootResource, NewResourceNodeAction.Type.FOLDER));
+      manager.add(new NewResourceNodeAction(this, page, view, rootResource, NewResourceNodeAction.Type.MODEL));
+      manager.add(new NewResourceNodeAction(this, page, view, rootResource, NewResourceNodeAction.Type.TEXT));
+      manager.add(new NewResourceNodeAction(this, page, view, rootResource, NewResourceNodeAction.Type.BINARY));
+    }
+
+    manager.add(new Separator());
+    manager.add(new LoadResourceAction(page, view));
+    manager.add(new ExportResourceAction(page, view));
+
+    if (!view.isReadOnly())
+    {
       manager.add(new ImportResourceAction(page, view));
+      manager.add(new Separator());
       manager.add(new CommitTransactionAction(page, view));
       manager.add(new RollbackTransactionAction(page, view));
     }
@@ -527,5 +619,27 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     }
 
     return SharedIcons.getImage(SharedIcons.OBJ_EDITOR);
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.2
+   */
+  protected static class EditorRegistryListener implements IPropertyListener
+  {
+    private CDOItemProvider itemProvider;
+
+    public EditorRegistryListener(CDOItemProvider itemProvider)
+    {
+      this.itemProvider = itemProvider;
+    }
+
+    public void propertyChanged(Object source, int propId)
+    {
+      if (propId == IEditorRegistry.PROP_CONTENTS)
+      {
+        itemProvider.fireLabelProviderChanged();
+      }
+    }
   }
 }

@@ -25,8 +25,6 @@ public class SharedIcons
 {
   private static final ImageRegistry REGISTRY = new ImageRegistry(getDisplay());
 
-  private static final String ETOOL = "etool16/"; //$NON-NLS-1$
-
   private static final String OBJ = "obj16/"; //$NON-NLS-1$
 
   public static final String OBJ_ACCEPTOR = OBJ + "acceptor"; //$NON-NLS-1$
@@ -40,6 +38,26 @@ public class SharedIcons
   public static final String OBJ_FACTORY = OBJ + "factory"; //$NON-NLS-1$
 
   public static final String OBJ_FOLDER = OBJ + "folder"; //$NON-NLS-1$
+
+  public static final String OBJ_BEAN = OBJ + "javabean"; //$NON-NLS-1$
+
+  public static final String OBJ_ERROR = OBJ + "error"; //$NON-NLS-1$
+
+  public static final String OBJ_PENDING = OBJ + "pending"; //$NON-NLS-1$
+
+  public static final String OBJ_COLLABORATION = OBJ + "collaboration"; //$NON-NLS-1$
+
+  public static final String OBJ_BUDDY = OBJ + "buddy"; //$NON-NLS-1$
+
+  public static final String OBJ_BUDDY_LONESOME = OBJ + "buddy_lonesome"; //$NON-NLS-1$
+
+  public static final String OBJ_BUDDY_AWAY = OBJ + "buddy_away"; //$NON-NLS-1$
+
+  public static final String OBJ_BUDDY_DO_NOT_DISTURB = OBJ + "buddy_do_not_disturb"; //$NON-NLS-1$
+
+  public static final String OBJ_CHAT = OBJ + "chat"; //$NON-NLS-1$
+
+  private static final String ETOOL = "etool16/"; //$NON-NLS-1$
 
   public static final String ETOOL_ADD_ACCEPTOR = ETOOL + "add_acceptor"; //$NON-NLS-1$
 
@@ -56,42 +74,39 @@ public class SharedIcons
    */
   public static final String ETOOL_PART_MODE = ETOOL + "part_mode"; //$NON-NLS-1$
 
-  private static final String TOOL = "etool16/"; //$NON-NLS-1$
+  public static final String ETOOL_HORIZONTAL = ETOOL + "horizontal_layout"; //$NON-NLS-1$
+
+  public static final String ETOOL_VERTICAL = ETOOL + "vertical_layout"; //$NON-NLS-1$
+
+  /**
+   * @since 4.2
+   */
+  public static final String ETOOL_COLLAPSE_ALL = ETOOL + "collapse_all"; //$NON-NLS-1$
 
   private static final String VIEW = "view16/"; //$NON-NLS-1$
 
-  public static final String OBJ_BEAN = OBJ + "javabean"; //$NON-NLS-1$
-
-  public static final String OBJ_ERROR = OBJ + "error"; //$NON-NLS-1$
-
-  public static final String OBJ_PENDING = OBJ + "pending"; //$NON-NLS-1$
-
   public static final String VIEW_CONTAINER = VIEW + "container"; //$NON-NLS-1$
-
-  public static final String TOOL_ADD = TOOL + "add"; //$NON-NLS-1$
-
-  public static final String TOOL_DELETE = TOOL + "delete"; //$NON-NLS-1$
-
-  public static final String TOOL_REFRESH = TOOL + "refresh"; //$NON-NLS-1$
 
   @SuppressWarnings("unused")
   private static final String WIZBAN = "wizban/"; //$NON-NLS-1$
 
-  public static final String OBJ_COLLABORATION = OBJ + "collaboration"; //$NON-NLS-1$
+  /**
+   * @deprecated As of 4.2 use {@link #ETOOL_ADD}
+   */
+  @Deprecated
+  public static final String TOOL_ADD = ETOOL_ADD;
 
-  public static final String OBJ_BUDDY = OBJ + "buddy"; //$NON-NLS-1$
+  /**
+   * @deprecated As of 4.2 use {@link #ETOOL_DELETE}
+   */
+  @Deprecated
+  public static final String TOOL_DELETE = ETOOL_DELETE;
 
-  public static final String OBJ_BUDDY_LONESOME = OBJ + "buddy_lonesome"; //$NON-NLS-1$
-
-  public static final String OBJ_BUDDY_AWAY = OBJ + "buddy_away"; //$NON-NLS-1$
-
-  public static final String OBJ_BUDDY_DO_NOT_DISTURB = OBJ + "buddy_do_not_disturb"; //$NON-NLS-1$
-
-  public static final String OBJ_CHAT = OBJ + "chat"; //$NON-NLS-1$
-
-  public static final String ETOOL_HORIZONTAL = ETOOL + "horizontal_layout"; //$NON-NLS-1$
-
-  public static final String ETOOL_VERTICAL = ETOOL + "vertical_layout"; //$NON-NLS-1$
+  /**
+   * @deprecated As of 4.2 use {@link #ETOOL_REFRESH}
+   */
+  @Deprecated
+  public static final String TOOL_REFRESH = ETOOL_REFRESH;
 
   public static Image getImage(String key)
   {

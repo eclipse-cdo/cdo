@@ -77,6 +77,8 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
   private Action refreshAction = new RefreshAction();
 
+  private Action collapseAllAction = new CollapseAllAction();
+
   public ContainerView()
   {
   }
@@ -417,6 +419,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   protected void fillLocalToolBar(IToolBarManager manager)
   {
     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+    manager.add(collapseAllAction);
   }
 
   protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
@@ -461,14 +464,14 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   protected void refreshPressed()
   {
     UIUtil.refreshViewer(viewer);
-    // UIUtil.preserveViewerState(viewer, new Runnable()
-    // {
-    // public void run()
-    // {
-    // itemProvider.dispose();
-    // initViewer();
-    // }
-    // });
+  }
+
+  /**
+   * @since 3.3
+   */
+  protected void collapseAllPressed()
+  {
+    getViewer().collapseAll();
   }
 
   protected void closeView()
@@ -535,6 +538,14 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     return refreshAction;
   }
 
+  /**
+   * @since 3.3
+   */
+  public Action getCollapseAllAction()
+  {
+    return collapseAllAction;
+  }
+
   protected Display getDisplay()
   {
     Display display = viewer.getControl().getDisplay();
@@ -576,17 +587,25 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
   public static ImageDescriptor getAddImageDescriptor()
   {
-    return SharedIcons.getDescriptor(SharedIcons.TOOL_ADD);
+    return SharedIcons.getDescriptor(SharedIcons.ETOOL_ADD);
   }
 
   public static ImageDescriptor getDeleteImageDescriptor()
   {
-    return SharedIcons.getDescriptor(SharedIcons.TOOL_DELETE);
+    return SharedIcons.getDescriptor(SharedIcons.ETOOL_DELETE);
   }
 
   public static ImageDescriptor getRefreshImageDescriptor()
   {
-    return SharedIcons.getDescriptor(SharedIcons.TOOL_REFRESH);
+    return SharedIcons.getDescriptor(SharedIcons.ETOOL_REFRESH);
+  }
+
+  /**
+   * @since 3.3
+   */
+  public static ImageDescriptor getCollapseAllImageDescriptor()
+  {
+    return SharedIcons.getDescriptor(SharedIcons.ETOOL_COLLAPSE_ALL);
   }
 
   protected static enum MessageType
@@ -608,6 +627,24 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     protected void safeRun() throws Exception
     {
       refreshPressed();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class CollapseAllAction extends SafeAction
+  {
+    private CollapseAllAction()
+    {
+      super(
+          Messages.getString("ContainerView_3"), Messages.getString("ContainerView_4"), getCollapseAllImageDescriptor()); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+
+    @Override
+    protected void safeRun() throws Exception
+    {
+      collapseAllPressed();
     }
   }
 

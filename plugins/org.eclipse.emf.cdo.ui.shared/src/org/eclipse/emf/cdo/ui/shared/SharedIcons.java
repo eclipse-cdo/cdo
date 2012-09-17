@@ -32,12 +32,6 @@ public class SharedIcons
 
   private static final String ETOOL = "etool16/"; //$NON-NLS-1$
 
-  private static final String OBJ = "obj16/"; //$NON-NLS-1$
-
-  private static final String VIEW = "view16/"; //$NON-NLS-1$
-
-  private static final String WIZBAN = "wizban/"; //$NON-NLS-1$
-
   public static final String ETOOL_OPEN_SESSION = ETOOL + "open_session" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
   public static final String ETOOL_OPEN_EDITOR = ETOOL + "open_editor" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
@@ -99,6 +93,8 @@ public class SharedIcons
    */
   public static final String ETOOL_EXPORT = ETOOL + "export" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
+  private static final String OBJ = "obj16/"; //$NON-NLS-1$
+
   public static final String OBJ_SESSION = OBJ + "cdo_session" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
   public static final String OBJ_SESSION_SYNCING = OBJ + "cdo_session_syncing" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
@@ -116,6 +112,11 @@ public class SharedIcons
   public static final String OBJ_EPACKAGE = OBJ + "EPackage" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
   public static final String OBJ_RESOURCE = OBJ + "CDOResource" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
+  /**
+   * @since 4.1
+   */
+  public static final String OBJ_FILE_RESOURCE = OBJ + "CDOFileResource" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
   /**
    * @since 4.1
@@ -145,17 +146,11 @@ public class SharedIcons
 
   public static final String OBJ_BRANCH = OBJ + "branch.png"; //$NON-NLS-1$
 
-  /**
-   * @since 4.1
-   */
-  public static final String OBJ_FOLDER = OBJ + "folder.gif"; //$NON-NLS-1$
-
-  /**
-   * @since 4.1
-   */
-  public static final String OBJ_FILE = OBJ + "file.gif"; //$NON-NLS-1$
+  private static final String VIEW = "view16/"; //$NON-NLS-1$
 
   public static final String VIEW_SESSIONS = VIEW + "cdo_sessions" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
+  private static final String WIZBAN = "wizban/"; //$NON-NLS-1$
 
   public static final String WIZBAN_PACKAGE_MANAGER = WIZBAN + "PackageManager" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 

@@ -27,13 +27,13 @@ import org.eclipse.emf.cdo.internal.ui.actions.CloseSessionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CommitTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CreateBranchAction;
-import org.eclipse.emf.cdo.internal.ui.actions.NewResourceNodeAction;
 import org.eclipse.emf.cdo.internal.ui.actions.DisableViewDurabilityAction;
 import org.eclipse.emf.cdo.internal.ui.actions.EnableViewDurabilityAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ExportResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ImportResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.LoadResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ManagePackagesAction;
+import org.eclipse.emf.cdo.internal.ui.actions.NewResourceNodeAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenAuditAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenDurableViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
@@ -264,7 +264,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
     if (obj instanceof CDOResourceFolder)
     {
-      return SharedIcons.getImage(SharedIcons.OBJ_FOLDER);
+      return SharedIcons.getImage(SharedIcons.OBJ_RESOURCE_FOLDER);
     }
 
     if (obj instanceof CDOResourceLeaf)

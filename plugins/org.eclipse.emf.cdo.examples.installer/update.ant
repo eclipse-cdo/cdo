@@ -9,8 +9,9 @@
 	Contributors:
 	  Eike Stepper - initial API and implementation
 -->
-<project name="UpdateExamplesInstaller" default="main" basedir="..">
+<project name="UpdateExamplesInstaller" basedir="..">
 
+	<!--
 	<import file="../org.eclipse.emf.cdo.examples.installer/updateLib.ant" />
 
 	<target name="main">
@@ -49,5 +50,6 @@
 		<update-example example="org.gastro.server.web" target="gastro.server.web" />
 		<update-example example="org.gastro.testclient" target="gastro.testclient" />
 	</target>
+	-->
 
 </project>

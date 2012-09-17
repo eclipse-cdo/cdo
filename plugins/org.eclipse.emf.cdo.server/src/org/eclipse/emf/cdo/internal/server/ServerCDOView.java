@@ -397,7 +397,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
   public CDOStaleReferencePolicy getStaleReferencePolicy()
   {
-    return CDOStaleReferencePolicy.EXCEPTION;
+    return CDOStaleReferencePolicy.DEFAULT;
   }
 
   public void setStaleReferencePolicy(CDOStaleReferencePolicy policy)

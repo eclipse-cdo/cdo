@@ -102,11 +102,27 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/view/CDOInvalidationPolicy.java" type="org.eclipse.emf.cdo.view.CDOInvalidationPolicy">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.view.CDOInvalidationPolicy"/>
+                <message_argument value="STRICT"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/view/CDOQuery.java" type="org.eclipse.emf.cdo.view.CDOQuery">
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="CDOQueryInfo"/>
                 <message_argument value="CDOQuery"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.java" type="org.eclipse.emf.cdo.view.CDOStaleReferencePolicy">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.view.CDOStaleReferencePolicy"/>
+                <message_argument value="DEFAULT"/>
             </message_arguments>
         </filter>
     </resource>

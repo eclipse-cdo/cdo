@@ -1670,7 +1670,7 @@ public class CDOViewImpl extends AbstractCDOView
 
     private CDOFeatureAnalyzer featureAnalyzer = CDOFeatureAnalyzer.NOOP;
 
-    private CDOStaleReferencePolicy staleReferencePolicy = CDOStaleReferencePolicy.EXCEPTION;
+    private CDOStaleReferencePolicy staleReferencePolicy = CDOStaleReferencePolicy.DEFAULT;
 
     private HashBag<CDOAdapterPolicy> changeSubscriptionPolicies = new HashBag<CDOAdapterPolicy>();
 
@@ -1955,7 +1955,7 @@ public class CDOViewImpl extends AbstractCDOView
     {
       if (policy == null)
       {
-        policy = CDOStaleReferencePolicy.EXCEPTION;
+        policy = CDOStaleReferencePolicy.DEFAULT;
       }
 
       IEvent event = null;

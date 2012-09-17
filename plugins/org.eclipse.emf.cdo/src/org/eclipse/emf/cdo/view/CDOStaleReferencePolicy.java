@@ -126,6 +126,11 @@ public interface CDOStaleReferencePolicy
   };
 
   /**
+   * @since 4.2
+   */
+  public static final CDOStaleReferencePolicy DEFAULT = PROXY;
+
+  /**
    * Returns an object that we want to return to the caller (clients). Exception thrown will be received by the caller
    * (clients).
    */

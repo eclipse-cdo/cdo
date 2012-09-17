@@ -19,14 +19,17 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 /**
  * A strategy interface to customize the invalidation behaviour of a {@link CDOView view}.
- * 
+ *
  * @see Options#setInvalidationPolicy(CDOInvalidationPolicy)
  * @author Eike Stepper
  * @since 3.0
  */
 public interface CDOInvalidationPolicy
 {
-  public static final CDOInvalidationPolicy DEFAULT = new CDOInvalidationPolicy()
+  /**
+   * @since 4.2
+   */
+  public static final CDOInvalidationPolicy STRICT = new CDOInvalidationPolicy()
   {
     public void handleInvalidation(CDOObject object, CDORevisionKey key)
     {
@@ -51,6 +54,8 @@ public interface CDOInvalidationPolicy
       // Do nothing
     }
   };
+
+  public static final CDOInvalidationPolicy DEFAULT = RELAXED;
 
   public void handleInvalidation(CDOObject object, CDORevisionKey key);
 

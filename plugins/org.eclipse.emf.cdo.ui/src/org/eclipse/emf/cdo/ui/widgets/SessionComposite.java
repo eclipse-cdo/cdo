@@ -40,7 +40,7 @@ import org.eclipse.swt.widgets.Listener;
  * Simple {@link org.eclipse.swt.widgets.Composite composite} allowing users to introduce connection information with a
  * repository. The widget recalls connection history and provides some additional functionality tweakers, as automatic
  * EPackage registration.
- * 
+ *
  * @author Victor Roldan Betancort
  * @since 2.0
  */
@@ -58,11 +58,15 @@ public class SessionComposite extends Composite
 
   private PreferenceButton automaticButton;
 
+  private PreferenceButton legacyButton;
+
   private String connectorDescription;
 
   private String repositoryName;
 
   private boolean automaticRegistry;
+
+  private boolean legacyMode;
 
   public SessionComposite(Composite parent, int style)
   {
@@ -112,6 +116,18 @@ public class SessionComposite extends Composite
       }
     });
 
+    new Label(this, SWT.NONE);
+    legacyButton = new PreferenceButton(this, SWT.CHECK, Messages.getString("SessionComposite.4"), //$NON-NLS-1$
+        OM.PREF_LEGACY_MODE_DEFAULT);
+    legacyButton.getButton().addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        legacyMode = legacyButton.getSelection();
+      }
+    });
+
     connectorText.setFocus();
     connectorText.getCombo().addFocusListener(new FocusListener()
     {
@@ -135,6 +151,7 @@ public class SessionComposite extends Composite
     connectorDescription = connectorText.getText();
     repositoryName = repositoryText.getText();
     automaticRegistry = automaticButton.getSelection();
+    legacyMode = legacyButton.getSelection();
   }
 
   public IHistory<String> getConnectorHistory()
@@ -167,9 +184,25 @@ public class SessionComposite extends Composite
     return automaticButton;
   }
 
+  /**
+   * @since 4.2
+   */
+  public PreferenceButton getLegacyButton()
+  {
+    return legacyButton;
+  }
+
   public boolean isAutomaticRegistry()
   {
     return automaticRegistry;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public boolean isLegacyMode()
+  {
+    return legacyMode;
   }
 
   public String getSessionDescription()
@@ -181,6 +214,11 @@ public class SessionComposite extends Composite
     if (automaticRegistry)
     {
       builder.append("&automaticPackageRegistry=true"); //$NON-NLS-1$
+    }
+
+    if (automaticRegistry)
+    {
+      builder.append("&legacyModeDefault=true"); //$NON-NLS-1$
     }
 
     return builder.toString();
@@ -201,6 +239,7 @@ public class SessionComposite extends Composite
     connectorText.getHistory().add(connectorDescription);
     repositoryText.getHistory().add(repositoryName);
     automaticButton.getPreference().setValue(automaticRegistry);
+    legacyButton.getPreference().setValue(legacyMode);
   }
 
   @Override
@@ -210,6 +249,7 @@ public class SessionComposite extends Composite
     connectorText.addListener(eventType, listener);
     repositoryText.addListener(eventType, listener);
     automaticButton.addListener(eventType, listener);
+    legacyButton.addListener(eventType, listener);
   }
 
   @Override
@@ -219,5 +259,6 @@ public class SessionComposite extends Composite
     connectorText.removeListener(eventType, listener);
     repositoryText.removeListener(eventType, listener);
     automaticButton.removeListener(eventType, listener);
+    legacyButton.removeListener(eventType, listener);
   }
 }

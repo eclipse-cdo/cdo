@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.ui.dialogs.ImportResourceDialog;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
+import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.EList;
@@ -47,7 +48,8 @@ public class ImportResourceAction extends ViewAction
 
   public ImportResourceAction(IWorkbenchPage page, CDOView view)
   {
-    super(page, TITLE + INTERACTIVE, Messages.getString("ImportResourceAction.2"), null, view); //$NON-NLS-1$
+    super(page, TITLE + INTERACTIVE,
+        Messages.getString("ImportResourceAction.2"), SharedIcons.getDescriptor(SharedIcons.ETOOL_IMPORT), view); //$NON-NLS-1$
     setId(ID);
   }
 

@@ -62,6 +62,43 @@ public class SharedIcons
    */
   public static final String ETOOL_NEW_RESOURCE_FOLDER = ETOOL + "NewCDOResourceFolder" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
+  /**
+   * @since 4.1
+   */
+  public static final String ETOOL_CLOCK = ETOOL + "clock" + IMAGE_FORMAT_PNG; //$NON-NLS-1$
+
+  /**
+   * @deprecated As of 4.1 use {@link #ETOOL_CLOCK}
+   */
+  @Deprecated
+  public static final String ETOOL_TIME_PICK_BUTTON_ICON = ETOOL_CLOCK;
+
+  /**
+   * @since 4.1
+   */
+  public static final String ETOOL_SLIDER = ETOOL + "slider" + IMAGE_FORMAT_PNG; //$NON-NLS-1$
+
+  /**
+   * @deprecated As of 4.1 use {@link #ETOOL_CLOCK}
+   */
+  @Deprecated
+  public static final String ETOOL_SLIDER_ICON = ETOOL_SLIDER;
+
+  /**
+   * @since 4.1
+   */
+  public static final String ETOOL_SAVE = ETOOL + "save" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
+  /**
+   * @since 4.1
+   */
+  public static final String ETOOL_IMPORT = ETOOL + "import" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
+  /**
+   * @since 4.1
+   */
+  public static final String ETOOL_EXPORT = ETOOL + "export" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
   public static final String OBJ_SESSION = OBJ + "cdo_session" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
   public static final String OBJ_SESSION_SYNCING = OBJ + "cdo_session_syncing" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
@@ -128,9 +165,20 @@ public class SharedIcons
 
   public static final String WIZBAN_TIME_SELECTION = WIZBAN + "TimeBanner" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
-  public static final String ETOOL_TIME_PICK_BUTTON_ICON = ETOOL + "clock" + IMAGE_FORMAT_PNG; //$NON-NLS-1$
+  /**
+   * @since 4.1
+   */
+  public static final String WIZBAN_TRANSFER = WIZBAN + "transfer_wiz" + IMAGE_FORMAT_PNG; //$NON-NLS-1$
 
-  public static final String ETOOL_SLIDER_ICON = ETOOL + "slider" + IMAGE_FORMAT_PNG; //$NON-NLS-1$
+  /**
+   * @since 4.1
+   */
+  public static final String WIZBAN_IMPORT = WIZBAN + "import_wiz" + IMAGE_FORMAT_PNG; //$NON-NLS-1$
+
+  /**
+   * @since 4.1
+   */
+  public static final String WIZBAN_EXPOR = WIZBAN + "export_wiz" + IMAGE_FORMAT_PNG; //$NON-NLS-1$
 
   public static Image getImage(String key)
   {

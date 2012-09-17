@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
 import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
+import org.eclipse.emf.cdo.internal.ui.LegacyModeRegistry;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.OpenSessionDialog;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
@@ -77,29 +78,32 @@ public final class OpenSessionAction extends LongRunningAction
       {
         CDOPackageRegistryPopulator.populate(session.getPackageRegistry());
       }
+
+      if (sessionComposite.isLegacyMode())
+      {
+        LegacyModeRegistry.setLegacyEnabled(session, true);
+      }
     }
     catch (RemoteException ex)
     {
       Throwable cause = ex.getCause();
-      if (cause instanceof NotAuthenticatedException)
-      {
-        // Skip silently because user has canceled the authentication
-      }
-      else
-      {
-        showError(cause);
-      }
+      handleError(cause);
     }
     catch (Exception ex)
     {
-      if (ex instanceof NotAuthenticatedException)
-      {
-        // Skip silently because user has canceled the authentication
-      }
-      else
-      {
-        showError(ex);
-      }
+      handleError(ex);
+    }
+  }
+
+  protected void handleError(Throwable ex)
+  {
+    if (ex instanceof NotAuthenticatedException)
+    {
+      // Skip silently because user has canceled the authentication
+    }
+    else
+    {
+      showError(ex);
     }
   }
 

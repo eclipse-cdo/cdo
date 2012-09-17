@@ -65,7 +65,7 @@ public final class OpenResourceEditorAction extends ResourceNodeAction
         {
           try
           {
-            IEditorInput input = new CDOLobEditorInput((CDOFileResource<?>)resource);
+            IEditorInput input = new CDOLobEditorInput(resource);
             page.openEditor(input, "org.eclipse.ui.DefaultTextEditor");
           }
           catch (Exception ex)

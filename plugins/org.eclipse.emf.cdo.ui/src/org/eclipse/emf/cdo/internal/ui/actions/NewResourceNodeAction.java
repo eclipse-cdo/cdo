@@ -30,7 +30,7 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public class CreateResourceNodeAction extends ViewAction
+public class NewResourceNodeAction extends ViewAction
 {
   private CDOItemProvider itemProvider;
 
@@ -40,7 +40,7 @@ public class CreateResourceNodeAction extends ViewAction
 
   private String resourceNodeName;
 
-  public CreateResourceNodeAction(CDOItemProvider itemProvider, IWorkbenchPage page, CDOView view,
+  public NewResourceNodeAction(CDOItemProvider itemProvider, IWorkbenchPage page, CDOView view,
       CDOResourceNode node, Type type)
   {
     super(page, type.getTitle() + INTERACTIVE, type.getTooltip(), type.getImageDescriptor(), view);

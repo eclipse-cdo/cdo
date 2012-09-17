@@ -23,7 +23,7 @@ import org.eclipse.net4j.util.ui.UIActivator;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
- * 
+ *
  * @author Eike Stepper
  */
 public abstract class OM
@@ -54,6 +54,9 @@ public abstract class OM
 
   public static final OMPreference<Boolean> PREF_AUTOMATIC_PACKAGE_REGISTRY = //
   PREFS.init("PREF_AUTOMATIC_PACKAGE_REGISTRY", true); //$NON-NLS-1$
+
+  public static final OMPreference<Boolean> PREF_LEGACY_MODE_DEFAULT = //
+  PREFS.init("PREF_LEGACY_MODE_DEFAULT", true); //$NON-NLS-1$
 
   public static final OMPreference<Boolean> PREF_EDITOR_AUTO_RELOAD = //
   PREFS.init("PREF_EDITOR_AUTO_RELOAD", true); //$NON-NLS-1$

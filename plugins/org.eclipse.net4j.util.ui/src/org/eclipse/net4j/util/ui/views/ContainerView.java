@@ -40,6 +40,7 @@ import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -224,8 +225,16 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     itemProvider = createContainerItemProvider();
     viewer.setContentProvider(createContentProvider());
     viewer.setLabelProvider(createLabelProvider());
-    viewer.setSorter(new ContainerNameSorter());
+    viewer.setSorter(createViewerSorter());
     resetInput();
+  }
+
+  /**
+   * @since 3.3
+   */
+  protected ViewerSorter createViewerSorter()
+  {
+    return new ContainerNameSorter();
   }
 
   /**
@@ -412,8 +421,8 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
   protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
   {
-    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
     itemProvider.fillContextMenu(manager, selection);
+    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
   }
 
   protected void selectionChanged(IActionBars bars, ITreeSelection selection)

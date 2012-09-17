@@ -11,8 +11,8 @@
 package org.eclipse.emf.cdo.transfer.ui;
 
 import org.eclipse.emf.cdo.transfer.CDOTransfer;
-import org.eclipse.emf.cdo.transfer.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.transfer.ui.swt.TransferComposite;
+import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -53,7 +53,7 @@ public class TransferDialog extends TitleAreaDialog
   @Override
   protected Control createDialogArea(Composite parent)
   {
-    ImageDescriptor descriptor = OM.Activator.INSTANCE.loadImageDescriptor("icons/transfer_wiz.png");
+    ImageDescriptor descriptor = SharedIcons.getDescriptor(SharedIcons.WIZBAN_TRANSFER);
     Display display = parent.getDisplay();
     wizban = descriptor.createImage(display);
 

@@ -54,8 +54,8 @@ public class ResourceNodeNameInputValidator implements IInputValidator
       CDOResourceNode node = (CDOResourceNode)nodeObject;
       if (node.getName().equals(newText))
       {
-        return isFolder ? Messages.getString("CreateResourceNodeAction.5") + newText : Messages.getString("CreateResourceNodeAction.6") //$NON-NLS-1$ //$NON-NLS-2$
-                + newText;
+        return isFolder ? Messages.getString("CreateResourceNodeAction.5") + " " + newText : Messages.getString("CreateResourceNodeAction.6") //$NON-NLS-1$ //$NON-NLS-2$
+                + " " + newText;
       }
     }
 

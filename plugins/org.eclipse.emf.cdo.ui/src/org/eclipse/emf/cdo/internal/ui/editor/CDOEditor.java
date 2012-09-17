@@ -1533,7 +1533,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     action.setEnabled(true);
     action.setChecked(false);
-    action.setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.ETOOL_SLIDER_ICON));
+    action.setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.ETOOL_SLIDER));
     action.setToolTipText(Messages.getString("CDOEditor.1")); //$NON-NLS-1$
     getActionBars().getToolBarManager().add(action);
   }

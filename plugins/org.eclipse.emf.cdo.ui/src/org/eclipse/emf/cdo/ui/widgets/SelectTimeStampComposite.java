@@ -147,7 +147,7 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
     });
 
     timeBrowseButton = new Button(pointGroup, SWT.NONE);
-    timeBrowseButton.setImage(SharedIcons.getImage(SharedIcons.ETOOL_TIME_PICK_BUTTON_ICON));
+    timeBrowseButton.setImage(SharedIcons.getImage(SharedIcons.ETOOL_CLOCK));
     timeBrowseButton.addSelectionListener(new SelectionAdapter()
     {
       @Override

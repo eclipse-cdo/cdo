@@ -132,8 +132,9 @@ public final class UIUtil
       {
         display = PlatformUI.getWorkbench().getDisplay();
       }
-      catch (RuntimeException ignore)
+      catch (Throwable ignore)
       {
+        //$FALL-THROUGH$
       }
     }
 

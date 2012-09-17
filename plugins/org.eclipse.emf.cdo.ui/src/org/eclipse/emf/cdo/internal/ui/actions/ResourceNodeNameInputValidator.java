@@ -40,13 +40,13 @@ public class ResourceNodeNameInputValidator implements IInputValidator
     // Do not allow empty names
     if (StringUtil.isEmpty(newText))
     {
-      return isFolder ? Messages.getString("CreateResourceNodeAction.3") : Messages.getString("CreateResourceNodeAction.4"); //$NON-NLS-1$ //$NON-NLS-2$
+      return isFolder ? Messages.getString("NewResourceNodeAction.3") : Messages.getString("NewResourceNodeAction.4"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     // Do not allow "/"
     if (newText.contains("/") || newText.contains("\\")) //$NON-NLS-1$ //$NON-NLS-2$
     {
-      return Messages.getString("CreateResourceNodeAction.2"); //$NON-NLS-1$
+      return Messages.getString("NewResourceNodeAction.2"); //$NON-NLS-1$
     }
 
     for (EObject nodeObject : node.eContents())
@@ -54,7 +54,7 @@ public class ResourceNodeNameInputValidator implements IInputValidator
       CDOResourceNode node = (CDOResourceNode)nodeObject;
       if (node.getName().equals(newText))
       {
-        return isFolder ? Messages.getString("CreateResourceNodeAction.5") + " " + newText : Messages.getString("CreateResourceNodeAction.6") //$NON-NLS-1$ //$NON-NLS-2$
+        return isFolder ? Messages.getString("NewResourceNodeAction.5") + " " + newText : Messages.getString("NewResourceNodeAction.6") //$NON-NLS-1$ //$NON-NLS-2$
                 + " " + newText;
       }
     }

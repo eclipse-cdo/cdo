@@ -40,8 +40,8 @@ public class NewResourceNodeAction extends ViewAction
 
   private String resourceNodeName;
 
-  public NewResourceNodeAction(CDOItemProvider itemProvider, IWorkbenchPage page, CDOView view,
-      CDOResourceNode node, Type type)
+  public NewResourceNodeAction(CDOItemProvider itemProvider, IWorkbenchPage page, CDOView view, CDOResourceNode node,
+      Type type)
   {
     super(page, type.getTitle() + INTERACTIVE, type.getTooltip(), type.getImageDescriptor(), view);
     selectedNode = node;
@@ -52,7 +52,7 @@ public class NewResourceNodeAction extends ViewAction
   @Override
   protected void preRun() throws Exception
   {
-    InputDialog dialog = new InputDialog(getShell(), type.getTitle(), Messages.getString("CreateResourceNodeAction.8"),
+    InputDialog dialog = new InputDialog(getShell(), type.getTitle(), Messages.getString("NewResourceNodeAction.8"),
         (type == Type.FOLDER ? "folder" : "resource") + (ViewAction.lastResourceNumber + 1),
         new ResourceNodeNameInputValidator(selectedNode));
 

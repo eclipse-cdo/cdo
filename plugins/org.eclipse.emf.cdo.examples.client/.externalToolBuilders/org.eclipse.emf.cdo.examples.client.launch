@@ -11,7 +11,7 @@
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value=""/>
 <booleanAttribute key="org.eclipse.ui.externaltools.ATTR_BUILDER_ENABLED" value="true"/>
-<stringAttribute key="org.eclipse.ui.externaltools.ATTR_BUILD_SCOPE" value="${working_set:&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;resources&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.emf.cdo.examples/src&quot; type=&quot;2&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.emf.cdo.examples.installer/examples/org.eclipse.emf.cdo.examples.installer.clone&quot; type=&quot;2&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.emf.cdo.examples.installer.clone&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;/resources&gt;}"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_BUILD_SCOPE" value="${working_set:&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;resources&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.emf.cdo.examples.client&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.emf.cdo.examples.installer/examples/org.eclipse.emf.cdo.examples.clone&quot; type=&quot;2&quot;/&gt;&#13;&#10;&lt;/resources&gt;}"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${build_project}/.externalToolBuilders/copyExample.ant"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_RUN_BUILD_KINDS" value="incremental,auto,"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-Dbuild.project=${build_project}"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>org.eclipse.emf.cdo.examples.master</name>
+	<name>org.eclipse.emf.cdo.examples.clone</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -30,7 +30,7 @@
 			<arguments>
 				<dictionary>
 					<key>LaunchConfigHandle</key>
-					<value>&lt;project&gt;/.externalToolBuilders/org.eclipse.emf.cdo.examples.installer.master.launch</value>
+					<value>&lt;project&gt;/.externalToolBuilders/org.eclipse.emf.cdo.examples.clone.launch</value>
 				</dictionary>
 				<dictionary>
 					<key>incclean</key>

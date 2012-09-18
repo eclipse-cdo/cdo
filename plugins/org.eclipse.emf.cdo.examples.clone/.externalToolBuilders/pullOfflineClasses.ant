@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+	Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+	All rights reserved. This program and the accompanying materials
+	are made available under the terms of the Eclipse Public License v1.0
+	which accompanies this distribution, and is available at
+	http://www.eclipse.org/legal/epl-v10.html
+
+	Contributors:
+	  Eike Stepper - initial API and implementation
+-->
+<project name="pullOfflineClasses" default="main" basedir="..">
+
+	<target name="main">
+		<copy todir="src" overwrite="true">
+			<fileset dir="../org.eclipse.emf.cdo.examples/src">
+				<include name="org/eclipse/emf/cdo/examples/server/offline/AbstractOfflineExampleServer.java" />
+				<include name="org/eclipse/emf/cdo/examples/server/offline/OfflineExampleClone.java" />
+				<include name="org/eclipse/emf/cdo/examples/server/offline/OfflineExampleUtil.java" />
+			</fileset>
+		</copy>
+	</target>
+
+</project>

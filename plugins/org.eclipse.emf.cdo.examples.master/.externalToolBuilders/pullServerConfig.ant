@@ -9,14 +9,15 @@
 	Contributors:
 	  Eike Stepper - initial API and implementation
 -->
-<project name="copyExample" default="main" basedir="../..">
-
-	<property name="installer" value="org.eclipse.emf.cdo.examples.installer" />
-	<import file="../../${installer}/copyExampleLib.ant" optional="true" />
-	<basename file="${build.project}" property="project" />
+<project name="pullServerConfig" default="main" basedir="..">
 
 	<target name="main">
-		<copyExample project="${project}" />
+		<copy todir="." overwrite="true">
+			<fileset dir="../org.eclipse.emf.cdo.server.product">
+				<exclude name="**/.gitignore" />
+				<include name="config/**" />
+			</fileset>
+		</copy>
 	</target>
 
 </project>

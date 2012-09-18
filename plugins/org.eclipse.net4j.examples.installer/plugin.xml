@@ -48,27 +48,27 @@
             pageImage="icons/full/wizban/NewEMFExample.gif">
          <projectDescriptor
                name="org.eclipse.net4j.buddies"
-               contentURI="examples/buddies/"
+               contentURI="examples/org.eclipse.net4j.buddies/"
                description="%ExampleProject_buddies_desc"/>
          <projectDescriptor
                name="org.eclipse.net4j.buddies.chat"
-               contentURI="examples/buddies.chat/"
+               contentURI="examples/org.eclipse.net4j.buddies.chat/"
                description="%ExampleProject_buddies.chat_desc"/>
          <projectDescriptor
                name="org.eclipse.net4j.buddies.chat.ui"
-               contentURI="examples/buddies.chat.ui/"
+               contentURI="examples/org.eclipse.net4j.buddies.chat.ui/"
                description="%ExampleProject_buddies.chat.ui_desc"/>
          <projectDescriptor
                name="org.eclipse.net4j.buddies.common"
-               contentURI="examples/buddies.common/"
+               contentURI="examples/org.eclipse.net4j.buddies.common/"
                description="%ExampleProject_buddies.common_desc"/>
          <projectDescriptor
                name="org.eclipse.net4j.buddies.server"
-               contentURI="examples/buddies.server/"
+               contentURI="examples/org.eclipse.net4j.buddies.server/"
                description="%ExampleProject_buddies.server_desc"/>
          <projectDescriptor
                name="org.eclipse.net4j.buddies.ui"
-               contentURI="examples/buddies.ui/"
+               contentURI="examples/org.eclipse.net4j.buddies.ui/"
                description="%ExampleProject_buddies.ui_desc"/>
       </example>
       <example
@@ -77,27 +77,27 @@
             pageImage="icons/full/wizban/NewEMFExample.gif">
          <projectDescriptor
                name="org.eclipse.net4j.jms"
-               contentURI="examples/jms/"
+               contentURI="examples/org.eclipse.net4j.jms/"
                description="%ExampleProject_jms_desc"/>
          <projectDescriptor
                name="org.eclipse.net4j.jms.admin"
-               contentURI="examples/jms.admin/"
+               contentURI="examples/org.eclipse.net4j.jms.admin/"
                description="%ExampleProject_jms.admin_desc"/>
          <projectDescriptor
                name="org.eclipse.net4j.jms.api"
-               contentURI="examples/jms.api/"
+               contentURI="examples/org.eclipse.net4j.jms.api/"
                description="%ExampleProject_jms.api_desc"/>
          <projectDescriptor
                name="org.eclipse.net4j.jms.server"
-               contentURI="examples/jms.server/"
+               contentURI="examples/org.eclipse.net4j.jms.server/"
                description="%ExampleProject_jms.server_desc"/>
          <projectDescriptor
                name="org.eclipse.net4j.jms.server.jdbc"
-               contentURI="examples/jms.server.jdbc/"
+               contentURI="examples/org.eclipse.net4j.jms.server.jdbc/"
                description="%ExampleProject_jms.server.jdbc_desc"/>
          <projectDescriptor
                name="org.eclipse.net4j.jms.tests"
-               contentURI="examples/jms.tests/"
+               contentURI="examples/org.eclipse.net4j.jms.tests/"
                description="%ExampleProject_jms.tests_desc"/>
       </example>
     </extension>

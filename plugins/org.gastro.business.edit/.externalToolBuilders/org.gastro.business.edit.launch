@@ -4,20 +4,14 @@
 <booleanAttribute key="org.eclipse.ant.ui.DEFAULT_VM_INSTALL" value="false"/>
 <booleanAttribute key="org.eclipse.ant.uiSET_INPUTHANDLER" value="false"/>
 <stringAttribute key="org.eclipse.debug.core.ATTR_REFRESH_SCOPE" value="${working_set:&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;resources&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.emf.cdo.examples.installer/examples&quot; type=&quot;2&quot;/&gt;&#13;&#10;&lt;/resources&gt;}"/>
-<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/org.eclipse.emf.cdo.examples.client"/>
-</listAttribute>
-<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
-<listEntry value="4"/>
-</listAttribute>
 <booleanAttribute key="org.eclipse.debug.core.capture_output" value="false"/>
 <booleanAttribute key="org.eclipse.debug.ui.ATTR_CONSOLE_OUTPUT_ON" value="false"/>
 <booleanAttribute key="org.eclipse.debug.ui.ATTR_LAUNCH_IN_BACKGROUND" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.ant.ui.AntClasspathProvider"/>
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="true"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.emf.cdo.examples.client"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value=""/>
 <booleanAttribute key="org.eclipse.ui.externaltools.ATTR_BUILDER_ENABLED" value="true"/>
-<stringAttribute key="org.eclipse.ui.externaltools.ATTR_BUILD_SCOPE" value="${working_set:&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;resources&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.emf.cdo.examples.installer/examples/org.gastro.business.edit&quot; type=&quot;2&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.gastro.business.edit&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;/resources&gt;}"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_BUILD_SCOPE" value="${working_set:&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;resources&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.emf.cdo.examples.installer/examples/org.gastro.business.edit/&quot; type=&quot;2&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.gastro.business.edit/.classpath&quot; type=&quot;1&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.gastro.business.edit/.externalToolBuilders&quot; type=&quot;2&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.gastro.business.edit/.project&quot; type=&quot;1&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.gastro.business.edit/.settings&quot; type=&quot;2&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.gastro.business.edit/about.html&quot; type=&quot;1&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.gastro.business.edit/build.properties&quot; type=&quot;1&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.gastro.business.edit/copyright.txt&quot; type=&quot;1&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.gastro.business.edit/icons&quot; type=&quot;2&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.gastro.business.edit/META-INF&quot; type=&quot;2&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.gastro.business.edit/plugin.properties&quot; type=&quot;1&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.gastro.business.edit/plugin.xml&quot; type=&quot;1&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.gastro.business.edit/src&quot; type=&quot;2&quot;/&gt;&#13;&#10;&lt;/resources&gt;}"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${build_project}/.externalToolBuilders/copyExample.ant"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_RUN_BUILD_KINDS" value="incremental,auto,"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-Dbuild.project=${build_project}"/>

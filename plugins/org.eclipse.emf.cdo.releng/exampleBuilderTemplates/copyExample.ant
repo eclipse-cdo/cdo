@@ -9,15 +9,14 @@
 	Contributors:
 	  Eike Stepper - initial API and implementation
 -->
-<project name="copyExampleLib" basedir=".." default="main">
+<project name="copyExample" default="main" basedir="../..">
 
-	<property name="examples.path" value="org.eclipse.net4j.examples.installer/examples" />
+	<property name="installer" value="#INSTALLER_PROJECT#" />
+	<import file="../../${installer}/copyExampleLib.ant" optional="true" />
 	<basename file="${build.project}" property="project" />
 
 	<target name="main">
-		<java classpath="org.eclipse.emf.cdo.releng/bin"
-		      classname="org.eclipse.emf.cdo.releng.GenerateExampleBuilders"
-		      args="${project}/plugin.xml" />
+		<copyExample project="${project}" />
 	</target>
 
 </project>

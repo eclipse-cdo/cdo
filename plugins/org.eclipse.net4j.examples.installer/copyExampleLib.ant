@@ -37,7 +37,7 @@
 
 			<replaceregexp file="${examples.path}/@{project}/.project"
 			               byline="false"
-			               flags="s"
+			               flags="sg"
 			               match="\s*&lt;buildCommand>\s+&lt;name>org.eclipse.ui.externaltools.ExternalToolBuilder.*?&lt;/buildCommand>"
 			               replace="" />
 

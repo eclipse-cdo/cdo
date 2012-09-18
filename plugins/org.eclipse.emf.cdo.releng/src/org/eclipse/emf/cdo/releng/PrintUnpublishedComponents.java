@@ -25,7 +25,7 @@ import java.util.Set;
  */
 public class PrintUnpublishedComponents
 {
-  public static final String DROP = "I20120611-1348";
+  public static final String DROP = "I20120914-0410";
 
   private static final Set<String> features = new HashSet<String>()
   {

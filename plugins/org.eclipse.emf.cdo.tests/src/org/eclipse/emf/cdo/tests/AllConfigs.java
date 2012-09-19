@@ -30,6 +30,8 @@ public abstract class AllConfigs extends ConfigTestSuite
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
+    // testClasses.add(ConflictResolverExtendedTest.class);
+
     // General
     testClasses.add(InitialTest.class);
     testClasses.add(CDOIDTest.class);
@@ -88,6 +90,7 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(FeatureMapTest.class);
     testClasses.add(AdapterManagerTest.class);
     testClasses.add(ConflictResolverTest.class);
+    testClasses.add(ConflictResolverMergingTest.class);
     testClasses.add(DynamicXSDTest.class);
     testClasses.add(SetFeatureTest.class);
     testClasses.add(DynamicPackageTest.class);
@@ -102,7 +105,6 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(ResourceModificationTrackingTest.class);
 
     // TODO testClasses.add(RemoteSessionManagerTest.class);
-    // TODO testClasses.add(ConflictResolverMergingTest.class);
     // TODO testClasses.add(NonCDOResourceTest.class);
     // TODO testClasses.add(GeneratedEcoreTest.class);
 

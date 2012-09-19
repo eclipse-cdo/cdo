@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.tests.util.TestAdapter;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
+import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
@@ -344,8 +345,13 @@ public class InvalidationTest extends AbstractCDOTest
   public void testDetachedConflictSameSession() throws Exception, IOException
   {
     CDOSession session = openSession();
+
     CDOTransaction trans1 = session.openTransaction();
+    trans1.options().setInvalidationPolicy(CDOInvalidationPolicy.STRICT);
+
     CDOTransaction trans2 = session.openTransaction();
+    trans2.options().setInvalidationPolicy(CDOInvalidationPolicy.STRICT);
+
     testDetachedConflict(trans1, trans2);
   }
 
@@ -353,9 +359,11 @@ public class InvalidationTest extends AbstractCDOTest
   {
     CDOSession session1 = openSession();
     CDOTransaction trans1 = session1.openTransaction();
+    trans1.options().setInvalidationPolicy(CDOInvalidationPolicy.STRICT);
 
     CDOSession session2 = openSession();
     CDOTransaction trans2 = session2.openTransaction();
+    trans2.options().setInvalidationPolicy(CDOInvalidationPolicy.STRICT);
 
     testDetachedConflict(trans1, trans2);
   }

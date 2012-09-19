@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  * Deadlock in CDOView
  * <p>
  * See bug 279982
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_279982_Test extends AbstractCDOTest
@@ -181,6 +181,7 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
     CDOResource res = tx.getOrCreateResource(getResourcePath("/resource1"));
 
     tx.options().setRevisionPrefetchingPolicy(CDOUtil.createRevisionPrefetchingPolicy(100));
+    tx.options().setStaleReferencePolicy(CDOStaleReferencePolicy.EXCEPTION);
     GenRefMultiNonContained reference = (GenRefMultiNonContained)res.getContents().get(1);
 
     assertNotNull(reference.getElements().get(0));

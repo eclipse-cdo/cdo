@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Ronald Krijgsheld - initial API and implementation
  */
@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
+import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
+import org.eclipse.emf.cdo.view.CDOStaleReferencePolicy;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -30,6 +32,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
+ * Bug 368223.
+ *
  * @author Ronald Krijgsheld
  */
 public class Bugzilla_368223_Test extends AbstractCDOTest
@@ -40,6 +44,8 @@ public class Bugzilla_368223_Test extends AbstractCDOTest
     CDOSession session = openSession();
 
     CDOTransaction transaction = session.openTransaction();
+    transaction.options().setInvalidationPolicy(CDOInvalidationPolicy.STRICT);
+    transaction.options().setStaleReferencePolicy(CDOStaleReferencePolicy.EXCEPTION);
     transaction.createResource(getResourcePath("/test1"));
     transaction.commit();
 
@@ -129,8 +135,10 @@ public class Bugzilla_368223_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
+      transaction.options().setInvalidationPolicy(CDOInvalidationPolicy.STRICT);
+      transaction.options().setStaleReferencePolicy(CDOStaleReferencePolicy.EXCEPTION);
 
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
       List<Company> listOfCompanies = new ArrayList<Company>();
 
       int loop = 10;
@@ -200,6 +208,8 @@ public class Bugzilla_368223_Test extends AbstractCDOTest
       CDOSession session = openSession();
 
       CDOTransaction transaction = session.openTransaction();
+      transaction.options().setStaleReferencePolicy(CDOStaleReferencePolicy.EXCEPTION);
+      transaction.options().setInvalidationPolicy(CDOInvalidationPolicy.STRICT);
       transaction.options().setFeatureAnalyzer(CDOUtil.createModelBasedFeatureAnalyzer());
 
       CDOResource resource = transaction.getResource(getResourcePath("/test1"));

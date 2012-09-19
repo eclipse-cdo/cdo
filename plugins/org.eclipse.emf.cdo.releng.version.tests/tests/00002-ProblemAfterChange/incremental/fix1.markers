@@ -17,3 +17,5 @@ Marker
   <severity>  = WARNING
   <message>   = Plug-in reference 'com.foo.project1' has been changed from 1.0.0 to 1.0.100
   problemType = component.version
+  quickFixReference = com.foo.project1
+  FIX = Mark as ignored reference (Add 'com.foo.project1' to the ignored.references property of /com.foo.releng/release.properties)

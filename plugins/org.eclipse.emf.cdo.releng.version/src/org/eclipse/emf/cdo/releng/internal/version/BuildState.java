@@ -37,6 +37,8 @@ public class BuildState implements IBuildState, Serializable
 
   private Set<String> rootProjects;
 
+  private Set<String> ignoredReferences;
+
   private boolean changedSinceRelease;
 
   private long validatorTimeStamp;
@@ -111,6 +113,16 @@ public class BuildState implements IBuildState, Serializable
   public void setRootProjects(Set<String> rootProjects)
   {
     this.rootProjects = rootProjects;
+  }
+
+  public Set<String> getIgnoredReferences()
+  {
+    return ignoredReferences;
+  }
+
+  public void setIgnoredReferences(Set<String> ignoredReferences)
+  {
+    this.ignoredReferences = ignoredReferences;
   }
 
   public long getValidatorTimeStamp()

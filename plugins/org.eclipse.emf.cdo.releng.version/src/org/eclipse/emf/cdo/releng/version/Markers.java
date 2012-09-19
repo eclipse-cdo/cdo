@@ -68,6 +68,8 @@ public final class Markers
 
   public static final String QUICK_FIX_PROJECT = "quickFixProject";
 
+  public static final String QUICK_FIX_REFERENCE = "quickFixReference";
+
   public static final String QUICK_FIX_CONFIGURE_OPTION = "quickFixConfigureOption";
 
   private static final Pattern NL_PATTERN = Pattern.compile("([\\n][\\r]?|[\\r][\\n]?)", Pattern.MULTILINE);
@@ -104,6 +106,11 @@ public final class Markers
   public static String getQuickFixProject(IMarker marker)
   {
     return getAttribute(marker, QUICK_FIX_PROJECT);
+  }
+
+  public static String getQuickFixReference(IMarker marker)
+  {
+    return getAttribute(marker, QUICK_FIX_REFERENCE);
   }
 
   public static String getQuickFixConfigureOption(IMarker marker)

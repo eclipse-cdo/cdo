@@ -365,7 +365,7 @@ public class VersionBuilderTest extends TestCase
       List<String> keys = new ArrayList<String>(attributes.keySet());
       keys.remove(IMarker.LINE_NUMBER);
 
-      createLocationMarkers(builder, attributes, keys, file, fileContentsProvider, true);
+      addLocationAttributes(builder, attributes, keys, file, fileContentsProvider, true);
 
       if (keys.remove(IMarker.SEVERITY))
       {
@@ -404,12 +404,18 @@ public class VersionBuilderTest extends TestCase
     return builder.toString();
   }
 
-  private void createLocationMarkers(StringBuilder builder, Map<String, Object> attributes, List<String> keys,
+  private boolean addLocationAttributes(StringBuilder builder, Map<String, Object> attributes, List<String> keys,
       IFile file, FileContentsProvider fileContentsProvider, boolean msg) throws CoreException, IOException
   {
     if (keys.remove(IMarker.CHAR_START))
     {
-      int indexStart = (Integer)attributes.get(IMarker.CHAR_START);
+      Object charStartAttribute = attributes.get(IMarker.CHAR_START);
+      if (charStartAttribute == null)
+      {
+        return false;
+      }
+
+      int indexStart = (Integer)charStartAttribute;
       int indexEnd = -1;
       if (keys.remove(IMarker.CHAR_END))
       {
@@ -453,6 +459,8 @@ public class VersionBuilderTest extends TestCase
         }
       }
     }
+
+    return true;
   }
 
   private boolean processFixes(BundleFile phase, IMarker[] markers, String contents, String fileName) throws Throwable
@@ -530,9 +538,8 @@ public class VersionBuilderTest extends TestCase
           keys.add(IMarker.CHAR_START);
 
           StringBuilder builder = new StringBuilder();
-          createLocationMarkers(builder, attributes, keys, file, fileContentsProvider, false);
-          String markerLocation = parseValue(builder.toString());
-          if (VersionUtil.equals(markerLocation, location))
+          boolean added = addLocationAttributes(builder, attributes, keys, file, fileContentsProvider, false);
+          if (!added || VersionUtil.equals(parseValue(builder.toString()), location))
           {
             applyFix(phase, marker, fix);
             return;

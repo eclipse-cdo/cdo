@@ -66,11 +66,17 @@ public class VersionResolutionGenerator implements IMarkerResolutionGenerator2
 
     if (Markers.UNREFERENCED_ELEMENT_PROBLEM.equals(problemType))
     {
-      resolutions.add(new RootProjectResolution(marker));
+      resolutions.add(new PropertiesResolution.RootProjects(marker));
     }
     else if (Markers.RELEASE_PATH_PROBLEM.equals(problemType))
     {
       resolutions.add(new ReleasePathResolution(marker));
+    }
+
+    String ignoreReference = Markers.getQuickFixReference(marker);
+    if (ignoreReference != null)
+    {
+      resolutions.add(new PropertiesResolution.IgnoredReferences(marker));
     }
 
     String ignoreOption = Markers.getQuickFixConfigureOption(marker);
@@ -99,6 +105,12 @@ public class VersionResolutionGenerator implements IMarkerResolutionGenerator2
     {
       return true;
     }
+
+    if (Markers.getQuickFixReference(marker) != null)
+    {
+      return true;
+    }
+
     if (Markers.getQuickFixNature(marker) != null)
     {
       return true;

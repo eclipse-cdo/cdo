@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -29,11 +29,17 @@ import java.util.Properties;
 /**
  * @author Eike Stepper
  */
-public class RootProjectResolution extends AbstractResolution
+public class PropertiesResolution extends AbstractResolution
 {
-  public RootProjectResolution(IMarker marker)
+  private String propertyKey;
+
+  private String propertyValue;
+
+  public PropertiesResolution(IMarker marker, String label, String propertyKey, String propertyValue)
   {
-    super(marker, "Mark as root project", Activator.CORRECTION_CONFIGURE_GIF);
+    super(marker, label, Activator.CORRECTION_CONFIGURE_GIF);
+    this.propertyKey = propertyKey;
+    this.propertyValue = propertyValue;
   }
 
   @Override
@@ -45,12 +51,10 @@ public class RootProjectResolution extends AbstractResolution
   @Override
   public String getDescription()
   {
-    IMarker marker = getMarker();
-    IProject project = marker.getResource().getProject();
+    IProject project = getMarker().getResource().getProject();
     VersionBuilderArguments arguments = new VersionBuilderArguments(project);
     IFile propertiesFile = VersionUtil.getFile(new Path(arguments.getReleasePath()), "properties");
-    return "Add '" + project.getName() + "' to the " + VersionBuilder.ROOT_PROJECTS_KEY + " property of "
-        + propertiesFile.getFullPath();
+    return "Add '" + propertyValue + "' to the " + propertyKey + " property of " + propertiesFile.getFullPath();
   }
 
   @Override
@@ -70,9 +74,9 @@ public class RootProjectResolution extends AbstractResolution
         properties = new Properties();
         properties.load(contents);
 
-        String oldValue = properties.getProperty(VersionBuilder.ROOT_PROJECTS_KEY, "");
-        properties.setProperty(VersionBuilder.ROOT_PROJECTS_KEY,
-            (oldValue + " " + project.getName().replace("\\", "\\\\").replace(" ", "\\ ")).trim());
+        String oldValue = properties.getProperty(propertyKey, "");
+        properties.setProperty(propertyKey,
+            (oldValue + " " + propertyValue.replace("\\", "\\\\").replace(" ", "\\ ")).trim());
       }
       finally
       {
@@ -83,6 +87,32 @@ public class RootProjectResolution extends AbstractResolution
       properties.store(out, "");
       contents = new ByteArrayInputStream(out.toByteArray());
       propertiesFile.setContents(contents, true, true, null);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class RootProjects extends PropertiesResolution
+  {
+    private static final String LABEL = "Mark as root project";
+
+    public RootProjects(IMarker marker)
+    {
+      super(marker, LABEL, VersionBuilder.ROOT_PROJECTS_KEY, marker.getResource().getProject().getName());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class IgnoredReferences extends PropertiesResolution
+  {
+    private static final String LABEL = "Mark as ignored reference";
+
+    public IgnoredReferences(IMarker marker)
+    {
+      super(marker, LABEL, VersionBuilder.IGNORED_REFERENCES_KEY, Markers.getQuickFixReference(marker));
     }
   }
 }

@@ -3,6 +3,8 @@ Marker
   <severity>  = WARNING
   <message>   = Plug-in reference 'com.foo.project1' has been removed
   problemType = component.version
+  quickFixReference = com.foo.project1
+  FIX = Mark as ignored reference (Add 'com.foo.project1' to the ignored.references property of /com.foo.releng/release.properties)
 Marker
   <resource>  = com.foo.project1-feature/feature.xml
   <charStart> = (5,17)

@@ -83,6 +83,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
 
   public static final String ROOT_PROJECTS_KEY = "root.projects";
 
+  public static final String IGNORED_REFERENCES_KEY = "ignored.references";
+
   private static final Pattern DEBUG_OPTION_PATTERN = Pattern.compile("^( *)([^/ \\n\\r]+)/([^ =]+)( *=.*)$",
       Pattern.MULTILINE);
 
@@ -101,6 +103,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
   private Boolean deviations;
 
   private Set<String> rootProjects;
+
+  private Set<String> ignoredReferences;
 
   private VersionBuilderArguments arguments;
 
@@ -303,6 +307,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
         buildState.setDeviations(deviations);
         buildState.setIntegration(integration);
         buildState.setRootProjects(rootProjects);
+        buildState.setIgnoredReferences(ignoredReferences);
         buildState.setPropertiesTimeStamp(propertiesTimeStamp);
 
         if (formerDeviations && !deviations)
@@ -315,6 +320,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
         deviations = formerDeviations;
         integration = buildState.isIntegration();
         rootProjects = buildState.getRootProjects();
+        ignoredReferences = buildState.getIgnoredReferences();
       }
 
       IPath componentModelPath = componentModelFile.getProjectRelativePath();
@@ -525,8 +531,8 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
           {
             createMarkers(componentModelFile, problems, ComponentReferenceType.UNRESOLVED);
             return;
-
           }
+
           ComponentReferenceType change = checkFeatureContentChanges(element, releaseElement, problems);
           if (change != ComponentReferenceType.UNCHANGED)
           {
@@ -692,10 +698,15 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
         deviations = Boolean.valueOf(properties.getProperty(DEVIATIONS_PROPERTY_KEY, "false"));
 
         rootProjects = new HashSet<String>();
-        List<String> rootProjectList = Arrays.asList(properties.getProperty(ROOT_PROJECTS_KEY, "").split(" "));
-        for (String rootProject : rootProjectList)
+        for (String rootProject : Arrays.asList(properties.getProperty(ROOT_PROJECTS_KEY, "").split(" ")))
         {
           rootProjects.add(rootProject.replace("\\ ", " ").replace("\\\\", "\\"));
+        }
+
+        ignoredReferences = new HashSet<String>();
+        for (String ignoredReference : Arrays.asList(properties.getProperty(IGNORED_REFERENCES_KEY, "").split(" ")))
+        {
+          ignoredReferences.add(ignoredReference.replace("\\ ", " ").replace("\\\\", "\\"));
         }
 
         Boolean newValue = Boolean.valueOf(properties.getProperty(INTEGRATION_PROPERTY_KEY, "true"));
@@ -716,6 +727,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
     deviations = false;
     integration = true;
     rootProjects = new HashSet<String>();
+    ignoredReferences = new HashSet<String>();
 
     String lineDelimiter = VersionUtil.getLineDelimiter(propertiesFile);
     String contents = INTEGRATION_PROPERTY_KEY + " = " + integration + lineDelimiter + DEVIATIONS_PROPERTY_KEY + " = "
@@ -830,11 +842,14 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       IElement trimmedVersion = releasedElementsChild.trimVersion();
       if (!allChildren.contains(trimmedVersion))
       {
-        IElement resolvedElement = resolveElement(trimmedVersion);
-        if (resolvedElement != null && !resolvedElement.isVersionUnresolved())
+        // IElement resolvedElement = resolveElement(trimmedVersion);
+        // if (resolvedElement != null && !resolvedElement.isVersionUnresolved())
         {
-          addProblem(releasedElementsChild, IMarker.SEVERITY_WARNING, ComponentReferenceType.REMOVED, null, problems);
-          biggestChange = ComponentReferenceType.REMOVED;
+          if (addProblem(releasedElementsChild, IMarker.SEVERITY_WARNING, ComponentReferenceType.REMOVED, null,
+              problems))
+          {
+            biggestChange = ComponentReferenceType.REMOVED;
+          }
         }
       }
     }
@@ -853,8 +868,10 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       releasedElementsChild = releasedElement.getChild(release, this, childElement.trimVersion());
       if (releasedElementsChild == null)
       {
-        addProblem(childElement, IMarker.SEVERITY_WARNING, ComponentReferenceType.ADDED, null, problems);
-        return ComponentReferenceType.ADDED;
+        if (addProblem(childElement, IMarker.SEVERITY_WARNING, ComponentReferenceType.ADDED, null, problems))
+        {
+          return ComponentReferenceType.ADDED;
+        }
       }
     }
 
@@ -876,23 +893,29 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
       {
         if (version.getMajor() != releasedVersion.getMajor())
         {
-          addProblem(childsReleasedElement, IMarker.SEVERITY_WARNING, ComponentReferenceType.MAJOR_CHANGED, version,
-              problems);
-          return ComponentReferenceType.MAJOR_CHANGED;
+          if (addProblem(childsReleasedElement, IMarker.SEVERITY_WARNING, ComponentReferenceType.MAJOR_CHANGED,
+              version, problems))
+          {
+            return ComponentReferenceType.MAJOR_CHANGED;
+          }
         }
 
         if (version.getMinor() != releasedVersion.getMinor())
         {
-          addProblem(childsReleasedElement, IMarker.SEVERITY_WARNING, ComponentReferenceType.MINOR_CHANGED, version,
-              problems);
-          return ComponentReferenceType.MINOR_CHANGED;
+          if (addProblem(childsReleasedElement, IMarker.SEVERITY_WARNING, ComponentReferenceType.MINOR_CHANGED,
+              version, problems))
+          {
+            return ComponentReferenceType.MINOR_CHANGED;
+          }
         }
 
         if (version.getMicro() != releasedVersion.getMicro())
         {
-          addProblem(childsReleasedElement, IMarker.SEVERITY_WARNING, ComponentReferenceType.MICRO_CHANGED, version,
-              problems);
-          return ComponentReferenceType.MICRO_CHANGED;
+          if (addProblem(childsReleasedElement, IMarker.SEVERITY_WARNING, ComponentReferenceType.MICRO_CHANGED,
+              version, problems))
+          {
+            return ComponentReferenceType.MICRO_CHANGED;
+          }
         }
       }
     }
@@ -903,8 +926,14 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
   private boolean addProblem(IElement element, int severity, ComponentReferenceType componentReferenceType,
       Version version, List<Problem> problems)
   {
-    problems.add(new Problem(element, severity, componentReferenceType, version));
-    return true;
+    String elementName = element.getName();
+    if (!ignoredReferences.contains(elementName))
+    {
+      problems.add(new Problem(element, severity, componentReferenceType, version));
+      return true;
+    }
+
+    return false;
   }
 
   private IProject getProject(IElement element)
@@ -1496,6 +1525,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
         String msg = label + " reference '" + name + "' has been removed";
         IMarker marker = Markers.addMarker(file, msg, severity);
         marker.setAttribute(Markers.PROBLEM_TYPE, Markers.COMPONENT_VERSION_PROBLEM);
+        marker.setAttribute(Markers.QUICK_FIX_REFERENCE, name);
       }
       else
       {
@@ -1542,6 +1572,10 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
           marker.setAttribute(Markers.QUICK_FIX_CONFIGURE_OPTION,
               IVersionBuilderArguments.IGNORE_CONTENT_CHANGES_ARGUMENT);
         }
+        else
+        {
+          marker.setAttribute(Markers.QUICK_FIX_REFERENCE, name);
+        }
       }
     }
     catch (Exception ex)
@@ -1569,6 +1603,7 @@ public class VersionBuilder extends IncrementalProjectBuilder implements IElemen
     {
       marker.setAttribute(Markers.QUICK_FIX_PATTERN, regex);
     }
+
     return marker;
   }
 

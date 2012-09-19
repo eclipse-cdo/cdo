@@ -56,7 +56,7 @@ import java.util.Set;
  * keeps itself in sync with the global factory registry. It reads the available factoryTypes for the type mappings
  * product type and populates indexes which make it easier to determine and look up the correct factories for a needed
  * type mapping.
- * 
+ *
  * @author Stefan Winkler
  */
 public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.Provider
@@ -150,6 +150,8 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     container.registerFactory(CoreTypeMappings.TMString.FACTORY_VARCHAR);
     container.registerFactory(CoreTypeMappings.TMString.FACTORY_CLOB);
     container.registerFactory(CoreTypeMappings.TMString.FACTORY_LONG_VARCHAR);
+    container.registerFactory(CoreTypeMappings.TMJavaClass.FACTORY_VARCHAR);
+    container.registerFactory(CoreTypeMappings.TMJavaObject.FACTORY);
     container.registerFactory(CoreTypeMappings.TMBlob.FACTORY_VARCHAR);
     container.registerFactory(CoreTypeMappings.TMBlob.FACTORY_LONG_VARCHAR);
     container.registerFactory(CoreTypeMappings.TMClob.FACTORY_VARCHAR);
@@ -179,6 +181,8 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEShort(), DBType.SMALLINT);
     classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEShortObject(), DBType.SMALLINT);
     classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEString(), DBType.VARCHAR);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEJavaClass(), DBType.VARCHAR);
+    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEJavaObject(), DBType.BLOB);
 
     classifierDefaultMapping.put(EtypesPackage.eINSTANCE.getBlob(), DBType.VARCHAR); // TODO Should be DBType.BLOB?
     classifierDefaultMapping.put(EtypesPackage.eINSTANCE.getClob(), DBType.VARCHAR); // TODO Should be DBType.CLOB?
@@ -365,7 +369,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
 
   /**
    * Keeps the {@link TypeMappingRegistry} in sync with {@link IManagedContainer#getFactoryRegistry()}.
-   * 
+   *
    * @author Stefan Winkler
    */
   private class RegistryPopulator implements IListener

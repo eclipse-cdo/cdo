@@ -120,6 +120,16 @@ public interface CDOType
    */
   public static final CDOType CLOB = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.CLOB;
 
+  /**
+   * @since 4.2
+   */
+  public static final CDOType JAVA_CLASS = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.JAVA_CLASS;
+
+  /**
+   * @since 4.2
+   */
+  public static final CDOType JAVA_OBJECT = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.JAVA_OBJECT;
+
   public static final CDOType CUSTOM = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.CUSTOM;
 
   /**

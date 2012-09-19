@@ -486,6 +486,68 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
+  public static final CDOType JAVA_CLASS = new CDOTypeImpl("JAVA_CLASS", EcorePackage.EJAVA_CLASS, true) //$NON-NLS-1$
+  {
+    @Override
+    protected String doCopyValue(Object value)
+    {
+      return (String)value;
+    }
+
+    public void writeValue(CDODataOutput out, Object value) throws IOException
+    {
+      out.writeString((String)value);
+    }
+
+    public String readValue(CDODataInput in) throws IOException
+    {
+      return in.readString();
+    }
+
+    @Override
+    public Object convertToEMF(EClassifier eType, Object value)
+    {
+      return EcoreUtil.createFromString((EDataType)eType, (String)value);
+    }
+
+    @Override
+    public Object convertToCDO(EClassifier eType, Object value)
+    {
+      return EcoreUtil.convertToString((EDataType)eType, value);
+    }
+  };
+
+  public static final CDOType JAVA_OBJECT = new CDOTypeImpl("JAVA_OBJECT", EcorePackage.EJAVA_CLASS, true) //$NON-NLS-1$
+  {
+    @Override
+    protected Object doCopyValue(Object value)
+    {
+      return value;
+    }
+
+    public void writeValue(CDODataOutput out, Object value) throws IOException
+    {
+      out.writeByteArray((byte[])value);
+    }
+
+    public byte[] readValue(CDODataInput in) throws IOException
+    {
+      return in.readByteArray();
+    }
+
+    @Override
+    public Object convertToEMF(EClassifier eType, Object value)
+    {
+      return EcoreUtil.createFromString((EDataType)eType, (String)value);
+    }
+
+    @Override
+    public Object convertToCDO(EClassifier eType, Object value)
+    {
+      return EcoreUtil.convertToString((EDataType)eType, value);
+    }
+  };
+
   public static final CDOType CUSTOM = new CDOTypeImpl("CUSTOM", 0, true) //$NON-NLS-1$
   {
     @Override

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model3"
-    nsURI="http://www.eclipse.org/emf/CDO/tests/model3/1.0.0" nsPrefix="model3">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model3" nsURI="http://www.eclipse.org/emf/CDO/tests/model3/1.0.0"
+    nsPrefix="model3">
   <eClassifiers xsi:type="ecore:EClass" name="Class1">
     <eStructuralFeatures xsi:type="ecore:EReference" name="class2" upperBound="-1"
         eType="#//subpackage/Class2" unsettable="true" eOpposite="#//subpackage/Class2/class1"/>
@@ -68,6 +67,17 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ClassWithIDAttribute">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClassWithJavaClassAttribute">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="javaClass" iD="true">
+      <eGenericType eClassifier="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaClass">
+        <eTypeArguments/>
+      </eGenericType>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClassWithJavaObjectAttribute">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="javaObject" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"
         iD="true"/>
   </eClassifiers>
   <eSubpackages name="subpackage" nsURI="http://www.eclipse.org/emf/CDO/tests/subpackage/1.0.0"

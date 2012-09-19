@@ -24,17 +24,17 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.ClassWithIDAttributeImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.ClassWithIDAttributeImpl#getId <em>Id</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithIDAttribute
 {
   /**
-   * The default value of the '{@link #getId() <em>Id</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getId()
    * @generated
    * @ordered
@@ -42,8 +42,8 @@ public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithID
   protected static final String ID_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getId() <em>Id</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getId()
    * @generated
    * @ordered
@@ -52,7 +52,6 @@ public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithID
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ClassWithIDAttributeImpl()
@@ -62,7 +61,6 @@ public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithID
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -73,7 +71,6 @@ public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithID
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getId()
@@ -83,7 +80,6 @@ public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithID
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setId(String newId)
@@ -96,7 +92,6 @@ public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithID
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -112,7 +107,6 @@ public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithID
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -129,7 +123,6 @@ public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithID
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -146,7 +139,6 @@ public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithID
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -162,7 +154,6 @@ public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithID
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

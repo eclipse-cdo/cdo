@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.model1.VAT;
+import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;
+import org.eclipse.emf.cdo.tests.model3.ClassWithJavaObjectAttribute;
 import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
@@ -37,6 +39,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -820,5 +824,78 @@ public class AttributeTest extends AbstractCDOTest
 
     // java.lang.ClassCastException: org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl
     EcoreUtil.copyAll(contents);
+  }
+
+  /**
+   * Bug 355787.
+   */
+  public void testJavaClass() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
+    resource.getContents().add(createClassWithJavaClassAttribute(CDOTransaction.class));
+    resource.getContents().add(createClassWithJavaClassAttribute(boolean.class));
+    resource.getContents().add(createClassWithJavaClassAttribute(byte.class));
+    resource.getContents().add(createClassWithJavaClassAttribute(char.class));
+    resource.getContents().add(createClassWithJavaClassAttribute(double.class));
+    resource.getContents().add(createClassWithJavaClassAttribute(float.class));
+    resource.getContents().add(createClassWithJavaClassAttribute(int.class));
+    resource.getContents().add(createClassWithJavaClassAttribute(long.class));
+    resource.getContents().add(createClassWithJavaClassAttribute(short.class));
+    transaction.commit();
+    session.close();
+
+    session = openSession();
+    transaction = session.openTransaction();
+    resource = transaction.getResource(getResourcePath("/my/resource"));
+    EList<EObject> contents = resource.getContents();
+    assertEquals(CDOTransaction.class, ((ClassWithJavaClassAttribute)contents.get(0)).getJavaClass());
+    assertEquals(boolean.class, ((ClassWithJavaClassAttribute)contents.get(1)).getJavaClass());
+    assertEquals(byte.class, ((ClassWithJavaClassAttribute)contents.get(2)).getJavaClass());
+    assertEquals(char.class, ((ClassWithJavaClassAttribute)contents.get(3)).getJavaClass());
+    assertEquals(double.class, ((ClassWithJavaClassAttribute)contents.get(4)).getJavaClass());
+    assertEquals(float.class, ((ClassWithJavaClassAttribute)contents.get(5)).getJavaClass());
+    assertEquals(int.class, ((ClassWithJavaClassAttribute)contents.get(6)).getJavaClass());
+    assertEquals(long.class, ((ClassWithJavaClassAttribute)contents.get(7)).getJavaClass());
+    assertEquals(short.class, ((ClassWithJavaClassAttribute)contents.get(8)).getJavaClass());
+  }
+
+  private ClassWithJavaClassAttribute createClassWithJavaClassAttribute(Class<?> javaClass)
+  {
+    ClassWithJavaClassAttribute object = getModel3Factory().createClassWithJavaClassAttribute();
+    object.setJavaClass(javaClass);
+    return object;
+  }
+
+  /**
+   * Bug 355787.
+   */
+  public void testJavaObject() throws Exception
+  {
+    Map<String, Number> salaries = new HashMap<String, Number>();
+    salaries.put("Eike", 5000);
+    salaries.put("Martin", 6000.99);
+    salaries.put("Ed", 7000f);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
+    resource.getContents().add(createClassWithJavaObjectAttribute(salaries));
+    transaction.commit();
+    session.close();
+
+    session = openSession();
+    transaction = session.openTransaction();
+    resource = transaction.getResource(getResourcePath("/my/resource"));
+    EList<EObject> contents = resource.getContents();
+    assertEquals(salaries, ((ClassWithJavaObjectAttribute)contents.get(0)).getJavaObject());
+  }
+
+  private ClassWithJavaObjectAttribute createClassWithJavaObjectAttribute(Object javaObject)
+  {
+    ClassWithJavaObjectAttribute object = getModel3Factory().createClassWithJavaObjectAttribute();
+    object.setJavaObject(javaObject);
+    return object;
   }
 }

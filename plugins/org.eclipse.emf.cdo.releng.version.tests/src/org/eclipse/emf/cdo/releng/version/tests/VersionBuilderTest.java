@@ -116,6 +116,11 @@ public class VersionBuilderTest extends TestCase
 
     for (;;)
     {
+      if (phase.getName().startsWith("clean") || phase.getChild("build.clean") != null)
+      {
+        clean = true;
+      }
+
       IMarker[] markers = buildWorkspace(phase, clean);
       String contents = processMarkers(phase, markers, fileName);
       if (markers.length == 0 || contents.equals(lastContents))

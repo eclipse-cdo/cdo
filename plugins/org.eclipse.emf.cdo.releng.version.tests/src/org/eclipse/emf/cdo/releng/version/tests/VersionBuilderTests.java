@@ -24,6 +24,7 @@ public class VersionBuilderTests extends TestSuite
 {
   private static final IPath WORKSPACE = ResourcesPlugin.getWorkspace().getRoot().getLocation();
 
+  @SuppressWarnings("unused")
   private boolean openWorkspaceFolder;
 
   private VersionBuilderTests()
@@ -60,18 +61,18 @@ public class VersionBuilderTests extends TestSuite
   public void run(TestResult result)
   {
     super.run(result);
-    if (openWorkspaceFolder)
-    {
-      try
-      {
-        // TODO Support operating systems other than Windows
-        Runtime.getRuntime().exec("explorer.exe \"" + WORKSPACE.toOSString() + "\"");
-      }
-      catch (Exception ex)
-      {
-        Activator.log(ex);
-      }
-    }
+    // if (openWorkspaceFolder)
+    // {
+    // try
+    // {
+    // // TODO Support operating systems other than Windows
+    // Runtime.getRuntime().exec("explorer.exe \"" + WORKSPACE.toOSString() + "\"");
+    // }
+    // catch (Exception ex)
+    // {
+    // Activator.log(ex);
+    // }
+    // }
   }
 
   public static Test suite()

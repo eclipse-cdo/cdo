@@ -20,10 +20,14 @@ folders and files in the phase folder lead to an addition or modification (overw
 
 When the runtime workspace has been updated as outlined above the entire runtime workspace
 is built. Only the first build of a test case is a clean build. Possible subsequent builds
-(see below) are incremental builds. If a build results in problem markers they are serialized
-to a string and this string is compared to the contents of the file "build.markers" in the
-phase folder. If they are not identical the test case fails. If the "build.markers" file does
-not exist it is created and initialized with the serialized string.
+(see below) are incremental builds. This can be overridden (for example PDE sometimes fails
+to remove feature problem markers without a clean build) by placing an empty "build.clean"
+file in the phase folder or just letting the phase name start with "clean".
+
+If a build results in problem markers they are serialized to a string and this string is
+compared to the contents of the file "build.markers" in the phase folder. If they are not
+identical the test case fails. If the "build.markers" file does not exist it is created
+and initialized with the serialized string.
 
                    The "*.markers" files must be verified manually!
 

@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 @CleanRepositoriesBefore
 public class ConflictResolverTest extends AbstractCDOTest
 {
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testMergeLocalChangesPerFeature_Basic() throws Exception
   {
     msg("Opening session");
@@ -87,6 +88,7 @@ public class ConflictResolverTest extends AbstractCDOTest
     assertEquals("OTTAWA", address2.getCity());
   }
 
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testCDOMergingConflictResolver() throws Exception
   {
     CDOSession session = openSession();

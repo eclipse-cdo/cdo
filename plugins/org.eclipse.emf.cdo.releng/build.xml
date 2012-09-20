@@ -254,7 +254,7 @@
 						<arg value="-r" />
 						<arg value="${buckminster.headless}" />
 						<arg value="-r" />
-						<arg value="${eclipse.downloads}/eclipse/updates/$eclipse}" />
+						<arg value="http://download.eclipse.org/eclipse/updates/3.8" />
 						<arg value="-d" />
 						<arg value="${tools}/buckminster" />
 						<arg value="-p" />

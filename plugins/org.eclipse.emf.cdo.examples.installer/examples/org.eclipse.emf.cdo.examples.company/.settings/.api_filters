@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.examples.company" version="2">
+    <resource path="src/org/eclipse/emf/cdo/examples/company/Addressable.java" type="org.eclipse.emf.cdo.examples.company.Addressable">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.Addressable"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/Category.java" type="org.eclipse.emf.cdo.examples.company.Category">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.Category"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/Company.java" type="org.eclipse.emf.cdo.examples.company.Company">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.Company"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/CompanyFactory.java" type="org.eclipse.emf.cdo.examples.company.CompanyFactory">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.CompanyFactory"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/CompanyPackage.java" type="org.eclipse.emf.cdo.examples.company.CompanyPackage">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.CompanyPackage"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/Customer.java" type="org.eclipse.emf.cdo.examples.company.Customer">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.Customer"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/Order.java" type="org.eclipse.emf.cdo.examples.company.Order">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.Order"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/OrderDetail.java" type="org.eclipse.emf.cdo.examples.company.OrderDetail">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.OrderDetail"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/Product.java" type="org.eclipse.emf.cdo.examples.company.Product">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.Product"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/PurchaseOrder.java" type="org.eclipse.emf.cdo.examples.company.PurchaseOrder">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.PurchaseOrder"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/SalesOrder.java" type="org.eclipse.emf.cdo.examples.company.SalesOrder">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.SalesOrder"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/Supplier.java" type="org.eclipse.emf.cdo.examples.company.Supplier">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.Supplier"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/VAT.java" type="org.eclipse.emf.cdo.examples.company.VAT">
+        <filter id="372310110">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.VAT"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/impl/AddressableImpl.java" type="org.eclipse.emf.cdo.examples.company.impl.AddressableImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.impl.AddressableImpl"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/impl/CategoryImpl.java" type="org.eclipse.emf.cdo.examples.company.impl.CategoryImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.impl.CategoryImpl"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/impl/CompanyFactoryImpl.java" type="org.eclipse.emf.cdo.examples.company.impl.CompanyFactoryImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.impl.CompanyFactoryImpl"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/impl/CompanyImpl.java" type="org.eclipse.emf.cdo.examples.company.impl.CompanyImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.impl.CompanyImpl"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/impl/CompanyPackageImpl.java" type="org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/impl/CustomerImpl.java" type="org.eclipse.emf.cdo.examples.company.impl.CustomerImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.impl.CustomerImpl"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/impl/OrderDetailImpl.java" type="org.eclipse.emf.cdo.examples.company.impl.OrderDetailImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.impl.OrderDetailImpl"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/impl/OrderImpl.java" type="org.eclipse.emf.cdo.examples.company.impl.OrderImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.impl.OrderImpl"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/impl/ProductImpl.java" type="org.eclipse.emf.cdo.examples.company.impl.ProductImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.impl.ProductImpl"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/impl/PurchaseOrderImpl.java" type="org.eclipse.emf.cdo.examples.company.impl.PurchaseOrderImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.impl.PurchaseOrderImpl"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/impl/SalesOrderImpl.java" type="org.eclipse.emf.cdo.examples.company.impl.SalesOrderImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.impl.SalesOrderImpl"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/impl/SupplierImpl.java" type="org.eclipse.emf.cdo.examples.company.impl.SupplierImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.impl.SupplierImpl"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/util/CompanyAdapterFactory.java" type="org.eclipse.emf.cdo.examples.company.util.CompanyAdapterFactory">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.util.CompanyAdapterFactory"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/company/util/CompanySwitch.java" type="org.eclipse.emf.cdo.examples.company.util.CompanySwitch">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.company.util.CompanySwitch"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

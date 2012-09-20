@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>CDO Master Server Example</title>
+</head>
+
+<body>
+
+<h1>CDO Master Server Example</h1>
+
+This project contains the launch configuration "ExampleMasterServer" that
+can be used to start a new OSGi process with a CDO master repository.
+You may need to update the launch configuration by clicking the "Add Required
+Plugins" button on the Plugins tab.
+<p>
+Before you actually run this master server you should review the server
+configuration file /config/cdo-server.xml in this project. In particular
+you may want to adjust the following settings:
+<p>
+<ul>
+	<li>
+		Acceptor port.
+		Default is 2036.
+	</li>
+	<li>
+		H2 datasource URL.
+		Default is a /database folder in the current directory, i.e., this project.
+	</li>
+	<li>
+		ID generation location.
+		Default is STORE, should be changed to CLIENT for all offline scenarios!
+	</li>
+</ul>
+
+If the server is running you can point your web browser to
+<a href="http://localhost:7777">http://localhost:7777</a> in order to
+introspect the repository. Please note that this introspection facility
+should not be used in production!
+
+</body>
+</html>

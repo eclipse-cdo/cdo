@@ -302,16 +302,16 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
         InternalChannel channel = writeQueue.peek();
         if (channel != null)
         {
-          Queue<IBuffer> bufferQueue = channel.getSendQueue();
-          if (bufferQueue != null)
+          Queue<IBuffer> channelSendQueue = channel.getSendQueue();
+          if (channelSendQueue != null)
           {
-            IBuffer buffer = bufferQueue.peek();
+            IBuffer buffer = channelSendQueue.peek();
             if (buffer != null)
             {
               if (buffer.write(socketChannel))
               {
                 writeQueue.poll();
-                bufferQueue.poll();
+                channelSendQueue.poll();
                 buffer.release();
               }
             }

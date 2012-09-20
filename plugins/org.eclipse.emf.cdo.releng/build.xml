@@ -265,6 +265,8 @@
 						<arg value="org.eclipse.buckminster.pde.headless.feature.feature.group" />
 						<arg value="-i" />
 						<arg value="org.eclipse.buckminster.git.headless.feature.feature.group" />
+						<arg value="-i" />
+						<arg value="org.eclipse.ant.launching" />
 					</args>
 				</eclipse.launch>
 

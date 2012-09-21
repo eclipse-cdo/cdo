@@ -70,7 +70,7 @@ public class TransferDropAdapter extends DNDDropAdapter<Object>
       return true;
     }
 
-    return true;// XXX Must be false!!!
+    return false;
   }
 
   @Override
@@ -115,13 +115,6 @@ public class TransferDropAdapter extends DNDDropAdapter<Object>
       transfer.perform();
       return true;
     }
-
-    // if (TransferView.INSTANCE == null)
-    // {
-    // return false;
-    // }
-    //
-    // TransferView.INSTANCE.setTransfer(transfer);
 
     return false;
   }

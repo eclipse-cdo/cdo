@@ -21,6 +21,7 @@
             type="fs"/>
    </extension>
 
+<!--
    <extension
          point="org.eclipse.ui.views">
       <view
@@ -30,5 +31,6 @@
             name="CDO Transfer">
       </view>
    </extension>
+-->
 
 </plugin>

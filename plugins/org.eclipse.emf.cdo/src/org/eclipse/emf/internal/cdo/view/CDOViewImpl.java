@@ -852,6 +852,13 @@ public class CDOViewImpl extends AbstractCDOView
         fireAdaptersNotifiedEvent(lastUpdateTime);
       }
     }
+    catch (RuntimeException ex)
+    {
+      if (isActive())
+      {
+        throw ex;
+      }
+    }
     finally
     {
       setLastUpdateTime(lastUpdateTime);

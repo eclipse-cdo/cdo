@@ -408,7 +408,7 @@ public class CDOViewImpl extends AbstractCDOView
 
     try
     {
-      synchronized (this)
+      synchronized (lockStates)
       {
         if (!options().isLockNotificationEnabled())
         {

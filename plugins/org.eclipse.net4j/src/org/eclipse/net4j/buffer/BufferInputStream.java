@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * A {@link IBufferHandler buffer handler} that defragments the passed {@link IBuffer buffers} into a continuous byte
  * sequence which is exposed as an {@link InputStream input stream}.
- * 
+ *
  * @author Eike Stepper
  */
 public class BufferInputStream extends InputStream implements IBufferHandler
@@ -163,49 +163,33 @@ public class BufferInputStream extends InputStream implements IBufferHandler
 
     try
     {
-      if (getMillisBeforeTimeout() == NO_TIMEOUT)
-      {
-        while (currentBuffer == null)
-        {
-          throwRemoteExceptionIfExists();
-
-          if (buffers == null)
-          {
-            // Stream has been closed - shutting down
-            return false;
-          }
-
-          currentBuffer = buffers.poll(check, TimeUnit.MILLISECONDS);
-        }
-      }
-      else
+      boolean noTimeout = getMillisBeforeTimeout() == NO_TIMEOUT;
+      if (!noTimeout)
       {
         restartTimeout();
-        while (currentBuffer == null)
+      }
+
+      while (currentBuffer == null)
+      {
+        throwRemoteExceptionIfExists();
+
+        if (buffers == null)
         {
-          throwRemoteExceptionIfExists();
-
-          if (buffers == null)
-          {
-            // Stream has been closed - shutting down
-            return false;
-          }
-
-          long remaining;
-          synchronized (this)
-          {
-            remaining = stopTimeMillis;
-          }
-
-          remaining -= System.currentTimeMillis();
-          if (remaining <= 0)
-          {
-            // Throw an exception so that caller can distinguish between end-of-stream and a timeout
-            throw new IOTimeoutException();
-          }
-
-          currentBuffer = buffers.poll(Math.min(remaining, check), TimeUnit.MILLISECONDS);
+          // Stream has been closed - shutting down
+          return false;
         }
+
+        long timeout;
+        if (noTimeout)
+        {
+          timeout = check;
+        }
+        else
+        {
+          timeout = computeTimeout(check);
+        }
+
+        currentBuffer = buffers.poll(timeout, TimeUnit.MILLISECONDS);
       }
     }
     catch (InterruptedException ex)
@@ -215,6 +199,24 @@ public class BufferInputStream extends InputStream implements IBufferHandler
 
     eos = currentBuffer.isEOS();
     return true;
+  }
+
+  private long computeTimeout(final long check) throws IOTimeoutException
+  {
+    long remaining;
+    synchronized (this)
+    {
+      remaining = stopTimeMillis;
+    }
+
+    remaining -= System.currentTimeMillis();
+    if (remaining <= 0)
+    {
+      // Throw an exception so that caller can distinguish between end-of-stream and a timeout
+      throw new IOTimeoutException();
+    }
+
+    return Math.min(remaining, check);
   }
 
   private void throwRemoteExceptionIfExists()

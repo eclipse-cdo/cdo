@@ -15,11 +15,16 @@ import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider.Factory;
+import org.eclipse.emf.cdo.transfer.ui.TransferDialog.InitializationState;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.dnd.DNDDropAdapter;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
@@ -81,13 +86,13 @@ public class TransferDropAdapter extends DNDDropAdapter<Object>
       return false;
     }
 
-    List<CDOTransferElement> sourceElements = getSourceElements(data);
+    final List<CDOTransferElement> sourceElements = getSourceElements(data);
     if (sourceElements == null || sourceElements.isEmpty())
     {
       return false;
     }
 
-    CDOTransferElement targetElement = getTargetElement(target);
+    final CDOTransferElement targetElement = getTargetElement(target);
     if (targetElement == null || !targetElement.isDirectory())
     {
       return false;
@@ -96,14 +101,55 @@ public class TransferDropAdapter extends DNDDropAdapter<Object>
     CDOTransferSystem sourceSystem = sourceElements.get(0).getSystem();
     CDOTransferSystem targetSystem = targetElement.getSystem();
 
-    CDOTransfer transfer = new CDOTransfer(sourceSystem, targetSystem);
+    final CDOTransfer transfer = new CDOTransfer(sourceSystem, targetSystem);
     transfer.getRootMapping().setRelativePath(targetElement.getPath());
-    for (CDOTransferElement sourceElement : sourceElements)
+
+    Shell shell = getViewer().getControl().getShell();
+    final TransferDialog dialog = new TransferDialog(shell, transfer);
+
+    new Job("Mapping elements")
     {
-      transfer.map(sourceElement);
+      @Override
+      protected IStatus run(IProgressMonitor monitor)
+      {
+        monitor.beginTask(getName(), sourceElements.size());
+
+        try
+        {
+          for (CDOTransferElement sourceElement : sourceElements)
+          {
+            if (monitor.isCanceled() || dialog.getInitializationState() == InitializationState.CANCELED)
+            {
+              dialog.setInitializationState(InitializationState.CANCELED);
+              return Status.OK_STATUS;
+            }
+
+            transfer.map(sourceElement);
+            monitor.worked(1);
+          }
+
+          dialog.setInitializationState(InitializationState.MAPPED);
+          return Status.OK_STATUS;
+        }
+        catch (RuntimeException ex)
+        {
+          dialog.setInitializationState(InitializationState.FAILED);
+          throw ex;
+        }
+        finally
+        {
+          monitor.done();
+        }
+      }
+    }.schedule();
+
+    if (dialog.open() == TransferDialog.OK)
+    {
+      transfer.perform();
+      return true;
     }
 
-    return performTransfer(transfer);
+    return false;
   }
 
   protected boolean performTransfer(CDOTransfer transfer)

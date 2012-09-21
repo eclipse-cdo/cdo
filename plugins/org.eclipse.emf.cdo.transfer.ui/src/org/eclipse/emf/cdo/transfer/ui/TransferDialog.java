@@ -16,15 +16,13 @@ import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -32,11 +30,13 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class TransferDialog extends TitleAreaDialog
 {
-  private CDOTransfer transfer;
+  private final CDOTransfer transfer;
 
   private TransferComposite transferComposite;
 
-  private Image wizban;
+  private InitializationState initializationState = InitializationState.MAPPING;
+
+  private Button okButton;
 
   public TransferDialog(Shell parentShell, CDOTransfer transfer)
   {
@@ -45,20 +45,42 @@ public class TransferDialog extends TitleAreaDialog
     this.transfer = transfer;
   }
 
-  public TransferComposite getTransferComposite()
+  public final CDOTransfer getTransfer()
+  {
+    return transfer;
+  }
+
+  public final TransferComposite getTransferComposite()
   {
     return transferComposite;
+  }
+
+  public InitializationState getInitializationState()
+  {
+    return initializationState;
+  }
+
+  public void setInitializationState(InitializationState initializationState)
+  {
+    this.initializationState = initializationState;
+
+    if (okButton != null)
+    {
+      okButton.getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          updateOkButtonEnabledment();
+        }
+      });
+    }
   }
 
   @Override
   protected Control createDialogArea(Composite parent)
   {
-    ImageDescriptor descriptor = SharedIcons.getDescriptor(SharedIcons.WIZBAN_TRANSFER);
-    Display display = parent.getDisplay();
-    wizban = descriptor.createImage(display);
-
     setTitle("Transfer from " + transfer.getSourceSystem() + " to " + transfer.getTargetSystem());
-    setTitleImage(wizban);
+    setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_TRANSFER));
 
     Composite area = (Composite)super.createDialogArea(parent);
 
@@ -67,15 +89,20 @@ public class TransferDialog extends TitleAreaDialog
     container.setLayoutData(new GridData(GridData.FILL_BOTH));
 
     transferComposite = new TransferComposite(container, transfer);
-
     return area;
   }
 
   @Override
   protected void createButtonsForButtonBar(Composite parent)
   {
-    createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
+    okButton = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
+    updateOkButtonEnabledment();
     createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+  }
+
+  protected void updateOkButtonEnabledment()
+  {
+    okButton.setEnabled(initializationState == InitializationState.MAPPED);
   }
 
   @Override
@@ -84,15 +111,11 @@ public class TransferDialog extends TitleAreaDialog
     return new Point(1000, 800);
   }
 
-  @Override
-  public boolean close()
+  /**
+   * @author Eike Stepper
+   */
+  public static enum InitializationState
   {
-    if (wizban != null)
-    {
-      wizban.dispose();
-      wizban = null;
-    }
-
-    return super.close();
+    MAPPING, MAPPED, FAILED, CANCELED
   }
 }

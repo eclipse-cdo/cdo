@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.transfer.repository.internal.ui;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
@@ -23,8 +24,11 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.dnd.Transfer;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -72,6 +76,22 @@ public class RepositoryUIProvider implements TransferUIProvider
     }
 
     return null;
+  }
+
+  public Object convertSelection(IStructuredSelection selection)
+  {
+    List<CDOResourceNode> result = new ArrayList<CDOResourceNode>();
+    for (Iterator<?> it = selection.iterator(); it.hasNext();)
+    {
+      Object object = it.next();
+      if (object instanceof CDOResourceNode)
+      {
+        CDOResourceNode node = (CDOResourceNode)object;
+        result.add(node);
+      }
+    }
+
+    return result.toArray(new CDOResourceNode[result.size()]);
   }
 
   /**

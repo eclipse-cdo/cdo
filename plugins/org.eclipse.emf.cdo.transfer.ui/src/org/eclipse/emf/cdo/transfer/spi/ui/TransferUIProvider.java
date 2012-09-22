@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.dnd.Transfer;
 
 import java.util.ArrayList;
@@ -35,6 +36,8 @@ public interface TransferUIProvider
   public List<CDOTransferElement> convertTransferData(Object data);
 
   public CDOTransferElement convertTransferTarget(Object target);
+
+  public Object convertSelection(IStructuredSelection selection);
 
   /**
    * @author Eike Stepper

@@ -1,0 +1,92 @@
+/*
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
+package org.eclipse.emf.cdo.transfer.ui;
+
+import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider;
+import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider.Factory;
+
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.ui.dnd.DNDDragListener;
+
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredViewer;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSourceEvent;
+import org.eclipse.swt.dnd.Transfer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author Eike Stepper
+ */
+public class TransferDragListener extends DNDDragListener<Object>
+{
+  private TransferUIProvider[] uiProviders;
+
+  protected TransferDragListener(StructuredViewer viewer)
+  {
+    super(viewer);
+    uiProviders = getUIProviders();
+
+    List<Transfer> transfers = new ArrayList<Transfer>();
+    for (int i = 0; i < uiProviders.length; i++)
+    {
+      TransferUIProvider uiProvider = uiProviders[i];
+      uiProvider.addSupportedTransfers(transfers);
+    }
+
+    setTransfers(transfers.toArray(new Transfer[transfers.size()]));
+  }
+
+  protected IManagedContainer getContainer()
+  {
+    return IPluginContainer.INSTANCE;
+  }
+
+  protected TransferUIProvider[] getUIProviders()
+  {
+    return Factory.getAll(getContainer());
+  }
+
+  @Override
+  protected Object getObject(IStructuredSelection selection)
+  {
+    for (int i = 0; i < uiProviders.length; i++)
+    {
+      TransferUIProvider uiProvider = uiProviders[i];
+
+      Object object = uiProvider.convertSelection(selection);
+      if (object != null)
+      {
+        return object;
+      }
+    }
+
+    return null;
+  }
+
+  @Override
+  public void dragFinished(DragSourceEvent event)
+  {
+    // TODO Eventually implement removal for move DND
+    super.dragFinished(event);
+  }
+
+  public static TransferDragListener support(StructuredViewer viewer)
+  {
+    TransferDragListener dragListener = new TransferDragListener(viewer);
+    Transfer[] transfers = dragListener.getTransfers();
+    viewer.addDragSupport(DND.DROP_MOVE, transfers, dragListener);
+    return dragListener;
+  }
+}

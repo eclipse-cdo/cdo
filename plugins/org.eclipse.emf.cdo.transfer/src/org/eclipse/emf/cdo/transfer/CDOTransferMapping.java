@@ -36,7 +36,7 @@ public interface CDOTransferMapping extends Comparable<CDOTransferMapping>
 
   public IPath getRelativePath();
 
-  public void setRelativePath(IPath relativePath);
+  public void setRelativePath(IPath path);
 
   public void setRelativePath(String path);
 

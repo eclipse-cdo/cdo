@@ -15,21 +15,21 @@ import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider.Factory;
-import org.eclipse.emf.cdo.transfer.ui.TransferDialog.InitializationState;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.dnd.DNDDropAdapter;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Shell;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,71 +98,49 @@ public class TransferDropAdapter extends DNDDropAdapter<Object>
       return false;
     }
 
-    CDOTransferSystem sourceSystem = sourceElements.get(0).getSystem();
-    CDOTransferSystem targetSystem = targetElement.getSystem();
+    final CDOTransferSystem sourceSystem = sourceElements.get(0).getSystem();
+    final CDOTransferSystem targetSystem = targetElement.getSystem();
 
     final CDOTransfer transfer = new CDOTransfer(sourceSystem, targetSystem);
-    transfer.getRootMapping().setRelativePath(targetElement.getPath());
+    transfer.setTargetPath(targetElement.getPath());
 
-    Shell shell = getViewer().getControl().getShell();
-    final TransferDialog dialog = new TransferDialog(shell, transfer);
-
-    new Job("Mapping elements")
+    UIUtil.runWithProgress(new IRunnableWithProgress()
     {
-      @Override
-      protected IStatus run(IProgressMonitor monitor)
+      public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
       {
-        monitor.beginTask(getName(), sourceElements.size());
-
         try
         {
+          monitor.beginTask("Initialize transfer from " + sourceSystem + " to " + targetSystem, sourceElements.size());
+
           for (CDOTransferElement sourceElement : sourceElements)
           {
-            if (monitor.isCanceled() || dialog.getInitializationState() == InitializationState.CANCELED)
-            {
-              dialog.setInitializationState(InitializationState.CANCELED);
-              return Status.OK_STATUS;
-            }
-
+            monitor.subTask("Mapping " + sourceElement);
             transfer.map(sourceElement);
             monitor.worked(1);
           }
-
-          dialog.setInitializationState(InitializationState.MAPPED);
-          return Status.OK_STATUS;
+        }
+        catch (OperationCanceledException ex)
+        {
+          throw new InterruptedException();
         }
         catch (RuntimeException ex)
         {
-          dialog.setInitializationState(InitializationState.FAILED);
           throw ex;
+        }
+        catch (Exception ex)
+        {
+          throw new InvocationTargetException(ex);
         }
         finally
         {
           monitor.done();
         }
       }
-    }.schedule();
+    });
 
-    if (dialog.open() == TransferDialog.OK)
-    {
-      transfer.perform();
-      return true;
-    }
-
-    return false;
-  }
-
-  protected boolean performTransfer(CDOTransfer transfer)
-  {
     Shell shell = getViewer().getControl().getShell();
     TransferDialog dialog = new TransferDialog(shell, transfer);
-    if (dialog.open() == TransferDialog.OK)
-    {
-      transfer.perform();
-      return true;
-    }
-
-    return false;
+    return dialog.open() == TransferDialog.OK;
   }
 
   protected List<CDOTransferElement> getSourceElements(Object data)

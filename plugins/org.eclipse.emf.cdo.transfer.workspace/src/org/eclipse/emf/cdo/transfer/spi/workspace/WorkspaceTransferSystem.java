@@ -27,6 +27,7 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 
 import java.io.InputStream;
@@ -151,12 +152,12 @@ public class WorkspaceTransferSystem extends CDOTransferSystem
   }
 
   @Override
-  public void createBinary(IPath path, InputStream source)
+  public void createBinary(IPath path, InputStream source, IProgressMonitor monitor)
   {
     try
     {
       IFile file = ROOT.getFile(path);
-      file.create(source, true, null);
+      file.create(source, true, monitor);
     }
     catch (CoreException ex)
     {
@@ -165,12 +166,12 @@ public class WorkspaceTransferSystem extends CDOTransferSystem
   }
 
   @Override
-  public void createText(IPath path, InputStream source, String encoding)
+  public void createText(IPath path, InputStream source, String encoding, IProgressMonitor monitor)
   {
     try
     {
       IFile file = ROOT.getFile(path);
-      file.create(source, true, null);
+      file.create(source, true, monitor);
       file.setCharset(encoding, null);
     }
     catch (CoreException ex)

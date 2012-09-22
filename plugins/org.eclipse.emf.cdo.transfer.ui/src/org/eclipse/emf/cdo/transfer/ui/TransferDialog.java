@@ -14,16 +14,22 @@ import org.eclipse.emf.cdo.transfer.CDOTransfer;
 import org.eclipse.emf.cdo.transfer.ui.swt.TransferComposite;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
+import org.eclipse.net4j.util.ui.UIUtil;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author Eike Stepper
@@ -33,10 +39,6 @@ public class TransferDialog extends TitleAreaDialog
   private final CDOTransfer transfer;
 
   private TransferComposite transferComposite;
-
-  private InitializationState initializationState = InitializationState.MAPPING;
-
-  private Button okButton;
 
   public TransferDialog(Shell parentShell, CDOTransfer transfer)
   {
@@ -53,27 +55,6 @@ public class TransferDialog extends TitleAreaDialog
   public final TransferComposite getTransferComposite()
   {
     return transferComposite;
-  }
-
-  public InitializationState getInitializationState()
-  {
-    return initializationState;
-  }
-
-  public void setInitializationState(InitializationState initializationState)
-  {
-    this.initializationState = initializationState;
-
-    if (okButton != null)
-    {
-      okButton.getDisplay().asyncExec(new Runnable()
-      {
-        public void run()
-        {
-          updateOkButtonEnabledment();
-        }
-      });
-    }
   }
 
   @Override
@@ -95,27 +76,42 @@ public class TransferDialog extends TitleAreaDialog
   @Override
   protected void createButtonsForButtonBar(Composite parent)
   {
-    okButton = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-    updateOkButtonEnabledment();
+    createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
     createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
   }
 
-  protected void updateOkButtonEnabledment()
+  @Override
+  protected void okPressed()
   {
-    okButton.setEnabled(initializationState == InitializationState.MAPPED);
+    UIUtil.runWithProgress(new IRunnableWithProgress()
+    {
+      public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
+      {
+        try
+        {
+          transfer.perform(monitor);
+        }
+        catch (OperationCanceledException ex)
+        {
+          throw new InterruptedException();
+        }
+        catch (RuntimeException ex)
+        {
+          throw ex;
+        }
+        catch (Exception ex)
+        {
+          throw new InvocationTargetException(ex);
+        }
+      }
+    });
+
+    super.okPressed();
   }
 
   @Override
   protected Point getInitialSize()
   {
     return new Point(1000, 800);
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static enum InitializationState
-  {
-    MAPPING, MAPPED, FAILED, CANCELED
   }
 }

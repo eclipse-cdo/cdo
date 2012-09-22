@@ -73,7 +73,7 @@ public class TransferTreeComposite extends Composite
     statusColumn.setWidth(100);
     statusColumn.setText("Status");
 
-    viewer.setAutoExpandLevel(TreeViewer.ALL_LEVELS);
+    viewer.setAutoExpandLevel(1);
     viewer.setContentProvider(new TransferContentProvider());
     viewer.setLabelProvider(new TransferLabelProvider(transfer));
     viewer.setInput(transfer.getRootMapping());

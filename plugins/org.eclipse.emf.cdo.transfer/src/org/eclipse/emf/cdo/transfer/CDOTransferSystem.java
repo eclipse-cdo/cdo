@@ -10,13 +10,19 @@
  */
 package org.eclipse.emf.cdo.transfer;
 
+import org.eclipse.net4j.util.io.IORuntimeException;
+
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -73,7 +79,35 @@ public abstract class CDOTransferSystem
     return resourceSet.createResource(uri);
   }
 
-  public abstract void createBinary(IPath path, InputStream source);
+  public abstract void createBinary(IPath path, InputStream source, IProgressMonitor monitor);
 
-  public abstract void createText(IPath path, InputStream source, String encoding);
+  public abstract void createText(IPath path, InputStream source, String encoding, IProgressMonitor monitor);
+
+  public void saveModels(EList<Resource> resources, IProgressMonitor monitor)
+  {
+    try
+    {
+      monitor.beginTask("", resources.size());
+
+      for (Resource resource : resources)
+      {
+        if (monitor.isCanceled())
+        {
+          throw new OperationCanceledException();
+        }
+
+        monitor.subTask("Saving " + resource.getURI());
+        resource.save(null);
+        monitor.worked(1);
+      }
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
 }

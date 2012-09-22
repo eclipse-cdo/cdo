@@ -11,11 +11,15 @@
  */
 package org.eclipse.net4j.util.ui;
 
+import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.ui.security.InteractiveCredentialsProvider;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.operation.ModalContext;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
@@ -41,6 +45,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -390,6 +395,33 @@ public final class UIUtil
       {
         gd.horizontalIndent = horizontalIndent;
       }
+    }
+  }
+
+  /**
+   * @since 3.3
+   */
+  public static void runWithProgress(final IRunnableWithProgress runnable)
+  {
+    try
+    {
+      IRunnableWithProgress op = new IRunnableWithProgress()
+      {
+        public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
+        {
+          ModalContext.run(runnable, true, monitor, PlatformUI.getWorkbench().getDisplay());
+        }
+      };
+  
+      PlatformUI.getWorkbench().getProgressService().run(false, true, op);
+    }
+    catch (InvocationTargetException ex)
+    {
+      OM.LOG.error(ex.getCause());
+    }
+    catch (InterruptedException ex)
+    {
+      //$FALL-THROUGH$
     }
   }
 

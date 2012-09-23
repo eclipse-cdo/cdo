@@ -115,13 +115,13 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     return relativePath;
   }
 
-  public void setRelativePath(IPath relativePath)
+  public void setRelativePath(IPath path)
   {
-    if (!ObjectUtil.equals(this.relativePath, relativePath))
+    if (!ObjectUtil.equals(this.relativePath, path))
     {
       IPath oldPath = this.relativePath;
-      this.relativePath = relativePath;
-      transfer.relativePathChanged(this, oldPath, relativePath);
+      this.relativePath = path;
+      transfer.relativePathChanged(this, oldPath, path);
     }
   }
 

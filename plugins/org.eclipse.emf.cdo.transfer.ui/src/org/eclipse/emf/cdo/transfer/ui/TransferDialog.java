@@ -14,29 +14,31 @@ import org.eclipse.emf.cdo.transfer.CDOTransfer;
 import org.eclipse.emf.cdo.transfer.ui.swt.TransferComposite;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
+import org.eclipse.net4j.util.ui.UIUtil;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
-import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author Eike Stepper
  */
 public class TransferDialog extends TitleAreaDialog
 {
-  private CDOTransfer transfer;
+  private final CDOTransfer transfer;
 
   private TransferComposite transferComposite;
-
-  private Image wizban;
 
   public TransferDialog(Shell parentShell, CDOTransfer transfer)
   {
@@ -45,7 +47,12 @@ public class TransferDialog extends TitleAreaDialog
     this.transfer = transfer;
   }
 
-  public TransferComposite getTransferComposite()
+  public final CDOTransfer getTransfer()
+  {
+    return transfer;
+  }
+
+  public final TransferComposite getTransferComposite()
   {
     return transferComposite;
   }
@@ -53,12 +60,8 @@ public class TransferDialog extends TitleAreaDialog
   @Override
   protected Control createDialogArea(Composite parent)
   {
-    ImageDescriptor descriptor = SharedIcons.getDescriptor(SharedIcons.WIZBAN_TRANSFER);
-    Display display = parent.getDisplay();
-    wizban = descriptor.createImage(display);
-
     setTitle("Transfer from " + transfer.getSourceSystem() + " to " + transfer.getTargetSystem());
-    setTitleImage(wizban);
+    setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_TRANSFER));
 
     Composite area = (Composite)super.createDialogArea(parent);
 
@@ -67,7 +70,6 @@ public class TransferDialog extends TitleAreaDialog
     container.setLayoutData(new GridData(GridData.FILL_BOTH));
 
     transferComposite = new TransferComposite(container, transfer);
-
     return area;
   }
 
@@ -79,20 +81,37 @@ public class TransferDialog extends TitleAreaDialog
   }
 
   @Override
-  protected Point getInitialSize()
+  protected void okPressed()
   {
-    return new Point(1000, 800);
+    UIUtil.runWithProgress(new IRunnableWithProgress()
+    {
+      public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
+      {
+        try
+        {
+          transfer.perform(monitor);
+        }
+        catch (OperationCanceledException ex)
+        {
+          throw new InterruptedException();
+        }
+        catch (RuntimeException ex)
+        {
+          throw ex;
+        }
+        catch (Exception ex)
+        {
+          throw new InvocationTargetException(ex);
+        }
+      }
+    });
+
+    super.okPressed();
   }
 
   @Override
-  public boolean close()
+  protected Point getInitialSize()
   {
-    if (wizban != null)
-    {
-      wizban.dispose();
-      wizban = null;
-    }
-
-    return super.close();
+    return new Point(1000, 800);
   }
 }

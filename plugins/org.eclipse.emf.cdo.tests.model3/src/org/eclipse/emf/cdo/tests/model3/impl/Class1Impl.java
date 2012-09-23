@@ -24,17 +24,16 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.Class1Impl#getClass2 <em>Class2</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.Class1Impl#getClass2 <em>Class2</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class Class1Impl extends CDOObjectImpl implements Class1
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected Class1Impl()
@@ -44,7 +43,6 @@ public class Class1Impl extends CDOObjectImpl implements Class1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -55,7 +53,6 @@ public class Class1Impl extends CDOObjectImpl implements Class1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -66,7 +63,6 @@ public class Class1Impl extends CDOObjectImpl implements Class1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -77,7 +73,6 @@ public class Class1Impl extends CDOObjectImpl implements Class1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetClass2()
@@ -87,7 +82,6 @@ public class Class1Impl extends CDOObjectImpl implements Class1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetClass2()

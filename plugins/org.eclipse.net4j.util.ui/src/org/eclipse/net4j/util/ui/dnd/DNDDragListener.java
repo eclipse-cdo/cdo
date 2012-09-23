@@ -35,11 +35,27 @@ public abstract class DNDDragListener<TYPE> extends DragSourceAdapter
   }
 
   /**
+   * @since 3.3
+   */
+  protected DNDDragListener(StructuredViewer viewer)
+  {
+    this.viewer = viewer;
+  }
+
+  /**
    * @since 3.0
    */
   public Transfer[] getTransfers()
   {
     return transfers;
+  }
+
+  /**
+   * @since 3.3
+   */
+  public void setTransfers(Transfer[] transfers)
+  {
+    this.transfers = transfers;
   }
 
   public StructuredViewer getViewer()

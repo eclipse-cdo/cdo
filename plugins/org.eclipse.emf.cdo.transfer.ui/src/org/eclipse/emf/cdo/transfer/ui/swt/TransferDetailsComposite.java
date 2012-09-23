@@ -40,6 +40,7 @@ import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -438,25 +439,47 @@ public class TransferDetailsComposite extends Composite implements IListener
     return relativePath.setFocus();
   }
 
-  public void notifyEvent(IEvent event)
+  public void notifyEvent(final IEvent event)
   {
-    if (event instanceof CDOTransfer.MappingEvent)
+    if (isDisposed())
     {
-      CDOTransfer.MappingEvent e = (CDOTransfer.MappingEvent)event;
-      if (ObjectUtil.equals(e.getMapping(), mapping))
-      {
-        notifyMappingEvent(e);
-      }
+      return;
     }
-    else if (event instanceof CDOTransfer.UnmappedModelsEvent)
+
+    try
     {
       getDisplay().asyncExec(new Runnable()
       {
         public void run()
         {
-          unmappedModels.refresh();
+          if (!isDisposed())
+          {
+            try
+            {
+              if (event instanceof CDOTransfer.MappingEvent)
+              {
+                CDOTransfer.MappingEvent e = (CDOTransfer.MappingEvent)event;
+                if (ObjectUtil.equals(e.getMapping(), mapping))
+                {
+                  notifyMappingEvent(e);
+                }
+              }
+              else if (event instanceof CDOTransfer.UnmappedModelsEvent)
+              {
+                unmappedModels.refresh();
+              }
+            }
+            catch (SWTException ex)
+            {
+              // Ignoredd
+            }
+          }
         }
       });
+    }
+    catch (SWTException ex)
+    {
+      // Ignoredd
     }
   }
 
@@ -466,19 +489,13 @@ public class TransferDetailsComposite extends Composite implements IListener
     {
       CDOTransfer.TransferTypeChangedEvent e = (CDOTransfer.TransferTypeChangedEvent)event;
       final CDOTransferType newType = e.getNewType();
-      getDisplay().asyncExec(new Runnable()
+      Object currentType = ((IStructuredSelection)transferType.getSelection()).getFirstElement();
+      if (currentType != newType)
       {
-        public void run()
-        {
-          Object currentType = ((IStructuredSelection)transferType.getSelection()).getFirstElement();
-          if (currentType != newType)
-          {
-            transferType.setSelection(new StructuredSelection(newType));
-          }
+        transferType.setSelection(new StructuredSelection(newType));
+      }
 
-          unmappedModels.refresh();
-        }
-      });
+      unmappedModels.refresh();
     }
     else if (event instanceof CDOTransfer.RelativePathChangedEvent)
     {
@@ -486,14 +503,8 @@ public class TransferDetailsComposite extends Composite implements IListener
       final String value = e.getNewPath().toString();
       if (!ObjectUtil.equals(value, relativePath.getText()))
       {
-        getDisplay().asyncExec(new Runnable()
-        {
-          public void run()
-          {
-            relativePath.setText(value);
-            status.setText(mapping.getStatus().toString());
-          }
-        });
+        relativePath.setText(value);
+        status.setText(mapping.getStatus().toString());
       }
     }
   }

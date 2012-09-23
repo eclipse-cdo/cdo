@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.tests.model3; singleton:=true
-Bundle-Version: 3.0.200.qualifier
+Bundle-Version: 3.0.300.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -14,9 +14,9 @@ Export-Package: org.eclipse.emf.cdo.tests.legacy.model3;version="3.0.200",
  org.eclipse.emf.cdo.tests.legacy.model3.impl;version="3.0.200",
  org.eclipse.emf.cdo.tests.legacy.model3.subpackage;version="3.0.200",
  org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl;version="3.0.200",
- org.eclipse.emf.cdo.tests.model3;version="3.0.200",
- org.eclipse.emf.cdo.tests.model3.impl;version="3.0.200",
- org.eclipse.emf.cdo.tests.model3.subpackage;version="3.0.200",
- org.eclipse.emf.cdo.tests.model3.subpackage.impl;version="3.0.200",
- org.eclipse.emf.cdo.tests.model3.subpackage.util;version="3.0.200",
- org.eclipse.emf.cdo.tests.model3.util;version="3.0.200"
+ org.eclipse.emf.cdo.tests.model3;version="3.0.300",
+ org.eclipse.emf.cdo.tests.model3.impl;version="3.0.300",
+ org.eclipse.emf.cdo.tests.model3.subpackage;version="3.0.300",
+ org.eclipse.emf.cdo.tests.model3.subpackage.impl;version="3.0.300",
+ org.eclipse.emf.cdo.tests.model3.subpackage.util;version="3.0.300",
+ org.eclipse.emf.cdo.tests.model3.util;version="3.0.300"

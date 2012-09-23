@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.Transfer;
@@ -73,6 +74,12 @@ public class FileSystemUIProvider implements TransferUIProvider
   public CDOTransferElement convertTransferTarget(Object target)
   {
     // TODO: implement FileSystemUIProvider.convertTransferTarget(target)
+    return null;
+  }
+
+  public Object convertSelection(IStructuredSelection selection)
+  {
+    // TODO: implement FileSystemUIProvider.convertSelection(selection)
     return null;
   }
 

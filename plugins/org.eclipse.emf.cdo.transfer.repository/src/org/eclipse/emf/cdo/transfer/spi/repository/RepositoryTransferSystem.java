@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.transfer.spi.repository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -24,6 +25,7 @@ import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
 import org.eclipse.emf.cdo.transfer.CDOTransferType;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.io.IORuntimeException;
@@ -32,9 +34,11 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 
 import java.io.ByteArrayInputStream;
@@ -164,33 +168,65 @@ public class RepositoryTransferSystem extends CDOTransferSystem
   }
 
   @Override
-  public void createBinary(IPath path, InputStream source)
+  public void createBinary(IPath path, InputStream source, IProgressMonitor monitor)
   {
     try
     {
+      monitor.beginTask("", 1);
+
       CDOBlob blob = new CDOBlob(source);
       CDOBinaryResource resource = ((CDOTransaction)view).createBinaryResource(path.toString());
       resource.setContents(blob);
+
+      monitor.worked(1); // TODO Progress more smoothly
     }
     catch (IOException ex)
     {
       throw new IORuntimeException(ex);
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 
   @Override
-  public void createText(IPath path, InputStream source, String encoding)
+  public void createText(IPath path, InputStream source, String encoding, IProgressMonitor monitor)
   {
     try
     {
+      monitor.beginTask("", 1);
+
       CDOClob clob = new CDOClob(new InputStreamReader(source, encoding));
       CDOTextResource resource = ((CDOTransaction)view).createTextResource(path.toString());
       resource.setContents(clob);
       resource.setEncoding(encoding);
+
+      monitor.worked(1); // TODO Progress more smoothly
     }
     catch (IOException ex)
     {
       throw new IORuntimeException(ex);
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  @Override
+  public void saveModels(EList<Resource> resources, IProgressMonitor monitor)
+  {
+    try
+    {
+      monitor.subTask("Committing to " + this);
+
+      CDOTransaction transaction = (CDOTransaction)view;
+      transaction.commit(monitor);
+    }
+    catch (CommitException ex)
+    {
+      throw new CDOException(ex);
     }
   }
 

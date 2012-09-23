@@ -19,6 +19,7 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.emf.common.util.URI;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 
 import java.io.File;
@@ -89,17 +90,22 @@ public class FileSystemTransferSystem extends CDOTransferSystem
   }
 
   @Override
-  public void createBinary(IPath path, InputStream source)
+  public void createBinary(IPath path, InputStream source, IProgressMonitor monitor)
   {
-    File file = getFile(path);
-    mkParent(file);
-
     OutputStream target = null;
 
     try
     {
+      File file = getFile(path);
+      long length = file.length();
+      int totalWork = length > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int)length;
+      monitor.beginTask("", totalWork);
+
+      mkParent(file);
+
       target = new FileOutputStream(file);
       IOUtil.copy(source, target);
+      monitor.worked(totalWork); // TODO Progress more smoothly
     }
     catch (IOException ex)
     {
@@ -108,21 +114,27 @@ public class FileSystemTransferSystem extends CDOTransferSystem
     finally
     {
       IOUtil.close(target);
+      monitor.done();
     }
   }
 
   @Override
-  public void createText(IPath path, InputStream source, String encoding)
+  public void createText(IPath path, InputStream source, String encoding, IProgressMonitor monitor)
   {
-    File file = getFile(path);
-    mkParent(file);
-
     Writer target = null;
 
     try
     {
+      File file = getFile(path);
+      long length = file.length();
+      int totalWork = length > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int)length;
+      monitor.beginTask("", totalWork);
+
+      mkParent(file);
+
       target = new FileWriter(file);
       IOUtil.copyCharacter(new InputStreamReader(source, encoding), target);
+      monitor.worked(totalWork); // TODO Progress more smoothly
     }
     catch (IOException ex)
     {
@@ -131,6 +143,7 @@ public class FileSystemTransferSystem extends CDOTransferSystem
     finally
     {
       IOUtil.close(target);
+      monitor.done();
     }
   }
 

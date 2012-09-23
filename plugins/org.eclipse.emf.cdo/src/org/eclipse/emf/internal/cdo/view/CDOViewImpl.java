@@ -408,7 +408,7 @@ public class CDOViewImpl extends AbstractCDOView
 
     try
     {
-      synchronized (this)
+      synchronized (lockStates)
       {
         if (!options().isLockNotificationEnabled())
         {
@@ -850,6 +850,13 @@ public class CDOViewImpl extends AbstractCDOView
         }
 
         fireAdaptersNotifiedEvent(lastUpdateTime);
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      if (isActive())
+      {
+        throw ex;
       }
     }
     finally

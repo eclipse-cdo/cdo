@@ -50,7 +50,7 @@ import java.util.Date;
 /**
  * This is a default implementation for the {@link ITypeMapping} interface which provides default behavor for all common
  * types.
- * 
+ *
  * @author Eike Stepper
  */
 public class CoreTypeMappings
@@ -851,6 +851,70 @@ public class CoreTypeMappings
       public ITypeMapping create(String description) throws ProductCreationException
       {
         return new TMBigDecimal();
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class TMJavaClass extends AbstractTypeMapping
+  {
+    public static final Factory FACTORY_VARCHAR = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
+        + ".JavaClassVarchar", EcorePackage.eINSTANCE.getEJavaClass(), DBType.VARCHAR));
+
+    @Override
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
+    {
+      return resultSet.getString(getField().getName());
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class Factory extends AbstractTypeMappingFactory
+    {
+      public Factory(Descriptor descriptor)
+      {
+        super(descriptor);
+      }
+
+      @Override
+      public ITypeMapping create(String description) throws ProductCreationException
+      {
+        return new TMJavaClass();
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class TMJavaObject extends AbstractTypeMapping
+  {
+    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".JavaObjectBlob",
+        EcorePackage.eINSTANCE.getEJavaObject(), DBType.BLOB));
+
+    @Override
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
+    {
+      return resultSet.getBytes(getField().getName());
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class Factory extends AbstractTypeMappingFactory
+    {
+      public Factory(Descriptor descriptor)
+      {
+        super(descriptor);
+      }
+
+      @Override
+      public ITypeMapping create(String description) throws ProductCreationException
+      {
+        return new TMJavaObject();
       }
     }
   }

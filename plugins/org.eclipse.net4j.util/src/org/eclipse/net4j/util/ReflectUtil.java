@@ -15,6 +15,7 @@ import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
+import java.beans.Introspector;
 import java.io.PrintStream;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -439,8 +440,15 @@ public final class ReflectUtil
     {
       if (isSetter(method))
       {
-        String name = StringUtil.uncap(method.getName().substring(3));
+        String property = method.getName().substring(3);
+        String name = Introspector.decapitalize(property);
         Object value = values.get(name);
+        if (value == null)
+        {
+          name = StringUtil.uncap(property);
+          value = values.get(name);
+        }
+
         if (value != null)
         {
           Class<?> type = method.getParameterTypes()[0];

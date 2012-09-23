@@ -16,7 +16,6 @@ import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.event.Notifier;
-import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -31,9 +30,12 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.SubProgressMonitor;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
@@ -102,11 +104,6 @@ public class CDOTransfer implements INotifier
     return modelTransferContext;
   }
 
-  public final CDOTransferMapping getRootMapping()
-  {
-    return rootMapping;
-  }
-
   public final CDOTransferType getDefaultTransferType()
   {
     return defaultTransferType;
@@ -135,6 +132,31 @@ public class CDOTransfer implements INotifier
     });
 
     return result;
+  }
+
+  public final CDOTransferMapping getRootMapping()
+  {
+    return rootMapping;
+  }
+
+  public IPath getTargetPath()
+  {
+    return rootMapping.getRelativePath();
+  }
+
+  public void setTargetPath(IPath targetPath)
+  {
+    rootMapping.setRelativePath(targetPath);
+  }
+
+  public void setTargetPath(String path)
+  {
+    rootMapping.setRelativePath(path);
+  }
+
+  public int getMappingCount()
+  {
+    return mappings.size();
   }
 
   public CDOTransferMapping map(IPath sourcePath)
@@ -209,74 +231,104 @@ public class CDOTransfer implements INotifier
     return type;
   }
 
-  protected void validate(CDOTransferMapping mapping)
+  protected void validate(CDOTransferMapping mapping, IProgressMonitor monitor)
   {
+    if (monitor.isCanceled())
+    {
+      throw new OperationCanceledException();
+    }
+
     if (mapping.getStatus() == CDOTransferMapping.Status.CONFLICT)
     {
       throw new IllegalStateException("Conflict: " + mapping);
     }
 
+    monitor.worked(1);
     for (CDOTransferMapping child : mapping.getChildren())
     {
-      validate(child);
+      validate(child, monitor);
     }
   }
 
   public void perform()
   {
-    validate(rootMapping);
-    perform(rootMapping);
-    modelTransferContext.performFinish();
+    perform(new NullProgressMonitor());
   }
 
-  protected void perform(CDOTransferMapping mapping)
+  public void perform(IProgressMonitor monitor)
   {
+    try
+    {
+      int mappingCount = getMappingCount();
+      monitor.beginTask("Perform transfer from " + getSourceSystem() + " to " + getTargetSystem(), 5 * mappingCount);
+
+      monitor.subTask("Validating transfer");
+      validate(rootMapping, new SubProgressMonitor(monitor, mappingCount));
+
+      perform(rootMapping, monitor);
+      modelTransferContext.performFinish(new SubProgressMonitor(monitor, 2 * mappingCount));
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  protected void perform(CDOTransferMapping mapping, IProgressMonitor monitor)
+  {
+    monitor.subTask("Transferring " + mapping);
+    if (monitor.isCanceled())
+    {
+      throw new OperationCanceledException();
+    }
+
     CDOTransferType transferType = mapping.getTransferType();
     if (transferType == CDOTransferType.FOLDER)
     {
-      performFolder(mapping);
+      performFolder(mapping, monitor);
     }
     else if (transferType == CDOTransferType.MODEL)
     {
-      performModel(mapping);
+      performModel(mapping, monitor);
     }
     else if (transferType == CDOTransferType.BINARY)
     {
-      performBinary(mapping);
+      performBinary(mapping, monitor);
     }
     else if (transferType instanceof CDOTransferType.Text)
     {
       String encoding = ((CDOTransferType.Text)transferType).getEncoding();
-      performText(mapping, encoding);
+      performText(mapping, encoding, monitor);
     }
   }
 
-  protected void performFolder(CDOTransferMapping mapping)
+  protected void performFolder(CDOTransferMapping mapping, IProgressMonitor monitor)
   {
     if (mapping.getStatus() == CDOTransferMapping.Status.NEW)
     {
       targetSystem.createFolder(mapping.getFullPath());
     }
 
+    monitor.worked(2);
     for (CDOTransferMapping child : mapping.getChildren())
     {
-      perform(child);
+      perform(child, monitor);
     }
   }
 
-  protected void performModel(CDOTransferMapping mapping)
+  protected void performModel(CDOTransferMapping mapping, IProgressMonitor monitor)
   {
-    modelTransferContext.perform(mapping);
+    modelTransferContext.perform(mapping, new SubProgressMonitor(monitor, 2));
   }
 
-  protected void performBinary(CDOTransferMapping mapping)
+  protected void performBinary(CDOTransferMapping mapping, IProgressMonitor monitor)
   {
     IPath path = mapping.getFullPath();
     InputStream source = mapping.getSource().openInputStream();
 
     try
     {
-      targetSystem.createBinary(path, source);
+      targetSystem.createBinary(path, source, new SubProgressMonitor(monitor, 2));
     }
     finally
     {
@@ -284,14 +336,14 @@ public class CDOTransfer implements INotifier
     }
   }
 
-  protected void performText(CDOTransferMapping mapping, String encoding)
+  protected void performText(CDOTransferMapping mapping, String encoding, IProgressMonitor monitor)
   {
     IPath path = mapping.getFullPath();
     InputStream source = mapping.getSource().openInputStream();
 
     try
     {
-      targetSystem.createText(path, source, encoding);
+      targetSystem.createText(path, source, encoding, new SubProgressMonitor(monitor, 2));
     }
     finally
     {
@@ -709,33 +761,36 @@ public class CDOTransfer implements INotifier
       return registry.getFactory(uri) != null;
     }
 
-    protected void perform(CDOTransferMapping mapping)
+    protected void perform(CDOTransferMapping mapping, IProgressMonitor monitor)
     {
-      Resource sourceResource = getSourceResource(mapping);
-      Resource targetResource = getTargetResource(mapping); // Create target resource
-
-      EList<EObject> sourceContents = sourceResource.getContents();
-      Collection<EObject> targetContents = copier.copyAll(sourceContents);
-
-      EList<EObject> contents = targetResource.getContents();
-      contents.addAll(targetContents);
-    }
-
-    protected void performFinish()
-    {
-      copier.copyReferences();
-
       try
       {
-        for (Resource resource : getTargetResourceSet().getResources())
-        {
-          resource.save(null);
-        }
+        monitor.beginTask("", 2);
+
+        Resource sourceResource = getSourceResource(mapping);
+        Resource targetResource = getTargetResource(mapping); // Create target resource
+
+        EList<EObject> sourceContents = sourceResource.getContents();
+        Collection<EObject> targetContents = copier.copyAll(sourceContents);
+        monitor.worked(1);
+
+        EList<EObject> contents = targetResource.getContents();
+        contents.addAll(targetContents);
+        monitor.worked(1);
       }
-      catch (IOException ex)
+      finally
       {
-        throw new IORuntimeException(ex);
+        monitor.done();
       }
+    }
+
+    protected void performFinish(IProgressMonitor monitor)
+    {
+      monitor.subTask("Copying model references");
+      copier.copyReferences();
+
+      CDOTransferSystem targetSystem = getTransfer().getTargetSystem();
+      targetSystem.saveModels(getTargetResourceSet().getResources(), monitor);
     }
 
     /**
@@ -763,11 +818,13 @@ public class CDOTransfer implements INotifier
           {
             removeResource(oldValue);
           }
+
           Resource newValue = (Resource)msg.getNewValue();
           if (newValue != null)
           {
             addResource(newValue);
           }
+
           break;
         }
         case Notification.ADD:

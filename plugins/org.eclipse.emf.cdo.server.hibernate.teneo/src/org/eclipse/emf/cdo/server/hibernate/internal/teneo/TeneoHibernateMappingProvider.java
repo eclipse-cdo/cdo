@@ -138,6 +138,8 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     }
 
     // add some annotations to the CDO model so that the mapping gets generated correctly
+    addTransientAnnotationToEClass(EtypesPackage.eINSTANCE.getModelElement());
+    addTransientAnnotationToEClass(EtypesPackage.eINSTANCE.getAnnotation());
     addTypeAnnotationToEDataType(EtypesPackage.eINSTANCE.getBlob(), CDOBlobUserType.class.getName());
     addTypeAnnotationToEDataType(EtypesPackage.eINSTANCE.getClob(), CDOClobUserType.class.getName());
 
@@ -186,6 +188,20 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     final String typeAnnotation = "@Type(type=\"" + type + "\")";
     eAnnotation.getDetails().put("value", typeAnnotation);
     eDataType.getEAnnotations().add(eAnnotation);
+  }
+
+  private void addTransientAnnotationToEClass(EClass eClass)
+  {
+    if (eClass.getEAnnotation(Constants.ANNOTATION_SOURCE_TENEO_JPA) != null)
+    {
+      return;
+    }
+
+    final EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+    eAnnotation.setSource(Constants.ANNOTATION_SOURCE_TENEO_JPA);
+    final String transientAnnotation = "@Transient";
+    eAnnotation.getDetails().put("value", transientAnnotation);
+    eClass.getEAnnotations().add(eAnnotation);
   }
 
   // see the CDOEntityMapper, there an explicit unique-key is added to

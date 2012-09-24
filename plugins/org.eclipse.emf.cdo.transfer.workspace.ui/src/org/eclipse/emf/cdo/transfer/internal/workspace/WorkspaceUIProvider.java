@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.transfer.spi.workspace.WorkspaceTransferSystem;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -62,7 +63,8 @@ public class WorkspaceUIProvider implements TransferUIProvider
       for (int i = 0; i < resources.length; i++)
       {
         IResource resource = resources[i];
-        CDOTransferElement element = WorkspaceTransferSystem.INSTANCE.getElement(resource.getFullPath());
+        IPath path = resource.getFullPath();
+        CDOTransferElement element = WorkspaceTransferSystem.INSTANCE.getElement(path);
         result.add(element);
       }
 
@@ -74,7 +76,13 @@ public class WorkspaceUIProvider implements TransferUIProvider
 
   public CDOTransferElement convertTransferTarget(Object target)
   {
-    // TODO: implement WorkspaceUIProvider.convertTransferTarget(target)
+    if (target instanceof IResource)
+    {
+      IResource resource = (IResource)target;
+      IPath path = resource.getFullPath();
+      return WorkspaceTransferSystem.INSTANCE.getElement(path);
+    }
+
     return null;
   }
 

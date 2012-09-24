@@ -159,28 +159,28 @@ public class CDOTransfer implements INotifier
     return mappings.size();
   }
 
-  public CDOTransferMapping map(IPath sourcePath)
+  public CDOTransferMapping map(IPath sourcePath, IProgressMonitor monitor)
   {
     CDOTransferElement source = sourceSystem.getElement(sourcePath);
-    return map(source);
+    return map(source, monitor);
   }
 
-  public CDOTransferMapping map(String sourcePath)
+  public CDOTransferMapping map(String sourcePath, IProgressMonitor monitor)
   {
-    return map(new Path(sourcePath));
+    return map(new Path(sourcePath), monitor);
   }
 
-  public CDOTransferMapping map(CDOTransferElement source)
+  public CDOTransferMapping map(CDOTransferElement source, IProgressMonitor monitor)
   {
-    return map(source, rootMapping);
+    return map(source, rootMapping, monitor);
   }
 
-  protected CDOTransferMapping map(CDOTransferElement source, CDOTransferMapping parent)
+  protected CDOTransferMapping map(CDOTransferElement source, CDOTransferMapping parent, IProgressMonitor monitor)
   {
     CDOTransferMapping mapping = mappings.get(source);
     if (mapping == null)
     {
-      mapping = createMapping(source, parent);
+      mapping = createMapping(source, parent, monitor);
       mappings.put(source, mapping);
     }
     else
@@ -200,9 +200,10 @@ public class CDOTransfer implements INotifier
     mapping.getChildren();
   }
 
-  protected CDOTransferMapping createMapping(CDOTransferElement source, CDOTransferMapping parent)
+  protected CDOTransferMapping createMapping(CDOTransferElement source, CDOTransferMapping parent,
+      IProgressMonitor monitor)
   {
-    return new CDOTransferMappingImpl(this, source, parent);
+    return new CDOTransferMappingImpl(this, source, parent, monitor);
   }
 
   protected ModelTransferContext createModelTransferContext()
@@ -217,18 +218,18 @@ public class CDOTransfer implements INotifier
       return CDOTransferType.FOLDER;
     }
 
+    CDOTransferType type = sourceSystem.getDefaultTransferType(source);
+    if (type != null)
+    {
+      return type;
+    }
+
     if (modelTransferContext.hasResourceFactory(source))
     {
       return CDOTransferType.MODEL;
     }
 
-    CDOTransferType type = sourceSystem.getDefaultTransferType(source);
-    if (type == null)
-    {
-      type = getDefaultTransferType();
-    }
-
-    return type;
+    return getDefaultTransferType();
   }
 
   protected void validate(CDOTransferMapping mapping, IProgressMonitor monitor)

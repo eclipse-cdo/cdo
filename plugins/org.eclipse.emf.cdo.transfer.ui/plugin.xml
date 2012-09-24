@@ -21,16 +21,30 @@
             type="fs"/>
    </extension>
 
-<!--
    <extension
-         point="org.eclipse.ui.views">
-      <view
-            category="org.eclipse.emf.cdo"
-            class="org.eclipse.emf.cdo.transfer.internal.ui.TransferView"
-            id="org.eclipse.emf.cdo.transfer.TransferView"
-            name="CDO Transfer">
-      </view>
+         point="org.eclipse.ui.navigator.navigatorContent">
+      <navigatorContent
+            id="org.eclipse.emf.cdo.transfer.ui.navigatorContent"
+            name="CDO Transfer Support">
+         <dropAssistant
+               class="org.eclipse.emf.cdo.transfer.internal.ui.TransferDropAdapterAssistant"
+               id="org.eclipse.emf.cdo.transfer.ui.dropAssistant">
+            <possibleDropTargets>
+            </possibleDropTargets>
+         </dropAssistant>
+      </navigatorContent>
    </extension>
--->
+
+   <extension
+         point="org.eclipse.ui.navigator.viewer">
+      <viewerContentBinding
+            viewerId="org.eclipse.ui.navigator.ProjectExplorer">
+         <includes>
+            <contentExtension
+                  pattern="org.eclipse.emf.cdo.transfer.ui.navigatorContent">
+            </contentExtension>
+         </includes>
+      </viewerContentBinding>
+   </extension>
 
 </plugin>

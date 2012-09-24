@@ -10,26 +10,19 @@
  */
 package org.eclipse.emf.cdo.transfer.ui;
 
-import org.eclipse.emf.cdo.transfer.CDOTransfer;
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
-import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider.Factory;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
-import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.dnd.DNDDropAdapter;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Shell;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,49 +91,8 @@ public class TransferDropAdapter extends DNDDropAdapter<Object>
       return false;
     }
 
-    final CDOTransferSystem sourceSystem = sourceElements.get(0).getSystem();
-    final CDOTransferSystem targetSystem = targetElement.getSystem();
-
-    final CDOTransfer transfer = new CDOTransfer(sourceSystem, targetSystem);
-    transfer.setTargetPath(targetElement.getPath());
-
-    UIUtil.runWithProgress(new IRunnableWithProgress()
-    {
-      public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
-      {
-        try
-        {
-          monitor.beginTask("Initialize transfer from " + sourceSystem + " to " + targetSystem, sourceElements.size());
-
-          for (CDOTransferElement sourceElement : sourceElements)
-          {
-            monitor.subTask("Mapping " + sourceElement);
-            transfer.map(sourceElement);
-            monitor.worked(1);
-          }
-        }
-        catch (OperationCanceledException ex)
-        {
-          throw new InterruptedException();
-        }
-        catch (RuntimeException ex)
-        {
-          throw ex;
-        }
-        catch (Exception ex)
-        {
-          throw new InvocationTargetException(ex);
-        }
-        finally
-        {
-          monitor.done();
-        }
-      }
-    });
-
     Shell shell = getViewer().getControl().getShell();
-    TransferDialog dialog = new TransferDialog(shell, transfer);
-    return dialog.open() == TransferDialog.OK;
+    return TransferDialog.open(shell, sourceElements, targetElement);
   }
 
   protected List<CDOTransferElement> getSourceElements(Object data)

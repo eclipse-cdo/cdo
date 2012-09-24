@@ -60,12 +60,8 @@ public class TransferLabelProvider extends LabelProvider implements ITableLabelP
   @Override
   public void dispose()
   {
-    if (sourceSystemLabelProvider != null)
-    {
-      sourceSystemLabelProvider.dispose();
-      sourceSystemLabelProvider = null;
-    }
-
+    sourceSystemLabelProvider.dispose();
+    sourceSystemLabelProvider = null;
     super.dispose();
   }
 

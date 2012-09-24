@@ -13,7 +13,9 @@ package org.eclipse.emf.cdo.transfer;
 import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.SubProgressMonitor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,7 +39,8 @@ class CDOTransferMappingImpl implements CDOTransferMapping
 
   private IPath relativePath;
 
-  public CDOTransferMappingImpl(CDOTransfer transfer, CDOTransferElement source, CDOTransferMapping parent)
+  public CDOTransferMappingImpl(CDOTransfer transfer, CDOTransferElement source, CDOTransferMapping parent,
+      IProgressMonitor monitor)
   {
     this.transfer = transfer;
     this.source = source;
@@ -52,12 +55,30 @@ class CDOTransferMappingImpl implements CDOTransferMapping
       this.parent.addChild(this);
     }
 
-    if (isDirectory())
+    try
     {
-      for (CDOTransferElement child : source.getChildren())
+      if (isDirectory())
       {
-        transfer.map(child, this);
+        CDOTransferElement[] children = source.getChildren();
+        monitor.beginTask("", 1 + children.length);
+        monitor.subTask("Mapping " + source);
+        monitor.worked(1);
+
+        for (CDOTransferElement child : children)
+        {
+          transfer.map(child, this, new SubProgressMonitor(monitor, 1));
+        }
       }
+      else
+      {
+        monitor.beginTask("", 1);
+        monitor.subTask("Mapping " + source);
+        monitor.worked(1);
+      }
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 
@@ -117,10 +138,10 @@ class CDOTransferMappingImpl implements CDOTransferMapping
 
   public void setRelativePath(IPath path)
   {
-    if (!ObjectUtil.equals(this.relativePath, path))
+    if (!ObjectUtil.equals(relativePath, path))
     {
-      IPath oldPath = this.relativePath;
-      this.relativePath = path;
+      IPath oldPath = relativePath;
+      relativePath = path;
       transfer.relativePathChanged(this, oldPath, path);
     }
   }

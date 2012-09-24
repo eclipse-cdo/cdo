@@ -16,7 +16,23 @@
   <extension
         point="org.eclipse.net4j.util.elementProcessors">
      <elementProcessor class="org.eclipse.emf.cdo.ui.CDOInteractiveExceptionHandler"/>
-  </extension>
+	</extension>
+
+   <extension
+         point="org.eclipse.net4j.util.factories">
+      <factory
+            class="org.eclipse.emf.cdo.internal.ui.transfer.RepositoryUIProvider$Factory"
+            productGroup="org.eclipse.emf.cdo.transfer.ui.providers"
+            type="repository"/>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.dropActions">
+      <action
+            class="org.eclipse.emf.cdo.internal.ui.transfer.RepositoryPluginDropAdapter"
+            id="org.eclipse.emf.cdo.ui.RepositoryPluginDropAdapter">
+      </action>
+   </extension>
 
    <extension
          point="org.eclipse.ui.views">

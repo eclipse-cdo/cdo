@@ -69,6 +69,7 @@ public class TransferDragListener extends DNDDragListener<Object>
       if (object != null)
       {
         return object;
+        // return new File[] { new File("dummy.transfer") };
       }
     }
 
@@ -86,7 +87,7 @@ public class TransferDragListener extends DNDDragListener<Object>
   {
     TransferDragListener dragListener = new TransferDragListener(viewer);
     Transfer[] transfers = dragListener.getTransfers();
-    viewer.addDragSupport(DND.DROP_MOVE, transfers, dragListener);
+    viewer.addDragSupport(DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_DEFAULT, transfers, dragListener);
     return dragListener;
   }
 }

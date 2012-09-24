@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.transfer.ui;
 
 import org.eclipse.emf.cdo.transfer.CDOTransfer;
+import org.eclipse.emf.cdo.transfer.CDOTransferElement;
+import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
 import org.eclipse.emf.cdo.transfer.ui.swt.TransferComposite;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
@@ -18,6 +20,7 @@ import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -30,6 +33,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -113,5 +118,57 @@ public class TransferDialog extends TitleAreaDialog
   protected Point getInitialSize()
   {
     return new Point(1000, 800);
+  }
+
+  public static boolean open(Shell shell, final List<CDOTransferElement> sourceElements,
+      final CDOTransferElement targetElement)
+  {
+    final CDOTransferSystem sourceSystem = sourceElements.get(0).getSystem();
+    final CDOTransferSystem targetSystem = targetElement.getSystem();
+
+    final CDOTransfer transfer = new CDOTransfer(sourceSystem, targetSystem);
+    transfer.setTargetPath(targetElement.getPath());
+
+    initializeTransfer(transfer, sourceElements);
+
+    TransferDialog dialog = new TransferDialog(shell, transfer);
+    return dialog.open() == TransferDialog.OK;
+  }
+
+  public static void initializeTransfer(final CDOTransfer transfer, final Collection<CDOTransferElement> sourceElements)
+  {
+    UIUtil.runWithProgress(new IRunnableWithProgress()
+    {
+      public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
+      {
+        try
+        {
+          CDOTransferSystem sourceSystem = transfer.getSourceSystem();
+          CDOTransferSystem targetSystem = transfer.getTargetSystem();
+          monitor.beginTask("Initialize transfer from " + sourceSystem + " to " + targetSystem, sourceElements.size());
+
+          for (CDOTransferElement sourceElement : sourceElements)
+          {
+            transfer.map(sourceElement, new SubProgressMonitor(monitor, 1));
+          }
+        }
+        catch (OperationCanceledException ex)
+        {
+          throw new InterruptedException();
+        }
+        catch (RuntimeException ex)
+        {
+          throw ex;
+        }
+        catch (Exception ex)
+        {
+          throw new InvocationTargetException(ex);
+        }
+        finally
+        {
+          monitor.done();
+        }
+      }
+    });
   }
 }

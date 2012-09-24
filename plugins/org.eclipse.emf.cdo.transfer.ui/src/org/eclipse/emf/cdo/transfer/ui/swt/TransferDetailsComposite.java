@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.transfer.CDOTransferMapping;
 import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
 import org.eclipse.emf.cdo.transfer.CDOTransferType;
+import org.eclipse.emf.cdo.transfer.ui.TransferDialog;
 import org.eclipse.emf.cdo.transfer.ui.TransferTypeContentProvider;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -56,6 +57,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -304,7 +306,7 @@ public class TransferDetailsComposite extends Composite implements IListener
 
         URI uri = resource.getURI();
         CDOTransferElement element = transfer.getSourceSystem().getElement(uri);
-        transfer.map(element);
+        TransferDialog.initializeTransfer(transfer, Collections.singleton(element));
       }
     });
 

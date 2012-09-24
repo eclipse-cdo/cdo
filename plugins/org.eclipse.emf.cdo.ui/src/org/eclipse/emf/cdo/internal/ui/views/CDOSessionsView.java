@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.internal.ui.views;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenSessionAction;
+import org.eclipse.emf.cdo.internal.ui.transfer.RepositoryTransferDragListener;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.transfer.ui.TransferDragListener;
 import org.eclipse.emf.cdo.transfer.ui.TransferDropAdapter;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
@@ -63,7 +63,7 @@ public class CDOSessionsView extends ContainerView
     Control control = super.createUI(parent);
 
     TreeViewer viewer = getViewer();
-    TransferDragListener.support(viewer);
+    RepositoryTransferDragListener.support(viewer);
     TransferDropAdapter.support(viewer);
 
     return control;

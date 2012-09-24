@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.transfer.repository.internal.ui;
+package org.eclipse.emf.cdo.internal.ui.transfer;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
@@ -36,8 +36,11 @@ import java.util.List;
  */
 public class RepositoryUIProvider implements TransferUIProvider
 {
+  public static RepositoryUIProvider INSTANCE;
+
   public RepositoryUIProvider()
   {
+    INSTANCE = this;
   }
 
   public ILabelProvider createLabelProvider(CDOTransferSystem system)

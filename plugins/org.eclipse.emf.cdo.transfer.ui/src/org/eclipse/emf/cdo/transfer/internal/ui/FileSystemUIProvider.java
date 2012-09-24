@@ -26,6 +26,7 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Image;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,12 +68,31 @@ public class FileSystemUIProvider implements TransferUIProvider
 
   public List<CDOTransferElement> convertTransferData(Object data)
   {
-    // TODO: implement FileSystemUIProvider.convertTransferData(data)
+    if (data instanceof String[])
+    {
+      String[] paths = (String[])data;
+      List<CDOTransferElement> result = new ArrayList<CDOTransferElement>(paths.length);
+      for (int i = 0; i < paths.length; i++)
+      {
+        String path = paths[i];
+        CDOTransferElement element = FileSystemTransferSystem.INSTANCE.getElement(path);
+        result.add(element);
+      }
+
+      return result;
+    }
+
     return null;
   }
 
   public CDOTransferElement convertTransferTarget(Object target)
   {
+    // System.out.println(target.getClass().getName());
+    // if (target instanceof String)
+    // {
+    // String path = (String)target;
+    // }
+
     // TODO: implement FileSystemUIProvider.convertTransferTarget(target)
     return null;
   }

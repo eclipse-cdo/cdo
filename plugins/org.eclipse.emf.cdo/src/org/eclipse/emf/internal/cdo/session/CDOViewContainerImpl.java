@@ -245,6 +245,7 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
       }
 
       viewSet.remove(view);
+      view.deactivate();
       throw ex;
     }
   }

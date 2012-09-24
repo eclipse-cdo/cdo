@@ -1119,6 +1119,8 @@ public class CDOViewImpl extends AbstractCDOView
     {
       sessionProtocol.openView(viewID, isReadOnly(), this);
     }
+
+    CDOViewRegistryImpl.INSTANCE.register(this);
   }
 
   /**
@@ -1127,6 +1129,8 @@ public class CDOViewImpl extends AbstractCDOView
   @Override
   protected void doDeactivate() throws Exception
   {
+    CDOViewRegistryImpl.INSTANCE.deregister(this);
+
     if (invalidationRunner != null)
     {
       LifecycleUtil.deactivate(invalidationRunner, OMLogger.Level.WARN);

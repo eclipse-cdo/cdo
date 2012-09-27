@@ -82,6 +82,9 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
   private int viewID;
 
+  /**
+   * Is <code>null</code> in {@link CommitDelegationRequest}.
+   */
   private CDOTransaction transaction;
 
   private boolean clearResourcePathCache;
@@ -185,7 +188,8 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
       TRACER.format("Writing {0} dirty objects", changedObjects.size()); //$NON-NLS-1$
     }
 
-    CDOID rootResourceID = transaction.getSession().getRepositoryInfo().getRootResourceID();
+    CDORepositoryInfo repositoryInfo = getSession().getRepositoryInfo();
+    CDOID rootResourceID = repositoryInfo.getRootResourceID();
     for (CDORevisionKey changedObject : changedObjects)
     {
       CDORevisionDelta delta = (CDORevisionDelta)changedObject;
@@ -204,7 +208,6 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
       TRACER.format("Writing {0} detached objects", detachedObjects.size()); //$NON-NLS-1$
     }
 
-    CDORepositoryInfo repositoryInfo = getSession().getRepositoryInfo();
     boolean auditing = repositoryInfo.isSupportingAudits();
     boolean branching = repositoryInfo.isSupportingBranches();
     boolean ensuringReferentialIntegrity = repositoryInfo.isEnsuringReferentialIntegrity();

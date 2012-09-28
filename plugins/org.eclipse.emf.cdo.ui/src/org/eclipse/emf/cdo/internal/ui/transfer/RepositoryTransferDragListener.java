@@ -16,11 +16,13 @@ import org.eclipse.emf.cdo.view.CDOViewRegistry;
 
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IORuntimeException;
-import org.eclipse.net4j.util.ui.dnd.DNDDragListener;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSourceAdapter;
+import org.eclipse.swt.dnd.DragSourceEvent;
+import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.ui.part.PluginTransfer;
 import org.eclipse.ui.part.PluginTransferData;
@@ -32,17 +34,39 @@ import java.util.Iterator;
 /**
  * @author Eike Stepper
  */
-public class RepositoryTransferDragListener extends DNDDragListener<Object>
+public class RepositoryTransferDragListener extends DragSourceAdapter
 {
-  private static final Transfer[] TRANSFERS = { PluginTransfer.getInstance() };
+  private static final Transfer[] TRANSFERS = { PluginTransfer.getInstance(), FileTransfer.getInstance() };
+
+  private StructuredViewer viewer;
 
   protected RepositoryTransferDragListener(StructuredViewer viewer)
   {
-    super(TRANSFERS, viewer);
+    this.viewer = viewer;
   }
 
   @Override
-  protected Object getObject(IStructuredSelection selection)
+  public void dragStart(DragSourceEvent event)
+  {
+    IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+    event.doit = !selection.isEmpty(); // TODO Check that only resource nodes are selected?
+  }
+
+  @Override
+  public void dragSetData(DragSourceEvent event)
+  {
+    IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+    for (Transfer transfer : TRANSFERS)
+    {
+      if (transfer.isSupportedType(event.dataType))
+      {
+        event.data = getObject(selection, transfer);
+        break;
+      }
+    }
+  }
+
+  protected Object getObject(IStructuredSelection selection, Transfer transfer)
   {
     try
     {
@@ -86,8 +110,7 @@ public class RepositoryTransferDragListener extends DNDDragListener<Object>
   public static RepositoryTransferDragListener support(StructuredViewer viewer)
   {
     RepositoryTransferDragListener dragListener = new RepositoryTransferDragListener(viewer);
-    Transfer[] transfers = dragListener.getTransfers();
-    viewer.addDragSupport(DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_DEFAULT, transfers, dragListener);
+    viewer.addDragSupport(DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_DEFAULT, TRANSFERS, dragListener);
     return dragListener;
   }
 }

@@ -375,6 +375,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
           if (isActive())
           {
             OM.LOG.warn("Connection attempt failed. Retrying in " + retryInterval + " seconds...", ex);
+            fireThrowable(ex);
             sleepRetryInterval();
             reconnect();
           }
@@ -460,6 +461,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
         if (isActive())
         {
           OM.LOG.warn("Replication attempt failed. Retrying in " + retryInterval + " seconds...", ex);
+          fireThrowable(ex);
           sleepRetryInterval();
           handleDisconnect();
         }
@@ -487,7 +489,14 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
 
     public void run()
     {
-      localRepository.handleBranch(branch);
+      try
+      {
+        localRepository.handleBranch(branch);
+      }
+      catch (Exception ex)
+      {
+        fireThrowable(ex);
+      }
     }
 
     @Override
@@ -570,6 +579,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
       }
       catch (Exception ex)
       {
+        fireThrowable(ex);
         if (failedRuns == null)
         {
           failedRuns = new ArrayList<Exception>();
@@ -600,6 +610,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
               catch (Exception ex)
               {
                 OM.LOG.error("CommitRunnableTask failed", ex);
+                fireThrowable(ex);
               }
             }
           }, recommitInterval * 1000L);

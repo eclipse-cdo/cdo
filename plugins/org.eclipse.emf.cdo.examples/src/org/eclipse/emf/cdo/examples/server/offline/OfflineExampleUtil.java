@@ -26,7 +26,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
  */
 public class OfflineExampleUtil
 {
-  public static final String MASTER_NAME = "master";
+  public static final String MASTER_NAME = "repo1";
 
   public static final int MASTER_PORT = 2036;
 

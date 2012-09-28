@@ -28,7 +28,6 @@ public class OfflineClone extends SynchronizableRepository
 {
   public OfflineClone()
   {
-    setState(OFFLINE);
   }
 
   @Override

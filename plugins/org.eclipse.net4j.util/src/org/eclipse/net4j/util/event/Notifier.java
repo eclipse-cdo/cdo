@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * A default implementation of a {@link INotifier notifier}.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  */
@@ -109,6 +109,19 @@ public class Notifier implements INotifier
       {
         fireEventSafe(event, listeners);
       }
+    }
+  }
+
+  /**
+   * @since 3.3
+   */
+  protected void fireThrowable(Throwable throwable)
+  {
+    IListener[] listeners = getListeners();
+    if (listeners.length != 0)
+    {
+      IEvent event = new ThrowableEvent(this, throwable);
+      fireEvent(event, listeners);
     }
   }
 

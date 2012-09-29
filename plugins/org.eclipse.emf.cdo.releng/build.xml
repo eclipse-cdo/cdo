@@ -467,6 +467,8 @@
 		</pathconvert>
 		<echoproperties destfile="${result}/all.properties" />
 
+		<copy file="${releng}/hudson/p2.index" tofile="${site.p2.dir}/p2.index" />
+
 		<copy todir="${hudson.WORKSPACE}"
 		      overwrite="true"
 		      includeemptydirs="true"

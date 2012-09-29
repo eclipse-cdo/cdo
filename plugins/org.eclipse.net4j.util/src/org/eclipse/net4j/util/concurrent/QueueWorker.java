@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.concurrent;
 
+import org.eclipse.net4j.util.lifecycle.LifecycleState;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -57,7 +59,7 @@ public abstract class QueueWorker<E> extends Worker
 
   public boolean addWork(E element)
   {
-    if (queue != null)
+    if (queue != null && getLifecycleState() != LifecycleState.DEACTIVATING)
     {
       return queue.offer(element);
     }

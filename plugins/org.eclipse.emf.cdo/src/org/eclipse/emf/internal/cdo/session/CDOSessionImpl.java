@@ -1077,14 +1077,14 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     long nextPreviousTimeStamp = lastUpdateTime;
     for (;;)
     {
+      Runnable invalidationRunnable = null;
       synchronized (outOfSequenceInvalidations)
       {
         OutOfSequenceInvalidation currentInvalidation = outOfSequenceInvalidations.remove(nextPreviousTimeStamp);
-
-        // If we don't have the invalidation that follows the last one we processed,
-        // then there is nothing we can do right now
         if (currentInvalidation == null)
         {
+          // If we don't have the invalidation that follows the last one we processed,
+          // then there is nothing we can do right now
           break;
         }
 
@@ -1093,21 +1093,25 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         final boolean currentClearResourcePathCache = currentInvalidation.isClearResourcePathCache();
         nextPreviousTimeStamp = currentCommitInfo.getTimeStamp();
 
+        invalidationRunnable = new Runnable()
+        {
+          public void run()
+          {
+            invalidateOrdered(currentCommitInfo, currentSender, currentClearResourcePathCache);
+          }
+        };
+
         if (sender == null)
         {
           QueueRunner invalidationRunner = getInvalidationRunner();
-          invalidationRunner.addWork(new Runnable()
-          {
-            public void run()
-            {
-              invalidateOrdered(currentCommitInfo, currentSender, currentClearResourcePathCache);
-            }
-          });
+          invalidationRunner.addWork(invalidationRunnable);
+          invalidationRunnable = null;
         }
-        else
-        {
-          invalidateOrdered(currentCommitInfo, currentSender, currentClearResourcePathCache);
-        }
+      }
+
+      if (invalidationRunnable != null)
+      {
+        invalidationRunnable.run();
       }
     }
   }

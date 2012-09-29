@@ -200,6 +200,8 @@ public class OfflineTest extends AbstractSyncingTest
     resource.getContents().add(company);
     transaction.commit();
 
+    sleep(1000);
+
     IEvent[] events = listener.getEvents();
     assertEquals(1, events.length);
   }

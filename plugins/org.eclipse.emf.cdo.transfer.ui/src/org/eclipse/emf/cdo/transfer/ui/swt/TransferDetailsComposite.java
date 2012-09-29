@@ -77,6 +77,8 @@ public class TransferDetailsComposite extends Composite implements IListener
 
   private CDOTransferMapping mapping;
 
+  private boolean handlingMappingEvent;
+
   private Text sourcePath;
 
   private Text targetPath;
@@ -171,7 +173,7 @@ public class TransferDetailsComposite extends Composite implements IListener
     {
       public void modifyText(ModifyEvent e)
       {
-        if (mapping != null)
+        if (mapping != null && !handlingMappingEvent)
         {
           String text = relativePath.getText();
           mapping.setRelativePath(text);
@@ -378,7 +380,7 @@ public class TransferDetailsComposite extends Composite implements IListener
       if (mapping != null)
       {
         sourcePath.setText(mapping.getSource().getPath().toString());
-        targetPath.setText(mapping.getFullPath().toString());
+        targetPath.setText(mapping.getFullPath().makeAbsolute().toString());
         status.setText(mapping.getStatus().toString());
         relativePath.setText(mapping.getRelativePath().toString());
 
@@ -505,9 +507,19 @@ public class TransferDetailsComposite extends Composite implements IListener
       final String value = e.getNewPath().toString();
       if (!ObjectUtil.equals(value, relativePath.getText()))
       {
-        relativePath.setText(value);
-        status.setText(mapping.getStatus().toString());
+        try
+        {
+          handlingMappingEvent = true;
+          relativePath.setText(value);
+          status.setText(mapping.getStatus().toString());
+        }
+        finally
+        {
+          handlingMappingEvent = false;
+        }
       }
+
+      targetPath.setText(mapping.getFullPath().makeAbsolute().toString());
     }
   }
 

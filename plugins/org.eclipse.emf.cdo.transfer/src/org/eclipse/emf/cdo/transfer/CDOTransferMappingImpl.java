@@ -39,6 +39,8 @@ class CDOTransferMappingImpl implements CDOTransferMapping
 
   private IPath relativePath;
 
+  private Status status;
+
   public CDOTransferMappingImpl(CDOTransfer transfer, CDOTransferElement source, CDOTransferMapping parent,
       IProgressMonitor monitor)
   {
@@ -142,6 +144,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     {
       IPath oldPath = relativePath;
       relativePath = path;
+      unsetStatusRecursively();
       transfer.relativePathChanged(this, oldPath, path);
     }
   }
@@ -262,6 +265,25 @@ class CDOTransferMappingImpl implements CDOTransferMapping
 
   public Status getStatus()
   {
+    if (status == null)
+    {
+      status = calculateStatus();
+    }
+
+    return status;
+  }
+
+  private Status calculateStatus()
+  {
+    if (parent != null)
+    {
+      Status status = parent.getStatus();
+      if (status != Status.MERGE)
+      {
+        return status;
+      }
+    }
+
     CDOTransferSystem targetSystem = transfer.getTargetSystem();
 
     IPath fullPath = getFullPath();
@@ -284,6 +306,21 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     }
 
     return Status.MERGE;
+  }
+
+  private void unsetStatusRecursively()
+  {
+    if (status != null)
+    {
+      status = null;
+      if (children != null && !children.isEmpty())
+      {
+        for (CDOTransferMapping child : children)
+        {
+          ((CDOTransferMappingImpl)child).unsetStatusRecursively();
+        }
+      }
+    }
   }
 
   public CDOTransferElement getTarget()

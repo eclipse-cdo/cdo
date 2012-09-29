@@ -147,8 +147,6 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
   public SynchronizableRepository()
   {
-    setState(INITIAL);
-    
     ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
     writeThroughCommitLock = rwLock.readLock();
     handleCommitInfoLock = rwLock.writeLock();
@@ -483,6 +481,9 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   protected void doActivate() throws Exception
   {
     super.doActivate();
+
+    // Makes setRootResource() being called later in RepositorySynchronizer.ConnectRunnable
+    setState(INITIAL);
 
     InternalStore store = getStore();
     if (!store.isFirstStart())

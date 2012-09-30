@@ -144,10 +144,6 @@
 			<rm:uri format="http://www.elver.org/eclipse/2.0.0/update"/>
 		</rm:provider>
 
-		<!-- SF.NET -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://net4j.sourceforge.net/update"/>
-		</rm:provider>
 	</rm:searchPath>
 
 </rm:rmap>

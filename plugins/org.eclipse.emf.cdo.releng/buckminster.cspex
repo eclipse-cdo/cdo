@@ -34,7 +34,7 @@
 
 		<cs:dependency name="com.mysql.jdbc" componentType="eclipse.feature"/>
 		<cs:dependency name="org.hsqldb" componentType="eclipse.feature"/>
-		<cs:dependency name="org.postgresql.jdbc3" componentType="eclipse.feature"/>
+		<cs:dependency name="org.postgresql" componentType="eclipse.feature"/>
 		<cs:dependency name="com.db4o" componentType="eclipse.feature"/>
 
 		<cs:dependency name="org.hibernate" componentType="eclipse.feature"/>

@@ -22,11 +22,11 @@ import org.eclipse.net4j.db.internal.postgresql.bundle.OM;
 import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.postgresql.Driver;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
 
+import java.sql.Driver;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
@@ -40,7 +40,7 @@ public class PostgreSQLAdapter extends DBAdapter
 {
   public static final String NAME = "postgresql"; //$NON-NLS-1$
 
-  public static final String VERSION = "8.3"; //$NON-NLS-1$
+  public static final String VERSION = "9.0"; //$NON-NLS-1$
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SQL, DBAdapter.class);
 
@@ -64,7 +64,7 @@ public class PostgreSQLAdapter extends DBAdapter
 
   public Driver getJDBCDriver()
   {
-    return new Driver();
+    return new org.postgresql.Driver();
   }
 
   public DataSource createJDBCDataSource()
@@ -78,7 +78,7 @@ public class PostgreSQLAdapter extends DBAdapter
   @Override
   public int getMaxTableNameLength()
   {
-    // http://www.postgresql.org/docs/8.2/static/sql-syntax-lexical.html
+    // http://www.postgresql.org/docs/9.0/static/sql-syntax-lexical.html
     return 63;
   }
 

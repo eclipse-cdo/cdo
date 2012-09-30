@@ -21,8 +21,8 @@ Import-Package: com.mysql.jdbc.jdbc2.optional;version="[5.0.0,6.0.0)",
  org.apache.derby.jdbc;version="[10.0.0,11.0.0)",
  org.h2.jdbcx;version="[1.0.0,2.0.0)",
  org.hsqldb.jdbc;version="[2.0.0,3.0.0)",
- org.postgresql.ds.common;version="[9.0.0,10.0.0)",
- org.postgresql.jdbc3;version="[9.0.0,10.0.0)"
+ org.postgresql.ds;version="[9.0.0,10.0.0)",
+ org.postgresql.ds.common;version="[9.0.0,10.0.0)"
 Export-Package: org.eclipse.emf.cdo.tests.db;version="4.0.200";x-friends:="org.eclipse.emf.cdo.tests.all",
  org.eclipse.emf.cdo.tests.db.bundle;version="4.0.200";x-internal:=true,
  org.eclipse.emf.cdo.tests.db.capabilities;version="4.0.200";x-friends:="org.eclipse.emf.cdo.tests.all",

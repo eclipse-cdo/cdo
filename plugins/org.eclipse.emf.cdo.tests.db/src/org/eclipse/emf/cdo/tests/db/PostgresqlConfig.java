@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -18,7 +18,7 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.postgresql.PostgreSQLAdapter;
 import org.eclipse.net4j.util.io.IOUtil;
 
-import org.postgresql.jdbc3.Jdbc3SimpleDataSource;
+import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
 
@@ -35,9 +35,9 @@ public class PostgresqlConfig extends DBConfig
 
   private static final long serialVersionUID = 1L;
 
-  private transient Jdbc3SimpleDataSource dataSource;
+  private transient PGSimpleDataSource dataSource;
 
-  private transient Jdbc3SimpleDataSource setupDataSource;
+  private transient PGSimpleDataSource setupDataSource;
 
   private String currentRepositoryName = "cdodb1";
 
@@ -64,7 +64,7 @@ public class PostgresqlConfig extends DBConfig
   {
     currentRepositoryName = repoName;
 
-    dataSource = new Jdbc3SimpleDataSource();
+    dataSource = new PGSimpleDataSource();
     dataSource.setServerName("localhost");
     dataSource.setDatabaseName(currentRepositoryName);
     dataSource.setUser("sa");
@@ -116,7 +116,7 @@ public class PostgresqlConfig extends DBConfig
   {
     if (setupDataSource == null)
     {
-      setupDataSource = new Jdbc3SimpleDataSource();
+      setupDataSource = new PGSimpleDataSource();
       setupDataSource.setServerName("localhost");
       setupDataSource.setDatabaseName(currentRepositoryName);
       setupDataSource.setUser("sa");

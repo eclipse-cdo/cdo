@@ -19,7 +19,7 @@
       <dbAdapter
             class="org.eclipse.net4j.db.postgresql.PostgreSQLAdapter"
             name="postgresql"
-            version="8.3">
+            version="9.0">
       </dbAdapter>
    </extension>
 

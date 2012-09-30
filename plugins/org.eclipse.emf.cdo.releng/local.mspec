@@ -3,10 +3,8 @@
   <mspec:property key="target.os" value="*"/>
   <mspec:property key="target.ws" value="*"/>
   <mspec:property key="target.arch" value="*"/>
-  <mspec:property key="resolve.target.platform" value="true"/>
 
-  <mspec:property key="eclipse.downloads" value="http://download.eclipse.org"/>
   <mspec:property key="buckminster.download.source" value="true"/>
-  
+
   <mspec:mspecNode materializer="workspace" filter="(buckminster.source=true)"/>
 </mspec:mspec>

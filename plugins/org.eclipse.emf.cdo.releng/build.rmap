@@ -4,21 +4,18 @@
 
 	<!-- Properties -->
 
-	<rm:property key="platform.version" mutable="true" value="3.8"/>
-	<rm:property key="emf.version" mutable="true" value="2.9-I-builds"/>
-	<rm:property key="orbit.version" mutable="true" value="S20120726065500"/>
+	<rm:property mutable="true" key="platform.version" value="3.8"/>
+	<rm:property mutable="true" key="emf.version" value="2.9-I-builds"/>
+	<rm:property mutable="true" key="orbit.version" value="S20120726065500"/>
 
-	<rm:property key="git.clone" mutable="true" value="${user.home}/git/cdo"/>
-	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org"/>
-	<rm:property key="resolve.target.platform" mutable="true" value="true"/>
-	<rm:property key="build.type" mutable="true" value="N"/>
+	<rm:property mutable="true" key="git.clone" value="${user.home}/git/cdo"/>
+	<rm:property mutable="true" key="build.type" value="N"/>
 
 	<!-- Locators -->
 
 	<rm:locator searchPathRef="git" pattern="^org\.eclipse\.emf\.cdo(?:\..+)?$"/>
 	<rm:locator searchPathRef="git" pattern="^org\.eclipse\.net4j(?:\..+)?$"/>
 	<rm:locator searchPathRef="git" pattern="^org\.gastro(?:\..+)?$"/>
-
 	<rm:locator searchPathRef="p2"/>
 
 	<!-- Search Paths -->
@@ -43,150 +40,104 @@
 	<rm:searchPath name="p2">
 
 		<!-- PLATFORM -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/eclipse/updates/{1}">
-				<bc:propertyRef key="eclipse.downloads"/>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/eclipse/updates/{0}">
 				<bc:propertyRef key="platform.version"/>
 			</rm:uri>
 		</rm:provider>
 
 		<!-- EMF -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emf/emf/updates/{1}">
-				<bc:propertyRef key="eclipse.downloads"/>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/modeling/emf/emf/updates/{0}">
 				<bc:propertyRef key="emf.version"/>
 			</rm:uri>
 		</rm:provider>
 
 		<!-- EMF Transaction, Validation, ... -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emf/updates/milestones">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/modeling/emf/updates/milestones"/>
+		</rm:provider>
+
+		<!-- EMF Compare -->
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/modeling/emf/compare/updates/interim/2.0"/>
 		</rm:provider>
 
 		<!-- MWE -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emft/mwe/updates/milestones">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/modeling/emft/mwe/updates/milestones"/>
 		</rm:provider>
 
 		<!-- EcoreTools -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/amalgam/temp/ecoretools-1.0.0">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/modeling/amalgam/temp/ecoretools-1.0.0"/>
 		</rm:provider>
 
 		<!-- GEF -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/tools/gef/updates/milestones">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/tools/gef/updates/milestones"/>
 		</rm:provider>
 
 		<!-- Graphiti -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/graphiti/updates/milestones">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/graphiti/updates/milestones"/>
 		</rm:provider>
 
 		<!-- GMP -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/gmp/updates/milestones">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/modeling/gmp/updates/milestones"/>
 		</rm:provider>
 
 		<!-- OCL -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/mdt/ocl/updates/milestones/4.0.0">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/modeling/mdt/ocl/updates/milestones/4.0.0"/>
 		</rm:provider>
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/mmt/qvto/updates/milestones">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/mmt/qvto/updates/milestones"/>
 		</rm:provider>
 
 		<!-- XPAND -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<!-- <rm:uri format="{0}/modeling/m2t/xpand/updates/milestones"> -->
-			<!-- XXX FOR Juno M2 only-->
-			<rm:uri format="{0}/modeling/m2t/xpand/updates/milestones">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/modeling/m2t/xpand/updates/milestones"/>
 		</rm:provider>
 
 		<!-- SWTBOT -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<!-- ################################################################ -->
 			<!-- ## Do not forget to adjust dawn tests feature.properties (1x) ## -->
 			<!-- ################################################################ -->
-			<rm:uri format="{0}/technology/swtbot/helios/dev-build/update-site">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
+			<rm:uri format="http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site"/>
 		</rm:provider>
 
 		<!-- MYLYN -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/mylyn/snapshots/kepler">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/mylyn/snapshots/kepler"/>
 		</rm:provider>
 
 		<!-- EGIT -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/egit/updates-nightly">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/egit/updates-nightly"/>
 		</rm:provider>
 
 		<!-- NEBULA -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/technology/nebula/snapshot">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/technology/nebula/snapshot"/>
 		</rm:provider>
 
 		<!-- ORBIT -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/tools/orbit/downloads/drops/{1}/repository">
-				<bc:propertyRef key="eclipse.downloads"/>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/tools/orbit/downloads/drops/{0}/repository">
 				<bc:propertyRef key="orbit.version"/>
 			</rm:uri>
 		</rm:provider>
 
 		<!-- TENEO -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emf/teneo/updates/2.0.0/interim">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/modeling/emf/teneo/updates/2.0.0/interim"/>
 		</rm:provider>
 
 		<!-- EVLER.ORG -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<!-- ############################################################### -->
 			<!-- ## Do not forget to adjust hibernate feature.properties (3x) ## -->
 			<!-- ############################################################### -->
@@ -194,8 +145,7 @@
 		</rm:provider>
 
 		<!-- SF.NET -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://net4j.sourceforge.net/update"/>
 		</rm:provider>
 	</rm:searchPath>

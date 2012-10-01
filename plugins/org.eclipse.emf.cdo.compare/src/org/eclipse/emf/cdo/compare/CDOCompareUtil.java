@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.compare;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
@@ -25,12 +27,30 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.BasicMonitor;
+import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.compare.Comparison;
-import org.eclipse.emf.compare.EMFCompare;
+import org.eclipse.emf.compare.EMFCompareConfiguration;
+import org.eclipse.emf.compare.conflict.DefaultConflictDetector;
+import org.eclipse.emf.compare.conflict.IConflictDetector;
+import org.eclipse.emf.compare.diff.DefaultDiffEngine;
+import org.eclipse.emf.compare.diff.DiffBuilder;
+import org.eclipse.emf.compare.diff.IDiffEngine;
+import org.eclipse.emf.compare.diff.IDiffProcessor;
+import org.eclipse.emf.compare.equi.DefaultEquiEngine;
+import org.eclipse.emf.compare.equi.IEquiEngine;
+import org.eclipse.emf.compare.extension.EMFCompareExtensionRegistry;
+import org.eclipse.emf.compare.extension.IPostProcessor;
+import org.eclipse.emf.compare.extension.PostProcessorDescriptor;
+import org.eclipse.emf.compare.match.DefaultMatchEngine;
+import org.eclipse.emf.compare.match.IMatchEngine;
 import org.eclipse.emf.compare.match.eobject.IEObjectMatcher;
 import org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher;
+import org.eclipse.emf.compare.req.DefaultReqEngine;
+import org.eclipse.emf.compare.req.IReqEngine;
 import org.eclipse.emf.compare.scope.AbstractComparisonScope;
 import org.eclipse.emf.compare.scope.IComparisonScope;
+import org.eclipse.emf.compare.utils.EqualityHelper;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -339,6 +359,157 @@ public final class CDOCompareUtil
       StringBuilder builder = new StringBuilder();
       CDOIDUtil.write(builder, id);
       return builder.toString();
+    }
+  }
+
+  private static final class EMFCompare
+  {
+    private IEObjectMatcher eObjectMatcher;
+
+    private Monitor progressMonitor;
+
+    private final IComparisonScope scope;
+
+    private EMFCompare(IComparisonScope scope)
+    {
+      checkNotNull(scope);
+      this.scope = scope;
+    }
+
+    public static EMFCompare newComparator(IComparisonScope scope)
+    {
+      return new EMFCompare(scope);
+    }
+
+    private static Comparison compare(IComparisonScope scope, EMFCompareConfiguration configuration,
+        IEObjectMatcher matcher)
+    {
+      final IMatchEngine matchEngine = new DefaultMatchEngine(matcher)
+      {
+        /**
+         * FIXME: CDO-specific.
+         */
+        @Override
+        protected void match(Notifier left, Notifier right, Notifier origin)
+        {
+          match((EObject)left, (EObject)right, (EObject)origin);
+        }
+      };
+
+      Comparison comparison = matchEngine.match(scope, configuration);
+
+      IPostProcessor postProcessor = getPostProcessor(scope);
+      if (postProcessor != null)
+      {
+        postProcessor.postMatch(comparison);
+      }
+
+      final IDiffProcessor diffBuilder = new DiffBuilder();
+
+      final IDiffEngine diffEngine = new DefaultDiffEngine(diffBuilder);
+      diffEngine.diff(comparison);
+
+      if (postProcessor != null)
+      {
+        postProcessor.postDiff(comparison);
+      }
+
+      final IReqEngine reqEngine = new DefaultReqEngine();
+      reqEngine.computeRequirements(comparison);
+
+      if (postProcessor != null)
+      {
+        postProcessor.postRequirements(comparison);
+      }
+
+      final IEquiEngine equiEngine = new DefaultEquiEngine();
+      equiEngine.computeEquivalences(comparison);
+
+      if (postProcessor != null)
+      {
+        postProcessor.postEquivalences(comparison);
+      }
+
+      if (comparison.isThreeWay())
+      {
+        final IConflictDetector conflictDetector = new DefaultConflictDetector();
+        conflictDetector.detect(comparison);
+
+        if (postProcessor != null)
+        {
+          postProcessor.postConflicts(comparison);
+        }
+      }
+
+      return comparison;
+    }
+
+    private static IPostProcessor getPostProcessor(IComparisonScope scope)
+    {
+      IPostProcessor postProcessor = null;
+      final Iterator<PostProcessorDescriptor> postProcessorIterator = EMFCompareExtensionRegistry
+          .getRegisteredPostProcessors().iterator();
+      while (postProcessorIterator.hasNext() && postProcessor == null)
+      {
+        final PostProcessorDescriptor descriptor = postProcessorIterator.next();
+        if (descriptor.getNsURI() != null && descriptor.getNsURI().trim().length() != 0)
+        {
+          final Iterator<String> nsUris = scope.getNsURIs().iterator();
+          while (nsUris.hasNext() && postProcessor == null)
+          {
+            if (nsUris.next().matches(descriptor.getNsURI()))
+            {
+              postProcessor = descriptor.getPostProcessor();
+            }
+          }
+        }
+
+        if (descriptor.getResourceURI() != null && descriptor.getResourceURI().trim().length() != 0)
+        {
+          final Iterator<String> resourceUris = scope.getResourceURIs().iterator();
+          while (resourceUris.hasNext() && postProcessor == null)
+          {
+            if (resourceUris.next().matches(descriptor.getResourceURI()))
+            {
+              postProcessor = descriptor.getPostProcessor();
+            }
+          }
+        }
+      }
+      return postProcessor;
+    }
+
+    public Comparison compare()
+    {
+      final Monitor monitor;
+      if (progressMonitor != null)
+      {
+        monitor = progressMonitor;
+      }
+      else
+      {
+        monitor = new BasicMonitor();
+      }
+
+      EqualityHelper helper = new EqualityHelper();
+      EMFCompareConfiguration configuration = new EMFCompareConfiguration(monitor, helper);
+      IEObjectMatcher matcher = createMatcher(helper);
+
+      return compare(scope, configuration, matcher);
+    }
+
+    public EMFCompare setEObjectMatcher(IEObjectMatcher matcher)
+    {
+      if (matcher != null)
+      {
+        eObjectMatcher = matcher;
+      }
+      return this;
+    }
+
+    private IEObjectMatcher createMatcher(EqualityHelper helper)
+    {
+      return eObjectMatcher;
     }
   }
 }

@@ -36,6 +36,7 @@ import org.eclipse.emf.internal.cdo.analyzer.CDOFeatureAnalyzerUI;
 import org.eclipse.emf.internal.cdo.analyzer.CDOFetchRuleManagerThreadLocal;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
+import org.eclipse.emf.internal.cdo.object.CDOExternalObject;
 import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.object.CDOObjectWrapper;
 import org.eclipse.emf.internal.cdo.session.CDOCollectionLoadingPolicyImpl;
@@ -406,6 +407,14 @@ public final class CDOUtil
       InternalCDOObject content = it.next();
       load(content, view);
     }
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static CDOObject wrapExternalObject(EObject object, CDOView view)
+  {
+    return new CDOExternalObject((InternalEObject)object, (InternalCDOView)view);
   }
 
   /**

@@ -150,7 +150,18 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
 
   public void appendCDOID(StringBuilder builder, CDOID id)
   {
-    long value = value(id);
+    long value;
+    if (id != null && id.isExternal())
+    {
+      IDBStoreAccessor accessor = (IDBStoreAccessor)StoreThreadLocal.getAccessor();
+      String uri = CDOIDUtil.getString(id);
+      value = externalReferenceManager.lookupByURI(accessor, uri);
+    }
+    else
+    {
+      value = value(id);
+    }
+
     builder.append(value);
   }
 

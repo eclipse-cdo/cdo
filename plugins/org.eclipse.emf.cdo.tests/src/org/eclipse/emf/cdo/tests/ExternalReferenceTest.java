@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
@@ -51,6 +53,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,7 +61,7 @@ import java.util.Map;
  */
 public class ExternalReferenceTest extends AbstractCDOTest
 {
-  final static public String REPOSITORY_B_NAME = "repo2";
+  private static final String REPOSITORY_B_NAME = "repo2";
 
   @CleanRepositoriesBefore
   public void testExternalWithDynamicEObject() throws Exception
@@ -88,7 +91,6 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
     resA.getContents().add(objectFromResA);
     transactionA1.commit();
-
   }
 
   public void testExternalWithEClass() throws Exception
@@ -147,6 +149,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
     }
 
     clearCache(getRepository().getRevisionManager());
+
     {
       CDOSession sessionA = openSession();
 
@@ -486,6 +489,35 @@ public class ExternalReferenceTest extends AbstractCDOTest
         assertInstanceOf(CDOIDExternal.class, value);
       }
     }
+  }
+
+  @CleanRepositoriesBefore
+  public void testXRefExternalObject() throws Exception
+  {
+    skipStoreWithoutExternalReferences();
+
+    ResourceSet resourceSet = new ResourceSetImpl();
+    Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+    map.put("xml", new XMLResourceFactoryImpl());
+
+    PurchaseOrder externalObject = getModel1Factory().createPurchaseOrder();
+    Resource externalResource = resourceSet.createResource(URI.createFileURI("/com/foo/bar.xml"));
+    externalResource.getContents().add(externalObject);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction(resourceSet);
+
+    Supplier supplier = getModel1Factory().createSupplier();
+    supplier.getPurchaseOrders().add(externalObject);
+
+    CDOResource resource = transaction.createResource(getResourcePath("/internal"));
+    resource.getContents().add(supplier);
+    transaction.commit();
+
+    CDOObject wrapper = CDOUtil.wrapExternalObject(externalObject, transaction);
+    List<CDOObjectReference> xRefs = transaction.queryXRefs(wrapper);
+    assertEquals(1, xRefs.size());
+    assertEquals(supplier, xRefs.get(0).getSourceObject());
   }
 
   private EPackage createDynamicEPackage()

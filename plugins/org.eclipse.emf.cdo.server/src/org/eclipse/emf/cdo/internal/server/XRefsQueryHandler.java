@@ -239,7 +239,16 @@ public class XRefsQueryHandler implements IQueryHandler
         while (tokenizer.hasMoreTokens())
         {
           String val = tokenizer.nextToken();
-          CDOID id = store.createObjectID(val);
+
+          CDOID id;
+          if (val.startsWith("e"))
+          {
+            id = CDOIDUtil.createExternal(val.substring(1));
+          }
+          else
+          {
+            id = store.createObjectID(val.substring(1));
+          }
 
           CDOClassifierRef classifierRef;
           if (id instanceof CDOClassifierRef.Provider)

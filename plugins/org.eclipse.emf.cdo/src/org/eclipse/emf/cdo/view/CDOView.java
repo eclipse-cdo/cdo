@@ -288,12 +288,14 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
    *
    * @param targetObject
    *          The target object that referencing objects are requested for.
+   *          An external target object can be used with the help of {@link CDOUtil#wrapExternalObject(EObject, CDOView) CDOUtil.wrapExternalObject()}.
    * @param sourceReferences
    *          The reference features that referencing objects are requested for, or an empty array if all reference
    *          features are to be used in the request.
    * @since 4.0
    * @see CDOView#queryXRefs(Set, EReference...)
    * @see CDOView#queryXRefsAsync(Set, EReference...)
+   * @see CDOUtil#wrapExternalObject(EObject, CDOView)
    */
   public List<CDOObjectReference> queryXRefs(CDOObject targetObject, EReference... sourceReferences);
 
@@ -303,12 +305,14 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
    *
    * @param targetObjects
    *          The set of target objects that referencing objects are requested for.
+   *          External target objects can be used with the help of {@link CDOUtil#wrapExternalObject(EObject, CDOView) CDOUtil.wrapExternalObject()}.
    * @param sourceReferences
    *          The reference features that referencing objects are requested for, or an empty array if all reference
    *          features are to be used in the request.
    * @since 3.0
    * @see CDOView#queryXRefs(CDOObject, EReference...)
    * @see CDOView#queryXRefsAsync(Set, EReference...)
+   * @see CDOUtil#wrapExternalObject(EObject, CDOView)
    */
   public List<CDOObjectReference> queryXRefs(Set<CDOObject> targetObjects, EReference... sourceReferences);
 
@@ -318,12 +322,14 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
    *
    * @param targetObjects
    *          The set of target objects that referencing objects are requested for.
+   *          External target objects can be used with the help of {@link CDOUtil#wrapExternalObject(EObject, CDOView) CDOUtil.wrapExternalObject()}.
    * @param sourceReferences
    *          The reference features that referencing objects are requested for, or an empty array if all reference
    *          features are to be used in the request.
    * @since 3.0
    * @see CDOView#queryXRefs(CDOObject, EReference...)
    * @see CDOView#queryXRefs(Set, EReference...)
+   * @see CDOUtil#wrapExternalObject(EObject, CDOView)
    */
   public CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects,
       EReference... sourceReferences);

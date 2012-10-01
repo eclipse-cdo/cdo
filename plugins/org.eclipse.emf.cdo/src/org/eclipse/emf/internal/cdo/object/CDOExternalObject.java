@@ -11,50 +11,57 @@
 package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOLock;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 
-import org.eclipse.emf.internal.cdo.CDOObjectImpl;
-
-import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-
-import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 /**
  * @author Eike Stepper
- * @since 2.0
  */
-public abstract class CDOObjectWrapper extends CDOObjectWrapperBase implements InternalCDOObject
+public class CDOExternalObject extends CDOObjectWrapperBase
 {
-  public CDOObjectWrapper()
+  public CDOExternalObject(InternalEObject instance, InternalCDOView view)
   {
+    this.instance = instance;
+    this.view = view;
+    id = view.provideCDOID(instance);
   }
 
-  /**
-   * @since 2.0
-   */
+  public CDOState cdoState()
+  {
+    return CDOState.CLEAN;
+  }
+
+  public CDORevision cdoRevision()
+  {
+    return null;
+  }
+
   public CDOLock cdoReadLock()
   {
-    return CDOObjectImpl.createLock(this, LockType.READ);
+    return null;
   }
 
-  /**
-   * @since 2.0
-   */
   public CDOLock cdoWriteLock()
   {
-    return CDOObjectImpl.createLock(this, LockType.WRITE);
+    return null;
   }
 
-  /**
-   * @since 4.1
-   */
   public CDOLock cdoWriteOption()
   {
-    return CDOObjectImpl.createLock(this, LockType.OPTION);
+    return null;
   }
 
-  public synchronized CDOLockState cdoLockState()
+  public CDOLockState cdoLockState()
   {
-    return CDOObjectImpl.getLockState(this);
+    return null;
+  }
+
+  public void cdoReload()
+  {
+    // Do nothing
   }
 }

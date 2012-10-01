@@ -724,6 +724,7 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
         builder.append("|");
       }
 
+      builder.append(id.isExternal() ? "e" : "i");
       builder.append(id.toURIFragment());
 
       if (!(id instanceof CDOClassifierRef.Provider))

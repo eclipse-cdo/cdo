@@ -136,6 +136,38 @@ public class ExternalReferenceManager extends Lifecycle
     }
   }
 
+  public long lookupByURI(IDBStoreAccessor accessor, String uri)
+  {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
+    PreparedStatement stmt = null;
+    ResultSet resultSet = null;
+
+    try
+    {
+      stmt = statementCache.getPreparedStatement(sqlSelectByURI, ReuseProbability.HIGH);
+      stmt.setString(1, uri);
+
+      resultSet = stmt.executeQuery();
+
+      if (resultSet.next())
+      {
+        return resultSet.getLong(1);
+      }
+
+      // Not found ...
+      return NULL;
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+      statementCache.releasePreparedStatement(stmt);
+    }
+  }
+
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
       throws IOException
   {
@@ -253,38 +285,6 @@ public class ExternalReferenceManager extends Lifecycle
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
-    }
-  }
-
-  private long lookupByURI(IDBStoreAccessor accessor, String uri)
-  {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
-    ResultSet resultSet = null;
-
-    try
-    {
-      stmt = statementCache.getPreparedStatement(sqlSelectByURI, ReuseProbability.HIGH);
-      stmt.setString(1, uri);
-
-      resultSet = stmt.executeQuery();
-
-      if (resultSet.next())
-      {
-        return resultSet.getLong(1);
-      }
-
-      // Not found ...
-      return NULL;
-    }
-    catch (SQLException e)
-    {
-      throw new DBException(e);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
       statementCache.releasePreparedStatement(stmt);
     }
   }

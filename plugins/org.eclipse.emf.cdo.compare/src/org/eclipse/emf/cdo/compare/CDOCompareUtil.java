@@ -12,8 +12,10 @@ package org.eclipse.emf.cdo.compare;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -33,11 +35,16 @@ import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.spi.cdo.InternalCDOSession.MergeData;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 import com.google.common.collect.Iterators;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Various static methods that may help EMF Compare in a CDO scope.
@@ -73,34 +80,29 @@ public final class CDOCompareUtil
       rightView = session.openView(right);
     }
 
-    CDOObject leftObject = leftView.getRootResource();
-    Notifier rightObject = rightView.getRootResource();
-
     CDOView originView = null;
-    Notifier originObject = null;
     if (threeWay)
     {
       CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(leftView, rightView);
       if (!ancestor.equals(leftView) && !ancestor.equals(rightView))
       {
         originView = session.openView(ancestor);
-        originObject = originView.getRootResource();
       }
     }
 
-    // Set<CDOID> ids;
-    // if (originView != null)
-    // {
-    // MergeData mergeData = ((InternalCDOSession)session).getMergeData(leftView, rightView, null);
-    // ids = mergeData.getIDs();
-    // }
-    // else
-    // {
-    // CDOChangeSetData changeSetData = leftView.compareRevisions(right);
-    // ids = changeSetData.getChangeKinds().keySet();
-    // }
+    Set<CDOID> ids;
+    if (originView != null)
+    {
+      MergeData mergeData = ((InternalCDOSession)session).getMergeData(leftView, rightView, null);
+      ids = mergeData.getIDs();
+    }
+    else
+    {
+      CDOChangeSetData changeSetData = leftView.compareRevisions(right);
+      ids = new HashSet<CDOID>(changeSetData.getChangeKinds().keySet());
+    }
 
-    IComparisonScope scope = new CDOComparisonScope.AllContents(leftObject, rightObject, originObject);
+    IComparisonScope scope = new CDOComparisonScope.Minimal(leftView, rightView, originView, ids);
     return createComparison(scope, leftView, rightView, originView);
   }
 
@@ -269,6 +271,77 @@ public final class CDOCompareUtil
       public Iterator<? extends EObject> getChildren(EObject eObject)
       {
         return eObject.eAllContents();
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class Minimal extends CDOComparisonScope implements Predicate<EObject>
+    {
+      private Set<CDOID> ids;
+
+      public Minimal(CDOView leftView, CDOView rightView, CDOView originView, Set<CDOID> ids)
+      {
+        super(leftView.getRootResource(), rightView.getRootResource(), originView != null ? originView
+            .getRootResource() : null);
+        this.ids = ids;
+
+        Set<CDOID> requiredParentIDs = new HashSet<CDOID>();
+        for (CDOID id : ids)
+        {
+          CDOObject leftObject = leftView.getObject(id);
+          collectRequiredParentIDs(leftObject, requiredParentIDs);
+
+          CDOObject rightObject = rightView.getObject(id);
+          collectRequiredParentIDs(rightObject, requiredParentIDs);
+
+          if (originView != null)
+          {
+            CDOObject originObject = originView.getObject(id);
+            collectRequiredParentIDs(originObject, requiredParentIDs);
+          }
+        }
+
+        ids.addAll(requiredParentIDs);
+      }
+
+      public Iterator<? extends EObject> getChildren(EObject eObject)
+      {
+        return Iterators.filter(eObject.eAllContents(), this);
+      }
+
+      public boolean apply(EObject input)
+      {
+        CDOObject object = CDOUtil.getCDOObject(input);
+        CDOID id = object.cdoID();
+        return ids.contains(id);
+      }
+
+      private void collectRequiredParentIDs(CDOObject object, Set<CDOID> requiredParentIDs)
+      {
+        CDOView view = object.cdoView();
+        CDORevision revision = object.cdoRevision();
+
+        CDOID containerID = (CDOID)revision.data().getContainerID();
+        collectRequiredParentIDs(view, containerID, requiredParentIDs);
+
+        CDOID resourceID = revision.data().getResourceID();
+        collectRequiredParentIDs(view, resourceID, requiredParentIDs);
+      }
+
+      private void collectRequiredParentIDs(CDOView view, CDOID id, Set<CDOID> requiredParentIDs)
+      {
+        if (!CDOIDUtil.isNull(id))
+        {
+          if (!ids.contains(id) && !requiredParentIDs.contains(id))
+          {
+            requiredParentIDs.add(id);
+
+            CDOObject object = view.getObject(id);
+            collectRequiredParentIDs(object, requiredParentIDs);
+          }
+        }
       }
     }
   }

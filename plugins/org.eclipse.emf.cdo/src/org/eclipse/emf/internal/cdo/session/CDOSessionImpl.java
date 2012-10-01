@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOChangeKind;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
@@ -1247,18 +1248,55 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       source = source.getBranch().getPoint(now);
     }
 
-    CDORevisionAvailabilityInfo targetInfo = createRevisionAvailabilityInfo(target);
-    CDORevisionAvailabilityInfo sourceInfo = createRevisionAvailabilityInfo(source);
+    CDORevisionAvailabilityInfo targetInfo = createRevisionAvailabilityInfo2(target);
+    CDORevisionAvailabilityInfo sourceInfo = createRevisionAvailabilityInfo2(source);
 
     Set<CDOID> ids = sessionProtocol.loadMergeData(targetInfo, sourceInfo, null, null);
 
-    cacheRevisions(targetInfo);
-    cacheRevisions(sourceInfo);
+    cacheRevisions2(targetInfo);
+    cacheRevisions2(sourceInfo);
 
     return CDORevisionUtil.createChangeSetData(ids, sourceInfo, targetInfo);
   }
 
+  public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase)
+  {
+    CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(target, source);
+
+    CDORevisionAvailabilityInfo ancestorInfo = createRevisionAvailabilityInfo2(ancestor);
+    CDORevisionAvailabilityInfo targetInfo = createRevisionAvailabilityInfo2(target);
+    CDORevisionAvailabilityInfo sourceInfo = createRevisionAvailabilityInfo2(source);
+    CDORevisionAvailabilityInfo baseInfo = sourceBase != null ? createRevisionAvailabilityInfo2(sourceBase) : null;
+
+    Set<CDOID> ids = sessionProtocol.loadMergeData(targetInfo, sourceInfo, ancestorInfo, baseInfo);
+
+    cacheRevisions2(targetInfo);
+    cacheRevisions2(sourceInfo);
+    cacheRevisions2(ancestorInfo);
+
+    if (baseInfo != null)
+    {
+      cacheRevisions2(baseInfo);
+    }
+    else
+    {
+      baseInfo = ancestorInfo;
+    }
+
+    CDOChangeSet targetChanges = createChangeSet(ids, ancestorInfo, targetInfo);
+    CDOChangeSet sourceChanges = createChangeSet(ids, baseInfo, sourceInfo);
+
+    return new MergeData(target, source, sourceBase, ancestor, targetInfo, sourceInfo, baseInfo, ancestorInfo, ids,
+        targetChanges, sourceChanges);
+  }
+
+  @Deprecated
   public CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  private CDORevisionAvailabilityInfo createRevisionAvailabilityInfo2(CDOBranchPoint branchPoint)
   {
     CDORevisionAvailabilityInfo info = new CDORevisionAvailabilityInfo(branchPoint);
 
@@ -1292,7 +1330,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return info;
   }
 
+  @Deprecated
   public void cacheRevisions(CDORevisionAvailabilityInfo info)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  private void cacheRevisions2(CDORevisionAvailabilityInfo info)
   {
     InternalCDORevisionManager revisionManager = getRevisionManager();
     CDOBranch branch = info.getBranchPoint().getBranch();
@@ -1315,6 +1359,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         }
       }
     }
+  }
+
+  private CDOChangeSet createChangeSet(Set<CDOID> ids, CDORevisionAvailabilityInfo startInfo,
+      CDORevisionAvailabilityInfo endInfo)
+  {
+    CDOChangeSetData data = CDORevisionUtil.createChangeSetData(ids, startInfo, endInfo);
+    return CDORevisionUtil.createChangeSet(startInfo.getBranchPoint(), endInfo.getBranchPoint(), data);
   }
 
   @Override

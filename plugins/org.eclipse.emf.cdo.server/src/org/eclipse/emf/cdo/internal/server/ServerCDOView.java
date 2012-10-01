@@ -967,12 +967,19 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
+    @Deprecated
     public CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint)
     {
       throw new UnsupportedOperationException();
     }
 
+    @Deprecated
     public void cacheRevisions(CDORevisionAvailabilityInfo info)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase)
     {
       throw new UnsupportedOperationException();
     }

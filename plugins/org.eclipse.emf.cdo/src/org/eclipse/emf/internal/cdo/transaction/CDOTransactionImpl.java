@@ -153,6 +153,7 @@ import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.spi.cdo.InternalCDOSession.MergeData;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
@@ -468,48 +469,21 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       throw new IllegalArgumentException("Source base is not contained in " + source);
     }
 
-    CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(target, source);
-
     InternalCDOSession session = getSession();
-    CDORevisionAvailabilityInfo ancestorInfo = session.createRevisionAvailabilityInfo(ancestor);
-    CDORevisionAvailabilityInfo targetInfo = session.createRevisionAvailabilityInfo(target);
-    CDORevisionAvailabilityInfo sourceInfo = session.createRevisionAvailabilityInfo(source);
-    CDORevisionAvailabilityInfo baseInfo = sourceBase != null ? session.createRevisionAvailabilityInfo(sourceBase)
-        : null;
+    MergeData mergeData = session.getMergeData(target, source, sourceBase);
 
-    CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-    Set<CDOID> ids = sessionProtocol.loadMergeData(targetInfo, sourceInfo, ancestorInfo, baseInfo);
-
-    session.cacheRevisions(targetInfo);
-    session.cacheRevisions(sourceInfo);
-    session.cacheRevisions(ancestorInfo);
-
-    if (baseInfo != null)
-    {
-      session.cacheRevisions(baseInfo);
-    }
-    else
-    {
-      baseInfo = ancestorInfo;
-    }
-
-    CDOChangeSet targetChanges = createChangeSet(ids, ancestorInfo, targetInfo);
-    CDOChangeSet sourceChanges = createChangeSet(ids, baseInfo, sourceInfo);
-
+    CDOChangeSet targetChanges = mergeData.getTargetChanges();
+    CDOChangeSet sourceChanges = mergeData.getSourceChanges();
     CDOChangeSetData result = merger.merge(targetChanges, sourceChanges);
     if (result == null)
     {
       return null;
     }
 
-    return applyChangeSet(result, ancestorInfo, targetInfo, source, false).getChangeSetData();
-  }
-
-  private CDOChangeSet createChangeSet(Set<CDOID> ids, CDORevisionAvailabilityInfo startInfo,
-      CDORevisionAvailabilityInfo endInfo)
-  {
-    CDOChangeSetData data = CDORevisionUtil.createChangeSetData(ids, startInfo, endInfo);
-    return CDORevisionUtil.createChangeSet(startInfo.getBranchPoint(), endInfo.getBranchPoint(), data);
+    CDORevisionAvailabilityInfo ancestorInfo = mergeData.getAncestorInfo();
+    CDORevisionAvailabilityInfo targetInfo = mergeData.getTargetInfo();
+    ApplyChangeSetResult changeSet = applyChangeSet(result, ancestorInfo, targetInfo, source, false);
+    return changeSet.getChangeSetData();
   }
 
   @Deprecated

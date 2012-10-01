@@ -13,6 +13,7 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
@@ -41,6 +42,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -239,11 +241,122 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
 
   /**
    * @since 4.0
+   * @deprecated As of 4.2 not used anymore.
    */
+  @Deprecated
   public CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint);
 
   /**
    * @since 4.0
+   * @deprecated As of 4.2 not used anymore.
    */
+  @Deprecated
   public void cacheRevisions(CDORevisionAvailabilityInfo info);
+
+  /**
+   * @since 4.2
+   */
+  public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase);
+
+  /**
+   * @author Eike Stepper
+   * @since 4.2
+   */
+  public static final class MergeData
+  {
+    private final CDOBranchPoint target;
+
+    private final CDOBranchPoint source;
+
+    private final CDOBranchPoint sourceBase;
+
+    private final CDOBranchPoint ancestor;
+
+    private final CDORevisionAvailabilityInfo targetInfo;
+
+    private final CDORevisionAvailabilityInfo sourceInfo;
+
+    private final CDORevisionAvailabilityInfo baseInfo;
+
+    private final CDORevisionAvailabilityInfo ancestorInfo;
+
+    private final Set<CDOID> ids;
+
+    private final CDOChangeSet targetChanges;
+
+    private final CDOChangeSet sourceChanges;
+
+    public MergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase, CDOBranchPoint ancestor,
+        CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
+        CDORevisionAvailabilityInfo baseInfo, CDORevisionAvailabilityInfo ancestorInfo, Set<CDOID> ids,
+        CDOChangeSet targetChanges, CDOChangeSet sourceChanges)
+    {
+      this.target = target;
+      this.source = source;
+      this.sourceBase = sourceBase;
+      this.ancestor = ancestor;
+      this.targetInfo = targetInfo;
+      this.sourceInfo = sourceInfo;
+      this.baseInfo = baseInfo;
+      this.ancestorInfo = ancestorInfo;
+      this.ids = ids;
+      this.targetChanges = targetChanges;
+      this.sourceChanges = sourceChanges;
+    }
+
+    public CDOBranchPoint getTarget()
+    {
+      return target;
+    }
+
+    public CDOBranchPoint getSource()
+    {
+      return source;
+    }
+
+    public CDOBranchPoint getSourceBase()
+    {
+      return sourceBase;
+    }
+
+    public CDOBranchPoint getAncestor()
+    {
+      return ancestor;
+    }
+
+    public CDORevisionAvailabilityInfo getTargetInfo()
+    {
+      return targetInfo;
+    }
+
+    public CDORevisionAvailabilityInfo getSourceInfo()
+    {
+      return sourceInfo;
+    }
+
+    public CDORevisionAvailabilityInfo getBaseInfo()
+    {
+      return baseInfo;
+    }
+
+    public CDORevisionAvailabilityInfo getAncestorInfo()
+    {
+      return ancestorInfo;
+    }
+
+    public Set<CDOID> getIDs()
+    {
+      return ids;
+    }
+
+    public CDOChangeSet getTargetChanges()
+    {
+      return targetChanges;
+    }
+
+    public CDOChangeSet getSourceChanges()
+    {
+      return sourceChanges;
+    }
+  }
 }

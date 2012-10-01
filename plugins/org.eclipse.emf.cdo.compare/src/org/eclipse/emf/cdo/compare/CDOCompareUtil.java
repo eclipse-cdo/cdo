@@ -16,13 +16,12 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.net4j.util.lifecycle.ILifecycle;
-import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.common.notify.Notifier;
@@ -64,6 +63,7 @@ public final class CDOCompareUtil
 
   public static CDOComparison compare(CDOView leftView, CDOBranchPoint right, boolean threeWay)
   {
+    Set<Object> objectsToDeactivateOnClose = new HashSet<Object>();
     CDOSession session = leftView.getSession();
 
     CDOView rightView;
@@ -78,6 +78,7 @@ public final class CDOCompareUtil
     else
     {
       rightView = session.openView(right);
+      objectsToDeactivateOnClose.add(rightView);
     }
 
     CDOView originView = null;
@@ -87,6 +88,7 @@ public final class CDOCompareUtil
       if (!ancestor.equals(leftView) && !ancestor.equals(rightView))
       {
         originView = session.openView(ancestor);
+        objectsToDeactivateOnClose.add(originView);
       }
     }
 
@@ -103,7 +105,7 @@ public final class CDOCompareUtil
     }
 
     IComparisonScope scope = new CDOComparisonScope.Minimal(leftView, rightView, originView, ids);
-    return createComparison(scope, leftView, rightView, originView);
+    return createComparison(scope, objectsToDeactivateOnClose);
   }
 
   public static CDOComparison compare(EObject leftRoot, CDOBranchPoint right)
@@ -113,6 +115,8 @@ public final class CDOCompareUtil
 
   public static CDOComparison compare(EObject leftRoot, CDOBranchPoint right, boolean threeWay)
   {
+    Set<Object> objectsToDeactivateOnClose = new HashSet<Object>();
+
     CDOObject leftObject = CDOUtil.getCDOObject(leftRoot);
     CDOView leftView = leftObject.cdoView();
     CDOBranchPoint left = CDOBranchUtil.copyBranchPoint(leftView);
@@ -130,6 +134,7 @@ public final class CDOCompareUtil
     else
     {
       rightView = session.openView(right);
+      objectsToDeactivateOnClose.add(rightView);
     }
 
     Notifier rightObject = rightView.getObject(leftObject);
@@ -143,11 +148,12 @@ public final class CDOCompareUtil
       {
         originView = session.openView(ancestor);
         originObject = originView.getObject(leftObject);
+        objectsToDeactivateOnClose.add(originView);
       }
     }
 
     IComparisonScope scope = new CDOComparisonScope.AllContents(leftObject, rightObject, originObject);
-    return createComparison(scope, leftView, rightView, originView);
+    return createComparison(scope, objectsToDeactivateOnClose);
   }
 
   private static EMFCompare createComparator(IComparisonScope scope)
@@ -160,12 +166,11 @@ public final class CDOCompareUtil
     return comparator;
   }
 
-  private static CDOComparison createComparison(IComparisonScope scope, CDOView leftView, CDOView rightView,
-      CDOView originView)
+  private static CDOComparison createComparison(IComparisonScope scope, Set<Object> objectsToDeactivateOnClose)
   {
     EMFCompare comparator = createComparator(scope);
     Comparison comparison = comparator.compare();
-    return new CDOComparison(comparison, leftView, rightView, originView);
+    return new CDOComparison(comparison, objectsToDeactivateOnClose);
   }
 
   /**
@@ -173,68 +178,34 @@ public final class CDOCompareUtil
    */
   public static class CDOComparison extends DelegatingComparison implements CloseableComparison
   {
-    private CDOView leftView;
+    private Set<Object> objectsToDeactivateOnClose;
 
-    private CDOView rightView;
-
-    private CDOView originView;
-
-    public CDOComparison(Comparison delegate, CDOView leftView, CDOView rightView, CDOView originView)
+    public CDOComparison(Comparison delegate, Set<Object> objectsToDeactivateOnClose)
     {
       super(delegate);
-      this.leftView = leftView;
-      this.rightView = rightView;
-      this.originView = originView;
-
-      leftView.addListener(new LifecycleEventAdapter()
-      {
-        @Override
-        protected void onDeactivated(ILifecycle lifecycle)
-        {
-          close();
-        }
-      });
-    }
-
-    public CDOView getLeftView()
-    {
-      return leftView;
-    }
-
-    public CDOView getRightView()
-    {
-      return rightView;
-    }
-
-    public CDOView getOriginView()
-    {
-      return originView;
-    }
-
-    public void close()
-    {
-      close(false);
-    }
-
-    public void close(boolean closeLeftView)
-    {
-      if (closeLeftView)
-      {
-        LifecycleUtil.deactivate(leftView);
-      }
-
-      LifecycleUtil.deactivate(rightView);
-      LifecycleUtil.deactivate(originView);
-
-      leftView = null;
-      rightView = null;
-      originView = null;
-      delegate = null;
+      this.objectsToDeactivateOnClose = objectsToDeactivateOnClose;
     }
 
     public boolean isClosed()
     {
       return delegate == null;
+    }
+
+    public void close()
+    {
+      if (delegate != null)
+      {
+        delegate = null;
+        if (objectsToDeactivateOnClose != null)
+        {
+          for (Object object : objectsToDeactivateOnClose)
+          {
+            LifecycleUtil.deactivate(object);
+          }
+
+          objectsToDeactivateOnClose = null;
+        }
+      }
     }
   }
 
@@ -283,8 +254,7 @@ public final class CDOCompareUtil
 
       public Minimal(CDOView leftView, CDOView rightView, CDOView originView, Set<CDOID> ids)
       {
-        super(leftView.getRootResource(), rightView.getRootResource(), originView != null ? originView
-            .getRootResource() : null);
+        super(getRoot(leftView), getRoot(rightView), getRoot(originView));
         this.ids = ids;
 
         Set<CDOID> requiredParentIDs = new HashSet<CDOID>();
@@ -342,6 +312,16 @@ public final class CDOCompareUtil
             collectRequiredParentIDs(object, requiredParentIDs);
           }
         }
+      }
+
+      private static CDOResource getRoot(CDOView view)
+      {
+        if (view == null)
+        {
+          return null;
+        }
+
+        return view.getRootResource();
       }
     }
   }

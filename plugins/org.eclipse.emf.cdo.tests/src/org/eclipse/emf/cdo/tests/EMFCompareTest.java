@@ -34,6 +34,33 @@ import org.eclipse.emf.ecore.EObject;
 public class EMFCompareTest extends AbstractCDOTest
 {
   @SuppressWarnings("unused")
+  public void testAllContentsOfCompany() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
+  
+    Company company = createCompany();
+    company.setName("ESC");
+  
+    resource.getContents().add(company);
+    resource.getContents().add(createCompany());
+    resource.getContents().add(createCompany());
+    CDOCommitInfo commit1 = transaction.commit();
+  
+    company.setName("Sympedia");
+    CDOCommitInfo commit2 = transaction.commit();
+  
+    company.setName("Eclipse");
+    CDOCommitInfo commit3 = transaction.commit();
+  
+    // CloseableComparison comparison = CDOCompareUtil.compare(session.openView(commit2).getObject(company), commit3);
+    CDOComparison comparison = CDOCompareUtil.compare(company, commit2);
+    dump(comparison);
+    comparison.close();
+  }
+
+  @SuppressWarnings("unused")
   public void testAllContentsOfRoot() throws Exception
   {
     CDOSession session = openSession();
@@ -56,34 +83,7 @@ public class EMFCompareTest extends AbstractCDOTest
 
     // CloseableComparison comparison = CDOCompareUtil.compare(session.openView(commit2).getObject(company), commit3);
     CDOComparison comparison = CDOCompareUtil.compare(transaction.getRootResource(), commit2);
-    dump(comparison.getMatches(), "");
-    comparison.close();
-  }
-
-  @SuppressWarnings("unused")
-  public void testAllContentsOfCompany() throws Exception
-  {
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
-
-    Company company = createCompany();
-    company.setName("ESC");
-
-    resource.getContents().add(company);
-    resource.getContents().add(createCompany());
-    resource.getContents().add(createCompany());
-    CDOCommitInfo commit1 = transaction.commit();
-
-    company.setName("Sympedia");
-    CDOCommitInfo commit2 = transaction.commit();
-
-    company.setName("Eclipse");
-    CDOCommitInfo commit3 = transaction.commit();
-
-    // CloseableComparison comparison = CDOCompareUtil.compare(session.openView(commit2).getObject(company), commit3);
-    CDOComparison comparison = CDOCompareUtil.compare(company, commit2);
-    dump(comparison.getMatches(), "");
+    dump(comparison);
     comparison.close();
   }
 
@@ -109,7 +109,7 @@ public class EMFCompareTest extends AbstractCDOTest
 
     // CloseableComparison comparison = CDOCompareUtil.compare(session.openView(commit2).getObject(company), commit3);
     CDOComparison comparison = CDOCompareUtil.compare(transaction, commit2);
-    dump(comparison.getMatches(), "");
+    dump(comparison);
     comparison.close();
   }
 
@@ -122,6 +122,11 @@ public class EMFCompareTest extends AbstractCDOTest
     company.getCategories().add(getModel1Factory().createCategory());
     company.getCategories().add(getModel1Factory().createCategory());
     return company;
+  }
+
+  private static void dump(CDOComparison comparison)
+  {
+    dump(comparison.getMatches(), "");
   }
 
   private static void dump(EList<Match> matches, String indent)

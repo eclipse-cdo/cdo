@@ -60,7 +60,7 @@
 
 		<!-- EMF Compare -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/emf/compare/updates/interim/2.0"/>
+			<rm:uri format="http://download.eclipse.org/modeling/emf/compare/updates/integration/2.0/I201210011526"/>
 		</rm:provider>
 
 		<!-- MWE -->

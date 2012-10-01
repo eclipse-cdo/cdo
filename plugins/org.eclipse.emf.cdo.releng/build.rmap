@@ -6,7 +6,7 @@
 
 	<rm:property mutable="true" key="platform.version" value="3.8"/>
 	<rm:property mutable="true" key="emf.version" value="2.9-I-builds"/>
-	<rm:property mutable="true" key="orbit.version" value="S20120726065500"/>
+	<rm:property mutable="true" key="orbit.version" value="S20120917013952"/>
 
 	<rm:property mutable="true" key="git.clone" value="${user.home}/git/cdo"/>
 	<rm:property mutable="true" key="build.type" value="N"/>

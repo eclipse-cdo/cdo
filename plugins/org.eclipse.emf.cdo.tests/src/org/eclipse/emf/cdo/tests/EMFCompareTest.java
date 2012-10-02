@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.compare.CDOCompareUtil;
-import org.eclipse.emf.cdo.compare.CDOCompareUtil.CDOComparison;
+import org.eclipse.emf.cdo.compare.CloseableComparison;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.Diff;
 import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.ecore.EObject;
@@ -39,23 +40,23 @@ public class EMFCompareTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/res1"));
-  
+
     Company company = createCompany();
     company.setName("ESC");
-  
+
     resource.getContents().add(company);
     resource.getContents().add(createCompany());
     resource.getContents().add(createCompany());
     CDOCommitInfo commit1 = transaction.commit();
-  
+
     company.setName("Sympedia");
     CDOCommitInfo commit2 = transaction.commit();
-  
+
     company.setName("Eclipse");
     CDOCommitInfo commit3 = transaction.commit();
-  
+
     // CloseableComparison comparison = CDOCompareUtil.compare(session.openView(commit2).getObject(company), commit3);
-    CDOComparison comparison = CDOCompareUtil.compare(company, commit2);
+    CloseableComparison comparison = CDOCompareUtil.compare(company, commit2);
     dump(comparison);
     comparison.close();
   }
@@ -82,7 +83,7 @@ public class EMFCompareTest extends AbstractCDOTest
     CDOCommitInfo commit3 = transaction.commit();
 
     // CloseableComparison comparison = CDOCompareUtil.compare(session.openView(commit2).getObject(company), commit3);
-    CDOComparison comparison = CDOCompareUtil.compare(transaction.getRootResource(), commit2);
+    CloseableComparison comparison = CDOCompareUtil.compare(transaction.getRootResource(), commit2);
     dump(comparison);
     comparison.close();
   }
@@ -108,7 +109,7 @@ public class EMFCompareTest extends AbstractCDOTest
     CDOCommitInfo commit3 = transaction.commit();
 
     // CloseableComparison comparison = CDOCompareUtil.compare(session.openView(commit2).getObject(company), commit3);
-    CDOComparison comparison = CDOCompareUtil.compare(transaction, commit2);
+    CloseableComparison comparison = CDOCompareUtil.compare(transaction, commit2);
     dump(comparison);
     comparison.close();
   }
@@ -124,7 +125,7 @@ public class EMFCompareTest extends AbstractCDOTest
     return company;
   }
 
-  private static void dump(CDOComparison comparison)
+  private static void dump(Comparison comparison)
   {
     dump(comparison.getMatches(), "");
   }

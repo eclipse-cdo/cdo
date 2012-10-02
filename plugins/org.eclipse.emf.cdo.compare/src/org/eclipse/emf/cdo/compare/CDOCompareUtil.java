@@ -26,11 +26,16 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.Monitor;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.compare.CompareFactory;
 import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.EMFCompareConfiguration;
+import org.eclipse.emf.compare.Match;
+import org.eclipse.emf.compare.MatchResource;
 import org.eclipse.emf.compare.conflict.DefaultConflictDetector;
 import org.eclipse.emf.compare.conflict.IConflictDetector;
 import org.eclipse.emf.compare.diff.DefaultDiffEngine;
@@ -42,10 +47,11 @@ import org.eclipse.emf.compare.equi.IEquiEngine;
 import org.eclipse.emf.compare.extension.EMFCompareExtensionRegistry;
 import org.eclipse.emf.compare.extension.IPostProcessor;
 import org.eclipse.emf.compare.extension.PostProcessorDescriptor;
-import org.eclipse.emf.compare.match.DefaultMatchEngine;
 import org.eclipse.emf.compare.match.IMatchEngine;
 import org.eclipse.emf.compare.match.eobject.IEObjectMatcher;
 import org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher;
+import org.eclipse.emf.compare.match.resource.IResourceMatcher;
+import org.eclipse.emf.compare.match.resource.StrategyResourceMatcher;
 import org.eclipse.emf.compare.req.DefaultReqEngine;
 import org.eclipse.emf.compare.req.IReqEngine;
 import org.eclipse.emf.compare.scope.AbstractComparisonScope;
@@ -59,6 +65,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession.MergeData;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 
 import java.util.HashSet;
@@ -76,12 +83,12 @@ public final class CDOCompareUtil
   {
   }
 
-  public static CDOComparison compare(CDOView leftView, CDOBranchPoint right)
+  public static CloseableComparison compare(CDOView leftView, CDOBranchPoint right)
   {
     return compare(leftView, right, true);
   }
 
-  public static CDOComparison compare(CDOView leftView, CDOBranchPoint right, boolean threeWay)
+  public static CloseableComparison compare(CDOView leftView, CDOBranchPoint right, boolean threeWay)
   {
     Set<Object> objectsToDeactivateOnClose = new HashSet<Object>();
     CDOSession session = leftView.getSession();
@@ -128,12 +135,12 @@ public final class CDOCompareUtil
     return createComparison(scope, objectsToDeactivateOnClose);
   }
 
-  public static CDOComparison compare(EObject leftRoot, CDOBranchPoint right)
+  public static CloseableComparison compare(EObject leftRoot, CDOBranchPoint right)
   {
     return compare(leftRoot, right, true);
   }
 
-  public static CDOComparison compare(EObject leftRoot, CDOBranchPoint right, boolean threeWay)
+  public static CloseableComparison compare(EObject leftRoot, CDOBranchPoint right, boolean threeWay)
   {
     Set<Object> objectsToDeactivateOnClose = new HashSet<Object>();
 
@@ -186,7 +193,7 @@ public final class CDOCompareUtil
     return comparator;
   }
 
-  private static CDOComparison createComparison(IComparisonScope scope, Set<Object> objectsToDeactivateOnClose)
+  private static CloseableComparison createComparison(IComparisonScope scope, Set<Object> objectsToDeactivateOnClose)
   {
     EMFCompare comparator = createComparator(scope);
     Comparison comparison = comparator.compare();
@@ -362,6 +369,11 @@ public final class CDOCompareUtil
     }
   }
 
+  /**
+   * FIXME: To be removed when bug 390849 is resolved.
+   *
+   * @author Eike Stepper
+   */
   private static final class EMFCompare
   {
     private IEObjectMatcher eObjectMatcher;
@@ -510,6 +522,262 @@ public final class CDOCompareUtil
     private IEObjectMatcher createMatcher(EqualityHelper helper)
     {
       return eObjectMatcher;
+    }
+
+    /**
+     * FIXME: Remove this when bug 390846 has been resolved.
+     *
+     * @author Eike Stepper
+     */
+    private static class DefaultMatchEngine implements IMatchEngine
+    {
+      private Comparison comparison;
+
+      private IComparisonScope comparisonScope;
+
+      private IEObjectMatcher eObjectMatcher;
+
+      public DefaultMatchEngine(IEObjectMatcher matcher)
+      {
+        checkNotNull(matcher);
+        eObjectMatcher = matcher;
+      }
+
+      public Comparison match(IComparisonScope scope, EMFCompareConfiguration configuration)
+      {
+        comparisonScope = scope;
+        associate(getComparison(), configuration);
+
+        final Notifier left = getScope().getLeft();
+        final Notifier right = getScope().getRight();
+        final Notifier origin = getScope().getOrigin();
+
+        getComparison().setThreeWay(origin != null);
+
+        match(left, right, origin);
+
+        return getComparison();
+      }
+
+      protected void match(final Notifier left, final Notifier right, final Notifier origin)
+      {
+        if (left instanceof ResourceSet || right instanceof ResourceSet)
+        {
+          match((ResourceSet)left, (ResourceSet)right, (ResourceSet)origin);
+        }
+        else if (left instanceof Resource || right instanceof Resource)
+        {
+          match((Resource)left, (Resource)right, (Resource)origin);
+        }
+        else if (left instanceof EObject || right instanceof EObject)
+        {
+          match((EObject)left, (EObject)right, (EObject)origin);
+        }
+      }
+
+      protected void match(ResourceSet left, ResourceSet right, ResourceSet origin)
+      {
+        final Iterator<? extends Resource> leftChildren = getScope().getCoveredResources(left);
+        final Iterator<? extends Resource> rightChildren = getScope().getCoveredResources(right);
+        final Iterator<? extends Resource> originChildren;
+        if (origin != null)
+        {
+          originChildren = getScope().getCoveredResources(origin);
+        }
+        else
+        {
+          originChildren = Iterators.emptyIterator();
+        }
+
+        final IResourceMatcher resourceMatcher = getResourceMatcher();
+        final Iterable<MatchResource> mappings = resourceMatcher.createMappings(leftChildren, rightChildren,
+            originChildren);
+
+        Iterator<? extends EObject> leftEObjects = Iterators.emptyIterator();
+        Iterator<? extends EObject> rightEObjects = Iterators.emptyIterator();
+        Iterator<? extends EObject> originEObjects = Iterators.emptyIterator();
+
+        for (MatchResource mapping : mappings)
+        {
+          getComparison().getMatchedResources().add(mapping);
+
+          final Resource leftRes = mapping.getLeft();
+          final Resource rightRes = mapping.getRight();
+          final Resource originRes = mapping.getOrigin();
+
+          if (leftRes != null)
+          {
+            leftEObjects = Iterators.concat(leftEObjects, getScope().getCoveredEObjects(leftRes));
+          }
+
+          if (rightRes != null)
+          {
+            rightEObjects = Iterators.concat(rightEObjects, getScope().getCoveredEObjects(rightRes));
+          }
+
+          if (originRes != null)
+          {
+            originEObjects = Iterators.concat(originEObjects, getScope().getCoveredEObjects(originRes));
+          }
+        }
+
+        final Iterable<Match> matches = getEObjectMatcher().createMatches(leftEObjects, rightEObjects, originEObjects);
+        Iterables.addAll(getComparison().getMatches(), matches);
+      }
+
+      protected void match(Resource left, Resource right, Resource origin)
+      {
+        // Our "roots" are Resources. Consider them matched
+        final MatchResource match = CompareFactory.eINSTANCE.createMatchResource();
+
+        match.setLeft(left);
+        match.setRight(right);
+        match.setOrigin(origin);
+
+        if (left != null)
+        {
+          URI uri = left.getURI();
+          if (uri != null)
+          {
+            match.setLeftURI(uri.toString());
+          }
+        }
+
+        if (right != null)
+        {
+          URI uri = right.getURI();
+          if (uri != null)
+          {
+            match.setRightURI(uri.toString());
+          }
+        }
+
+        if (origin != null)
+        {
+          URI uri = origin.getURI();
+          if (uri != null)
+          {
+            match.setOriginURI(uri.toString());
+          }
+        }
+
+        getComparison().getMatchedResources().add(match);
+
+        // We need at least two resources to match them
+        if (atLeastTwo(left == null, right == null, origin == null))
+        {
+          return;
+        }
+
+        final Iterator<? extends EObject> leftEObjects;
+        if (left != null)
+        {
+          leftEObjects = getScope().getCoveredEObjects(left);
+        }
+        else
+        {
+          leftEObjects = Iterators.emptyIterator();
+        }
+        final Iterator<? extends EObject> rightEObjects;
+        if (right != null)
+        {
+          rightEObjects = getScope().getCoveredEObjects(right);
+        }
+        else
+        {
+          rightEObjects = Iterators.emptyIterator();
+        }
+        final Iterator<? extends EObject> originEObjects;
+        if (origin != null)
+        {
+          originEObjects = getScope().getCoveredEObjects(origin);
+        }
+        else
+        {
+          originEObjects = Iterators.emptyIterator();
+        }
+
+        final Iterable<Match> matches = getEObjectMatcher().createMatches(leftEObjects, rightEObjects, originEObjects);
+
+        Iterables.addAll(getComparison().getMatches(), matches);
+      }
+
+      protected void match(EObject left, EObject right, EObject origin)
+      {
+        if (left == null || right == null)
+        {
+          throw new IllegalArgumentException();
+        }
+
+        final Iterator<? extends EObject> leftEObjects = Iterators.concat(Iterators.singletonIterator(left), getScope()
+            .getChildren(left));
+        final Iterator<? extends EObject> rightEObjects = Iterators.concat(Iterators.singletonIterator(right),
+            getScope().getChildren(right));
+        final Iterator<? extends EObject> originEObjects;
+        if (origin != null)
+        {
+          originEObjects = Iterators.concat(Iterators.singletonIterator(origin), getScope().getChildren(origin));
+        }
+        else
+        {
+          originEObjects = Iterators.emptyIterator();
+        }
+
+        final Iterable<Match> matches = getEObjectMatcher().createMatches(leftEObjects, rightEObjects, originEObjects);
+
+        Iterables.addAll(getComparison().getMatches(), matches);
+      }
+
+      protected IResourceMatcher getResourceMatcher()
+      {
+        return new StrategyResourceMatcher();
+      }
+
+      protected IEObjectMatcher getEObjectMatcher()
+      {
+        return eObjectMatcher;
+      }
+
+      protected Comparison getComparison()
+      {
+        if (comparison == null)
+        {
+          comparison = CompareFactory.eINSTANCE.createComparison();
+        }
+        return comparison;
+      }
+
+      protected IComparisonScope getScope()
+      {
+        return comparisonScope;
+      }
+
+      protected static boolean atLeastTwo(boolean condition1, boolean condition2, boolean condition3)
+      {
+        // CHECKSTYLE:OFF This expression is alone in its method, and documented.
+        return condition1 && (condition2 || condition3) || condition2 && condition3;
+        // CHECKSTYLE:ON
+      }
+
+      private static void associate(Comparison comparison, EMFCompareConfiguration configuration)
+      {
+        Iterator<Adapter> eAdapters = comparison.eAdapters().iterator();
+        while (eAdapters.hasNext())
+        {
+          Adapter eAdapter = eAdapters.next();
+          if (eAdapter.isAdapterForType(EMFCompareConfiguration.class))
+          {
+            eAdapters.remove();
+            if (eAdapter instanceof Adapter.Internal)
+            {
+              ((Adapter.Internal)eAdapter).unsetTarget(comparison);
+            }
+          }
+        }
+
+        comparison.eAdapters().add(configuration);
+        configuration.setTarget(comparison);
+      }
     }
   }
 }

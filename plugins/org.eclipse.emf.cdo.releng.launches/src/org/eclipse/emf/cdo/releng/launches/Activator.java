@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.launches;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.osgi.framework.BundleContext;
@@ -44,5 +45,10 @@ public class Activator extends AbstractUIPlugin
   public static Activator getDefault()
   {
     return plugin;
+  }
+
+  public static ImageDescriptor getImageDescriptor(String key)
+  {
+    return imageDescriptorFromPlugin(PLUGIN_ID, "icons/" + key + ".gif");
   }
 }

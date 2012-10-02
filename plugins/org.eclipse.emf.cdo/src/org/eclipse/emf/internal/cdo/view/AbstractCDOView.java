@@ -786,6 +786,11 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     checkActive();
     CDOObject object = CDOUtil.getCDOObject(objectFromDifferentView);
     CDOView view = object.cdoView();
+    if (view == null)
+    {
+      return null;
+    }
+
     if (view != this)
     {
       if (!view.getSession().getRepositoryInfo().getUUID().equals(getSession().getRepositoryInfo().getUUID()))

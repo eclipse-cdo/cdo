@@ -20,6 +20,9 @@
   <article:Plugin name="org.eclipse.emf.cdo.admin" label="CDO Model Repository Client Admin Support">
     <packages name="org.eclipse.emf.cdo.admin"/>
   </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.compare" label="CDO Model Repository Client Compare Support">
+    <packages name="org.eclipse.emf.cdo.compare"/>
+  </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.edit" label="CDO Model Repository Client Edit Support">
     <packages name="org.eclipse.emf.cdo.edit"/>
     <packages name="org.eclipse.emf.cdo.eresource.provider"/>
@@ -126,5 +129,21 @@
   <article:Plugin name="org.eclipse.emf.cdo.server.security" label="CDO Model Repository Server Security Support">
     <packages name="org.eclipse.emf.cdo.server.security"/>
     <packages name="org.eclipse.emf.cdo.server.spi.security"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.transfer" label="CDO Transfer Framework">
+    <packages name="org.eclipse.emf.cdo.spi.transfer"/>
+    <packages name="org.eclipse.emf.cdo.transfer"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.transfer.repository" label="CDO Transfer Framework (Repository Support)">
+    <packages name="org.eclipse.emf.cdo.transfer.spi.repository"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.transfer.ui" label="CDO Transfer Framework (UI)">
+    <packages name="org.eclipse.emf.cdo.transfer.spi.ui"/>
+    <packages name="org.eclipse.emf.cdo.transfer.ui"/>
+    <packages name="org.eclipse.emf.cdo.transfer.ui.swt"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.transfer.workspace.ui" label="CDO Transfer Framework (Workspace Support UI)"/>
+  <article:Plugin name="org.eclipse.emf.cdo.transfer.workspace" label="CDO Transfer Framework (Workspace Support)">
+    <packages name="org.eclipse.emf.cdo.transfer.spi.workspace"/>
   </article:Plugin>
 </xmi:XMI>

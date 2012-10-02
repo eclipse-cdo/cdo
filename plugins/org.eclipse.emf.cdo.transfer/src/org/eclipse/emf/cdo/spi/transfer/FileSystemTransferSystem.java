@@ -33,6 +33,8 @@ import java.io.OutputStream;
 import java.io.Writer;
 
 /**
+ * A {@link CDOTransferSystem transfer system} that abstracts the external file system.
+ *
  * @author Eike Stepper
  * @since 4.2
  */

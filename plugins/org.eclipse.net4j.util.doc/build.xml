@@ -176,6 +176,16 @@
 			<tag name="noreference" description="No Reference" />
 		</javadoc>
 
+		<copy todir="${javadoc.destdir}" verbose="true" failonerror="false">
+			<cutdirsmapper dirs="2" />
+			<fileset dir="plugins" defaultexcludes="true">
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/doc-files/**" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/log/doc-files/**" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/pref/doc-files/**" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/trace/doc-files/**" />
+			</fileset>
+		</copy>
+
 		<copy todir="${javadoc.destdir}/resources" verbose="true" failonerror="false">
 			<fileset dir="${project.path}/resources" defaultexcludes="true">
 				<include name="**/*" />

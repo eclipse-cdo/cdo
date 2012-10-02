@@ -50,6 +50,7 @@ import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
@@ -72,6 +73,7 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.ITreeSelection;
+import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorRegistry;
@@ -622,16 +624,24 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   }
 
   /**
+   * A {@link IPropertyListener listener} on the platform's {@link IEditorRegistry editor registry} that fires {@link LabelProviderChangedEvent label events}
+   * from the associated {@link #getItemProvider() item provider} when {@link CDOTransferElement element} labels need to be updated.
+   *
    * @author Eike Stepper
    * @since 4.2
    */
   protected static class EditorRegistryListener implements IPropertyListener
   {
-    private CDOItemProvider itemProvider;
+    private final CDOItemProvider itemProvider;
 
     public EditorRegistryListener(CDOItemProvider itemProvider)
     {
       this.itemProvider = itemProvider;
+    }
+
+    public CDOItemProvider getItemProvider()
+    {
+      return itemProvider;
     }
 
     public void propertyChanged(Object source, int propId)

@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.transfer.ui;
 
+import org.eclipse.emf.cdo.transfer.CDOTransfer;
+import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider.Factory;
 
@@ -27,6 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A {@link DNDDragListener drag listener} that can {@link #support(StructuredViewer) support} a {@link StructuredViewer viewer} to create and perform
+ * {@link CDOTransfer transfers} of the dragged elements to target {@link CDOTransferElement elements}.
+ *
  * @author Eike Stepper
  */
 public class TransferDragListener extends DNDDragListener<Object>

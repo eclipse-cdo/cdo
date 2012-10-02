@@ -31,6 +31,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import java.lang.reflect.InvocationTargetException;
 
 /**
+ * A {@link Comparison comparison} that delegates all methods to another comparison.
+ *
  * @author Eike Stepper
  */
 public class DelegatingComparison implements Comparison

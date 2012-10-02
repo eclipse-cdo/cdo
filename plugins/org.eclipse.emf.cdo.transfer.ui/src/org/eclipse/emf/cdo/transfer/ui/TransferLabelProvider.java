@@ -30,6 +30,8 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 
 /**
+ * A reusable {@link ITableLabelProvider table label provider} for the {@link CDOTransferMapping mappings} of a {@link CDOTransfer transfer}.
+ *
  * @author Eike Stepper
  * @since 4.2
  */

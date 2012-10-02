@@ -1259,7 +1259,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return CDORevisionUtil.createChangeSetData(ids, sourceInfo, targetInfo);
   }
 
-  public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase)
+  public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase,
+      boolean computeChangeSets)
   {
     CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(target, source);
 
@@ -1283,8 +1284,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       baseInfo = ancestorInfo;
     }
 
-    CDOChangeSet targetChanges = createChangeSet(ids, ancestorInfo, targetInfo);
-    CDOChangeSet sourceChanges = createChangeSet(ids, baseInfo, sourceInfo);
+    CDOChangeSet targetChanges = null;
+    CDOChangeSet sourceChanges = null;
+    if (computeChangeSets)
+    {
+      targetChanges = createChangeSet(ids, ancestorInfo, targetInfo);
+      sourceChanges = createChangeSet(ids, baseInfo, sourceInfo);
+    }
 
     return new MergeData(target, source, sourceBase, ancestor, targetInfo, sourceInfo, baseInfo, ancestorInfo, ids,
         targetChanges, sourceChanges);

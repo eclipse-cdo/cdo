@@ -102,7 +102,7 @@ Class CDOUtil</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="CDOUtil.html" title="&#171;static&#187; CDOUtil" alt="" coords="5,5,75,45"/>
+<area shape="rect" id="node1" href="CDOUtil.html" title="CDOUtil" alt="" coords="5,6,75,31"/>
 </map>
 
 <CENTER><IMG SRC="CDOUtil.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -217,6 +217,15 @@ Various static methods that may help in CDO client applications.
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#getIntrinsicIDToEObjectMap(org.eclipse.emf.cdo.eresource.CDOResource)">getIntrinsicIDToEObjectMap</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A>&nbsp;resource)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the map used to cache the EObject that is identified by the <A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html#getEObjectByID(java.lang.String)"><CODE>value</CODE></A>
+ of its ID feature.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -345,8 +354,26 @@ Various static methods that may help in CDO client applications.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#setIntrinsicIDToEObjectMap(org.eclipse.emf.cdo.eresource.CDOResource, java.util.Map)">setIntrinsicIDToEObjectMap</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A>&nbsp;resource,
+                           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&gt;&nbsp;intrinsicIDToEObjectMap)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the map used to cache the EObject identified by the value of its ID feature.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#setLegacyModeDefault(boolean)">setLegacyModeDefault</A></B>(boolean&nbsp;on)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#wrapExternalObject(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.view.CDOView)">wrapExternalObject</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&nbsp;object,
+                   <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;view)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -383,6 +410,43 @@ public static boolean <B>registerResourceFactory</B>(<A HREF="http://download.ec
 <DT><B>Since:</B></DT>
   <DD>4.0</DD>
 </DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getIntrinsicIDToEObjectMap(org.eclipse.emf.cdo.eresource.CDOResource)"><!-- --></A><H3>
+getIntrinsicIDToEObjectMap</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&gt; <B>getIntrinsicIDToEObjectMap</B>(<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A>&nbsp;resource)</PRE>
+<DL>
+<DD>Returns the map used to cache the EObject that is identified by the <A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html#getEObjectByID(java.lang.String)"><CODE>value</CODE></A>
+ of its ID feature.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the map used to cache the EObject that is identified by the value of its ID feature.<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#setIntrinsicIDToEObjectMap(org.eclipse.emf.cdo.eresource.CDOResource, java.util.Map)"><CODE>setIntrinsicIDToEObjectMap(org.eclipse.emf.cdo.eresource.CDOResource, java.util.Map<java.lang.String, org.eclipse.emf.ecore.EObject>)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setIntrinsicIDToEObjectMap(org.eclipse.emf.cdo.eresource.CDOResource, java.util.Map)"><!-- --></A><H3>
+setIntrinsicIDToEObjectMap</H3>
+<PRE>
+public void <B>setIntrinsicIDToEObjectMap</B>(<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A>&nbsp;resource,
+                                       <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&gt;&nbsp;intrinsicIDToEObjectMap)</PRE>
+<DL>
+<DD>Sets the map used to cache the EObject identified by the value of its ID feature.
+ This cache is only activated if the map is not <code>null</code>.
+ The map will be lazily loaded by the <A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html#getEObjectByID(java.lang.String)"><CODE>getEObjectByID</CODE></A> method.
+ It is up to the client to clear the cache when it becomes invalid,
+ e.g., when the ID of a previously mapped EObject is changed.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>intrinsicIDToEObjectMap</CODE> - the new map or <code>null</code>.<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#getIntrinsicIDToEObjectMap(org.eclipse.emf.cdo.eresource.CDOResource)"><CODE>getIntrinsicIDToEObjectMap(org.eclipse.emf.cdo.eresource.CDOResource)</CODE></A></DL>
 </DD>
 </DL>
 <HR>
@@ -582,6 +646,20 @@ public static void <B>load</B>(<A HREF="http://download.eclipse.org/modeling/emf
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="wrapExternalObject(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.view.CDOView)"><!-- --></A><H3>
+wrapExternalObject</H3>
+<PRE>
+public static <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A> <B>wrapExternalObject</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&nbsp;object,
+                                           <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;view)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>

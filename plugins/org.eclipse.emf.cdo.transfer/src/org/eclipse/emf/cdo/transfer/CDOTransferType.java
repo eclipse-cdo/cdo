@@ -20,8 +20,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Specifies how to treat a source {@link CDOTransferElement element} when it is mapped to a target element by a {@link CDOTransferMapping transfer mapping}.
+ *
  * @author Eike Stepper
  * @since 4.2
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public class CDOTransferType implements Comparable<CDOTransferType>
 {
@@ -132,9 +135,13 @@ public class CDOTransferType implements Comparable<CDOTransferType>
   }
 
   /**
+   * A {@link CDOTransferType transfer type} for text {@link CDOTransferElement elements} that have a special {@link #getEncoding() encoding}.
+   * <p>
+   * Call {@link CDOTransferType#text(String)} to get an encoding-specific instance.
+   *
    * @author Eike Stepper
    */
-  public static class Text extends CDOTransferType
+  public static final class Text extends CDOTransferType
   {
     private String encoding;
 

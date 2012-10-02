@@ -216,6 +216,14 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#clearResourcePathCacheIfNecessary(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">clearResourcePathCacheIfNecessary</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</A>&nbsp;delta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#collectViewedRevisions(java.util.Map)">collectViewedRevisions</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>,<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&gt;&nbsp;revisions)</CODE>
 
 <BR>
@@ -375,6 +383,20 @@ If the meaning of this type isn't clear, there really should be more of a descri
            boolean&nbsp;async)</CODE>
 
 <BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2. use <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch, long, java.util.List, java.util.List, java.util.Map, boolean, boolean)"><CODE>invalidate(CDOBranch, long, List, List, Map, boolean, boolean)</CODE></A></I></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch, long, java.util.List, java.util.List, java.util.Map, boolean, boolean)">invalidate</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch,
+           long&nbsp;lastUpdateTime,
+           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</A>&gt;&nbsp;allChangedObjects,
+           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</A>&gt;&nbsp;allDetachedObjects,
+           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>,<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&gt;&nbsp;oldRevisions,
+           boolean&nbsp;async,
+           boolean&nbsp;clearResourcePathCache)</CODE>
+
+<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -501,7 +523,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.view.<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#addObjectHandler(org.eclipse.emf.cdo.view.CDOObjectHandler)">addObjectHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#compareRevisions(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">compareRevisions</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#createQuery(java.lang.String, java.lang.String)">createQuery</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#createQuery(java.lang.String, java.lang.String, java.lang.Object)">createQuery</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#disableDurableLocking(boolean)">disableDurableLocking</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking()">enableDurableLocking</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking(boolean)">enableDurableLocking</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getBinaryResource(java.lang.String)">getBinaryResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObject(org.eclipse.emf.cdo.common.id.CDOID)">getObject</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObject(org.eclipse.emf.cdo.common.id.CDOID, boolean)">getObject</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObject(T)">getObject</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObjectHandlers()">getObjectHandlers</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResource(java.lang.String)">getResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResource(java.lang.String, boolean)">getResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResourceNode(java.lang.String)">getResourceNode</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResourceSet()">getResourceSet</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getRootResource()">getRootResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getTextResource(java.lang.String)">getTextResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getURIHandler()">getURIHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#hasConflict()">hasConflict</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#hasResource(java.lang.String)">hasResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#isDirty()">isDirty</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#isInvalidationRunnerActive()">isInvalidationRunnerActive</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#isLegacyModeEnabled()">isLegacyModeEnabled</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#isObjectRegistered(org.eclipse.emf.cdo.common.id.CDOID)">isObjectRegistered</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long)">lockObjects</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long, boolean)">lockObjects</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options()">options</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryResources(org.eclipse.emf.cdo.eresource.CDOResourceFolder, java.lang.String, boolean)">queryResources</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryResourcesAsync(org.eclipse.emf.cdo.eresource.CDOResourceFolder, java.lang.String, boolean)">queryResourcesAsync</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.ecore.EReference...)">queryXRefs</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs(java.util.Set, org.eclipse.emf.ecore.EReference...)">queryXRefs</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefsAsync(java.util.Set, org.eclipse.emf.ecore.EReference...)">queryXRefsAsync</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#reload(org.eclipse.emf.cdo.CDOObject...)">reload</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#removeObjectHandler(org.eclipse.emf.cdo.view.CDOObjectHandler)">removeObjectHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)">setBranch</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranch, long)">setBranchPoint</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">setBranchPoint</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setTimeStamp(long)">setTimeStamp</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects()">unlockObjects</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)">unlockObjects</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, boolean)">unlockObjects</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#addObjectHandler(org.eclipse.emf.cdo.view.CDOObjectHandler)">addObjectHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#compareRevisions(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">compareRevisions</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#createQuery(java.lang.String, java.lang.String)">createQuery</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#createQuery(java.lang.String, java.lang.String, java.lang.Object)">createQuery</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#disableDurableLocking(boolean)">disableDurableLocking</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking()">enableDurableLocking</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking(boolean)">enableDurableLocking</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getBinaryResource(java.lang.String)">getBinaryResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObject(org.eclipse.emf.cdo.common.id.CDOID)">getObject</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObject(org.eclipse.emf.cdo.common.id.CDOID, boolean)">getObject</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObject(T)">getObject</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObjectHandlers()">getObjectHandlers</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResource(java.lang.String)">getResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResource(java.lang.String, boolean)">getResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResourceFolder(java.lang.String)">getResourceFolder</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResourceNode(java.lang.String)">getResourceNode</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResourceSet()">getResourceSet</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getRootResource()">getRootResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getTextResource(java.lang.String)">getTextResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getURIHandler()">getURIHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#hasConflict()">hasConflict</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#hasResource(java.lang.String)">hasResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#isDirty()">isDirty</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#isInvalidationRunnerActive()">isInvalidationRunnerActive</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#isLegacyModeEnabled()">isLegacyModeEnabled</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#isObjectRegistered(org.eclipse.emf.cdo.common.id.CDOID)">isObjectRegistered</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long)">lockObjects</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long, boolean)">lockObjects</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options()">options</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryResources(org.eclipse.emf.cdo.eresource.CDOResourceFolder, java.lang.String, boolean)">queryResources</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryResourcesAsync(org.eclipse.emf.cdo.eresource.CDOResourceFolder, java.lang.String, boolean)">queryResourcesAsync</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.ecore.EReference...)">queryXRefs</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs(java.util.Set, org.eclipse.emf.ecore.EReference...)">queryXRefs</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefsAsync(java.util.Set, org.eclipse.emf.ecore.EReference...)">queryXRefsAsync</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#reload(org.eclipse.emf.cdo.CDOObject...)">reload</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#removeObjectHandler(org.eclipse.emf.cdo.view.CDOObjectHandler)">removeObjectHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)">setBranch</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranch, long)">setBranchPoint</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">setBranchPoint</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setResourcePathCache(java.util.Map)">setResourcePathCache</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setTimeStamp(long)">setTimeStamp</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects()">unlockObjects</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)">unlockObjects</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, boolean)">unlockObjects</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.CDOCommonView"><!-- --></A>
@@ -796,19 +818,42 @@ void <B>handleObjectStateChanged</B>(<A HREF="../../../../../org/eclipse/emf/spi
 <A NAME="invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch, long, java.util.List, java.util.List, java.util.Map, boolean)"><!-- --></A><H3>
 invalidate</H3>
 <PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>void <B>invalidate</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch,
+                           long&nbsp;lastUpdateTime,
+                           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</A>&gt;&nbsp;allChangedObjects,
+                           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</A>&gt;&nbsp;allDetachedObjects,
+                           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>,<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&gt;&nbsp;oldRevisions,
+                           boolean&nbsp;async)</PRE>
+<DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2. use <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch, long, java.util.List, java.util.List, java.util.Map, boolean, boolean)"><CODE>invalidate(CDOBranch, long, List, List, Map, boolean, boolean)</CODE></A></I>
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch, long, java.util.List, java.util.List, java.util.Map, boolean, boolean)"><!-- --></A><H3>
+invalidate</H3>
+<PRE>
 void <B>invalidate</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch,
                 long&nbsp;lastUpdateTime,
                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</A>&gt;&nbsp;allChangedObjects,
                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</A>&gt;&nbsp;allDetachedObjects,
                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>,<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&gt;&nbsp;oldRevisions,
-                boolean&nbsp;async)</PRE>
+                boolean&nbsp;async,
+                boolean&nbsp;clearResourcePathCache)</PRE>
 <DL>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
 <DT><B>Since:</B></DT>
-  <DD>4.0</DD>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -855,6 +900,22 @@ void <B>remapObject</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CD
 </DL>
 </DD>
 <DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="clearResourcePathCacheIfNecessary(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)"><!-- --></A><H3>
+clearResourcePathCacheIfNecessary</H3>
+<PRE>
+void <B>clearResourcePathCacheIfNecessary</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</A>&nbsp;delta)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>

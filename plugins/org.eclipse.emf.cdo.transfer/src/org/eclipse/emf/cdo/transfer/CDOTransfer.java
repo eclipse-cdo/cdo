@@ -13,10 +13,12 @@ package org.eclipse.emf.cdo.transfer;
 import org.eclipse.emf.cdo.spi.transfer.ResourceFactoryRegistryWithoutDefaults;
 
 import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -44,6 +46,19 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * Abstracts the transfer of a tree of {@link CDOTransferElement elements} for a
+ * {@link #getSourceSystem() source} to a {@link #getTargetSystem() target} {@link CDOTransferSystem system}.
+ * <p>
+ * The mappings of the source elements to their target elements is represented as a tree of {@link CDOTransferMapping transfer mappings}.
+ * <p>
+ * A transfer fires the following {@link IEvent events}:
+ * <ul>
+ * <li>{@link ChildrenChangedEvent} when the {@link CDOTransferMapping#getChildren() children} of a mapping have changed.
+ * <li>{@link RelativePathChangedEvent} when the {@link CDOTransferMapping#getRelativePath() relative path} of a mapping has changed.
+ * <li>{@link TransferTypeChangedEvent} when the {@link CDOTransferMapping#getTransferType() transfer type} of a mapping has changed.
+ * <li>{@link UnmappedModelsEvent} when the set of {@link CDOTransfer.ModelTransferContext#getUnmappedModels() unmapped models} has changed.
+ * </ul>
+ *
  * @author Eike Stepper
  * @since 4.2
  */
@@ -402,7 +417,10 @@ public class CDOTransfer implements INotifier
   }
 
   /**
+   * An abstract base implementation of a {@link CDOTransferMapping mapping} {@link ILifecycleEvent event}.
+   *
    * @author Eike Stepper
+   * @noextend This class is not intended to be subclassed by clients.
    */
   public static abstract class MappingEvent extends Event
   {
@@ -425,7 +443,11 @@ public class CDOTransfer implements INotifier
   }
 
   /**
+   * A {@link MappingEvent mapping event} fired from a {@link CDOTransfer transfer} when
+   * the {@link CDOTransferMapping#getChildren() children} of a mapping have changed.
+   *
    * @author Eike Stepper
+   * @noextend This class is not intended to be subclassed by clients.
    */
   public static class ChildrenChangedEvent extends MappingEvent
   {
@@ -459,6 +481,8 @@ public class CDOTransfer implements INotifier
     }
 
     /**
+     * Enumerates the possible values of {@link ChildrenChangedEvent#getKind()}.
+     *
      * @author Eike Stepper
      */
     public enum Kind
@@ -468,7 +492,11 @@ public class CDOTransfer implements INotifier
   }
 
   /**
+   * A {@link MappingEvent mapping event} fired from a {@link CDOTransfer transfer} when
+   * the {@link CDOTransferMapping#getRelativePath() relative path} of a mapping has changed.
+   *
    * @author Eike Stepper
+   * @noextend This class is not intended to be subclassed by clients.
    */
   public static class RelativePathChangedEvent extends MappingEvent
   {
@@ -503,7 +531,11 @@ public class CDOTransfer implements INotifier
   }
 
   /**
+   * A {@link MappingEvent mapping event} fired from a {@link CDOTransfer transfer} when
+   * the {@link CDOTransferMapping#getTransferType() transfer type} of a mapping has changed.
+   *
    * @author Eike Stepper
+   * @noextend This class is not intended to be subclassed by clients.
    */
   public static class TransferTypeChangedEvent extends MappingEvent
   {
@@ -538,7 +570,11 @@ public class CDOTransfer implements INotifier
   }
 
   /**
+   * An {@link IEvent event} fired from a {@link CDOTransfer transfer} when
+   * the set of {@link CDOTransfer.ModelTransferContext#getUnmappedModels() unmapped models} has changed.
+   *
    * @author Eike Stepper
+   * @noextend This class is not intended to be subclassed by clients.
    */
   public static class UnmappedModelsEvent extends Event
   {
@@ -551,6 +587,8 @@ public class CDOTransfer implements INotifier
   }
 
   /**
+   * Encapsulates the model-specific aspects of a {@link CDOTransfer transfer}.
+   *
    * @author Eike Stepper
    */
   public static class ModelTransferContext
@@ -651,22 +689,11 @@ public class CDOTransfer implements INotifier
       map.put(contentType, factory);
     }
 
-    public Set<Resource> resolve()
+    public Set<Resource> getUnmappedModels()
     {
       if (unmappedModels == null)
       {
-        Set<Resource> mappedModels = resourceElements.keySet();
-
-        ResourceSet resourceSet = getSourceResourceSet();
-        EList<Resource> resources = resourceSet.getResources();
-
-        // if (resources.addAll(mappedModels))
-        // {
-        // EcoreUtil.resolveAll(resourceSet);
-        // }
-
-        unmappedModels = new HashSet<Resource>(resources);
-        unmappedModels.removeAll(mappedModels);
+        unmappedModels = resolve();
         fireUnmappedModelsEvent();
       }
 
@@ -687,6 +714,18 @@ public class CDOTransfer implements INotifier
       }
 
       return old;
+    }
+
+    protected Set<Resource> resolve()
+    {
+      Set<Resource> mappedModels = resourceElements.keySet();
+
+      ResourceSet resourceSet = getSourceResourceSet();
+      EList<Resource> resources = resourceSet.getResources();
+
+      Set<Resource> unmappedModels = new HashSet<Resource>(resources);
+      unmappedModels.removeAll(mappedModels);
+      return unmappedModels;
     }
 
     protected void fireUnmappedModelsEvent()
@@ -795,6 +834,8 @@ public class CDOTransfer implements INotifier
     }
 
     /**
+     * An {@link AdapterImpl adapter} for a {@link ResourceSet resource set} that resolves all proxies in all resources when they are loaded.
+     *
      * @author Eike Stepper
      */
     public static class ResolveProxyAdapter extends AdapterImpl
@@ -880,6 +921,8 @@ public class CDOTransfer implements INotifier
       }
 
       /**
+       * An {@link AdapterImpl adapter} for a {@link Resource resource} that resolves all proxies in that resource when it's demand loaded.
+       *
        * @author Eike Stepper
        */
       public static class LoadResourceAdapter extends AdapterImpl
@@ -910,10 +953,13 @@ public class CDOTransfer implements INotifier
   }
 
   /**
+   * Reserved for future use.
+   *
    * @author Eike Stepper
+   * @noextend This class is not intended to be subclassed by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface ModelTransferResolution
   {
-
   }
 }

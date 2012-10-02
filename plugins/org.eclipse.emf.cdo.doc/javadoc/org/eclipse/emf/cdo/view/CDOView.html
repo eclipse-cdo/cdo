@@ -110,22 +110,23 @@ Interface CDOView</H2>
 <area shape="rect" id="node1" href="../common/CDOCommonView.html" title="&#171;interface&#187; CDOCommonView (org.eclipse.emf.cdo.common)" alt="" coords="15,5,212,59"/>
 <area shape="rect" id="node2" href="../ui/CDOEditorInput.html" title="&#171;interface&#187; CDOEditorInput (org.eclipse.emf.cdo.ui)" alt="" coords="35,78,192,133"/>
 <area shape="rect" id="node3" href="../CDOObject.html" title="&#171;interface&#187; CDOObject (org.eclipse.emf.cdo)" alt="" coords="42,151,185,206"/>
-<area shape="rect" id="node4" href="CDOObjectHandler.html" title="&#171;interface&#187; CDOObjectHandler" alt="" coords="671,393,803,433"/>
+<area shape="rect" id="node4" href="CDOObjectHandler.html" title="&#171;interface&#187; CDOObjectHandler" alt="" coords="671,423,803,463"/>
 <area shape="rect" id="node5" href="CDOQuery.html" title="&#171;interface&#187; CDOQuery" alt="" coords="71,225,156,265"/>
 <area shape="rect" id="node6" href="../session/CDOSession.html" title="&#171;interface&#187; CDOSession (org.eclipse.emf.cdo.session)" alt="" coords="17,285,209,339"/>
-<area shape="rect" id="node7" href="../transaction/CDOTransaction.html" title="&#171;interface&#187; CDOTransaction (org.eclipse.emf.cdo.transaction)" alt="" coords="632,453,843,507"/>
+<area shape="rect" id="node7" href="../transaction/CDOTransaction.html" title="&#171;interface&#187; CDOTransaction (org.eclipse.emf.cdo.transaction)" alt="" coords="632,482,843,537"/>
 <area shape="rect" id="node8" href="../util/CDOUpdatable.html" title="&#171;interface&#187; CDOUpdatable (org.eclipse.emf.cdo.util)" alt="" coords="31,358,195,413"/>
-<area shape="rect" id="node9" href="CDOView.html" title="&#171;interface&#187; CDOView" alt="" coords="387,461,472,501"/>
-<area shape="rect" id="node10" href="CDOView.Options.html" title="&#171;interface&#187; CDOView.Options" alt="" coords="674,527,801,567"/>
+<area shape="rect" id="node9" href="CDOView.html" title="&#171;interface&#187; CDOView" alt="" coords="387,491,472,531"/>
+<area shape="rect" id="node10" href="CDOView.Options.html" title="&#171;interface&#187; CDOView.Options" alt="" coords="674,556,801,596"/>
 <area shape="rect" id="node11" href="CDOViewAdaptersNotifiedEvent.html" title="&#171;interface&#187; CDOViewAdaptersNotifiedEvent" alt="" coords="11,432,216,472"/>
 <area shape="rect" id="node12" href="CDOViewContainer.html" title="&#171;interface&#187; CDOViewContainer" alt="" coords="47,491,180,531"/>
 <area shape="rect" id="node13" href="CDOViewDurabilityChangedEvent.html" title="&#171;interface&#187; CDOViewDurabilityChangedEvent" alt="" coords="6,549,221,589"/>
 <area shape="rect" id="node14" href="CDOViewInvalidationEvent.html" title="&#171;interface&#187; CDOViewInvalidationEvent" alt="" coords="27,608,200,648"/>
 <area shape="rect" id="node15" href="CDOViewLocksChangedEvent.html" title="&#171;interface&#187; CDOViewLocksChangedEvent" alt="" coords="15,667,211,707"/>
-<area shape="rect" id="node16" href="CDOViewSet.html" title="&#171;interface&#187; CDOViewSet" alt="" coords="64,725,163,765"/>
-<area shape="rect" id="node17" href="CDOViewTargetChangedEvent.html" title="&#171;interface&#187; CDOViewTargetChangedEvent" alt="" coords="15,784,212,824"/>
-<area shape="rect" id="node18" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="23,843,203,898"/>
-<area shape="rect" id="node19" href="../../spi/cdo/InternalCDOView.html" title="&#171;interface&#187; InternalCDOView (org.eclipse.emf.spi.cdo)" alt="" coords="655,586,819,641"/>
+<area shape="rect" id="node16" href="CDOViewRegistry.html" title="&#171;interface&#187; CDOViewRegistry" alt="" coords="50,725,177,765"/>
+<area shape="rect" id="node17" href="CDOViewSet.html" title="&#171;interface&#187; CDOViewSet" alt="" coords="64,784,163,824"/>
+<area shape="rect" id="node18" href="CDOViewTargetChangedEvent.html" title="&#171;interface&#187; CDOViewTargetChangedEvent" alt="" coords="15,843,212,883"/>
+<area shape="rect" id="node19" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="23,902,203,957"/>
+<area shape="rect" id="node20" href="../../spi/cdo/InternalCDOView.html" title="&#171;interface&#187; InternalCDOView (org.eclipse.emf.spi.cdo)" alt="" coords="655,615,819,670"/>
 </map>
 
 <CENTER><IMG SRC="CDOView.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -341,6 +342,14 @@ T</CODE></FONT></TD>
 <CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResource(java.lang.String, boolean)">getResource</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;path,
             boolean&nbsp;loadOnDemand)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResourceFolder(java.lang.String)">getResourceFolder</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;path)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -572,6 +581,14 @@ T</CODE></FONT></TD>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Same as calling <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranch, long)"><CODE>setBranchPoint(branchPoint.getBranch(),
  branchPoint.getTimeStamp())</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setResourcePathCache(java.util.Map)">setResourcePathCache</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;&nbsp;resourcePathCache)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the new <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><CODE>map</CODE></A> to be used as a cache for various <code>get*Resource*(String path)</code> methods.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -999,6 +1016,22 @@ getResourceNode</H3>
 </DL>
 <HR>
 
+<A NAME="getResourceFolder(java.lang.String)"><!-- --></A><H3>
+getResourceFolder</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</A> <B>getResourceFolder</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;path)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="getRootResource()"><!-- --></A><H3>
 getRootResource</H3>
 <PRE>
@@ -1014,6 +1047,36 @@ getRootResource</H3>
 </DD>
 <DD><DL>
 </DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setResourcePathCache(java.util.Map)"><!-- --></A><H3>
+setResourcePathCache</H3>
+<PRE>
+void <B>setResourcePathCache</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>,<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;&nbsp;resourcePathCache)</PRE>
+<DL>
+<DD>Sets the new <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><CODE>map</CODE></A> to be used as a cache for various <code>get*Resource*(String path)</code> methods.
+ <p>
+ Can be used to reset/clear the resource path cache by passing a <code>new HashMap&lt;String, CDOID&gt;()</code>.
+ Smarter maps could implement a LRU eviction policy to limit the map capacity.
+ Passing <code>null</code> disables resource path caching.
+ <p>
+ The default value is <code>new HashMap&lt;String, CDOID&gt;()</code>.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResourceNode(java.lang.String)"><CODE>getResourceNode(String)</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResource(java.lang.String)"><CODE>getResource(String)</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResource(java.lang.String, boolean)"><CODE>getResource(String, boolean)</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getBinaryResource(java.lang.String)"><CODE>getBinaryResource(String)</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getTextResource(java.lang.String)"><CODE>getTextResource(String)</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResourceFolder(java.lang.String)"><CODE>getResourceFolder(String)</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#hasResource(java.lang.String)"><CODE>hasResource(String)</CODE></A></DL>
 </DD>
 </DL>
 <HR>
@@ -1071,11 +1134,13 @@ queryXRefs</H3>
 </DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>targetObject</CODE> - The target object that referencing objects are requested for.<DD><CODE>sourceReferences</CODE> - The reference features that referencing objects are requested for, or an empty array if all reference
+<DT><B>Parameters:</B><DD><CODE>targetObject</CODE> - The target object that referencing objects are requested for.
+          An external target object can be used with the help of <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#wrapExternalObject(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.view.CDOView)"><CODE>CDOUtil.wrapExternalObject()</CODE></A>.<DD><CODE>sourceReferences</CODE> - The reference features that referencing objects are requested for, or an empty array if all reference
           features are to be used in the request.<DT><B>Since:</B></DT>
   <DD>4.0</DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs(java.util.Set, org.eclipse.emf.ecore.EReference...)"><CODE>queryXRefs(Set, EReference...)</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefsAsync(java.util.Set, org.eclipse.emf.ecore.EReference...)"><CODE>queryXRefsAsync(Set, EReference...)</CODE></A></DL>
+<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefsAsync(java.util.Set, org.eclipse.emf.ecore.EReference...)"><CODE>queryXRefsAsync(Set, EReference...)</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#wrapExternalObject(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.view.CDOView)"><CODE>CDOUtil.wrapExternalObject(EObject, CDOView)</CODE></A></DL>
 </DD>
 </DL>
 <HR>
@@ -1093,11 +1158,13 @@ queryXRefs</H3>
 </DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>targetObjects</CODE> - The set of target objects that referencing objects are requested for.<DD><CODE>sourceReferences</CODE> - The reference features that referencing objects are requested for, or an empty array if all reference
+<DT><B>Parameters:</B><DD><CODE>targetObjects</CODE> - The set of target objects that referencing objects are requested for.
+          External target objects can be used with the help of <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#wrapExternalObject(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.view.CDOView)"><CODE>CDOUtil.wrapExternalObject()</CODE></A>.<DD><CODE>sourceReferences</CODE> - The reference features that referencing objects are requested for, or an empty array if all reference
           features are to be used in the request.<DT><B>Since:</B></DT>
   <DD>3.0</DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.ecore.EReference...)"><CODE>queryXRefs(CDOObject, EReference...)</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefsAsync(java.util.Set, org.eclipse.emf.ecore.EReference...)"><CODE>queryXRefsAsync(Set, EReference...)</CODE></A></DL>
+<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefsAsync(java.util.Set, org.eclipse.emf.ecore.EReference...)"><CODE>queryXRefsAsync(Set, EReference...)</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#wrapExternalObject(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.view.CDOView)"><CODE>CDOUtil.wrapExternalObject(EObject, CDOView)</CODE></A></DL>
 </DD>
 </DL>
 <HR>
@@ -1115,11 +1182,13 @@ queryXRefsAsync</H3>
 </DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>targetObjects</CODE> - The set of target objects that referencing objects are requested for.<DD><CODE>sourceReferences</CODE> - The reference features that referencing objects are requested for, or an empty array if all reference
+<DT><B>Parameters:</B><DD><CODE>targetObjects</CODE> - The set of target objects that referencing objects are requested for.
+          External target objects can be used with the help of <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#wrapExternalObject(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.view.CDOView)"><CODE>CDOUtil.wrapExternalObject()</CODE></A>.<DD><CODE>sourceReferences</CODE> - The reference features that referencing objects are requested for, or an empty array if all reference
           features are to be used in the request.<DT><B>Since:</B></DT>
   <DD>3.0</DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.ecore.EReference...)"><CODE>queryXRefs(CDOObject, EReference...)</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs(java.util.Set, org.eclipse.emf.ecore.EReference...)"><CODE>queryXRefs(Set, EReference...)</CODE></A></DL>
+<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs(java.util.Set, org.eclipse.emf.ecore.EReference...)"><CODE>queryXRefs(Set, EReference...)</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#wrapExternalObject(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.view.CDOView)"><CODE>CDOUtil.wrapExternalObject(EObject, CDOView)</CODE></A></DL>
 </DD>
 </DL>
 <HR>

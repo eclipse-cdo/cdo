@@ -143,7 +143,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   /**
    * @since 4.0
-   * @deprecated Not called anymore. Use {@link CDOSessionProtocol#lockObjects2(List, int, CDOBranch, LockType, boolean, long)} instead.
+   * @deprecated Not called anymore. Use {@link #lockObjects2(List, int, CDOBranch, LockType, boolean, long)} instead.
    */
   @Deprecated
   public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
@@ -163,7 +163,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   /**
    * @since 3.0
-   * @deprecated Not called anymore. Use {@link CDOSessionProtocol#unlockObjects2(CDOView, Collection, LockType, boolean)} instead.
+   * @deprecated Not called anymore. Use {@link #unlockObjects2(CDOView, Collection, LockType, boolean)} instead.
    */
   @Deprecated
   public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType);
@@ -202,7 +202,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   /**
    * @since 4.0
-   * @deprecated Not called anymore. Use {@link CDOSessionProtocol#commitTransaction(InternalCDOCommitContext, OMMonitor)} instead.
+   * @deprecated Not called anymore. Use {@link #commitTransaction(InternalCDOCommitContext, OMMonitor)} instead.
    */
   @Deprecated
   public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
@@ -215,7 +215,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   /**
    * @since 4.0
-   * @deprecated Not called anymore. Use {@link CDOSessionProtocol#commitDelegation(InternalCDOCommitContext, OMMonitor)} instead.
+   * @deprecated Not called anymore. Use {@link #commitDelegation(InternalCDOCommitContext, OMMonitor)} instead.
    */
   @Deprecated
   public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,

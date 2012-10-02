@@ -248,6 +248,14 @@ One in a sequence of possibly several points in time of a <A HREF="../../../../.
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOSavepoint.html#getRevisionDeltas()">getRevisionDeltas</A></B>()</CODE>
 
 <BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOSavepoint.html#getRevisionDeltas2()"><CODE>getRevisionDeltas2()</CODE></A> instead.</I></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>,<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOSavepoint.html#getRevisionDeltas2()">getRevisionDeltas2</A></B>()</CODE>
+
+<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -443,14 +451,42 @@ getDirtyObjects</H3>
 <A NAME="getRevisionDeltas()"><!-- --></A><H3>
 getRevisionDeltas</H3>
 <PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentMap</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>,<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</A>&gt; <B>getRevisionDeltas</B>()</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentMap</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>,<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</A>&gt; <B>getRevisionDeltas</B>()</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOSavepoint.html#getRevisionDeltas2()"><CODE>getRevisionDeltas2()</CODE></A> instead.</I>
+<P>
+<DD>The returned map delegates to <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOSavepoint.html#getRevisionDeltas2()"><CODE>getRevisionDeltas2()</CODE></A> and does <b>not</b> support the following methods:
+
+ <ul>
+ <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true#putIfAbsent(K, V)" title="class or interface in java.util.concurrent"><CODE>ConcurrentMap.putIfAbsent(Object, Object)</CODE></A>
+ <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true#remove(java.lang.Object, java.lang.Object)" title="class or interface in java.util.concurrent"><CODE>ConcurrentMap.remove(Object, Object)</CODE></A>
+ <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true#replace(K, V)" title="class or interface in java.util.concurrent"><CODE>ConcurrentMap.replace(Object, Object)</CODE></A>
+ <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentMap.html?is-external=true#replace(K, V, V)" title="class or interface in java.util.concurrent"><CODE>ConcurrentMap.replace(Object, Object, Object)</CODE></A>
+ </ul>
+<P>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getRevisionDeltas2()"><!-- --></A><H3>
+getRevisionDeltas2</H3>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>,<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</A>&gt; <B>getRevisionDeltas2</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>

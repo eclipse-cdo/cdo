@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/event/ValueEvent.html" title="class in org.eclipse.net4j.util.event"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/event/ThrowableEvent.html" title="class in org.eclipse.net4j.util.event"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/net4j/util/event/Notifier.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="Notifier.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -189,6 +189,14 @@ A default implementation of a <A HREF="../../../../../org/eclipse/net4j/util/eve
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent, org.eclipse.net4j.util.event.IListener[])">fireEvent</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</A>&nbsp;event,
           <A HREF="../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</A>[]&nbsp;listeners)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireThrowable(java.lang.Throwable)">fireThrowable</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</A>&nbsp;throwable)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -401,6 +409,22 @@ public void <B>fireEvent</B>(<A HREF="../../../../../org/eclipse/net4j/util/even
 </DL>
 <HR>
 
+<A NAME="fireThrowable(java.lang.Throwable)"><!-- --></A><H3>
+fireThrowable</H3>
+<PRE>
+protected void <B>fireThrowable</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</A>&nbsp;throwable)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.3</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="getNotificationService()"><!-- --></A><H3>
 getNotificationService</H3>
 <PRE>
@@ -478,7 +502,7 @@ protected void <B>lastListenerRemoved</B>()</PRE>
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/event/ValueEvent.html" title="class in org.eclipse.net4j.util.event"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/event/ThrowableEvent.html" title="class in org.eclipse.net4j.util.event"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/net4j/util/event/Notifier.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="Notifier.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

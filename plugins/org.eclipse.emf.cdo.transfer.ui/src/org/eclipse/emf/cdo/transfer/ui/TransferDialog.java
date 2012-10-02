@@ -37,6 +37,8 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * A dialog that contains a {@link TransferComposite}.
+ *
  * @author Eike Stepper
  */
 public class TransferDialog extends TitleAreaDialog

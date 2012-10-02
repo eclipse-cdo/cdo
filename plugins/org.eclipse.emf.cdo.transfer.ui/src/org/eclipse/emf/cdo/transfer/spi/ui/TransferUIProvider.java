@@ -12,6 +12,9 @@ package org.eclipse.emf.cdo.transfer.spi.ui;
 
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.transfer.CDOTransferSystem;
+import org.eclipse.emf.cdo.transfer.ui.TransferDragListener;
+import org.eclipse.emf.cdo.transfer.ui.TransferDropAdapter;
+import org.eclipse.emf.cdo.transfer.ui.TransferLabelProvider;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
@@ -24,6 +27,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Abstracts the {@link CDOTransferSystem transfer system}-specific aspects that are needed by a generic transfer user interface.
+ * <p>
+ * Abstracted functionalities include:
+ * <ul>
+ * <li>{@link TransferLabelProvider Providing labels} for {@link CDOTransferElement transfer elements}, see {@link #createLabelProvider(CDOTransferSystem) createLabelProvider()}.
+ * <li>Creating transfers for {@link TransferDragListener drag operations}, see {@link #addSupportedTransfers(List) addSupportedTransfers()}, {@link #convertSelection(IStructuredSelection) convertSelection()}.
+ * <li>Creating transfers for {@link TransferDropAdapter drop operations}, see {@link #addSupportedTransfers(List) addSupportedTransfers()}, {@link #convertTransferData(Object) convertTransferData()}, {@link #convertTransferTarget(Object) convertTransferTarget()}.
+ * </ul>
+ *
  * @author Eike Stepper
  * @since 4.2
  */
@@ -40,6 +52,8 @@ public interface TransferUIProvider
   public Object convertSelection(IStructuredSelection selection);
 
   /**
+   * Creates {@link TransferUIProvider} instances.
+   *
    * @author Eike Stepper
    */
   public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory

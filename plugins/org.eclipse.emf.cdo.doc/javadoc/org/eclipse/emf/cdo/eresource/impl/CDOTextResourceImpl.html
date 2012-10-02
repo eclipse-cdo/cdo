@@ -132,13 +132,14 @@ Class CDOTextResourceImpl</H2>
 <DT><B>Since:</B></DT>
   <DD>4.1</DD>
 <DT><B>Generated</B></DT>
-  <DD>NOT</DD>
+  <DD></DD>
 <DT><B>No Extend</B></DT>
   <DD>This class is not intended to be subclassed by clients. <!-- end-user-doc -->
  <p>
  The following features are implemented:
  <ul>
    <li><A HREF="../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOTextResourceImpl.html#getContents()"><CODE><em>Contents</em></CODE></A></li>
+   <li><A HREF="../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOTextResourceImpl.html#getEncoding()"><CODE><em>Encoding</em></CODE></A></li>
  </ul>
  </p></DD>
 </DL>
@@ -312,8 +313,24 @@ Class CDOTextResourceImpl</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOTextResourceImpl.html#getEncoding()">getEncoding</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOTextResourceImpl.html#setContents(org.eclipse.emf.cdo.common.lob.CDOClob)">setContents</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/lob/CDOClob.html" title="class in org.eclipse.emf.cdo.common.lob">CDOClob</A>&nbsp;newContents)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOTextResourceImpl.html#setEncoding(java.lang.String)">setEncoding</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;newEncoding)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -522,6 +539,50 @@ public void <B>setContents</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/co
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>newContents</CODE> - the new value of the '<em>Contents</em>' attribute.<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html#getContents()"><CODE>CDOTextResource.getContents()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getEncoding()"><!-- --></A><H3>
+getEncoding</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getEncoding</B>()</PRE>
+<DL>
+<DD><!-- begin-user-doc -->
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html#getEncoding()">getEncoding</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOTextResource</A></CODE></DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the value of the '<em>Encoding</em>' attribute.<DT><B>Since:</B></DT>
+  <DD>4.2
+ <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html#setEncoding(java.lang.String)"><CODE>CDOTextResource.setEncoding(String)</CODE></A>, 
+<A HREF="../../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#getCDOTextResource_Encoding()"><CODE>EresourcePackage.getCDOTextResource_Encoding()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setEncoding(java.lang.String)"><!-- --></A><H3>
+setEncoding</H3>
+<PRE>
+public void <B>setEncoding</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;newEncoding)</PRE>
+<DL>
+<DD><!-- begin-user-doc -->
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html#setEncoding(java.lang.String)">setEncoding</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOTextResource</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>newEncoding</CODE> - the new value of the '<em>Encoding</em>' attribute.<DT><B>Since:</B></DT>
+  <DD>4.2
+ <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html#getEncoding()"><CODE>CDOTextResource.getEncoding()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DD>

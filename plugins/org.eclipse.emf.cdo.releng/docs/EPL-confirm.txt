@@ -3,3 +3,13 @@ please confirm that:
 1) The number of lines that you changed is smaller than 250.
 2) You are the only author of these changed lines.
 3) You apply the EPL to these changed lines.
+
+
+
+
+
+I confirm that:
+
+1) The number of lines that I changed is smaller than 250.
+2) I'm the only author of these changed lines.
+3) I apply the EPL to these changed lines.

@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.compare;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -227,7 +225,7 @@ public final class CDOCompareUtil
     Set<CDOID> ids;
     if (originView != null)
     {
-      MergeData mergeData = ((InternalCDOSession)session).getMergeData(leftView, rightView, null);
+      MergeData mergeData = ((InternalCDOSession)session).getMergeData(leftView, rightView, null, false);
       ids = mergeData.getIDs();
     }
     else
@@ -476,7 +474,7 @@ public final class CDOCompareUtil
 
     private EMFCompare(IComparisonScope scope)
     {
-      checkNotNull(scope);
+      com.google.common.base.Preconditions.checkNotNull(scope);
       this.scope = scope;
     }
 
@@ -631,7 +629,7 @@ public final class CDOCompareUtil
 
       public DefaultMatchEngine(IEObjectMatcher matcher)
       {
-        checkNotNull(matcher);
+        com.google.common.base.Preconditions.checkNotNull(matcher);
         eObjectMatcher = matcher;
       }
 

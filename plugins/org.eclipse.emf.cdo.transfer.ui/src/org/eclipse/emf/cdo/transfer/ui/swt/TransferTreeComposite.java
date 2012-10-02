@@ -32,6 +32,8 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 
 /**
+ * A {@link Composite composite} that contains a {@link #getViewer() tree viewer} for the {@link CDOTransferMapping mappings} of a {@link #getTransfer() transfer}.
+ *
  * @author Eike Stepper
  * @since 4.2
  */
@@ -117,6 +119,8 @@ public class TransferTreeComposite extends Composite
   }
 
   /**
+   * An {@link Action action} to {@link CDOTransferMapping#unmap() unmap} a {@link CDOTransferMapping transfer mapping}.
+   *
    * @author Eike Stepper
    */
   public static class UnmapAction extends Action

@@ -101,6 +101,10 @@ Packages that use <A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDORe
 <TD><A HREF="#org.eclipse.emf.cdo.eresource.util"><B>org.eclipse.emf.cdo.eresource.util</B></A></TD>
 <TD>The generated EMF utilities of the CDO repository file system.&nbsp;</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.ui"><B>org.eclipse.emf.cdo.ui</B></A></TD>
+<TD>Reusable UI components specific to the CDO Model Repository.&nbsp;</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -231,6 +235,87 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the result of interpreting the object as an instance of '<em>CDO Resource Leaf</em>'</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.ui"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</A> in <A HREF="../../../../../../org/eclipse/emf/cdo/ui/package-summary.html">org.eclipse.emf.cdo.ui</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/emf/cdo/ui/package-summary.html">org.eclipse.emf.cdo.ui</A> with parameters of type <A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorInput.html?is-external=true" title="class or interface in org.eclipse.ui">IEditorInput</A></CODE></FONT></TD>
+<TD><CODE><B>CDOEditorUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/CDOEditorUtil.html#createEditorInput(java.lang.String, org.eclipse.emf.cdo.eresource.CDOResourceLeaf)">createEditorInput</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;editorID,
+                  <A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</A>&nbsp;resource)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an implementation of the IEditorInput interface.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorInput.html?is-external=true" title="class or interface in org.eclipse.ui">IEditorInput</A></CODE></FONT></TD>
+<TD><CODE><B>CDOEditorUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/CDOEditorUtil.html#createEditorInput(java.lang.String, org.eclipse.emf.cdo.eresource.CDOResourceLeaf, boolean)">createEditorInput</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;editorID,
+                  <A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</A>&nbsp;resource,
+                  boolean&nbsp;viewOwned)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an implementation of the IEditorInput interface.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>[]</CODE></FONT></TD>
+<TD><CODE><B>CDOEditorUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/CDOEditorUtil.html#getAllEditorIDs(org.eclipse.emf.cdo.eresource.CDOResourceLeaf)">getAllEditorIDs</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</A>&nbsp;resource)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B>CDOEditorUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/CDOEditorUtil.html#getEffectiveEditorID(org.eclipse.emf.cdo.eresource.CDOResourceLeaf)">getEffectiveEditorID</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</A>&nbsp;resource)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>CDOEditorUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/CDOEditorUtil.html#openEditor(org.eclipse.ui.IWorkbenchPage, org.eclipse.emf.cdo.eresource.CDOResourceLeaf)">openEditor</A></B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPage</A>&nbsp;page,
+           <A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</A>&nbsp;resource)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Opens the specified resource in CDOEditor</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>CDOEditorUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/CDOEditorUtil.html#openEditor(org.eclipse.ui.IWorkbenchPage, java.lang.String, org.eclipse.emf.cdo.eresource.CDOResourceLeaf)">openEditor</A></B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPage</A>&nbsp;page,
+           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;editorID,
+           <A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</A>&nbsp;resource)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Opens the specified resource in CDOEditor</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>CDOEditorUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/CDOEditorUtil.html#populateMenu(org.eclipse.jface.action.IMenuManager, org.eclipse.emf.cdo.eresource.CDOResourceLeaf, org.eclipse.ui.IWorkbenchPage)">populateMenu</A></B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</A>&nbsp;manager,
+             <A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</A>&nbsp;resource,
+             <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPage</A>&nbsp;page)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;

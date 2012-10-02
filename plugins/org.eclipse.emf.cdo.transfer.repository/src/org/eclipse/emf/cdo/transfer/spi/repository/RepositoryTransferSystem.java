@@ -49,6 +49,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 /**
+ * A CDO {@link #getView() repository}-based implementation of a {@link CDOTransferSystem transfer system}.
+ *
  * @author Eike Stepper
  * @since 4.2
  */

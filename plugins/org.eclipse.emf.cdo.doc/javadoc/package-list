@@ -14,6 +14,7 @@ org.eclipse.emf.cdo.common.revision
 org.eclipse.emf.cdo.common.revision.delta
 org.eclipse.emf.cdo.common.security
 org.eclipse.emf.cdo.common.util
+org.eclipse.emf.cdo.compare
 org.eclipse.emf.cdo.edit
 org.eclipse.emf.cdo.eresource
 org.eclipse.emf.cdo.eresource.impl
@@ -57,9 +58,16 @@ org.eclipse.emf.cdo.spi.common.model
 org.eclipse.emf.cdo.spi.common.protocol
 org.eclipse.emf.cdo.spi.common.revision
 org.eclipse.emf.cdo.spi.server
+org.eclipse.emf.cdo.spi.transfer
 org.eclipse.emf.cdo.spi.workspace
 org.eclipse.emf.cdo.team
 org.eclipse.emf.cdo.transaction
+org.eclipse.emf.cdo.transfer
+org.eclipse.emf.cdo.transfer.spi.repository
+org.eclipse.emf.cdo.transfer.spi.ui
+org.eclipse.emf.cdo.transfer.spi.workspace
+org.eclipse.emf.cdo.transfer.ui
+org.eclipse.emf.cdo.transfer.ui.swt
 org.eclipse.emf.cdo.ui
 org.eclipse.emf.cdo.ui.ide
 org.eclipse.emf.cdo.ui.widgets

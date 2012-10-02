@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.transfer;
 import org.eclipse.core.runtime.IPath;
 
 /**
+ * The mapping of a source {@link CDOTransferElement element} to a target element in the context of a specific {@link CDOTransfer transfer}.
+ *
  * @author Eike Stepper
  * @since 4.2
  */
@@ -61,16 +63,21 @@ public interface CDOTransferMapping extends Comparable<CDOTransferMapping>
   public CDOTransferElement getTarget();
 
   /**
-     * @author Eike Stepper
-     */
+   * Enumerates the possibles values of {@link CDOTransferMapping#getStatus()}.
+   *
+   * @author Eike Stepper
+   */
   public enum Status
   {
     NEW, MERGE, CONFLICT
   }
 
   /**
-     * @author Eike Stepper
-     */
+   * A call-back that is called for a {@link CDOTransferMapping mapping} and all its {@link CDOTransferMapping#getChildren() children} when
+   * passed into its {@link CDOTransferMapping#accept(Visitor) accept()} method.
+   *
+   * @author Eike Stepper
+   */
   public interface Visitor
   {
     public boolean visit(CDOTransferMapping mapping);

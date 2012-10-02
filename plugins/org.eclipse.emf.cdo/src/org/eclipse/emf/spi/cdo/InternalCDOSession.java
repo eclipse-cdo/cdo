@@ -256,9 +256,12 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
   /**
    * @since 4.2
    */
-  public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase);
+  public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase,
+      boolean computeChangeSets);
 
   /**
+   * A data structure that holds all input and output values of {@link InternalCDOSession#getMergeData(CDOBranchPoint, CDOBranchPoint, CDOBranchPoint, boolean) InternalCDOSession.getMergeData()}.
+   *
    * @author Eike Stepper
    * @since 4.2
    */

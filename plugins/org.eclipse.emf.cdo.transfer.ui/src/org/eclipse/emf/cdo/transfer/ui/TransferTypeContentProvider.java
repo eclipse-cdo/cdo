@@ -10,12 +10,18 @@
  */
 package org.eclipse.emf.cdo.transfer.ui;
 
+import org.eclipse.emf.cdo.transfer.CDOTransferMapping;
 import org.eclipse.emf.cdo.transfer.CDOTransferType;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.Viewer;
 
 /**
+ * A reusable {@link IStructuredContentProvider content provider} for the {@link CDOTransferType transfer types} of a {@link CDOTransferMapping mapping}.
+ * <p>
+ * The recognized {@link StructuredViewer#setInput(Object) inputs} include instances of {@link CDOTransferType} and <code>CDOTransferType[]</code>.
+ *
  * @author Eike Stepper
  */
 public class TransferTypeContentProvider implements IStructuredContentProvider

@@ -26,6 +26,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
+ * An abstraction of an end point system of a {@link CDOTransfer transfer}.
+ * <p>
+ * It's used for example in {@link CDOTransfer#getSourceSystem()} and {@link CDOTransfer#getTargetSystem()}.
+ * The arguments of the map() methods in {@link CDOTransfer} are treated as {@link IPath paths} relative to the source transfer system.
+ * The {@link CDOTransferMapping#getTarget() targets} of the created mappings are determined by paths relative to the target transfer system.
+ *
  * @author Eike Stepper
  * @since 4.2
  */

@@ -189,6 +189,17 @@ If the meaning of this type isn't clear, there really should be more of a descri
                                            <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</A>&gt;&nbsp;xRefs)</CODE>
 
 <BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2</I></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#CDOSessionProtocol.CommitTransactionResult(org.eclipse.emf.cdo.common.id.CDOIDProvider, java.lang.String, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, long, java.util.List, boolean)">CDOSessionProtocol.CommitTransactionResult</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</A>&nbsp;idProvider,
+                                           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;rollbackMessage,
+                                           <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint,
+                                           long&nbsp;previousTimeStamp,
+                                           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</A>&gt;&nbsp;xRefs,
+                                           boolean&nbsp;clearResourcePathCache)</CODE>
+
+<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
@@ -286,6 +297,14 @@ If the meaning of this type isn't clear, there really should be more of a descri
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#isClearResourcePathCache()">isClearResourcePathCache</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#setNewLockStates(org.eclipse.emf.cdo.common.lock.CDOLockState[])">setNewLockStates</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</A>[]&nbsp;newLockStates)</CODE>
 
@@ -326,15 +345,35 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <A NAME="CDOSessionProtocol.CommitTransactionResult(org.eclipse.emf.cdo.common.id.CDOIDProvider, java.lang.String, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, long, java.util.List)"><!-- --></A><H3>
 CDOSessionProtocol.CommitTransactionResult</H3>
 <PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>public <B>CDOSessionProtocol.CommitTransactionResult</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</A>&nbsp;idProvider,
+                                                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;rollbackMessage,
+                                                             <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint,
+                                                             long&nbsp;previousTimeStamp,
+                                                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</A>&gt;&nbsp;xRefs)</PRE>
+<DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2</I>
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.0</DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDOSessionProtocol.CommitTransactionResult(org.eclipse.emf.cdo.common.id.CDOIDProvider, java.lang.String, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, long, java.util.List, boolean)"><!-- --></A><H3>
+CDOSessionProtocol.CommitTransactionResult</H3>
+<PRE>
 public <B>CDOSessionProtocol.CommitTransactionResult</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</A>&nbsp;idProvider,
                                                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;rollbackMessage,
                                                   <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint,
                                                   long&nbsp;previousTimeStamp,
-                                                  <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</A>&gt;&nbsp;xRefs)</PRE>
+                                                  <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</A>&gt;&nbsp;xRefs,
+                                                  boolean&nbsp;clearResourcePathCache)</PRE>
 <DL>
 <DL>
 <DT><B>Since:</B></DT>
-  <DD>4.0</DD>
+  <DD>4.2</DD>
 </DL>
 </DL>
 <HR>
@@ -473,6 +512,22 @@ public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isClearResourcePathCache()"><!-- --></A><H3>
+isClearResourcePathCache</H3>
+<PRE>
+public boolean <B>isClearResourcePathCache</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>

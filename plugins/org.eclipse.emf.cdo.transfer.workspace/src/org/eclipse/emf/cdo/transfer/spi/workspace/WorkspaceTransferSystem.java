@@ -23,6 +23,7 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -33,6 +34,8 @@ import org.eclipse.core.runtime.Path;
 import java.io.InputStream;
 
 /**
+ * An Eclipse {@link IWorkspace workspace}-based implementation of a {@link CDOTransferSystem transfer system}.
+ *
  * @author Eike Stepper
  * @since 4.2
  */

@@ -33,6 +33,9 @@
       <topic label="CDO Model Repository Client Admin Support" href="javadoc/org/eclipse/emf/cdo/admin/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.admin" href="javadoc/org/eclipse/emf/cdo/admin/package-summary.html" icon="package" />
       </topic>
+      <topic label="CDO Model Repository Client Compare Support" href="javadoc/org/eclipse/emf/cdo/compare/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.compare" href="javadoc/org/eclipse/emf/cdo/compare/package-summary.html" icon="package" />
+      </topic>
       <topic label="CDO Model Repository Client Edit Support" href="javadoc/org/eclipse/emf/cdo/edit/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.edit" href="javadoc/org/eclipse/emf/cdo/edit/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.eresource.provider" href="javadoc/org/eclipse/emf/cdo/eresource/provider/package-summary.html" icon="package" />
@@ -132,6 +135,21 @@
       <topic label="CDO Model Repository Server Security Support" href="javadoc/org/eclipse/emf/cdo/server/security/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.server.security" href="javadoc/org/eclipse/emf/cdo/server/security/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.server.spi.security" href="javadoc/org/eclipse/emf/cdo/server/spi/security/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Transfer Framework" href="javadoc/org/eclipse/emf/cdo/spi/transfer/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.spi.transfer" href="javadoc/org/eclipse/emf/cdo/spi/transfer/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.transfer" href="javadoc/org/eclipse/emf/cdo/transfer/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Transfer Framework (Repository Support)" href="javadoc/org/eclipse/emf/cdo/transfer/spi/repository/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.transfer.spi.repository" href="javadoc/org/eclipse/emf/cdo/transfer/spi/repository/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Transfer Framework (UI)" href="javadoc/org/eclipse/emf/cdo/transfer/spi/ui/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.transfer.spi.ui" href="javadoc/org/eclipse/emf/cdo/transfer/spi/ui/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.transfer.ui" href="javadoc/org/eclipse/emf/cdo/transfer/ui/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.transfer.ui.swt" href="javadoc/org/eclipse/emf/cdo/transfer/ui/swt/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Transfer Framework (Workspace Support)" href="javadoc/org/eclipse/emf/cdo/transfer/spi/workspace/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.transfer.spi.workspace" href="javadoc/org/eclipse/emf/cdo/transfer/spi/workspace/package-summary.html" icon="package" />
       </topic>
     </topic>
     <topic label="Extension Point Reference" href="html/reference/schema/index.html">

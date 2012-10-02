@@ -470,7 +470,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     InternalCDOSession session = getSession();
-    MergeData mergeData = session.getMergeData(target, source, sourceBase);
+    MergeData mergeData = session.getMergeData(target, source, sourceBase, true);
 
     CDOChangeSet targetChanges = mergeData.getTargetChanges();
     CDOChangeSet sourceChanges = mergeData.getSourceChanges();

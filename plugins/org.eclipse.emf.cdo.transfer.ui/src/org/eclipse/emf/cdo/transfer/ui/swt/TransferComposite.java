@@ -21,6 +21,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
 /**
+ * A vertical {@link SashForm sash} that contains a {@link TransferTreeComposite} and a {@link TransferDetailsComposite}.
+ *
  * @author Eike Stepper
  * @since 4.2
  */

@@ -1,0 +1,1160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+CDOTransfer (CDO Model Repository Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="CDOTransfer (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CDOTransfer.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV CLASS&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ChildrenChangedEvent.html" title="class in org.eclipse.emf.cdo.transfer"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/emf/cdo/transfer/CDOTransfer.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="CDOTransfer.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.emf.cdo.transfer</FONT>
+<BR>
+Class CDOTransfer</H2>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
+  <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.emf.cdo.transfer.CDOTransfer</B>
+</PRE>
+<DL>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></DD>
+</DL>
+<HR>
+<DL>
+  <DT>public class <B>CDOTransfer</B>
+  <DD>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>
+  <DD>implements <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>
+</DL>
+
+<map id="APIVIZ" name="APIVIZ">
+<area shape="rect" id="node1" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="5,6,184,61"/>
+<area shape="rect" id="node2" href="CDOTransfer.html" title="CDOTransfer" alt="" coords="47,101,143,126"/>
+</map>
+
+<CENTER><IMG SRC="CDOTransfer.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+
+
+
+<P>
+Abstracts the transfer of a tree of <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer"><CODE>elements</CODE></A> for a
+ <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#getSourceSystem()"><CODE>source</CODE></A> to a <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#getTargetSystem()"><CODE>target</CODE></A> <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><CODE>system</CODE></A>.
+ <p>
+ The mappings of the source elements to their target elements is represented as a tree of <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer"><CODE>transfer mappings</CODE></A>.
+ <p>
+ A transfer fires the following <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>events</CODE></A>:
+ <ul>
+ <li><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ChildrenChangedEvent.html" title="class in org.eclipse.emf.cdo.transfer"><CODE>CDOTransfer.ChildrenChangedEvent</CODE></A> when the <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html#getChildren()"><CODE>children</CODE></A> of a mapping have changed.
+ <li><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.RelativePathChangedEvent.html" title="class in org.eclipse.emf.cdo.transfer"><CODE>CDOTransfer.RelativePathChangedEvent</CODE></A> when the <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html#getRelativePath()"><CODE>relative path</CODE></A> of a mapping has changed.
+ <li><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.TransferTypeChangedEvent.html" title="class in org.eclipse.emf.cdo.transfer"><CODE>CDOTransfer.TransferTypeChangedEvent</CODE></A> when the <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html#getTransferType()"><CODE>transfer type</CODE></A> of a mapping has changed.
+ <li><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.UnmappedModelsEvent.html" title="class in org.eclipse.emf.cdo.transfer"><CODE>CDOTransfer.UnmappedModelsEvent</CODE></A> when the set of <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ModelTransferContext.html#getUnmappedModels()"><CODE>unmapped models</CODE></A> has changed.
+ </ul>
+<P>
+
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ChildrenChangedEvent.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.ChildrenChangedEvent</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.MappingEvent.html" title="class in org.eclipse.emf.cdo.transfer"><CODE>mapping event</CODE></A> fired from a <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><CODE>transfer</CODE></A> when
+ the <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html#getChildren()"><CODE>children</CODE></A> of a mapping have changed.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.MappingEvent.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.MappingEvent</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An abstract base implementation of a <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer"><CODE>mapping</CODE></A> <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycleEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle"><CODE>event</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ModelTransferContext.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.ModelTransferContext</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Encapsulates the model-specific aspects of a <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><CODE>transfer</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ModelTransferResolution.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransfer.ModelTransferResolution</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reserved for future use.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.RelativePathChangedEvent.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.RelativePathChangedEvent</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.MappingEvent.html" title="class in org.eclipse.emf.cdo.transfer"><CODE>mapping event</CODE></A> fired from a <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><CODE>transfer</CODE></A> when
+ the <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html#getRelativePath()"><CODE>relative path</CODE></A> of a mapping has changed.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.TransferTypeChangedEvent.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.TransferTypeChangedEvent</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.MappingEvent.html" title="class in org.eclipse.emf.cdo.transfer"><CODE>mapping event</CODE></A> fired from a <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><CODE>transfer</CODE></A> when
+ the <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html#getTransferType()"><CODE>transfer type</CODE></A> of a mapping has changed.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.UnmappedModelsEvent.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.UnmappedModelsEvent</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>event</CODE></A> fired from a <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html" title="class in org.eclipse.emf.cdo.transfer"><CODE>transfer</CODE></A> when
+ the set of <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ModelTransferContext.html#getUnmappedModels()"><CODE>unmapped models</CODE></A> has changed.</TD>
+</TR>
+</TABLE>
+&nbsp;<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">Notifier</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#notifier">notifier</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#CDOTransfer(org.eclipse.emf.cdo.transfer.CDOTransferSystem, org.eclipse.emf.cdo.transfer.CDOTransferSystem)">CDOTransfer</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferSystem</A>&nbsp;sourceSystem,
+            <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferSystem</A>&nbsp;targetSystem)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</A></B>(<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IListener</A>&nbsp;listener)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#childrenChanged(org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.emf.cdo.transfer.CDOTransfer.ChildrenChangedEvent.Kind)">childrenChanged</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+                <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;child,
+                <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ChildrenChangedEvent.Kind.html" title="enum in org.eclipse.emf.cdo.transfer">CDOTransfer.ChildrenChangedEvent.Kind</A>&nbsp;kind)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#createMapping(org.eclipse.emf.cdo.transfer.CDOTransferElement, org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.core.runtime.IProgressMonitor)">createMapping</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferElement</A>&nbsp;source,
+              <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;parent,
+              <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ModelTransferContext.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.ModelTransferContext</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#createModelTransferContext()">createModelTransferContext</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferType.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferType</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#getDefaultTransferType()">getDefaultTransferType</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IListener</A>[]</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#getListeners()">getListeners</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#getMappingCount()">getMappingCount</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ModelTransferContext.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.ModelTransferContext</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#getModelTransferContext()">getModelTransferContext</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#getRootMapping()">getRootMapping</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferSystem</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#getSourceSystem()">getSourceSystem</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#getTargetPath()">getTargetPath</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferSystem</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#getTargetSystem()">getTargetSystem</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferType.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferType</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#getTransferType(org.eclipse.emf.cdo.transfer.CDOTransferElement)">getTransferType</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferElement</A>&nbsp;source)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferType.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferType</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#getUsedTransferTypes()">getUsedTransferTypes</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#hasListeners()">hasListeners</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#map(org.eclipse.emf.cdo.transfer.CDOTransferElement, org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.core.runtime.IProgressMonitor)">map</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferElement</A>&nbsp;source,
+    <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;parent,
+    <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#map(org.eclipse.emf.cdo.transfer.CDOTransferElement, org.eclipse.core.runtime.IProgressMonitor)">map</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferElement</A>&nbsp;source,
+    <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#map(org.eclipse.core.runtime.IPath, org.eclipse.core.runtime.IProgressMonitor)">map</A></B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</A>&nbsp;sourcePath,
+    <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#map(java.lang.String, org.eclipse.core.runtime.IProgressMonitor)">map</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;sourcePath,
+    <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#perform()">perform</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#perform(org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.core.runtime.IProgressMonitor)">perform</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+        <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#perform(org.eclipse.core.runtime.IProgressMonitor)">perform</A></B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#performBinary(org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.core.runtime.IProgressMonitor)">performBinary</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+              <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#performFolder(org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.core.runtime.IProgressMonitor)">performFolder</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+              <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#performModel(org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.core.runtime.IProgressMonitor)">performModel</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+             <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#performText(org.eclipse.emf.cdo.transfer.CDOTransferMapping, java.lang.String, org.eclipse.core.runtime.IProgressMonitor)">performText</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+            <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;encoding,
+            <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#relativePathChanged(org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.core.runtime.IPath, org.eclipse.core.runtime.IPath)">relativePathChanged</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+                    <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</A>&nbsp;oldPath,
+                    <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</A>&nbsp;newPath)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</A></B>(<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IListener</A>&nbsp;listener)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#setDefaultTransferType(org.eclipse.emf.cdo.transfer.CDOTransferType)">setDefaultTransferType</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferType.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferType</A>&nbsp;defaultTransferType)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#setTargetPath(org.eclipse.core.runtime.IPath)">setTargetPath</A></B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</A>&nbsp;targetPath)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#setTargetPath(java.lang.String)">setTargetPath</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;path)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#transferTypeChanged(org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.emf.cdo.transfer.CDOTransferType, org.eclipse.emf.cdo.transfer.CDOTransferType)">transferTypeChanged</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+                    <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferType.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferType</A>&nbsp;oldType,
+                    <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferType.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferType</A>&nbsp;newType)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#unmap(org.eclipse.emf.cdo.transfer.CDOTransferMapping)">unmap</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.html#validate(org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.core.runtime.IProgressMonitor)">validate</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+         <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ FIELD DETAIL =========== -->
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Field Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="notifier"><!-- --></A><H3>
+notifier</H3>
+<PRE>
+protected final <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">Notifier</A> <B>notifier</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="CDOTransfer(org.eclipse.emf.cdo.transfer.CDOTransferSystem, org.eclipse.emf.cdo.transfer.CDOTransferSystem)"><!-- --></A><H3>
+CDOTransfer</H3>
+<PRE>
+public <B>CDOTransfer</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferSystem</A>&nbsp;sourceSystem,
+                   <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferSystem</A>&nbsp;targetSystem)</PRE>
+<DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="addListener(org.eclipse.net4j.util.event.IListener)"><!-- --></A><H3>
+addListener</H3>
+<PRE>
+public void <B>addListener</B>(<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IListener</A>&nbsp;listener)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</A></CODE> in interface <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="removeListener(org.eclipse.net4j.util.event.IListener)"><!-- --></A><H3>
+removeListener</H3>
+<PRE>
+public void <B>removeListener</B>(<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IListener</A>&nbsp;listener)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</A></CODE> in interface <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="hasListeners()"><!-- --></A><H3>
+hasListeners</H3>
+<PRE>
+public boolean <B>hasListeners</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</A></CODE> in interface <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getListeners()"><!-- --></A><H3>
+getListeners</H3>
+<PRE>
+public <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IListener</A>[] <B>getListeners</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</A></CODE> in interface <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getSourceSystem()"><!-- --></A><H3>
+getSourceSystem</H3>
+<PRE>
+public final <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferSystem</A> <B>getSourceSystem</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getTargetSystem()"><!-- --></A><H3>
+getTargetSystem</H3>
+<PRE>
+public final <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferSystem</A> <B>getTargetSystem</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getModelTransferContext()"><!-- --></A><H3>
+getModelTransferContext</H3>
+<PRE>
+public <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ModelTransferContext.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.ModelTransferContext</A> <B>getModelTransferContext</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getDefaultTransferType()"><!-- --></A><H3>
+getDefaultTransferType</H3>
+<PRE>
+public final <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferType.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferType</A> <B>getDefaultTransferType</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setDefaultTransferType(org.eclipse.emf.cdo.transfer.CDOTransferType)"><!-- --></A><H3>
+setDefaultTransferType</H3>
+<PRE>
+public final void <B>setDefaultTransferType</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferType.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferType</A>&nbsp;defaultTransferType)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getUsedTransferTypes()"><!-- --></A><H3>
+getUsedTransferTypes</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferType.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferType</A>&gt; <B>getUsedTransferTypes</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getRootMapping()"><!-- --></A><H3>
+getRootMapping</H3>
+<PRE>
+public final <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A> <B>getRootMapping</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getTargetPath()"><!-- --></A><H3>
+getTargetPath</H3>
+<PRE>
+public <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</A> <B>getTargetPath</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setTargetPath(org.eclipse.core.runtime.IPath)"><!-- --></A><H3>
+setTargetPath</H3>
+<PRE>
+public void <B>setTargetPath</B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</A>&nbsp;targetPath)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setTargetPath(java.lang.String)"><!-- --></A><H3>
+setTargetPath</H3>
+<PRE>
+public void <B>setTargetPath</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;path)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getMappingCount()"><!-- --></A><H3>
+getMappingCount</H3>
+<PRE>
+public int <B>getMappingCount</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="map(org.eclipse.core.runtime.IPath, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+map</H3>
+<PRE>
+public <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A> <B>map</B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</A>&nbsp;sourcePath,
+                              <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="map(java.lang.String, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+map</H3>
+<PRE>
+public <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A> <B>map</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;sourcePath,
+                              <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="map(org.eclipse.emf.cdo.transfer.CDOTransferElement, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+map</H3>
+<PRE>
+public <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A> <B>map</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferElement</A>&nbsp;source,
+                              <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="map(org.eclipse.emf.cdo.transfer.CDOTransferElement, org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+map</H3>
+<PRE>
+protected <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A> <B>map</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferElement</A>&nbsp;source,
+                                 <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;parent,
+                                 <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unmap(org.eclipse.emf.cdo.transfer.CDOTransferMapping)"><!-- --></A><H3>
+unmap</H3>
+<PRE>
+protected void <B>unmap</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createMapping(org.eclipse.emf.cdo.transfer.CDOTransferElement, org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+createMapping</H3>
+<PRE>
+protected <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A> <B>createMapping</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferElement</A>&nbsp;source,
+                                           <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;parent,
+                                           <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createModelTransferContext()"><!-- --></A><H3>
+createModelTransferContext</H3>
+<PRE>
+protected <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ModelTransferContext.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransfer.ModelTransferContext</A> <B>createModelTransferContext</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getTransferType(org.eclipse.emf.cdo.transfer.CDOTransferElement)"><!-- --></A><H3>
+getTransferType</H3>
+<PRE>
+protected <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferType.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferType</A> <B>getTransferType</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferElement</A>&nbsp;source)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="validate(org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+validate</H3>
+<PRE>
+protected void <B>validate</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+                        <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="perform()"><!-- --></A><H3>
+perform</H3>
+<PRE>
+public void <B>perform</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="perform(org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+perform</H3>
+<PRE>
+public void <B>perform</B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="perform(org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+perform</H3>
+<PRE>
+protected void <B>perform</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+                       <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="performFolder(org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+performFolder</H3>
+<PRE>
+protected void <B>performFolder</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+                             <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="performModel(org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+performModel</H3>
+<PRE>
+protected void <B>performModel</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+                            <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="performBinary(org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+performBinary</H3>
+<PRE>
+protected void <B>performBinary</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+                             <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="performText(org.eclipse.emf.cdo.transfer.CDOTransferMapping, java.lang.String, org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
+performText</H3>
+<PRE>
+protected void <B>performText</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+                           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;encoding,
+                           <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="childrenChanged(org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.emf.cdo.transfer.CDOTransfer.ChildrenChangedEvent.Kind)"><!-- --></A><H3>
+childrenChanged</H3>
+<PRE>
+protected void <B>childrenChanged</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+                               <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;child,
+                               <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ChildrenChangedEvent.Kind.html" title="enum in org.eclipse.emf.cdo.transfer">CDOTransfer.ChildrenChangedEvent.Kind</A>&nbsp;kind)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="relativePathChanged(org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.core.runtime.IPath, org.eclipse.core.runtime.IPath)"><!-- --></A><H3>
+relativePathChanged</H3>
+<PRE>
+protected void <B>relativePathChanged</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+                                   <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</A>&nbsp;oldPath,
+                                   <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</A>&nbsp;newPath)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="transferTypeChanged(org.eclipse.emf.cdo.transfer.CDOTransferMapping, org.eclipse.emf.cdo.transfer.CDOTransferType, org.eclipse.emf.cdo.transfer.CDOTransferType)"><!-- --></A><H3>
+transferTypeChanged</H3>
+<PRE>
+protected void <B>transferTypeChanged</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferMapping.html" title="interface in org.eclipse.emf.cdo.transfer">CDOTransferMapping</A>&nbsp;mapping,
+                                   <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferType.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferType</A>&nbsp;oldType,
+                                   <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferType.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferType</A>&nbsp;newType)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CDOTransfer.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV CLASS&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransfer.ChildrenChangedEvent.html" title="class in org.eclipse.emf.cdo.transfer"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/emf/cdo/transfer/CDOTransfer.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="CDOTransfer.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

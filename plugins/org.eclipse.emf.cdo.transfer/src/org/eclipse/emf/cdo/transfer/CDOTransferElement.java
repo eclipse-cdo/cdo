@@ -20,6 +20,8 @@ import org.eclipse.core.runtime.Path;
 import java.io.InputStream;
 
 /**
+ * An abstraction of the elements (such as files or folders) of a {@link CDOTransferSystem transfer system}.
+ *
  * @author Eike Stepper
  * @since 4.2
  */

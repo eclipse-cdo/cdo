@@ -40,6 +40,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.events.ModifyEvent;
@@ -52,6 +53,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -62,6 +64,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * A {@link Composite composite} that lays out {@link Control controls} for the details of a single {@link CDOTransferMapping}.
+ *
  * @author Eike Stepper
  * @since 4.2
  */
@@ -553,6 +557,10 @@ public class TransferDetailsComposite extends Composite implements IListener
   }
 
   /**
+   * A reusable {@link StructuredContentProvider content provider} for the {@link ModelTransferContext#getUnmappedModels() unmapped models} of a {@link CDOTransfer transfer}.
+   * <p>
+   * The {@link StructuredViewer#setInput(Object) input} must be an instance of {@link CDOTransfer}.
+   *
    * @author Eike Stepper
    */
   public static class UnmappedModelsContentProvider extends StructuredContentProvider<CDOTransfer>
@@ -561,12 +569,14 @@ public class TransferDetailsComposite extends Composite implements IListener
     {
       CDOTransfer transfer = getInput();
       ModelTransferContext context = transfer.getModelTransferContext();
-      Set<Resource> resources = context.resolve();
+      Set<Resource> resources = context.getUnmappedModels();
       return resources.toArray(new Resource[resources.size()]);
     }
   }
 
   /**
+   * A reusable {@link LabelProvider label provider} for the {@link ModelTransferContext#getUnmappedModels() unmapped models} of a {@link CDOTransfer transfer}.
+   *
    * @author Eike Stepper
    */
   public static class UnmappedModelsLabelProvider extends LabelProvider implements IColorProvider

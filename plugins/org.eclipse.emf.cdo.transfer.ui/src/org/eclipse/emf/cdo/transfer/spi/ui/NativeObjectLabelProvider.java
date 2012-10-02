@@ -17,6 +17,9 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 /**
+ * A reusable implementation of a {@link ILabelProvider label provider} that delegates to another label provider
+ * for the extracted {@link CDOTransferElement#getNativeObject() native object} of an argument object.
+ *
  * @author Eike Stepper
  */
 public class NativeObjectLabelProvider extends LabelProvider

@@ -94,6 +94,10 @@ Packages that use <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.ht
 <TD>Client concepts like <A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>CDOObject</CODE></A> and <A HREF="../../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo"><CODE>CDOState</CODE></A>.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.compare"><B>org.eclipse.emf.cdo.compare</B></A></TD>
+<TD>Client concepts for integrating EMF Compare with CDO.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.net4j"><B>org.eclipse.emf.cdo.net4j</B></A></TD>
 <TD>Client concepts for dealing with Net4j-based sessions to remote repositories.&nbsp;</TD>
 </TR>
@@ -121,6 +125,11 @@ Packages that use <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.ht
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.transaction"><B>org.eclipse.emf.cdo.transaction</B></A></TD>
 <TD>Client concepts for dealing with transactions, distributed transactions and their save points.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.transfer.spi.repository"><B>org.eclipse.emf.cdo.transfer.spi.repository</B></A></TD>
+<TD>Client concepts for dealing with transfers of <A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>resources</CODE></A>
+ between <A HREF="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><CODE>systems</CODE></A>.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.ui"><B>org.eclipse.emf.cdo.ui</B></A></TD>
@@ -171,6 +180,60 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title=
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> this object is associated with, or <code>null</code> if this object is not
  associated with a view.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.compare"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A> in <A HREF="../../../../../../org/eclipse/emf/cdo/compare/package-summary.html">org.eclipse.emf.cdo.compare</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/emf/cdo/compare/package-summary.html">org.eclipse.emf.cdo.compare</A> with parameters of type <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/compare/CloseableComparison.html" title="interface in org.eclipse.emf.cdo.compare">CloseableComparison</A></CODE></FONT></TD>
+<TD><CODE><B>CDOCompareUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">compare</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
+        <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;right)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Same as <A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><CODE>compare(leftView, right, true)</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/compare/CloseableComparison.html" title="interface in org.eclipse.emf.cdo.compare">CloseableComparison</A></CODE></FONT></TD>
+<TD><CODE><B>CDOCompareUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)">compare</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
+        <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;right,
+        boolean&nbsp;tryThreeWay)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Takes a <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A>/<A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A>
+ and returns <CODE>matches</CODE> only for the <b>changed</b> elements of the entire content tree of its <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html#getRootResource()"><CODE>root resource</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Constructors in <A HREF="../../../../../../org/eclipse/emf/cdo/compare/package-summary.html">org.eclipse.emf.cdo.compare</A> with parameters of type <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.CDOComparisonScope.Minimal.html#CDOCompareUtil.CDOComparisonScope.Minimal(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView, java.util.Set)">CDOCompareUtil.CDOComparisonScope.Minimal</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
+                                          <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;rightView,
+                                          <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;originView,
+                                          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;&nbsp;ids)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -481,6 +544,45 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title=
 </TABLE>
 &nbsp;
 <P>
+<A NAME="org.eclipse.emf.cdo.transfer.spi.repository"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A> in <A HREF="../../../../../../org/eclipse/emf/cdo/transfer/spi/repository/package-summary.html">org.eclipse.emf.cdo.transfer.spi.repository</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/emf/cdo/transfer/spi/repository/package-summary.html">org.eclipse.emf.cdo.transfer.spi.repository</A> that return <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></CODE></FONT></TD>
+<TD><CODE><B>RepositoryTransferSystem.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/transfer/spi/repository/RepositoryTransferSystem.html#getView()">getView</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Constructors in <A HREF="../../../../../../org/eclipse/emf/cdo/transfer/spi/repository/package-summary.html">org.eclipse.emf.cdo.transfer.spi.repository</A> with parameters of type <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/transfer/spi/repository/RepositoryTransferSystem.html#RepositoryTransferSystem(org.eclipse.emf.cdo.view.CDOView)">RepositoryTransferSystem</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;view)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
 <A NAME="org.eclipse.emf.cdo.ui"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -535,7 +637,7 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title=
                      boolean&nbsp;viewOwned)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an implementation of CDOEditorInput interface</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an implementation of the CDOEditorInput interface.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -649,6 +751,15 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title=
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A></CODE></FONT></TD>
+<TD><CODE><B>CDOUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#wrapExternalObject(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.view.CDOView)">wrapExternalObject</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&nbsp;object,
+                   <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;view)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -701,10 +812,26 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title=
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></CODE></FONT></TD>
+<TD><CODE><B>CDOViewRegistry.Registration.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOViewRegistry.Registration.html#getView()">getView</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>CDOView</CODE></A> of this registration.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></CODE></FONT></TD>
 <TD><CODE><B>CDOViewContainer.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#getView(int)">getView</A></B>(int&nbsp;viewID)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></CODE></FONT></TD>
+<TD><CODE><B>CDOViewRegistry.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOViewRegistry.html#getView(int)">getView</A></B>(int&nbsp;id)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> with the given <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOViewRegistry.Registration.html#getID()"><CODE>ID</CODE></A> if it is registered, <code>null</code> otherwise.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -722,6 +849,14 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title=
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an array of all open <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>views</CODE></A> and <A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transactions</CODE></A> of this session.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>[]</CODE></FONT></TD>
+<TD><CODE><B>CDOViewRegistry.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOViewRegistry.html#getViews()">getViews</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns all registered <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>views</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -861,6 +996,14 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title=
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
 <TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</A> with parameters of type <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B>CDOViewRegistry.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOViewRegistry.html#getID(org.eclipse.emf.cdo.view.CDOView)">getID</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;view)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOViewRegistry.Registration.html#getID()"><CODE>ID</CODE></A> of the given <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> if it is registered, <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOViewRegistry.html#NOT_REGISTERED">0</A> otherwise.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">

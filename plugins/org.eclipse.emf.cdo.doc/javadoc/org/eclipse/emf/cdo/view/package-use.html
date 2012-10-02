@@ -94,6 +94,10 @@ Packages that use <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summa
 <TD>Client concepts like <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>CDOObject</CODE></A> and <A HREF="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo"><CODE>CDOState</CODE></A>.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.compare"><B>org.eclipse.emf.cdo.compare</B></A></TD>
+<TD>Client concepts for integrating EMF Compare with CDO.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.net4j"><B>org.eclipse.emf.cdo.net4j</B></A></TD>
 <TD>Client concepts for dealing with Net4j-based sessions to remote repositories.&nbsp;</TD>
 </TR>
@@ -121,6 +125,11 @@ Packages that use <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summa
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.transaction"><B>org.eclipse.emf.cdo.transaction</B></A></TD>
 <TD>Client concepts for dealing with transactions, distributed transactions and their save points.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.transfer.spi.repository"><B>org.eclipse.emf.cdo.transfer.spi.repository</B></A></TD>
+<TD>Client concepts for dealing with transfers of <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>resources</CODE></A>
+ between <A HREF="../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer"><CODE>systems</CODE></A>.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.ui"><B>org.eclipse.emf.cdo.ui</B></A></TD>
@@ -157,6 +166,22 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summary.html
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo"><B>CDOView</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A read-only view to the state of the object graph in the repository of the underlying <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> at a
+ specific <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><CODE>time</CODE></A> at a specific <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><CODE>branch</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.compare"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</A> used by <A HREF="../../../../../org/eclipse/emf/cdo/compare/package-summary.html">org.eclipse.emf.cdo.compare</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.compare"><B>CDOView</B></A></B>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A read-only view to the state of the object graph in the repository of the underlying <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> at a
@@ -346,6 +371,22 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summary.html
 </TABLE>
 &nbsp;
 <P>
+<A NAME="org.eclipse.emf.cdo.transfer.spi.repository"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</A> used by <A HREF="../../../../../org/eclipse/emf/cdo/transfer/spi/repository/package-summary.html">org.eclipse.emf.cdo.transfer.spi.repository</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.transfer.spi.repository"><B>CDOView</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A read-only view to the state of the object graph in the repository of the underlying <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> at a
+ specific <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><CODE>time</CODE></A> at a specific <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><CODE>branch</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
 <A NAME="org.eclipse.emf.cdo.ui"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -496,6 +537,12 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summary.html
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A global registry of <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view provider</CODE></A> implementations.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewRegistry.html#org.eclipse.emf.cdo.view"><B>CDOViewRegistry</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A global registry of all open <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>views</CODE></A> and <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transactions</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOViewSet.html#org.eclipse.emf.cdo.view"><B>CDOViewSet</B></A></B>

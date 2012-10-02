@@ -18,10 +18,15 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 
 /**
+ * A reusable {@link ITreeContentProvider tree content provider} for the {@link CDOTransferMapping mappings} of a {@link CDOTransfer transfer}.
+ * <p>
+ * The {@link StructuredViewer#setInput(Object) input} must be an instance of {@link CDOTransferMapping}, e.g., the return value of {@link CDOTransfer#getRootMapping()}.
+ *
  * @author Eike Stepper
  * @since 4.2
  */

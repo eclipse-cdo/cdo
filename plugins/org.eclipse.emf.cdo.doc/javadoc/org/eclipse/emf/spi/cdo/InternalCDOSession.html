@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html" title="interface in org.eclipse.emf.spi.cdo"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSessionConfiguration.html" title="interface in org.eclipse.emf.spi.cdo"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html" title="class in org.eclipse.emf.spi.cdo"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/spi/cdo/InternalCDOSession.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="InternalCDOSession.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -76,7 +76,7 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
 DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
@@ -136,6 +136,14 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Nested Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOSession.MergeData</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A data structure that holds all input and output values of <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#getMergeData(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><CODE>InternalCDOSession.getMergeData()</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.cdo.session.CDOSession"><!-- --></A>
@@ -201,7 +209,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#cacheRevisions(org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo)">cacheRevisions</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A>&nbsp;info)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 not used anymore.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -217,7 +225,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#createRevisionAvailabilityInfo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">createRevisionAvailabilityInfo</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 not used anymore.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -256,6 +264,17 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#getLobStore()">getLobStore</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOSession.MergeData</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#getMergeData(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)">getMergeData</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;target,
+             <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;source,
+             <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;sourceBase,
+             boolean&nbsp;computeChangeSets)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -309,6 +328,15 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">handleCommitNotification</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A>&nbsp;commitInfo)</CODE>
 
 <BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo, boolean)"><CODE>handleCommitNotification(CDOCommitInfo, boolean)</CODE></A></I></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo, boolean)">handleCommitNotification</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A>&nbsp;commitInfo,
+                         boolean&nbsp;clearResourcePathCache)</CODE>
+
+<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -343,6 +371,16 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo, org.eclipse.emf.spi.cdo.InternalCDOTransaction)">invalidate</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A>&nbsp;commitInfo,
            <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>&nbsp;sender)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo, org.eclipse.emf.spi.cdo.InternalCDOTransaction, boolean)"><CODE>invalidate(CDOCommitInfo, InternalCDOTransaction, boolean)</CODE></A></I></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo, org.eclipse.emf.spi.cdo.InternalCDOTransaction, boolean)">invalidate</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A>&nbsp;commitInfo,
+           <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>&nbsp;sender,
+           boolean&nbsp;clearResourcePathCache)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -1122,14 +1160,34 @@ void <B>handleBranchNotification</B>(<A HREF="../../../../../org/eclipse/emf/cdo
 <A NAME="handleCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)"><!-- --></A><H3>
 handleCommitNotification</H3>
 <PRE>
-void <B>handleCommitNotification</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A>&nbsp;commitInfo)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>void <B>handleCommitNotification</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A>&nbsp;commitInfo)</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo, boolean)"><CODE>handleCommitNotification(CDOCommitInfo, boolean)</CODE></A></I>
+<P>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="handleCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo, boolean)"><!-- --></A><H3>
+handleCommitNotification</H3>
+<PRE>
+void <B>handleCommitNotification</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A>&nbsp;commitInfo,
+                              boolean&nbsp;clearResourcePathCache)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -1155,15 +1213,36 @@ void <B>handleLockNotification</B>(<A HREF="../../../../../org/eclipse/emf/cdo/c
 <A NAME="invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo, org.eclipse.emf.spi.cdo.InternalCDOTransaction)"><!-- --></A><H3>
 invalidate</H3>
 <PRE>
-void <B>invalidate</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A>&nbsp;commitInfo,
-                <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>&nbsp;sender)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>void <B>invalidate</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A>&nbsp;commitInfo,
+                           <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>&nbsp;sender)</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo, org.eclipse.emf.spi.cdo.InternalCDOTransaction, boolean)"><CODE>invalidate(CDOCommitInfo, InternalCDOTransaction, boolean)</CODE></A></I>
+<P>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo, org.eclipse.emf.spi.cdo.InternalCDOTransaction, boolean)"><!-- --></A><H3>
+invalidate</H3>
+<PRE>
+void <B>invalidate</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A>&nbsp;commitInfo,
+                <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>&nbsp;sender,
+                boolean&nbsp;clearResourcePathCache)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -1272,8 +1351,11 @@ void <B>setMainBranchLocal</B>(boolean&nbsp;mainBranchLocal)</PRE>
 <A NAME="createRevisionAvailabilityInfo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><!-- --></A><H3>
 createRevisionAvailabilityInfo</H3>
 <PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A> <B>createRevisionAvailabilityInfo</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT><A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A> <B>createRevisionAvailabilityInfo</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint)</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 not used anymore.</I>
+<P>
 <DD><DL>
 </DL>
 </DD>
@@ -1288,14 +1370,36 @@ createRevisionAvailabilityInfo</H3>
 <A NAME="cacheRevisions(org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo)"><!-- --></A><H3>
 cacheRevisions</H3>
 <PRE>
-void <B>cacheRevisions</B>(<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A>&nbsp;info)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>void <B>cacheRevisions</B>(<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A>&nbsp;info)</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 not used anymore.</I>
+<P>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getMergeData(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><!-- --></A><H3>
+getMergeData</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOSession.MergeData</A> <B>getMergeData</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;target,
+                                          <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;source,
+                                          <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;sourceBase,
+                                          boolean&nbsp;computeChangeSets)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -1330,7 +1434,7 @@ void <B>cacheRevisions</B>(<A HREF="../../../../../org/eclipse/emf/cdo/spi/commo
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html" title="interface in org.eclipse.emf.spi.cdo"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSessionConfiguration.html" title="interface in org.eclipse.emf.spi.cdo"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html" title="class in org.eclipse.emf.spi.cdo"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/spi/cdo/InternalCDOSession.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="InternalCDOSession.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -1350,7 +1454,7 @@ void <B>cacheRevisions</B>(<A HREF="../../../../../org/eclipse/emf/cdo/spi/commo
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
 DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>

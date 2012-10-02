@@ -114,6 +114,7 @@
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/spi/common/model/*.java" />
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/spi/common/protocol/*.java" />
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/spi/common/revision/*.java" />
+				<include name="org.eclipse.emf.cdo.compare/src/org/eclipse/emf/cdo/compare/*.java" />
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/edit/*.java" />
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/eresource/provider/*.java" />
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/etypes/provider/*.java" />
@@ -141,6 +142,13 @@
 				<include name="org.eclipse.emf.cdo.server/src/org/eclipse/emf/cdo/server/mem/*.java" />
 				<include name="org.eclipse.emf.cdo.server/src/org/eclipse/emf/cdo/spi/server/*.java" />
 				<include name="org.eclipse.emf.cdo.team/src/org/eclipse/emf/cdo/team/*.java" />
+				<include name="org.eclipse.emf.cdo.transfer.repository/src/org/eclipse/emf/cdo/transfer/spi/repository/*.java" />
+				<include name="org.eclipse.emf.cdo.transfer.ui/src/org/eclipse/emf/cdo/transfer/spi/ui/*.java" />
+				<include name="org.eclipse.emf.cdo.transfer.ui/src/org/eclipse/emf/cdo/transfer/ui/*.java" />
+				<include name="org.eclipse.emf.cdo.transfer.ui/src/org/eclipse/emf/cdo/transfer/ui/swt/*.java" />
+				<include name="org.eclipse.emf.cdo.transfer.workspace/src/org/eclipse/emf/cdo/transfer/spi/workspace/*.java" />
+				<include name="org.eclipse.emf.cdo.transfer/src/org/eclipse/emf/cdo/spi/transfer/*.java" />
+				<include name="org.eclipse.emf.cdo.transfer/src/org/eclipse/emf/cdo/transfer/*.java" />
 				<include name="org.eclipse.emf.cdo.ui.ide/src/org/eclipse/emf/cdo/ui/ide/*.java" />
 				<include name="org.eclipse.emf.cdo.ui/src/org/eclipse/emf/cdo/ui/*.java" />
 				<include name="org.eclipse.emf.cdo.ui/src/org/eclipse/emf/cdo/ui/widgets/*.java" />
@@ -181,6 +189,9 @@
 			</group>
 			<group title="CDO Model Repository Client Admin Support">
 				<package name="org.eclipse.emf.cdo.admin" />
+			</group>
+			<group title="CDO Model Repository Client Compare Support">
+				<package name="org.eclipse.emf.cdo.compare" />
 			</group>
 			<group title="CDO Model Repository Client Edit Support">
 				<package name="org.eclipse.emf.cdo.edit" />
@@ -281,6 +292,21 @@
 			<group title="CDO Model Repository Server Security Support">
 				<package name="org.eclipse.emf.cdo.server.security" />
 				<package name="org.eclipse.emf.cdo.server.spi.security" />
+			</group>
+			<group title="CDO Transfer Framework">
+				<package name="org.eclipse.emf.cdo.spi.transfer" />
+				<package name="org.eclipse.emf.cdo.transfer" />
+			</group>
+			<group title="CDO Transfer Framework (Repository Support)">
+				<package name="org.eclipse.emf.cdo.transfer.spi.repository" />
+			</group>
+			<group title="CDO Transfer Framework (UI)">
+				<package name="org.eclipse.emf.cdo.transfer.spi.ui" />
+				<package name="org.eclipse.emf.cdo.transfer.ui" />
+				<package name="org.eclipse.emf.cdo.transfer.ui.swt" />
+			</group>
+			<group title="CDO Transfer Framework (Workspace Support)">
+				<package name="org.eclipse.emf.cdo.transfer.spi.workspace" />
 			</group>
 
 			<link href="${jdk.link}" />

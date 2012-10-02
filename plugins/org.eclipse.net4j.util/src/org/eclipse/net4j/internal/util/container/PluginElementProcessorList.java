@@ -14,8 +14,6 @@ import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
-import org.eclipse.core.runtime.CoreException;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -204,7 +202,7 @@ public class PluginElementProcessorList extends Lifecycle implements List<IEleme
     super.doDeactivate();
   }
 
-  private void doActivateOSGi() throws CoreException
+  private void doActivateOSGi() throws Exception
   {
     org.eclipse.core.runtime.IExtensionRegistry extensionRegistry = org.eclipse.core.runtime.Platform
         .getExtensionRegistry();

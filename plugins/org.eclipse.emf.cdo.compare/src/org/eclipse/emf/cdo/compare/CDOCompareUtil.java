@@ -28,6 +28,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.AbstractTreeIterator;
 import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.common.util.URI;
@@ -305,7 +306,16 @@ public final class CDOCompareUtil
 
       public Iterator<? extends EObject> getChildren(EObject eObject)
       {
-        return Iterators.filter(eObject.eAllContents(), this);
+        return new AbstractTreeIterator<EObject>(eObject, false)
+        {
+          private static final long serialVersionUID = 1L;
+
+          @Override
+          public Iterator<EObject> getChildren(Object object)
+          {
+            return Iterators.filter(((EObject)object).eContents().iterator(), Minimal.this);
+          }
+        };
       }
 
       public boolean apply(EObject input)

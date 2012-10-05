@@ -32,8 +32,6 @@ public abstract class CDOSessionFactory extends Factory
 {
   public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.sessions"; //$NON-NLS-1$
 
-  private static final String TRUE = Boolean.TRUE.toString();
-
   public CDOSessionFactory(String type)
   {
     super(PRODUCT_GROUP, type);
@@ -50,15 +48,8 @@ public abstract class CDOSessionFactory extends Factory
         throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOSessionFactory.1"), description)); //$NON-NLS-1$
       }
 
-      Map<String, String> result = CDOURIUtil.getParameters(query);
-      String repositoryName = result.get("repositoryName"); //$NON-NLS-1$
-      if (repositoryName == null)
-      {
-        throw new IllegalArgumentException("Repository name is missing: " + description);
-      }
-
-      boolean automaticPackageRegistry = TRUE.equals(result.get("automaticPackageRegistry")); //$NON-NLS-1$
-      return createSession(repositoryName, automaticPackageRegistry);
+      Map<String, String> parameters = CDOURIUtil.getParameters(query);
+      return createSession(uri, parameters);
     }
     catch (URISyntaxException ex)
     {
@@ -68,6 +59,13 @@ public abstract class CDOSessionFactory extends Factory
 
   /**
    * @since 2.0
+   * @deprecated As of 4.2 implement {@link #createSession(URI, Map)}.
    */
-  protected abstract InternalCDOSession createSession(String repositoryName, boolean automaticPackageRegistry);
+  @Deprecated
+  protected InternalCDOSession createSession(String repositoryName, boolean automaticPackageRegistry)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  protected abstract InternalCDOSession createSession(URI uri, Map<String, String> parameters);
 }

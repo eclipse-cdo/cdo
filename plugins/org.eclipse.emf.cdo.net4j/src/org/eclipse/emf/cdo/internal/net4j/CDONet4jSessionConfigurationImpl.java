@@ -127,6 +127,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     sessionImpl.setStreamWrapper(streamWrapper);
     sessionImpl.setConnector(connector);
     sessionImpl.setRepositoryName(repositoryName);
+    sessionImpl.setUserID(getUserID());
     sessionImpl.setSignalTimeout(signalTimeout);
   }
 

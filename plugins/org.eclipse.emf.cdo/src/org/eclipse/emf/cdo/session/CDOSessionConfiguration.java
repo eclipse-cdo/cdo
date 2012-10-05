@@ -26,7 +26,7 @@ import org.eclipse.net4j.util.event.INotifier;
  * <ul>
  * <li> {@link CDOSessionConfiguration.SessionOpenedEvent} after a session has been opened by this configuration.
  * </ul>
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -37,6 +37,16 @@ import org.eclipse.net4j.util.event.INotifier;
  */
 public interface CDOSessionConfiguration extends INotifier
 {
+  /**
+   * @since 4.2
+   */
+  public String getUserID();
+
+  /**
+   * @since 4.2
+   */
+  public void setUserID(String userID);
+
   /**
    * @see CDOSession.Options#isPassiveUpdateEnabled()
    * @since 3.0
@@ -78,7 +88,7 @@ public interface CDOSessionConfiguration extends INotifier
 
   /**
    * A special exception handler can be set <b>before</b> the session is opened and can not be changed thereafter.
-   * 
+   *
    * @see CDOSession#getExceptionHandler()
    */
   public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler);
@@ -92,7 +102,7 @@ public interface CDOSessionConfiguration extends INotifier
   /**
    * A special ID generator can be set <b>before</b> the session is opened and can not be changed thereafter. If not
    * <code>null</code>, the passed generator <b>must be</b> thread-safe.
-   * 
+   *
    * @see CDOSession#getIDGenerator()
    * @since 4.1
    */
@@ -107,7 +117,7 @@ public interface CDOSessionConfiguration extends INotifier
   /**
    * A special ID generator can be set <b>before</b> the session is opened and can not be changed thereafter. If not
    * <code>null</code>, the passed generator <b>must be</b> thread-safe.
-   * 
+   *
    * @see CDOSession#getFetchRuleManager()
    * @since 4.1
    */
@@ -143,7 +153,7 @@ public interface CDOSessionConfiguration extends INotifier
   /**
    * Fired from a {@link CDOSessionConfiguration session configuration} after a new {@link CDOSession session} has been
    * opened.
-   * 
+   *
    * @author Eike Stepper
    * @since 4.0
    * @noextend This interface is not intended to be extended by clients.

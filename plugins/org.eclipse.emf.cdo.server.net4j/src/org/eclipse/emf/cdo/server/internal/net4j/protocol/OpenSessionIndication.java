@@ -40,6 +40,8 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
 
   private String repositoryName;
 
+  private String userID;
+
   private boolean passiveUpdateEnabled;
 
   private PassiveUpdateMode passiveUpdateMode;
@@ -74,6 +76,12 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
     if (TRACER.isEnabled())
     {
       TRACER.format("Read repositoryName: {0}", repositoryName); //$NON-NLS-1$
+    }
+
+    userID = in.readString();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Read userID: {0}", userID); //$NON-NLS-1$
     }
 
     passiveUpdateEnabled = in.readBoolean();
@@ -121,6 +129,11 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
         // Skip response because the user has canceled the authentication
         out.writeInt(0);
         return;
+      }
+
+      if (session.getUserID() == null && userID != null)
+      {
+        session.setUserID(userID);
       }
 
       session.setPassiveUpdateEnabled(passiveUpdateEnabled);

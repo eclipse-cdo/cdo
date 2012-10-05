@@ -41,6 +41,11 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOPermissionP
 
   public InternalSessionManager getManager();
 
+  /**
+   * @since 4.2
+   */
+  public void setUserID(String userID);
+
   public InternalView[] getViews();
 
   public InternalView getView(int viewID);

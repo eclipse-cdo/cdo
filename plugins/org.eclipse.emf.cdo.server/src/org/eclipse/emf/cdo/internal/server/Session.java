@@ -158,6 +158,11 @@ public class Session extends Container<IView> implements InternalSession
     return userID;
   }
 
+  public void setUserID(String userID)
+  {
+    this.userID = userID;
+  }
+
   /**
    * @since 2.0
    */

@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.OpenSessionDialog;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.widgets.SessionComposite;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
@@ -26,8 +27,6 @@ import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
-
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -72,7 +71,14 @@ public final class OpenSessionAction extends LongRunningAction
       IManagedContainer container = getContainer();
       String productGroup = CDOSessionFactory.PRODUCT_GROUP;
       String description = sessionComposite.getSessionDescription();
-      InternalCDOSession session = (InternalCDOSession)container.getElement(productGroup, "cdo", description); //$NON-NLS-1$
+
+      String userID = org.eclipse.emf.internal.cdo.bundle.OM.PREF_USER_NAME.getValue();
+      if (userID != null)
+      {
+        description += "&userID=" + userID;
+      }
+
+      CDOSession session = (CDOSession)container.getElement(productGroup, "cdo", description); //$NON-NLS-1$
 
       if (sessionComposite.isAutomaticRegistry())
       {

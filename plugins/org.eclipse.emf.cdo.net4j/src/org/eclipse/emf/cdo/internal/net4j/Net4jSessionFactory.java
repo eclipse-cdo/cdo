@@ -23,6 +23,9 @@ import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
+import java.net.URI;
+import java.util.Map;
+
 /**
  * @author Eike Stepper
  */
@@ -35,14 +38,19 @@ public class Net4jSessionFactory extends CDOSessionFactory
     super(TYPE);
   }
 
-  /**
-   * @since 2.0
-   */
   @Override
-  protected InternalCDOSession createSession(String repositoryName, boolean automaticPackageRegistry)
+  protected InternalCDOSession createSession(URI uri, Map<String, String> parameters)
   {
+    String userID = parameters.get("userID"); //$NON-NLS-1$
+    String repositoryName = parameters.get("repositoryName"); //$NON-NLS-1$
+    if (repositoryName == null)
+    {
+      throw new IllegalArgumentException("Repository name is missing: " + uri);
+    }
+
     CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setRepositoryName(repositoryName);
+    configuration.setUserID(userID);
     configuration.getAuthenticator().setCredentialsProvider(getCredentialsProvider());
 
     // The session will be activated by the container

@@ -41,6 +41,8 @@ import org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration;
  */
 public abstract class CDOSessionConfigurationImpl extends Notifier implements InternalCDOSessionConfiguration
 {
+  private String userID;
+
   private boolean passiveUpdateEnabled = true;
 
   private PassiveUpdateMode passiveUpdateMode = PassiveUpdateMode.INVALIDATIONS;
@@ -92,6 +94,17 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
 
   public CDOSessionConfigurationImpl()
   {
+  }
+
+  public String getUserID()
+  {
+    return userID;
+  }
+
+  public void setUserID(String userID)
+  {
+    checkNotOpen();
+    this.userID = userID;
   }
 
   public boolean isPassiveUpdateEnabled()
@@ -221,7 +234,7 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
 
   /**
    * Returns the commit info manager. The commit info manager may be used to query commit infos.
-   * 
+   *
    * @return the commit info manager
    * @see CDOCommitInfoManager
    */
@@ -233,7 +246,7 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
   /**
    * Sets the commit info manager. The commit info manager may be used to query commit infos. May only be called as long
    * as the session's not opened yet
-   * 
+   *
    * @param commitInfoManager
    *          the new commit info manager
    * @see CDOCommitInfoManager

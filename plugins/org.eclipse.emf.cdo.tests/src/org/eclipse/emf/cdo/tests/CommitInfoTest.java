@@ -149,7 +149,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
+    assertEquals(commitInfo.getTimeStamp(), infos.get(0).getTimeStamp());
   }
 
   @Skips("MongoDB")
@@ -172,7 +172,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
+    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -195,7 +195,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
+    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
   }
 
   @Skips("MongoDB")
@@ -227,7 +227,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
+    assertEquals(commitInfo.getUserID(), infos.get(0).getUserID());
   }
 
   @Skips("MongoDB")
@@ -252,7 +252,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getComment(), infos.get(1).getComment());
+    assertEquals(commitInfo.getComment(), infos.get(0).getComment());
   }
 
   @Skips("MongoDB")
@@ -275,7 +275,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
+    assertEquals(commitInfo.getTimeStamp(), infos.get(0).getTimeStamp());
   }
 
   @Skips("MongoDB")
@@ -298,7 +298,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
+    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -354,7 +354,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
+    assertEquals(commitInfo.getUserID(), infos.get(0).getUserID());
   }
 
   @Skips("MongoDB")
@@ -380,7 +380,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getComment(), infos.get(1).getComment());
+    assertEquals(commitInfo.getComment(), infos.get(0).getComment());
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -518,7 +518,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
+    assertEquals(commitInfo.getTimeStamp(), infos.get(0).getTimeStamp());
   }
 
   @CleanRepositoriesBefore
@@ -537,7 +537,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
+    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -558,7 +558,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
+    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
   }
 
   @CleanRepositoriesBefore
@@ -587,7 +587,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
+    assertEquals(commitInfo.getUserID(), infos.get(0).getUserID());
   }
 
   @CleanRepositoriesBefore
@@ -609,7 +609,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getComment(), infos.get(1).getComment());
+    assertEquals(commitInfo.getComment(), infos.get(0).getComment());
   }
 
   @CleanRepositoriesBefore
@@ -628,7 +628,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
+    assertEquals(commitInfo.getTimeStamp(), infos.get(0).getTimeStamp());
   }
 
   @CleanRepositoriesBefore
@@ -647,7 +647,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
+    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -696,7 +696,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
+    assertEquals(commitInfo.getUserID(), infos.get(0).getUserID());
   }
 
   @CleanRepositoriesBefore
@@ -718,7 +718,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getComment(), infos.get(1).getComment());
+    assertEquals(commitInfo.getComment(), infos.get(0).getComment());
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -855,7 +855,67 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(1 + COMMITS, infos.size()); // Initial root resource commit + COMMITS
     for (int i = 0; i < COMMITS; i++)
     {
-      assertEquals(expected.get(i), infos.get(1 + i));
+      assertEquals(expected.get(COMMITS - i - 1), infos.get(i));
+    }
+  }
+
+  @CleanRepositoriesBefore
+  public void testMultipleEntriesByCountDown() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+
+    List<CDOCommitInfo> expected = new ArrayList<CDOCommitInfo>();
+    final int COMMITS = 20;
+    for (int i = 0; i < COMMITS; i++)
+    {
+      resource.getContents().add(getModel1Factory().createProduct1());
+      transaction.setCommitComment("Commit " + i);
+      expected.add(transaction.commit());
+    }
+
+    final int LOAD = 10;
+
+    Handler handler = new Handler();
+    session.getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, null, null, -LOAD, handler);
+
+    List<CDOCommitInfo> infos = handler.getInfos();
+
+    assertEquals(LOAD, infos.size()); // Initial root resource commit + COMMITS
+    for (int i = 0; i < LOAD; i++)
+    {
+      assertEquals(expected.get(COMMITS - i - 1), infos.get(i));
+    }
+  }
+
+  @CleanRepositoriesBefore
+  public void testMultipleEntriesByCountUp() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+
+    List<CDOCommitInfo> expected = new ArrayList<CDOCommitInfo>();
+    final int COMMITS = 20;
+    for (int i = 0; i < COMMITS; i++)
+    {
+      resource.getContents().add(getModel1Factory().createProduct1());
+      transaction.setCommitComment("Commit " + i);
+      expected.add(transaction.commit());
+    }
+
+    final int LOAD = 10;
+
+    Handler handler = new Handler();
+    session.getCommitInfoManager().getCommitInfos(null, expected.get(0).getTimeStamp(), null, null, LOAD, handler);
+
+    List<CDOCommitInfo> infos = handler.getInfos();
+
+    assertEquals(LOAD, infos.size()); // Initial root resource commit + COMMITS
+    for (int i = 0; i < LOAD; i++)
+    {
+      assertEquals(expected.get(i), infos.get(i));
     }
   }
 

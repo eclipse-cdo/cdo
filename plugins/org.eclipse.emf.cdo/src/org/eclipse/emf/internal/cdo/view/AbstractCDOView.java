@@ -91,6 +91,8 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
+import org.eclipse.core.runtime.Platform;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -281,9 +283,9 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     return branchPoint.getTimeStamp();
   }
 
-  protected void fireViewTargetChangedEvent(IListener[] listeners)
+  protected void fireViewTargetChangedEvent(CDOBranchPoint oldBranchPoint, IListener[] listeners)
   {
-    fireEvent(new ViewTargetChangedEvent(branchPoint), listeners);
+    fireEvent(new ViewTargetChangedEvent(oldBranchPoint, branchPoint), listeners);
   }
 
   public boolean isDirty()
@@ -1442,6 +1444,11 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     return !isActive();
   }
 
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  {
+    return Platform.getAdapterManager().getAdapter(this, adapter);
+  }
+
   @Override
   public String toString()
   {
@@ -1667,10 +1674,13 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
   {
     private static final long serialVersionUID = 1L;
 
-    private CDOBranchPoint branchPoint;
+    private final CDOBranchPoint oldBranchPoint;
 
-    public ViewTargetChangedEvent(CDOBranchPoint branchPoint)
+    private final CDOBranchPoint branchPoint;
+
+    public ViewTargetChangedEvent(CDOBranchPoint oldBranchPoint, CDOBranchPoint branchPoint)
     {
+      this.oldBranchPoint = CDOBranchUtil.copyBranchPoint(oldBranchPoint);
       this.branchPoint = CDOBranchUtil.copyBranchPoint(branchPoint);
     }
 
@@ -1678,6 +1688,11 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     public String toString()
     {
       return MessageFormat.format("CDOViewTargetChangedEvent: {0}", branchPoint); //$NON-NLS-1$
+    }
+
+    public CDOBranchPoint getOldBranchPoint()
+    {
+      return oldBranchPoint;
     }
 
     public CDOBranchPoint getBranchPoint()

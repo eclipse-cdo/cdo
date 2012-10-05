@@ -28,6 +28,8 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.monitor.NotifyingMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitorProgress;
 
+import org.eclipse.core.runtime.Platform;
+
 import java.io.IOException;
 import java.util.Set;
 
@@ -182,6 +184,11 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
   public long getTimeStamp() throws UnsupportedOperationException
   {
     return delegate.getTimeStamp();
+  }
+
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  {
+    return Platform.getAdapterManager().getAdapter(this, adapter);
   }
 
   @Override

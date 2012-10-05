@@ -7,8 +7,7 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
- org.eclipse.emf.cdo.transfer;bundle-version="[4.2.0,5.0.0)";visibility:=reexport,
+Require-Bundle: org.eclipse.emf.cdo.transfer;bundle-version="[4.2.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo;bundle-version="[4.2.0,5.0.0)";visibility:=reexport
 Export-Package: org.eclipse.emf.cdo.transfer.internal.repository.bundle;version="4.2.0";x-internal:=true,
  org.eclipse.emf.cdo.transfer.spi.repository;version="4.2.0"

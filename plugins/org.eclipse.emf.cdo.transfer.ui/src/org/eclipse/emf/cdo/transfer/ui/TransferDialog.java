@@ -73,8 +73,8 @@ public class TransferDialog extends TitleAreaDialog
     Composite area = (Composite)super.createDialogArea(parent);
 
     Composite container = new Composite(area, SWT.NONE);
-    container.setLayout(new FillLayout());
     container.setLayoutData(new GridData(GridData.FILL_BOTH));
+    container.setLayout(new FillLayout());
 
     transferComposite = new TransferComposite(container, transfer);
     return area;

@@ -11,10 +11,11 @@
 package org.eclipse.emf.cdo.internal.ui.dialogs;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite;
 import org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite;
 
-import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.ValidationContext;
 
@@ -23,15 +24,12 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
@@ -116,20 +114,22 @@ public class SelectBranchPointDialog extends TitleAreaDialog implements Validati
   protected void configureShell(Shell newShell)
   {
     super.configureShell(newShell);
-    newShell.setSize(500, 500);
+    newShell.setSize(700, 500);
   }
 
   @Override
   protected Control createDialogArea(Composite parent)
   {
-    Composite composite = (Composite)super.createDialogArea(parent);
-    composite.setLayoutData(UIUtil.createGridData());
-    composite.setLayout(new GridLayout(1, false));
+    Composite area = (Composite)super.createDialogArea(parent);
 
-    createBranchPointArea(composite);
-    UIUtil.setValidationContext(composite, aggregator);
+    Composite container = new Composite(area, SWT.NONE);
+    container.setLayoutData(new GridData(GridData.FILL_BOTH));
+    container.setLayout(new GridLayout(1, false));
 
-    return composite;
+    createBranchPointArea(container);
+    UIUtil.setValidationContext(container, aggregator);
+
+    return area;
   }
 
   protected void createBranchPointArea(Composite parent)
@@ -186,6 +186,17 @@ public class SelectBranchPointDialog extends TitleAreaDialog implements Validati
 
   protected void createCommitsTab(Composite parent)
   {
+    CommitHistoryComposite control = new CommitHistoryComposite(parent, SWT.NONE)
+    {
+      @Override
+      protected void commitInfoChanged(CDOCommitInfo newCommitInfo)
+      {
+        setBranchPoint(newCommitInfo);
+      }
+    };
+
+    control.setLayoutData(UIUtil.createGridData());
+    control.setInput(new CommitHistoryComposite.Input(session, null));
   }
 
   protected void createTagsTab(Composite parent)
@@ -203,67 +214,5 @@ public class SelectBranchPointDialog extends TitleAreaDialog implements Validati
 
   protected void validate()
   {
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static class WithName extends SelectBranchPointDialog
-  {
-    private String name;
-
-    private Text nameText;
-
-    public WithName(IWorkbenchPage page, CDOSession session, CDOBranchPoint branchPoint, boolean allowTimeStamp,
-        String name)
-    {
-      super(page, session, branchPoint, allowTimeStamp);
-      this.name = StringUtil.safe(name);
-    }
-
-    public String getName()
-    {
-      return name;
-    }
-
-    public void setName(String name)
-    {
-      this.name = name;
-      validate();
-    }
-
-    public Text getNameText()
-    {
-      return nameText;
-    }
-
-    @Override
-    protected void createBranchPointArea(Composite parent)
-    {
-      GridLayout gridLayout = UIUtil.createGridLayout(2);
-      gridLayout.marginHeight = 5;
-      gridLayout.horizontalSpacing = 5;
-
-      Composite composite = new Composite(parent, SWT.NONE);
-      composite.setLayoutData(UIUtil.createGridData(true, false));
-      composite.setLayout(gridLayout);
-
-      Label label = new Label(composite, SWT.NONE);
-      label.setLayoutData(UIUtil.createGridData(false, false));
-      label.setText("Name:");
-
-      nameText = new Text(composite, SWT.BORDER);
-      nameText.setLayoutData(UIUtil.createGridData(true, false));
-      nameText.setText(name);
-      nameText.addModifyListener(new ModifyListener()
-      {
-        public void modifyText(ModifyEvent e)
-        {
-          setName(nameText.getText());
-        }
-      });
-
-      super.createBranchPointArea(parent);
-    }
   }
 }

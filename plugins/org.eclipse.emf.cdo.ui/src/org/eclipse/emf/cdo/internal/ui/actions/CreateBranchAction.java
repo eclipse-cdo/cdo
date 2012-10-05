@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.internal.ui.dialogs.SelectBranchPointDialog;
+import org.eclipse.emf.cdo.internal.ui.dialogs.CreateBranchDialog;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
@@ -50,7 +50,7 @@ public class CreateBranchAction extends SessionAction
   @Override
   protected void preRun() throws Exception
   {
-    SelectBranchPointDialog.WithName dialog = new SelectBranchPointDialog.WithName(getPage(), getSession(), null, true,
+    CreateBranchDialog dialog = new CreateBranchDialog(getPage(), getSession(), null, true,
         null)
     {
       @Override

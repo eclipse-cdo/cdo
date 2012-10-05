@@ -27,6 +27,8 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.options.IOptionsContainer;
 
+import org.eclipse.core.runtime.Platform;
+
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -213,6 +215,11 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   {
     checkOpen();
     changeSubscriptionIDs.clear();
+  }
+
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  {
+    return Platform.getAdapterManager().getAdapter(this, adapter);
   }
 
   @Override

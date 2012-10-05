@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.common.branch;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
@@ -33,9 +34,9 @@ import java.util.Map;
  */
 public class CDOBranchManagerImpl extends Container<CDOBranch> implements InternalCDOBranchManager
 {
-  private BranchLoader branchLoader;
+  private CDOCommonRepository repository;
 
-  private CDOTimeProvider timeProvider;
+  private BranchLoader branchLoader;
 
   private InternalCDOBranch mainBranch;
 
@@ -43,6 +44,16 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
 
   public CDOBranchManagerImpl()
   {
+  }
+
+  public CDOCommonRepository getRepository()
+  {
+    return repository;
+  }
+
+  public void setRepository(CDOCommonRepository repository)
+  {
+    this.repository = repository;
   }
 
   public BranchLoader getBranchLoader()
@@ -58,12 +69,13 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
 
   public CDOTimeProvider getTimeProvider()
   {
-    return timeProvider;
+    return repository;
   }
 
+  @Deprecated
   public void setTimeProvider(CDOTimeProvider timeProvider)
   {
-    this.timeProvider = timeProvider;
+    throw new UnsupportedOperationException();
   }
 
   public void initMainBranch(boolean local, long timeStamp)
@@ -218,8 +230,8 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
+    checkState(repository, "repository"); //$NON-NLS-1$
     checkState(branchLoader, "branchLoader"); //$NON-NLS-1$
-    checkState(timeProvider, "timeProvider"); //$NON-NLS-1$
   }
 
   /**

@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
@@ -208,7 +209,8 @@ public class CDOViewImpl extends AbstractCDOView
                   "timeStamp ({0}) < repository creation time ({1})", CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(creationTimeStamp))); //$NON-NLS-1$
     }
 
-    if (branchPoint.equals(getBranchPoint()))
+    CDOBranchPoint oldBranchPoint = CDOBranchUtil.copyBranchPoint(getBranchPoint());
+    if (branchPoint.equals(oldBranchPoint))
     {
       return false;
     }
@@ -243,7 +245,7 @@ public class CDOViewImpl extends AbstractCDOView
     IListener[] listeners = getListeners();
     if (listeners != null)
     {
-      fireViewTargetChangedEvent(listeners);
+      fireViewTargetChangedEvent(oldBranchPoint, listeners);
     }
 
     return true;

@@ -15,14 +15,13 @@ package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewContainer;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * Can open new {@link CDOTransaction transactions} and provide access to openend transactions.
- * 
+ *
  * @author Eike Stepper
  * @since 4.1
  * @noextend This interface is not intended to be extended by clients.
@@ -33,12 +32,19 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 public interface CDOTransactionContainer extends CDOViewContainer
 {
   /**
-   * Returns an array of all open {@link CDOView views} and {@link CDOTransaction transactions} of this session.
-   * 
+   * Returns an array of all open {@link CDOTransaction transactions} of this session.
+   *
    * @see #openView()
    * @see #openTransaction()
    */
   public CDOTransaction[] getTransactions();
+
+  /**
+   * Returns an array of all {@link CDOTransaction transactions} of this session that are open on the given branch.
+   *
+   * @since 4.2
+   */
+  public CDOTransaction[] getTransactions(CDOBranch branch);
 
   /**
    * @since 4.1
@@ -47,7 +53,7 @@ public interface CDOTransactionContainer extends CDOViewContainer
 
   /**
    * Opens and returns a new {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set}.
-   * 
+   *
    * @see #openTransaction()
    * @since 4.1
    */
@@ -55,7 +61,7 @@ public interface CDOTransactionContainer extends CDOViewContainer
 
   /**
    * Opens and returns a new {@link CDOTransaction transaction} on a new EMF {@link ResourceSet resource set}.
-   * 
+   *
    * @see #openTransaction()
    * @since 4.0
    */
@@ -63,7 +69,7 @@ public interface CDOTransactionContainer extends CDOViewContainer
 
   /**
    * Opens and returns a new {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set}.
-   * 
+   *
    * @see #openTransaction()
    * @since 3.0
    */
@@ -71,7 +77,7 @@ public interface CDOTransactionContainer extends CDOViewContainer
 
   /**
    * Opens and returns a new {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set}.
-   * 
+   *
    * @see #openTransaction()
    * @since 3.0
    */
@@ -81,7 +87,7 @@ public interface CDOTransactionContainer extends CDOViewContainer
    * Opens and returns a new {@link CDOTransaction transaction} on a new EMF {@link ResourceSet resource set}.
    * <p>
    * Same as calling <code>openTransaction(new ResourceSetImpl())</code>.
-   * 
+   *
    * @see #openTransaction(ResourceSet)
    * @since 3.0
    */
@@ -91,7 +97,7 @@ public interface CDOTransactionContainer extends CDOViewContainer
    * Opens and returns a new {@link CDOTransaction transaction} on a new EMF {@link ResourceSet resource set}.
    * <p>
    * Same as calling <code>openTransaction(new ResourceSetImpl())</code>.
-   * 
+   *
    * @see #openTransaction(ResourceSet)
    */
   public CDOTransaction openTransaction();
@@ -102,7 +108,7 @@ public interface CDOTransactionContainer extends CDOViewContainer
    * CDOTransaction.enableDurableLocking(true)}.
    * <p>
    * Same as calling <code>openTransaction(durableLockingID, new ResourceSetImpl())</code>.
-   * 
+   *
    * @see #openTransaction(String,ResourceSet)
    * @since 4.0
    */
@@ -112,7 +118,7 @@ public interface CDOTransactionContainer extends CDOViewContainer
    * Opens and returns a {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set} by
    * resuming a transaction that has previously been made durable by calling
    * {@link CDOTransaction#enableDurableLocking(boolean) CDOTransaction.enableDurableLocking(true)}.
-   * 
+   *
    * @see #openTransaction(String)
    * @since 4.0
    */

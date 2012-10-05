@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
@@ -71,6 +72,8 @@ import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
+
+import org.eclipse.core.runtime.PlatformObject;
 
 import java.util.Collection;
 import java.util.List;
@@ -423,7 +426,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   /**
    * @author Eike Stepper
    */
-  private final class ServerCDOSession implements InternalCDOSession, CDORepositoryInfo
+  private final class ServerCDOSession extends PlatformObject implements InternalCDOSession, CDORepositoryInfo
   {
     private InternalSession internalSession;
 
@@ -433,6 +436,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     {
       this.internalSession = internalSession;
       repository = internalSession.getManager().getRepository();
+    }
+
+    public CDOSession getSession()
+    {
+      return this;
     }
 
     public CDOView[] getElements()
@@ -448,6 +456,21 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     public InternalCDOTransaction[] getTransactions()
     {
       return new InternalCDOTransaction[0];
+    }
+
+    public InternalCDOTransaction[] getTransactions(CDOBranch branch)
+    {
+      return new InternalCDOTransaction[0];
+    }
+
+    public CDOView[] getViews(CDOBranch branch)
+    {
+      if (getBranch() == branch)
+      {
+        return getViews();
+      }
+
+      return new CDOView[0];
     }
 
     public CDOView[] getViews()

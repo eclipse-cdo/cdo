@@ -122,6 +122,8 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import org.eclipse.core.runtime.Platform;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -1194,6 +1196,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   public void fireInvalidationEvent(InternalCDOTransaction sender, CDOCommitInfo commitInfo)
   {
     fireEvent(new InvalidationEvent(sender, commitInfo));
+  }
+
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  {
+    return Platform.getAdapterManager().getAdapter(this, adapter);
   }
 
   @Override

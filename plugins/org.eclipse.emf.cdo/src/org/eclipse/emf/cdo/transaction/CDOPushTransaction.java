@@ -47,6 +47,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -831,6 +832,20 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public Set<? extends EObject> getCommittables()
   {
     return delegate.getCommittables();
+  }
+
+  /**
+   * @since 4.2
+   */
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  {
+    return Platform.getAdapterManager().getAdapter(this, adapter);
+  }
+
+  @Override
+  public String toString()
+  {
+    return delegate.toString();
   }
 
   public static File createTempFile(CDOTransaction transaction) throws IOException

@@ -16,9 +16,11 @@ import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.options.IOptionsEvent;
 import org.eclipse.net4j.util.security.IUserAware;
 
+import org.eclipse.core.runtime.IAdaptable;
+
 /**
  * Abstracts the information about CDO sessions that is common to both client and server side.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -28,7 +30,7 @@ import org.eclipse.net4j.util.security.IUserAware;
  * @apiviz.has {@link CDOCommonSession.Options}
  * @apiviz.uses {@link CDOCommonRepository} - - connectsTo
  */
-public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeable
+public interface CDOCommonSession extends IAdaptable, IUserAware, IOptionsContainer, Closeable
 {
   public int getSessionID();
 
@@ -43,7 +45,7 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
 
   /**
    * Encapsulates the configuration options of CDO sessions that are common to both client and server side.
-   * 
+   *
    * @author Simon McDuff
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
@@ -54,7 +56,7 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
   {
     /**
      * Returns the {@link CDOCommonSession session} of this options object.
-     * 
+     *
      * @since 4.0
      */
     public CDOCommonSession getContainer();
@@ -75,7 +77,7 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
      * will be refreshed.
      * <p>
      * When enabled again, a refresh will be automatically performed to be in sync with the server.
-     * 
+     *
      * @since 3.0
      */
     public void setPassiveUpdateEnabled(boolean enabled);
@@ -103,7 +105,7 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
     /**
      * Enumerates the possible {@link CDOCommonSession.Options#getPassiveUpdateMode() passive update modes} of a CDO
      * session.
-     * 
+     *
      * @author Eike Stepper
      * @since 3.0
      */
@@ -130,7 +132,7 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
     /**
      * Enumerates the possible {@link CDOCommonSession.Options#getLockNotificationMode() lock notification modes} of a
      * CDO session.
-     * 
+     *
      * @since 4.1
      */
     public enum LockNotificationMode
@@ -155,7 +157,7 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
     /**
      * An {@link IOptionsEvent options event} fired when the {@link PassiveUpdateMode passive update mode} of a CDO
      * session has changed.
-     * 
+     *
      * @author Eike Stepper
      * @since 3.0
      */
@@ -173,7 +175,7 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
     /**
      * An {@link IOptionsEvent options event} fired when the {@link LockNotificationMode lock notification mode} of a
      * CDO session has changed.
-     * 
+     *
      * @author Caspar De Groot
      * @since 4.1
      */

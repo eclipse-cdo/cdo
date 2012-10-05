@@ -541,6 +541,11 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
   public void loadCommitInfos(final CDOBranch branch, final long startTime, final long endTime,
       CDOCommitInfoHandler handler)
   {
+    if (endTime < CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      throw new IllegalArgumentException("Counting not supported");
+    }
+
     ObjectSet<DB4OCommitInfo> resultSet = getObjectContainer().query(new Predicate<DB4OCommitInfo>()
     {
       private static final long serialVersionUID = 1L;

@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
@@ -43,6 +44,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
+import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -54,7 +56,12 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.collection.AbstractFilteredIterator;
+import org.eclipse.net4j.util.collection.BidirectionalIterator;
+import org.eclipse.net4j.util.collection.LimitedIterator;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.collection.Predicate;
+import org.eclipse.net4j.util.collection.PredicateIterator;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -81,6 +88,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -254,28 +262,96 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
     return count;
   }
 
-  public synchronized void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
+  public synchronized void loadCommitInfos(final CDOBranch branch, long startTime, final long endTime,
+      CDOCommitInfoHandler handler)
   {
     InternalCDOCommitInfoManager manager = getRepository().getCommitInfoManager();
-    for (int i = 0; i < commitInfos.size(); i++)
+
+    if (startTime == endTime && endTime > CDOBranchPoint.UNSPECIFIED_DATE)
     {
-      CommitInfo info = commitInfos.get(i);
-      if (startTime != CDOBranchPoint.UNSPECIFIED_DATE && info.getTimeStamp() < startTime)
+      int index = Collections.binarySearch(commitInfos, new CommitInfoKey(startTime));
+      if (index >= 0)
       {
-        continue;
+        CommitInfo commitInfo = commitInfos.get(index);
+        commitInfo.handle(manager, handler);
       }
 
-      if (endTime != CDOBranchPoint.UNSPECIFIED_DATE && info.getTimeStamp() > endTime)
-      {
-        continue;
-      }
+      return;
+    }
 
-      if (branch != null && !ObjectUtil.equals(info.getBranch(), branch))
-      {
-        continue;
-      }
+    int count = CDOCommitInfoUtil.decodeCount(endTime);
+    int startIndex;
+    if (startTime == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      startIndex = commitInfos.size();
+    }
+    else
+    {
+      startIndex = Collections.binarySearch(commitInfos, new CommitInfoKey(startTime));
+    }
 
-      info.handle(manager, handler);
+    boolean match = true;
+    if (startIndex < 0)
+    {
+      startIndex = -(startIndex + 1);
+      match = false;
+    }
+
+    boolean counting = false;
+    boolean backward = false;
+    if (endTime < CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      counting = true;
+      if (count < 0)
+      {
+        backward = true;
+        if (!match)
+        {
+          --startIndex;
+        }
+      }
+    }
+    else
+    {
+      if (endTime <= startTime)
+      {
+        backward = true;
+        if (!match)
+        {
+          --startIndex;
+        }
+      }
+    }
+
+    ListIterator<CommitInfo> listIterator = commitInfos.listIterator(startIndex);
+    Iterator<CommitInfo> iterator = new BidirectionalIterator<CommitInfo>(listIterator, backward);
+
+    if (counting)
+    {
+      iterator = new LimitedIterator<CommitInfo>(iterator, Math.abs(count));
+    }
+    else if (startTime != CDOBranchPoint.UNSPECIFIED_DATE || endTime != CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      Predicate<CDOTimeProvider> predicate = backward ? new DownTo(endTime) : new UpTo(endTime);
+      iterator = new PredicateIterator<CommitInfo>(iterator, predicate);
+    }
+
+    if (branch != null)
+    {
+      iterator = new AbstractFilteredIterator<CommitInfo>(iterator)
+      {
+        @Override
+        protected boolean isValid(CommitInfo element)
+        {
+          return element.getBranch() == branch;
+        }
+      };
+    }
+
+    while (iterator.hasNext())
+    {
+      CommitInfo commitInfo = iterator.next();
+      commitInfo.handle(manager, handler);
     }
   }
 
@@ -1204,6 +1280,42 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
   /**
    * @author Eike Stepper
    */
+  private static final class UpTo implements Predicate<CDOTimeProvider>
+  {
+    private final long timeStamp;
+
+    public UpTo(long timeStamp)
+    {
+      this.timeStamp = timeStamp;
+    }
+
+    public boolean apply(CDOTimeProvider commitInfo)
+    {
+      return commitInfo.getTimeStamp() <= timeStamp;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class DownTo implements Predicate<CDOTimeProvider>
+  {
+    private final long timeStamp;
+
+    public DownTo(long timeStamp)
+    {
+      this.timeStamp = timeStamp;
+    }
+
+    public boolean apply(CDOTimeProvider commitInfo)
+    {
+      return commitInfo.getTimeStamp() >= timeStamp;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   private static final class ListKey
   {
     private CDOID id;
@@ -1259,11 +1371,32 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
   /**
    * @author Eike Stepper
    */
-  private static final class CommitInfo
+  private static class CommitInfoKey implements CDOTimeProvider, Comparable<CommitInfoKey>
+  {
+    private long timeStamp;
+
+    public CommitInfoKey(long timeStamp)
+    {
+      this.timeStamp = timeStamp;
+    }
+
+    public long getTimeStamp()
+    {
+      return timeStamp;
+    }
+
+    public int compareTo(CommitInfoKey o)
+    {
+      return CDOCommonUtil.compareTimeStamps(timeStamp, o.timeStamp);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class CommitInfo extends CommitInfoKey
   {
     private CDOBranch branch;
-
-    private long timeStamp;
 
     private long previousTimeStamp;
 
@@ -1273,8 +1406,8 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
 
     public CommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment)
     {
+      super(timeStamp);
       this.branch = branch;
-      this.timeStamp = timeStamp;
       this.previousTimeStamp = previousTimeStamp;
       this.userID = userID;
       this.comment = comment;
@@ -1285,22 +1418,18 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
       return branch;
     }
 
-    public long getTimeStamp()
-    {
-      return timeStamp;
-    }
-
     public void handle(InternalCDOCommitInfoManager manager, CDOCommitInfoHandler handler)
     {
-      CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null);
+      CDOCommitInfo commitInfo = manager.createCommitInfo(branch, getTimeStamp(), previousTimeStamp, userID, comment,
+          null);
       handler.handleCommitInfo(commitInfo);
     }
 
     @Override
     public String toString()
     {
-      return MessageFormat.format("CommitInfo[{0}, {1}, {2}, {3}, {4}]", branch, timeStamp, previousTimeStamp, userID,
-          comment);
+      return MessageFormat.format("CommitInfo[{0}, {1}, {2}, {3}, {4}]", branch, getTimeStamp(), previousTimeStamp,
+          userID, comment);
     }
   }
 }

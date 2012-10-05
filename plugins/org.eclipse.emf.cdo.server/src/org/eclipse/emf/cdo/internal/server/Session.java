@@ -56,6 +56,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import org.eclipse.core.runtime.Platform;
+
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Set;
@@ -552,6 +554,11 @@ public class Session extends Container<IView> implements InternalSession
     {
       protocol.sendRemoteMessageNotification(sender, message);
     }
+  }
+
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  {
+    return Platform.getAdapterManager().getAdapter(this, adapter);
   }
 
   @Override

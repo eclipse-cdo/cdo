@@ -23,9 +23,9 @@ import java.text.MessageFormat;
  */
 public class CDOBranchPointImpl implements CDOBranchPoint, Comparable<CDOBranchPoint>
 {
-  private CDOBranch branch;
+  private final CDOBranch branch;
 
-  private long timeStamp;
+  private final long timeStamp;
 
   public CDOBranchPointImpl(CDOBranch branch, long timeStamp)
   {

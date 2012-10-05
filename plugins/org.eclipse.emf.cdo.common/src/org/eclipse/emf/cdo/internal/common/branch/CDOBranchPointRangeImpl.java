@@ -20,9 +20,9 @@ import java.text.MessageFormat;
  */
 public class CDOBranchPointRangeImpl implements CDOBranchPointRange
 {
-  private CDOBranchPoint startPoint;
+  private final CDOBranchPoint startPoint;
 
-  private CDOBranchPoint endPoint;
+  private final CDOBranchPoint endPoint;
 
   public CDOBranchPointRangeImpl(CDOBranchPoint startPoint, CDOBranchPoint endPoint)
   {

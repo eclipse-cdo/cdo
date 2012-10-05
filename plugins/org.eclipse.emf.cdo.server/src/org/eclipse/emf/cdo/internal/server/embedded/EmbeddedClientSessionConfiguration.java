@@ -22,6 +22,8 @@ import org.eclipse.net4j.util.CheckUtil;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
+import org.eclipse.core.runtime.PlatformObject;
+
 import java.util.Set;
 
 /**
@@ -68,13 +70,18 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
   /**
    * @author Eike Stepper
    */
-  protected static class RepositoryInfo implements org.eclipse.emf.cdo.session.CDORepositoryInfo
+  protected static class RepositoryInfo extends PlatformObject implements org.eclipse.emf.cdo.session.CDORepositoryInfo
   {
     private EmbeddedClientSession session;
 
     public RepositoryInfo(EmbeddedClientSession session)
     {
       this.session = session;
+    }
+
+    public EmbeddedClientSession getSession()
+    {
+      return session;
     }
 
     public String getName()

@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 
 /**
  * A {@link CDOViewEvent view event} fired when the branch point of a {@link CDOView view} has changed.
- * 
+ *
  * @author Victor Roldan Betancort
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
@@ -23,5 +23,10 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
  */
 public interface CDOViewTargetChangedEvent extends CDOViewEvent
 {
+  /**
+   * @since 4.2
+   */
+  public CDOBranchPoint getOldBranchPoint();
+
   public CDOBranchPoint getBranchPoint();
 }

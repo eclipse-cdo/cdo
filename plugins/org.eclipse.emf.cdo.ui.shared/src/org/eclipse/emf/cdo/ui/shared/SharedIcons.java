@@ -146,6 +146,21 @@ public class SharedIcons
 
   public static final String OBJ_BRANCH = OBJ + "branch.png"; //$NON-NLS-1$
 
+  /**
+   * @since 4.1
+   */
+  public static final String OBJ_COMMIT = OBJ + "commit.gif"; //$NON-NLS-1$
+
+  /**
+   * @since 4.1
+   */
+  public static final String OBJ_PERSON = OBJ + "person.gif"; //$NON-NLS-1$
+
+  /**
+   * @since 4.1
+   */
+  public static final String OBJ_PERSON_ME = OBJ + "person-me.gif"; //$NON-NLS-1$
+
   private static final String VIEW = "view16/"; //$NON-NLS-1$
 
   public static final String VIEW_SESSIONS = VIEW + "cdo_sessions" + IMAGE_FORMAT_GIF; //$NON-NLS-1$

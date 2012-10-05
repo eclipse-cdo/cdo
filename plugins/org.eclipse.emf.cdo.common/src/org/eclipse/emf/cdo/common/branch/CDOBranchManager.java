@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.common.branch;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
+
 import org.eclipse.net4j.util.event.INotifier;
 
 /**
@@ -30,7 +32,7 @@ import org.eclipse.net4j.util.event.INotifier;
  * <li> <code>org.eclipse.emf.cdo.session.CDOSession</code>
  * <li> <code>org.eclipse.emf.cdo.server.IRepository</code>
  * </ul>
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
@@ -41,6 +43,13 @@ import org.eclipse.net4j.util.event.INotifier;
  */
 public interface CDOBranchManager extends INotifier
 {
+  /**
+   * Returns the repository this branch manager is associated with.
+   *
+   * @since 4.2
+   */
+  public CDOCommonRepository getRepository();
+
   /**
    * Returns the main branch of the branch tree managed by this branch manager.
    * <p>
@@ -61,7 +70,7 @@ public interface CDOBranchManager extends INotifier
 
   /**
    * Returns the branch with the given absolute path.
-   * 
+   *
    * @param path
    *          A concatenation of the names of all branches from the {@link #getMainBranch() main branch} to the
    *          requested branch, separated by {@link CDOBranch#PATH_SEPARATOR slashes} ("/" characters). Example:

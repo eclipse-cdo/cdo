@@ -32,7 +32,9 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -68,10 +70,37 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
    */
   public InternalCDOView[] getViews()
   {
+    return getViews(null);
+  }
+
+  public InternalCDOView[] getViews(CDOBranch branch)
+  {
+    List<InternalCDOView> views = getViews(branch, false);
+    return views.toArray(new InternalCDOView[views.size()]);
+  }
+
+  protected List<InternalCDOView> getViews(CDOBranch branch, boolean writeable)
+  {
     checkActive();
     synchronized (views)
     {
-      return views.toArray(new InternalCDOView[views.size()]);
+      List<InternalCDOView> result = new ArrayList<InternalCDOView>();
+      for (InternalCDOView view : views)
+      {
+        if (branch != null && branch != view.getBranch())
+        {
+          continue;
+        }
+
+        if (writeable && view.isReadOnly())
+        {
+          continue;
+        }
+
+        result.add(view);
+      }
+
+      return result;
     }
   }
 

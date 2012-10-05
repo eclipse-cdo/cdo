@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.common.branch;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
@@ -32,12 +33,21 @@ import java.io.IOException;
  */
 public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
 {
+  /**
+   * @since 4.2
+   */
+  public void setRepository(CDOCommonRepository repository);
+
   public BranchLoader getBranchLoader();
 
   public void setBranchLoader(BranchLoader branchLoader);
 
   public CDOTimeProvider getTimeProvider();
 
+  /**
+   * @deprecated As of 4.2 replaced by {@link #setRepository(CDOCommonRepository)}
+   */
+  @Deprecated
   public void setTimeProvider(CDOTimeProvider timeProvider);
 
   /**

@@ -11,11 +11,12 @@
 package org.eclipse.emf.cdo.common.branch;
 
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 
 /**
  * A {@link #getTimeStamp() point in time} in a particular {@link #getBranch() branch}.
- * 
+ *
  * @see CDOCommitInfo
  * @see CDOBranchTag
  * @see CDOBranch#getBase()
@@ -28,18 +29,18 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
  * @noimplement This interface is not intended to be implemented by clients.
  * @apiviz.has {@link CDOBranch}
  */
-public interface CDOBranchPoint
+public interface CDOBranchPoint extends CDOTimeProvider
 {
   /**
    * The fixed special time stamp <i>unspecified</i>.
-   * 
+   *
    * @see CDOBranch#getHead()
    */
   public static final long UNSPECIFIED_DATE = 0;
 
   /**
    * The fixed special time stamp <i>invalid</i>.
-   * 
+   *
    * @since 4.0
    */
   public static final long INVALID_DATE = -1;

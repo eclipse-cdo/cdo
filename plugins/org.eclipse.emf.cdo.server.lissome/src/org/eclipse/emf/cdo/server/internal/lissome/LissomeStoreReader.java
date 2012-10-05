@@ -328,6 +328,11 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
 
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, final CDOCommitInfoHandler handler)
   {
+    if (endTime < CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      throw new IllegalArgumentException("Counting not supported");
+    }
+
     InternalCDOCommitInfoManager commitInfoManager = getStore().getRepository().getCommitInfoManager();
     Optimizer optimizer = getStore().getOptimizer();
     OptimizerTask[] tasks = optimizer.getTasks();

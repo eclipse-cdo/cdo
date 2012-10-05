@@ -26,6 +26,8 @@ import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.om.monitor.NotifyingMonitor;
 
+import org.eclipse.core.runtime.Platform;
+
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -200,6 +202,11 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
     }
 
     return configuration.openNet4jSession();
+  }
+
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  {
+    return Platform.getAdapterManager().getAdapter(this, adapter);
   }
 
   @Override

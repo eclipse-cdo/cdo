@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl.Repos
 import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CommitTransactionRequest;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
-import org.eclipse.emf.cdo.net4j.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
@@ -162,8 +161,8 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       setBranchManager(branchManager);
     }
 
+    branchManager.setRepository(getRepositoryInfo());
     branchManager.setBranchLoader(getSessionProtocol());
-    branchManager.setTimeProvider(getRepositoryInfo());
     branchManager.initMainBranch(isMainBranchLocal(), getRepositoryInfo().getCreationTime());
     branchManager.activate();
 
@@ -237,7 +236,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     setSessionID(result.getSessionID());
     setUserID(result.getUserID());
     setLastUpdateTime(result.getLastUpdateTime());
-    setRepositoryInfo(new RepositoryInfo(repositoryName, result, this));
+    setRepositoryInfo(new RepositoryInfo(this, repositoryName, result));
     return result;
   }
 
@@ -285,10 +284,10 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       return signalProtocol;
     }
 
-    public ISignalProtocol<CDOSession> getProtocol()
+    public ISignalProtocol<org.eclipse.emf.cdo.net4j.CDOSession> getProtocol()
     {
       @SuppressWarnings("unchecked")
-      ISignalProtocol<CDOSession> net4jProtocol = (ISignalProtocol<CDOSession>)(ISignalProtocol<?>)getNet4jProtocol();
+      ISignalProtocol<org.eclipse.emf.cdo.net4j.CDOSession> net4jProtocol = (ISignalProtocol<org.eclipse.emf.cdo.net4j.CDOSession>)(ISignalProtocol<?>)getNet4jProtocol();
       return net4jProtocol;
     }
 

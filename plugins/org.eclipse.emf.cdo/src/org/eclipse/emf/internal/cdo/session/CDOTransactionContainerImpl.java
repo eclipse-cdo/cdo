@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,18 +51,13 @@ public abstract class CDOTransactionContainerImpl extends CDOViewContainerImpl i
 
   public InternalCDOTransaction[] getTransactions()
   {
-    checkActive();
-    List<InternalCDOTransaction> result = new ArrayList<InternalCDOTransaction>();
+    return getTransactions(null);
+  }
 
-    for (InternalCDOView view : getViews())
-    {
-      if (view instanceof InternalCDOTransaction)
-      {
-        result.add((InternalCDOTransaction)view);
-      }
-    }
-
-    return result.toArray(new InternalCDOTransaction[result.size()]);
+  public InternalCDOTransaction[] getTransactions(CDOBranch branch)
+  {
+    List<InternalCDOView> transactions = getViews(branch, true);
+    return transactions.toArray(new InternalCDOTransaction[transactions.size()]);
   }
 
   public CDOTransaction openTransaction(CDOBranchPoint target, ResourceSet resourceSet)

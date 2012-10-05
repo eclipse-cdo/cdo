@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchManagerImpl;
+import org.eclipse.emf.cdo.internal.common.branch.CDOBranchPointImpl;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchPointRangeImpl;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -47,6 +48,11 @@ public final class CDOBranchUtil
 
   public static CDOBranchPoint copyBranchPoint(CDOBranchPoint source)
   {
+    if (source instanceof CDOBranchPointImpl)
+    {
+      return source;
+    }
+
     return source.getBranch().getPoint(source.getTimeStamp());
   }
 

@@ -115,6 +115,8 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
 
+import org.eclipse.core.runtime.Platform;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.MessageFormat;
@@ -1620,6 +1622,11 @@ public class Repository extends Container<Object> implements InternalRepository
     return new UnlockObjectsResult(cdoLockStates, timestamp);
   }
 
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  {
+    return Platform.getAdapterManager().getAdapter(this, adapter);
+  }
+
   @Override
   public String toString()
   {
@@ -1859,8 +1866,8 @@ public class Repository extends Container<Object> implements InternalRepository
     packageRegistry.setPackageProcessor(this);
     packageRegistry.setPackageLoader(this);
 
+    branchManager.setRepository(this);
     branchManager.setBranchLoader(this);
-    branchManager.setTimeProvider(this);
 
     revisionManager.setRevisionLoader(this);
     sessionManager.setRepository(this);

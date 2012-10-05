@@ -52,6 +52,7 @@ import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
@@ -109,6 +110,8 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
   private IWorkbenchPage page;
 
+  private boolean mergeMainBranchWithSession;
+
   public CDOItemProvider(IWorkbenchPage page, IElementFilter rootElementFilter)
   {
     super(rootElementFilter);
@@ -138,6 +141,26 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     super.dispose();
   }
 
+  /**
+   * @since 4.2
+   */
+  public boolean isMergeMainBranchWithSession()
+  {
+    return mergeMainBranchWithSession;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public void setMergeMainBranchWithSession(boolean mergeMainBranchWithSession)
+  {
+    if (this.mergeMainBranchWithSession != mergeMainBranchWithSession)
+    {
+      this.mergeMainBranchWithSession = mergeMainBranchWithSession;
+      refreshViewer(true);
+    }
+  }
+
   @Override
   public Object[] getChildren(Object element)
   {
@@ -148,7 +171,12 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
     if (element instanceof CDOBranch)
     {
-      return ((CDOBranch)element).getBranches();
+      return getChildren((CDOBranch)element);
+    }
+
+    if (mergeMainBranchWithSession && element instanceof CDOSession)
+    {
+      return getChildren(((CDOSession)element).getBranchManager().getMainBranch());
     }
 
     if (element instanceof CDOView)
@@ -164,6 +192,46 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     return super.getChildren(element);
   }
 
+  /**
+   * @since 4.2
+   */
+  protected Object[] getChildren(CDOBranch branch)
+  {
+    CDOBranch[] branches = branch.getBranches();
+    if (!mergeMainBranchWithSession)
+    {
+      return branch.getBranches();
+    }
+
+    Object[] views = getViews(branch);
+
+    if (views.length == 0)
+    {
+      return branches;
+    }
+
+    if (branches.length == 0)
+    {
+      return views;
+    }
+
+    Object[] children = new Object[branches.length + views.length];
+    System.arraycopy(branches, 0, children, 0, branches.length);
+    System.arraycopy(views, 0, children, branches.length, views.length);
+    return children;
+  }
+
+  private Object[] getViews(CDOBranch branch)
+  {
+    CDOSession session = CDOUtil.getSession(branch);
+    if (session != null)
+    {
+      return session.getViews(branch);
+    }
+
+    return NO_ELEMENTS;
+  }
+
   @Override
   public boolean hasChildren(Object element)
   {
@@ -174,7 +242,15 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
     if (element instanceof CDOBranch)
     {
-      return !((CDOBranch)element).isEmpty();
+      return hasChildren((CDOBranch)element);
+    }
+
+    if (element instanceof CDOSession)
+    {
+      if (mergeMainBranchWithSession)
+      {
+        return hasChildren(((CDOSession)element).getBranchManager().getMainBranch());
+      }
     }
 
     if (element instanceof CDOView)
@@ -190,6 +266,20 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     return super.hasChildren(element);
   }
 
+  /**
+   * @since 4.2
+   */
+  protected boolean hasChildren(CDOBranch branch)
+  {
+    if (!branch.isEmpty())
+    {
+      return true;
+    }
+
+    Object[] views = getViews(branch);
+    return views.length != 0;
+  }
+
   @Override
   public Object getParent(Object element)
   {
@@ -198,6 +288,11 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       CDOBranch branch = (CDOBranch)element;
       if (branch.isMainBranch())
       {
+        if (mergeMainBranchWithSession)
+        {
+          return CDOUtil.getSession(branch);
+        }
+
         return branch.getBranchManager();
       }
 
@@ -214,6 +309,18 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       }
 
       return parent;
+    }
+
+    if (element instanceof CDOView)
+    {
+      CDOView view = (CDOView)element;
+      CDOBranch branch = view.getBranch();
+      if (branch.isMainBranch() || !mergeMainBranchWithSession)
+      {
+        return view.getSession();
+      }
+
+      return branch;
     }
 
     return super.getParent(element);
@@ -360,6 +467,10 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       {
         fillView(manager, (CDOView)object);
       }
+      else if (object instanceof CDOBranch)
+      {
+        fillBranch(manager, (CDOBranch)object);
+      }
       else if (object instanceof CDOResourceFolder)
       {
         fillResourceFolder(manager, (CDOResourceFolder)object);
@@ -372,58 +483,6 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
     manager.add(new Separator());
     super.fillContextMenu(manager, selection);
-  }
-
-  /**
-   * @since 3.0
-   */
-  protected void fillResourceFolder(IMenuManager manager, CDOResourceFolder folder)
-  {
-  }
-
-  /**
-   * @since 4.2
-   */
-  protected void fillResourceLeaf(IMenuManager manager, Object object)
-  {
-    CDOEditorUtil.populateMenu(manager, (CDOResourceLeaf)object, page);
-
-    if (object instanceof CDOResource)
-    {
-      fillResource(manager, (CDOResource)object);
-    }
-    else if (object instanceof CDOTextResource)
-    {
-      fillTextResource(manager, (CDOTextResource)object);
-    }
-    else if (object instanceof CDOBinaryResource)
-    {
-      fillBinaryResource(manager, (CDOBinaryResource)object);
-    }
-  }
-
-  /**
-   * @since 3.0
-   */
-  protected void fillResource(IMenuManager manager, CDOResource resource)
-  {
-    // manager.add(new OpenResourceEditorAction(page, resource));
-  }
-
-  /**
-   * @since 4.2
-   */
-  protected void fillTextResource(IMenuManager manager, CDOTextResource resource)
-  {
-    // manager.add(new OpenResourceEditorAction(page, resource));
-  }
-
-  /**
-   * @since 4.2
-   */
-  protected void fillBinaryResource(IMenuManager manager, CDOBinaryResource resource)
-  {
-    // manager.add(new OpenResourceEditorAction(page, resource));
   }
 
   /**
@@ -455,7 +514,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     if (session.getRepositoryInfo().isSupportingBranches())
     {
       manager.add(new Separator());
-      manager.add(new CreateBranchAction(page, session));
+      fillBranch(manager, session.getBranchManager().getMainBranch());
     }
 
     manager.add(new Separator());
@@ -551,6 +610,67 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
     manager.add(new Separator());
     manager.add(new CloseViewAction(page, view));
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void fillBranch(IMenuManager manager, CDOBranch branch)
+  {
+    CDOSession session = CDOUtil.getSession(branch);
+    manager.add(new CreateBranchAction(page, session));
+  }
+
+  /**
+   * @since 3.0
+   */
+  protected void fillResourceFolder(IMenuManager manager, CDOResourceFolder folder)
+  {
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void fillResourceLeaf(IMenuManager manager, Object object)
+  {
+    CDOEditorUtil.populateMenu(manager, (CDOResourceLeaf)object, page);
+
+    if (object instanceof CDOResource)
+    {
+      fillResource(manager, (CDOResource)object);
+    }
+    else if (object instanceof CDOTextResource)
+    {
+      fillTextResource(manager, (CDOTextResource)object);
+    }
+    else if (object instanceof CDOBinaryResource)
+    {
+      fillBinaryResource(manager, (CDOBinaryResource)object);
+    }
+  }
+
+  /**
+   * @since 3.0
+   */
+  protected void fillResource(IMenuManager manager, CDOResource resource)
+  {
+    // manager.add(new OpenResourceEditorAction(page, resource));
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void fillTextResource(IMenuManager manager, CDOTextResource resource)
+  {
+    // manager.add(new OpenResourceEditorAction(page, resource));
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void fillBinaryResource(IMenuManager manager, CDOBinaryResource resource)
+  {
+    // manager.add(new OpenResourceEditorAction(page, resource));
   }
 
   @Override

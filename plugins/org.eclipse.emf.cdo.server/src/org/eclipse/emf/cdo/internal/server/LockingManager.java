@@ -53,6 +53,8 @@ import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.core.runtime.PlatformObject;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -566,7 +568,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   /**
    * @author Eike Stepper
    */
-  private final class DurableView implements IView, CDOCommonView.Options
+  private final class DurableView extends PlatformObject implements IView, CDOCommonView.Options
   {
     private String durableLockingID;
 

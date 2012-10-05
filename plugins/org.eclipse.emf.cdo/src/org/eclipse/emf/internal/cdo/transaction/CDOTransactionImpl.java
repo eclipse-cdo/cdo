@@ -2883,6 +2883,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           return;
         }
 
+        CDOBranch oldBranch = getBranch();
         CDOBranch branch = result.getBranch();
         boolean branchChanged = !ObjectUtil.equals(branch, getBranch());
         if (branchChanged)
@@ -2957,7 +2958,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         {
           if (branchChanged)
           {
-            fireViewTargetChangedEvent(listeners);
+            fireViewTargetChangedEvent(oldBranch.getHead(), listeners);
           }
 
           fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.COMMITTED, idMappings), listeners);

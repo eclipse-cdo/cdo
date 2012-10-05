@@ -571,32 +571,47 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     {
       if (event instanceof CDOViewTargetChangedEvent)
       {
-        Object input = selectionViewer.getInput();
-        if (input == EMPTY_INPUT)
+        final CDOViewTargetChangedEvent e = (CDOViewTargetChangedEvent)event;
+        getSite().getShell().getDisplay().asyncExec(new Runnable()
         {
-          if (inputID != null)
+          public void run()
           {
-            try
+            Object input = selectionViewer.getInput();
+            if (input == EMPTY_INPUT)
             {
-              CDOObject object = view.getObject(inputID);
-              selectionViewer.setInput(object);
-              inputID = null;
+              if (inputID != null)
+              {
+                try
+                {
+                  CDOObject object = view.getObject(inputID);
+                  selectionViewer.setInput(object);
+                  inputID = null;
+                }
+                catch (Exception ex)
+                {
+                  // Ignore
+                }
+              }
             }
-            catch (Exception ex)
+            else if (input instanceof EObject)
             {
-              // Ignore
+              CDOObject object = CDOUtil.getCDOObject((EObject)input);
+              if (object.cdoInvalid())
+              {
+                if (e.getBranchPoint().getTimeStamp() == e.getOldBranchPoint().getTimeStamp())
+                {
+                  inputID = null;
+                  closeEditor();
+                }
+                else
+                {
+                  inputID = object.cdoID();
+                  selectionViewer.setInput(EMPTY_INPUT);
+                }
+              }
             }
           }
-        }
-        else if (input instanceof EObject)
-        {
-          CDOObject object = CDOUtil.getCDOObject((EObject)input);
-          if (object.cdoInvalid())
-          {
-            inputID = object.cdoID();
-            selectionViewer.setInput(EMPTY_INPUT);
-          }
-        }
+        });
       }
     }
   };

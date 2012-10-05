@@ -174,15 +174,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/internal/server/mem/MEMStore.java" type="org.eclipse.emf.cdo.internal.server.mem.MEMStore">
-        <filter id="574660632">
-            <message_arguments>
-                <message_argument value="DurableLocking"/>
-                <message_argument value="IDurableLockingManager"/>
-                <message_argument value="MEMStore"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/mem/MEMStoreAccessor.java" type="org.eclipse.emf.cdo.internal.server.mem.MEMStoreAccessor">
         <filter id="574660632">
             <message_arguments>

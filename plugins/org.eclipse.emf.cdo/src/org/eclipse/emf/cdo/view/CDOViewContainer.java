@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * Can open new {@link CDOView views} and provide access to openend views.
- * 
+ *
  * @author Eike Stepper
  * @since 4.1
  * @noextend This interface is not intended to be extended by clients.
@@ -35,10 +35,17 @@ public interface CDOViewContainer extends IContainer<CDOView>
 {
   /**
    * Returns an array of all open {@link CDOView views} and {@link CDOTransaction transactions} of this session.
-   * 
+   *
    * @see #openView()
    */
   public CDOView[] getViews();
+
+  /**
+   * Returns an array of all {@link CDOView views} and {@link CDOTransaction transactions} of this session that are open on the given branch.
+   *
+   * @since 4.2
+   */
+  public CDOView[] getViews(CDOBranch branch);
 
   /**
    * @since 4.0
@@ -47,7 +54,7 @@ public interface CDOViewContainer extends IContainer<CDOView>
 
   /**
    * Opens and returns a new {@link CDOView view} on the given EMF {@link ResourceSet resource set}.
-   * 
+   *
    * @see #openView()
    * @since 4.0
    */
@@ -55,7 +62,7 @@ public interface CDOViewContainer extends IContainer<CDOView>
 
   /**
    * Opens and returns a new {@link CDOView view} on a new EMF {@link ResourceSet resource set}.
-   * 
+   *
    * @see #openView()
    * @since 4.0
    */
@@ -63,7 +70,7 @@ public interface CDOViewContainer extends IContainer<CDOView>
 
   /**
    * Opens and returns a new {@link CDOView view} on the given EMF {@link ResourceSet resource set}.
-   * 
+   *
    * @see #openView()
    * @since 3.0
    */
@@ -73,7 +80,7 @@ public interface CDOViewContainer extends IContainer<CDOView>
    * Opens and returns a new {@link CDOView view} on a new EMF {@link ResourceSet resource set}.
    * <p>
    * Same as calling <code>openView(new ResourceSetImpl())</code>.
-   * 
+   *
    * @see #openView(CDOBranch, long, ResourceSet)
    * @since 3.0
    */
@@ -83,7 +90,7 @@ public interface CDOViewContainer extends IContainer<CDOView>
    * Opens and returns a new {@link CDOView view} on a new EMF {@link ResourceSet resource set}.
    * <p>
    * Same as calling <code>openView(new ResourceSetImpl())</code>.
-   * 
+   *
    * @see #openView(CDOBranch, long, ResourceSet)
    * @since 3.0
    */
@@ -93,7 +100,7 @@ public interface CDOViewContainer extends IContainer<CDOView>
    * Opens and returns a new {@link CDOView view} on a new EMF {@link ResourceSet resource set}.
    * <p>
    * Same as calling <code>openView(new ResourceSetImpl())</code>.
-   * 
+   *
    * @see #openView(CDOBranch, long, ResourceSet)
    * @since 3.0
    */
@@ -101,7 +108,7 @@ public interface CDOViewContainer extends IContainer<CDOView>
 
   /**
    * Opens and returns a new {@link CDOView view} on the given EMF {@link ResourceSet resource set}.
-   * 
+   *
    * @see #openView(CDOBranch, long, ResourceSet)
    * @since 4.0
    */
@@ -111,7 +118,7 @@ public interface CDOViewContainer extends IContainer<CDOView>
    * Opens and returns a new {@link CDOView view} on a new EMF {@link ResourceSet resource set}.
    * <p>
    * Same as calling <code>openView(new ResourceSetImpl())</code>.
-   * 
+   *
    * @see #openView(CDOBranch, long, ResourceSet)
    */
   public CDOView openView();
@@ -122,7 +129,7 @@ public interface CDOViewContainer extends IContainer<CDOView>
    * CDOView.enableDurableLocking(true)}.
    * <p>
    * Same as calling <code>openView(durableLockingID, new ResourceSetImpl())</code>.
-   * 
+   *
    * @see #openView(String,ResourceSet)
    * @since 4.0
    */
@@ -132,7 +139,7 @@ public interface CDOViewContainer extends IContainer<CDOView>
    * Opens and returns a {@link CDOView view} on the given EMF {@link ResourceSet resource set} by resuming a view that
    * has previously been made durable by calling {@link CDOView#enableDurableLocking(boolean)
    * CDOView.enableDurableLocking(true)}.
-   * 
+   *
    * @see #openView(String)
    * @since 4.0
    */

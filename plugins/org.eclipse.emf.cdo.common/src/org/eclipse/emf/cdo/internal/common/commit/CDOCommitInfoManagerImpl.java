@@ -13,11 +13,16 @@ package org.eclipse.emf.cdo.internal.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
+import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+
+import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * @author Andre Dietisheim
@@ -25,6 +30,8 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
 public class CDOCommitInfoManagerImpl extends Lifecycle implements InternalCDOCommitInfoManager
 {
   private CommitInfoLoader commitInfoLoader;
+
+  private Map<CDOCommitHistory, Boolean> histories = new WeakHashMap<CDOCommitHistory, Boolean>();
 
   public CDOCommitInfoManagerImpl()
   {
@@ -46,6 +53,29 @@ public class CDOCommitInfoManagerImpl extends Lifecycle implements InternalCDOCo
   {
     checkActive();
     return new CDOCommitInfoImpl(this, branch, timeStamp, previousTimeStamp, userID, comment, commitData);
+  }
+
+  public CDOCommitHistory getHistory()
+  {
+    return getHistory(null);
+  }
+
+  public CDOCommitHistory getHistory(CDOBranch branch)
+  {
+    synchronized (histories)
+    {
+      for (CDOCommitHistory history : histories.keySet())
+      {
+        if (history.getBranch() == branch)
+        {
+          return history;
+        }
+      }
+
+      CDOCommitHistory history = new CDOCommitHistory(this, branch);
+      histories.put(history, Boolean.TRUE);
+      return history;
+    }
   }
 
   public CDOCommitInfo getCommitInfo(long timeStamp)
@@ -74,8 +104,13 @@ public class CDOCommitInfoManagerImpl extends Lifecycle implements InternalCDOCo
   {
     checkActive();
 
-    // TODO: implement CDOCommitInfoManagerImpl.getCommitInfos(branch, startTime, userID, comment, count, handler)
-    throw new UnsupportedOperationException();
+    if (userID != null || comment != null)
+    {
+      throw new IllegalArgumentException("The parameters userID and comment are not supported");
+    }
+
+    long endTime = CDOCommitInfoUtil.encodeCount(count);
+    commitInfoLoader.loadCommitInfos(branch, startTime, endTime, handler);
   }
 
   @Override

@@ -55,6 +55,7 @@ import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractHorizon
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
+import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -987,6 +988,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
+    int count = CDOCommitInfoUtil.decodeCount(endTime);
+
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);
@@ -1019,12 +1022,12 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     {
       builder.append(where ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
       builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);
-      builder.append(">="); //$NON-NLS-1$
+      builder.append(count < 0 ? "<=" : ">="); //$NON-NLS-1$
       builder.append(startTime);
       where = true;
     }
 
-    if (endTime != CDOBranchPoint.UNSPECIFIED_DATE)
+    if (endTime > CDOBranchPoint.UNSPECIFIED_DATE)
     {
       builder.append(where ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
       builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);
@@ -1035,6 +1038,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
     builder.append(" ORDER BY "); //$NON-NLS-1$
     builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);
+    builder.append(count < 0 || CDOBranchPoint.UNSPECIFIED_DATE <= endTime && endTime <= startTime ? " DESC" : " ASC"); //$NON-NLS-1$
     String sql = builder.toString();
 
     PreparedStatement stmt = null;
@@ -1043,6 +1047,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     InternalRepository repository = getStore().getRepository();
     InternalCDOBranchManager branchManager = repository.getBranchManager();
     InternalCDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
+    count = Math.abs(count);
 
     try
     {
@@ -1065,6 +1070,11 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
         CDOCommitInfo commitInfo = commitInfoManager.createCommitInfo(infoBranch, timeStamp, previousTimeStamp, userID,
             comment, null);
         handler.handleCommitInfo(commitInfo);
+
+        if (--count == 0)
+        {
+          break;
+        }
       }
     }
     catch (SQLException ex)

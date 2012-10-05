@@ -39,7 +39,7 @@ import org.eclipse.swt.widgets.Listener;
 /**
  * UI widget that provides visualization of all available {@link org.eclipse.emf.cdo.common.branch.CDOBranch branches},
  * and with the capability to select one.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  */
@@ -51,13 +51,19 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
 
   private CDOBranch branch;
 
-  private IHistory<String> branchHistory;
-
   private HistoryText branchText;
 
   private TreeViewer branchViewer;
 
   public SelectBranchComposite(Composite parent, int style, CDOSession session, CDOBranch branch)
+  {
+    this(parent, style, session, branch, false);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public SelectBranchComposite(Composite parent, int style, CDOSession session, CDOBranch branch, boolean withHistory)
   {
     super(parent, style);
     this.session = session;
@@ -70,24 +76,27 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
 
     setLayout(gridLayout);
 
-    String prefName = "PREF_HISTORY_BRANCHES-" + session.getRepositoryInfo().getUUID(); //$NON-NLS-1$
-    OMPreference<String[]> pref = OM.PREFS.getArray(prefName);
-    if (pref == null)
+    if (withHistory)
     {
-      pref = OM.PREFS.initArray(prefName);
-    }
-
-    branchHistory = new PreferenceHistory(pref);
-
-    branchText = new HistoryText(this, SWT.BORDER | SWT.SINGLE, branchHistory);
-    branchText.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-    branchText.getCombo().addModifyListener(new ModifyListener()
-    {
-      public void modifyText(ModifyEvent e)
+      String prefName = "PREF_HISTORY_BRANCHES-" + session.getRepositoryInfo().getUUID(); //$NON-NLS-1$
+      OMPreference<String[]> pref = OM.PREFS.getArray(prefName);
+      if (pref == null)
       {
-        setBranchFromPath();
+        pref = OM.PREFS.initArray(prefName);
       }
-    });
+
+      IHistory<String> branchHistory = new PreferenceHistory(pref);
+
+      branchText = new HistoryText(this, SWT.BORDER | SWT.SINGLE, branchHistory);
+      branchText.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+      branchText.getCombo().addModifyListener(new ModifyListener()
+      {
+        public void modifyText(ModifyEvent e)
+        {
+          setBranchFromPath();
+        }
+      });
+    }
 
     CDOItemProvider itemProvider = new CDOItemProvider(null);
     branchViewer = new TreeViewer(this, SWT.BORDER | SWT.SINGLE);
@@ -103,8 +112,18 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
       }
     });
 
-    branchText.setFocus();
     setBranchFromPath();
+  }
+
+  @Override
+  public boolean setFocus()
+  {
+    if (branchText != null)
+    {
+      return branchText.setFocus();
+    }
+
+    return branchViewer.getTree().setFocus();
   }
 
   public ValidationContext getValidationContext()
@@ -139,23 +158,32 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
 
   public void rememberSettings()
   {
-    branchText.getHistory().add(branch.getPathName());
+    if (branchText != null)
+    {
+      branchText.getHistory().add(branch.getPathName());
+    }
   }
 
   @Override
   public void addListener(int eventType, Listener listener)
   {
     super.addListener(eventType, listener);
-    branchText.addListener(eventType, listener);
     branchViewer.getTree().addListener(eventType, listener);
+    if (branchText != null)
+    {
+      branchText.addListener(eventType, listener);
+    }
   }
 
   @Override
   public void removeListener(int eventType, Listener listener)
   {
     super.removeListener(eventType, listener);
-    branchText.removeListener(eventType, listener);
     branchViewer.getTree().removeListener(eventType, listener);
+    if (branchText != null)
+    {
+      branchText.removeListener(eventType, listener);
+    }
   }
 
   protected void branchChanged(CDOBranch newBranch)
@@ -164,25 +192,28 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
 
   private void setBranchFromPath()
   {
-    String branchPath = branchText.getText();
-    CDOBranch newBranch = session.getBranchManager().getBranch(branchPath);
-    if (newBranch != branch)
+    if (branchText != null)
     {
-      branch = newBranch;
-      if (newBranch != null)
+      String branchPath = branchText.getText();
+      CDOBranch newBranch = session.getBranchManager().getBranch(branchPath);
+      if (newBranch != branch)
       {
-        branchViewer.reveal(branch);
-        branchViewer.setSelection(new StructuredSelection(branch));
-      }
-      else
-      {
-        branchViewer.setSelection(StructuredSelection.EMPTY);
+        branch = newBranch;
+        if (newBranch != null)
+        {
+          branchViewer.reveal(branch);
+          branchViewer.setSelection(new StructuredSelection(branch));
+        }
+        else
+        {
+          branchViewer.setSelection(StructuredSelection.EMPTY);
+        }
+
+        branchChanged(newBranch);
       }
 
-      branchChanged(newBranch);
+      validate();
     }
-
-    validate();
   }
 
   private void setBranchFromViewer()
@@ -192,7 +223,11 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
     if (newBranch != branch)
     {
       branch = newBranch;
-      branchText.setText(branch.getPathName());
+      if (branchText != null)
+      {
+        branchText.setText(branch.getPathName());
+      }
+
       branchChanged(newBranch);
     }
 
@@ -203,7 +238,10 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
   {
     if (validationContext != null)
     {
-      validationContext.setValidationError(branchText.getCombo(), branch != null ? null : "Branch does not exist.");
+      if (branchText != null)
+      {
+        validationContext.setValidationError(branchText.getCombo(), branch != null ? null : "Branch does not exist.");
+      }
     }
   }
 }

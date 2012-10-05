@@ -21,9 +21,11 @@ import org.eclipse.net4j.util.options.IOptions;
 import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.options.IOptionsEvent;
 
+import org.eclipse.core.runtime.IAdaptable;
+
 /**
  * Abstracts the information about CDO views that is common to both client and server side.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -31,7 +33,8 @@ import org.eclipse.net4j.util.options.IOptionsEvent;
  * @apiviz.landmark
  * @apiviz.has {@link CDOCommonView.Options}
  */
-public interface CDOCommonView extends CDOLockOwner, CDOBranchPoint, CDORevisionProvider, IOptionsContainer, Closeable
+public interface CDOCommonView extends CDOLockOwner, CDOBranchPoint, CDORevisionProvider, IOptionsContainer,
+    IAdaptable, Closeable
 {
   public int getViewID();
 
@@ -49,14 +52,14 @@ public interface CDOCommonView extends CDOLockOwner, CDOBranchPoint, CDORevision
 
   /**
    * Returns the {@link Options options} of this view.
-   * 
+   *
    * @since 4.1
    */
   public Options options();
 
   /**
    * Encapsulates the configuration options of CDO views that are common to both client and server side.
-   * 
+   *
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
@@ -69,7 +72,7 @@ public interface CDOCommonView extends CDOLockOwner, CDOBranchPoint, CDORevision
      * Returns <code>true</code> if this view will notify its {@link IListener listeners} about changes to the
      * {@link CDOLockState lock states} of the objects in this view (due to lock operations in <i>other</i> views),
      * <code>false</code> otherwise.
-     * 
+     *
      * @see CDOLockState
      */
     public boolean isLockNotificationEnabled();
@@ -77,7 +80,7 @@ public interface CDOCommonView extends CDOLockOwner, CDOBranchPoint, CDORevision
     /**
      * Specifies whether this view will notify its {@link IListener listeners} about changes to the {@link CDOLockState
      * lock states} of the objects in this view (due to lock operations in <i>other</i> views), or not.
-     * 
+     *
      * @see CDOLockState
      */
     public void setLockNotificationEnabled(boolean enabled);
@@ -85,7 +88,7 @@ public interface CDOCommonView extends CDOLockOwner, CDOBranchPoint, CDORevision
     /**
      * An {@link IOptionsEvent options event} fired from common view {@link CDOCommonView#options() options} when the
      * {@link Options#setLockNotificationEnabled(boolean) lock notification enabled} option has changed.
-     * 
+     *
      * @author Caspar De Groot
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.

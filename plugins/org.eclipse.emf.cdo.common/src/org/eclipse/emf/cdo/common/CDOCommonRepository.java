@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 
 import org.eclipse.net4j.util.event.IEvent;
 
+import org.eclipse.core.runtime.IAdaptable;
+
 import java.util.Set;
 
 /**
@@ -37,7 +39,7 @@ import java.util.Set;
  * @apiviz.uses {@link CDOCommonRepository.TypeChangedEvent} - - fires
  * @apiviz.uses {@link CDOCommonRepository.StateChangedEvent} - - fires
  */
-public interface CDOCommonRepository extends CDOTimeProvider
+public interface CDOCommonRepository extends CDOTimeProvider, IAdaptable
 {
   /**
    * Returns the name of this repository.

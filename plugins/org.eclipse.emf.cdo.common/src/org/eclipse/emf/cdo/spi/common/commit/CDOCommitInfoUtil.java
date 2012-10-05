@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.common.commit;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
@@ -41,6 +42,39 @@ public final class CDOCommitInfoUtil
   public static InternalCDOCommitInfoManager createCommitInfoManager()
   {
     return new CDOCommitInfoManagerImpl();
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static long encodeCount(int count)
+  {
+    long timeStamp = count;
+    if (count < 0)
+    {
+      timeStamp = -timeStamp + Integer.MAX_VALUE;
+    }
+
+    return -timeStamp;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static int decodeCount(long timeStamp)
+  {
+    if (timeStamp < CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      timeStamp = -timeStamp;
+      if (timeStamp > Integer.MAX_VALUE)
+      {
+        return (int)(Integer.MAX_VALUE - timeStamp);
+      }
+
+      return (int)timeStamp;
+    }
+
+    return Integer.MAX_VALUE;
   }
 
   /**

@@ -4,13 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Szabolcs Bárdy - initial API and implementation
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -65,7 +66,10 @@ public class Bugzilla_342135_Test extends AbstractCDOTest
     IOUtil.OUT().println();
 
     // Same commit info loaded from database
-    CDOCommitInfo loadedCommitInfo = session.getCommitInfoManager().getCommitInfo(commitInfo.getTimeStamp());
+    CDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
+    long timeStamp = commitInfo.getTimeStamp();
+
+    CDOCommitInfo loadedCommitInfo = commitInfoManager.getCommitInfo(timeStamp);
     List<CDORevisionKey> loadedChangedObjects = loadedCommitInfo.getChangedObjects();
     List<CDOIDAndVersion> loadedDetachedObjects = loadedCommitInfo.getDetachedObjects();
 

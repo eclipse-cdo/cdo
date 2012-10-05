@@ -13,6 +13,7 @@
 package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -20,8 +21,10 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
+import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOXATransaction;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
@@ -169,6 +172,18 @@ public final class CDOUtil
     if (cdoObject != null)
     {
       return cdoObject.cdoView().getSession();
+    }
+
+    CDOBranch branch = AdapterUtil.adapt(object, CDOBranch.class);
+    if (branch != null)
+    {
+      InternalCDOBranchManager branchManager = (InternalCDOBranchManager)branch.getBranchManager();
+      CDOCommonRepository repository = branchManager.getRepository();
+      if (repository instanceof CDORepositoryInfo)
+      {
+        CDORepositoryInfo repositoryInfo = (CDORepositoryInfo)repository;
+        return repositoryInfo.getSession();
+      }
     }
 
     CDORemoteSessionManager remoteSessionManager = AdapterUtil.adapt(object, CDORemoteSessionManager.class);

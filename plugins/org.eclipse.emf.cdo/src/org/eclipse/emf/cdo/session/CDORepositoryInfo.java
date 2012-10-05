@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 
 /**
  * Describes a model repository a {@link CDOSession session} is connected to.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
@@ -23,8 +23,15 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 public interface CDORepositoryInfo extends CDOCommonRepository
 {
   /**
+   * Returns the session.
+   *
+   * @since 4.2
+   */
+  public CDOSession getSession();
+
+  /**
    * Returns the approximate current time of this repository by optionally refreshing the approximation from the server.
-   * 
+   *
    * @see CDOCommonRepository#getTimeStamp()
    */
   public long getTimeStamp(boolean forceRefresh);

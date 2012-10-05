@@ -27,6 +27,8 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RepositoryTimeResult;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
+import org.eclipse.core.runtime.PlatformObject;
+
 import java.util.Set;
 
 /**
@@ -131,7 +133,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   /**
    * @author Eike Stepper
    */
-  public static class RepositoryInfo implements CDORepositoryInfo
+  public static class RepositoryInfo extends PlatformObject implements CDORepositoryInfo
   {
     private String name;
 
@@ -165,8 +167,9 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     private InternalCDOSession session;
 
-    public RepositoryInfo(String name, OpenSessionResult result, InternalCDOSession session)
+    public RepositoryInfo(InternalCDOSession session, String name, OpenSessionResult result)
     {
+      this.session = session;
       this.name = name;
       uuid = result.getRepositoryUUID();
       type = result.getRepositoryType();
@@ -182,7 +185,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       serializingCommits = result.isRepositoryEnsuringReferentialIntegrity();
       ensuringReferentialIntegrity = result.isRepositoryEnsuringReferentialIntegrity();
       idGenerationLocation = result.getRepositoryIDGenerationLocation();
-      this.session = session;
+    }
+
+    public InternalCDOSession getSession()
+    {
+      return session;
     }
 
     public String getName()

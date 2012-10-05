@@ -14,9 +14,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * An abstract base class for custom iterators that only requires to implement a single {@link #computeNextElement()}
- * method.
- * 
+ * An abstract base class for custom iterators that only requires to implement a single {@link #computeNextElement()} method.
+ *
  * @author Eike Stepper
  * @since 3.2
  */
@@ -27,7 +26,7 @@ public abstract class AbstractIterator<T> implements Iterator<T>
    */
   protected static final Object END_OF_DATA = new Object();
 
-  private boolean computed;
+  private boolean nextComputed;
 
   private T next;
 
@@ -37,13 +36,13 @@ public abstract class AbstractIterator<T> implements Iterator<T>
 
   public final boolean hasNext()
   {
-    if (computed)
+    if (nextComputed)
     {
       return true;
     }
 
     Object object = computeNextElement();
-    computed = true;
+    nextComputed = true;
 
     if (object == END_OF_DATA)
     {
@@ -63,7 +62,7 @@ public abstract class AbstractIterator<T> implements Iterator<T>
       throw new NoSuchElementException();
     }
 
-    computed = false;
+    nextComputed = false;
     return next;
   }
 

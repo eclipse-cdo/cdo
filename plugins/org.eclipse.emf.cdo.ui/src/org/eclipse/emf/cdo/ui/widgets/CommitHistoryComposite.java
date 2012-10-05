@@ -79,12 +79,15 @@ public class CommitHistoryComposite extends Composite
   {
     this.input = input;
 
+    CDOBranch inputBranch = input.getBranch();
     CDOSession session = input.getSession();
     String userID = session.getUserID();
+
     labelProvider.setLocalUserID(userID);
+    labelProvider.setInputBranch(inputBranch);
 
     CDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
-    history = commitInfoManager.getHistory(input.getBranch());
+    history = commitInfoManager.getHistory(inputBranch);
     if (history.isEmpty())
     {
       history.loadCommitInfos(25);
@@ -275,7 +278,13 @@ public class CommitHistoryComposite extends Composite
 
     private static final ImageDescriptor PERSON_ME = SharedIcons.getDescriptor(SharedIcons.OBJ_PERSON_ME);
 
+    private static final ImageDescriptor BRANCH = SharedIcons.getDescriptor(SharedIcons.OBJ_BRANCH);
+
+    private static final ImageDescriptor BRANCH_GRAY = SharedIcons.getDescriptor(SharedIcons.OBJ_BRANCH_GRAY);
+
     private String localUserID;
+
+    private CDOBranch inputBranch;
 
     public LabelProvider()
     {
@@ -294,7 +303,7 @@ public class CommitHistoryComposite extends Composite
         }
       });
 
-      addColumn(new Column<CDOCommitInfo>("Comment", 200)
+      addColumn(new Column<CDOCommitInfo>("Comment", 250)
       {
         @Override
         public String getText(CDOCommitInfo commitInfo)
@@ -336,6 +345,17 @@ public class CommitHistoryComposite extends Composite
         {
           return commitInfo.getBranch().getPathName();
         }
+
+        @Override
+        public Image getImage(CDOCommitInfo commitInfo)
+        {
+          if (inputBranch == null || inputBranch == commitInfo.getBranch())
+          {
+            return (Image)getResource(BRANCH);
+          }
+
+          return (Image)getResource(BRANCH_GRAY);
+        }
       });
     }
 
@@ -347,7 +367,16 @@ public class CommitHistoryComposite extends Composite
     public void setLocalUserID(String localUserID)
     {
       this.localUserID = localUserID;
-      // fireLabelProviderChanged(new LabelProviderChangedEvent(this));
+    }
+
+    public CDOBranch getInputBranch()
+    {
+      return inputBranch;
+    }
+
+    public void setInputBranch(CDOBranch inputBranch)
+    {
+      this.inputBranch = inputBranch;
     }
   }
 }

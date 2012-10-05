@@ -149,6 +149,11 @@ public class SharedIcons
   /**
    * @since 4.1
    */
+  public static final String OBJ_BRANCH_GRAY = OBJ + "branch-gray.png"; //$NON-NLS-1$
+
+  /**
+   * @since 4.1
+   */
   public static final String OBJ_COMMIT = OBJ + "commit.gif"; //$NON-NLS-1$
 
   /**

@@ -2910,7 +2910,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
 
         CDOCommitInfo commitInfo = makeCommitInfo(timeStamp, result.getPreviousTimeStamp());
-        session.invalidate(commitInfo, transaction, result.isClearResourcePathCache());
+        if (!commitInfo.isEmpty())
+        {
+          session.invalidate(commitInfo, transaction, result.isClearResourcePathCache());
+        }
 
         // Bug 290032 - Sticky views
         if (session.isSticky())

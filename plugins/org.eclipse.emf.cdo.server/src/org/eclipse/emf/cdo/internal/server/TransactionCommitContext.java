@@ -165,6 +165,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private List<LockState<Object, IView>> postCommitLockStates;
 
+  private boolean hasChanges;
+
   private boolean serializingCommits;
 
   private boolean ensuringReferentialIntegrity;
@@ -475,6 +477,13 @@ public class TransactionCommitContext implements InternalCommitContext
     try
     {
       monitor.begin(107);
+
+      hasChanges = newPackageUnits.length != 0 || newObjects.length != 0 || dirtyObjectDeltas.length != 0;
+      if (!hasChanges)
+      {
+        return;
+      }
+
       dirtyObjects = new InternalCDORevision[dirtyObjectDeltas.length];
 
       if (newPackageUnits.length != 0)
@@ -533,11 +542,22 @@ public class TransactionCommitContext implements InternalCommitContext
     try
     {
       monitor.begin(101);
-      accessor.commit(monitor.fork(100));
+      if (hasChanges)
+      {
+        accessor.commit(monitor.fork(100));
+      }
+      else
+      {
+        monitor.worked(100);
+      }
+
       updateInfraStructure(monitor.fork());
 
-      // Bugzilla 297940
-      repository.endCommit(timeStamp);
+      if (hasChanges)
+      {
+        // Bugzilla 297940
+        repository.endCommit(timeStamp);
+      }
     }
     catch (Throwable ex)
     {

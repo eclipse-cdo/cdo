@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.team.IRepositoryManager;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.ui.CDOEventHandler;
@@ -491,12 +493,13 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
       if (selection instanceof CDOResource)
       {
         IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-        CDOView view = ((CDOResource)selection).cdoView().getSession().openTransaction();
+        CDOTransaction transaction = ((CDOResource)selection).cdoView().getSession().openTransaction();
+        new CDOTransactionCommentator(transaction);
 
         try
         {
-          CDOEditorInput editorInput = CDOEditorUtil.createCDOEditorInput(view, ((CDOResource)selection).getPath(),
-              true);
+          CDOEditorInput editorInput = CDOEditorUtil.createCDOEditorInput(transaction,
+              ((CDOResource)selection).getPath(), true);
           page.openEditor(editorInput, CDOEditorUtil.getEditorID());
         }
         catch (PartInitException ex)

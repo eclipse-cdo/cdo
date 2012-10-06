@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.internal.ui.dialogs.ImportResourceDialog;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 
 import org.eclipse.emf.common.util.EList;
@@ -56,7 +57,10 @@ public class ImportResourceActionDelegate extends NewResourceActionDelegate
         sourceURI = uris.get(0);
         setNewResourceNode(createNewResourceNode());
         getNewResourceNode().setName(dialog.getTargetPath());
+
         CDOTransaction transaction = object.cdoView().getSession().openTransaction();
+        new CDOTransactionCommentator(transaction);
+
         CDOObject transactionalObject = transaction.getObject(object);
         return transactionalObject;
       }

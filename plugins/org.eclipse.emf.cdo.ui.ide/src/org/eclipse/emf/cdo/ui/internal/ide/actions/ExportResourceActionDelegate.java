@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.dialogs.ImportResourceDialog;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 
 import org.eclipse.net4j.util.io.IORuntimeException;
@@ -62,6 +63,8 @@ public class ExportResourceActionDelegate extends TransactionalBackgroundActionD
       {
         targetURI = uris.get(0);
         CDOTransaction transaction = object.cdoView().getSession().openTransaction();
+        new CDOTransactionCommentator(transaction);
+
         CDOObject transactionalObject = transaction.getObject(object);
         return transactionalObject;
       }

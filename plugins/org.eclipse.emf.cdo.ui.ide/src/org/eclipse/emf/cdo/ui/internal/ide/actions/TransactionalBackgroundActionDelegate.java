@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.ui.internal.ide.actions;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -96,7 +97,7 @@ public abstract class TransactionalBackgroundActionDelegate extends LongRunningA
    * Usually opens a new transaction based on the passed object and its view/session and returns a "contextualized" copy
    * of this object. Clients may override to access the UI thread before the background job is started or change the
    * contextualization procedure.
-   * 
+   *
    * @param object
    *          Usually an object in a read-only view that needs to be modified in a separate transaction.
    * @return A transactional copy of the passed object, or <code>null</code> to indicate cancelation of this action.
@@ -104,6 +105,8 @@ public abstract class TransactionalBackgroundActionDelegate extends LongRunningA
   protected CDOObject preRun(CDOObject object)
   {
     CDOTransaction transaction = object.cdoView().getSession().openTransaction();
+    new CDOTransactionCommentator(transaction);
+
     CDOObject transactionalObject = transaction.getObject(object);
     return transactionalObject;
   }

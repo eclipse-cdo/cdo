@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
 import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 
@@ -82,6 +83,7 @@ public class RemoveResourceActionDelegate implements IObjectActionDelegate
             if (transaction == null)
             {
               transaction = node.cdoView().getSession().openTransaction();
+              new CDOTransactionCommentator(transaction);
               repositoryToTransaction.put(sessionID, transaction);
             }
 

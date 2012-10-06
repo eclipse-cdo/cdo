@@ -14,10 +14,10 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CommitTransactionRequest;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -50,7 +50,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * See bug 213782, bug 201366
- * 
+ *
  * @author Simon McDuff
  */
 public class TransactionTest extends AbstractCDOTest
@@ -476,8 +476,8 @@ public class TransactionTest extends AbstractCDOTest
       }
     };
 
-    IRepository repository = getRepository();
-    repository.addCommitInfoHandler(handler);
+    CDOCommitInfoManager commitInfoManager = getRepository().getCommitInfoManager();
+    commitInfoManager.addCommitInfoHandler(handler);
 
     try
     {
@@ -495,7 +495,7 @@ public class TransactionTest extends AbstractCDOTest
     }
     finally
     {
-      repository.removeCommitInfoHandler(handler);
+      commitInfoManager.removeCommitInfoHandler(handler);
     }
   }
 

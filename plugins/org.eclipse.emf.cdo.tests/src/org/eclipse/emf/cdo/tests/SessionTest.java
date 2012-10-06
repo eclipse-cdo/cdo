@@ -280,7 +280,9 @@ public class SessionTest extends AbstractCDOTest
 
     CDOSession session = openSession("authrepo2");
     assertEquals(USER_ID, session.getUserID());
-    assertEquals(USER_ID, repository.getSessionManager().getSessions()[0].getUserID());
+
+    ISession serverSession = repository.getSessionManager().getSession(session.getSessionID());
+    assertEquals(USER_ID, serverSession.getUserID());
     session.close();
   }
 

@@ -391,16 +391,19 @@ public abstract class DelegatingRepository implements InternalRepository
     return getDelegate().getPackageRegistryCommitLock();
   }
 
+  @Deprecated
   public CDOCommitInfoHandler[] getCommitInfoHandlers()
   {
     return getDelegate().getCommitInfoHandlers();
   }
 
+  @Deprecated
   public void addCommitInfoHandler(CDOCommitInfoHandler handler)
   {
     getDelegate().addCommitInfoHandler(handler);
   }
 
+  @Deprecated
   public void removeCommitInfoHandler(CDOCommitInfoHandler handler)
   {
     getDelegate().removeCommitInfoHandler(handler);

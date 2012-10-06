@@ -16,11 +16,14 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
+import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -30,6 +33,8 @@ import java.util.WeakHashMap;
 public class CDOCommitInfoManagerImpl extends Lifecycle implements InternalCDOCommitInfoManager
 {
   private CommitInfoLoader commitInfoLoader;
+
+  private List<CDOCommitInfoHandler> commitInfoHandlers = new ArrayList<CDOCommitInfoHandler>();
 
   private Map<CDOCommitHistory, Boolean> histories = new WeakHashMap<CDOCommitHistory, Boolean>();
 
@@ -46,6 +51,51 @@ public class CDOCommitInfoManagerImpl extends Lifecycle implements InternalCDOCo
   {
     checkInactive();
     this.commitInfoLoader = commitInfoLoader;
+  }
+
+  public CDOCommitInfoHandler[] getCommitInfoHandlers()
+  {
+    synchronized (commitInfoHandlers)
+    {
+      return commitInfoHandlers.toArray(new CDOCommitInfoHandler[commitInfoHandlers.size()]);
+    }
+  }
+
+  /**
+   * @since 4.0
+   */
+  public void addCommitInfoHandler(CDOCommitInfoHandler handler)
+  {
+    synchronized (commitInfoHandlers)
+    {
+      commitInfoHandlers.add(handler);
+    }
+  }
+
+  /**
+   * @since 4.0
+   */
+  public void removeCommitInfoHandler(CDOCommitInfoHandler handler)
+  {
+    synchronized (commitInfoHandlers)
+    {
+      commitInfoHandlers.remove(handler);
+    }
+  }
+
+  public void notifyCommitInfoHandlers(CDOCommitInfo commitInfo)
+  {
+    for (CDOCommitInfoHandler handler : getCommitInfoHandlers())
+    {
+      try
+      {
+        handler.handleCommitInfo(commitInfo);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
   }
 
   public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
@@ -68,12 +118,14 @@ public class CDOCommitInfoManagerImpl extends Lifecycle implements InternalCDOCo
       {
         if (history.getBranch() == branch)
         {
+          history.activate();
           return history;
         }
       }
 
       CDOCommitHistory history = new CDOCommitHistory(this, branch);
       histories.put(history, Boolean.TRUE);
+      history.activate();
       return history;
     }
   }

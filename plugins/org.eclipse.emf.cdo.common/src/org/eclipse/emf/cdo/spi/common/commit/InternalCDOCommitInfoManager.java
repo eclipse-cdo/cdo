@@ -33,6 +33,11 @@ public interface InternalCDOCommitInfoManager extends CDOCommitInfoManager, ILif
   public void setCommitInfoLoader(CommitInfoLoader commitInfoLoader);
 
   /**
+   * @since 4.2
+   */
+  public void notifyCommitInfoHandlers(CDOCommitInfo commitInfo);
+
+  /**
    * @since 4.0
    */
   public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,

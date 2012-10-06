@@ -982,7 +982,7 @@ public class CommitInfoTest extends AbstractCDOTest
   public void testLogThroughCommitInfoHandler() throws Exception
   {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    getRepository().addCommitInfoHandler(new TextCommitInfoLog(baos));
+    getRepository().getCommitInfoManager().addCommitInfoHandler(new TextCommitInfoLog(baos));
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
@@ -1005,7 +1005,7 @@ public class CommitInfoTest extends AbstractCDOTest
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     AsyncCommitInfoHandler log = new AsyncCommitInfoHandler(new TextCommitInfoLog(baos));
     log.activate();
-    getRepository().addCommitInfoHandler(log);
+    getRepository().getCommitInfoManager().addCommitInfoHandler(log);
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();

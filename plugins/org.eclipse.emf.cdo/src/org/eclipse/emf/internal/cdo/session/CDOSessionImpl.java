@@ -1150,6 +1150,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     if (success)
     {
       fireInvalidationEvent(sender, commitInfo);
+      commitInfoManager.notifyCommitInfoHandlers(commitInfo);
     }
 
     for (InternalCDOView view : getViews())

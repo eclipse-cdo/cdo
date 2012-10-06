@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -120,17 +121,23 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
 
   /**
    * @since 4.1
+   * @deprecated As of 4.2 call {@link CDOCommitInfoManager#getCommitInfoHandlers()}
    */
+  @Deprecated
   public CDOCommitInfoHandler[] getCommitInfoHandlers();
 
   /**
    * @since 4.0
+   * @deprecated As of 4.2 call {@link CDOCommitInfoManager#addCommitInfoHandler(CDOCommitInfoHandler)}
    */
+  @Deprecated
   public void addCommitInfoHandler(CDOCommitInfoHandler handler);
 
   /**
    * @since 4.0
+   * @deprecated As of 4.2 call {@link CDOCommitInfoManager#removeCommitInfoHandler(CDOCommitInfoHandler)}
    */
+  @Deprecated
   public void removeCommitInfoHandler(CDOCommitInfoHandler handler);
 
   /**

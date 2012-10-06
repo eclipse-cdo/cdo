@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.common.revision.NOOPRevisionCache;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
@@ -478,9 +479,10 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
         repository.removeHandler(handler);
       }
 
-      for (CDOCommitInfoHandler handler : repository.getCommitInfoHandlers())
+      CDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
+      for (CDOCommitInfoHandler handler : commitInfoManager.getCommitInfoHandlers())
       {
-        repository.removeCommitInfoHandler(handler);
+        commitInfoManager.removeCommitInfoHandler(handler);
       }
     }
   }

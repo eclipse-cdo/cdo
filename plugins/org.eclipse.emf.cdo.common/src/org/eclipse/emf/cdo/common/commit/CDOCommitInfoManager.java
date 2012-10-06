@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
  * @apiviz.landmark
  * @apiviz.uses {@link CDOCommitInfo} - - manages
  */
-public interface CDOCommitInfoManager
+public interface CDOCommitInfoManager extends CDOCommitInfoProvider
 {
   /**
    * @since 4.2

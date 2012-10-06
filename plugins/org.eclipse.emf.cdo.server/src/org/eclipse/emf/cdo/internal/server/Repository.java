@@ -188,8 +188,6 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private List<WriteAccessHandler> writeAccessHandlers = new ArrayList<WriteAccessHandler>();
 
-  private List<CDOCommitInfoHandler> commitInfoHandlers = new ArrayList<CDOCommitInfoHandler>();
-
   private EPackage[] initialPackages;
 
   // Bugzilla 297940
@@ -913,59 +911,36 @@ public class Repository extends Container<Object> implements InternalRepository
     distributor.run(InternalCommitContext.OPS, commitContext, monitor);
   }
 
-  public CDOCommitInfoHandler[] getCommitInfoHandlers()
-  {
-    synchronized (commitInfoHandlers)
-    {
-      return commitInfoHandlers.toArray(new CDOCommitInfoHandler[commitInfoHandlers.size()]);
-    }
-  }
-
-  /**
-   * @since 4.0
-   */
-  public void addCommitInfoHandler(CDOCommitInfoHandler handler)
-  {
-    synchronized (commitInfoHandlers)
-    {
-      if (!commitInfoHandlers.contains(handler))
-      {
-        commitInfoHandlers.add(handler);
-      }
-    }
-  }
-
-  /**
-   * @since 4.0
-   */
-  public void removeCommitInfoHandler(CDOCommitInfoHandler handler)
-  {
-    synchronized (commitInfoHandlers)
-    {
-      commitInfoHandlers.remove(handler);
-    }
-  }
-
   @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo)
   {
     sendCommitNotification(sender, commitInfo, true);
   }
 
+  @Deprecated
+  public CDOCommitInfoHandler[] getCommitInfoHandlers()
+  {
+    return commitInfoManager.getCommitInfoHandlers();
+  }
+
+  @Deprecated
+  public void addCommitInfoHandler(CDOCommitInfoHandler handler)
+  {
+    commitInfoManager.addCommitInfoHandler(handler);
+  }
+
+  @Deprecated
+  public void removeCommitInfoHandler(CDOCommitInfoHandler handler)
+  {
+    commitInfoManager.removeCommitInfoHandler(handler);
+  }
+
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache)
   {
-    sessionManager.sendCommitNotification(sender, commitInfo, clearResourcePathCache);
-
-    for (CDOCommitInfoHandler handler : getCommitInfoHandlers())
+    if (!commitInfo.isEmpty())
     {
-      try
-      {
-        handler.handleCommitInfo(commitInfo);
-      }
-      catch (Exception ex)
-      {
-        OM.LOG.error(ex);
-      }
+      sessionManager.sendCommitNotification(sender, commitInfo, clearResourcePathCache);
+      commitInfoManager.notifyCommitInfoHandlers(commitInfo);
     }
   }
 

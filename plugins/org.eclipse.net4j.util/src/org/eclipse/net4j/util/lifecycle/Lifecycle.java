@@ -51,7 +51,7 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
   {
   }
 
-  public final void activate() throws LifecycleException
+  void internalActivate() throws LifecycleException
   {
     try
     {
@@ -105,7 +105,7 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
     }
   }
 
-  public final Exception deactivate()
+  Exception internalDeactivate()
   {
     try
     {
@@ -155,6 +155,16 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
       unlock();
       return ex;
     }
+  }
+
+  public final void activate() throws LifecycleException
+  {
+    internalActivate();
+  }
+
+  public final Exception deactivate()
+  {
+    return internalDeactivate();
   }
 
   /**

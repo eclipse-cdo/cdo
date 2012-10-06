@@ -13,7 +13,7 @@ package org.eclipse.net4j.util.container;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
-import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.lifecycle.ShareableLifecycle;
 
 import java.util.List;
 
@@ -22,10 +22,19 @@ import java.util.List;
  *
  * @author Eike Stepper
  */
-public abstract class Container<E> extends Lifecycle implements IContainer<E>
+public abstract class Container<E> extends ShareableLifecycle implements IContainer<E>
 {
   public Container()
   {
+    this(false);
+  }
+
+  /**
+   * @since 3.3
+   */
+  public Container(boolean shareable)
+  {
+    super(shareable);
   }
 
   public boolean isEmpty()

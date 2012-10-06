@@ -148,6 +148,22 @@ public abstract class OSGiActivator implements BundleActivator
   }
 
   /**
+   * @since 3.3
+   */
+  public static void start(OMBundle bundle) throws Exception
+  {
+    ((AbstractBundle)bundle).start();
+  }
+
+  /**
+   * @since 3.3
+   */
+  public static void stop(OMBundle bundle) throws Exception
+  {
+    ((AbstractBundle)bundle).stop();
+  }
+
+  /**
    * @since 2.0
    */
   public static void traceStart(BundleContext context)

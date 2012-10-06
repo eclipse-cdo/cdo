@@ -15,6 +15,7 @@ import org.eclipse.net4j.internal.util.bundle.OM;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Arrays;
 
 /**
  * @author Eike Stepper
@@ -91,5 +92,11 @@ public final class ArrayPreference extends Preference<String[]>
   public Type getType()
   {
     return Type.ARRAY;
+  }
+
+  @Override
+  public String toString()
+  {
+    return getName() + " = " + Arrays.asList(getValue());
   }
 }

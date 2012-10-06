@@ -117,6 +117,7 @@ public final class Activator extends EMFPlugin
      */
     protected void doStart() throws Exception
     {
+      OSGiActivator.start(OM.BUNDLE);
       CDOViewProviderRegistryImpl.INSTANCE.activate();
     }
 
@@ -126,6 +127,7 @@ public final class Activator extends EMFPlugin
     protected void doStop() throws Exception
     {
       LifecycleUtil.deactivate(CDOViewProviderRegistryImpl.INSTANCE, OMLogger.Level.WARN);
+      OSGiActivator.stop(OM.BUNDLE);
     }
 
     @SuppressWarnings("deprecation")

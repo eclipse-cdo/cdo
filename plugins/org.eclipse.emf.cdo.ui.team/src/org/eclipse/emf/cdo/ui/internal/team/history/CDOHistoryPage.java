@@ -10,6 +10,11 @@
  */
 package org.eclipse.emf.cdo.ui.internal.team.history;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorInput;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input;
 
@@ -50,7 +55,21 @@ public class CDOHistoryPage extends HistoryPage
   @Override
   public void createControl(Composite parent)
   {
-    commitHistoryComposite = new CommitHistoryComposite(parent, SWT.NONE);
+    commitHistoryComposite = new CommitHistoryComposite(parent, SWT.NONE)
+    {
+      @Override
+      protected void doubleClicked(CDOCommitInfo commitInfo)
+      {
+        long previousTimeStamp = commitInfo.getPreviousTimeStamp();
+        if (previousTimeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+        {
+          CDOSession session = input.getSession();
+          CDOBranchPoint previous = CDOBranchUtil.normalizeBranchPoint(commitInfo.getBranch(), previousTimeStamp);
+          CDOCompareEditorInput.openCompareDialog(session, commitInfo, previous);
+        }
+      }
+    };
+    getSite().setSelectionProvider(commitHistoryComposite.getTableViewer());
   }
 
   @Override

@@ -30,7 +30,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -254,52 +253,6 @@ public final class CDOCompareUtil
     EMFCompare comparator = createComparator(scope);
     Comparison comparison = comparator.compare();
     return new CDOComparison(scope, comparison, objectsToDeactivateOnClose);
-  }
-
-  /**
-   * A {@link Comparison comparison} that can be closed to dispose of used resources.
-   *
-   * @author Eike Stepper
-   */
-  public static class CDOComparison extends DelegatingComparison implements CloseableComparison
-  {
-    private final IComparisonScope scope;
-
-    private Set<Object> objectsToDeactivateOnClose;
-
-    public CDOComparison(IComparisonScope scope, Comparison delegate, Set<Object> objectsToDeactivateOnClose)
-    {
-      super(delegate);
-      this.scope = scope;
-      this.objectsToDeactivateOnClose = objectsToDeactivateOnClose;
-    }
-
-    public final IComparisonScope getScope()
-    {
-      return scope;
-    }
-
-    public boolean isClosed()
-    {
-      return delegate == null;
-    }
-
-    public void close()
-    {
-      if (delegate != null)
-      {
-        delegate = null;
-        if (objectsToDeactivateOnClose != null)
-        {
-          for (Object object : objectsToDeactivateOnClose)
-          {
-            LifecycleUtil.deactivate(object);
-          }
-
-          objectsToDeactivateOnClose = null;
-        }
-      }
-    }
   }
 
   /**

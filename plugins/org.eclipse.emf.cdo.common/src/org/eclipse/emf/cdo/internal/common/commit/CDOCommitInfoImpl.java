@@ -78,7 +78,8 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
 
   public boolean isEmpty()
   {
-    return false;
+    loadCommitDataIfNeeded();
+    return commitData.isEmpty();
   }
 
   public CDOChangeSetData copy()

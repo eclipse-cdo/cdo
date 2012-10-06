@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
  * A client-side {@link CDOAdminRepository administrative interface} to a remote repository.
  *
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOAdminClientRepository extends CDOAdminRepository
 {

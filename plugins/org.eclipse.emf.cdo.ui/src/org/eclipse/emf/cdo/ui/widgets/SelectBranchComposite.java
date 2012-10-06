@@ -112,7 +112,8 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
       }
     });
 
-    setBranchFromPath();
+    branchViewer.setSelection(new StructuredSelection(branch));
+    // setBranchFromPath();
   }
 
   @Override

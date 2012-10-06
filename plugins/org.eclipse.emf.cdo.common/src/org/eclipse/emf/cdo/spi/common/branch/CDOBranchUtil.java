@@ -61,6 +61,30 @@ public final class CDOBranchUtil
     return source.getBranch().getVersion(source.getVersion());
   }
 
+  /**
+   * @since 4.2
+   */
+  public static CDOBranchPoint normalizeBranchPoint(CDOBranch branch, long timeStamp)
+  {
+    for (;;)
+    {
+      long baseTime = branch.getBase().getTimeStamp();
+      if (timeStamp < baseTime)
+      {
+        branch = branch.getBase().getBranch();
+        if (branch == null)
+        {
+          throw new IllegalArgumentException("Time " + CDOCommonUtil.formatTimeStamp(timeStamp)
+              + " is before the repository creation time " + CDOCommonUtil.formatTimeStamp(baseTime));
+        }
+      }
+      else
+      {
+        return branch.getPoint(timeStamp);
+      }
+    }
+  }
+
   public static boolean isContainedBy(CDOBranchPoint contained, CDOBranchPoint container)
   {
     CDOBranch containerBranch = container.getBranch();

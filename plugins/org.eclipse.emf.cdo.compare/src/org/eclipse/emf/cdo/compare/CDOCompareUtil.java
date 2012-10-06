@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -124,7 +125,7 @@ public final class CDOCompareUtil
   /**
    * Same as {@link #compare(CDOView, CDOBranchPoint, boolean) compare(leftRoot, right, true)}.
    */
-  public static CloseableComparison compare(EObject leftRoot, CDOBranchPoint right)
+  public static CDOComparison compare(EObject leftRoot, CDOBranchPoint right)
   {
     return compare(leftRoot, right, true);
   }
@@ -134,7 +135,7 @@ public final class CDOCompareUtil
    * be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
    * matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.
    */
-  public static CloseableComparison compare(EObject leftRoot, CDOBranchPoint right, boolean tryThreeWay)
+  public static CDOComparison compare(EObject leftRoot, CDOBranchPoint right, boolean tryThreeWay)
   {
     Set<Object> objectsToDeactivateOnClose = new HashSet<Object>();
 
@@ -180,7 +181,7 @@ public final class CDOCompareUtil
   /**
    * Same as {@link #compare(EObject, CDOBranchPoint, boolean) compare(leftView, right, true)}.
    */
-  public static CloseableComparison compare(CDOView leftView, CDOBranchPoint right)
+  public static CDOComparison compare(CDOView leftView, CDOBranchPoint right)
   {
     return compare(leftView, right, true);
   }
@@ -191,7 +192,7 @@ public final class CDOCompareUtil
    * The advantage of this scope is that CDO-specific mechanisms are used to efficiently (remotely) determine the set of changed objects. Only those and their container
    * objects are considered as matches, making this scope scale seamlessly with the overall size of a repository.
    */
-  public static CloseableComparison compare(CDOView leftView, CDOBranchPoint right, boolean tryThreeWay)
+  public static CDOComparison compare(CDOView leftView, CDOBranchPoint right, boolean tryThreeWay)
   {
     Set<Object> objectsToDeactivateOnClose = new HashSet<Object>();
     CDOSession session = leftView.getSession();
@@ -248,11 +249,11 @@ public final class CDOCompareUtil
     return comparator;
   }
 
-  private static CloseableComparison createComparison(IComparisonScope scope, Set<Object> objectsToDeactivateOnClose)
+  private static CDOComparison createComparison(IComparisonScope scope, Set<Object> objectsToDeactivateOnClose)
   {
     EMFCompare comparator = createComparator(scope);
     Comparison comparison = comparator.compare();
-    return new CDOComparison(comparison, objectsToDeactivateOnClose);
+    return new CDOComparison(scope, comparison, objectsToDeactivateOnClose);
   }
 
   /**
@@ -262,12 +263,20 @@ public final class CDOCompareUtil
    */
   public static class CDOComparison extends DelegatingComparison implements CloseableComparison
   {
+    private final IComparisonScope scope;
+
     private Set<Object> objectsToDeactivateOnClose;
 
-    public CDOComparison(Comparison delegate, Set<Object> objectsToDeactivateOnClose)
+    public CDOComparison(IComparisonScope scope, Comparison delegate, Set<Object> objectsToDeactivateOnClose)
     {
       super(delegate);
+      this.scope = scope;
       this.objectsToDeactivateOnClose = objectsToDeactivateOnClose;
+    }
+
+    public final IComparisonScope getScope()
+    {
+      return scope;
     }
 
     public boolean isClosed()
@@ -366,16 +375,11 @@ public final class CDOCompareUtil
         Set<CDOID> requiredParentIDs = new HashSet<CDOID>();
         for (CDOID id : ids)
         {
-          CDOObject leftObject = leftView.getObject(id);
-          collectRequiredParentIDs(leftObject, requiredParentIDs);
-
-          CDOObject rightObject = rightView.getObject(id);
-          collectRequiredParentIDs(rightObject, requiredParentIDs);
-
+          collectRequiredParentID(leftView, id, requiredParentIDs);
+          collectRequiredParentID(rightView, id, requiredParentIDs);
           if (originView != null)
           {
-            CDOObject originObject = originView.getObject(id);
-            collectRequiredParentIDs(originObject, requiredParentIDs);
+            collectRequiredParentID(originView, id, requiredParentIDs);
           }
         }
 
@@ -423,9 +427,24 @@ public final class CDOCompareUtil
           {
             requiredParentIDs.add(id);
 
-            CDOObject object = view.getObject(id);
+            collectRequiredParentID(view, id, requiredParentIDs);
+          }
+        }
+      }
+
+      protected void collectRequiredParentID(CDOView view, CDOID id, Set<CDOID> requiredParentIDs)
+      {
+        try
+        {
+          CDOObject object = view.getObject(id);
+          if (object != null)
+          {
             collectRequiredParentIDs(object, requiredParentIDs);
           }
+        }
+        catch (ObjectNotFoundException ex)
+        {
+          //$FALL-THROUGH$
         }
       }
 

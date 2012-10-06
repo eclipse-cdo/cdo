@@ -12,11 +12,15 @@ package org.eclipse.emf.cdo.ui.widgets;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.compare.CDOCompareUtil;
+import org.eclipse.emf.cdo.compare.CDOCompareUtil.CDOComparison;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -24,9 +28,18 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 import org.eclipse.net4j.util.ui.TableLabelProvider;
 
+import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.EMFEditPlugin;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
+import org.eclipse.compare.CompareConfiguration;
+import org.eclipse.compare.CompareEditorInput;
+import org.eclipse.compare.CompareUI;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -40,6 +53,8 @@ import org.eclipse.swt.widgets.Composite;
 public class CommitHistoryComposite extends Composite
 {
   private CDOCommitHistory history;
+
+  private CDOCommitHistory lastHistory;
 
   private TableViewer tableViewer;
 
@@ -55,6 +70,18 @@ public class CommitHistoryComposite extends Composite
 
     tableViewer = new TableViewer(this, SWT.BORDER | SWT.FULL_SELECTION);
     tableViewer.setContentProvider(new ContentProvider());
+    tableViewer.addDoubleClickListener(new IDoubleClickListener()
+    {
+      public void doubleClick(DoubleClickEvent event)
+      {
+        IStructuredSelection selection = (IStructuredSelection)tableViewer.getSelection();
+        CDOCommitInfo commitInfo = (CDOCommitInfo)selection.getFirstElement();
+        if (commitInfo != null)
+        {
+          doubleClicked(commitInfo);
+        }
+      }
+    });
 
     labelProvider = new LabelProvider();
     labelProvider.support(tableViewer);
@@ -86,14 +113,20 @@ public class CommitHistoryComposite extends Composite
     labelProvider.setLocalUserID(userID);
     labelProvider.setInputBranch(inputBranch);
 
+    setHistory(session, inputBranch);
+    tableViewer.setInput(history);
+  }
+
+  protected void setHistory(CDOSession session, CDOBranch branch)
+  {
     CDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
-    history = commitInfoManager.getHistory(inputBranch);
-    if (history.isEmpty())
+    history = commitInfoManager.getHistory(branch);
+    if (lastHistory != null && lastHistory != history)
     {
-      history.loadCommitInfos(25);
+      lastHistory.deactivate();
     }
 
-    tableViewer.setInput(history);
+    lastHistory = history;
   }
 
   @Override
@@ -112,6 +145,42 @@ public class CommitHistoryComposite extends Composite
 
   protected void commitInfoChanged(CDOCommitInfo newCommitInfo)
   {
+  }
+
+  @SuppressWarnings("restriction")
+  protected void doubleClicked(CDOCommitInfo commitInfo)
+  {
+    long previousTimeStamp = commitInfo.getPreviousTimeStamp();
+    if (previousTimeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      CDOBranchPoint previous = CDOBranchUtil.normalizeBranchPoint(commitInfo.getBranch(), previousTimeStamp);
+      CDOView leftView = input.getSession().openView(commitInfo);
+      CDOComparison comparison = CDOCompareUtil.compare(leftView, previous);
+      IComparisonScope scope = comparison.getScope();
+
+      try
+      {
+        final CompareConfiguration configuration = new CompareConfiguration();
+        configuration.setProperty(org.eclipse.emf.compare.ide.ui.internal.EMFCompareConstants.COMPARE_RESULT,
+            comparison);
+        configuration.setProperty(
+            org.eclipse.emf.compare.ide.ui.internal.EMFCompareConstants.EDITING_DOMAIN,
+            new org.eclipse.emf.compare.ide.ui.internal.util.EMFCompareEditingDomain(comparison, scope.getLeft(), scope
+                .getRight(), scope.getOrigin()));
+        ComposedAdapterFactory.Descriptor.Registry registry = EMFEditPlugin
+            .getComposedAdapterFactoryDescriptorRegistry();
+        ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(registry);
+        final CompareEditorInput input = new EMFCompareEditorInput(configuration, adapterFactory);
+        input.setTitle("My own compare dialog");
+        configuration.setContainer(input);
+        CompareUI.openCompareDialog(input);
+      }
+      finally
+      {
+        comparison.close();
+        leftView.close();
+      }
+    }
   }
 
   /**

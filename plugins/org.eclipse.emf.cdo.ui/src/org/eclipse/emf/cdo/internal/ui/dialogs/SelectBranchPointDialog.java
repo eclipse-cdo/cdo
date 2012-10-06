@@ -172,7 +172,7 @@ public class SelectBranchPointDialog extends TitleAreaDialog implements Validati
 
   protected void createComposeTab(Composite parent)
   {
-    Control control = new ComposeBranchPointComposite(parent, SWT.NONE, session, null, allowTimeStamp)
+    Control control = new ComposeBranchPointComposite(parent, SWT.NONE, session, branchPoint, allowTimeStamp)
     {
       @Override
       protected void branchPointChanged(CDOBranchPoint newBranchPoint)

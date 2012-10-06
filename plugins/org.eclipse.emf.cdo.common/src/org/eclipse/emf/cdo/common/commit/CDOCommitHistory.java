@@ -23,11 +23,15 @@ import java.util.LinkedList;
  * @author Eike Stepper
  * @since 4.2
  */
-public class CDOCommitHistory extends Container<CDOCommitInfo>
+public class CDOCommitHistory extends Container<CDOCommitInfo> implements CDOCommitInfoHandler
 {
+  public static final int DEFAULT_LOAD_COUNT = 25;
+
   private final CDOCommitInfoManager manager;
 
   private final CDOBranch branch;
+
+  private int loadCount = DEFAULT_LOAD_COUNT;
 
   private LinkedList<CDOCommitInfo> commitInfos = new LinkedList<CDOCommitInfo>();
 
@@ -39,6 +43,7 @@ public class CDOCommitHistory extends Container<CDOCommitInfo>
 
   public CDOCommitHistory(CDOCommitInfoManager manager, CDOBranch branch)
   {
+    super(true);
     this.manager = manager;
     this.branch = branch;
   }
@@ -53,8 +58,29 @@ public class CDOCommitHistory extends Container<CDOCommitInfo>
     return branch;
   }
 
+  public final int getLoadCount()
+  {
+    return loadCount;
+  }
+
+  public void setLoadCount(int loadCount)
+  {
+    this.loadCount = loadCount;
+  }
+
+  @Override
+  public boolean isEmpty()
+  {
+    checkActive();
+    synchronized (commitInfos)
+    {
+      return commitInfos.isEmpty();
+    }
+  }
+
   public CDOCommitInfo[] getElements()
   {
+    checkActive();
     synchronized (commitInfos)
     {
       if (elements == null)
@@ -66,7 +92,7 @@ public class CDOCommitHistory extends Container<CDOCommitInfo>
     }
   }
 
-  public boolean loadCommitInfos(final int count)
+  public boolean loadCommitInfos()
   {
     synchronized (loaderThreadLock)
     {
@@ -80,7 +106,7 @@ public class CDOCommitHistory extends Container<CDOCommitInfo>
         @Override
         public void run()
         {
-          doLoadCommitInfos(count);
+          doLoadCommitInfos();
 
           synchronized (loaderThreadLock)
           {
@@ -94,7 +120,40 @@ public class CDOCommitHistory extends Container<CDOCommitInfo>
     return true;
   }
 
-  protected void doLoadCommitInfos(int count)
+  public void handleCommitInfo(CDOCommitInfo commitInfo)
+  {
+    synchronized (commitInfos)
+    {
+      commitInfos.addFirst(commitInfo);
+      elements = null;
+    }
+
+    fireElementAddedEvent(commitInfo);
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    manager.addCommitInfoHandler(this);
+    loadCommitInfos();
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    manager.removeCommitInfoHandler(this);
+
+    synchronized (commitInfos)
+    {
+      commitInfos.clear();
+      elements = null;
+    }
+
+    super.doDeactivate();
+  }
+
+  protected void doLoadCommitInfos()
   {
     final long startTime;
     synchronized (commitInfos)
@@ -102,7 +161,7 @@ public class CDOCommitHistory extends Container<CDOCommitInfo>
       startTime = commitInfos.isEmpty() ? CDOBranchPoint.UNSPECIFIED_DATE : commitInfos.getLast().getTimeStamp();
     }
 
-    manager.getCommitInfos(branch, startTime, null, null, -count, new CDOCommitInfoHandler()
+    manager.getCommitInfos(branch, startTime, null, null, -loadCount, new CDOCommitInfoHandler()
     {
       private boolean ignore = startTime != CDOBranchPoint.UNSPECIFIED_DATE;
 

@@ -38,7 +38,6 @@ import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.transaction.TransactionException;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
@@ -102,7 +101,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
@@ -1936,7 +1934,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         boolean first = true;
         EList<Resource> resources = CDOUtil.getResources(editingDomain.getResourceSet());
-        monitor.beginTask("", resources.size()); //$NON-NLS-1$
         try
         {
           for (Resource resource : resources)
@@ -1947,29 +1944,16 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
               try
               {
                 savedResources.add(resource);
-                saveOptions.put(CDOResource.OPTION_SAVE_PROGRESS_MONITOR, new SubProgressMonitor(monitor, 1));
-                saveOptions.put(CDOResource.OPTION_SAVE_OVERRIDE_TRANSACTION, view);
-                resource.save(saveOptions);
-              }
-              catch (TransactionException exception)
-              {
-                OM.LOG.error(exception);
-                final Shell shell = getSite().getShell();
-                shell.getDisplay().syncExec(new Runnable()
+                if (resource instanceof CDOResource)
                 {
-                  public void run()
+                  CDOView resourceView = ((CDOResource)resource).cdoView();
+                  if (resourceView == view)
                   {
-                    CDOTransaction transaction = (CDOTransaction)view;
-                    String title = Messages.getString("CDOEditor.17"); //$NON-NLS-1$
-                    String message = Messages.getString("CDOEditor.18"); //$NON-NLS-1$
-                    RollbackTransactionDialog dialog = new RollbackTransactionDialog(getEditorSite().getPage(), title,
-                        message, transaction);
-                    if (dialog.open() == RollbackTransactionDialog.OK)
-                    {
-                      transaction.rollback();
-                    }
+                    continue;
                   }
-                });
+                }
+
+                resource.save(saveOptions);
               }
               catch (Exception exception)
               {
@@ -1979,9 +1963,34 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
               first = false;
             }
-            else
+          }
+
+          if (!view.isReadOnly())
+          {
+            final CDOTransaction transaction = (CDOTransaction)view;
+
+            try
             {
-              monitor.worked(1);
+              transaction.commit(monitor);
+            }
+            catch (Exception exception)
+            {
+              OM.LOG.error(exception);
+              final Shell shell = getSite().getShell();
+              shell.getDisplay().syncExec(new Runnable()
+              {
+                public void run()
+                {
+                  String title = Messages.getString("CDOEditor.17"); //$NON-NLS-1$
+                  String message = Messages.getString("CDOEditor.18"); //$NON-NLS-1$
+                  RollbackTransactionDialog dialog = new RollbackTransactionDialog(getEditorSite().getPage(), title,
+                      message, transaction);
+                  if (dialog.open() == RollbackTransactionDialog.OK)
+                  {
+                    transaction.rollback();
+                  }
+                }
+              });
             }
           }
         }

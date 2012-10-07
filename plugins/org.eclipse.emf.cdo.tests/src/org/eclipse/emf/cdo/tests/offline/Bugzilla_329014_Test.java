@@ -114,21 +114,21 @@ public class Bugzilla_329014_Test extends AbstractSyncingTest
     masterCompany.setName("Company3");
     masterTransaction.commit();
 
-    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), 1000);
+    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     cloneCompany.setName("Company4");
     cloneTransaction.commit();
     cloneCompany.setName("Company5");
     cloneTransaction.commit();
 
-    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), 1000);
+    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     masterCompany.setName("Company6");
     masterTransaction.commit();
     masterCompany.setName("Company7");
     masterTransaction.commit();
 
-    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), 1000);
+    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     // check.
     assertEquals(masterCompany.getName(), cloneCompany.getName());
@@ -159,21 +159,21 @@ public class Bugzilla_329014_Test extends AbstractSyncingTest
     cloneCompany.setName("Company3");
     cloneTransaction.commit();
 
-    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), 1000);
+    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     masterCompany.setName("Company4");
     masterTransaction.commit();
     masterCompany.setName("Company5");
     masterTransaction.commit();
 
-    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), 1000);
+    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     cloneCompany.setName("Company6");
     cloneTransaction.commit();
     cloneCompany.setName("Company7");
     cloneTransaction.commit();
 
-    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), 1000);
+    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     // check.
     assertEquals(cloneCompany.getName(), masterCompany.getName());
@@ -213,7 +213,7 @@ public class Bugzilla_329014_Test extends AbstractSyncingTest
     getOfflineConfig().startMasterTransport();
     waitForOnline(clone);
 
-    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), 1000);
+    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     cloneCompany.getName();
     msg(CDOUtil.getCDOObject(cloneCompany).cdoRevision().getVersion());
@@ -223,14 +223,14 @@ public class Bugzilla_329014_Test extends AbstractSyncingTest
     cloneCompany.setName("Company5");
     cloneTransaction.commit();
 
-    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), 1000);
+    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     masterCompany.setName("Company6");
     masterTransaction.commit();
     masterCompany.setName("Company7");
     masterTransaction.commit();
 
-    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), 1000);
+    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     // check.
     assertEquals(masterCompany.getName(), cloneCompany.getName());
@@ -261,7 +261,7 @@ public class Bugzilla_329014_Test extends AbstractSyncingTest
     cloneCompany.setName("Company3");
     cloneTransaction.commit();
 
-    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), 1000);
+    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     // go offline.
     getOfflineConfig().stopMasterTransport();
@@ -276,14 +276,14 @@ public class Bugzilla_329014_Test extends AbstractSyncingTest
     getOfflineConfig().startMasterTransport();
     waitForOnline(clone);
 
-    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), 1000);
+    cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     cloneCompany.setName("Company6");
     cloneTransaction.commit();
     cloneCompany.setName("Company7");
     cloneTransaction.commit();
 
-    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), 1000);
+    masterTransaction.waitForUpdate(cloneTransaction.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     // check.
     assertEquals(cloneCompany.getName(), masterCompany.getName());

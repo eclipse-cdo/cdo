@@ -926,6 +926,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   public synchronized InternalCDOObject removeObject(CDOID id)
   {
+    if (id == null)
+    {
+      return null;
+    }
+
     if (id.equals(lastLookupID))
     {
       lastLookupID = null;

@@ -28,7 +28,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
  * properties and features of those objects.
  * <p>
  * Note that, by contract, every instance of CDOObject can also be cast to {@link InternalCDOObject}.
- * 
+ *
  * @author Eike Stepper
  * @apiviz.landmark
  * @apiviz.has {@link CDOState}
@@ -47,7 +47,7 @@ public interface CDOObject extends EObject, CDOWithID
    * If the state of this object is {@link CDOState#NEW NEW} the returned CDOID instance can be cast to
    * {@link CDOIDTemp} and is unique in the scope of the associated {@link #cdoView() transaction}. In all other states
    * a non-<code>null</code> return value uniquely identifies a persistent object in the scope of the whole repository.
-   * 
+   *
    * @see #cdoState()
    */
   public CDOID cdoID();
@@ -63,7 +63,7 @@ public interface CDOObject extends EObject, CDOWithID
    * <p>
    * This method is a convenience method to determine whether the {@link #cdoState() state} of this object is either
    * {@link CDOState#CONFLICT CONFLICT} or {@link CDOState#INVALID_CONFLICT INVALID_CONFLICT}.
-   * 
+   *
    * @since 2.0
    */
   public boolean cdoConflict();
@@ -74,7 +74,7 @@ public interface CDOObject extends EObject, CDOWithID
    * <p>
    * This method is a convenience method to determine whether the {@link #cdoState() state} of this object is either
    * {@link CDOState#INVALID INVALID} or {@link CDOState#INVALID_CONFLICT INVALID_CONFLICT}.
-   * 
+   *
    * @since 2.0
    */
   public boolean cdoInvalid();
@@ -82,7 +82,7 @@ public interface CDOObject extends EObject, CDOWithID
   /**
    * Returns the {@link CDOView view} this object is associated with, or <code>null</code> if this object is not
    * associated with a view. This view manages all aspects of this object and cahces it as long as required.
-   * 
+   *
    * @since 2.0
    */
   public CDOView cdoView();
@@ -101,7 +101,7 @@ public interface CDOObject extends EObject, CDOWithID
    * This method may not return <code>null</code> return for objects that have no {@link #cdoDirectResource() direct
    * resource}. Please note that, depending on the containment depth of this object, the evaluation of the resource can
    * be a costly operation.
-   * 
+   *
    * @see #cdoDirectResource()
    */
   public CDOResource cdoResource();
@@ -112,14 +112,14 @@ public interface CDOObject extends EObject, CDOWithID
    * <p>
    * Please note that, independend of the containment depth of this object, the evaluation of the direct resource is an
    * operation with a constant cost.
-   * 
+   *
    * @since 2.0
    */
   public CDOResource cdoDirectResource();
 
   /**
    * Returns the read lock associated with this object.
-   * 
+   *
    * @return Never <code>null</code>.
    * @since 2.0
    */
@@ -127,7 +127,7 @@ public interface CDOObject extends EObject, CDOWithID
 
   /**
    * Returns the write lock associated with this object.
-   * 
+   *
    * @return Never <code>null</code>.
    * @since 2.0
    */
@@ -143,14 +143,14 @@ public interface CDOObject extends EObject, CDOWithID
    * <p>
    * It thus allows a view to ensure that it is the only that who will be able to obtain a write lock in the future,
    * without preventing read locks to be obtained by others at this moment.
-   * 
+   *
    * @since 4.1
    */
   public CDOLock cdoWriteOption();
 
   /**
    * Returns the {@link CDOLockState} of this object.
-   * 
+   *
    * @since 4.1
    */
   public CDOLockState cdoLockState();
@@ -159,7 +159,7 @@ public interface CDOObject extends EObject, CDOWithID
    * Ensures that the revisions of the contained objects up to the given depth are in the local
    * {@link CDORevisionManager revision cache}. Subsequent access to the respective contained objects will not lead to
    * server round-trips after calling this method.
-   * 
+   *
    * @param depth
    *          {@link CDORevision#DEPTH_NONE}, {@link CDORevision#DEPTH_INFINITE} or any other positive integer number.
    * @since 3.0
@@ -170,4 +170,9 @@ public interface CDOObject extends EObject, CDOWithID
    * TODO: JavaDoc
    */
   public void cdoReload();
+
+  /**
+   * @since 4.2
+   */
+  public CDOObjectHistory cdoHistory();
 }

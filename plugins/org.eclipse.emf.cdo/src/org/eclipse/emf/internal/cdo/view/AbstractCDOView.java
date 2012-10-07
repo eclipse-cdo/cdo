@@ -13,11 +13,14 @@
 package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOObjectHistory;
 import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -39,6 +42,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
+import org.eclipse.emf.cdo.internal.common.commit.CDOCommitHistoryProviderImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -70,7 +74,6 @@ import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -105,7 +108,8 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractCDOView extends Lifecycle implements InternalCDOView
+public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOObject, CDOObjectHistory> implements
+    InternalCDOView
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, AbstractCDOView.class);
 
@@ -1550,6 +1554,20 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
   {
     CDOSession session = getSession();
     return session.compareRevisions(source, this);
+  }
+
+  @Override
+  public CDOCommitHistory getHistory()
+  {
+    CDOBranch branch = getBranch();
+    CDOCommitInfoManager commitInfoManager = getSession().getCommitInfoManager();
+    return commitInfoManager.getHistory(branch);
+  }
+
+  @Override
+  protected CDOCommitHistory createHistory(CDOObject key)
+  {
+    return new CDOObjectHistoryImpl(key);
   }
 
   @Override

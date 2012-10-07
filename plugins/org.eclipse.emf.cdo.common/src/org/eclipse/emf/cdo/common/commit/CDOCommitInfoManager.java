@@ -22,18 +22,9 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
  * @apiviz.landmark
  * @apiviz.uses {@link CDOCommitInfo} - - manages
  */
-public interface CDOCommitInfoManager extends CDOCommitInfoProvider
+public interface CDOCommitInfoManager extends CDOCommitInfoProvider,
+    CDOCommitHistory.Provider<CDOBranch, CDOCommitHistory>
 {
-  /**
-   * @since 4.2
-   */
-  public CDOCommitHistory getHistory();
-
-  /**
-   * @since 4.2
-   */
-  public CDOCommitHistory getHistory(CDOBranch branch);
-
   /**
    * @since 4.0
    */

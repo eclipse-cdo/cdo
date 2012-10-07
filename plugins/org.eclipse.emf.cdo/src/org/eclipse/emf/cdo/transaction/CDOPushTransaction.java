@@ -11,11 +11,13 @@
 package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOObjectHistory;
 import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -725,6 +727,22 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public CDOChangeSetData compareRevisions(CDOBranchPoint source)
   {
     return delegate.compareRevisions(source);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public CDOCommitHistory getHistory()
+  {
+    return delegate.getHistory();
+  }
+
+  /**
+   * @since 4.2
+   */
+  public CDOObjectHistory getHistory(CDOObject object)
+  {
+    return delegate.getHistory(object);
   }
 
   public CDOSavepoint setSavepoint()

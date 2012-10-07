@@ -13,6 +13,7 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOObjectHistory;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
@@ -162,6 +163,14 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   public void cdoReload()
   {
     CDOStateMachine.INSTANCE.reload(this);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public CDOObjectHistory cdoHistory()
+  {
+    return view.getHistory(this);
   }
 
   /**

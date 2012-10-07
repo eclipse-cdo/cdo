@@ -4,6 +4,12 @@
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.CDOObject"/>
+                <message_argument value="cdoHistory()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.CDOObject"/>
                 <message_argument value="cdoLockState()"/>
             </message_arguments>
         </filter>
@@ -128,6 +134,12 @@
     </resource>
     <resource path="src/org/eclipse/emf/cdo/view/CDOView.java" type="org.eclipse.emf.cdo.view.CDOView">
         <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOCommonView"/>
+                <message_argument value="CDOView"/>
+            </message_arguments>
+        </filter>
+        <filter id="574619656">
             <message_arguments>
                 <message_argument value="CDOCommonView"/>
                 <message_argument value="CDOView"/>

@@ -11,6 +11,7 @@
 package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOLock;
+import org.eclipse.emf.cdo.CDOObjectHistory;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -63,5 +64,10 @@ public class CDOExternalObject extends CDOObjectWrapperBase
   public void cdoReload()
   {
     // Do nothing
+  }
+
+  public CDOObjectHistory cdoHistory()
+  {
+    return null;
   }
 }

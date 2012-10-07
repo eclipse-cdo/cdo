@@ -20,23 +20,18 @@ import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 
-import org.eclipse.net4j.util.lifecycle.Lifecycle;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.WeakHashMap;
 
 /**
  * @author Andre Dietisheim
  */
-public class CDOCommitInfoManagerImpl extends Lifecycle implements InternalCDOCommitInfoManager
+public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBranch, CDOCommitHistory> implements
+    InternalCDOCommitInfoManager
 {
   private CommitInfoLoader commitInfoLoader;
 
   private List<CDOCommitInfoHandler> commitInfoHandlers = new ArrayList<CDOCommitInfoHandler>();
-
-  private Map<CDOCommitHistory, Boolean> histories = new WeakHashMap<CDOCommitHistory, Boolean>();
 
   public CDOCommitInfoManagerImpl()
   {
@@ -105,31 +100,6 @@ public class CDOCommitInfoManagerImpl extends Lifecycle implements InternalCDOCo
     return new CDOCommitInfoImpl(this, branch, timeStamp, previousTimeStamp, userID, comment, commitData);
   }
 
-  public CDOCommitHistory getHistory()
-  {
-    return getHistory(null);
-  }
-
-  public CDOCommitHistory getHistory(CDOBranch branch)
-  {
-    synchronized (histories)
-    {
-      for (CDOCommitHistory history : histories.keySet())
-      {
-        if (history.getBranch() == branch)
-        {
-          history.activate();
-          return history;
-        }
-      }
-
-      CDOCommitHistory history = new CDOCommitHistory(this, branch);
-      histories.put(history, Boolean.TRUE);
-      history.activate();
-      return history;
-    }
-  }
-
   public CDOCommitInfo getCommitInfo(long timeStamp)
   {
     checkActive();
@@ -170,5 +140,11 @@ public class CDOCommitInfoManagerImpl extends Lifecycle implements InternalCDOCo
   {
     super.doBeforeActivate();
     checkState(commitInfoLoader, "commitInfoLoader"); //$NON-NLS-1$
+  }
+
+  @Override
+  protected CDOCommitHistory createHistory(CDOBranch key)
+  {
+    return new CDOCommitHistoryImpl(this, key);
   }
 }

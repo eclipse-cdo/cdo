@@ -16,11 +16,13 @@ import org.eclipse.emf.cdo.CDOAdapter;
 import org.eclipse.emf.cdo.CDOInvalidationNotification;
 import org.eclipse.emf.cdo.CDONotification;
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOObjectHistory;
 import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOException;
@@ -87,7 +89,8 @@ import java.util.Set;
  * @apiviz.uses {@link CDOViewLocksChangedEvent} - - fires
  * @apiviz.uses {@link CDOViewTargetChangedEvent} - - fires
  */
-public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
+public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.Provider<CDOObject, CDOObjectHistory>,
+    INotifier
 {
   /**
    * Returns the {@link CDOSession session} this view was opened by.

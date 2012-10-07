@@ -12,6 +12,7 @@
 package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOObjectHistory;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
@@ -131,6 +132,11 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   public void cdoReload()
   {
     CDOStateMachine.INSTANCE.reload(this);
+  }
+
+  public CDOObjectHistory cdoHistory()
+  {
+    return view.getHistory(this);
   }
 
   public CDOState cdoInternalSetState(CDOState state)

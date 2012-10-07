@@ -196,7 +196,7 @@ public class SelectBranchPointDialog extends TitleAreaDialog implements Validati
     };
 
     control.setLayoutData(UIUtil.createGridData());
-    control.setInput(new CommitHistoryComposite.Input(session, null));
+    control.setInput(new CommitHistoryComposite.Input(session, null, null));
   }
 
   protected void createTagsTab(Composite parent)

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.ui.widgets;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
@@ -21,6 +22,7 @@ import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 import org.eclipse.net4j.util.ui.TableLabelProvider;
 
@@ -43,8 +45,6 @@ import org.eclipse.swt.widgets.Composite;
 public class CommitHistoryComposite extends Composite
 {
   private CDOCommitHistory history;
-
-  private CDOCommitHistory lastHistory;
 
   private TableViewer tableViewer;
 
@@ -96,27 +96,34 @@ public class CommitHistoryComposite extends Composite
   {
     this.input = input;
 
-    CDOBranch inputBranch = input.getBranch();
     CDOSession session = input.getSession();
-    String userID = session.getUserID();
+    CDOBranch branch = input.getBranch();
 
-    labelProvider.setLocalUserID(userID);
-    labelProvider.setInputBranch(inputBranch);
+    labelProvider.setLocalUserID(session.getUserID());
+    labelProvider.setInputBranch(branch);
 
-    setHistory(session, inputBranch);
+    setHistory(session, branch, input.getObject());
     tableViewer.setInput(history);
   }
 
-  protected void setHistory(CDOSession session, CDOBranch branch)
+  protected void setHistory(CDOSession session, CDOBranch branch, CDOObject object)
   {
-    CDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
-    history = commitInfoManager.getHistory(branch);
-    if (lastHistory != null && lastHistory != history)
+    CDOCommitHistory oldHistory = history;
+
+    if (object == null)
     {
-      lastHistory.deactivate();
+      CDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
+      history = commitInfoManager.getHistory(branch);
+    }
+    else
+    {
+      history = object.cdoHistory();
     }
 
-    lastHistory = history;
+    if (oldHistory != null && oldHistory != history)
+    {
+      LifecycleUtil.deactivate(oldHistory);
+    }
   }
 
   @Override
@@ -150,46 +157,52 @@ public class CommitHistoryComposite extends Composite
 
     private final CDOBranch branch;
 
-    public Input(Object object)
+    private final CDOObject object;
+
+    public Input(Object delegate)
     {
-      if (object instanceof CDOSession)
+      if (delegate instanceof CDOSession)
       {
-        session = (CDOSession)object;
+        session = (CDOSession)delegate;
         branch = null;
+        object = null;
         return;
       }
 
-      if (object instanceof CDOView)
+      if (delegate instanceof CDOView)
       {
-        CDOView view = (CDOView)object;
+        CDOView view = (CDOView)delegate;
         session = view.getSession();
         branch = view.getBranch();
+        object = null;
         return;
       }
 
-      if (object instanceof EObject)
+      if (delegate instanceof EObject)
       {
-        EObject eObject = (EObject)object;
+        EObject eObject = (EObject)delegate;
         CDOObject cdoObject = CDOUtil.getCDOObject(eObject);
         if (cdoObject != null)
         {
           CDOView view = cdoObject.cdoView();
-          if (view != null)
+          if (view != null && cdoObject.cdoState() != CDOState.NEW)
           {
             session = view.getSession();
             branch = view.getBranch();
+            object = cdoObject;
             return;
           }
         }
       }
 
-      throw new IllegalStateException("Illegal input: " + object);
+      throw new IllegalStateException("Illegal input: " + delegate);
     }
 
-    public Input(CDOSession session, CDOBranch branch)
+    public Input(CDOSession session, CDOBranch branch, CDOObject object)
     {
       this.session = session;
       this.branch = branch;
+      this.object = object;
     }
 
     public final CDOSession getSession()
@@ -202,13 +215,19 @@ public class CommitHistoryComposite extends Composite
       return branch;
     }
 
+    public final CDOObject getObject()
+    {
+      return object;
+    }
+
     @Override
     public int hashCode()
     {
       final int prime = 31;
       int result = 1;
-      result = prime * result + (branch == null ? 0 : branch.hashCode());
       result = prime * result + (session == null ? 0 : session.hashCode());
+      result = prime * result + (branch == null ? 0 : branch.hashCode());
+      result = prime * result + (object == null ? 0 : object.hashCode());
       return result;
     }
 
@@ -231,18 +250,6 @@ public class CommitHistoryComposite extends Composite
       }
 
       Input other = (Input)obj;
-      if (branch == null)
-      {
-        if (other.branch != null)
-        {
-          return false;
-        }
-      }
-      else if (!branch.equals(other.branch))
-      {
-        return false;
-      }
-
       if (session == null)
       {
         if (other.session != null)
@@ -255,16 +262,33 @@ public class CommitHistoryComposite extends Composite
         return false;
       }
 
-      return true;
+      if (branch == null)
+      {
+        if (other.branch != null)
+        {
+          return false;
+        }
+      }
+      else if (!branch.equals(other.branch))
+      {
+        return false;
+      }
+
+      return object == other.object;
     }
 
     @Override
     public String toString()
     {
-      String str = session.getRepositoryInfo().getName();
+      String str = "Repostory: " + session.getRepositoryInfo().getName();
       if (branch != null)
       {
-        str += " [" + branch.getPathName() + "]";
+        str += ", Branch: " + branch.getPathName();
+      }
+
+      if (object != null)
+      {
+        str += ", Object: " + object;
       }
 
       return str;

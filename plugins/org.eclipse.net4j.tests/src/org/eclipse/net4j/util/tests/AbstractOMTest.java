@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.tests;
 
+import org.eclipse.net4j.internal.util.test.TestExecuter;
 import org.eclipse.net4j.tests.bundle.OM;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
@@ -242,53 +243,60 @@ public abstract class AbstractOMTest extends TestCase
   @Override
   public void runBare() throws Throwable
   {
-    try
+    TestExecuter.execute(this, new TestExecuter.Executable()
     {
-      // Don't call super.runBare() because it does not clean up after exceptions from setUp()
-      Throwable exception = null;
-
-      try
-      {
-        setUp();
-        runTest();
-      }
-      catch (Throwable running)
-      {
-        exception = running;
-      }
-      finally
+      public void execute() throws Throwable
       {
         try
         {
-          tearDown();
-        }
-        catch (Throwable tearingDown)
-        {
-          if (exception == null)
+          Throwable exception = null;
+
+          try
           {
-            exception = tearingDown;
+            setUp();
+
+            // Don't call super.runBare() because it does not clean up after exceptions from setUp()
+            runTest();
+          }
+          catch (Throwable running)
+          {
+            exception = running;
+          }
+          finally
+          {
+            try
+            {
+              tearDown();
+            }
+            catch (Throwable tearingDown)
+            {
+              if (exception == null)
+              {
+                exception = tearingDown;
+              }
+            }
+          }
+
+          if (exception != null)
+          {
+            throw exception;
           }
         }
-      }
+        catch (SkipTestException ex)
+        {
+          OM.LOG.info("Skipped " + this); //$NON-NLS-1$
+        }
+        catch (Throwable t)
+        {
+          if (!SUPPRESS_OUTPUT)
+          {
+            t.printStackTrace(IOUtil.OUT());
+          }
 
-      if (exception != null)
-      {
-        throw exception;
+          throw t;
+        }
       }
-    }
-    catch (SkipTestException ex)
-    {
-      OM.LOG.info("Skipped " + this); //$NON-NLS-1$
-    }
-    catch (Throwable t)
-    {
-      if (!SUPPRESS_OUTPUT)
-      {
-        t.printStackTrace(IOUtil.OUT());
-      }
-
-      throw t;
-    }
+    });
   }
 
   @Override
@@ -420,6 +428,11 @@ public abstract class AbstractOMTest extends TestCase
     File file = TMPUtil.createTempFile(prefix, suffix, directory);
     addFileToDelete(file);
     return file;
+  }
+
+  public static AbstractOMTest getCurrrentTest()
+  {
+    return (AbstractOMTest)TestExecuter.getValue();
   }
 
   /**

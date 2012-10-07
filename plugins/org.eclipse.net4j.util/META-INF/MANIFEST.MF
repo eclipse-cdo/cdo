@@ -20,6 +20,7 @@ Export-Package: org.eclipse.net4j.internal.util.bundle;version="3.3.0";x-friends
  org.eclipse.net4j.internal.util.factory;version="3.3.0";x-friends:="org.eclipse.net4j.util.defs",
  org.eclipse.net4j.internal.util.om;version="3.3.0";x-friends:="org.eclipse.net4j.util.defs",
  org.eclipse.net4j.internal.util.om.pref;version="3.3.0";x-friends:="org.eclipse.net4j.util.defs",
+ org.eclipse.net4j.internal.util.test;version="3.3.0";x-friends:="org.eclipse.net4j.tests",
  org.eclipse.net4j.util;version="3.3.0",
  org.eclipse.net4j.util.cache;version="3.3.0",
  org.eclipse.net4j.util.collection;version="3.3.0",

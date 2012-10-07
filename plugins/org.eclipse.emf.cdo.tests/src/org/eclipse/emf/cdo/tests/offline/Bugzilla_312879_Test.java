@@ -202,10 +202,4 @@ public class Bugzilla_312879_Test extends AbstractSyncingTest
       assertEquals(categoryNamePrefix + c++, category.getName());
     }
   }
-
-  @Override
-  protected boolean isRawReplication()
-  {
-    return true;
-  }
 }

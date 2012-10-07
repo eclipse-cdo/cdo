@@ -24,19 +24,13 @@ import org.eclipse.emf.cdo.util.CDOUtil;
  * "Attempt to modify historical revision" on raw replication.
  * <p>
  * See bug 319552
- * 
+ *
  * @author Pascal Lehmann
  * @since 4.0
  */
 @CleanRepositoriesBefore
 public class Bugzilla_319552_Test extends AbstractSyncingTest
 {
-  @Override
-  protected boolean isRawReplication()
-  {
-    return true;
-  }
-
   public void test() throws Exception
   {
     InternalRepository clone = getRepository();

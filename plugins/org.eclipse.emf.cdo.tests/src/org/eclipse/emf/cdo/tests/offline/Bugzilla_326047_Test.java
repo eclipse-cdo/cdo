@@ -30,19 +30,13 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
  * Revision not revised on rawImport for deleted objects.
  * <p>
  * See bug 326047
- * 
+ *
  * @author Pascal Lehmann
  * @since 4.0
  */
 @CleanRepositoriesBefore
 public class Bugzilla_326047_Test extends AbstractSyncingTest
 {
-  @Override
-  protected boolean isRawReplication()
-  {
-    return true;
-  }
-
   public void test() throws Exception
   {
     InternalRepository clone = getRepository();

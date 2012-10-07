@@ -26,12 +26,6 @@ import org.eclipse.net4j.signal.RemoteException;
 public class Bugzilla_376567_Test extends AbstractSyncingTest
 {
   @Override
-  protected boolean isRawReplication()
-  {
-    return true;
-  }
-
-  @Override
   protected boolean isHinderInitialReplication()
   {
     return true;

@@ -31,12 +31,6 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 public class Bugzilla_376566_Test extends AbstractSyncingTest
 {
   @Override
-  protected boolean isRawReplication()
-  {
-    return true;
-  }
-
-  @Override
   protected boolean isHinderInitialReplication()
   {
     return true;

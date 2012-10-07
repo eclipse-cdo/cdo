@@ -88,7 +88,7 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
 
   protected boolean isRawReplication()
   {
-    return false;
+    return true;
   }
 
   protected long getTestDelayedCommitHandling()

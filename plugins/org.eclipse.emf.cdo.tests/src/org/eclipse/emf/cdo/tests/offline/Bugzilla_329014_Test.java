@@ -26,7 +26,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
  * LastUpdateTimestamp of ReplicatorSession not set on local commits.
  * <p>
  * See bug 329014
- * 
+ *
  * @author Pascal Lehmann
  * @since 4.0
  */
@@ -44,12 +44,6 @@ public class Bugzilla_329014_Test extends AbstractSyncingTest
   private CDOSession masterSession;
 
   private CDOSession cloneSession;
-
-  @Override
-  protected boolean isRawReplication()
-  {
-    return true;
-  }
 
   @Override
   protected void doSetUp() throws Exception

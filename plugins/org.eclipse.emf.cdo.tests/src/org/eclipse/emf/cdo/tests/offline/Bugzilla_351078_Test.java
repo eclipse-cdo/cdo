@@ -34,19 +34,13 @@ import org.eclipse.emf.common.util.EList;
  * Support raw replication in HorizontalBranchingMappingStrategyWithRanges.
  * <p>
  * See bug 351078
- * 
+ *
  * @author Eike Stepper
  */
 @Requires(IRepositoryConfig.CAPABILITY_OFFLINE)
 @CleanRepositoriesBefore
 public class Bugzilla_351078_Test extends AbstractSyncingTest
 {
-  @Override
-  protected boolean isRawReplication()
-  {
-    return true;
-  }
-
   @Override
   protected void doSetUp() throws Exception
   {

@@ -31,7 +31,8 @@ import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
-import org.eclipse.net4j.util.concurrent.QueueRunner;
+import org.eclipse.net4j.util.concurrent.PriorityQueueRunnable;
+import org.eclipse.net4j.util.concurrent.PriorityQueueRunner;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
@@ -46,14 +47,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * @author Eike Stepper
  * @since 3.0
  */
-public class RepositorySynchronizer extends QueueRunner implements InternalRepositorySynchronizer
+public class RepositorySynchronizer extends PriorityQueueRunner implements InternalRepositorySynchronizer
 {
   public static final int DEFAULT_RETRY_INTERVAL = 3;
 
@@ -174,12 +173,6 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
   protected String getThreadName()
   {
     return "CDORepositorySynchronizer"; //$NON-NLS-1$
-  }
-
-  @Override
-  protected BlockingQueue<Runnable> createQueue()
-  {
-    return new PriorityBlockingQueue<Runnable>();
   }
 
   @Override
@@ -330,20 +323,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
   /**
    * @author Eike Stepper
    */
-  private static abstract class QueueRunnable implements Runnable, Comparable<QueueRunnable>
-  {
-    public int compareTo(QueueRunnable o)
-    {
-      return getPriority().compareTo(o.getPriority());
-    }
-
-    protected abstract Integer getPriority();
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class ConnectRunnable extends QueueRunnable
+  private final class ConnectRunnable extends PriorityQueueRunnable
   {
     public ConnectRunnable()
     {
@@ -423,7 +403,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
   /**
    * @author Eike Stepper
    */
-  private final class ReplicateRunnable extends QueueRunnable
+  private final class ReplicateRunnable extends PriorityQueueRunnable
   {
     public ReplicateRunnable()
     {
@@ -478,7 +458,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
   /**
    * @author Eike Stepper
    */
-  private final class BranchRunnable extends QueueRunnable
+  private final class BranchRunnable extends PriorityQueueRunnable
   {
     private CDOBranch branch;
 
@@ -500,7 +480,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
     }
 
     @Override
-    public int compareTo(QueueRunnable o)
+    public int compareTo(PriorityQueueRunnable o)
     {
       int result = super.compareTo(o);
       if (result == 0)
@@ -518,6 +498,78 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
     }
   }
 
+  /**
+   * @author Eike Stepper
+   */
+  private abstract class RetryingRunnable extends PriorityQueueRunnable
+  {
+    private List<Exception> failedRuns;
+
+    public RetryingRunnable()
+    {
+    }
+
+    public void run()
+    {
+      try
+      {
+        doRun();
+      }
+      catch (Exception ex)
+      {
+        fireThrowable(ex);
+        if (failedRuns == null)
+        {
+          failedRuns = new ArrayList<Exception>();
+        }
+
+        failedRuns.add(ex);
+        if (failedRuns.size() <= maxRecommits)
+        {
+          if (TRACER.isEnabled())
+          {
+            String simpleName = RetryingRunnable.this.getClass().getSimpleName();
+            TRACER.format(simpleName + " failed. Trying again in {0} seconds...", recommitInterval); //$NON-NLS-1$
+          }
+
+          if (recommitTimer == null)
+          {
+            recommitTimer = new Timer("RetryTimer-" + RepositorySynchronizer.this);
+          }
+
+          recommitTimer.schedule(new TimerTask()
+          {
+            @Override
+            public void run()
+            {
+              try
+              {
+                addWork(RetryingRunnable.this);
+              }
+              catch (Exception ex)
+              {
+                String simpleName = RetryingRunnable.this.getClass().getSimpleName();
+                OM.LOG.error(simpleName + " failed. Exiting.", ex);
+                fireThrowable(ex);
+              }
+            }
+          }, recommitInterval * 1000L);
+        }
+        else
+        {
+          OM.LOG.error(getErrorMessage(), ex);
+        }
+      }
+    }
+
+    protected abstract void doRun();
+
+    protected abstract String getErrorMessage();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   private final class CommitRunnable extends RetryingRunnable
   {
     private CDOCommitInfo commitInfo;
@@ -534,7 +586,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
     }
 
     @Override
-    public int compareTo(QueueRunnable o)
+    public int compareTo(PriorityQueueRunnable o)
     {
       int result = super.compareTo(o);
       if (result == 0)
@@ -557,69 +609,6 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
     protected String getErrorMessage()
     {
       return "Replication of master commit failed:" + commitInfo;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private abstract class RetryingRunnable extends QueueRunnable
-  {
-    private List<Exception> failedRuns;
-
-    protected abstract void doRun();
-
-    protected abstract String getErrorMessage();
-
-    public void run()
-    {
-      try
-      {
-        doRun();
-      }
-      catch (Exception ex)
-      {
-        fireThrowable(ex);
-        if (failedRuns == null)
-        {
-          failedRuns = new ArrayList<Exception>();
-        }
-
-        failedRuns.add(ex);
-        if (failedRuns.size() <= maxRecommits)
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("Replication of master commit failed. Trying again in {0} seconds...", recommitInterval); //$NON-NLS-1$
-          }
-
-          if (recommitTimer == null)
-          {
-            recommitTimer = new Timer("RecommitTimer-" + RepositorySynchronizer.this);
-          }
-
-          recommitTimer.schedule(new TimerTask()
-          {
-            @Override
-            public void run()
-            {
-              try
-              {
-                addWork(this);
-              }
-              catch (Exception ex)
-              {
-                OM.LOG.error("CommitRunnableTask failed", ex);
-                fireThrowable(ex);
-              }
-            }
-          }, recommitInterval * 1000L);
-        }
-        else
-        {
-          OM.LOG.error(getErrorMessage(), ex);
-        }
-      }
     }
   }
 

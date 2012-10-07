@@ -28,12 +28,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 @CleanRepositoriesBefore
 public class Bugzilla_376470_Test extends AbstractSyncingTest
 {
-  @Override
-  protected boolean isRawReplication()
-  {
-    return true;
-  }
-
   public void testRollbackWhileOnline() throws Exception
   {
     InternalRepository clone = getRepository();

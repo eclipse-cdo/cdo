@@ -129,7 +129,7 @@ public abstract class Worker extends Lifecycle
 
   protected String getThreadName()
   {
-    return null;
+    return getClass().getSimpleName();
   }
 
   /**

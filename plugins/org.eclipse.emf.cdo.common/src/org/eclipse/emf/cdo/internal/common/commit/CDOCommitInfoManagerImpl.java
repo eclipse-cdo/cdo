@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * @author Andre Dietisheim
@@ -29,30 +31,42 @@ import java.util.List;
 public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBranch, CDOCommitHistory> implements
     InternalCDOCommitInfoManager
 {
-  private CommitInfoLoader commitInfoLoader;
+  private final Map<CDOCommitInfo, CDOCommitInfo> cache;
 
-  private List<CDOCommitInfoHandler> commitInfoHandlers = new ArrayList<CDOCommitInfoHandler>();
+  private final Object cacheLock = new Object();
 
-  public CDOCommitInfoManagerImpl()
+  private CommitInfoLoader loader;
+
+  private List<CDOCommitInfoHandler> handlers = new ArrayList<CDOCommitInfoHandler>();
+
+  public CDOCommitInfoManagerImpl(boolean caching)
   {
+    if (caching)
+    {
+      cache = new WeakHashMap<CDOCommitInfo, CDOCommitInfo>();
+    }
+    else
+    {
+      cache = null;
+    }
   }
 
   public CommitInfoLoader getCommitInfoLoader()
   {
-    return commitInfoLoader;
+    return loader;
   }
 
   public void setCommitInfoLoader(CommitInfoLoader commitInfoLoader)
   {
     checkInactive();
-    this.commitInfoLoader = commitInfoLoader;
+    loader = commitInfoLoader;
   }
 
   public CDOCommitInfoHandler[] getCommitInfoHandlers()
   {
-    synchronized (commitInfoHandlers)
+    synchronized (handlers)
     {
-      return commitInfoHandlers.toArray(new CDOCommitInfoHandler[commitInfoHandlers.size()]);
+      return handlers.toArray(new CDOCommitInfoHandler[handlers.size()]);
     }
   }
 
@@ -61,9 +75,9 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
    */
   public void addCommitInfoHandler(CDOCommitInfoHandler handler)
   {
-    synchronized (commitInfoHandlers)
+    synchronized (handlers)
     {
-      commitInfoHandlers.add(handler);
+      handlers.add(handler);
     }
   }
 
@@ -72,9 +86,9 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
    */
   public void removeCommitInfoHandler(CDOCommitInfoHandler handler)
   {
-    synchronized (commitInfoHandlers)
+    synchronized (handlers)
     {
-      commitInfoHandlers.remove(handler);
+      handlers.remove(handler);
     }
   }
 
@@ -97,7 +111,9 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
       String comment, CDOCommitData commitData)
   {
     checkActive();
-    return new CDOCommitInfoImpl(this, branch, timeStamp, previousTimeStamp, userID, comment, commitData);
+    CDOCommitInfo commitInfo = new CDOCommitInfoImpl(this, branch, timeStamp, previousTimeStamp, userID, comment,
+        commitData);
+    return intern(commitInfo);
   }
 
   public CDOCommitInfo getCommitInfo(long timeStamp)
@@ -118,33 +134,76 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
   public void getCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
     checkActive();
-    commitInfoLoader.loadCommitInfos(branch, startTime, endTime, handler);
+    if (cache != null)
+    {
+      final CDOCommitInfoHandler delegate = handler;
+      handler = new CDOCommitInfoHandler()
+      {
+        public void handleCommitInfo(CDOCommitInfo commitInfo)
+        {
+          delegate.handleCommitInfo(intern(commitInfo));
+        }
+      };
+    }
+
+    loader.loadCommitInfos(branch, startTime, endTime, handler);
   }
 
   public void getCommitInfos(CDOBranch branch, long startTime, String userID, String comment, int count,
       CDOCommitInfoHandler handler)
   {
-    checkActive();
-
     if (userID != null || comment != null)
     {
       throw new IllegalArgumentException("The parameters userID and comment are not supported");
     }
 
     long endTime = CDOCommitInfoUtil.encodeCount(count);
-    commitInfoLoader.loadCommitInfos(branch, startTime, endTime, handler);
+    getCommitInfos(branch, startTime, endTime, handler);
   }
 
   @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(commitInfoLoader, "commitInfoLoader"); //$NON-NLS-1$
+    checkState(loader, "commitInfoLoader"); //$NON-NLS-1$
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    if (cache != null)
+    {
+      synchronized (cacheLock)
+      {
+        cache.clear();
+      }
+    }
+
+    super.doDeactivate();
   }
 
   @Override
   protected CDOCommitHistory createHistory(CDOBranch key)
   {
     return new CDOCommitHistoryImpl(this, key);
+  }
+
+  private CDOCommitInfo intern(CDOCommitInfo commitInfo)
+  {
+    if (cache != null && commitInfo != null)
+    {
+      synchronized (cacheLock)
+      {
+        CDOCommitInfo cachedCommitInfo = cache.get(commitInfo);
+        if (cachedCommitInfo != null)
+        {
+          return cachedCommitInfo;
+        }
+
+        cache.put(commitInfo, commitInfo);
+      }
+    }
+
+    return commitInfo;
   }
 }

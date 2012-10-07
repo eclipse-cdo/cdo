@@ -39,9 +39,17 @@ public final class CDOCommitInfoUtil
   {
   }
 
+  /**
+   * @since 4.2
+   */
+  public static InternalCDOCommitInfoManager createCommitInfoManager(boolean caching)
+  {
+    return new CDOCommitInfoManagerImpl(caching);
+  }
+
   public static InternalCDOCommitInfoManager createCommitInfoManager()
   {
-    return new CDOCommitInfoManagerImpl();
+    return createCommitInfoManager(false);
   }
 
   /**

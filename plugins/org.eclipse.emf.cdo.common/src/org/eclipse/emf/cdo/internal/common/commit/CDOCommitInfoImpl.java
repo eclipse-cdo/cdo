@@ -130,6 +130,45 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
   }
 
   @Override
+  public int hashCode()
+  {
+    long timeStamp = getTimeStamp();
+
+    final int prime = 31;
+    int result = 0;
+    result = prime * result + (commitInfoManager == null ? 0 : commitInfoManager.hashCode());
+    result = prime * result + (int)(timeStamp ^ timeStamp >>> 32);
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+
+    if (!(obj instanceof CDOCommitInfoImpl))
+    {
+      return false;
+    }
+
+    CDOCommitInfoImpl other = (CDOCommitInfoImpl)obj;
+    if (commitInfoManager != other.commitInfoManager)
+    {
+      return false;
+    }
+
+    if (getTimeStamp() != other.getTimeStamp())
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+  @Override
   public String toString()
   {
     String data = null;
@@ -144,7 +183,7 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
             "CommitInfo[{0}, {1}, {2}, {3}, {4}, {5}]", getPreviousTimeStamp(), getBranch(), timeStamp, getUserID(), getComment(), data); //$NON-NLS-1$
   }
 
-  private void loadCommitDataIfNeeded()
+  private synchronized void loadCommitDataIfNeeded()
   {
     if (commitData == null)
     {

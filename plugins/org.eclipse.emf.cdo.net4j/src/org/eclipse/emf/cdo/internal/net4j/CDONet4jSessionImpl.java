@@ -169,7 +169,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     InternalCDOCommitInfoManager commitInfoManager = getCommitInfoManager();
     if (commitInfoManager == null)
     {
-      commitInfoManager = CDOCommitInfoUtil.createCommitInfoManager();
+      commitInfoManager = CDOCommitInfoUtil.createCommitInfoManager(true);
       setCommitInfoManager(commitInfoManager);
     }
 

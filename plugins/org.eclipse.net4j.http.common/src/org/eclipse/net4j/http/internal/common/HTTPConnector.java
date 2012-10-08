@@ -265,8 +265,16 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
 
     public void execute()
     {
-      HTTPChannel channel = (HTTPChannel)getChannel(getChannelID());
       long operationCount = getOperationCount();
+
+      short channelID = getChannelID();
+      HTTPChannel channel = (HTTPChannel)getChannel(channelID);
+      if (channel == null)
+      {
+        OM.LOG.error("Channel " + channelID + " not found");
+        return;
+      }
+
       synchronized (channel)
       {
         // Execute preceding operations if necessary

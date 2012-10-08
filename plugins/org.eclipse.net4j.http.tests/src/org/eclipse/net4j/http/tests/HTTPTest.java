@@ -128,7 +128,7 @@ public class HTTPTest extends AbstractTransportTest
 
   private HTTPClientConnector getHTTPConnector()
   {
-    return (HTTPClientConnector)Net4jUtil.getConnector(container, "http", //$NON-NLS-1$ 
-        "http://eike@localhost:8080/net4j"); //$NON-NLS-1$
+    return (HTTPClientConnector)Net4jUtil.getConnector(container, "http", //$NON-NLS-1$
+        "http://localhost:8080/net4j"); //$NON-NLS-1$
   }
 }

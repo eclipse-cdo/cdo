@@ -29,8 +29,6 @@ import java.util.ListIterator;
  */
 public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CDOCommitHistory
 {
-  public static final int DEFAULT_LOAD_COUNT = 25;
-
   private final CDOCommitInfoManager manager;
 
   private final CDOBranch branch;

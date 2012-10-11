@@ -22,7 +22,7 @@ import org.eclipse.net4j.util.container.IContainer;
  */
 public interface CDOCommitHistory extends IContainer<CDOCommitInfo>, CDOCommitInfoHandler
 {
-  public static final int DEFAULT_LOAD_COUNT = 25;
+  public static final int DEFAULT_LOAD_COUNT = 100;
 
   public CDOCommitInfoManager getManager();
 

@@ -30,11 +30,16 @@ public interface CDOCommitInfoManager extends CDOCommitInfoProvider,
    */
   public CDOCommitInfo getCommitInfo(long timeStamp);
 
+  /**
+   * @since 4.2
+   */
+  public CDOCommitInfo getCommitInfo(CDOBranch branch, long startTime, boolean up);
+
   public void getCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler);
 
   /**
    * @since 4.0
    */
-  public void getCommitInfos(CDOBranch branch, long startTime, String userID, String comment, int count,
+  public void getCommitInfos(CDOBranch branch, long startTime, String reserved1, String reserved2, int count,
       CDOCommitInfoHandler handler);
 }

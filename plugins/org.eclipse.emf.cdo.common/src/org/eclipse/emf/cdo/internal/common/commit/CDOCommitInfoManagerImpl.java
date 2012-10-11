@@ -119,8 +119,40 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
   public CDOCommitInfo getCommitInfo(long timeStamp)
   {
     checkActive();
+
+    if (cache != null)
+    {
+      synchronized (cacheLock)
+      {
+        for (CDOCommitInfo commitInfo : cache.keySet())
+        {
+          if (commitInfo.getTimeStamp() == timeStamp)
+          {
+            return commitInfo;
+          }
+        }
+      }
+    }
+
     final CDOCommitInfo[] result = { null };
     getCommitInfos(null, timeStamp, timeStamp, new CDOCommitInfoHandler()
+    {
+      public void handleCommitInfo(CDOCommitInfo commitInfo)
+      {
+        result[0] = commitInfo;
+      }
+    });
+
+    return result[0];
+  }
+
+  public CDOCommitInfo getCommitInfo(CDOBranch branch, long startTime, boolean up)
+  {
+    checkActive();
+    int count = up ? 1 : -1;
+
+    final CDOCommitInfo[] result = { null };
+    getCommitInfos(branch, startTime, null, null, count, new CDOCommitInfoHandler()
     {
       public void handleCommitInfo(CDOCommitInfo commitInfo)
       {
@@ -149,12 +181,12 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     loader.loadCommitInfos(branch, startTime, endTime, handler);
   }
 
-  public void getCommitInfos(CDOBranch branch, long startTime, String userID, String comment, int count,
+  public void getCommitInfos(CDOBranch branch, long startTime, String reserved1, String reserved2, int count,
       CDOCommitInfoHandler handler)
   {
-    if (userID != null || comment != null)
+    if (reserved1 != null || reserved2 != null)
     {
-      throw new IllegalArgumentException("The parameters userID and comment are not supported");
+      throw new IllegalArgumentException("The parameters reserved1 and reserved2 are not supported");
     }
 
     long endTime = CDOCommitInfoUtil.encodeCount(count);

@@ -34,6 +34,8 @@ import java.util.Map;
  */
 public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitInfo
 {
+//  private static final CDOCommitInfo[] NO_PARENTS = {};
+
   private InternalCDOCommitInfoManager commitInfoManager;
 
   private long previousTimeStamp;
@@ -43,6 +45,8 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
   private String comment;
 
   private CDOCommitData commitData;
+
+//  private transient CDOCommitInfo[] parents;
 
   public CDOCommitInfoImpl(InternalCDOCommitInfoManager commitInfoManager, CDOBranch branch, long timeStamp,
       long previousTimeStamp, String userID, String comment, CDOCommitData commitData)
@@ -60,6 +64,24 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
   {
     return commitInfoManager;
   }
+
+//  public synchronized CDOCommitInfo[] getParents()
+//  {
+//    if (parents == null)
+//    {
+//      CDOCommitInfo previousCommitInfo = commitInfoManager.getCommitInfo(previousTimeStamp);
+//      if (previousCommitInfo != null)
+//      {
+//        parents = new CDOCommitInfo[] { previousCommitInfo };
+//      }
+//      else
+//      {
+//        parents = NO_PARENTS;
+//      }
+//    }
+//
+//    return parents;
+//  }
 
   public long getPreviousTimeStamp()
   {

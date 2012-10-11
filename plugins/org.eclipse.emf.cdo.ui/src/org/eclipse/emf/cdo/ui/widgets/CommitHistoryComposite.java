@@ -16,12 +16,13 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
-import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.internal.ui.history.NetRenderer;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 import org.eclipse.net4j.util.ui.TableLabelProvider;
@@ -37,6 +38,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Table;
 
 /**
  * @author Eike Stepper
@@ -49,6 +53,8 @@ public class CommitHistoryComposite extends Composite
   private TableViewer tableViewer;
 
   private LabelProvider labelProvider;
+
+  private NetRenderer netRenderer;
 
   private Input input;
 
@@ -75,11 +81,18 @@ public class CommitHistoryComposite extends Composite
 
     labelProvider = new LabelProvider();
     labelProvider.support(tableViewer);
-  }
 
-  public final CDOCommitHistory getHistory()
-  {
-    return history;
+    netRenderer = new NetRenderer(tableViewer);
+
+    Table table = tableViewer.getTable();
+    table.addListener(SWT.PaintItem, netRenderer);
+    table.addListener(SWT.EraseItem, new Listener()
+    {
+      public void handleEvent(Event event)
+      {
+        event.detail &= ~SWT.FOREGROUND;
+      }
+    });
   }
 
   public final TableViewer getTableViewer()
@@ -94,16 +107,25 @@ public class CommitHistoryComposite extends Composite
 
   public final void setInput(Input input)
   {
-    this.input = input;
+    if (!ObjectUtil.equals(this.input, input))
+    {
+      this.input = input;
 
-    CDOSession session = input.getSession();
-    CDOBranch branch = input.getBranch();
+      CDOSession session = input.getSession();
+      CDOBranch branch = input.getBranch();
 
-    labelProvider.setLocalUserID(session.getUserID());
-    labelProvider.setInputBranch(branch);
+      labelProvider.setLocalUserID(session.getUserID());
+      labelProvider.setInputBranch(branch);
 
-    setHistory(session, branch, input.getObject());
-    tableViewer.setInput(history);
+      setHistory(session, branch, input.getObject());
+      netRenderer.setInput(input);
+      tableViewer.setInput(history);
+    }
+  }
+
+  public final CDOCommitHistory getHistory()
+  {
+    return history;
   }
 
   protected void setHistory(CDOSession session, CDOBranch branch, CDOObject object)
@@ -135,8 +157,10 @@ public class CommitHistoryComposite extends Composite
   @Override
   public void dispose()
   {
+
     input = null;
     history = null;
+
     super.dispose();
   }
 
@@ -344,7 +368,8 @@ public class CommitHistoryComposite extends Composite
         @Override
         public String getText(CDOCommitInfo commitInfo)
         {
-          return CDOCommonUtil.formatTimeStamp(commitInfo.getTimeStamp());
+          // return CDOCommonUtil.formatTimeStamp(commitInfo.getTimeStamp());
+          return "" + commitInfo.getTimeStamp();
         }
 
         @Override

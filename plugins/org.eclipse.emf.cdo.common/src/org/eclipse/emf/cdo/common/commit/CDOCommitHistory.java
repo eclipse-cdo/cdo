@@ -22,17 +22,25 @@ import org.eclipse.net4j.util.container.IContainer;
  */
 public interface CDOCommitHistory extends IContainer<CDOCommitInfo>, CDOCommitInfoHandler
 {
-  public static final int DEFAULT_LOAD_COUNT = 100;
+  public static final int DEFAULT_LOAD_COUNT = 50;
 
   public CDOCommitInfoManager getManager();
 
   public CDOBranch getBranch();
 
+  public CDOCommitInfo getFirstElement();
+
+  public CDOCommitInfo getLastElement();
+
+  public CDOCommitInfo getElement(int index);
+
+  public int size();
+
   public int getLoadCount();
 
   public void setLoadCount(int loadCount);
 
-  public boolean load();
+  public boolean triggerLoad();
 
   /**
    * Provides consumers with {@link CDOCommitHistory histories}.

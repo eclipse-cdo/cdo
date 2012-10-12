@@ -11,8 +11,10 @@
 package org.eclipse.emf.cdo.internal.ui.history;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.LabelProvider;
@@ -72,15 +74,15 @@ public class NetRenderer implements Listener
 
   private Color cellBackground;
 
-  // private TableViewer tableViewer;
+  private TableViewer tableViewer;
 
   private LabelProvider labelProvider;
 
-  // private CDOCommitHistory history;
+  private CDOCommitHistory history;
 
   public NetRenderer(TableViewer tableViewer)
   {
-    // this.tableViewer = tableViewer;
+    this.tableViewer = tableViewer;
     labelProvider = (LabelProvider)tableViewer.getLabelProvider();
 
     ResourceManager resourceManager = labelProvider.getResourceManager();
@@ -94,10 +96,10 @@ public class NetRenderer implements Listener
     CDOObject object = input.getObject();
     CDOID objectID = object == null ? null : object.cdoID();
 
-    // history = (CDOCommitHistory)tableViewer.getInput();
-
     ResourceManager resourceManager = labelProvider.getResourceManager();
     net = new Net(session, objectID, resourceManager);
+
+    history = null;
   }
 
   public void handleEvent(Event event)
@@ -139,7 +141,7 @@ public class NetRenderer implements Listener
     }
     catch (Throwable ex)
     {
-      ex.printStackTrace(); // TODO Log properly
+      OM.LOG.error(ex);
     }
   }
 
@@ -220,6 +222,8 @@ public class NetRenderer implements Listener
         drawCommitDot(dotX, dotY, dotSize, dotSize);
       }
 
+      triggerLoadIfNeeded(commitInfo);
+
       textX += getTrackX(segments.length) + TRACK_WIDTH;
     }
     else
@@ -281,5 +285,21 @@ public class NetRenderer implements Listener
   private int getTrackCenter(int position)
   {
     return getTrackX(position) + TRACK_WIDTH / 2;
+  }
+
+  private void triggerLoadIfNeeded(CDOCommitInfo commitInfo)
+  {
+    if (history == null)
+    {
+      history = (CDOCommitHistory)tableViewer.getInput();
+    }
+
+    if (history != null)
+    {
+      if (commitInfo == history.getLastElement())
+      {
+        history.triggerLoad();
+      }
+    }
   }
 }

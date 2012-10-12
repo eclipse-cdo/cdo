@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.internal.team.bundle.OM;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input;
 
@@ -146,9 +147,10 @@ public class CDOHistoryPage extends HistoryPage
       input = new CommitHistoryComposite.Input(object);
       return true;
     }
-    catch (IllegalStateException ex)
+    catch (Exception ex)
     {
       input = null;
+      OM.LOG.error(ex);
       return false;
     }
     finally

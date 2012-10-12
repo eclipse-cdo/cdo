@@ -242,6 +242,8 @@ public class Net
     }
 
     Segment bestSegment = null;
+    long visualTime = 0;
+
     for (int i = 0; i < tracks.length; i++)
     {
       Track track = tracks[i];
@@ -269,14 +271,32 @@ public class Net
             continue;
           }
 
-          if (lastSegment.getLastCommitTime() < branch.getBaseCommitTime())
+          if (visualTime == 0)
           {
-            // If the last segment of this track ends before the branch's last commit there's enough room for a new
-            // segment in this track
-            if (bestSegment == null || lastSegment.getLastCommitTime() < bestSegment.getLastCommitTime())
+            Segment lastBranchSegment = branch.getLastSegment();
+            if (lastBranchSegment != null)
+            {
+              visualTime = lastBranchSegment.getLastCommitTime();
+            }
+            else
+            {
+              visualTime = branch.getBaseCommitTime();
+            }
+          }
+
+          if (lastSegment.getLastCommitTime() < visualTime)
+          {
+            if (bestSegment == null)
             {
               bestSegment = lastSegment;
             }
+
+            // // If the last segment of this track ends before the branch's last commit there's enough room for a new
+            // // segment in this track
+            // if (bestSegment == null || lastSegment.getLastCommitTime() < bestSegment.getLastCommitTime())
+            // {
+            // bestSegment = lastSegment;
+            // }
           }
         }
       }
@@ -292,31 +312,31 @@ public class Net
             return firstSegment;
           }
 
-          if (!firstSegment.isComplete())
+          if (bestSegment == null)
           {
-            // Don't block the tracks with incomplete segments
-            continue;
-          }
+            if (!firstSegment.isComplete())
+            {
+              // Don't block the tracks with incomplete segments
+              continue;
+            }
 
-          if (firstBranch.getBaseCommitBranch() == branch)
-          {
-            // Don't block the tracks with the base commit
-            continue;
-          }
+            if (firstBranch.getBaseCommitBranch() == branch)
+            {
+              // Don't block the tracks with the base commit
+              continue;
+            }
 
-          // if (firstSegment.getFirstVisualTime() == firstCommit.getTime())
-          // {
-          // // Don't block the track of the first commit
-          // continue;
-          // }
-
-          if (firstSegment.getFirstVisualTime() > branch.getFirstCommitTime())
-          {
-            // If the first segment of this track starts after the branch's first commit there's enough room for a new
-            // segment in this track
-            if (bestSegment == null || firstSegment.getFirstVisualTime() > bestSegment.getFirstVisualTime())
+            if (firstSegment.getFirstVisualTime() > branch.getFirstCommitTime())
             {
               bestSegment = firstSegment;
+
+              // // If the first segment of this track starts after the branch's first commit there's enough room for a
+              // new
+              // // segment in this track
+              // if (bestSegment == null || firstSegment.getFirstVisualTime() > bestSegment.getFirstVisualTime())
+              // {
+              // bestSegment = firstSegment;
+              // }
             }
           }
         }
@@ -336,6 +356,12 @@ public class Net
     Segment segment = new Segment(track, branch);
     track.addSegment(segment, afterLast);
     branch.addSegment(segment, afterLast);
+
+    if (visualTime != 0)
+    {
+      segment.adjustVisualTime(visualTime, true);
+    }
+
     return segment;
   }
 

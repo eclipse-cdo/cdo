@@ -18,9 +18,9 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 
+import org.eclipse.net4j.util.collection.GrowingRandomAccessList;
 import org.eclipse.net4j.util.container.Container;
 
-import java.util.LinkedList;
 import java.util.ListIterator;
 
 /**
@@ -35,7 +35,8 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
 
   private int loadCount = DEFAULT_LOAD_COUNT;
 
-  private LinkedList<CDOCommitInfo> commitInfos = new LinkedList<CDOCommitInfo>();
+  private GrowingRandomAccessList<CDOCommitInfo> commitInfos = new GrowingRandomAccessList<CDOCommitInfo>(
+      CDOCommitInfo.class, DEFAULT_LOAD_COUNT);
 
   private CDOCommitInfo[] elements;
 
@@ -70,6 +71,52 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     this.loadCount = loadCount;
   }
 
+  public CDOCommitInfo getFirstElement()
+  {
+    checkActive();
+    synchronized (commitInfos)
+    {
+      if (commitInfos.isEmpty())
+      {
+        return null;
+      }
+
+      return commitInfos.getFirst();
+    }
+  }
+
+  public CDOCommitInfo getLastElement()
+  {
+    checkActive();
+    synchronized (commitInfos)
+    {
+      if (commitInfos.isEmpty())
+      {
+        return null;
+      }
+
+      return commitInfos.getLast();
+    }
+  }
+
+  public CDOCommitInfo getElement(int index)
+  {
+    checkActive();
+    synchronized (commitInfos)
+    {
+      return commitInfos.get(index);
+    }
+  }
+
+  public int size()
+  {
+    checkActive();
+    synchronized (commitInfos)
+    {
+      return commitInfos.size();
+    }
+  }
+
   @Override
   public boolean isEmpty()
   {
@@ -94,7 +141,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
   }
 
-  public boolean load()
+  public boolean triggerLoad()
   {
     synchronized (loaderThreadLock)
     {
@@ -178,7 +225,13 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
   {
     super.doActivate();
     manager.addCommitInfoHandler(this);
-    load();
+  }
+
+  @Override
+  protected void doAfterActivate() throws Exception
+  {
+    super.doAfterActivate();
+    triggerLoad();
   }
 
   @Override

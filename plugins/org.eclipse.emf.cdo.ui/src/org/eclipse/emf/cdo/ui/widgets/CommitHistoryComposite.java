@@ -93,7 +93,7 @@ public class CommitHistoryComposite extends Composite
     labelProvider = new LabelProvider();
     labelProvider.support(tableViewer);
 
-    netRenderer = new NetRenderer(tableViewer);
+    netRenderer = new NetRenderer(labelProvider);
 
     Table table = tableViewer.getTable();
     table.addListener(SWT.PaintItem, netRenderer);
@@ -147,6 +147,13 @@ public class CommitHistoryComposite extends Composite
         LifecycleUtil.deactivate(oldHistory);
       }
     }
+  }
+
+  public void refreshLayout()
+  {
+    Input currentInput = input;
+    setInput(null);
+    setInput(currentInput);
   }
 
   public final CDOCommitHistory getHistory()

@@ -39,7 +39,6 @@ public class Segment
   {
     this.track = track;
     this.branch = branch;
-    System.out.println("New: " + this);
   }
 
   public final Net getNet()

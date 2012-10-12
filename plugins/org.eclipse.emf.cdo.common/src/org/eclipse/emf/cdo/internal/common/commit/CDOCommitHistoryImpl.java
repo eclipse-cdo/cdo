@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.internal.common.bundle.OM;
 
 import org.eclipse.net4j.util.collection.GrowingRandomAccessList;
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.event.FinishedEvent;
+import org.eclipse.net4j.util.event.IListener;
 
 import java.util.ListIterator;
 
@@ -39,6 +41,8 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
       CDOCommitInfo.class, DEFAULT_LOAD_COUNT);
 
   private CDOCommitInfo[] elements;
+
+  private boolean full;
 
   private Thread loaderThread;
 
@@ -143,9 +147,14 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
 
   public boolean triggerLoad()
   {
+    return triggerLoad(null);
+  }
+
+  public boolean triggerLoad(final CDOCommitInfoHandler handler)
+  {
     synchronized (loaderThreadLock)
     {
-      if (loaderThread != null)
+      if (full || loaderThread != null)
       {
         return false;
       }
@@ -157,7 +166,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
         {
           try
           {
-            doLoadCommitInfos();
+            doLoadCommitInfos(handler);
           }
           catch (Throwable ex)
           {
@@ -220,6 +229,16 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     fireElementAddedEvent(commitInfo);
   }
 
+  public boolean isFull()
+  {
+    return full;
+  }
+
+  protected void setFull()
+  {
+    full = true;
+  }
+
   @Override
   protected void doActivate() throws Exception
   {
@@ -241,7 +260,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     super.doDeactivate();
   }
 
-  protected void doLoadCommitInfos()
+  protected void doLoadCommitInfos(final CDOCommitInfoHandler handler)
   {
     final long startTime;
     synchronized (commitInfos)
@@ -249,12 +268,15 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
       startTime = commitInfos.isEmpty() ? CDOBranchPoint.UNSPECIFIED_DATE : commitInfos.getLast().getTimeStamp();
     }
 
+    final int[] loaded = { 0 };
     manager.getCommitInfos(branch, startTime, null, null, -loadCount, new CDOCommitInfoHandler()
     {
       private boolean ignore = startTime != CDOBranchPoint.UNSPECIFIED_DATE;
 
       public void handleCommitInfo(CDOCommitInfo commitInfo)
       {
+        ++loaded[0];
+
         if (ignore)
         {
           ignore = false;
@@ -262,8 +284,24 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
         }
 
         CDOCommitHistoryImpl.this.handleCommitInfo(commitInfo);
+
+        if (handler != null)
+        {
+          handler.handleCommitInfo(commitInfo);
+        }
       }
     });
+
+    if (loaded[0] < loadCount)
+    {
+      setFull();
+    }
+
+    if (handler instanceof IListener)
+    {
+      IListener listener = (IListener)handler;
+      listener.notifyEvent(FinishedEvent.INSTANCE);
+    }
   }
 
   /**
@@ -324,6 +362,16 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     public boolean triggerLoad()
     {
       return false;
+    }
+
+    public boolean triggerLoad(CDOCommitInfoHandler handler)
+    {
+      return false;
+    }
+
+    public boolean isFull()
+    {
+      return true;
     }
   }
 }

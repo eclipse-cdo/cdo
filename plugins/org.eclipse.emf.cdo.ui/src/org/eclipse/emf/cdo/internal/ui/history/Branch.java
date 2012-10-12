@@ -69,8 +69,6 @@ public class Branch extends SegmentList
       firstCommitTime = getCommitTime(1L, true);
       lastCommitTime = getCommitTime(Long.MAX_VALUE, false);
     }
-
-    System.out.println("New: " + this);
   }
 
   public final CDOBranch getCDOBranch()

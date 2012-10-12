@@ -21,7 +21,6 @@ public class Track extends SegmentList
   {
     super(net);
     this.position = position;
-    System.out.println("New: " + this);
   }
 
   public int getPosition()

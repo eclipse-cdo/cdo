@@ -15,9 +15,13 @@ import org.eclipse.emf.cdo.CDOObjectHistory;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitHistoryImpl;
+
+import org.eclipse.net4j.util.event.FinishedEvent;
+import org.eclipse.net4j.util.event.IListener;
 
 /**
  * A cache for the {@link CDOCommitInfo commit infos} of a branch or of an entire repository.
@@ -46,7 +50,7 @@ public class CDOObjectHistoryImpl extends CDOCommitHistoryImpl implements CDOObj
   }
 
   @Override
-  protected void doLoadCommitInfos()
+  protected void doLoadCommitInfos(CDOCommitInfoHandler handler)
   {
     int count = getLoadCount();
     for (int i = 0; i < count; i++)
@@ -69,6 +73,7 @@ public class CDOObjectHistoryImpl extends CDOCommitHistoryImpl implements CDOObj
           if (base.getBranch() == null)
           {
             // Reached repository creation
+            setFull();
             break;
           }
 
@@ -77,6 +82,7 @@ public class CDOObjectHistoryImpl extends CDOCommitHistoryImpl implements CDOObj
           if (revision == null)
           {
             // Reached branch where the object does not exist
+            setFull();
             break;
           }
 
@@ -86,6 +92,17 @@ public class CDOObjectHistoryImpl extends CDOCommitHistoryImpl implements CDOObj
 
       CDOCommitInfo commitInfo = getManager().getCommitInfo(loadedRevision.getTimeStamp());
       handleCommitInfo(commitInfo);
+
+      if (handler != null)
+      {
+        handler.handleCommitInfo(commitInfo);
+      }
+    }
+
+    if (handler instanceof IListener)
+    {
+      IListener listener = (IListener)handler;
+      listener.notifyEvent(FinishedEvent.INSTANCE);
     }
   }
 }

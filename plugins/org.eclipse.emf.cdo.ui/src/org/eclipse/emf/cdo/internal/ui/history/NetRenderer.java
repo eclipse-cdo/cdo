@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.internal.ui.history;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
@@ -20,7 +19,6 @@ import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.LabelProvider;
 
 import org.eclipse.jface.resource.ResourceManager;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.Color;
@@ -74,16 +72,11 @@ public class NetRenderer implements Listener
 
   private Color cellBackground;
 
-  private TableViewer tableViewer;
-
   private LabelProvider labelProvider;
 
-  private CDOCommitHistory history;
-
-  public NetRenderer(TableViewer tableViewer)
+  public NetRenderer(LabelProvider labelProvider)
   {
-    this.tableViewer = tableViewer;
-    labelProvider = (LabelProvider)tableViewer.getLabelProvider();
+    this.labelProvider = labelProvider;
 
     ResourceManager resourceManager = labelProvider.getResourceManager();
     colorDotFill = resourceManager.createColor(new RGB(220, 220, 220));
@@ -98,8 +91,6 @@ public class NetRenderer implements Listener
 
     ResourceManager resourceManager = labelProvider.getResourceManager();
     net = new Net(session, objectID, resourceManager);
-
-    history = null;
   }
 
   public void handleEvent(Event event)
@@ -222,8 +213,6 @@ public class NetRenderer implements Listener
         drawCommitDot(dotX, dotY, dotSize, dotSize);
       }
 
-      triggerLoadIfNeeded(commitInfo);
-
       textX += getTrackX(segments.length) + TRACK_WIDTH;
     }
     else
@@ -285,21 +274,5 @@ public class NetRenderer implements Listener
   private int getTrackCenter(int position)
   {
     return getTrackX(position) + TRACK_WIDTH / 2;
-  }
-
-  private void triggerLoadIfNeeded(CDOCommitInfo commitInfo)
-  {
-    if (history == null)
-    {
-      history = (CDOCommitHistory)tableViewer.getInput();
-    }
-
-    if (history != null)
-    {
-      if (commitInfo == history.getLastElement())
-      {
-        history.triggerLoad();
-      }
-    }
   }
 }

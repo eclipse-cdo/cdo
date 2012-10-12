@@ -55,7 +55,6 @@ public class Net
     this.session = session;
     this.objectID = objectID;
     this.resourceManager = resourceManager;
-    System.out.println("New: " + this);
   }
 
   public final CDOSession getSession()
@@ -167,8 +166,6 @@ public class Net
 
   private Commit createCommit(CDOCommitInfo commitInfo)
   {
-    System.out.println("Enter: Commit[" + commitInfo.getTimeStamp() + "]");
-
     Segment segment = getSegment(commitInfo);
     if (segment == null)
     {
@@ -212,10 +209,6 @@ public class Net
       boolean afterLast = isAfterLast(time); // false means beforeFirst
       segment = getOrCreateSegment(branch, time, afterLast);
     }
-    else
-    {
-      System.out.println("Match: " + segment);
-    }
 
     branch.adjustCommitTimes(time);
     segment.adjustCommitTimes(time);
@@ -234,8 +227,6 @@ public class Net
         {
           Branch rowBranch = rowSegment.getBranch();
           boolean complete = rowBranch.getBaseCommitTime() == time;
-
-          System.out.println("Extend: " + rowSegment + " --> " + time + (complete ? " COMPLETE" : ""));
           rowSegment.adjustVisualTime(time, complete);
         }
       }

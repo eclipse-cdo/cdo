@@ -42,6 +42,10 @@ public interface CDOCommitHistory extends IContainer<CDOCommitInfo>, CDOCommitIn
 
   public boolean triggerLoad();
 
+  public boolean triggerLoad(CDOCommitInfoHandler handler);
+
+  public boolean isFull();
+
   /**
    * Provides consumers with {@link CDOCommitHistory histories}.
    *

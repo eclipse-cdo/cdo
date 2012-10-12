@@ -27,7 +27,6 @@ public class Commit
   {
     this.segment = segment;
     this.commitInfo = commitInfo;
-    System.out.println("New: " + this);
   }
 
   public final CDOCommitInfo getCommitInfo()

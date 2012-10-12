@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.ui.internal.team.history;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
@@ -26,9 +27,15 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.team.ui.history.HistoryPage;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.part.IPageSite;
 
 /**
  * @author Eike Stepper
@@ -53,6 +60,8 @@ public class CDOHistoryPage extends HistoryPage
       });
     }
   };
+
+  private Action loadAction = new LoadAction();
 
   public CDOHistoryPage()
   {
@@ -130,7 +139,12 @@ public class CDOHistoryPage extends HistoryPage
       }
     };
 
-    getSite().setSelectionProvider(commitHistoryComposite.getTableViewer());
+    IPageSite site = getSite();
+    site.setSelectionProvider(commitHistoryComposite.getTableViewer());
+
+    IActionBars actionBars = site.getActionBars();
+    setupToolBar(actionBars.getToolBarManager());
+    setupViewMenu(actionBars.getMenuManager());
   }
 
   @Override
@@ -179,7 +193,14 @@ public class CDOHistoryPage extends HistoryPage
     finally
     {
       commitHistoryComposite.setInput(input);
+      updateLoadActionEnablement();
     }
+  }
+
+  private void updateLoadActionEnablement()
+  {
+    boolean full = commitHistoryComposite.getHistory().isFull();
+    loadAction.setEnabled(!full);
   }
 
   @Override
@@ -192,6 +213,23 @@ public class CDOHistoryPage extends HistoryPage
     }
 
     super.dispose();
+  }
+
+  protected void setupToolBar(IToolBarManager manager)
+  {
+    manager.add(loadAction);
+  }
+
+  protected void setupViewMenu(IMenuManager manager)
+  {
+    manager.add(new Action("Refresh Layout")
+    {
+      @Override
+      public void run()
+      {
+        commitHistoryComposite.refreshLayout();
+      }
+    });
   }
 
   public static boolean canShowHistoryFor(Object object)
@@ -209,6 +247,37 @@ public class CDOHistoryPage extends HistoryPage
     catch (IllegalStateException ex)
     {
       return false;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class LoadAction extends Action implements CDOCommitInfoHandler
+  {
+    public LoadAction()
+    {
+      super("Load");
+    }
+
+    @Override
+    public void run()
+    {
+      CDOCommitHistory history = commitHistoryComposite.getHistory();
+      history.triggerLoad(this);
+    }
+
+    public void handleCommitInfo(final CDOCommitInfo commitInfo)
+    {
+      commitHistoryComposite.getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          TableViewer tableViewer = commitHistoryComposite.getTableViewer();
+          tableViewer.reveal(commitInfo);
+          updateLoadActionEnablement();
+        }
+      });
     }
   }
 }

@@ -265,4 +265,65 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
       }
     });
   }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class Empty extends Container<CDOCommitInfo> implements CDOCommitHistory
+  {
+    private static final CDOCommitInfo[] NO_ELEMENTS = {};
+
+    public CDOCommitInfo[] getElements()
+    {
+      return NO_ELEMENTS;
+    }
+
+    public void handleCommitInfo(CDOCommitInfo commitInfo)
+    {
+    }
+
+    public CDOCommitInfoManager getManager()
+    {
+      return null;
+    }
+
+    public CDOBranch getBranch()
+    {
+      return null;
+    }
+
+    public CDOCommitInfo getFirstElement()
+    {
+      return null;
+    }
+
+    public CDOCommitInfo getLastElement()
+    {
+      return null;
+    }
+
+    public CDOCommitInfo getElement(int index)
+    {
+      return null;
+    }
+
+    public int size()
+    {
+      return 0;
+    }
+
+    public int getLoadCount()
+    {
+      return 0;
+    }
+
+    public void setLoadCount(int loadCount)
+    {
+    }
+
+    public boolean triggerLoad()
+    {
+      return false;
+    }
+  }
 }

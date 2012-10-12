@@ -14,7 +14,7 @@ import org.eclipse.net4j.util.event.Event;
 
 /**
  * A default implementation of a lifecycle {@link ILifecycleEvent event}.
- * 
+ *
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
  * @apiviz.exclude
@@ -25,10 +25,18 @@ public class LifecycleEvent extends Event implements ILifecycleEvent
 
   private Kind kind;
 
-  public LifecycleEvent(Lifecycle lifecycle, Kind kind)
+  /**
+   * @since 3.3
+   */
+  public LifecycleEvent(ILifecycle lifecycle, Kind kind)
   {
     super(lifecycle);
     this.kind = kind;
+  }
+
+  public LifecycleEvent(Lifecycle lifecycle, Kind kind)
+  {
+    this((ILifecycle)lifecycle, kind);
   }
 
   /**

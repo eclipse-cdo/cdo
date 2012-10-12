@@ -17,10 +17,12 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.ui.internal.team.bundle.OM;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input;
 
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.core.runtime.Platform;
@@ -36,6 +38,21 @@ public class CDOHistoryPage extends HistoryPage
   private CommitHistoryComposite commitHistoryComposite;
 
   private Input input;
+
+  private IListener inputListener = new LifecycleEventAdapter()
+  {
+    @Override
+    protected void onDeactivated(ILifecycle lifecycle)
+    {
+      getControl().getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          CDOHistoryPage.this.setInput(null);
+        }
+      });
+    }
+  };
 
   public CDOHistoryPage()
   {
@@ -140,17 +157,23 @@ public class CDOHistoryPage extends HistoryPage
   @Override
   public boolean inputSet()
   {
+    if (input != null)
+    {
+      input.removeListener(inputListener);
+      input.deactivate();
+      input = null;
+    }
+
     Object object = getInput();
 
     try
     {
       input = new CommitHistoryComposite.Input(object);
+      input.addListener(inputListener);
       return true;
     }
     catch (Exception ex)
     {
-      input = null;
-      OM.LOG.error(ex);
       return false;
     }
     finally
@@ -159,8 +182,25 @@ public class CDOHistoryPage extends HistoryPage
     }
   }
 
+  @Override
+  public void dispose()
+  {
+    if (input != null)
+    {
+      input.deactivate();
+      input = null;
+    }
+
+    super.dispose();
+  }
+
   public static boolean canShowHistoryFor(Object object)
   {
+    if (object == null)
+    {
+      return false;
+    }
+
     try
     {
       new CommitHistoryComposite.Input(object);

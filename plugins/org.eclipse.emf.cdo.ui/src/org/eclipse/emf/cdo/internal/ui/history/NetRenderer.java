@@ -174,10 +174,12 @@ public class NetRenderer implements Listener
     {
       if (width != 0)
       {
-        width += TRACK_OFFSET + 1;
+        width += 2 * TRACK_OFFSET;
       }
 
-      drawLine(colorDotOutline, width, cellHeightHalf, gc.getClipping().width, cellHeightHalf, LINE_WIDTH);
+      int y = cellHeightHalf + 1;
+      int x2 = gc.getClipping().width;
+      drawLine(colorDotOutline, width, y, x2, y, LINE_WIDTH);
     }
   }
 

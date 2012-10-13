@@ -46,6 +46,8 @@ public class Net
 
   private Map<CDOCommitInfo, Commit> commits = new WeakHashMap<CDOCommitInfo, Commit>();
 
+  private int commitCounter;
+
   private Commit firstCommit;
 
   private Commit lastCommit;
@@ -159,6 +161,7 @@ public class Net
     {
       commit = createCommit(commitInfo);
       commits.put(commitInfo, commit);
+      ++commitCounter;
     }
 
     return commit;
@@ -389,5 +392,10 @@ public class Net
     }
 
     throw new IllegalArgumentException("New commits must not be added between the first and last commits");
+  }
+
+  int getCommitCounter()
+  {
+    return commitCounter;
   }
 }

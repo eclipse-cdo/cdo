@@ -23,6 +23,8 @@ public class Commit
 
   private Segment[] rowSegments;
 
+  private int commitCounter;
+
   public Commit(CDOCommitInfo commitInfo, Segment segment)
   {
     this.segment = segment;
@@ -32,6 +34,11 @@ public class Commit
   public final CDOCommitInfo getCommitInfo()
   {
     return commitInfo;
+  }
+
+  public final Net getNet()
+  {
+    return segment.getNet();
   }
 
   public final Branch getBranch()
@@ -51,11 +58,14 @@ public class Commit
 
   public final Segment[] getRowSegments()
   {
-    // if (rowSegments == null) TODO re-enable cache and add cache invalidation (timestamp of last addition)
+    Net net = segment.getNet();
+    int netCommitCounter = net.getCommitCounter();
+
+    if (rowSegments == null || commitCounter < netCommitCounter)
     {
       long time = getTime();
-      Net net = segment.getNet();
       rowSegments = net.getRowSegments(time);
+      commitCounter = netCommitCounter;
     }
 
     return rowSegments;

@@ -144,6 +144,12 @@ public class CommitHistoryComposite extends Composite
   public void refreshLayout()
   {
     netRenderer.setInput(input);
+    CDOCommitInfo[] elements = history.getElements();
+    for (int i = elements.length - 1; i >= 0; --i)
+    {
+      CDOCommitInfo commitInfo = elements[i];
+      netRenderer.addCommit(commitInfo);
+    }
 
     Table table = tableViewer.getTable();
     table.setTopIndex(0);

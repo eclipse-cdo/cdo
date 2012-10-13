@@ -77,17 +77,14 @@ public class NetRenderer implements Listener
 
   private LabelProvider labelProvider;
 
-  public NetRenderer(LabelProvider labelProvider)
+  public NetRenderer(TableViewer tableViewer)
   {
-    this.labelProvider = labelProvider;
+    labelProvider = (LabelProvider)tableViewer.getLabelProvider();
 
     ResourceManager resourceManager = labelProvider.getResourceManager();
     colorDotFill = resourceManager.createColor(new RGB(220, 220, 220));
     colorDotOutline = resourceManager.createColor(new RGB(110, 110, 110));
-  }
 
-  public void support(TableViewer tableViewer)
-  {
     Table table = tableViewer.getTable();
     table.addListener(SWT.MeasureItem, this);
     table.addListener(SWT.PaintItem, this);
@@ -116,20 +113,10 @@ public class NetRenderer implements Listener
     switch (event.type)
     {
     case SWT.MeasureItem:
-      // TableItem item = (TableItem)event.item;
-      // String text = getText(item, event.index);
-      // Point size = event.gc.textExtent(text);
-      // event.width = size.x;
-      // event.height = Math.max(event.height, size.y);
       event.width = handlePaintEvent(event, true);
       break;
 
     case SWT.PaintItem:
-      // TableItem item = (TableItem)event.item;
-      // String text = getText(item, event.index);
-      // Point size = event.gc.textExtent(text);
-      // int offset2 = event.index == 0 ? Math.max(0, (event.height - size.y) / 2) : 0;
-      // event.gc.drawText(text, event.x, event.y + offset2, true);
       handlePaintEvent(event, false);
       break;
 

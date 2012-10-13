@@ -48,13 +48,16 @@ public class CDOHistoryPage extends HistoryPage
     @Override
     protected void onDeactivated(ILifecycle lifecycle)
     {
-      getControl().getDisplay().asyncExec(new Runnable()
+      if (!commitHistoryComposite.isDisposed())
       {
-        public void run()
+        commitHistoryComposite.getDisplay().asyncExec(new Runnable()
         {
-          CDOHistoryPage.this.setInput(null);
-        }
-      });
+          public void run()
+          {
+            CDOHistoryPage.this.setInput(null);
+          }
+        });
+      }
     }
   };
 

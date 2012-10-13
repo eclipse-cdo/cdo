@@ -81,8 +81,7 @@ public class CommitHistoryComposite extends Composite
     labelProvider = new LabelProvider();
     labelProvider.support(tableViewer);
 
-    netRenderer = new NetRenderer(labelProvider);
-    netRenderer.support(tableViewer);
+    netRenderer = new NetRenderer(tableViewer);
   }
 
   public final TableViewer getTableViewer()
@@ -130,7 +129,11 @@ public class CommitHistoryComposite extends Composite
 
   public void refreshLayout()
   {
-    tableViewer.reveal(history.getFirstElement());
+    if (!history.isEmpty())
+    {
+      tableViewer.reveal(history.getFirstElement());
+    }
+
     netRenderer.setInput(input);
     tableViewer.setInput(history);
   }

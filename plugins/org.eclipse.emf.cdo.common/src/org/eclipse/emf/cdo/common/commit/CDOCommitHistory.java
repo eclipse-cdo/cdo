@@ -41,6 +41,8 @@ public interface CDOCommitHistory extends IContainer<CDOCommitInfo>, CDOCommitIn
 
   public boolean isFull();
 
+  public boolean isLoading();
+
   public boolean isAppendingTriggerLoadElement();
 
   public void setAppendingTriggerLoadElement(boolean appendingTriggerLoadElement);

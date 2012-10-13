@@ -165,6 +165,29 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
   }
 
+  public CDOCommitInfo[] getElements()
+  {
+    checkActive();
+    synchronized (commitInfos)
+    {
+      if (elements == null)
+      {
+        int size = commitInfos.size();
+        if (!full && appendingTriggerLoadElement)
+        {
+          elements = commitInfos.toArray(new CDOCommitInfo[size + 1]);
+          elements[size] = triggerLoadElement;
+        }
+        else
+        {
+          elements = commitInfos.toArray(new CDOCommitInfo[size]);
+        }
+      }
+
+      return elements;
+    }
+  }
+
   public int size()
   {
     checkActive();
@@ -195,26 +218,16 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
   }
 
-  public CDOCommitInfo[] getElements()
+  public boolean isFull()
   {
-    checkActive();
-    synchronized (commitInfos)
-    {
-      if (elements == null)
-      {
-        int size = commitInfos.size();
-        if (!full && appendingTriggerLoadElement)
-        {
-          elements = commitInfos.toArray(new CDOCommitInfo[size + 1]);
-          elements[size] = triggerLoadElement;
-        }
-        else
-        {
-          elements = commitInfos.toArray(new CDOCommitInfo[size]);
-        }
-      }
+    return full;
+  }
 
-      return elements;
+  public boolean isLoading()
+  {
+    synchronized (loaderThreadLock)
+    {
+      return loaderThread != null;
     }
   }
 
@@ -300,11 +313,6 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
 
     fireElementAddedEvent(commitInfo);
-  }
-
-  public boolean isFull()
-  {
-    return full;
   }
 
   protected void setFull()
@@ -529,6 +537,11 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
 
     public void setAppendingTriggerLoadElement(boolean appendingTriggerLoadElement)
     {
+    }
+
+    public boolean isLoading()
+    {
+      return false;
     }
 
     public int getLoadCount()

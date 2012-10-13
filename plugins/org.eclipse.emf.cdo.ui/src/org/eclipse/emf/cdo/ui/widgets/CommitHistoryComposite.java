@@ -51,6 +51,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Table;
 
 /**
  * @author Eike Stepper
@@ -129,13 +130,12 @@ public class CommitHistoryComposite extends Composite
 
   public void refreshLayout()
   {
-    if (!history.isEmpty())
-    {
-      tableViewer.reveal(history.getFirstElement());
-    }
-
     netRenderer.setInput(input);
+
+    Table table = tableViewer.getTable();
+    table.setTopIndex(0);
     tableViewer.setInput(history);
+    table.setTopIndex(0);
   }
 
   public final CDOCommitHistory getHistory()

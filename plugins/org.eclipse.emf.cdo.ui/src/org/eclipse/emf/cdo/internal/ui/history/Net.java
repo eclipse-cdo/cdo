@@ -245,19 +245,9 @@ public class Net
             }
           }
 
-          if (lastSegment.getLastCommitTime() < visualTime)
+          if (bestSegment == null && lastSegment.getLastCommitTime() < visualTime)
           {
-            if (bestSegment == null)
-            {
-              bestSegment = lastSegment;
-            }
-
-            // // If the last segment of this track ends before the branch's last commit there's enough room for a new
-            // // segment in this track
-            // if (bestSegment == null || lastSegment.getLastCommitTime() < bestSegment.getLastCommitTime())
-            // {
-            // bestSegment = lastSegment;
-            // }
+            bestSegment = lastSegment;
           }
         }
       }
@@ -290,14 +280,6 @@ public class Net
             if (firstSegment.getFirstVisualTime() > branch.getFirstCommitTime())
             {
               bestSegment = firstSegment;
-
-              // // If the first segment of this track starts after the branch's first commit there's enough room for a
-              // new
-              // // segment in this track
-              // if (bestSegment == null || firstSegment.getFirstVisualTime() > bestSegment.getFirstVisualTime())
-              // {
-              // bestSegment = firstSegment;
-              // }
             }
           }
         }
@@ -368,9 +350,9 @@ public class Net
     {
       throw new IllegalStateException("No segment");
     }
-  
+
     Commit commit = new Commit(commitInfo, segment);
-  
+
     if (firstCommit == null)
     {
       firstCommit = commit;
@@ -388,7 +370,7 @@ public class Net
         lastCommit = commit;
       }
     }
-  
+
     commits.put(commitInfo, commit);
     ++commitCounter;
     return commit;

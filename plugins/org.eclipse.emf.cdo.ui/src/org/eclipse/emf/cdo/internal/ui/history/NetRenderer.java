@@ -126,7 +126,7 @@ public class NetRenderer implements Listener
     switch (event.type)
     {
     case SWT.MeasureItem:
-      event.width = handlePaintEvent(event, true);
+      event.width = handlePaintEvent(event, true) + TRACK_OFFSET;
       break;
 
     case SWT.PaintItem:
@@ -199,13 +199,14 @@ public class NetRenderer implements Listener
       if (image != null)
       {
         Rectangle bounds = image.getBounds();
+        x += 2;
         if (!justMeasureWidth)
         {
           gc.drawImage(image, bounds.x, bounds.y, bounds.width, bounds.height, //
-              cellX + x, cellY + 1, bounds.width, bounds.height);
+              cellX + x - TRACK_OFFSET, cellY + 1, bounds.width, bounds.height);
         }
 
-        x += bounds.width + TRACK_OFFSET;
+        x += bounds.width;
       }
     }
 

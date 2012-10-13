@@ -173,7 +173,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
       if (elements == null)
       {
         int size = commitInfos.size();
-        if (!full && appendingTriggerLoadElement)
+        if (!full && appendingTriggerLoadElement && !isLoading())
         {
           elements = commitInfos.toArray(new CDOCommitInfo[size + 1]);
           elements[size] = triggerLoadElement;

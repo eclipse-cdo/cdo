@@ -14,9 +14,10 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
+import org.eclipse.emf.cdo.common.commit.CDOCommitHistory.TriggerLoadElement;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
-import org.eclipse.emf.cdo.internal.common.commit.CDOCommitHistoryImpl;
 import org.eclipse.emf.cdo.internal.ui.history.NetRenderer;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
@@ -24,6 +25,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -77,18 +79,7 @@ public class CommitHistoryComposite extends Composite
 
     tableViewer = new TableViewer(this, SWT.BORDER | SWT.FULL_SELECTION);
     tableViewer.setContentProvider(new ContentProvider());
-    tableViewer.addDoubleClickListener(new IDoubleClickListener()
-    {
-      public void doubleClick(DoubleClickEvent event)
-      {
-        IStructuredSelection selection = (IStructuredSelection)tableViewer.getSelection();
-        CDOCommitInfo commitInfo = (CDOCommitInfo)selection.getFirstElement();
-        if (commitInfo != null)
-        {
-          doubleClicked(commitInfo);
-        }
-      }
-    });
+    tableViewer.addDoubleClickListener(new DoubleClickListener());
 
     labelProvider = new LabelProvider();
     labelProvider.support(tableViewer);
@@ -125,7 +116,7 @@ public class CommitHistoryComposite extends Composite
       CDOCommitHistory oldHistory = history;
       if (input == null)
       {
-        history = new CDOCommitHistoryImpl.Empty();
+        history = CDOCommitHistory.EMPTY;
       }
       else
       {
@@ -137,10 +128,12 @@ public class CommitHistoryComposite extends Composite
         labelProvider.setInputBranch(branch);
 
         history = createHistory(session, branch, object);
-        netRenderer.setInput(input);
+        history.setAppendingTriggerLoadElement(true);
       }
 
-      tableViewer.setInput(history);
+      refreshLayout();
+      // netRenderer.setInput(input);
+      // tableViewer.setInput(history);
 
       if (oldHistory != null && oldHistory != history)
       {
@@ -151,9 +144,8 @@ public class CommitHistoryComposite extends Composite
 
   public void refreshLayout()
   {
-    Input currentInput = input;
-    setInput(null);
-    setInput(currentInput);
+    netRenderer.setInput(input);
+    tableViewer.setInput(history);
   }
 
   public final CDOCommitHistory getHistory()
@@ -192,6 +184,46 @@ public class CommitHistoryComposite extends Composite
 
   protected void doubleClicked(CDOCommitInfo commitInfo)
   {
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class DoubleClickListener implements IDoubleClickListener
+  {
+    public void doubleClick(DoubleClickEvent event)
+    {
+      IStructuredSelection selection = (IStructuredSelection)tableViewer.getSelection();
+      CDOCommitInfo commitInfo = (CDOCommitInfo)selection.getFirstElement();
+      if (commitInfo != null)
+      {
+        if (commitInfo instanceof TriggerLoadElement)
+        {
+          history.triggerLoad(new RevealElementHandler());
+        }
+        else
+        {
+          doubleClicked(commitInfo);
+        }
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class RevealElementHandler implements CDOCommitInfoHandler
+  {
+    public void handleCommitInfo(final CDOCommitInfo commitInfo)
+    {
+      getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          tableViewer.reveal(commitInfo);
+        }
+      });
+    }
   }
 
   /**
@@ -443,6 +475,11 @@ public class CommitHistoryComposite extends Composite
         @Override
         public String getText(CDOCommitInfo commitInfo)
         {
+          if (commitInfo instanceof CDOCommitHistory.TriggerLoadElement)
+          {
+            return StringUtil.EMPTY;
+          }
+
           // return CDOCommonUtil.formatTimeStamp(commitInfo.getTimeStamp());
           return "" + commitInfo.getTimeStamp();
         }
@@ -450,6 +487,11 @@ public class CommitHistoryComposite extends Composite
         @Override
         public Image getImage(CDOCommitInfo commitInfo)
         {
+          if (commitInfo instanceof CDOCommitHistory.TriggerLoadElement)
+          {
+            return null;
+          }
+
           return (Image)getResource(COMMIT);
         }
       });
@@ -468,12 +510,22 @@ public class CommitHistoryComposite extends Composite
         @Override
         public String getText(CDOCommitInfo commitInfo)
         {
+          if (commitInfo instanceof CDOCommitHistory.TriggerLoadElement)
+          {
+            return StringUtil.EMPTY;
+          }
+
           return commitInfo.getUserID();
         }
 
         @Override
         public Image getImage(CDOCommitInfo commitInfo)
         {
+          if (commitInfo instanceof CDOCommitHistory.TriggerLoadElement)
+          {
+            return null;
+          }
+
           String userID = commitInfo.getUserID();
           if (userID != null)
           {
@@ -494,12 +546,22 @@ public class CommitHistoryComposite extends Composite
         @Override
         public String getText(CDOCommitInfo commitInfo)
         {
+          if (commitInfo instanceof CDOCommitHistory.TriggerLoadElement)
+          {
+            return StringUtil.EMPTY;
+          }
+
           return commitInfo.getBranch().getPathName();
         }
 
         @Override
         public Image getImage(CDOCommitInfo commitInfo)
         {
+          if (commitInfo instanceof CDOCommitHistory.TriggerLoadElement)
+          {
+            return null;
+          }
+
           if (inputBranch == null || inputBranch == commitInfo.getBranch())
           {
             return (Image)getResource(BRANCH);

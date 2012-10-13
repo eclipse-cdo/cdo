@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.internal.common.commit.CDOCommitHistoryImpl;
 
 import org.eclipse.net4j.util.container.IContainer;
 
@@ -22,6 +23,8 @@ import org.eclipse.net4j.util.container.IContainer;
  */
 public interface CDOCommitHistory extends IContainer<CDOCommitInfo>, CDOCommitInfoHandler
 {
+  public static final CDOCommitHistory EMPTY = new CDOCommitHistoryImpl.Empty();
+
   public static final int DEFAULT_LOAD_COUNT = 50;
 
   public CDOCommitInfoManager getManager();
@@ -36,6 +39,12 @@ public interface CDOCommitHistory extends IContainer<CDOCommitInfo>, CDOCommitIn
 
   public int size();
 
+  public boolean isFull();
+
+  public boolean isAppendingTriggerLoadElement();
+
+  public void setAppendingTriggerLoadElement(boolean appendingTriggerLoadElement);
+
   public int getLoadCount();
 
   public void setLoadCount(int loadCount);
@@ -43,8 +52,6 @@ public interface CDOCommitHistory extends IContainer<CDOCommitInfo>, CDOCommitIn
   public boolean triggerLoad();
 
   public boolean triggerLoad(CDOCommitInfoHandler handler);
-
-  public boolean isFull();
 
   /**
    * Provides consumers with {@link CDOCommitHistory histories}.
@@ -56,5 +63,17 @@ public interface CDOCommitHistory extends IContainer<CDOCommitInfo>, CDOCommitIn
     public CDOCommitHistory getHistory();
 
     public HISTORY getHistory(KEY key);
+  }
+
+  /**
+   * A virtual {@link CDOCommitHistory history} element that can be returned from {@link CDOCommitHistory#getElements()}
+   * if {@link CDOCommitHistory#isAppendingTriggerLoadElement()} is <code>true</code> to indicate that
+   * the history is not {@link CDOCommitHistory#isFull() fully} loaded, yet.
+   *
+   * @author Eike Stepper
+   */
+  public interface TriggerLoadElement extends CDOCommitInfo
+  {
+    public CDOCommitHistory getHistory();
   }
 }

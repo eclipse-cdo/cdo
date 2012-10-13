@@ -12,10 +12,16 @@ package org.eclipse.emf.cdo.internal.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOChangeKind;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 
 import org.eclipse.net4j.util.collection.GrowingRandomAccessList;
@@ -23,7 +29,9 @@ import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.FinishedEvent;
 import org.eclipse.net4j.util.event.IListener;
 
+import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -31,6 +39,8 @@ import java.util.ListIterator;
  */
 public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CDOCommitHistory
 {
+  private final TriggerLoadElement triggerLoadElement = new TriggerLoadElementImpl();
+
   private final CDOCommitInfoManager manager;
 
   private final CDOBranch branch;
@@ -41,6 +51,8 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
       CDOCommitInfo.class, DEFAULT_LOAD_COUNT);
 
   private CDOCommitInfo[] elements;
+
+  private boolean appendingTriggerLoadElement;
 
   private boolean full;
 
@@ -73,6 +85,47 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
   public void setLoadCount(int loadCount)
   {
     this.loadCount = loadCount;
+  }
+
+  public boolean isAppendingTriggerLoadElement()
+  {
+    return appendingTriggerLoadElement;
+  }
+
+  public void setAppendingTriggerLoadElement(boolean appendingTriggerLoadElement)
+  {
+    int event = 0;
+    synchronized (commitInfos)
+    {
+      if (this.appendingTriggerLoadElement != appendingTriggerLoadElement)
+      {
+        this.appendingTriggerLoadElement = appendingTriggerLoadElement;
+        elements = null;
+
+        if (!full)
+        {
+          if (appendingTriggerLoadElement)
+          {
+            event = 1;
+          }
+          else
+          {
+            event = 2;
+          }
+        }
+      }
+    }
+
+    switch (event)
+    {
+    case 1:
+      fireElementAddedEvent(triggerLoadElement);
+      break;
+
+    case 2:
+      fireElementRemovedEvent(triggerLoadElement);
+      break;
+    }
   }
 
   public CDOCommitInfo getFirstElement()
@@ -117,7 +170,13 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     checkActive();
     synchronized (commitInfos)
     {
-      return commitInfos.size();
+      int size = commitInfos.size();
+      if (!full && appendingTriggerLoadElement)
+      {
+        ++size;
+      }
+
+      return size;
     }
   }
 
@@ -127,6 +186,11 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     checkActive();
     synchronized (commitInfos)
     {
+      if (!full && appendingTriggerLoadElement)
+      {
+        return false;
+      }
+
       return commitInfos.isEmpty();
     }
   }
@@ -138,7 +202,16 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     {
       if (elements == null)
       {
-        elements = commitInfos.toArray(new CDOCommitInfo[commitInfos.size()]);
+        int size = commitInfos.size();
+        if (!full && appendingTriggerLoadElement)
+        {
+          elements = commitInfos.toArray(new CDOCommitInfo[size + 1]);
+          elements[size] = triggerLoadElement;
+        }
+        else
+        {
+          elements = commitInfos.toArray(new CDOCommitInfo[size]);
+        }
       }
 
       return elements;
@@ -284,11 +357,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
         }
 
         CDOCommitHistoryImpl.this.handleCommitInfo(commitInfo);
-
-        if (handler != null)
-        {
-          handler.handleCommitInfo(commitInfo);
-        }
+        handle(handler, commitInfo);
       }
     });
 
@@ -296,11 +365,109 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     {
       setFull();
     }
+    else if (appendingTriggerLoadElement)
+    {
+      fireElementAddedEvent(triggerLoadElement);
+      handle(handler, triggerLoadElement);
+    }
 
     if (handler instanceof IListener)
     {
       IListener listener = (IListener)handler;
       listener.notifyEvent(FinishedEvent.INSTANCE);
+    }
+  }
+
+  private static void handle(final CDOCommitInfoHandler handler, CDOCommitInfo commitInfo)
+  {
+    if (handler != null)
+    {
+      handler.handleCommitInfo(commitInfo);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class TriggerLoadElementImpl implements TriggerLoadElement
+  {
+    public CDOCommitHistory getHistory()
+    {
+      return CDOCommitHistoryImpl.this;
+    }
+
+    public CDOCommitInfoManager getCommitInfoManager()
+    {
+      return manager;
+    }
+
+    public CDOBranch getBranch()
+    {
+      return null;
+    }
+
+    public long getTimeStamp()
+    {
+      return CDOBranchPoint.UNSPECIFIED_DATE;
+    }
+
+    public long getPreviousTimeStamp()
+    {
+      return CDOBranchPoint.UNSPECIFIED_DATE;
+    }
+
+    public String getUserID()
+    {
+      return null;
+    }
+
+    public String getComment()
+    {
+      return "Load more history elements";
+    }
+
+    public boolean isEmpty()
+    {
+      return true;
+    }
+
+    public List<CDOPackageUnit> getNewPackageUnits()
+    {
+      return null;
+    }
+
+    public List<CDOIDAndVersion> getNewObjects()
+    {
+      return null;
+    }
+
+    public List<CDORevisionKey> getChangedObjects()
+    {
+      return null;
+    }
+
+    public List<CDOIDAndVersion> getDetachedObjects()
+    {
+      return null;
+    }
+
+    public Map<CDOID, CDOChangeKind> getChangeKinds()
+    {
+      return null;
+    }
+
+    public CDOChangeKind getChangeKind(CDOID id)
+    {
+      return null;
+    }
+
+    public void merge(CDOChangeSetData changeSetData)
+    {
+    }
+
+    public CDOChangeSetData copy()
+    {
+      return null;
     }
   }
 
@@ -312,6 +479,11 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     private static final CDOCommitInfo[] NO_ELEMENTS = {};
 
     public CDOCommitInfo[] getElements()
+    {
+      return NO_ELEMENTS;
+    }
+
+    public CDOCommitInfo[] getElements(boolean withTriggerLoadElement)
     {
       return NO_ELEMENTS;
     }
@@ -348,6 +520,15 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     public int size()
     {
       return 0;
+    }
+
+    public boolean isAppendingTriggerLoadElement()
+    {
+      return false;
+    }
+
+    public void setAppendingTriggerLoadElement(boolean appendingTriggerLoadElement)
+    {
     }
 
     public int getLoadCount()

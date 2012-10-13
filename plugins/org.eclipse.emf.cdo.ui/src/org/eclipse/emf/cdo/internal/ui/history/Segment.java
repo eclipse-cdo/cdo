@@ -124,9 +124,13 @@ public class Segment
 
   void adjustCommitTimes(long time)
   {
-    if (firstCommitTime == 0)
+    if (firstVisualTime == 0)
     {
       firstVisualTime = time;
+    }
+
+    if (firstCommitTime == 0)
+    {
       firstCommitTime = time;
       lastCommitTime = time;
     }

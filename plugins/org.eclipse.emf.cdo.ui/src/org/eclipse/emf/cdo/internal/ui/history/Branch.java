@@ -175,7 +175,7 @@ public class Branch extends SegmentList
 
   private void determineBaseCommitIfNeeded()
   {
-    if (cdoBranch.isMainBranch())
+    if (baseCommitTime != 0 || cdoBranch.isMainBranch())
     {
       return;
     }

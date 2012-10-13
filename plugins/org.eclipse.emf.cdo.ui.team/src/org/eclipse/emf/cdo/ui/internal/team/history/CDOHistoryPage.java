@@ -109,8 +109,8 @@ public class CDOHistoryPage extends HistoryPage
           long timeStamp = commitInfo.getTimeStamp();
           if (timeStamp != lastCommitTime[0])
           {
-            branch = branch
-                .createBranch("branch-" + (timeStamp - session.getRepositoryInfo().getCreationTime()) / 1000);
+            String name = "branch-" + (timeStamp - session.getRepositoryInfo().getCreationTime()) / 1000;
+            branch = branch.createBranch(name, timeStamp);
           }
 
           transaction = session.openTransaction(branch);

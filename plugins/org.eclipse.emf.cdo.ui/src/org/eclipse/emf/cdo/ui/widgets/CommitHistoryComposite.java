@@ -51,9 +51,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Table;
 
 /**
  * @author Eike Stepper
@@ -85,16 +82,7 @@ public class CommitHistoryComposite extends Composite
     labelProvider.support(tableViewer);
 
     netRenderer = new NetRenderer(labelProvider);
-
-    Table table = tableViewer.getTable();
-    table.addListener(SWT.PaintItem, netRenderer);
-    table.addListener(SWT.EraseItem, new Listener()
-    {
-      public void handleEvent(Event event)
-      {
-        event.detail &= ~SWT.FOREGROUND;
-      }
-    });
+    netRenderer.support(tableViewer);
   }
 
   public final TableViewer getTableViewer()
@@ -132,8 +120,6 @@ public class CommitHistoryComposite extends Composite
       }
 
       refreshLayout();
-      // netRenderer.setInput(input);
-      // tableViewer.setInput(history);
 
       if (oldHistory != null && oldHistory != history)
       {
@@ -144,6 +130,7 @@ public class CommitHistoryComposite extends Composite
 
   public void refreshLayout()
   {
+    tableViewer.reveal(history.getFirstElement());
     netRenderer.setInput(input);
     tableViewer.setInput(history);
   }

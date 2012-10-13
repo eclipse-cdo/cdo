@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.LabelProvider;
 
 import org.eclipse.jface.resource.ResourceManager;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.Color;
@@ -30,6 +31,7 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
 /**
@@ -84,6 +86,14 @@ public class NetRenderer implements Listener
     colorDotOutline = resourceManager.createColor(new RGB(110, 110, 110));
   }
 
+  public void support(TableViewer tableViewer)
+  {
+    Table table = tableViewer.getTable();
+    table.addListener(SWT.MeasureItem, this);
+    table.addListener(SWT.PaintItem, this);
+    table.addListener(SWT.EraseItem, this);
+  }
+
   public void setInput(Input input)
   {
     if (input != null)
@@ -102,6 +112,34 @@ public class NetRenderer implements Listener
   }
 
   public void handleEvent(Event event)
+  {
+    switch (event.type)
+    {
+    case SWT.MeasureItem:
+      // TableItem item = (TableItem)event.item;
+      // String text = getText(item, event.index);
+      // Point size = event.gc.textExtent(text);
+      // event.width = size.x;
+      // event.height = Math.max(event.height, size.y);
+      event.width = handlePaintEvent(event, true);
+      break;
+
+    case SWT.PaintItem:
+      // TableItem item = (TableItem)event.item;
+      // String text = getText(item, event.index);
+      // Point size = event.gc.textExtent(text);
+      // int offset2 = event.index == 0 ? Math.max(0, (event.height - size.y) / 2) : 0;
+      // event.gc.drawText(text, event.x, event.y + offset2, true);
+      handlePaintEvent(event, false);
+      break;
+
+    case SWT.EraseItem:
+      event.detail &= ~SWT.FOREGROUND;
+      break;
+    }
+  }
+
+  public int handlePaintEvent(Event event, boolean justMeasureWidth)
   {
     try
     {
@@ -136,22 +174,23 @@ public class NetRenderer implements Listener
       cellBackground = gc.getBackground();
 
       CDOCommitInfo commitInfo = (CDOCommitInfo)((TableItem)event.item).getData();
-      drawCell(commitInfo, event.index);
+      return drawCell(commitInfo, event.index, justMeasureWidth);
     }
     catch (Throwable ex)
     {
       OM.LOG.error(ex);
+      return 0;
     }
   }
 
-  private void drawCell(CDOCommitInfo commitInfo, int columnIndex)
+  private int drawCell(CDOCommitInfo commitInfo, int columnIndex, boolean justMeasureWidth)
   {
-    int textX = TRACK_OFFSET;
+    int x = TRACK_OFFSET;
     if (columnIndex == 1)
     {
       if (!(commitInfo instanceof TriggerLoadElement))
       {
-        textX += drawCommit(commitInfo);
+        x += drawCommit(commitInfo, justMeasureWidth);
       }
     }
     else
@@ -160,15 +199,19 @@ public class NetRenderer implements Listener
       if (image != null)
       {
         Rectangle bounds = image.getBounds();
-        gc.drawImage(image, bounds.x, bounds.y, bounds.width, bounds.height, //
-            cellX + textX, cellY + 1, bounds.width, bounds.height);
+        if (!justMeasureWidth)
+        {
+          gc.drawImage(image, bounds.x, bounds.y, bounds.width, bounds.height, //
+              cellX + x, cellY + 1, bounds.width, bounds.height);
+        }
 
-        textX += bounds.width + TRACK_OFFSET;
+        x += bounds.width + TRACK_OFFSET;
       }
     }
 
     String text = labelProvider.getColumnText(commitInfo, columnIndex);
-    int width = drawText(text, textX, cellHeightHalf);
+    int width = drawText(text, x, cellHeightHalf, justMeasureWidth);
+    x += width;
 
     if (commitInfo instanceof TriggerLoadElement)
     {
@@ -177,84 +220,93 @@ public class NetRenderer implements Listener
         width += 2 * TRACK_OFFSET;
       }
 
-      int y = cellHeightHalf + 1;
-      int x2 = gc.getClipping().width;
-      drawLine(colorDotOutline, width, y, x2, y, LINE_WIDTH);
+      if (!justMeasureWidth)
+      {
+        int y = cellHeightHalf + 1;
+        int x2 = gc.getClipping().width;
+        drawLine(colorDotOutline, width, y, x2, y, LINE_WIDTH);
+      }
     }
+
+    return x;
   }
 
-  private int drawCommit(CDOCommitInfo commitInfo)
+  private int drawCommit(CDOCommitInfo commitInfo, boolean justMeasureWidth)
   {
     Commit commit = net.getCommit(commitInfo);
-    Segment commitSegment = commit.getSegment();
-    long commitTime = commit.getTime();
-
     Segment[] segments = commit.getRowSegments();
-    for (int i = 0; i < segments.length; i++)
+
+    if (!justMeasureWidth)
     {
-      Segment segment = segments[i];
-      if (segment != null)
+      Segment commitSegment = commit.getSegment();
+      long commitTime = commit.getTime();
+
+      for (int i = 0; i < segments.length; i++)
       {
-        Branch branch = segment.getBranch();
-        Color color = branch.getColor();
-
-        int trackCenter = getTrackCenter(i);
-        if (segment != commitSegment)
+        Segment segment = segments[i];
+        if (segment != null)
         {
-          if (commitTime == segment.getFirstVisualTime() && segment.isComplete())
+          Branch branch = segment.getBranch();
+          Color color = branch.getColor();
+
+          int trackCenter = getTrackCenter(i);
+          if (segment != commitSegment)
           {
-            Track commitTrack = commitSegment.getTrack();
-            int commitTrackPosition = commitTrack.getPosition();
-            int commitTrackCenter = getTrackCenter(commitTrackPosition);
-            int positionDelta = Math.abs(i - commitTrackPosition);
-
-            int x2 = commitTrackCenter;
-            if (i < commitTrackPosition)
+            if (commitTime == segment.getFirstVisualTime() && segment.isComplete())
             {
-              // Horizontal line to left
-              x2 -= (positionDelta - 1) * TRACK_WIDTH + 7;
-              drawLine(color, commitTrackCenter, cellHeightHalf, x2, cellHeightHalf, LINE_WIDTH);
+              Track commitTrack = commitSegment.getTrack();
+              int commitTrackPosition = commitTrack.getPosition();
+              int commitTrackCenter = getTrackCenter(commitTrackPosition);
+              int positionDelta = Math.abs(i - commitTrackPosition);
 
-              // Diagonal line to upper left
-              drawLine(color, x2, cellHeightHalf, getTrackCenter(i), 0, LINE_WIDTH);
+              int x2 = commitTrackCenter;
+              if (i < commitTrackPosition)
+              {
+                // Horizontal line to left
+                x2 -= (positionDelta - 1) * TRACK_WIDTH + 7;
+                drawLine(color, commitTrackCenter, cellHeightHalf, x2, cellHeightHalf, LINE_WIDTH);
+
+                // Diagonal line to upper left
+                drawLine(color, x2, cellHeightHalf, getTrackCenter(i), 0, LINE_WIDTH);
+              }
+              else
+              {
+                // Horizontal line to right
+                x2 += (positionDelta - 1) * TRACK_WIDTH + 7;
+                drawLine(color, commitTrackCenter, cellHeightHalf, x2, cellHeightHalf, LINE_WIDTH);
+
+                // Diagonal line to upper right
+                drawLine(color, x2, cellHeightHalf, getTrackCenter(i), 0, LINE_WIDTH);
+              }
             }
             else
             {
-              // Horizontal line to right
-              x2 += (positionDelta - 1) * TRACK_WIDTH + 7;
-              drawLine(color, commitTrackCenter, cellHeightHalf, x2, cellHeightHalf, LINE_WIDTH);
-
-              // Diagonal line to upper right
-              drawLine(color, x2, cellHeightHalf, getTrackCenter(i), 0, LINE_WIDTH);
+              // Full vertical line
+              drawLine(color, trackCenter, 0, trackCenter, cellHeight, LINE_WIDTH);
             }
           }
-          else
-          {
-            // Full vertical line
-            drawLine(color, trackCenter, 0, trackCenter, cellHeight, LINE_WIDTH);
-          }
         }
+
+        Color color = commitSegment.getBranch().getColor();
+        int position = commitSegment.getTrack().getPosition();
+        int trackCenter = getTrackCenter(position);
+
+        if (commitTime < commitSegment.getLastCommitTime())
+        {
+          // Half vertical line to top
+          drawLine(color, trackCenter, 0, trackCenter, cellHeightHalf, LINE_WIDTH);
+        }
+
+        if (commitTime > commitSegment.getFirstVisualTime() || !commitSegment.isComplete())
+        {
+          // Half vertical line to bottom
+          drawLine(color, trackCenter, cellHeightHalf, trackCenter, cellHeight, LINE_WIDTH);
+        }
+
+        int dotX = trackCenter - dotSizeHalf - 1;
+        int dotY = cellHeightHalf - dotSizeHalf;
+        drawDot(dotX, dotY, dotSize, dotSize);
       }
-
-      Color color = commitSegment.getBranch().getColor();
-      int position = commitSegment.getTrack().getPosition();
-      int trackCenter = getTrackCenter(position);
-
-      if (commitTime < commitSegment.getLastCommitTime())
-      {
-        // Half vertical line to top
-        drawLine(color, trackCenter, 0, trackCenter, cellHeightHalf, LINE_WIDTH);
-      }
-
-      if (commitTime > commitSegment.getFirstVisualTime() || !commitSegment.isComplete())
-      {
-        // Half vertical line to bottom
-        drawLine(color, trackCenter, cellHeightHalf, trackCenter, cellHeight, LINE_WIDTH);
-      }
-
-      int dotX = trackCenter - dotSizeHalf - 1;
-      int dotY = cellHeightHalf - dotSizeHalf;
-      drawDot(dotX, dotY, dotSize, dotSize);
     }
 
     return getTrackX(segments.length) + TRACK_WIDTH;
@@ -280,14 +332,18 @@ public class NetRenderer implements Listener
     gc.drawOval(dotX, dotY, dotW, dotH);
   }
 
-  private int drawText(final String msg, final int x, final int y)
+  private int drawText(final String msg, final int x, final int y, boolean justMeasureWidth)
   {
     Point extent = gc.textExtent(msg);
-    int textY = (y * 2 - extent.y) / 2;
-    gc.setForeground(cellForeground);
-    gc.setBackground(cellBackground);
-    gc.setBackground(cellBackground);
-    gc.drawString(msg, cellX + x, cellY + textY, true);
+    if (!justMeasureWidth)
+    {
+      int textY = (y * 2 - extent.y) / 2;
+      gc.setForeground(cellForeground);
+      gc.setBackground(cellBackground);
+      gc.setBackground(cellBackground);
+      gc.drawString(msg, cellX + x, cellY + textY, true);
+    }
+
     return extent.x;
   }
 

@@ -91,6 +91,19 @@ public class NetRenderer implements Listener
     table.addListener(SWT.EraseItem, this);
   }
 
+  public final Net getNet()
+  {
+    return net;
+  }
+
+  public void addCommit(CDOCommitInfo commitInfo)
+  {
+    if (net != null && !(commitInfo instanceof TriggerLoadElement))
+    {
+      net.addCommit(commitInfo);
+    }
+  }
+
   public void setInput(Input input)
   {
     if (input != null)

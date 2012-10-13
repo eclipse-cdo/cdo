@@ -26,6 +26,8 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.container.ContainerEventAdapter;
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -60,6 +62,15 @@ import org.eclipse.swt.widgets.Table;
 public class CommitHistoryComposite extends Composite
 {
   private CDOCommitHistory history;
+
+  private IListener historyListener = new ContainerEventAdapter<CDOCommitInfo>()
+  {
+    @Override
+    protected void onAdded(IContainer<CDOCommitInfo> history, CDOCommitInfo commitInfo)
+    {
+      netRenderer.addCommit(commitInfo);
+    }
+  };
 
   private TableViewer tableViewer;
 
@@ -119,10 +130,12 @@ public class CommitHistoryComposite extends Composite
         history.setAppendingTriggerLoadElement(true);
       }
 
+      history.addListener(historyListener);
       refreshLayout();
 
       if (oldHistory != null && oldHistory != history)
       {
+        oldHistory.removeListener(historyListener);
         LifecycleUtil.deactivate(oldHistory);
       }
     }

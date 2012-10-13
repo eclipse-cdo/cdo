@@ -159,40 +159,7 @@ public class Net
     Commit commit = commits.get(commitInfo);
     if (commit == null)
     {
-      commit = createCommit(commitInfo);
-      commits.put(commitInfo, commit);
-      ++commitCounter;
-    }
-
-    return commit;
-  }
-
-  private Commit createCommit(CDOCommitInfo commitInfo)
-  {
-    Segment segment = getSegment(commitInfo);
-    if (segment == null)
-    {
-      throw new IllegalStateException("No segment");
-    }
-
-    Commit commit = new Commit(commitInfo, segment);
-
-    if (firstCommit == null)
-    {
-      firstCommit = commit;
-      lastCommit = commit;
-    }
-    else
-    {
-      long time = commit.getTime();
-      if (time < firstCommit.getTime())
-      {
-        firstCommit = commit;
-      }
-      else if (time > lastCommit.getTime())
-      {
-        lastCommit = commit;
-      }
+      commit = addCommit(commitInfo);
     }
 
     return commit;
@@ -392,6 +359,39 @@ public class Net
     }
 
     throw new IllegalArgumentException("New commits must not be added between the first and last commits");
+  }
+
+  Commit addCommit(CDOCommitInfo commitInfo)
+  {
+    Segment segment = getSegment(commitInfo);
+    if (segment == null)
+    {
+      throw new IllegalStateException("No segment");
+    }
+  
+    Commit commit = new Commit(commitInfo, segment);
+  
+    if (firstCommit == null)
+    {
+      firstCommit = commit;
+      lastCommit = commit;
+    }
+    else
+    {
+      long time = commit.getTime();
+      if (time < firstCommit.getTime())
+      {
+        firstCommit = commit;
+      }
+      else if (time > lastCommit.getTime())
+      {
+        lastCommit = commit;
+      }
+    }
+  
+    commits.put(commitInfo, commit);
+    ++commitCounter;
+    return commit;
   }
 
   int getCommitCounter()

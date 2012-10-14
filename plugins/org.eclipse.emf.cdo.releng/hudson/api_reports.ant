@@ -12,8 +12,8 @@
 <project name="API Reports" default="main">
 
 	<target name="main">
-		<apitooling.analysis baseline="/opt/public/modeling/emf/cdo/api_baseline" profile="${git.clone}" report="${result}/analysis" />
-		<apitooling.analysis_reportconversion xmlfiles="${result}/analysis" htmlfiles="${result}/analysis/html" />
+		<apitooling.compare baseline="/opt/public/modeling/emf/cdo/api_baseline" profile="${git.clone}" report="${result}/analysis" />
+		<!--apitooling.analysis_reportconversion xmlfiles="${result}/analysis" htmlfiles="${result}/analysis/html" /-->
 	</target>
 
 </project>

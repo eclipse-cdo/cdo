@@ -439,6 +439,11 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
       return true;
     }
 
+    public boolean isInitialCommit()
+    {
+      return false;
+    }
+
     public List<CDOPackageUnit> getNewPackageUnits()
     {
       return null;

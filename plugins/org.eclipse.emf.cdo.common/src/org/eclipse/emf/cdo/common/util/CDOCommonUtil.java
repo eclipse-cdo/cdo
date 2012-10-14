@@ -34,7 +34,7 @@ import java.util.Date;
 
 /**
  * Various static methods that may help with I/O and time stamps.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  */
@@ -44,6 +44,11 @@ public final class CDOCommonUtil
    * @since 4.0
    */
   public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss'.'SSS");
+
+  /**
+   * @since 4.2
+   */
+  public static final String SYSTEM_USER_ID = "CDO_SYSTEM"; //$NON-NLS-1$
 
   private CDOCommonUtil()
   {

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.common.commit;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 
 /**
@@ -34,4 +35,11 @@ public interface CDOCommitInfo extends CDOBranchPoint, CDOCommitData
   public String getUserID();
 
   public String getComment();
+
+  /**
+   * Returns <code>true</code> if this commit info describes the first initializing commit in the {@link CDOCommonRepository repository}, <code>false</code> otherwise.
+   *
+   * @since 4.2
+   */
+  public boolean isInitialCommit();
 }

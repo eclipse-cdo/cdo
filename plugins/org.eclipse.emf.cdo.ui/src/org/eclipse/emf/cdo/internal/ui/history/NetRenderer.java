@@ -39,6 +39,8 @@ import org.eclipse.swt.widgets.TableItem;
  */
 public class NetRenderer implements Listener
 {
+  private static final int ROUND_EDGE = 3;
+
   private static final int TRACK_OFFSET = 4;
 
   private static final int TRACK_WIDTH = 14;
@@ -225,7 +227,7 @@ public class NetRenderer implements Listener
       {
         int y = cellHeightHalf + 1;
         int x2 = gc.getClipping().width;
-        drawLine(colorDotOutline, width, y, x2, y, LINE_WIDTH);
+        drawLine(colorDotOutline, width, y, x2, y);
       }
     }
 
@@ -260,30 +262,21 @@ public class NetRenderer implements Listener
               int commitTrackCenter = getTrackCenter(commitTrackPosition);
               int positionDelta = Math.abs(i - commitTrackPosition);
 
-              int x2 = commitTrackCenter;
+              int horizontal = (positionDelta - 1) * TRACK_WIDTH + 6 + ROUND_EDGE;
               if (i < commitTrackPosition)
               {
-                // Horizontal line to left
-                x2 -= (positionDelta - 1) * TRACK_WIDTH + 7;
-                drawLine(color, commitTrackCenter, cellHeightHalf, x2, cellHeightHalf, LINE_WIDTH);
-
-                // Diagonal line to upper left
-                drawLine(color, x2, cellHeightHalf, getTrackCenter(i), 0, LINE_WIDTH);
+                horizontal = -horizontal;
               }
-              else
-              {
-                // Horizontal line to right
-                x2 += (positionDelta - 1) * TRACK_WIDTH + 7;
-                drawLine(color, commitTrackCenter, cellHeightHalf, x2, cellHeightHalf, LINE_WIDTH);
 
-                // Diagonal line to upper right
-                drawLine(color, x2, cellHeightHalf, getTrackCenter(i), 0, LINE_WIDTH);
-              }
+              LinePlotter plotter = new LinePlotter(color, commitTrackCenter, cellHeightHalf);
+              plotter.relative(horizontal, 0);
+              plotter.absolute(getTrackCenter(i), ROUND_EDGE);
+              plotter.relative(0, -ROUND_EDGE);
             }
             else
             {
               // Full vertical line
-              drawLine(color, trackCenter, 0, trackCenter, cellHeight, LINE_WIDTH);
+              drawLine(color, trackCenter, 0, trackCenter, cellHeight);
             }
           }
         }
@@ -295,13 +288,16 @@ public class NetRenderer implements Listener
         if (commitTime < commitSegment.getLastCommitTime())
         {
           // Half vertical line to top
-          drawLine(color, trackCenter, 0, trackCenter, cellHeightHalf, LINE_WIDTH);
+          drawLine(color, trackCenter, 0, trackCenter, cellHeightHalf);
         }
 
         if (commitTime > commitSegment.getFirstVisualTime() || !commitSegment.isComplete())
         {
-          // Half vertical line to bottom
-          drawLine(color, trackCenter, cellHeightHalf, trackCenter, cellHeight, LINE_WIDTH);
+          if (!commitInfo.isInitialCommit())
+          {
+            // Half vertical line to bottom
+            drawLine(color, trackCenter, cellHeightHalf, trackCenter, cellHeight);
+          }
         }
 
         int dotX = trackCenter - dotSizeHalf - 1;
@@ -313,10 +309,10 @@ public class NetRenderer implements Listener
     return getTrackX(segments.length) + TRACK_WIDTH;
   }
 
-  private void drawLine(final Color color, final int x1, final int y1, final int x2, final int y2, final int width)
+  private void drawLine(Color color, int x1, int y1, int x2, int y2)
   {
     gc.setForeground(color);
-    gc.setLineWidth(width);
+    gc.setLineWidth(LINE_WIDTH);
     gc.drawLine(cellX + x1, cellY + y1, cellX + x2, cellY + y2);
   }
 
@@ -356,5 +352,40 @@ public class NetRenderer implements Listener
   private int getTrackCenter(int position)
   {
     return getTrackX(position) + TRACK_WIDTH / 2;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class LinePlotter
+  {
+    private final Color color;
+
+    private int x;
+
+    private int y;
+
+    public LinePlotter(Color color, int x, int y)
+    {
+      this.color = color;
+      this.x = x;
+      this.y = y;
+    }
+
+    public void relative(int width, int height)
+    {
+      int fromX = x;
+      int fromY = y;
+      x += width;
+      y += height;
+      drawLine(color, fromX, fromY, x, y);
+    }
+
+    public void absolute(int x, int y)
+    {
+      drawLine(color, this.x, this.y, x, y);
+      this.x = x;
+      this.y = y;
+    }
   }
 }

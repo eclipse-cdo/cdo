@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.lock.IDurableLockingManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -52,7 +53,7 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
   /**
    * @since 3.0
    */
-  public static final String SYSTEM_USER_ID = "CDO_SYSTEM"; //$NON-NLS-1$
+  public static final String SYSTEM_USER_ID = CDOCommonUtil.SYSTEM_USER_ID;
 
   public IStore getStore();
 

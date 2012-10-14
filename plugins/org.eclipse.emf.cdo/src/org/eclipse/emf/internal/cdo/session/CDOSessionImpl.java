@@ -1894,6 +1894,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       return false;
     }
 
+    public boolean isInitialCommit()
+    {
+      return commitInfo.isInitialCommit();
+    }
+
     public CDOChangeSetData copy()
     {
       return commitInfo.copy();

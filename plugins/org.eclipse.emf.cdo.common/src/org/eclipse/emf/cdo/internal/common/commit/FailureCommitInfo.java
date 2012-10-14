@@ -74,6 +74,11 @@ public class FailureCommitInfo implements CDOCommitInfo
     return true;
   }
 
+  public boolean isInitialCommit()
+  {
+    return false;
+  }
+
   public List<CDOPackageUnit> getNewPackageUnits()
   {
     return Collections.emptyList();

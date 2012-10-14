@@ -16,7 +16,10 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitHistoryImpl;
 
@@ -47,6 +50,43 @@ public class CDOObjectHistoryImpl extends CDOCommitHistoryImpl implements CDOObj
   public CDOObject getCDOObject()
   {
     return object;
+  }
+
+  @Override
+  protected boolean filter(CDOCommitInfo commitInfo)
+  {
+    if (commitInfo.isCommitDataLoaded())
+    {
+      CDOID id = object.cdoID();
+
+      for (CDORevisionKey key : commitInfo.getChangedObjects())
+      {
+        if (key.getID().equals(id))
+        {
+          return false;
+        }
+      }
+
+      for (CDOIDAndVersion key : commitInfo.getNewObjects())
+      {
+        if (key.getID().equals(id))
+        {
+          return false;
+        }
+      }
+
+      for (CDOIDAndVersion key : commitInfo.getDetachedObjects())
+      {
+        if (key.getID().equals(id))
+        {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    return super.filter(commitInfo);
   }
 
   @Override

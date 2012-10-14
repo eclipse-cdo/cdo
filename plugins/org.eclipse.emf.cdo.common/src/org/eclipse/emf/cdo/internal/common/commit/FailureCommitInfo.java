@@ -79,6 +79,11 @@ public class FailureCommitInfo implements CDOCommitInfo
     return false;
   }
 
+  public boolean isCommitDataLoaded()
+  {
+    return true;
+  }
+
   public List<CDOPackageUnit> getNewPackageUnits()
   {
     return Collections.emptyList();

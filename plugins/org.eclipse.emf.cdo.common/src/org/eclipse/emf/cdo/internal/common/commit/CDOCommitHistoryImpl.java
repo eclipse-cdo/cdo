@@ -275,6 +275,11 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
 
   public void handleCommitInfo(CDOCommitInfo commitInfo)
   {
+    if (filter(commitInfo))
+    {
+      return;
+    }
+
     long timeStamp = commitInfo.getTimeStamp();
     synchronized (commitInfos)
     {
@@ -313,6 +318,11 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
 
     fireElementAddedEvent(commitInfo);
+  }
+
+  protected boolean filter(CDOCommitInfo commitInfo)
+  {
+    return branch != null && branch != commitInfo.getBranch();
   }
 
   protected void setFull()
@@ -442,6 +452,11 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     public boolean isInitialCommit()
     {
       return false;
+    }
+
+    public boolean isCommitDataLoaded()
+    {
+      return true;
     }
 
     public List<CDOPackageUnit> getNewPackageUnits()

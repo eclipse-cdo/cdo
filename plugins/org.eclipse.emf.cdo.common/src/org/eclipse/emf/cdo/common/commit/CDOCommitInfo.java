@@ -42,4 +42,9 @@ public interface CDOCommitInfo extends CDOBranchPoint, CDOCommitData
    * @since 4.2
    */
   public boolean isInitialCommit();
+
+  /**
+   * @since 4.2
+   */
+  public boolean isCommitDataLoaded();
 }

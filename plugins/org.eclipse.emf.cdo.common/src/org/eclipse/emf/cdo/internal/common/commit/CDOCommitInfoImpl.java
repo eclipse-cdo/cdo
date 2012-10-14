@@ -210,6 +210,11 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
             "CommitInfo[{0}, {1}, {2}, {3}, {4}, {5}]", getPreviousTimeStamp(), getBranch(), timeStamp, getUserID(), getComment(), data); //$NON-NLS-1$
   }
 
+  public synchronized boolean isCommitDataLoaded()
+  {
+    return commitData != null;
+  }
+
   private synchronized void loadCommitDataIfNeeded()
   {
     if (commitData == null)

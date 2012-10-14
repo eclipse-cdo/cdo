@@ -74,6 +74,11 @@ public abstract class DelegatingCommitInfo implements CDOCommitInfo
     return getDelegate().isInitialCommit();
   }
 
+  public boolean isCommitDataLoaded()
+  {
+    return getDelegate().isCommitDataLoaded();
+  }
+
   public List<CDOPackageUnit> getNewPackageUnits()
   {
     return getDelegate().getNewPackageUnits();

@@ -14,11 +14,11 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.swt.graphics.Color;
 
@@ -45,10 +45,11 @@ public class Branch extends SegmentList
     this.cdoBranch = cdoBranch;
     color = net.getColor(cdoBranch.getID());
 
+    CDOSession session = net.getSession();
     CDOID objectID = net.getObjectID();
     if (objectID != null)
     {
-      CDORevisionManager revisionManager = net.getSession().getRevisionManager();
+      CDORevisionManager revisionManager = session.getRevisionManager();
 
       CDOBranchPoint lastPoint = cdoBranch.getHead();
       CDORevision lastRevision = revisionManager.getRevision(objectID, lastPoint, CDORevision.UNCHUNKED,
@@ -66,8 +67,18 @@ public class Branch extends SegmentList
     }
     else
     {
-      firstCommitTime = getCommitTime(1L, true);
-      lastCommitTime = getCommitTime(Long.MAX_VALUE, false);
+      CDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
+      CDOCommitInfo firstCommit = commitInfoManager.getFirstOfBranch(cdoBranch);
+      if (firstCommit != null)
+      {
+        firstCommitTime = firstCommit.getTimeStamp();
+      }
+
+      CDOCommitInfo lastCommit = commitInfoManager.getLastOfBranch(cdoBranch);
+      if (lastCommit != null)
+      {
+        lastCommitTime = lastCommit.getTimeStamp();
+      }
     }
   }
 
@@ -161,18 +172,6 @@ public class Branch extends SegmentList
     }
   }
 
-  private long getCommitTime(long startTime, boolean up)
-  {
-    CDOCommitInfoManager commitInfoManager = getNet().getSession().getCommitInfoManager();
-    CDOCommitInfo commitInfo = commitInfoManager.getCommitInfo(cdoBranch, startTime, up);
-    if (commitInfo != null)
-    {
-      return commitInfo.getTimeStamp();
-    }
-
-    return 0;
-  }
-
   private void determineBaseCommitIfNeeded()
   {
     if (baseCommitTime != 0 || cdoBranch.isMainBranch())
@@ -180,26 +179,9 @@ public class Branch extends SegmentList
       return;
     }
 
-    CDOBranchPoint base = cdoBranch.getBase();
-    while (baseCommitTime == 0)
-    {
-      CDOBranch baseBranch = base.getBranch();
-      long baseTime = base.getTimeStamp();
-
-      final Net net = getNet();
-      CDOCommitInfoManager commitInfoManager = net.getSession().getCommitInfoManager();
-      commitInfoManager.getCommitInfos(baseBranch, baseTime, null, null, -1, new CDOCommitInfoHandler()
-      {
-        public void handleCommitInfo(CDOCommitInfo commitInfo)
-        {
-          CDOBranch cdoBaseBranch = commitInfo.getBranch();
-          baseCommitBranch = net.getBranch(cdoBaseBranch);
-          baseCommitTime = commitInfo.getTimeStamp();
-        }
-      });
-
-      base = baseBranch.getBase();
-    }
+    CDOCommitInfoManager commitInfoManager = getNet().getSession().getCommitInfoManager();
+    CDOCommitInfo commitInfo = commitInfoManager.getBaseOfBranch(cdoBranch);
+    baseCommitTime = commitInfo.getTimeStamp();
   }
 
   @Override

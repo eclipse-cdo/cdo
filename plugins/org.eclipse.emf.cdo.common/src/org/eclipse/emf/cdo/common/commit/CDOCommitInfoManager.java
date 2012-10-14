@@ -42,4 +42,19 @@ public interface CDOCommitInfoManager extends CDOCommitInfoProvider,
    */
   public void getCommitInfos(CDOBranch branch, long startTime, String reserved1, String reserved2, int count,
       CDOCommitInfoHandler handler);
+
+  /**
+   * @since 4.2
+   */
+  public CDOCommitInfo getBaseOfBranch(CDOBranch branch);
+
+  /**
+   * @since 4.2
+   */
+  public CDOCommitInfo getFirstOfBranch(CDOBranch branch);
+
+  /**
+   * @since 4.2
+   */
+  public CDOCommitInfo getLastOfBranch(CDOBranch branch);
 }

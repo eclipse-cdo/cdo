@@ -23,7 +23,7 @@ public class Commit
 
   private Segment[] rowSegments;
 
-  private int commitCounter;
+  private int commitCounter = -1;
 
   public Commit(CDOCommitInfo commitInfo, Segment segment)
   {
@@ -64,7 +64,7 @@ public class Commit
     if (rowSegments == null || commitCounter < netCommitCounter)
     {
       long time = getTime();
-      rowSegments = net.getRowSegments(time);
+      rowSegments = net.createRowSegments(time);
       commitCounter = netCommitCounter;
     }
 

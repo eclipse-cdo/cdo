@@ -102,30 +102,6 @@ public class Net
     return tracks;
   }
 
-  public final Segment[] getRowSegments(long time)
-  {
-    Segment[] segments = NO_SEGMENTS;
-    for (int i = tracks.length - 1; i >= 0; --i)
-    {
-      Track track = tracks[i];
-      Segment segment = track.getSegment(time, true);
-
-      if (segments == NO_SEGMENTS)
-      {
-        if (segment == null)
-        {
-          continue;
-        }
-
-        segments = new Segment[i + 1];
-      }
-
-      segments[i] = segment;
-    }
-
-    return segments;
-  }
-
   public final Commit getFirstCommit()
   {
     return firstCommit;
@@ -171,7 +147,7 @@ public class Net
     long time = commitInfo.getTimeStamp();
 
     Branch branch = getBranch(cdoBranch);
-    Segment segment = branch.getSegment(time, false);
+    Segment segment = branch.getSegment(time);
 
     if (segment == null)
     {
@@ -343,6 +319,30 @@ public class Net
     throw new IllegalArgumentException("New commits must not be added between the first and last commits");
   }
 
+  Segment[] createRowSegments(long time)
+  {
+    Segment[] segments = NO_SEGMENTS;
+    for (int i = tracks.length - 1; i >= 0; --i)
+    {
+      Track track = tracks[i];
+      Segment segment = track.getSegment(time);
+
+      if (segments == NO_SEGMENTS)
+      {
+        if (segment == null)
+        {
+          continue;
+        }
+
+        segments = new Segment[i + 1];
+      }
+
+      segments[i] = segment;
+    }
+
+    return segments;
+  }
+
   Commit addCommit(CDOCommitInfo commitInfo)
   {
     Segment segment = getSegment(commitInfo);
@@ -351,6 +351,7 @@ public class Net
       throw new IllegalStateException("No segment");
     }
 
+    ++commitCounter;
     Commit commit = new Commit(commitInfo, segment);
 
     if (firstCommit == null)
@@ -372,7 +373,6 @@ public class Net
     }
 
     commits.put(commitInfo, commit);
-    ++commitCounter;
     return commit;
   }
 

@@ -11,14 +11,19 @@
 package org.eclipse.emf.cdo.ui.internal.team.history;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
+import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorInput;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input;
+import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.LabelProvider;
 
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -26,8 +31,10 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.team.ui.history.HistoryPage;
@@ -40,6 +47,8 @@ import org.eclipse.ui.part.IPageSite;
 public class CDOHistoryPage extends HistoryPage
 {
   private CommitHistoryComposite commitHistoryComposite;
+
+  private boolean commitOnDoubleClick = true;
 
   private Input input;
 
@@ -89,6 +98,24 @@ public class CDOHistoryPage extends HistoryPage
       @Override
       protected void doubleClicked(CDOCommitInfo commitInfo)
       {
+        if (commitOnDoubleClick)
+        {
+          testCommit(commitInfo);
+        }
+        else
+        {
+          long previousTimeStamp = commitInfo.getPreviousTimeStamp();
+          if (previousTimeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+          {
+            CDOSession session = input.getSession();
+            CDOBranchPoint previous = CDOBranchUtil.normalizeBranchPoint(commitInfo.getBranch(), previousTimeStamp);
+            CDOCompareEditorInput.openCompareDialog(session, commitInfo, previous);
+          }
+        }
+      }
+
+      private void testCommit(CDOCommitInfo commitInfo)
+      {
         CDOTransaction transaction = null;
 
         try
@@ -114,6 +141,8 @@ public class CDOHistoryPage extends HistoryPage
           }
 
           transaction = session.openTransaction(branch);
+          new CDOTransactionCommentator(transaction);
+
           CDOResourceFolder folder = transaction.getOrCreateResourceFolder("/folder");
           folder.addResource("folder-" + folder.getNodes().size() + 1);
           transaction.commit();
@@ -126,14 +155,6 @@ public class CDOHistoryPage extends HistoryPage
         {
           LifecycleUtil.deactivate(transaction);
         }
-
-        // long previousTimeStamp = commitInfo.getPreviousTimeStamp();
-        // if (previousTimeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
-        // {
-        // CDOSession session = input.getSession();
-        // CDOBranchPoint previous = CDOBranchUtil.normalizeBranchPoint(commitInfo.getBranch(), previousTimeStamp);
-        // CDOCompareEditorInput.openCompareDialog(session, commitInfo, previous);
-        // }
       }
     };
 
@@ -212,6 +233,36 @@ public class CDOHistoryPage extends HistoryPage
 
   protected void setupViewMenu(IMenuManager manager)
   {
+    manager.add(new Action("Format Time Stamps", SWT.CHECK)
+    {
+      {
+        LabelProvider labelProvider = commitHistoryComposite.getLabelProvider();
+        setChecked(labelProvider.isFormatTimeStamps());
+      }
+
+      @Override
+      public void run()
+      {
+        LabelProvider labelProvider = commitHistoryComposite.getLabelProvider();
+        labelProvider.setFormatTimeStamps(!labelProvider.isFormatTimeStamps());
+
+        TableViewer tableViewer = commitHistoryComposite.getTableViewer();
+        tableViewer.refresh(true);
+      }
+    });
+
+    manager.add(new Action("Test Commit on Double Click", SWT.CHECK)
+    {
+      {
+        setChecked(commitOnDoubleClick);
+      }
+
+      @Override
+      public void run()
+      {
+        commitOnDoubleClick = !commitOnDoubleClick;
+      }
+    });
   }
 
   public static boolean canShowHistoryFor(Object object)

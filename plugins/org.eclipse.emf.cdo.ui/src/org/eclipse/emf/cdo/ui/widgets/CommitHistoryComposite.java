@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitHistory.TriggerLoadElement;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.ui.history.NetRenderer;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
@@ -101,6 +102,11 @@ public class CommitHistoryComposite extends Composite
     return tableViewer;
   }
 
+  public final LabelProvider getLabelProvider()
+  {
+    return labelProvider;
+  }
+
   public final Input getInput()
   {
     return input;
@@ -145,7 +151,7 @@ public class CommitHistoryComposite extends Composite
   {
     netRenderer.setInput(input);
     CDOCommitInfo[] elements = history.getElements();
-    for (int i = elements.length - 1; i >= 0; --i)
+    for (int i = 0; i < elements.length; i++)
     {
       CDOCommitInfo commitInfo = elements[i];
       netRenderer.addCommit(commitInfo);
@@ -477,6 +483,8 @@ public class CommitHistoryComposite extends Composite
 
     private CDOBranch inputBranch;
 
+    private boolean formatTimeStamps = true;
+
     public LabelProvider()
     {
       addColumn(new Column<CDOCommitInfo>("Time", 160)
@@ -489,7 +497,11 @@ public class CommitHistoryComposite extends Composite
             return StringUtil.EMPTY;
           }
 
-          // return CDOCommonUtil.formatTimeStamp(commitInfo.getTimeStamp());
+          if (formatTimeStamps)
+          {
+            return CDOCommonUtil.formatTimeStamp(commitInfo.getTimeStamp());
+          }
+
           return "" + commitInfo.getTimeStamp();
         }
 
@@ -599,6 +611,16 @@ public class CommitHistoryComposite extends Composite
     public void setInputBranch(CDOBranch inputBranch)
     {
       this.inputBranch = inputBranch;
+    }
+
+    public boolean isFormatTimeStamps()
+    {
+      return formatTimeStamps;
+    }
+
+    public void setFormatTimeStamps(boolean formatTimeStamps)
+    {
+      this.formatTimeStamps = formatTimeStamps;
     }
   }
 }

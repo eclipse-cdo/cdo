@@ -124,11 +124,7 @@ public class Segment
 
   void adjustCommitTimes(long time)
   {
-    if (firstVisualTime == 0)
-    {
-      firstVisualTime = time;
-    }
-
+    adjustVisualTime(time, false);
     if (firstCommitTime == 0)
     {
       firstCommitTime = time;
@@ -137,10 +133,6 @@ public class Segment
     else if (time < firstCommitTime)
     {
       firstCommitTime = time;
-      if (time < firstVisualTime)
-      {
-        firstVisualTime = time;
-      }
     }
     else if (time > lastCommitTime)
     {

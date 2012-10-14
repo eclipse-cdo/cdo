@@ -41,9 +41,8 @@ public abstract class SegmentList
     return lastSegment;
   }
 
-  public final Segment getSegment(long time, boolean extendIfPossible)
+  public final Segment getSegment(long time)
   {
-    Segment last = null;
     Segment segment = lastSegment;
     while (segment != null)
     {
@@ -52,24 +51,7 @@ public abstract class SegmentList
         return segment;
       }
 
-      last = segment;
       segment = getPreviousSegment(segment);
-    }
-
-    if (extendIfPossible)
-    {
-      if (last != null && last.getLastCommitTime() >= time)
-      {
-        if (last.getBranch().getFirstCommitTime() <= time)
-        {
-          Segment previousInTrack = last.getPreviousInTrack();
-          if (previousInTrack == null || previousInTrack.getLastCommitTime() < time)
-          {
-            last.adjustCommitTimes(time);
-            return last;
-          }
-        }
-      }
     }
 
     return null;

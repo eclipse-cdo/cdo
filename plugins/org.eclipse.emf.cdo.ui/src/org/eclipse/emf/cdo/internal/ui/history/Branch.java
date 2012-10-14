@@ -43,7 +43,7 @@ public class Branch extends SegmentList
   {
     super(net);
     this.cdoBranch = cdoBranch;
-    color = net.getNextColor();
+    color = net.getColor(cdoBranch.getID());
 
     CDOID objectID = net.getObjectID();
     if (objectID != null)

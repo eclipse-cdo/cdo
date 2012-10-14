@@ -306,7 +306,7 @@ public class NetRenderer implements Listener
       }
     }
 
-    return getTrackX(segments.length) + TRACK_WIDTH;
+    return getTrackX(segments.length);
   }
 
   private void drawLine(Color color, int x1, int y1, int x2, int y2)

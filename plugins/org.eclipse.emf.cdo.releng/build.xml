@@ -433,6 +433,7 @@
 			</cmdargs>
 		</buckminster>
 
+		<echo message="" />
 		<echo message="Setting API baseline to /opt/public/modeling/emf/cdo/api_baseline" />
 		<buckminster command="addbaseline">
 			<cmdargs>
@@ -552,8 +553,9 @@
 		<echo message="Generating API reports" />
 		<buckminster command="perform">
 			<cmdargs>
+				<arg value="-D" />
+				<arg value="result=${result}" />
 				<arg value="org.eclipse.emf.cdo.releng#generate.api.reports" />
-				<arg value="-Dresult=${result}" />
 			</cmdargs>
 		</buckminster>
 	</target>

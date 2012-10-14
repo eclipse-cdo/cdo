@@ -143,8 +143,8 @@ public class CDOHistoryPage extends HistoryPage
           transaction = session.openTransaction(branch);
           new CDOTransactionCommentator(transaction);
 
-          CDOResourceFolder folder = transaction.getOrCreateResourceFolder("/folder");
-          folder.addResource("folder-" + folder.getNodes().size() + 1);
+          CDOResourceFolder folder = transaction.getOrCreateResourceFolder("test");
+          folder.addResource("resource-" + folder.getNodes().size());
           transaction.commit();
         }
         catch (Exception ex)

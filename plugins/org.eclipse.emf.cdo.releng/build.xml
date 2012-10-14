@@ -416,15 +416,12 @@
 
 	<target name="provision"
 	        depends="-init.tools,-init.buildinfos,-init.workspace"
-	        description="Imports projects and binaries">
+	        description="Imports projects and binaries and set up API baseline">
 		<echo message="Importing projects into ${ws}" />
 		<echo message="Importing binaries into ${tp}" />
-
 		<mkdir dir="${tp}" />
 		<buckminster command="import">
 			<cmdargs>
-				<!--<jvmarg value="-Dorg.eclipse.update.jarprocessor.pack200=/shared/common/jdk-1.6.0_26.x86_64/bin" />-->
-
 				<arg value="-B" />
 				<arg value="${hudson.WORKSPACE}/bom.xml" />
 
@@ -433,6 +430,14 @@
 
 				<!-- Last argument: -->
 				<arg value="${basedir}/build.mspec" />
+			</cmdargs>
+		</buckminster>
+
+		<echo message="Setting API baseline to /opt/public/modeling/emf/cdo/api_baseline" />
+		<buckminster command="addbaseline">
+			<cmdargs>
+				<arg value="-A" />
+				<arg value="CDO Baseline" />
 			</cmdargs>
 		</buckminster>
 	</target>
@@ -455,6 +460,7 @@
 				<include name="*.help/bin/**" />
 			</fileset>
 		</delete>
+		<antcall target="-generate.api" />
 	</target>
 
 	<!-- ======= -->
@@ -475,8 +481,6 @@
 			</dirset>
 		</pathconvert>
 		<echoproperties destfile="${result}/all.properties" />
-
-		<!--<copy file="${releng}/hudson/p2.index" tofile="${site.p2.dir}/p2.index" />-->
 
 		<copy todir="${hudson.WORKSPACE}"
 		      overwrite="true"
@@ -538,6 +542,20 @@
 				<antcall target="-generate.products" />
 			</then>
 		</if>
+	</target>
+
+	<!-- ============ -->
+	<!-- Generate API -->
+	<!-- ============ -->
+
+	<target name="-generate.api">
+		<echo message="Generating API reports" />
+		<buckminster command="perform">
+			<cmdargs>
+				<arg value="org.eclipse.emf.cdo.releng#generate.api.reports" />
+				<arg value="-Dresult=${result}" />
+			</cmdargs>
+		</buckminster>
 	</target>
 
 	<!-- ============== -->

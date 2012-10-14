@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cs:cspecExtension xmlns:cs="http://www.eclipse.org/buckminster/CSpec-1.0">
+
 	<cs:dependencies>
 		<cs:dependency name="org.eclipse.emf.cdo.site" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.cdo.releng.release" componentType="osgi.bundle"/>
@@ -43,4 +44,14 @@
 		<cs:dependency name="javax.persistence" componentType="eclipse.feature"/>
 		<cs:dependency name="javax.annotation" componentType="osgi.bundle"/>
 	</cs:dependencies>
+
+	<cs:actions>
+		<cs:public name="generate.api.reports" actor="ant" always="true">
+			<cs:actorProperties>
+				<cs:property key="buildFile" value="${releng}/hudson/api_reports.ant"/>
+				<cs:property key="targets" value="main"/>
+			</cs:actorProperties>
+		</cs:public>
+	</cs:actions>
+
 </cs:cspecExtension>

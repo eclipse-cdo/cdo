@@ -1,0 +1,5 @@
+ R:.*\.releng.*
+ R:.*\.examples.*
+ R:.*\.tests.*
+ R:.*\.buddies.*
+ R:.*\.jms.*

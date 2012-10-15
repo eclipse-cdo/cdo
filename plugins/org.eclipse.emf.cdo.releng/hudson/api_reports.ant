@@ -11,11 +11,16 @@
 -->
 <project name="API Reports" default="main">
 
+	<dirname file="${ant.file}" property="script.dir" />
 	<property name="api.baseline" location="/opt/public/modeling/emf/cdo/api_baseline" />
 
 	<target name="main">
 		<echo message="Comparing profile ${api.profile} to baseline ${api.baseline}" />
-		<apitooling.compare baseline="${api.baseline}" profile="${api.profile}" report="${api.report}" />
+		<apitooling.compare baseline="${api.baseline}"
+		                    profile="${api.profile}"
+		                    report="${api.report}"
+		                    includelist="${script.dir}/api_reports.includelist"
+		                    excludelist="${script.dir}/api_reports.excludelist" />
 	</target>
 
 </project>

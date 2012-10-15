@@ -11,8 +11,8 @@
 -->
 <project name="API Reports" default="main">
 
-	<dirname file="${ant.file}" property="script.dir" />
 	<property name="api.baseline" location="/opt/public/modeling/emf/cdo/api_baseline" />
+	<dirname file="${ant.file}" property="script.dir" />
 
 	<target name="main">
 		<echo message="Comparing profile ${api.profile} to baseline ${api.baseline}" />

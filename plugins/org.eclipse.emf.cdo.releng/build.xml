@@ -676,7 +676,13 @@
 				<arg value="org.eclipse.emf.cdo.releng#generate.api.reports" />
 			</cmdargs>
 		</buckminster>
+		<delete includeemptydirs="true" quiet="true">
+			<fileset dir="${buckminster.temp.root}">
+				<include name="_dropins/**" />
+			</fileset>
+		</delete>
 		<move file="${hudson.WORKSPACE}/compare.xml" tofile="${hudson.WORKSPACE}/api.xml" verbose="false" />
+		<xslt style="xsl/api2html.xsl" in="${hudson.WORKSPACE}/api.xml" out="${hudson.WORKSPACE}/api.html" />
 	</target>
 
 	<!-- ================= -->

@@ -23,12 +23,14 @@
 		<cs:dependency name="org.eclipse.emf.workspace" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.teneo.hibernate" componentType="eclipse.feature"/>
 
+		<!--
 		<cs:dependency name="org.eclipse.zest" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.gef" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.gmf" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.mwe.core" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.mwe2.runtime.sdk" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.ecoretools" componentType="eclipse.feature"/>
+		-->
 
 		<cs:dependency name="org.eclipse.swtbot" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.swtbot.eclipse" componentType="eclipse.feature"/>

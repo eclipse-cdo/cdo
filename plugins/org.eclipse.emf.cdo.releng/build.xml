@@ -174,12 +174,16 @@
 
 		<property name="tools" location="${hudson.WORKSPACE}/tools" />
 		<property name="result" location="${hudson.WORKSPACE}/result" />
+		<property name="zips" location="${hudson.WORKSPACE}/zips" />
 
 		<property name="ws" location="${result}/ws" />
 		<property name="tp" location="${result}/tp" />
 
 		<property name="buckminster.output.root" location="${result}/output" />
 		<property name="buckminster.temp.root" location="${result}/temp" />
+
+		<property name="temp.dropins" location="${buckminster.temp.root}/_dropins" />
+		<property name="temp.products" location="${buckminster.temp.root}/_products" />
 	</target>
 
 	<!-- ========== -->
@@ -255,6 +259,8 @@
 						<arg value="${buckminster.headless}" />
 						<arg value="-r" />
 						<arg value="http://download.eclipse.org/eclipse/updates/3.8" />
+						<arg value="-r" />
+						<arg value="http://download.eclipse.org/modeling/emf/cdo/updates/integration" />
 						<arg value="-d" />
 						<arg value="${tools}/buckminster" />
 						<arg value="-p" />
@@ -269,6 +275,8 @@
 						<arg value="org.eclipse.buckminster.git.headless.feature.feature.group" />
 						<arg value="-i" />
 						<arg value="org.eclipse.ant.launching" />
+						<arg value="-i" />
+						<arg value="org.eclipse.emf.cdo.releng.version.headless.feature.group" />
 					</args>
 				</eclipse.launch>
 
@@ -461,7 +469,6 @@
 				<include name="*.help/bin/**" />
 			</fileset>
 		</delete>
-		<antcall target="-generate.api" />
 	</target>
 
 	<!-- ======= -->
@@ -529,7 +536,6 @@
 	<!-- ============ -->
 
 	<target name="-generate.all">
-		<property name="zips" location="${hudson.WORKSPACE}/zips" />
 		<mkdir dir="${zips}" />
 
 		<antcall target="-generate.help" />
@@ -537,27 +543,15 @@
 		<antcall target="-generate.bookmarks" />
 		<antcall target="-generate.dropins" />
 
+		<!-- Must come after generate.dropins -->
+		<antcall target="-generate.api" />
+
 		<if>
 			<equals arg1="${hudson.GENERATE_PRODUCTS}" arg2="true" />
 			<then>
 				<antcall target="-generate.products" />
 			</then>
 		</if>
-	</target>
-
-	<!-- ============ -->
-	<!-- Generate API -->
-	<!-- ============ -->
-
-	<target name="-generate.api">
-		<echo message="Generating API reports" />
-		<buckminster command="perform">
-			<cmdargs>
-				<arg value="-D" />
-				<arg value="result=${result}" />
-				<arg value="org.eclipse.emf.cdo.releng#generate.api.reports" />
-			</cmdargs>
-		</buckminster>
 	</target>
 
 	<!-- ============== -->
@@ -622,7 +616,6 @@
 	<!-- ================ -->
 
 	<target name="-generate.dropins">
-		<property name="temp.dropins" location="${buckminster.temp.root}/_dropins" />
 		<delete failonerror="false" includeemptydirs="true" quiet="true">
 			<fileset dir="${temp.dropins}" defaultexcludes="false">
 				<include name="**/*" />
@@ -663,12 +656,34 @@
 		      file="${zips}/emf-cdo-${build.qualifier}-Dropins.properties" />
 	</target>
 
+	<!-- ============ -->
+	<!-- Generate API -->
+	<!-- ============ -->
+
+	<target name="-generate.api">
+		<echo message="Generating API reports" />
+		<copy todir="${temp.dropins}/plugins" overwrite="false">
+			<fileset dir="${tp}/plugins">
+				<include name="**" />
+			</fileset>
+		</copy>
+		<buckminster command="perform">
+			<cmdargs>
+				<arg value="-D" />
+				<arg value="api.profile=${temp.dropins}" />
+				<arg value="-D" />
+				<arg value="api.report=${hudson.WORKSPACE}" />
+				<arg value="org.eclipse.emf.cdo.releng#generate.api.reports" />
+			</cmdargs>
+		</buckminster>
+		<move file="${hudson.WORKSPACE}/compare.xml" tofile="${hudson.WORKSPACE}/api.xml" verbose="false" />
+	</target>
+
 	<!-- ================= -->
 	<!-- Generate Products -->
 	<!-- ================= -->
 
 	<target name="-generate.products">
-		<property name="temp.products" location="${buckminster.temp.root}/_products" />
 		<delete includeemptydirs="true" failonerror="true" quiet="true">
 			<fileset dir="${temp.products}">
 				<include name="**" />

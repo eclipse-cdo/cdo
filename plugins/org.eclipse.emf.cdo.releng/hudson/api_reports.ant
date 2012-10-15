@@ -11,9 +11,15 @@
 -->
 <project name="API Reports" default="main">
 
+	<property name="api.baseline" location="/opt/public/modeling/emf/cdo/api_baseline" />
+	<dirname file="${ant.file}" property="script.dir" />
+
 	<target name="main">
-		<apitooling.compare baseline="/opt/public/modeling/emf/cdo/api_baseline" profile="${git.clone}/plugins" report="${result}/api" />
-		<!--apitooling.analysis_reportconversion xmlfiles="${result}/analysis" htmlfiles="${result}/analysis/html" /-->
+		<echo message="Comparing profile ${api.profile} to baseline ${api.baseline}" />
+		<apitooling.compare baseline="${api.baseline}"
+		                    profile="${api.profile}"
+		                    report="${api.report}"
+		                    includelist="${script.dir}/api_reports.includelist" />
 	</target>
 
 </project>

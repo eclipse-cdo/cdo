@@ -19,8 +19,7 @@
 		<apitooling.compare baseline="${api.baseline}"
 		                    profile="${api.profile}"
 		                    report="${api.report}"
-		                    includelist="${script.dir}/api_reports.includelist"
-		                    excludelist="${script.dir}/api_reports.excludelist" />
+		                    includelist="${script.dir}/api_reports.includelist" />
 	</target>
 
 </project>

@@ -11,10 +11,11 @@
 -->
 <project name="API Reports" default="main">
 
+	<property name="api.baseline" location="/opt/public/modeling/emf/cdo/api_baseline" />
+
 	<target name="main">
-		<apitooling.compare baseline="/opt/public/modeling/emf/cdo/api_baseline"
-		                    profile="${api.profile}"
-		                    report="${api.report}" />
+		<echo message="Comparing profile ${api.profile} to baseline ${api.baseline}" />
+		<apitooling.compare baseline="${api.baseline}" profile="${api.profile}" report="${api.report}" />
 	</target>
 
 </project>

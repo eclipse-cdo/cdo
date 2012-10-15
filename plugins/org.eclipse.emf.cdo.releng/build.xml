@@ -666,7 +666,7 @@
 		<buckminster command="perform">
 			<cmdargs>
 				<arg value="-D" />
-				<arg value="api.profile=${temp.dropins}" />
+				<arg value="api.profile=${temp.dropins}/eclipse" />
 				<arg value="-D" />
 				<arg value="api.report=${hudson.WORKSPACE}" />
 				<arg value="org.eclipse.emf.cdo.releng#generate.api.reports" />

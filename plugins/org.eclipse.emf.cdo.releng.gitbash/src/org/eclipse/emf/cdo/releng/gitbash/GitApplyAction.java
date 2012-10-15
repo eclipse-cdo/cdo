@@ -179,7 +179,6 @@ public class GitApplyAction extends BaseSelectionListenerAction implements IObje
       }
     }
 
-    @SuppressWarnings("resource")
     private File savePatch(IStorage storage) throws CoreException
     {
       InputStream in = null;

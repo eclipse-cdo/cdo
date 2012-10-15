@@ -543,7 +543,8 @@
 		<antcall target="-generate.index" />
 		<antcall target="-generate.bookmarks" />
 		<antcall target="-generate.dropins" />
-		<antcall target="-generate.api" /> <!-- Must come after generate.dropins -->
+		<antcall target="-generate.api" />
+		<!-- Must come after generate.dropins -->
 
 		<if>
 			<equals arg1="${hudson.GENERATE_PRODUCTS}" arg2="true" />

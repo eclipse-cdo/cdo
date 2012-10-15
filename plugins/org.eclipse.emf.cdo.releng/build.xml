@@ -622,16 +622,16 @@
 				<include name="**/*" />
 			</fileset>
 		</delete>
-		<mkdir dir="${temp.dropins}/eclipse" />
+		<mkdir dir="${temp.dropins}" />
 
-		<copy todir="${temp.dropins}/eclipse" failonerror="true">
+		<copy todir="${temp.dropins}" failonerror="true">
 			<fileset dir="${git.clone}/features/org.eclipse.emf.cdo.license-feature/rootfiles">
 				<include name="epl-v10.html" />
 				<include name="notice.html" />
 			</fileset>
 		</copy>
 
-		<copy todir="${temp.dropins}/eclipse/features" flatten="true">
+		<copy todir="${temp.dropins}/features" flatten="true">
 			<fileset dir="${buckminster.output.root}">
 				<include name="*-eclipse.feature/jar/*" />
 				<include name="*-eclipse.feature/source.jar/*" />
@@ -641,7 +641,7 @@
 			</fileset>
 		</copy>
 
-		<copy todir="${temp.dropins}/eclipse/plugins" flatten="true">
+		<copy todir="${temp.dropins}/plugins" flatten="true">
 			<fileset dir="${buckminster.output.root}">
 				<include name="*-osgi.bundle/jar/*" />
 				<include name="*-osgi.bundle/source.jar/*" />
@@ -649,7 +649,7 @@
 		</copy>
 
 		<zip destfile="${zips}/emf-cdo-${build.qualifier}-Dropins.zip">
-			<fileset dir="${temp.dropins}/eclipse">
+			<fileset dir="${temp.dropins}">
 				<include name="**/*" />
 			</fileset>
 		</zip>
@@ -663,10 +663,15 @@
 
 	<target name="-generate.api">
 		<echo message="Generating API reports" />
+		<copy todir="${temp.dropins}/plugins" overwrite="false">
+			<fileset dir="${tp}/plugins">
+				<include name="**" />
+			</fileset>
+		</copy>
 		<buckminster command="perform">
 			<cmdargs>
 				<arg value="-D" />
-				<arg value="api.profile=${temp.dropins}/eclipse" />
+				<arg value="api.profile=${temp.dropins}" />
 				<arg value="-D" />
 				<arg value="api.report=${hudson.WORKSPACE}" />
 				<arg value="org.eclipse.emf.cdo.releng#generate.api.reports" />

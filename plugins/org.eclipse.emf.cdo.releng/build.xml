@@ -543,8 +543,9 @@
 		<antcall target="-generate.index" />
 		<antcall target="-generate.bookmarks" />
 		<antcall target="-generate.dropins" />
-		<antcall target="-generate.api" />
+
 		<!-- Must come after generate.dropins -->
+		<antcall target="-generate.api" />
 
 		<if>
 			<equals arg1="${hudson.GENERATE_PRODUCTS}" arg2="true" />
@@ -621,16 +622,16 @@
 				<include name="**/*" />
 			</fileset>
 		</delete>
-		<mkdir dir="${temp.dropins}" />
+		<mkdir dir="${temp.dropins}/eclipse" />
 
-		<copy todir="${temp.dropins}" failonerror="true">
+		<copy todir="${temp.dropins}/eclipse" failonerror="true">
 			<fileset dir="${git.clone}/features/org.eclipse.emf.cdo.license-feature/rootfiles">
 				<include name="epl-v10.html" />
 				<include name="notice.html" />
 			</fileset>
 		</copy>
 
-		<copy todir="${temp.dropins}/features" flatten="true">
+		<copy todir="${temp.dropins}/eclipse/features" flatten="true">
 			<fileset dir="${buckminster.output.root}">
 				<include name="*-eclipse.feature/jar/*" />
 				<include name="*-eclipse.feature/source.jar/*" />
@@ -640,7 +641,7 @@
 			</fileset>
 		</copy>
 
-		<copy todir="${temp.dropins}/plugins" flatten="true">
+		<copy todir="${temp.dropins}/eclipse/plugins" flatten="true">
 			<fileset dir="${buckminster.output.root}">
 				<include name="*-osgi.bundle/jar/*" />
 				<include name="*-osgi.bundle/source.jar/*" />
@@ -648,7 +649,7 @@
 		</copy>
 
 		<zip destfile="${zips}/emf-cdo-${build.qualifier}-Dropins.zip">
-			<fileset dir="${temp.dropins}">
+			<fileset dir="${temp.dropins}/eclipse">
 				<include name="**/*" />
 			</fileset>
 		</zip>
@@ -665,7 +666,7 @@
 		<buckminster command="perform">
 			<cmdargs>
 				<arg value="-D" />
-				<arg value="api.profile=${zips}/emf-cdo-${build.qualifier}-Dropins.zip" />
+				<arg value="api.profile=${temp.dropins}" />
 				<arg value="-D" />
 				<arg value="api.report=${hudson.WORKSPACE}" />
 				<arg value="org.eclipse.emf.cdo.releng#generate.api.reports" />

@@ -114,11 +114,11 @@ public class Api2Html extends DefaultHandler
           {
             componentID = message.substring("The API component ".length());
             componentID = componentID.substring(0, componentID.indexOf(' '));
-            componentID = componentID.replace('_', '(') + ")";
 
             if (message.endsWith("added"))
             {
               componentChange = "The API component has been added";
+              componentID = componentID.replace('_', '(') + ")";
             }
             else if (message.endsWith("removed"))
             {
@@ -451,7 +451,7 @@ public class Api2Html extends DefaultHandler
     {
       out.print(indent + "<div class='" + getClass().getSimpleName().toLowerCase()
           + "'><a href=\"javascript:toggle('node" + id + "')\"><img src='" + (isCollapsed() ? PLUS : MINUS)
-          + "' id='img_node" + id + "'></a> ");
+          + "' id='img_node" + id + "'></a>");
       super.generate(out, "");
       out.println("</div>");
 
@@ -540,7 +540,13 @@ public class Api2Html extends DefaultHandler
     @Override
     public String getText()
     {
-      return super.getText() + "&nbsp;" + componentVersion;
+      String text = super.getText();
+      if (componentVersion != null)
+      {
+        text += "&nbsp;" + componentVersion;
+      }
+
+      return text;
     }
 
     @Override

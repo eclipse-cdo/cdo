@@ -30,6 +30,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Eike Stepper
@@ -47,6 +49,9 @@ public class Api2Html extends DefaultHandler
   private static final String PLUS = "plus.gif";
 
   private static final String MINUS = "minus.gif";
+
+  private static final Pattern VERSION_CHANGED = Pattern
+      .compile("The ([^ ]+) version has been changed for the api component ([^ ]+) \\(from version ([^ ]+) to ([^ ]+)\\)");
 
   private int lastNodeID;
 
@@ -97,31 +102,52 @@ public class Api2Html extends DefaultHandler
         String elementType = attributes.getValue("element_type");
         String kind = attributes.getValue("kind");
         String message = attributes.getValue("message");
-
-        if (componentID == null || componentID.length() == 0)
-        {
-          System.out.println("No componentID: " + message);
-          return;
-        }
-
-        if (typeName == null || typeName.length() == 0)
-        {
-          System.out.println("No typeName: " + message);
-          return;
-        }
-
         if (message.startsWith("The re-exported type"))
         {
           return;
         }
 
-        String componentVersion = "";
+        String componentChange = null;
+        if (componentID == null || componentID.length() == 0)
+        {
+          if (message.startsWith("The API component "))
+          {
+            componentID = message.substring("The API component ".length());
+            componentID = componentID.substring(0, componentID.indexOf(' '));
+            componentID = componentID.replace('_', '(') + ")";
+
+            if (message.endsWith("added"))
+            {
+              componentChange = "The API component has been added";
+            }
+            else if (message.endsWith("removed"))
+            {
+              componentChange = "The API component has been removed";
+            }
+            else
+            {
+              System.out.println("No componentID: " + message);
+              return;
+            }
+          }
+        }
+
+        if (componentChange == null && (typeName == null || typeName.length() == 0))
+        {
+          Matcher matcher = VERSION_CHANGED.matcher(message);
+          if (matcher.matches())
+          {
+            componentChange = "The " + matcher.group(1) + " version has been changed from " + matcher.group(3) + " to "
+                + matcher.group(4);
+          }
+        }
+
+        String componentVersion = null;
         int pos = componentID.indexOf('(');
         if (pos != -1)
         {
           componentVersion = componentID.substring(pos + 1, componentID.length() - 1);
           componentID = componentID.substring(0, pos);
-
         }
 
         message = remove(message, typeName + ".");
@@ -129,6 +155,7 @@ public class Api2Html extends DefaultHandler
         message = remove(message, " for interface " + typeName);
         message = remove(message, " for class " + typeName);
         message = remove(message, " to " + typeName);
+
         if (message.startsWith("The deprecation modifiers has"))
         {
           message = "The deprecation modifier has" + message.substring("The deprecation modifiers has".length());
@@ -144,19 +171,33 @@ public class Api2Html extends DefaultHandler
           components.put(componentID, component);
         }
 
-        component.setComponentVersion(componentVersion);
-
-        Type type = component.getTypes().get(typeName);
-        if (type == null)
+        if (componentVersion != null)
         {
-          type = new Type(typeName);
-          component.getTypes().put(typeName, type);
+          component.setComponentVersion(componentVersion);
         }
 
-        type.setElementType(elementType);
+        if (componentChange != null)
+        {
+          component.getChanges().add(new Change(componentChange, kind));
+        }
+        else
+        {
+          if (typeName == null || typeName.length() == 0)
+          {
+            System.out.println("No typeName: " + message);
+            return;
+          }
 
-        Change change = new Change(message, kind);
-        type.getChanges().add(change);
+          Type type = component.getTypes().get(typeName);
+          if (type == null)
+          {
+            type = new Type(typeName);
+            component.getTypes().put(typeName, type);
+          }
+
+          type.setElementType(elementType);
+          type.getChanges().add(new Change(message, kind));
+        }
       }
       catch (Exception ex)
       {
@@ -450,10 +491,17 @@ public class Api2Html extends DefaultHandler
     @Override
     protected void generateChildren(PrintStream out, String indent) throws Exception
     {
-      for (String key : sortedKeys(components))
+      if (components.isEmpty())
       {
-        Component component = components.get(key);
-        component.generate(out, indent);
+        out.println(indent + "<em>There are no " + getText().toLowerCase() + ".</em>");
+      }
+      else
+      {
+        for (String key : sortedKeys(components))
+        {
+          Component component = components.get(key);
+          component.generate(out, indent);
+        }
       }
     }
 
@@ -469,6 +517,8 @@ public class Api2Html extends DefaultHandler
    */
   private final class Component extends AbstractTreeNode
   {
+    private final List<Change> changes = new ArrayList<Change>();
+
     private final Map<String, Type> types = new HashMap<String, Type>();
 
     private Version componentVersion;
@@ -490,13 +540,18 @@ public class Api2Html extends DefaultHandler
     @Override
     public String getText()
     {
-      return super.getText() + "&nbsp;-&nbsp;" + componentVersion;
+      return super.getText() + "&nbsp;" + componentVersion;
     }
 
     @Override
     public String getIcon()
     {
       return "<img src='plugin.gif'>";
+    }
+
+    public List<Change> getChanges()
+    {
+      return changes;
     }
 
     public Map<String, Type> getTypes()
@@ -507,6 +562,11 @@ public class Api2Html extends DefaultHandler
     @Override
     protected void generateChildren(PrintStream out, String indent) throws Exception
     {
+      for (Change change : changes)
+      {
+        change.generate(out, indent);
+      }
+
       for (String key : sortedKeys(types))
       {
         Type type = types.get(key);

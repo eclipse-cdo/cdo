@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -97,6 +98,9 @@ public class Api2Html extends DefaultHandler
     {
       try
       {
+        String componentVersion = null;
+        String componentChange = null;
+
         String componentID = attributes.getValue("componentId");
         String typeName = attributes.getValue("type_name");
         String elementType = attributes.getValue("element_type");
@@ -105,9 +109,17 @@ public class Api2Html extends DefaultHandler
         if (message.startsWith("The re-exported type"))
         {
           return;
+          // int pos = message.indexOf(" from ");
+          // if (pos != -1)
+          // {
+          // message = message.substring(0, pos);
+          // }
+          //
+          // componentChange = message;
+          // message = null;
+          // typeName = null;
         }
 
-        String componentChange = null;
         if (componentID == null || componentID.length() == 0)
         {
           if (message.startsWith("The API component "))
@@ -117,12 +129,12 @@ public class Api2Html extends DefaultHandler
 
             if (message.endsWith("added"))
             {
-              componentChange = "The API component has been added";
-              componentID = componentID.replace('_', '(') + ")";
+              componentChange = "The plugin has been added";
+              componentVersion = readComponentVersion(componentID);
             }
             else if (message.endsWith("removed"))
             {
-              componentChange = "The API component has been removed";
+              componentChange = "The plugin has been removed";
             }
             else
             {
@@ -142,7 +154,6 @@ public class Api2Html extends DefaultHandler
           }
         }
 
-        String componentVersion = null;
         int pos = componentID.indexOf('(');
         if (pos != -1)
         {
@@ -156,7 +167,7 @@ public class Api2Html extends DefaultHandler
         message = remove(message, " for class " + typeName);
         message = remove(message, " to " + typeName);
 
-        if (message.startsWith("The deprecation modifiers has"))
+        if (message != null && message.startsWith("The deprecation modifiers has"))
         {
           message = "The deprecation modifier has" + message.substring("The deprecation modifiers has".length());
         }
@@ -203,6 +214,26 @@ public class Api2Html extends DefaultHandler
       {
         ex.printStackTrace();
       }
+    }
+  }
+
+  private String readComponentVersion(String componentID) throws Exception
+  {
+    File plugin = new File(pluginsFolder, componentID);
+    File metaInf = new File(plugin, "META-INF");
+    File manifestFile = new File(metaInf, "MANIFEST.MF");
+
+    FileInputStream in = new FileInputStream(manifestFile);
+
+    try
+    {
+      Manifest manifest = new Manifest(in);
+      java.util.jar.Attributes attributes = manifest.getMainAttributes();
+      return attributes.getValue("Bundle-Version");
+    }
+    finally
+    {
+      in.close();
     }
   }
 
@@ -311,10 +342,13 @@ public class Api2Html extends DefaultHandler
 
   private String remove(String string, String remove)
   {
-    int pos = string.indexOf(remove);
-    if (pos != -1)
+    if (string != null)
     {
-      string = string.substring(0, pos) + string.substring(pos + remove.length());
+      int pos = string.indexOf(remove);
+      if (pos != -1)
+      {
+        string = string.substring(0, pos) + string.substring(pos + remove.length());
+      }
     }
 
     return string;

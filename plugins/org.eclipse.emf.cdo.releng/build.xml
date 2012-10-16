@@ -686,7 +686,7 @@
 			<arg value="${hudson.WORKSPACE}" />
 			<arg value="${build.qualifier}" />
 			<arg value="${git.clone}/plugins" />
-			<arg value="${tp}" />
+			<arg value="${tp}/plugins" />
 		</java>
 		<copy file="${releng}/hudson/api.css" todir="${hudson.WORKSPACE}" overwrite="true" />
 	</target>

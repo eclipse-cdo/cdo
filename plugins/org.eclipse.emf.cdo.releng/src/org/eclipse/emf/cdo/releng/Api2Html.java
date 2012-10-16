@@ -165,7 +165,7 @@ public class Api2Html extends DefaultHandler
     }
   }
 
-  public String determineElementType(String typeName) throws MalformedURLException
+  private String determineElementType(String typeName) throws MalformedURLException
   {
     if (classLoader == null)
     {
@@ -214,7 +214,7 @@ public class Api2Html extends DefaultHandler
       }
     }
 
-    for (File plugin : new File(tpFolder, "plugins").listFiles())
+    for (File plugin : tpFolder.listFiles())
     {
       urls.add(plugin.toURI().toURL());
     }
@@ -261,25 +261,14 @@ public class Api2Html extends DefaultHandler
     }
   }
 
-  public static void main(String[] args) throws Exception
-  {
-    if (args.length == 0)
-    {
-      // Just for local testing!
-      args = new String[] { "/develop", "R20120918-0947", "/develop/git/cdo/plugins", "/develop/ws/cdo/.buckminster/tp" };
-    }
-
-    new Api2Html(new File(args[0]), args[1], new File(args[2]), new File(args[3]));
-  }
-
-  private static List<String> sortedKeys(Map<String, ?> map)
+  private List<String> sortedKeys(Map<String, ?> map)
   {
     List<String> list = new ArrayList<String>(map.keySet());
     Collections.sort(list);
     return list;
   }
 
-  private static String remove(String string, String remove)
+  private String remove(String string, String remove)
   {
     int pos = string.indexOf(remove);
     if (pos != -1)
@@ -288,6 +277,18 @@ public class Api2Html extends DefaultHandler
     }
 
     return string;
+  }
+
+  public static void main(String[] args) throws Exception
+  {
+    if (args.length == 0)
+    {
+      // Just for local testing!
+      args = new String[] { "/develop", "R20120918-0947", "/develop/git/cdo/plugins",
+          "/develop/ws/cdo/.buckminster/tp/plugins" };
+    }
+
+    new Api2Html(new File(args[0]), args[1], new File(args[2]), new File(args[3]));
   }
 
   /**

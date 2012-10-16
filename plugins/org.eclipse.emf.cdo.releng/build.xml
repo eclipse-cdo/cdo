@@ -682,7 +682,11 @@
 			</fileset>
 		</delete>
 		<move file="${hudson.WORKSPACE}/compare.xml" tofile="${hudson.WORKSPACE}/api.xml" verbose="false" />
-		<java classpath="${releng}/bin/" classname="org.eclipse.emf.cdo.releng.Api2Html">
+		<java classname="org.eclipse.emf.cdo.releng.Api2Html">
+			<classpath>
+				<pathelement location="${releng}/bin/" />
+				<pathelement location="/opt/public/common/apache-ant-1.7.1/lib/xercesImpl.jar" />
+			</classpath>
 			<arg value="${hudson.WORKSPACE}" />
 			<arg value="${build.qualifier}" />
 			<arg value="${git.clone}/plugins" />

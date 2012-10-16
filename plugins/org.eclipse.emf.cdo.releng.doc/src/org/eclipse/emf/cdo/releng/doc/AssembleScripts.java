@@ -57,7 +57,6 @@ import java.util.regex.Pattern;
  */
 public class AssembleScripts
 {
-
   public static final boolean INCLUDE_SPI = true;
 
   private static final String EXPORT_PACKAGE = "Export-Package";

@@ -682,7 +682,13 @@
 			</fileset>
 		</delete>
 		<move file="${hudson.WORKSPACE}/compare.xml" tofile="${hudson.WORKSPACE}/api.xml" verbose="false" />
-		<xslt style="xsl/api2html.xsl" in="${hudson.WORKSPACE}/api.xml" out="${hudson.WORKSPACE}/api.html" />
+		<java classpath="${releng}/bin/" classname="org.eclipse.emf.cdo.releng.Api2Html">
+			<arg value="${hudson.WORKSPACE}" />
+			<arg value="${build.qualifier}" />
+			<arg value="${git.clone}/plugins" />
+			<arg value="${tp}" />
+		</java>
+		<copy file="${releng}/hudson/api.css" todir="${hudson.WORKSPACE}" overwrite="true" />
 	</target>
 
 	<!-- ================= -->

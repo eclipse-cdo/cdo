@@ -428,6 +428,12 @@
 		<echo message="Importing projects into ${ws}" />
 		<echo message="Importing binaries into ${tp}" />
 		<mkdir dir="${tp}" />
+		<buckminster command="setpref">
+			<cmdargs>
+				<arg value="maxParallelResolutions" />
+				<arg value="1" />
+			</cmdargs>
+		</buckminster>
 		<buckminster command="import">
 			<cmdargs>
 				<arg value="-B" />

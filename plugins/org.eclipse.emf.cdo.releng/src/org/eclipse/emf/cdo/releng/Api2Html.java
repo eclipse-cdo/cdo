@@ -290,6 +290,10 @@ public class Api2Html extends DefaultHandler
           urls.add(bin.toURI().toURL());
         }
       }
+      else if (plugin.getName().endsWith(".jar"))
+      {
+        urls.add(plugin.toURI().toURL());
+      }
     }
 
     for (File plugin : tpFolder.listFiles())

@@ -37,6 +37,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
  * @apiviz.has {@link CDOLock} oneway - - writeLock
  * @apiviz.has {@link CDOLock} oneway - - writeOption
  * @apiviz.uses {@link CDONotification} - - delivers
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOObject extends EObject, CDOWithID
 {

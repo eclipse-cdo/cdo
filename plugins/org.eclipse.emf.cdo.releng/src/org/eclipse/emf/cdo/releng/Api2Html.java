@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.jar.Manifest;
 import java.util.regex.Matcher;
@@ -51,6 +52,8 @@ public class Api2Html extends DefaultHandler
 
   private static final String MINUS = "minus.gif";
 
+  private static final String NO_DOCS = "";
+
   private static final Pattern VERSION_CHANGED = Pattern
       .compile("The ([^ ]+) version has been changed for the api component ([^ ]+) \\(from version ([^ ]+) to ([^ ]+)\\)");
 
@@ -59,6 +62,8 @@ public class Api2Html extends DefaultHandler
   private Category breaking = new Category("Breaking Changes");
 
   private Category compatible = new Category("Compatible Changes");
+
+  private Map<String, String> docProjects = new HashMap<String, String>();
 
   private ClassLoader classLoader;
 
@@ -202,7 +207,7 @@ public class Api2Html extends DefaultHandler
           Type type = component.getTypes().get(typeName);
           if (type == null)
           {
-            type = new Type(typeName);
+            type = new Type(component, typeName);
             component.getTypes().put(typeName, type);
           }
 
@@ -222,7 +227,6 @@ public class Api2Html extends DefaultHandler
     File plugin = new File(pluginsFolder, componentID);
     File metaInf = new File(plugin, "META-INF");
     File manifestFile = new File(metaInf, "MANIFEST.MF");
-
     FileInputStream in = new FileInputStream(manifestFile);
 
     try
@@ -237,38 +241,40 @@ public class Api2Html extends DefaultHandler
     }
   }
 
-  private String determineElementType(String typeName) throws MalformedURLException
+  private String getDocProject(String componentID) throws Exception
   {
-    if (classLoader == null)
+    String docProject = docProjects.get(componentID);
+    if (docProject == NO_DOCS)
     {
-      classLoader = createClassLoader();
-    }
-
-    try
-    {
-      Class<?> c = classLoader.loadClass(typeName);
-      if (c.isAnnotation())
-      {
-        return ANNOTATION;
-      }
-
-      if (c.isEnum())
-      {
-        return ENUM;
-      }
-
-      if (c.isInterface())
-      {
-        return INTERFACE;
-      }
-    }
-    catch (Throwable ex)
-    {
-      System.err.println(ex.getMessage());
       return null;
     }
 
-    return CLASS;
+    if (docProject == null)
+    {
+      docProject = NO_DOCS;
+
+      File plugin = new File(pluginsFolder, componentID);
+      if (plugin.isDirectory())
+      {
+        File buildProperties = new File(plugin, "build.properties");
+        FileInputStream in = new FileInputStream(buildProperties);
+
+        try
+        {
+          Properties properties = new Properties();
+          properties.load(in);
+
+          docProject = properties.getProperty("doc.project", NO_DOCS);
+        }
+        finally
+        {
+          in.close();
+        }
+      }
+    }
+
+    docProjects.put(componentID, docProject);
+    return docProject;
   }
 
   private ClassLoader createClassLoader() throws MalformedURLException
@@ -461,7 +467,7 @@ public class Api2Html extends DefaultHandler
           + (href != null ? "</a>" : ""));
     }
 
-    protected String getHref()
+    protected String getHref() throws Exception
     {
       return null;
     }
@@ -557,9 +563,14 @@ public class Api2Html extends DefaultHandler
 
     private Version componentVersion;
 
-    public Component(String text)
+    public Component(String componentID)
     {
-      super(text);
+      super(componentID);
+    }
+
+    public String getComponentID()
+    {
+      return super.getText();
     }
 
     public void setComponentVersion(String componentVersion)
@@ -574,13 +585,13 @@ public class Api2Html extends DefaultHandler
     @Override
     public String getText()
     {
-      String text = super.getText();
+      String componentID = getComponentID();
       if (componentVersion != null)
       {
-        text += "&nbsp;" + componentVersion;
+        componentID += "&nbsp;" + componentVersion;
       }
 
-      return text;
+      return componentID;
     }
 
     @Override
@@ -613,6 +624,20 @@ public class Api2Html extends DefaultHandler
         type.generate(out, indent);
       }
     }
+
+    @Override
+    protected String getHref() throws Exception
+    {
+      String componentID = getComponentID();
+      String docProject = getDocProject(componentID);
+      if (docProject == null)
+      {
+        return null;
+      }
+
+      return "http://download.eclipse.org/modeling/emf/cdo/drops/" + buildQualifier + "/help/" + docProject
+          + "/javadoc/" + componentID.replace('.', '/') + "/package-summary.html";
+    }
   }
 
   /**
@@ -622,17 +647,26 @@ public class Api2Html extends DefaultHandler
   {
     private final List<Change> changes = new ArrayList<Change>();
 
+    private final Component component;
+
     private String elementType;
 
-    public Type(String text)
+    public Type(Component component, String text)
     {
       super(text);
+      this.component = component;
+    }
+
+    public String getTypeName()
+    {
+      return super.getText();
     }
 
     @Override
     public String getText()
     {
-      return super.getText().replace('$', '.');
+      String typeName = getTypeName();
+      return typeName.replace('$', '.');
     }
 
     @Override
@@ -677,7 +711,7 @@ public class Api2Html extends DefaultHandler
     {
       if (elementType == null)
       {
-        String typeName = super.getText();
+        String typeName = getTypeName();
         elementType = determineElementType(typeName);
       }
 
@@ -694,10 +728,51 @@ public class Api2Html extends DefaultHandler
     }
 
     @Override
-    protected String getHref()
+    protected String getHref() throws Exception
     {
-      return "http://download.eclipse.org/modeling/emf/cdo/drops/" + buildQualifier
-          + "/help/org.eclipse.emf.cdo.doc/javadoc/" + super.getText().replace('.', '/').replace('$', '.') + ".html";
+      String componentID = component.getComponentID();
+      String docProject = getDocProject(componentID);
+      if (docProject == null)
+      {
+        return null;
+      }
+
+      return "http://download.eclipse.org/modeling/emf/cdo/drops/" + buildQualifier + "/help/" + docProject
+          + "/javadoc/" + getTypeName().replace('.', '/').replace('$', '.') + ".html";
+    }
+
+    private String determineElementType(String typeName) throws MalformedURLException
+    {
+      if (classLoader == null)
+      {
+        classLoader = createClassLoader();
+      }
+
+      try
+      {
+        Class<?> c = classLoader.loadClass(typeName);
+        if (c.isAnnotation())
+        {
+          return ANNOTATION;
+        }
+
+        if (c.isEnum())
+        {
+          return ENUM;
+        }
+
+        if (c.isInterface())
+        {
+          return INTERFACE;
+        }
+      }
+      catch (Throwable ex)
+      {
+        ex.printStackTrace();
+        return null;
+      }
+
+      return CLASS;
     }
   }
 

@@ -19,7 +19,8 @@
 		<apitooling.compare baseline="${api.baseline}"
 		                    profile="${api.profile}"
 		                    report="${api.report}"
-		                    includelist="${script.dir}/api_reports.includelist" />
+		                    includelist="${script.dir}/api_reports.includelist"
+		                    debug="true" />
 	</target>
 
 </project>

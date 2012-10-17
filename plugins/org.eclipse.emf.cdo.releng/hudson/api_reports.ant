@@ -19,7 +19,6 @@
 		<apitooling.compare baseline="${api.baseline}"
 		                    profile="${api.profile}"
 		                    report="${api.report}"
-		                    visibility="ALL"
 		                    debug="true" />
 	</target>
 

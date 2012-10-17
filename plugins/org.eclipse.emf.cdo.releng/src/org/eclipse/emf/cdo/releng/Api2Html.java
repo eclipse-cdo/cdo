@@ -226,18 +226,23 @@ public class Api2Html extends DefaultHandler
     File plugin = new File(pluginsFolder, componentID);
     File metaInf = new File(plugin, "META-INF");
     File manifestFile = new File(metaInf, "MANIFEST.MF");
-    FileInputStream in = new FileInputStream(manifestFile);
+    if (manifestFile.isFile())
+    {
+      FileInputStream in = new FileInputStream(manifestFile);
 
-    try
-    {
-      Manifest manifest = new Manifest(in);
-      java.util.jar.Attributes attributes = manifest.getMainAttributes();
-      return attributes.getValue("Bundle-Version");
+      try
+      {
+        Manifest manifest = new Manifest(in);
+        java.util.jar.Attributes attributes = manifest.getMainAttributes();
+        return attributes.getValue("Bundle-Version");
+      }
+      finally
+      {
+        in.close();
+      }
     }
-    finally
-    {
-      in.close();
-    }
+
+    return null;
   }
 
   private String getDocProject(String componentID) throws Exception

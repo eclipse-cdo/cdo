@@ -59,9 +59,11 @@ public class Api2Html extends DefaultHandler
 
   private int lastNodeID;
 
-  private Category breaking = new Category("Breaking Changes");
+  private Category breaking = new Category("Breaking API Changes");
 
-  private Category compatible = new Category("Compatible Changes");
+  private Category compatible = new Category("Compatible API Changes");
+
+  private Category reexports = new Category("Re-Exported API Changes");
 
   private Map<String, String> docProjects = new HashMap<String, String>();
 
@@ -111,19 +113,6 @@ public class Api2Html extends DefaultHandler
         String elementType = attributes.getValue("element_type");
         String kind = attributes.getValue("kind");
         String message = attributes.getValue("message");
-        if (message.startsWith("The re-exported type"))
-        {
-          return;
-          // int pos = message.indexOf(" from ");
-          // if (pos != -1)
-          // {
-          // message = message.substring(0, pos);
-          // }
-          //
-          // componentChange = message;
-          // message = null;
-          // typeName = null;
-        }
 
         if (componentID == null || componentID.length() == 0)
         {
@@ -177,7 +166,17 @@ public class Api2Html extends DefaultHandler
           message = "The deprecation modifier has" + message.substring("The deprecation modifiers has".length());
         }
 
-        Category category = "true".equals(attributes.getValue("compatible")) ? compatible : breaking;
+        Category category;
+        if (message.startsWith("The re-exported type"))
+        {
+          componentChange = message;
+          category = reexports;
+        }
+        else
+        {
+          category = "true".equals(attributes.getValue("compatible")) ? compatible : breaking;
+        }
+
         Map<String, Component> components = category.getComponents();
 
         Component component = components.get(componentID);
@@ -333,6 +332,8 @@ public class Api2Html extends DefaultHandler
       breaking.generate(out, "");
       out.println("<p/>");
       compatible.generate(out, "");
+      out.println("<p/>");
+      reexports.generate(out, "");
 
       out.println("</body>");
       out.println("</html>");
@@ -772,8 +773,7 @@ public class Api2Html extends DefaultHandler
       }
       catch (Throwable ex)
       {
-        ex.printStackTrace();
-        return null;
+        //$FALL-THROUGH$
       }
 
       return CLASS;

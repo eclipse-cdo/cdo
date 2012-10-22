@@ -582,4 +582,9 @@ public class HibernateStore extends Store implements IHibernateStore
 
     return systemInformation;
   }
+
+  public String getMappingXml()
+  {
+    return mappingXml;
+  }
 }

@@ -10,14 +10,12 @@
  */
 package org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle;
 
-import org.eclipse.emf.cdo.server.hibernate.teneo.CDOMappingGenerator;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.IOUtil;
-
-import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.osgi.framework.console.CommandInterpreter;
 import org.eclipse.osgi.framework.console.CommandProvider;
@@ -26,7 +24,6 @@ import org.osgi.framework.BundleContext;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.Properties;
 
 /**
  * Provides a command to export the hbm file directly from the osgi prompt.
@@ -89,17 +86,13 @@ public class HibernateCommandProvider implements CommandProvider
     String syntax = "Syntax: hibernate mapping <repository-name> <export-file>";
     InternalRepository repository = getRepository(interpreter, syntax);
     String exportFile = nextArgument(interpreter, syntax);
+    final HibernateStore store = (HibernateStore)repository.getStore();
     OutputStream out = null;
 
     try
     {
+      final String mapping = store.getMappingXml();
       out = new FileOutputStream(exportFile);
-      Properties props = new Properties();
-      props.putAll(repository.getProperties());
-      final EPackage[] ePackages = repository.getPackageRegistry().values().toArray(new EPackage[0]);
-
-      final CDOMappingGenerator mappingGenerator = new CDOMappingGenerator();
-      final String mapping = mappingGenerator.generateMapping(ePackages, props);
       out.write(mapping.getBytes());
       interpreter.println("Hibernate mapping exported");
     }

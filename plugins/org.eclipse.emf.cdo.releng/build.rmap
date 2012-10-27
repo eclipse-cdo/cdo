@@ -119,6 +119,11 @@
 			<rm:uri format="http://download.eclipse.org/egit/updates-nightly"/>
 		</rm:provider>
 
+		<!-- BUCKMINSTER -->
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/tools/buckminster/headless-3.8"/>
+		</rm:provider>
+
 		<!-- NEBULA -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.eclipse.org/technology/nebula/snapshot"/>

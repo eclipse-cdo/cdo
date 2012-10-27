@@ -143,6 +143,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.cdo.releng.apireports"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.releng.manifests"
          version="0.0.0"/>
 

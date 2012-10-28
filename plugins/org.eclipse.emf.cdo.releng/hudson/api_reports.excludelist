@@ -1,7 +1,0 @@
- R:.*\.releng.*
- R:.*\.doc.*
- R:.*\.sdk.*
- R:.*\.examples.*
- R:.*\.tests.*
- R:.*\.buddies.*
- R:.*\.jms.*

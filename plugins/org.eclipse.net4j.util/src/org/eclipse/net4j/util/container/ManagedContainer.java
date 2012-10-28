@@ -583,13 +583,8 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     }
 
     LifecycleUtil.deactivate(factoryRegistry);
-    factoryRegistry = null;
-
     LifecycleUtil.deactivate(postProcessors);
-    postProcessors = null;
-
     elementRegistry.clear();
-    elementRegistry = null;
     super.doDeactivate();
   }
 

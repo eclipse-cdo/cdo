@@ -667,7 +667,6 @@
 
 	<target name="-generate.api">
 		<echo message="Generating API reports" />
-		<!--
 		<buckminster command="perform">
 			<cmdargs>
 				<arg value="-D" />
@@ -686,7 +685,6 @@
 			<arg value="${tp}/plugins" />
 		</java>
 		<copy file="${releng}/hudson/api.css" todir="${hudson.WORKSPACE}" overwrite="true" />
-		-->
 	</target>
 
 	<!-- ================= -->

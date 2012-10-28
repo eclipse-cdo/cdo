@@ -1,4 +1,4 @@
 # Debugging and tracing options
 
-org.eclipse.net4j.db.mysql/debug = true
-org.eclipse.net4j.db.mysql/debug.sql = true
+org.eclipse.net4j.db.oracle/debug = true
+org.eclipse.net4j.db.oracle/debug.sql = true

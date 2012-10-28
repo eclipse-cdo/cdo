@@ -35,7 +35,7 @@ public class OracleSQLAdapter extends DBAdapter
 
   public static final String NAME = "oracle"; //$NON-NLS-1$
 
-  public static final String VERSION = "10.2.1"; //$NON-NLS-1$
+  public static final String VERSION = "11.1.0.7"; //$NON-NLS-1$
 
   public OracleSQLAdapter()
   {
@@ -70,8 +70,7 @@ public class OracleSQLAdapter extends DBAdapter
       builder.append("UNIQUE "); //$NON-NLS-1$
     }
 
-    builder.append("INDEX "); //$NON-NLS-1$
-    builder.append("I"); //$NON-NLS-1$
+    builder.append("INDEX I"); //$NON-NLS-1$
     builder.append(System.currentTimeMillis());
 
     try

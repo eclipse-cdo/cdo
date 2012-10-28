@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Oracle DB Adapter
+Bundle-SymbolicName: org.eclipse.net4j.db.oracle;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: org.eclipse.net4j.db;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
+Import-Package: oracle.jdbc;version="[11.0.0,12.0.0)",
+ oracle.jdbc.driver;version="[11.0.0,12.0.0)",
+ oracle.jdbc.pool;version="[11.0.0,12.0.0)",
+ org.osgi.framework;version="[1.0.0,2.0.0)"
+Bundle-ActivationPolicy: lazy
+Eclipse-RegisterBuddy: org.eclipse.net4j.db
+Export-Package: org.eclipse.net4j.db.oracle;version="1.0.0",
+ org.eclipse.net4j.db.oracle.internal.bundle;version="1.0.0";x-internal:=true
+Bundle-ClassPath: .
+Bundle-Activator: org.eclipse.net4j.db.oracle.internal.bundle.OM$Activator

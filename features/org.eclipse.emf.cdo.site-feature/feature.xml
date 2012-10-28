@@ -51,6 +51,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.net4j.db.oracle"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.net4j.db.postgresql"
          version="0.0.0"/>
 

@@ -31,11 +31,11 @@
 		<cs:dependency name="org.hsqldb" componentType="eclipse.feature"/>
 		<cs:dependency name="org.postgresql" componentType="eclipse.feature"/>
 		<cs:dependency name="com.db4o" componentType="eclipse.feature"/>
-
 		<cs:dependency name="org.hibernate" componentType="eclipse.feature"/>
 		<cs:dependency name="org.dom4j" componentType="eclipse.feature"/>
 		<cs:dependency name="javax.persistence" componentType="eclipse.feature"/>
 		<cs:dependency name="javax.annotation" componentType="osgi.bundle"/>
+		<cs:dependency name="oracle.database.driver.jdk50" componentType="osgi.bundle"/>
 	</cs:dependencies>
 
 	<cs:actions>

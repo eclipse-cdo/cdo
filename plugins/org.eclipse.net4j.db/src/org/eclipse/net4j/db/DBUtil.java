@@ -561,7 +561,8 @@ public final class DBUtil
         {
           throw new DBException("Result " + i + " is not successful: " + result);
         }
-        else if (checkExactlyOne && result != 1)
+
+        if (checkExactlyOne && result != 1)
         {
           throw new DBException("Result " + i + " did not affect exactly one row: " + result);
         }

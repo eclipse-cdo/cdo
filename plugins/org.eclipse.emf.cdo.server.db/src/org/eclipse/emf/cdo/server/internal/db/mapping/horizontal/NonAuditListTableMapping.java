@@ -1037,6 +1037,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
             operationIt.remove();
           }
         }
+
         if (operationCounter > 0)
         {
           DBUtil.executeBatch(shiftDownStmt, operationCounter, false);

@@ -27,6 +27,7 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.pde.api.tools.internal.ApiBaselineManager;
 import org.eclipse.pde.api.tools.internal.comparator.DeltaXmlVisitor;
@@ -64,31 +65,18 @@ public class ApiReportsActor extends AbstractActor
   {
   }
 
-  public static void updateMonitor(IProgressMonitor monitor, int work) throws OperationCanceledException
-  {
-    if (monitor == null)
-    {
-      return;
-    }
-    if (monitor.isCanceled())
-    {
-      throw new OperationCanceledException();
-    }
-    monitor.worked(work);
-  }
-
-  public static void updateMonitor(IProgressMonitor monitor) throws OperationCanceledException
-  {
-    updateMonitor(monitor, 0);
-  }
-
   @Override
   protected IStatus internalPerform(IActionContext context, IProgressMonitor monitor) throws CoreException
   {
-    Map<String, ? extends Object> properties = context.getProperties();
-    String baselineName = (String)properties.get("baseline.name");
-    String reportFileName = (String)properties.get("reportfile.name");
-    String exclusionPatterns = (String)properties.get("exclusion.patterns");
+    Map<String, ? extends Object> properties = context.getAction().getActorProperties();
+    String baselineName = (String)properties.get("baseline");
+    if (baselineName == null || baselineName.length() == 0)
+    {
+      return new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Baseline name not specified");
+    }
+
+    String exclusionPatterns = (String)properties.get("exclude");
+    String reportFileName = System.getProperty("api.report", new File("api.xml").getAbsolutePath());
 
     SubMonitor progress = SubMonitor.convert(monitor, 100);
     progress.subTask("Collecting elements to compare");
@@ -185,20 +173,32 @@ public class ApiReportsActor extends AbstractActor
 
   private List<Object> collectProjects(String exclusionPatterns)
   {
-    Pattern[] patterns = new Pattern[exclusionPatterns.length()];
-    String[] split = exclusionPatterns.split(",");
-    for (int i = 0; i < split.length; i++)
+    Pattern[] patterns = new Pattern[0];
+    if (exclusionPatterns != null)
     {
-      patterns[i] = Pattern.compile(split[i]);
+      String[] split = exclusionPatterns.split(",");
+      patterns = new Pattern[split.length];
+      for (int i = 0; i < split.length; i++)
+      {
+        Pattern pattern = Pattern.compile(split[i]);
+        patterns[i] = pattern;
+      }
     }
 
     List<Object> result = new ArrayList<Object>();
     for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects())
     {
-      String name = project.getName();
-      if (!isExcluded(patterns, name))
+      if (project.isAccessible())
       {
-        result.add(project);
+        String name = project.getName();
+        if (!isExcluded(patterns, name))
+        {
+          IJavaProject javaProject = JavaCore.create(project);
+          if (javaProject != null)
+          {
+            result.add(javaProject);
+          }
+        }
       }
     }
 
@@ -395,5 +395,25 @@ public class ApiReportsActor extends AbstractActor
         ApiPlugin.log(e);
       }
     }
+  }
+
+  private static void updateMonitor(IProgressMonitor monitor, int work) throws OperationCanceledException
+  {
+    if (monitor == null)
+    {
+      return;
+    }
+
+    if (monitor.isCanceled())
+    {
+      throw new OperationCanceledException();
+    }
+
+    monitor.worked(work);
+  }
+
+  private static void updateMonitor(IProgressMonitor monitor) throws OperationCanceledException
+  {
+    updateMonitor(monitor, 0);
   }
 }

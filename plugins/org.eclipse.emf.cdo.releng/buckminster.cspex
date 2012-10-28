@@ -48,10 +48,10 @@
 	</cs:dependencies>
 
 	<cs:actions>
-		<cs:public name="generate.api.reports" actor="ant" always="true">
+		<cs:public name="generate.api.reports" actor="apireports" always="true">
 			<cs:actorProperties>
-				<cs:property key="buildFile" value="${releng}/hudson/api_reports.ant"/>
-				<cs:property key="targets" value="main"/>
+				<cs:property key="baseline" value="CDO Baseline"/>
+				<cs:property key="exclude" value=".*\.doc.*,.*\.tests.*,.*\.releng.*,.*\.examples.*,.*\.jms.*,.*\.buddies.*,.*\.gastro.*"/>
 			</cs:actorProperties>
 		</cs:public>
 	</cs:actions>

@@ -667,26 +667,14 @@
 
 	<target name="-generate.api">
 		<echo message="Generating API reports" />
-		<copy todir="${temp.dropins}/plugins" overwrite="false">
-			<fileset dir="${tp}/plugins">
-				<include name="**" />
-			</fileset>
-		</copy>
+		<!--
 		<buckminster command="perform">
 			<cmdargs>
 				<arg value="-D" />
-				<arg value="api.profile=${temp.dropins}" />
-				<arg value="-D" />
-				<arg value="api.report=${hudson.WORKSPACE}" />
+				<arg value="api.report=${hudson.WORKSPACE}/api.xml" />
 				<arg value="org.eclipse.emf.cdo.releng#generate.api.reports" />
 			</cmdargs>
 		</buckminster>
-		<delete includeemptydirs="true" quiet="true">
-			<fileset dir="${buckminster.temp.root}">
-				<include name="_dropins/**" />
-			</fileset>
-		</delete>
-		<move file="${hudson.WORKSPACE}/compare.xml" tofile="${hudson.WORKSPACE}/api.xml" verbose="false" />
 		<java classname="org.eclipse.emf.cdo.releng.Api2Html">
 			<classpath>
 				<pathelement location="${releng}/bin/" />
@@ -698,6 +686,7 @@
 			<arg value="${tp}/plugins" />
 		</java>
 		<copy file="${releng}/hudson/api.css" todir="${hudson.WORKSPACE}" overwrite="true" />
+		-->
 	</target>
 
 	<!-- ================= -->

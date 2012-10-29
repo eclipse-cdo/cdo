@@ -79,6 +79,8 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
   private String sqlUpdateContainerPart;
 
+  private String sqlDelete;
+
   private ThreadLocal<FeatureDeltaWriter> deltaWriter = new ThreadLocal<FeatureDeltaWriter>()
   {
     @Override
@@ -247,6 +249,13 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     builder.append(CDODBSchema.ATTRIBUTES_ID);
     builder.append("=? "); //$NON-NLS-1$
     sqlUpdateAffix = builder.toString();
+
+    builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
+    builder.append(getTable());
+    builder.append(" WHERE "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append("=? "); //$NON-NLS-1$
+    sqlDelete = builder.toString();
   }
 
   @Override
@@ -434,7 +443,17 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
   @Override
   protected void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp,
-      OMMonitor mon)
+      OMMonitor monitor)
+  {
+    rawDelete(accessor, id, version, branch, monitor);
+
+    AbstractHorizontalMappingStrategy mappingStrategy = (AbstractHorizontalMappingStrategy)getMappingStrategy();
+    mappingStrategy.removeObjectType(accessor, id);
+  }
+
+  @Override
+  protected void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version,
+      OMMonitor monitor)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
@@ -442,10 +461,8 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlUpdatePrefix + sqlUpdateAffix, ReuseProbability.HIGH);
-      stmt.setInt(1, -version);
-      stmt.setLong(2, timeStamp);
-      idHandler.setCDOID(stmt, 3, id);
+      stmt = statementCache.getPreparedStatement(sqlDelete, ReuseProbability.HIGH);
+      idHandler.setCDOID(stmt, 1, id);
 
       DBUtil.update(stmt, true);
     }
@@ -457,12 +474,6 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     {
       statementCache.releasePreparedStatement(stmt);
     }
-  }
-
-  @Override
-  protected void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version, OMMonitor fork)
-  {
-    // Not called because CDOWorkspace uses an auditing local repo
   }
 
   public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created,

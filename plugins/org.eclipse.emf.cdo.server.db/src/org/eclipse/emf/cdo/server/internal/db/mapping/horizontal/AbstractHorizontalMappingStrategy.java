@@ -58,7 +58,7 @@ import java.util.List;
  * <li>object type cache (table cdo_objects)
  * <li>resource query handling
  * </ul>
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  */
@@ -79,6 +79,11 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   public void putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
   {
     objectTypeMapper.putObjectType(accessor, timeStamp, id, type);
+  }
+
+  public void removeObjectType(IDBStoreAccessor accessor, CDOID id)
+  {
+    objectTypeMapper.removeObjectType(accessor, id);
   }
 
   public void repairAfterCrash(IDBAdapter dbAdapter, Connection connection)
@@ -388,7 +393,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   /**
    * This is an intermediate implementation. It should be changed after classmappings support a general way to implement
    * queries ...
-   * 
+   *
    * @param accessor
    *          the accessor to use.
    * @param classMapping
@@ -443,50 +448,47 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
   private CDOID getMinLocalID(Connection connection)
   {
-    IIDHandler idHandler = getStore().getIDHandler();
-    CDOID min = idHandler.getMaxCDOID();
+    final IIDHandler idHandler = getStore().getIDHandler();
+    final CDOID[] min = { idHandler.getMaxCDOID() };
 
-    // Do not call getClassMappings() at this point, as the package registry is not yet initialized!
     String dbName = getStore().getRepository().getName();
-    List<String> names = DBUtil.getAllTableNames(connection, dbName);
 
-    String prefix = "SELECT MIN(t." + CDODBSchema.ATTRIBUTES_ID + ") FROM " + dbName + "." + CDODBSchema.CDO_OBJECTS
-        + " AS o, " + dbName + ".";
+    final String prefix = "SELECT MIN(t." + CDODBSchema.ATTRIBUTES_ID + ") FROM " + dbName + "."
+        + CDODBSchema.CDO_OBJECTS + " AS o, " + dbName + ".";
 
-    String suffix = " AS t WHERE t." + CDODBSchema.ATTRIBUTES_BRANCH + "<0 AND t." + CDODBSchema.ATTRIBUTES_ID + "=o."
-        + CDODBSchema.ATTRIBUTES_ID + " AND t." + CDODBSchema.ATTRIBUTES_CREATED + "=o."
+    final String suffix = " AS t WHERE t." + CDODBSchema.ATTRIBUTES_BRANCH + "<0 AND t." + CDODBSchema.ATTRIBUTES_ID
+        + "=o." + CDODBSchema.ATTRIBUTES_ID + " AND t." + CDODBSchema.ATTRIBUTES_CREATED + "=o."
         + CDODBSchema.ATTRIBUTES_CREATED;
 
-    for (String name : names)
+    getStore().visitAllTables(connection, new IDBStore.TableVisitor()
     {
-      Statement stmt = null;
-      ResultSet resultSet = null;
-
-      try
+      public void visitTable(Connection connection, String name) throws SQLException
       {
-        stmt = connection.createStatement();
-        resultSet = stmt.executeQuery(prefix + name + suffix);
+        Statement stmt = null;
+        ResultSet resultSet = null;
 
-        if (resultSet.next())
+        try
         {
-          CDOID id = idHandler.getCDOID(resultSet, 1);
-          if (id != null && idHandler.compare(id, min) < 0)
+          stmt = connection.createStatement();
+          resultSet = stmt.executeQuery(prefix + name + suffix);
+
+          if (resultSet.next())
           {
-            min = id;
+            CDOID id = idHandler.getCDOID(resultSet, 1);
+            if (id != null && idHandler.compare(id, min[0]) < 0)
+            {
+              min[0] = id;
+            }
           }
         }
+        finally
+        {
+          DBUtil.close(resultSet);
+          DBUtil.close(stmt);
+        }
       }
-      catch (SQLException ex)
-      {
-        //$FALL-THROUGH$
-      }
-      finally
-      {
-        DBUtil.close(resultSet);
-        DBUtil.close(stmt);
-      }
-    }
+    });
 
-    return min;
+    return min[0];
   }
 }

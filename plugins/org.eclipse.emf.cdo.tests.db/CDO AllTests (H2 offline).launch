@@ -6,7 +6,7 @@
 </listAttribute>
 <intAttribute key="com.chronon.sb.browser.launcher.launchattrs.jretype" value="64"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/org.eclipse.emf.cdo.tests.db/src/org/eclipse/emf/cdo/tests/db/AllTestsDBH2Offline.java"/>
+<listEntry value="/org.eclipse.emf.cdo.tests.db/src/org/eclipse/emf/cdo/tests/db/offline/AllTestsDBH2Offline.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
@@ -19,7 +19,7 @@
 <booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="false"/>
 <stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit3"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.emf.cdo.tests.db.AllTestsDBH2Offline"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.emf.cdo.tests.db.offline.AllTestsDBH2Offline"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.emf.cdo.tests.db"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx1024m&#13;&#10;-Dorg.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser=true"/>
 </launchConfiguration>

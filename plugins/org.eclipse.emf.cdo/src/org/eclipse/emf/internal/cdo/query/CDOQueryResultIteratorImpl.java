@@ -126,6 +126,17 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
     return new QueryResultList(result);
   }
 
+  @Override
+  public T asValue()
+  {
+    if (hasNext())
+    {
+      return next();
+    }
+
+    return null;
+  }
+
   /**
    * @author Simon McDuff
    */

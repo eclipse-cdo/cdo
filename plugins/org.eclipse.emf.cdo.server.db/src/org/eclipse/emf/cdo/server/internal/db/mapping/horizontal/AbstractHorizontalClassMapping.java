@@ -62,6 +62,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -432,6 +433,12 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     }
 
     return tables;
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("{0}[{1} -> {2}]", getClass().getSimpleName(), eClass, table);
   }
 
   protected void checkDuplicateResources(IDBStoreAccessor accessor, CDORevision revision) throws IllegalStateException

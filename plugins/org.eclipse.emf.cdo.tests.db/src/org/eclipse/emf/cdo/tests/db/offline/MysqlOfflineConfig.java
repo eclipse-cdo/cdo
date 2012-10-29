@@ -8,9 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.db;
+package org.eclipse.emf.cdo.tests.db.offline;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
+import org.eclipse.emf.cdo.tests.db.MysqlConfig;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;

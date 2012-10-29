@@ -90,4 +90,9 @@ public abstract class AbstractQueryIterator<T> extends AbstractQueryResult<T>
   }
 
   public abstract List<T> asList();
+
+  /**
+   * @since 4.2
+   */
+  public abstract T asValue();
 }

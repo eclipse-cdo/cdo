@@ -69,10 +69,10 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     return this;
   }
 
-  protected <T> AbstractQueryIterator<T> createQueryResult(Class<T> classObject)
+  protected <T> AbstractQueryIterator<T> createQueryResult(Class<T> type)
   {
     CDOQueryInfoImpl queryInfo = createQueryInfo();
-    if (CDOID.class.equals(classObject))
+    if (CDOID.class.equals(type))
     {
       return new CDOQueryCDOIDIteratorImpl<T>(view, queryInfo);
     }
@@ -80,13 +80,13 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     return new CDOQueryResultIteratorImpl<T>(view, queryInfo);
   }
 
-  public <T> List<T> getResult(Class<T> classObject)
+  public <T> List<T> getResult(Class<T> type)
   {
     AbstractQueryIterator<T> queryResult = null;
 
     try
     {
-      queryResult = createQueryResult(classObject);
+      queryResult = createQueryResult(type);
       view.getSession().getSessionProtocol().query(view, queryResult);
       return queryResult.asList();
     }
@@ -102,6 +102,30 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
   public <T> List<T> getResult()
   {
     return getResult(null);
+  }
+
+  public <T> T getResultValue(Class<T> type)
+  {
+    AbstractQueryIterator<T> queryResult = null;
+
+    try
+    {
+      queryResult = createQueryResult(type);
+      view.getSession().getSessionProtocol().query(view, queryResult);
+      return queryResult.asValue();
+    }
+    finally
+    {
+      if (queryResult != null)
+      {
+        queryResult.close();
+      }
+    }
+  }
+
+  public <T> T getResultValue()
+  {
+    return getResultValue(null);
   }
 
   public <T> BlockingCloseableIterator<T> getResultAsync(Class<T> classObject)

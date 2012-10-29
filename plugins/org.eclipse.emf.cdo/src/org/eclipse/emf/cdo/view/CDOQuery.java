@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Provides access to the information that specifies a query from a {@link CDOCommonView view} to a
  * {@link CDOCommonRepository repository} and to the results of the remote query execution;
- * 
+ *
  * @author Simon McDuff
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -37,7 +37,7 @@ public interface CDOQuery extends CDOQueryInfo
 {
   /**
    * Returns the {@link CDOView view} this query was created by and is associated with.
-   * 
+   *
    * @return Never <code>null</code>.
    */
   public CDOView getView();
@@ -53,7 +53,7 @@ public interface CDOQuery extends CDOQueryInfo
 
   /**
    * Same as {@link #getResultAsync(Class)} but tries to infer the return type from the static context.
-   * 
+   *
    * @since 4.0
    */
   public <T> CloseableIterator<T> getResultAsync();
@@ -65,18 +65,28 @@ public interface CDOQuery extends CDOQueryInfo
    * server. In other words, the result list is only returned after all result elements have been received by the
    * client.
    */
-  public <T> List<T> getResult(Class<T> classObject);
+  public <T> List<T> getResult(Class<T> type);
 
   /**
    * Same as {@link #getResult(Class)} but tries to infer the return type from the static context.
-   * 
+   *
    * @since 4.0
    */
   public <T> List<T> getResult();
 
   /**
+   * @since 4.2
+   */
+  public <T> T getResultValue(Class<T> type);
+
+  /**
+   * @since 4.2
+   */
+  public <T> T getResultValue();
+
+  /**
    * Sets the maximum number of results to retrieve from the server.
-   * 
+   *
    * @param maxResults
    *          the maximum number of results to retrieve or {@link #UNLIMITED_RESULTS} for no limitation.
    * @return the same query instance.
@@ -85,7 +95,7 @@ public interface CDOQuery extends CDOQueryInfo
 
   /**
    * Binds an argument value to a named parameter.
-   * 
+   *
    * @param name
    *          the parameter name
    * @param value
@@ -99,7 +109,7 @@ public interface CDOQuery extends CDOQueryInfo
 
   /**
    * Binds an object as teh context for this query.
-   * 
+   *
    * @since 4.0
    */
   public CDOQuery setContext(Object object);

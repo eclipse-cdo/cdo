@@ -23,6 +23,9 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 /**
  * The main entry point to the API of CDO's proprietary object/relational mapper.
  *
@@ -47,6 +50,11 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
   public IDBSchema getDBSchema();
 
   /**
+   * @since 4.2
+   */
+  public void visitAllTables(Connection connection, TableVisitor visitor);
+
+  /**
    * Get the meta data manager associated with this DBStore.
    *
    * @since 2.0
@@ -62,6 +70,17 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
    * @since 2.0
    */
   public IDBStoreAccessor getWriter(ITransaction transaction);
+
+  /**
+   * Called back from {@link IDBStore#visitAllTables(Connection, TableVisitor)} for all tables in the database.
+   *
+   * @author Eike Stepper
+   * @since 4.2
+   */
+  public interface TableVisitor
+  {
+    public void visitTable(Connection connection, String name) throws SQLException;
+  }
 
   /**
    * Contains symbolic constants that specifiy valid keys of {@link IRepository#getProperties() DB store properties}.

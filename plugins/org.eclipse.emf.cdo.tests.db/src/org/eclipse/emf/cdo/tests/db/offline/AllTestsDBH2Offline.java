@@ -8,11 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.db;
+package org.eclipse.emf.cdo.tests.db.offline;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
+import org.eclipse.emf.cdo.tests.db.DBConfigs;
 import org.eclipse.emf.cdo.tests.offline.Bugzilla_319552_Test;
 import org.eclipse.emf.cdo.tests.offline.Bugzilla_325097_Test;
 import org.eclipse.emf.cdo.tests.offline.Bugzilla_326047_Test;
@@ -35,19 +36,19 @@ import junit.framework.TestSuite;
 /**
  * @author Eike Stepper
  */
-public class AllTestsDBMysqlOffline extends DBConfigs
+public class AllTestsDBH2Offline extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBMysqlOffline().getTestSuite("CDO Tests (DBStore Mysql Horizontal - offline mode)");
+    return new AllTestsDBH2Offline().getTestSuite("CDO Tests (DBStore H2 Horizontal - offline mode)");
   }
 
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    // addScenario(parent, COMBINED, new MysqlOfflineConfig(false, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    addScenario(parent, COMBINED, new MysqlOfflineConfig(false, false, IDGenerationLocation.CLIENT), JVM, NATIVE);
-    // addScenario(parent, COMBINED, new MysqlOfflineConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    // addScenario(parent, COMBINED, new H2OfflineConfig(false, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, COMBINED, new H2OfflineConfig(false, false, IDGenerationLocation.CLIENT), JVM, NATIVE);
+    // addScenario(parent, COMBINED, new H2OfflineConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
   }
 
   @Override

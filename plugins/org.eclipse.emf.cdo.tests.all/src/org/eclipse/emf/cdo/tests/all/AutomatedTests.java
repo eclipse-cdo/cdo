@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.tests.all;
 
 import org.eclipse.emf.cdo.tests.AllTests;
 import org.eclipse.emf.cdo.tests.db.AllTestsDBH2All;
-import org.eclipse.emf.cdo.tests.db.AllTestsDBH2Offline;
+import org.eclipse.emf.cdo.tests.db.offline.AllTestsDBH2Offline;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

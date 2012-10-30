@@ -58,7 +58,7 @@ import java.util.List;
  * <li>object type cache (table cdo_objects)
  * <li>resource query handling
  * </ul>
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  */
@@ -195,14 +195,14 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   {
     for (IDBTable table : listMapping.getDBTables())
     {
-      String listSuffix = ", " + attrTable + " a_t" + attrSuffix;
-      String listJoin = getListJoinForRawExport("a_t", "l_t");
+      String listSuffix = ", " + attrTable + " \"a_t\"" + attrSuffix;
+      String listJoin = getListJoinForRawExport("\"a_t\"", "\"l_t\"");
       if (listJoin != null)
       {
         listSuffix += listJoin;
       }
 
-      DBUtil.serializeTable(out, connection, table, "l_t", listSuffix);
+      DBUtil.serializeTable(out, connection, table, "\"l_t\"", listSuffix);
     }
   }
 
@@ -388,7 +388,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   /**
    * This is an intermediate implementation. It should be changed after classmappings support a general way to implement
    * queries ...
-   * 
+   *
    * @param accessor
    *          the accessor to use.
    * @param classMapping
@@ -450,11 +450,11 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     String dbName = getStore().getRepository().getName();
     List<String> names = DBUtil.getAllTableNames(connection, dbName);
 
-    String prefix = "SELECT MIN(t." + CDODBSchema.ATTRIBUTES_ID + ") FROM " + dbName + "." + CDODBSchema.CDO_OBJECTS
-        + " AS o, " + dbName + ".";
+    String prefix = "SELECT MIN(\"t\"." + CDODBSchema.ATTRIBUTES_ID + ") FROM " + dbName + "."
+        + CDODBSchema.CDO_OBJECTS + " \"o\", " + dbName + ".";
 
-    String suffix = " AS t WHERE t." + CDODBSchema.ATTRIBUTES_BRANCH + "<0 AND t." + CDODBSchema.ATTRIBUTES_ID + "=o."
-        + CDODBSchema.ATTRIBUTES_ID + " AND t." + CDODBSchema.ATTRIBUTES_CREATED + "=o."
+    String suffix = " \"t\" WHERE \"t\"." + CDODBSchema.ATTRIBUTES_BRANCH + "<0 AND \"t\"." + CDODBSchema.ATTRIBUTES_ID
+        + "=\"o\"." + CDODBSchema.ATTRIBUTES_ID + " AND \"t\"." + CDODBSchema.ATTRIBUTES_CREATED + "=\"o\"."
         + CDODBSchema.ATTRIBUTES_CREATED;
 
     for (String name : names)

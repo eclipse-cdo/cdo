@@ -382,10 +382,7 @@ public final class DBUtil
     return exceptions;
   }
 
-  /**
-   * @since 4.1
-   */
-  public static int asInt(Object value)
+  private static int asInt(Object value)
   {
     if (value instanceof Number)
     {
@@ -395,10 +392,7 @@ public final class DBUtil
     return 0;
   }
 
-  /**
-   * @since 4.1
-   */
-  public static long asLong(Object value)
+  private static long asLong(Object value)
   {
     if (value instanceof Number)
     {

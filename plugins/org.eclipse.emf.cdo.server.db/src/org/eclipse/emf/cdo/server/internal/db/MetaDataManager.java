@@ -352,9 +352,13 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     {
       public boolean handle(int row, final Object... values)
       {
+        int index = asInt(values[1]);
+        long timestamp = asLong(values[2]);
+
         InternalCDOPackageUnit packageUnit = createPackageUnit();
-        packageUnit.setOriginalType(CDOPackageUnit.Type.values()[(Integer)values[1]]);
-        packageUnit.setTimeStamp((Long)values[2]);
+        packageUnit.setOriginalType(CDOPackageUnit.Type.values()[index]);
+        packageUnit.setTimeStamp(timestamp);
+
         packageUnits.put((String)values[0], packageUnit);
         return true;
       }
@@ -425,5 +429,25 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   {
     modelElementToMetaID.put(modelElement, metaID);
     metaIDToModelElement.put(metaID, modelElement);
+  }
+
+  private static int asInt(Object value)
+  {
+    if (value instanceof Number)
+    {
+      return ((Number)value).intValue();
+    }
+
+    return 0;
+  }
+
+  private static long asLong(Object value)
+  {
+    if (value instanceof Number)
+    {
+      return ((Number)value).longValue();
+    }
+
+    return 0L;
   }
 }

@@ -352,9 +352,13 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     {
       public boolean handle(int row, final Object... values)
       {
+        int index = DBUtil.asInt(values[1]);
+        long timestamp = DBUtil.asLong(values[2]);
+
         InternalCDOPackageUnit packageUnit = createPackageUnit();
-        packageUnit.setOriginalType(CDOPackageUnit.Type.values()[(Integer)values[1]]);
-        packageUnit.setTimeStamp((Long)values[2]);
+        packageUnit.setOriginalType(CDOPackageUnit.Type.values()[index]);
+        packageUnit.setTimeStamp(timestamp);
+
         packageUnits.put((String)values[0], packageUnit);
         return true;
       }

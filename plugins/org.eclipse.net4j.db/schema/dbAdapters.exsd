@@ -64,7 +64,7 @@
 
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="org.eclipse.net4j.db.IDBAdapter"/>
+                  <meta.attribute kind="java" basedOn="org.eclipse.net4j.spi.db.DBAdapter:"/>
                </appInfo>
             </annotation>
          </attribute>

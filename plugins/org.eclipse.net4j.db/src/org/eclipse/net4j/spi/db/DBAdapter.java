@@ -223,6 +223,14 @@ public abstract class DBAdapter implements IDBAdapter
     return 128;
   }
 
+  /**
+   * @since 4.2
+   */
+  public int getFieldLength(DBType type)
+  {
+    return getDefaultDBLength(type);
+  }
+
   public boolean isTypeIndexable(DBType type)
   {
     switch (type)
@@ -584,5 +592,13 @@ public abstract class DBAdapter implements IDBAdapter
     {
       throw new DBException(ex);
     }
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static int getDefaultDBLength(DBType type)
+  {
+    return type == DBType.VARCHAR ? 32672 : IDBField.DEFAULT;
   }
 }

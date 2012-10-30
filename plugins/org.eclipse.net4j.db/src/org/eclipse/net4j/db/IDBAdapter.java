@@ -13,6 +13,7 @@ package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.DBAdapterRegistry;
+import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import javax.sql.DataSource;
@@ -26,8 +27,9 @@ import java.util.Set;
 
 /**
  * Abstracts all aspects of a database that are vendor-specific.
- * 
+ *
  * @author Eike Stepper
+ * @noimplement This interface is not intended to be implemented by clients. Subclass {@link DBAdapter} instead.
  */
 public interface IDBAdapter
 {
@@ -63,12 +65,21 @@ public interface IDBAdapter
    */
   public int getMaxFieldNameLength();
 
+  /**
+   * Returns the column length for the given database type.
+   *
+   * @param type the {@link DBType} to check.
+   * @return the supported column length for the type.
+   * @since 4.2
+   */
+  public int getFieldLength(DBType type);
+
   public boolean isTypeIndexable(DBType type);
 
   /**
    * Provide a way for the DBAdapter to override unsupported DB types with replacements. The default implementation just
    * returns the given type. Subclasses may override single types with replacements.
-   * 
+   *
    * @since 3.0
    */
   public DBType adaptType(DBType type);
@@ -76,14 +87,14 @@ public interface IDBAdapter
   /**
    * Check if a character is valid as first character. (e.g., underscores are forbidden as first character in Derby
    * elements.
-   * 
+   *
    * @since 4.0
    */
   public boolean isValidFirstChar(char ch);
 
   /**
    * Check if an exception indicates a constraint violation (duplicate key)
-   * 
+   *
    * @since 4.0
    */
   public boolean isDuplicateKeyException(SQLException ex);

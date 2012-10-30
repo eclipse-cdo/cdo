@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -43,7 +44,7 @@ import java.sql.SQLException;
  * suitable factory for the {@link TypeMappingRegistry} and register it either manually using
  * {@link IManagedContainer#registerFactory(org.eclipse.net4j.util.factory.IFactory)} or using the Net4j Extension Point
  * <code>factories</code>.
- * 
+ *
  * @author Eike Stepper
  * @author Stefan Winkler
  * @since 4.0
@@ -219,7 +220,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
   /**
    * Implementors could override this method to convert a given value to the database representation and set it to the
    * prepared statement.
-   * 
+   *
    * @param stmt
    *          the {@link PreparedStatement} which is used for DB access
    * @param index
@@ -235,7 +236,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
   /**
    * Returns the SQL type of this TypeMapping. The default implementation considers the type map held by the
    * {@link MetaDataManager meta-data manager}. Subclasses may override.
-   * 
+   *
    * @return The sql type of this TypeMapping.
    */
   protected int getSqlType()
@@ -268,16 +269,14 @@ public abstract class AbstractTypeMapping implements ITypeMapping
       }
     }
 
-    // TODO: implement DBAdapter.getDBLength
-    // mappingStrategy.getStore().getDBAdapter().getDBLength(type);
-    // which should then return the correct default field length for the db type
-    return type == DBType.VARCHAR ? 32672 : IDBField.DEFAULT;
+    IDBAdapter adapter = mappingStrategy.getStore().getDBAdapter();
+    return adapter.getFieldLength(type);
   }
 
   /**
    * Subclasses should implement this method to read the value from the result set. Typical implementations should look
    * similar to this one: <code>resultSet.getString(getField().getName())</code>
-   * 
+   *
    * @param resultSet
    *          the result set to read from
    * @return the result value read (this has to be compatible with the {@link #feature}.

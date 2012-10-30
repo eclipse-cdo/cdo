@@ -383,21 +383,38 @@ public final class DBUtil
   }
 
   /**
+   * @since 4.1
+   */
+  public static int asInt(Object value)
+  {
+    if (value instanceof Number)
+    {
+      return ((Number)value).intValue();
+    }
+
+    return 0;
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static long asLong(Object value)
+  {
+    if (value instanceof Number)
+    {
+      return ((Number)value).longValue();
+    }
+
+    return 0L;
+  }
+
+  /**
    * @since 3.0
    */
   public static int selectMinimumInt(Connection connection, IDBField field, String... where) throws DBException
   {
     Number number = getFunctionResult(connection, field, "MIN", where); //$NON-NLS-1$
-    if (number instanceof Integer)
-    {
-      return (Integer)number;
-    }
-    else if (number == null)
-    {
-      return 0;
-    }
-
-    throw new DBException("Not an integer number: " + number); //$NON-NLS-1$
+    return asInt(number);
   }
 
   /**
@@ -406,16 +423,7 @@ public final class DBUtil
   public static long selectMinimumLong(Connection connection, IDBField field, String... where) throws DBException
   {
     Number number = getFunctionResult(connection, field, "MIN", where); //$NON-NLS-1$
-    if (number instanceof Long)
-    {
-      return (Long)number;
-    }
-    else if (number == null)
-    {
-      return 0L;
-    }
-
-    throw new DBException("Not a long number: " + number); //$NON-NLS-1$
+    return asLong(number);
   }
 
   /**
@@ -424,16 +432,7 @@ public final class DBUtil
   public static int selectMaximumInt(Connection connection, IDBField field, String... where) throws DBException
   {
     Number number = getFunctionResult(connection, field, "MAX", where); //$NON-NLS-1$
-    if (number instanceof Integer)
-    {
-      return (Integer)number;
-    }
-    else if (number == null)
-    {
-      return 0;
-    }
-
-    throw new DBException("Not an integer number: " + number); //$NON-NLS-1$
+    return asInt(number);
   }
 
   /**
@@ -442,16 +441,7 @@ public final class DBUtil
   public static long selectMaximumLong(Connection connection, IDBField field, String... where) throws DBException
   {
     Number number = getFunctionResult(connection, field, "MAX", where); //$NON-NLS-1$
-    if (number instanceof Long)
-    {
-      return (Long)number;
-    }
-    else if (number == null)
-    {
-      return 0L;
-    }
-
-    throw new DBException("Not a long number: " + number); //$NON-NLS-1$
+    return asLong(number);
   }
 
   private static Number getFunctionResult(Connection connection, IDBField field, String function, String... where)

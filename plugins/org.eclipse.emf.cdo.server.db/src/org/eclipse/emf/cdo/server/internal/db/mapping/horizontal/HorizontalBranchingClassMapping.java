@@ -425,6 +425,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
+    boolean success;
 
     long timeStamp = revision.getTimeStamp();
     int branchID = revision.getBranch().getID();
@@ -445,17 +446,6 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         idHandler.setCDOID(stmt, 1, revision.getID());
         stmt.setInt(2, branchID);
       }
-
-      // Read singleval-attribute table always (even without modeled attributes!)
-      boolean success = readValuesFromStatement(stmt, revision, accessor);
-
-      // Read multival tables only if revision exists
-      if (success && revision.getVersion() >= CDOBranchVersion.FIRST_VERSION)
-      {
-        readLists(accessor, revision, listChunk);
-      }
-
-      return success;
     }
     catch (SQLException ex)
     {
@@ -465,6 +455,17 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     {
       statementCache.releasePreparedStatement(stmt);
     }
+
+    // Read singleval-attribute table always (even without modeled attributes!)
+    success = readValuesFromStatement(stmt, revision, accessor);
+
+    // Read multival tables only if revision exists
+    if (success && revision.getVersion() >= CDOBranchVersion.FIRST_VERSION)
+    {
+      readLists(accessor, revision, listChunk);
+    }
+
+    return success;
   }
 
   public boolean readRevisionByVersion(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
@@ -472,6 +473,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
+    boolean success;
 
     try
     {
@@ -481,15 +483,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       stmt.setInt(3, revision.getVersion());
 
       // Read singleval-attribute table always (even without modeled attributes!)
-      boolean success = readValuesFromStatement(stmt, revision, accessor);
-
-      // Read multival tables only if revision exists
-      if (success)
-      {
-        readLists(accessor, revision, listChunk);
-      }
-
-      return success;
+      success = readValuesFromStatement(stmt, revision, accessor);
     }
     catch (SQLException ex)
     {
@@ -499,6 +493,14 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     {
       statementCache.releasePreparedStatement(stmt);
     }
+
+    // Read multival tables only if revision exists
+    if (success)
+    {
+      readLists(accessor, revision, listChunk);
+    }
+
+    return success;
   }
 
   public PreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name,

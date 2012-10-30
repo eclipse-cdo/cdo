@@ -56,6 +56,7 @@ import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.collection.MoveableList;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -66,6 +67,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -319,7 +321,8 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     PreparedStatement stmt = null;
     ResultSet resultSet = null;
 
-    IStoreChunkReader baseReader = null;
+    // list of chunks to be read from base revision
+    ArrayList<Pair<Integer, Integer>> toReadFromBase = null;
     try
     {
       String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
@@ -339,12 +342,12 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
         int index = resultSet.getInt(1);
         if (index > currentIndex)
         {
-          if (baseReader == null)
+          if (toReadFromBase == null)
           {
-            baseReader = createBaseChunkReader(accessor, id, branchID);
+            toReadFromBase = new ArrayList<Pair<Integer, Integer>>();
           }
+          toReadFromBase.add(new Pair<Integer, Integer>(currentIndex, index));
 
-          baseReader.addRangedChunk(currentIndex, index);
           if (TRACER.isEnabled())
           {
             TRACER.format("Scheduling range {0}-{1} to be read from base revision", currentIndex, index); //$NON-NLS-1$
@@ -366,19 +369,13 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
 
       if (valuesToRead > 0)
       {
-        if (baseReader == null)
+        if (toReadFromBase == null)
         {
-          baseReader = createBaseChunkReader(accessor, id, branchID);
+          toReadFromBase = new ArrayList<Pair<Integer, Integer>>();
         }
-
-        baseReader.addRangedChunk(currentIndex, currentIndex + valuesToRead);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format(
-              "Scheduling range {0}-{1} to be read from base revision", currentIndex, currentIndex + valuesToRead); //$NON-NLS-1$
+        toReadFromBase.add(new Pair<Integer, Integer>(currentIndex, currentIndex + valuesToRead));
         }
       }
-    }
     catch (SQLException ex)
     {
       throw new DBException(ex);
@@ -389,12 +386,20 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
       statementCache.releasePreparedStatement(stmt);
     }
 
-    if (baseReader != null)
+    // read missing values from base revision ...
+    if (toReadFromBase != null)
     {
+      IStoreChunkReader baseReader = createBaseChunkReader(accessor, id, branchID);
+
       if (TRACER.isEnabled())
       {
         TRACER.format("Reading base revision chunks for feature {0}.{1} of {2} from base revision {3}", //$NON-NLS-1$
             getContainingClass().getName(), getFeature().getName(), revision, baseReader.getRevision());
+      }
+
+      for (Pair<Integer, Integer> range : toReadFromBase)
+      {
+        baseReader.addRangedChunk(range.getElement1(), range.getElement2());
       }
 
       List<Chunk> baseChunks = baseReader.executeRead();

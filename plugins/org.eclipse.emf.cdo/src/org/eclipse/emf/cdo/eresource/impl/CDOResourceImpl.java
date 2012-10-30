@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
+ *    Christian W. Damus (CEA) - isLoading() support for CDOResource
  */
 package org.eclipse.emf.cdo.eresource.impl;
 
@@ -65,6 +66,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOResource;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
@@ -80,6 +82,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource</b></em>'.
@@ -103,7 +106,7 @@ import java.util.concurrent.Callable;
  *
  * @generated
  */
-public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource, Resource.Internal
+public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOResource, Resource.Internal
 {
   private static final EReference CDO_RESOURCE_CONTENTS = EresourcePackage.eINSTANCE.getCDOResource_Contents();
 
@@ -167,6 +170,8 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
    * @ADDED
    */
   private transient Map<String, EObject> intrinsicIDToEObjectMap;
+
+  private transient AtomicInteger loadingCounter = new AtomicInteger();
 
   /**
    * @ADDED
@@ -1517,6 +1522,28 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   public boolean isLoading()
   {
     return loading;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public void cdoInternalLoading(EObject object)
+  {
+    if (loadingCounter.incrementAndGet() == 1)
+    {
+      loading = true;
+    }
+  }
+
+  /**
+   * @since 4.2
+   */
+  public void cdoInternalDoneLoading(EObject object)
+  {
+    if (loadingCounter.decrementAndGet() == 0)
+    {
+      loading = false;
+    }
   }
 
   /**

@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Martin Fluegge - bug 247226: Transparently support legacy models
+ *    Christian W. Damus (CEA) - isLoading() support for CDOResource
  */
 package org.eclipse.emf.internal.cdo.object;
 
@@ -52,6 +53,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.spi.cdo.CDOStore;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOResource;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.lang.reflect.Field;
@@ -392,11 +394,20 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
     Counter counter = recursionCounter.get();
 
+    Resource resource = null;
+
     try
     {
       registerWrapper(this);
       counter.increment();
       view.registerObject(this);
+
+      revisionToInstanceResource();
+      resource = instance.eDirectResource();
+      if (resource instanceof InternalCDOResource)
+      {
+        ((InternalCDOResource)resource).cdoInternalLoading(instance);
+      }
 
       revisionToInstanceContainer();
 
@@ -406,8 +417,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       {
         revisionToInstanceFeature(feature);
       }
-
-      revisionToInstanceResource();
     }
     catch (RuntimeException ex)
     {
@@ -421,6 +430,11 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
     finally
     {
+      if (resource instanceof InternalCDOResource)
+      {
+        ((InternalCDOResource)resource).cdoInternalDoneLoading(instance);
+      }
+
       if (deliver)
       {
         instance.eSetDeliver(true);

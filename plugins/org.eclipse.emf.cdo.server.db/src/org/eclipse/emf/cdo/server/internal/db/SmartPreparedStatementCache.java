@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.util.ImplementationError;
 
 import java.sql.Connection;
@@ -20,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author Stefan Winkler
@@ -27,256 +29,107 @@ import java.util.Map;
  */
 public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
 {
-  private Cache cache;
+  private final int capacity;
 
-  private Map<PreparedStatement, CachedPreparedStatement> checkedOut = new HashMap<PreparedStatement, CachedPreparedStatement>();
+  private TreeMap<String, CachedPreparedStatement> cache = new TreeMap<String, CachedPreparedStatement>();
+
+  private Map<PreparedStatement, CachedPreparedStatement> checkOuts = new HashMap<PreparedStatement, CachedPreparedStatement>();
+
+  private long lastTouch;
 
   public SmartPreparedStatementCache(int capacity)
   {
-    cache = new Cache(capacity);
+    this.capacity = capacity;
   }
 
-  public PreparedStatement getPreparedStatement(String sql, ReuseProbability reuseProbability)
+  public final int getCapacity()
   {
+    return capacity;
+  }
+
+  public int size()
+  {
+    return cache.size();
+  }
+
+  public PreparedStatement getPreparedStatement(String sql, ReuseProbability probability)
+  {
+    PreparedStatement preparedStatement;
+
     CachedPreparedStatement cachedStatement = cache.remove(sql);
     if (cachedStatement == null)
     {
-      cachedStatement = createCachedPreparedStatement(sql, reuseProbability);
+      try
+      {
+        Connection connection = getConnection();
+        preparedStatement = connection.prepareStatement(sql);
+        cachedStatement = new CachedPreparedStatement(sql, preparedStatement, probability);
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+    else
+    {
+      preparedStatement = cachedStatement.getPreparedStatement();
     }
 
-    PreparedStatement result = cachedStatement.getPreparedStatement();
-    checkedOut.put(result, cachedStatement);
-
-    return result;
+    checkOuts.put(preparedStatement, cachedStatement);
+    return preparedStatement;
   }
 
-  /**
-   * @param ps
-   *          the prepared statement to be released to the cache, or <code>null</code>.
-   */
-  public void releasePreparedStatement(PreparedStatement ps)
+  public void releasePreparedStatement(PreparedStatement preparedStatement)
   {
-    if (ps != null) // Bug 276926: Silently accept ps == null and do nothing.
+    if (preparedStatement == null)
     {
-      CachedPreparedStatement cachedStatement = checkedOut.remove(ps);
-      cache.put(cachedStatement);
+      // Bug 276926: Silently accept preparedStatement == null and do nothing.
+      return;
+    }
+
+    CachedPreparedStatement cachedStatement = checkOuts.remove(preparedStatement);
+    cachedStatement.setTouch(++lastTouch);
+
+    String sql = cachedStatement.getSQL();
+    if (cache.put(sql, cachedStatement) != null)
+    {
+      throw new ImplementationError(sql + " already in cache"); //$NON-NLS-1$
+    }
+
+    if (cache.size() > capacity)
+    {
+      CachedPreparedStatement old = cache.remove(cache.firstKey());
+      DBUtil.close(old.getPreparedStatement());
     }
   }
 
   @Override
   protected void doBeforeDeactivate() throws Exception
   {
-    if (!checkedOut.isEmpty())
+    if (!checkOuts.isEmpty())
     {
       OM.LOG.warn("Statement leak detected"); //$NON-NLS-1$
     }
   }
 
-  private CachedPreparedStatement createCachedPreparedStatement(String sql, ReuseProbability reuseProbability)
-  {
-    try
-    {
-      Connection connection = getConnection();
-      PreparedStatement stmt = connection.prepareStatement(sql);
-      return new CachedPreparedStatement(sql, reuseProbability, stmt);
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-  }
-
   /**
    * @author Stefan Winkler
    */
-  private static final class Cache
+  private static final class CachedPreparedStatement implements Comparable<CachedPreparedStatement>
   {
-    private CacheList lists[];
-
-    private HashMap<String, CachedPreparedStatement> lookup;
-
-    private int capacity;
-
-    public Cache(int capacity)
-    {
-      this.capacity = capacity;
-
-      lookup = new HashMap<String, CachedPreparedStatement>(capacity);
-
-      lists = new CacheList[ReuseProbability.values().length];
-      for (ReuseProbability prob : ReuseProbability.values())
-      {
-        lists[prob.ordinal()] = new CacheList();
-      }
-    }
-
-    public void put(CachedPreparedStatement cachedStatement)
-    {
-      // refresh age
-      cachedStatement.touch();
-
-      // put into appripriate list
-      lists[cachedStatement.getProbability().ordinal()].add(cachedStatement);
-
-      // put into lookup table
-      if (lookup.put(cachedStatement.getSQL(), cachedStatement) != null)
-      {
-        throw new ImplementationError(cachedStatement.getSQL() + " already in cache"); //$NON-NLS-1$
-      }
-
-      // handle capacity overflow
-      if (lookup.size() > capacity)
-      {
-        evictOne();
-      }
-    }
-
-    private void evictOne()
-    {
-      long maxAge = -1;
-      int ordinal = -1;
-
-      for (ReuseProbability prob : ReuseProbability.values())
-      {
-        if (!lists[prob.ordinal()].isEmpty())
-        {
-          long age = lists[prob.ordinal()].tail().getAge();
-          if (maxAge < age)
-          {
-            maxAge = age;
-            ordinal = prob.ordinal();
-          }
-        }
-      }
-
-      remove(lists[ordinal].tail().getSQL());
-    }
-
-    public CachedPreparedStatement remove(String sql)
-    {
-      CachedPreparedStatement result = lookup.remove(sql);
-      if (result == null)
-      {
-        return null;
-      }
-
-      lists[result.getProbability().ordinal()].remove(result);
-      return result;
-    }
-
-    /**
-     * @author Stefan Winkler
-     */
-    private class CacheList
-    {
-      private CachedPreparedStatement first;
-
-      private CachedPreparedStatement last;
-
-      public CacheList()
-      {
-      }
-
-      public void add(CachedPreparedStatement s)
-      {
-        if (first == null)
-        {
-          first = s;
-          last = s;
-          s.previous = null;
-          s.next = null;
-        }
-        else
-        {
-          first.previous = s;
-          s.next = first;
-          first = s;
-        }
-      }
-
-      public void remove(CachedPreparedStatement s)
-      {
-        if (s == first)
-        {
-          first = s.next;
-        }
-
-        if (s.next != null)
-        {
-          s.next.previous = s.previous;
-        }
-
-        if (s == last)
-        {
-          last = s.previous;
-        }
-
-        if (s.previous != null)
-        {
-          s.previous.next = s.next;
-        }
-
-        s.previous = null;
-        s.next = null;
-      }
-
-      public CachedPreparedStatement tail()
-      {
-        return last;
-      }
-
-      public boolean isEmpty()
-      {
-        return first == null;
-      }
-    }
-  }
-
-  /**
-   * @author Stefan Winkler
-   */
-  private static final class CachedPreparedStatement
-  {
-    private long timeStamp;
-
     private String sql;
+
+    private PreparedStatement preparedStatement;
 
     private ReuseProbability probability;
 
-    private PreparedStatement statement;
+    private long touch;
 
-    /**
-     * DL field
-     */
-    private CachedPreparedStatement previous;
-
-    /**
-     * DL field
-     */
-    private CachedPreparedStatement next;
-
-    public CachedPreparedStatement(String sql, ReuseProbability prob, PreparedStatement stmt)
+    public CachedPreparedStatement(String sql, PreparedStatement preparedStatement, ReuseProbability probability)
     {
       this.sql = sql;
-      probability = prob;
-      statement = stmt;
-      timeStamp = System.currentTimeMillis();
-    }
-
-    public PreparedStatement getPreparedStatement()
-    {
-      return statement;
-    }
-
-    public long getAge()
-    {
-      long currentTime = System.currentTimeMillis();
-      return (currentTime - timeStamp) * probability.ordinal();
-    }
-
-    public void touch()
-    {
-      timeStamp = System.currentTimeMillis();
+      this.preparedStatement = preparedStatement;
+      this.probability = probability;
     }
 
     public String getSQL()
@@ -284,9 +137,31 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
       return sql;
     }
 
-    public ReuseProbability getProbability()
+    public PreparedStatement getPreparedStatement()
     {
-      return probability;
+      return preparedStatement;
+    }
+
+    public void setTouch(long touch)
+    {
+      this.touch = touch;
+    }
+
+    public int compareTo(CachedPreparedStatement o)
+    {
+      int result = probability.compareTo(o.probability);
+      if (result == 0)
+      {
+        result = (int)(o.touch - touch);
+      }
+
+      return result;
+    }
+
+    @Override
+    public String toString()
+    {
+      return "CachedPreparedStatement[sql=" + sql + ", probability=" + probability + ", touch=" + touch + "]";
     }
   }
 }

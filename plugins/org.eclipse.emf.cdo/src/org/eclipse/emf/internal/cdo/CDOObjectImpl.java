@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
+ *    Christian W. Damus - partial/conditional persistence of features
  */
 package org.eclipse.emf.internal.cdo;
 
@@ -17,10 +18,13 @@ import org.eclipse.emf.cdo.CDOObjectHistory;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo.PersistenceFilter;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -1062,6 +1066,17 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     if (TRACER.isEnabled())
     {
       TRACER.format("Populating feature {0}", feature); //$NON-NLS-1$
+    }
+
+    PersistenceFilter filter = ((InternalCDOClassInfo)CDOModelUtil.getClassInfo(feature
+        .getEContainingClass())).getPersistenceFilter(feature);
+    if (filter != null)
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Filtering value of feature {0}", feature); //$NON-NLS-1$
+      }
+      setting = filter.getPersistableValue(object, setting);
     }
 
     CDOStore cdoStore = view.getStore();

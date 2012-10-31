@@ -7,18 +7,22 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA) - support partially persistent features
  */
 package org.eclipse.emf.cdo.internal.common.model;
 
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.internal.common.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,11 +31,15 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class CDOClassInfoImpl extends AdapterImpl implements CDOClassInfo
+public class CDOClassInfoImpl extends AdapterImpl implements InternalCDOClassInfo
 {
   private static final int NOT_MAPPED = -1;
 
+  private static final PersistenceFilter[] NO_FILTERS = {};
+
   private EStructuralFeature[] allPersistentFeatures;
+
+  private PersistenceFilter[] persistenceFilters = NO_FILTERS;
 
   private int[] featureIDMappings;
 
@@ -94,6 +102,17 @@ public class CDOClassInfoImpl extends AdapterImpl implements CDOClassInfo
     return index;
   }
 
+  public PersistenceFilter getPersistenceFilter(EStructuralFeature feature)
+  {
+    if (persistenceFilters == NO_FILTERS)
+    {
+      return null;
+    }
+
+    int featureID = getEClass().getFeatureID(feature);
+    return persistenceFilters[featureID];
+  }
+
   private void init(EClass eClass)
   {
     List<EStructuralFeature> persistentFeatures = new ArrayList<EStructuralFeature>();
@@ -115,7 +134,39 @@ public class CDOClassInfoImpl extends AdapterImpl implements CDOClassInfo
       EStructuralFeature feature = allPersistentFeatures[i];
       int featureID = eClass.getFeatureID(feature);
       featureIDMappings[featureID] = i;
+
+      PersistenceFilter persistenceFilter = initPersistenceFilter(feature);
+      if (persistenceFilter != null)
+      {
+        if (persistenceFilters == NO_FILTERS)
+        {
+          persistenceFilters = new PersistenceFilter[allFeatures.size()];
+        }
+
+        persistenceFilters[featureID] = persistenceFilter;
+      }
     }
+  }
+
+  private PersistenceFilter initPersistenceFilter(EStructuralFeature feature)
+  {
+    CDOPersistenceFilterImpl result = null;
+    String filter = EcoreUtil.getAnnotation(feature, EMFUtil.CDO_ANNOTATION_SOURCE, "filter");
+
+    if (filter != null)
+    {
+      EStructuralFeature dependency = feature.getEContainingClass().getEStructuralFeature(filter);
+      if (dependency != null)
+      {
+        result = new CDOPersistenceFilterImpl(dependency);
+      }
+      else
+      {
+        OM.LOG.warn("Persistence filter '" + filter + "' not found for " + feature);
+      }
+    }
+
+    return result;
   }
 
   @Override

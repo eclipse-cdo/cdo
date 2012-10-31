@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.emf.ecore.dynamic_package">
+      <resource
+            uri="http://www.eclipse.org/cdo/tests/schema/stuff/1.0"
+            location="platform:/plugin/org.eclipse.emf.cdo.tests.uml/model/stuff.ecore">
+      </resource>
+   </extension>
+   
+   <extension
+         point="org.eclipse.emf.ecore.dynamic_package">
+      <resource
+            uri="http://www.eclipse.org/cdo/tests/schema/myprofile"
+            location="platform:/plugin/org.eclipse.emf.cdo.tests.uml/model/My.profile.uml#_PSH9UfdpEeGvZ8MJGWo2mQ">
+      </resource>
+   </extension>
+   
+   <extension
+         point="org.eclipse.uml2.uml.dynamic_package">
+      <profile
+            uri="http://www.eclipse.org/cdo/tests/schema/myprofile"
+            location="platform:/plugin/org.eclipse.emf.cdo.tests.uml/model/My.profile.uml#_SPKysPdoEeGvZ8MJGWo2mQ">
+      </profile>
+   </extension>
+
+</plugin>

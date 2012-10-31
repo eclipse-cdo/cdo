@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
  *    Simon McDuff - maintenance
+ *    Christian W. Damus - support registered dynamic UML profiles
  */
 package org.eclipse.emf.cdo.common.model;
 
@@ -389,13 +390,17 @@ public final class EMFUtil
   {
     try
     {
-      Resource resource = ePackage.eResource();
+      // The package may be nested in other content (e.g., a UML Profile).
+      // Or, maybe it is just a dynamic package that was not loaded from a resource
+      Resource resource = ((InternalEObject)ePackage).eDirectResource();
       if (resource == null)
       {
-        // Happens e.g. for dynamic packages that were not loaded from a resource
         ResourceSet resourceSet = newEcoreResourceSet(packageRegistry);
         resource = resourceSet.createResource(URI.createURI(ePackage.getNsURI()));
-        resource.getContents().add(ePackage);
+
+        // If the package is nested in some container, then copy it into the temporary
+        // resource so that we don't send content that the server doesn't need
+        resource.getContents().add(ePackage.eContainer() == null ? ePackage : copyPackage(ePackage));
       }
 
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -406,6 +411,18 @@ public final class EMFUtil
     {
       throw WrappedException.wrap(ex);
     }
+  }
+
+  /**
+   * Copies a package that is nested in some containing context, like a UML profile, stripping
+   * out any annotations that are not Ecore annotations (such as UML annotations tracing back
+   * to stereotypes in the profile).
+   */
+  private static EPackage copyPackage(EPackage ePackage)
+  {
+    EPackage result = EcoreUtil.copy(ePackage);
+
+    return result;
   }
 
   /**

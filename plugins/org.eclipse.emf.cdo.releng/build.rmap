@@ -92,8 +92,15 @@
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.eclipse.org/modeling/mdt/ocl/updates/milestones/4.1.0"/>
 		</rm:provider>
+
+		<!-- QVTO -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.eclipse.org/mmt/qvto/updates/milestones"/>
+		</rm:provider>
+
+		<!-- UML2 -->
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/modeling/mdt/uml2/updates/4.0.x"/>
 		</rm:provider>
 
 		<!-- XPAND -->

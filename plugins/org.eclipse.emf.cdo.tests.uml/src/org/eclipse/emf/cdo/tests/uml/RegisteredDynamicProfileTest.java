@@ -29,6 +29,14 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import org.eclipse.uml2.common.util.UML2Util;
+import org.eclipse.uml2.uml.Model;
+import org.eclipse.uml2.uml.NamedElement;
+import org.eclipse.uml2.uml.Profile;
+import org.eclipse.uml2.uml.Stereotype;
+import org.eclipse.uml2.uml.UMLFactory;
+import org.eclipse.uml2.uml.UMLPackage;
+
 /**
  * Tests legacy-mode support for registered dynamic UML Profiles.
  */
@@ -44,8 +52,6 @@ public class RegisteredDynamicProfileTest extends AbstractCDOTest
 
   private static final String S_CONCEPT = "Concept";
 
-  private final UMLFactory umlFactory = UMLFactory.eINSTANCE;
-
   //
   // Test cases
   //
@@ -59,11 +65,11 @@ public class RegisteredDynamicProfileTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction(rset);
     CDOResource res = transaction.createResource(getResourcePath("/model1.uml"));
 
-    Model umlModel = umlFactory.createModel();
+    Model umlModel = UMLFactory.eINSTANCE.createModel();
     res.getContents().add(umlModel);
 
     umlModel.setName("model");
-    Class aClass = umlModel.createOwnedClass("Fruit", true);
+    org.eclipse.uml2.uml.Class aClass = umlModel.createOwnedClass("Fruit", true);
 
     Profile profile = UML2Util.load(rset, URI.createURI(MY_PROFILE_URI), UMLPackage.Literals.PROFILE);
     assertNotNull(profile);
@@ -91,7 +97,7 @@ public class RegisteredDynamicProfileTest extends AbstractCDOTest
     assertEquals(2, res.getContents().size()); // the model and the stereotype instance
 
     umlModel = (Model)res.getContents().get(0);
-    aClass = (Class)EcoreUtil.getObjectByType(umlModel.getOwnedTypes(), UMLPackage.Literals.CLASS);
+    aClass = (org.eclipse.uml2.uml.Class)EcoreUtil.getObjectByType(umlModel.getOwnedTypes(), UMLPackage.Literals.CLASS);
     assertNotNull(aClass);
 
     // changes in UML2 API are needed to recognize the EClass<-->Stereotype relationship using

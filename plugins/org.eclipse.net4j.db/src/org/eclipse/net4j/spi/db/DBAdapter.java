@@ -459,7 +459,7 @@ public abstract class DBAdapter implements IDBAdapter
       {
         if (maxRows != 1)
         {
-          statement.setMaxRows(1);
+          statement.setMaxRows(maxRows);
         }
       }
     }

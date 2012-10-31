@@ -259,9 +259,19 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
       try
       {
         visitor.visitTable(connection, name);
+        connection.commit();
       }
       catch (SQLException ex)
       {
+        try
+        {
+          connection.rollback();
+        }
+        catch (SQLException ex1)
+        {
+          throw new DBException(ex1);
+        }
+
         if (!COLUMN_NOT_FOUND.equalsIgnoreCase(ex.getSQLState()))
         {
           throw new DBException(ex);

@@ -400,7 +400,7 @@ public final class EMFUtil
 
         // If the package is nested in some container, then copy it into the temporary
         // resource so that we don't send content that the server doesn't need
-        resource.getContents().add(ePackage.eContainer() == null ? ePackage : copyPackage(ePackage));
+        resource.getContents().add(ePackage.eContainer() == null ? ePackage : EcoreUtil.copy(ePackage));
       }
 
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -411,18 +411,6 @@ public final class EMFUtil
     {
       throw WrappedException.wrap(ex);
     }
-  }
-
-  /**
-   * Copies a package that is nested in some containing context, like a UML profile, stripping
-   * out any annotations that are not Ecore annotations (such as UML annotations tracing back
-   * to stereotypes in the profile).
-   */
-  private static EPackage copyPackage(EPackage ePackage)
-  {
-    EPackage result = EcoreUtil.copy(ePackage);
-
-    return result;
   }
 
   /**

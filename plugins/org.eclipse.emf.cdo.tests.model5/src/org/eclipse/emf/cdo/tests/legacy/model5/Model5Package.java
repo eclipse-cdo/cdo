@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
  * @see org.eclipse.emf.cdo.tests.legacy.model5.Model5Factory
  * @model kind="package"
  * @generated
@@ -33,14 +32,13 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
-   * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package name.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNAME = "model5";
@@ -53,23 +51,22 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/legacy/model5/1.0.0";
 
   /**
-   * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package namespace name.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNS_PREFIX = "model5";
 
   /**
-   * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The singleton instance of the package.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   Model5Package eINSTANCE = org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl.init();
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.TestFeatureMapImpl
-   * <em>Test Feature Map</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.TestFeatureMapImpl <em>Test Feature Map</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.TestFeatureMapImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getTestFeatureMap()
    * @generated
@@ -77,42 +74,41 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   int TEST_FEATURE_MAP = 0;
 
   /**
-   * The feature id for the '<em><b>Managers</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Managers</b></em>' reference list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TEST_FEATURE_MAP__MANAGERS = 0;
 
   /**
-   * The feature id for the '<em><b>Doctors</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Doctors</b></em>' reference list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TEST_FEATURE_MAP__DOCTORS = 1;
 
   /**
-   * The feature id for the '<em><b>People</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>People</b></em>' attribute list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TEST_FEATURE_MAP__PEOPLE = 2;
 
   /**
-   * The number of structural features of the '<em>Test Feature Map</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Test Feature Map</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int TEST_FEATURE_MAP_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.ManagerImpl <em>Manager</em>}'
-   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.ManagerImpl <em>Manager</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.ManagerImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getManager()
    * @generated
@@ -120,8 +116,8 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   int MANAGER = 1;
 
   /**
-   * The number of structural features of the '<em>Manager</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Manager</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -130,7 +126,6 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.DoctorImpl <em>Doctor</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.DoctorImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getDoctor()
    * @generated
@@ -138,17 +133,16 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   int DOCTOR = 2;
 
   /**
-   * The number of structural features of the '<em>Doctor</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Doctor</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int DOCTOR_FEATURE_COUNT = 0;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfStringImpl
-   * <em>Gen List Of String</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfStringImpl <em>Gen List Of String</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfStringImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getGenListOfString()
    * @generated
@@ -156,26 +150,25 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   int GEN_LIST_OF_STRING = 3;
 
   /**
-   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Elements</b></em>' attribute list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_STRING__ELEMENTS = 0;
 
   /**
-   * The number of structural features of the '<em>Gen List Of String</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Gen List Of String</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_STRING_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfIntImpl
-   * <em>Gen List Of Int</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfIntImpl <em>Gen List Of Int</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfIntImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getGenListOfInt()
    * @generated
@@ -183,26 +176,25 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   int GEN_LIST_OF_INT = 4;
 
   /**
-   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Elements</b></em>' attribute list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_INT__ELEMENTS = 0;
 
   /**
-   * The number of structural features of the '<em>Gen List Of Int</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Gen List Of Int</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_INT_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfIntegerImpl
-   * <em>Gen List Of Integer</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfIntegerImpl <em>Gen List Of Integer</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfIntegerImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getGenListOfInteger()
    * @generated
@@ -210,26 +202,25 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   int GEN_LIST_OF_INTEGER = 5;
 
   /**
-   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Elements</b></em>' attribute list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_INTEGER__ELEMENTS = 0;
 
   /**
-   * The number of structural features of the '<em>Gen List Of Integer</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Gen List Of Integer</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_INTEGER_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfLongImpl
-   * <em>Gen List Of Long</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfLongImpl <em>Gen List Of Long</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfLongImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getGenListOfLong()
    * @generated
@@ -237,26 +228,25 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   int GEN_LIST_OF_LONG = 6;
 
   /**
-   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Elements</b></em>' attribute list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_LONG__ELEMENTS = 0;
 
   /**
-   * The number of structural features of the '<em>Gen List Of Long</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Gen List Of Long</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_LONG_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfBooleanImpl
-   * <em>Gen List Of Boolean</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfBooleanImpl <em>Gen List Of Boolean</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfBooleanImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getGenListOfBoolean()
    * @generated
@@ -264,26 +254,25 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   int GEN_LIST_OF_BOOLEAN = 7;
 
   /**
-   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Elements</b></em>' attribute list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_BOOLEAN__ELEMENTS = 0;
 
   /**
-   * The number of structural features of the '<em>Gen List Of Boolean</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Gen List Of Boolean</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_BOOLEAN_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfShortImpl
-   * <em>Gen List Of Short</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfShortImpl <em>Gen List Of Short</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfShortImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getGenListOfShort()
    * @generated
@@ -291,26 +280,25 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   int GEN_LIST_OF_SHORT = 8;
 
   /**
-   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Elements</b></em>' attribute list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_SHORT__ELEMENTS = 0;
 
   /**
-   * The number of structural features of the '<em>Gen List Of Short</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Gen List Of Short</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_SHORT_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfFloatImpl
-   * <em>Gen List Of Float</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfFloatImpl <em>Gen List Of Float</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfFloatImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getGenListOfFloat()
    * @generated
@@ -318,26 +306,25 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   int GEN_LIST_OF_FLOAT = 9;
 
   /**
-   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Elements</b></em>' attribute list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_FLOAT__ELEMENTS = 0;
 
   /**
-   * The number of structural features of the '<em>Gen List Of Float</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Gen List Of Float</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_FLOAT_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfDoubleImpl
-   * <em>Gen List Of Double</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfDoubleImpl <em>Gen List Of Double</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfDoubleImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getGenListOfDouble()
    * @generated
@@ -345,26 +332,25 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   int GEN_LIST_OF_DOUBLE = 10;
 
   /**
-   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Elements</b></em>' attribute list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_DOUBLE__ELEMENTS = 0;
 
   /**
-   * The number of structural features of the '<em>Gen List Of Double</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Gen List Of Double</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_DOUBLE_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfDateImpl
-   * <em>Gen List Of Date</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfDateImpl <em>Gen List Of Date</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfDateImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getGenListOfDate()
    * @generated
@@ -372,26 +358,25 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   int GEN_LIST_OF_DATE = 11;
 
   /**
-   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Elements</b></em>' attribute list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_DATE__ELEMENTS = 0;
 
   /**
-   * The number of structural features of the '<em>Gen List Of Date</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Gen List Of Date</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_DATE_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfCharImpl
-   * <em>Gen List Of Char</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfCharImpl <em>Gen List Of Char</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfCharImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getGenListOfChar()
    * @generated
@@ -399,26 +384,25 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   int GEN_LIST_OF_CHAR = 12;
 
   /**
-   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Elements</b></em>' attribute list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_CHAR__ELEMENTS = 0;
 
   /**
-   * The number of structural features of the '<em>Gen List Of Char</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Gen List Of Char</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_CHAR_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfIntArrayImpl
-   * <em>Gen List Of Int Array</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfIntArrayImpl <em>Gen List Of Int Array</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfIntArrayImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getGenListOfIntArray()
    * @generated
@@ -426,34 +410,107 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   int GEN_LIST_OF_INT_ARRAY = 13;
 
   /**
-   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Elements</b></em>' attribute list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_INT_ARRAY__ELEMENTS = 0;
 
   /**
-   * The number of structural features of the '<em>Gen List Of Int Array</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Gen List Of Int Array</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int GEN_LIST_OF_INT_ARRAY_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '<em>Int Array</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getIntArray()
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.ParentImpl <em>Parent</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.ParentImpl
+   * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getParent()
    * @generated
    */
-  int INT_ARRAY = 14;
+  int PARENT = 14;
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.TestFeatureMap
-   * <em>Test Feature Map</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+  	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int PARENT__CHILDREN = 0;
+
+  /**
+  	 * The feature id for the '<em><b>Favourite</b></em>' reference.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int PARENT__FAVOURITE = 1;
+
+  /**
+  	 * The number of structural features of the '<em>Parent</em>' class.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int PARENT_FEATURE_COUNT = 2;
+
+  /**
+  	 * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.ChildImpl <em>Child</em>}' class.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.ChildImpl
+  	 * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getChild()
+  	 * @generated
+  	 */
+  int CHILD = 15;
+
+  /**
+  	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CHILD__PARENT = 0;
+
+  /**
+  	 * The feature id for the '<em><b>Preferred By</b></em>' reference.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CHILD__PREFERRED_BY = 1;
+
+  /**
+  	 * The number of structural features of the '<em>Child</em>' class.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CHILD_FEATURE_COUNT = 2;
+
+  /**
+  	 * The meta object id for the '<em>Int Array</em>' data type.
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @see org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5PackageImpl#getIntArray()
+  	 * @generated
+  	 */
+  int INT_ARRAY = 16;
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.TestFeatureMap <em>Test Feature Map</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Test Feature Map</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.TestFeatureMap
    * @generated
@@ -461,10 +518,9 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EClass getTestFeatureMap();
 
   /**
-   * Returns the meta object for the reference list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model5.TestFeatureMap#getManagers <em>Managers</em>}'. <!-- begin-user-doc
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.legacy.model5.TestFeatureMap#getManagers <em>Managers</em>}'.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the reference list '<em>Managers</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.TestFeatureMap#getManagers()
    * @see #getTestFeatureMap()
@@ -473,10 +529,9 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EReference getTestFeatureMap_Managers();
 
   /**
-   * Returns the meta object for the reference list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model5.TestFeatureMap#getDoctors <em>Doctors</em>}'. <!-- begin-user-doc
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.legacy.model5.TestFeatureMap#getDoctors <em>Doctors</em>}'.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the reference list '<em>Doctors</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.TestFeatureMap#getDoctors()
    * @see #getTestFeatureMap()
@@ -485,10 +540,9 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EReference getTestFeatureMap_Doctors();
 
   /**
-   * Returns the meta object for the attribute list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model5.TestFeatureMap#getPeople <em>People</em>}'. <!-- begin-user-doc -->
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.legacy.model5.TestFeatureMap#getPeople <em>People</em>}'.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute list '<em>People</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.TestFeatureMap#getPeople()
    * @see #getTestFeatureMap()
@@ -517,9 +571,8 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EClass getDoctor();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfString
-   * <em>Gen List Of String</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfString <em>Gen List Of String</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Gen List Of String</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfString
    * @generated
@@ -527,10 +580,9 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EClass getGenListOfString();
 
   /**
-   * Returns the meta object for the attribute list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfString#getElements <em>Elements</em>}'. <!-- begin-user-doc
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfString#getElements <em>Elements</em>}'.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfString#getElements()
    * @see #getGenListOfString()
@@ -539,9 +591,8 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EAttribute getGenListOfString_Elements();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfInt
-   * <em>Gen List Of Int</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfInt <em>Gen List Of Int</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Gen List Of Int</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfInt
    * @generated
@@ -549,10 +600,9 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EClass getGenListOfInt();
 
   /**
-   * Returns the meta object for the attribute list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfInt#getElements <em>Elements</em>}'. <!-- begin-user-doc
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfInt#getElements <em>Elements</em>}'.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfInt#getElements()
    * @see #getGenListOfInt()
@@ -561,9 +611,8 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EAttribute getGenListOfInt_Elements();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfInteger
-   * <em>Gen List Of Integer</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfInteger <em>Gen List Of Integer</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Gen List Of Integer</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfInteger
    * @generated
@@ -583,9 +632,8 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EAttribute getGenListOfInteger_Elements();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfLong
-   * <em>Gen List Of Long</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfLong <em>Gen List Of Long</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Gen List Of Long</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfLong
    * @generated
@@ -593,10 +641,9 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EClass getGenListOfLong();
 
   /**
-   * Returns the meta object for the attribute list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfLong#getElements <em>Elements</em>}'. <!-- begin-user-doc
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfLong#getElements <em>Elements</em>}'.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfLong#getElements()
    * @see #getGenListOfLong()
@@ -605,9 +652,8 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EAttribute getGenListOfLong_Elements();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfBoolean
-   * <em>Gen List Of Boolean</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfBoolean <em>Gen List Of Boolean</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Gen List Of Boolean</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfBoolean
    * @generated
@@ -627,9 +673,8 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EAttribute getGenListOfBoolean_Elements();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfShort
-   * <em>Gen List Of Short</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfShort <em>Gen List Of Short</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Gen List Of Short</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfShort
    * @generated
@@ -637,10 +682,9 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EClass getGenListOfShort();
 
   /**
-   * Returns the meta object for the attribute list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfShort#getElements <em>Elements</em>}'. <!-- begin-user-doc
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfShort#getElements <em>Elements</em>}'.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfShort#getElements()
    * @see #getGenListOfShort()
@@ -649,9 +693,8 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EAttribute getGenListOfShort_Elements();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfFloat
-   * <em>Gen List Of Float</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfFloat <em>Gen List Of Float</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Gen List Of Float</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfFloat
    * @generated
@@ -659,10 +702,9 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EClass getGenListOfFloat();
 
   /**
-   * Returns the meta object for the attribute list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfFloat#getElements <em>Elements</em>}'. <!-- begin-user-doc
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfFloat#getElements <em>Elements</em>}'.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfFloat#getElements()
    * @see #getGenListOfFloat()
@@ -671,9 +713,8 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EAttribute getGenListOfFloat_Elements();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfDouble
-   * <em>Gen List Of Double</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfDouble <em>Gen List Of Double</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Gen List Of Double</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfDouble
    * @generated
@@ -681,10 +722,9 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EClass getGenListOfDouble();
 
   /**
-   * Returns the meta object for the attribute list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfDouble#getElements <em>Elements</em>}'. <!-- begin-user-doc
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfDouble#getElements <em>Elements</em>}'.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfDouble#getElements()
    * @see #getGenListOfDouble()
@@ -693,9 +733,8 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EAttribute getGenListOfDouble_Elements();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfDate
-   * <em>Gen List Of Date</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfDate <em>Gen List Of Date</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Gen List Of Date</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfDate
    * @generated
@@ -703,10 +742,9 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EClass getGenListOfDate();
 
   /**
-   * Returns the meta object for the attribute list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfDate#getElements <em>Elements</em>}'. <!-- begin-user-doc
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfDate#getElements <em>Elements</em>}'.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfDate#getElements()
    * @see #getGenListOfDate()
@@ -715,9 +753,8 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EAttribute getGenListOfDate_Elements();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfChar
-   * <em>Gen List Of Char</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfChar <em>Gen List Of Char</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Gen List Of Char</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfChar
    * @generated
@@ -725,10 +762,9 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EClass getGenListOfChar();
 
   /**
-   * Returns the meta object for the attribute list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfChar#getElements <em>Elements</em>}'. <!-- begin-user-doc
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfChar#getElements <em>Elements</em>}'.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfChar#getElements()
    * @see #getGenListOfChar()
@@ -737,9 +773,8 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EAttribute getGenListOfChar_Elements();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfIntArray
-   * <em>Gen List Of Int Array</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfIntArray <em>Gen List Of Int Array</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Gen List Of Int Array</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model5.GenListOfIntArray
    * @generated
@@ -759,17 +794,81 @@ public interface Model5Package extends org.eclipse.emf.cdo.tests.model5.Model5Pa
   EAttribute getGenListOfIntArray_Elements();
 
   /**
-   * Returns the meta object for data type '<em>Int Array</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return the meta object for data type '<em>Int Array</em>'.
-   * @model instanceClass="int[]"
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.Parent <em>Parent</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Parent</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model5.Parent
    * @generated
    */
+  EClass getParent();
+
+  /**
+  	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.legacy.model5.Parent#getChildren <em>Children</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the containment reference list '<em>Children</em>'.
+  	 * @see org.eclipse.emf.cdo.tests.legacy.model5.Parent#getChildren()
+  	 * @see #getParent()
+  	 * @generated
+  	 */
+  EReference getParent_Children();
+
+  /**
+  	 * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.legacy.model5.Parent#getFavourite <em>Favourite</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the reference '<em>Favourite</em>'.
+  	 * @see org.eclipse.emf.cdo.tests.legacy.model5.Parent#getFavourite()
+  	 * @see #getParent()
+  	 * @generated
+  	 */
+  EReference getParent_Favourite();
+
+  /**
+  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.Child <em>Child</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for class '<em>Child</em>'.
+  	 * @see org.eclipse.emf.cdo.tests.legacy.model5.Child
+  	 * @generated
+  	 */
+  EClass getChild();
+
+  /**
+  	 * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.legacy.model5.Child#getParent <em>Parent</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the container reference '<em>Parent</em>'.
+  	 * @see org.eclipse.emf.cdo.tests.legacy.model5.Child#getParent()
+  	 * @see #getChild()
+  	 * @generated
+  	 */
+  EReference getChild_Parent();
+
+  /**
+  	 * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.legacy.model5.Child#getPreferredBy <em>Preferred By</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the reference '<em>Preferred By</em>'.
+  	 * @see org.eclipse.emf.cdo.tests.legacy.model5.Child#getPreferredBy()
+  	 * @see #getChild()
+  	 * @generated
+  	 */
+  EReference getChild_PreferredBy();
+
+  /**
+  	 * Returns the meta object for data type '<em>Int Array</em>'.
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @return the meta object for data type '<em>Int Array</em>'.
+  	 * @model instanceClass="int[]"
+  	 * @generated
+  	 */
   EDataType getIntArray();
 
   /**
-   * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the factory that creates the instances of the model.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the factory that creates the instances of the model.
    * @generated
    */

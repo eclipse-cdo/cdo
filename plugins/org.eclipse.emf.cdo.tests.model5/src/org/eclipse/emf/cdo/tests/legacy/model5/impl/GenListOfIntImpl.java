@@ -36,15 +36,14 @@ public class GenListOfIntImpl extends EObjectImpl implements GenListOfInt
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
-   * The cached value of the '{@link #getElements() <em>Elements</em>}' attribute list. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getElements() <em>Elements</em>}' attribute list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getElements()
    * @generated
    * @ordered
@@ -53,7 +52,6 @@ public class GenListOfIntImpl extends EObjectImpl implements GenListOfInt
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected GenListOfIntImpl()
@@ -63,7 +61,6 @@ public class GenListOfIntImpl extends EObjectImpl implements GenListOfInt
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -74,7 +71,6 @@ public class GenListOfIntImpl extends EObjectImpl implements GenListOfInt
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<Integer> getElements()
@@ -88,7 +84,6 @@ public class GenListOfIntImpl extends EObjectImpl implements GenListOfInt
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -104,7 +99,6 @@ public class GenListOfIntImpl extends EObjectImpl implements GenListOfInt
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -123,7 +117,6 @@ public class GenListOfIntImpl extends EObjectImpl implements GenListOfInt
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -140,7 +133,6 @@ public class GenListOfIntImpl extends EObjectImpl implements GenListOfInt
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -156,7 +148,6 @@ public class GenListOfIntImpl extends EObjectImpl implements GenListOfInt
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

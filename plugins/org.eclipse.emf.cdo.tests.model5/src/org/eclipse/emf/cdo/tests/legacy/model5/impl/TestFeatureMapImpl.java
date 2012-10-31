@@ -45,15 +45,14 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
-   * The cached value of the '{@link #getManagers() <em>Managers</em>}' reference list. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getManagers() <em>Managers</em>}' reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getManagers()
    * @generated
    * @ordered
@@ -61,9 +60,9 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
   protected EList<Manager> managers;
 
   /**
-   * The cached value of the '{@link #getDoctors() <em>Doctors</em>}' reference list. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getDoctors() <em>Doctors</em>}' reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getDoctors()
    * @generated
    * @ordered
@@ -71,9 +70,9 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
   protected EList<Doctor> doctors;
 
   /**
-   * The cached value of the '{@link #getPeople() <em>People</em>}' attribute list. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getPeople() <em>People</em>}' attribute list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getPeople()
    * @generated
    * @ordered
@@ -82,7 +81,6 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected TestFeatureMapImpl()
@@ -92,7 +90,6 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -103,7 +100,6 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<Manager> getManagers()
@@ -117,7 +113,6 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<Doctor> getDoctors()
@@ -131,7 +126,6 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public FeatureMap getPeople()
@@ -145,7 +139,6 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -161,7 +154,6 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -183,7 +175,6 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -209,7 +200,6 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -232,7 +222,6 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -252,7 +241,6 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

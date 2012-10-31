@@ -33,56 +33,52 @@ import org.eclipse.emf.ecore.util.FeatureMap;
 public interface TestFeatureMap extends EObject
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
-  /**
-   * Returns the value of the '<em><b>Managers</b></em>' reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.tests.model5.Manager}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Managers</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.tests.model5.Manager}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Managers</em>' containment reference list isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Managers</em>' reference list.
    * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getTestFeatureMap_Managers()
-   * @model transient="true" extendedMetaData="group='#people'"
+   * @model transient="true"
+   *        extendedMetaData="group='#people'"
    * @generated
    */
   EList<Manager> getManagers();
 
   /**
-   * Returns the value of the '<em><b>Doctors</b></em>' reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.tests.model5.Doctor}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Doctors</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.tests.model5.Doctor}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Doctors</em>' containment reference list isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Doctors</em>' reference list.
    * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getTestFeatureMap_Doctors()
-   * @model transient="true" extendedMetaData="group='#people'"
+   * @model transient="true"
+   *        extendedMetaData="group='#people'"
    * @generated
    */
   EList<Doctor> getDoctors();
 
   /**
-   * Returns the value of the '<em><b>People</b></em>' attribute list. The list contents are of type
-   * {@link org.eclipse.emf.ecore.util.FeatureMap.Entry}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>People</b></em>' attribute list.
+   * The list contents are of type {@link org.eclipse.emf.ecore.util.FeatureMap.Entry}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>People</em>' attribute list isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>People</em>' attribute list.
    * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getTestFeatureMap_People()
-   * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true" extendedMetaData="kind='group'"
+   * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
+   *        extendedMetaData="kind='group'"
    * @generated
    */
   FeatureMap getPeople();

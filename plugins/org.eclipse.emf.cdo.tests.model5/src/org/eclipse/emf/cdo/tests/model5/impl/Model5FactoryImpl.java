@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.model5.impl;
 
+import org.eclipse.emf.cdo.tests.model5.Child;
 import org.eclipse.emf.cdo.tests.model5.Doctor;
 import org.eclipse.emf.cdo.tests.model5.GenListOfBoolean;
 import org.eclipse.emf.cdo.tests.model5.GenListOfChar;
@@ -25,6 +26,7 @@ import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Model5Factory;
 import org.eclipse.emf.cdo.tests.model5.Model5Package;
+import org.eclipse.emf.cdo.tests.model5.Parent;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 
 import org.eclipse.emf.ecore.EClass;
@@ -36,21 +38,13 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 {
   /**
+   * Creates the default factory implementation.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
-  /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public static Model5Factory init()
@@ -72,8 +66,8 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public Model5FactoryImpl()
@@ -83,7 +77,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -119,6 +112,10 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
       return createGenListOfChar();
     case Model5Package.GEN_LIST_OF_INT_ARRAY:
       return createGenListOfIntArray();
+    case Model5Package.PARENT:
+      return createParent();
+    case Model5Package.CHILD:
+      return createChild();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -126,7 +123,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -143,7 +139,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -160,7 +155,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public TestFeatureMap createTestFeatureMap()
@@ -171,7 +165,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Manager createManager()
@@ -182,7 +175,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Doctor createDoctor()
@@ -193,7 +185,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public GenListOfInt createGenListOfInt()
@@ -204,7 +195,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public GenListOfInteger createGenListOfInteger()
@@ -215,7 +205,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public GenListOfLong createGenListOfLong()
@@ -226,7 +215,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public GenListOfBoolean createGenListOfBoolean()
@@ -237,7 +225,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public GenListOfShort createGenListOfShort()
@@ -248,7 +235,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public GenListOfFloat createGenListOfFloat()
@@ -259,7 +245,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public GenListOfDouble createGenListOfDouble()
@@ -270,7 +255,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public GenListOfDate createGenListOfDate()
@@ -281,7 +265,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public GenListOfChar createGenListOfChar()
@@ -292,7 +275,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public GenListOfIntArray createGenListOfIntArray()
@@ -302,10 +284,31 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public Parent createParent()
+  {
+    ParentImpl parent = new ParentImpl();
+    return parent;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public Child createChild()
+  {
+    ChildImpl child = new ChildImpl();
+    return child;
+  }
+
+  /**
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public int[] createIntArrayFromString(EDataType eDataType, String initialValue)
   {
     return (int[])super.createFromString(initialValue);
@@ -313,7 +316,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String convertIntArrayToString(EDataType eDataType, Object instanceValue)
@@ -323,7 +325,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public GenListOfString createGenListOfString()
@@ -334,7 +335,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Model5Package getModel5Package()
@@ -344,7 +344,6 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

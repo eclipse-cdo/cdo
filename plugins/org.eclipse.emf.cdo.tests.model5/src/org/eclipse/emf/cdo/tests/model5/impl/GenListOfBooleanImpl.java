@@ -24,24 +24,16 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfBooleanImpl#getElements <em>Elements</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfBooleanImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class GenListOfBooleanImpl extends CDOObjectImpl implements GenListOfBoolean
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected GenListOfBooleanImpl()
@@ -51,7 +43,6 @@ public class GenListOfBooleanImpl extends CDOObjectImpl implements GenListOfBool
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -62,7 +53,6 @@ public class GenListOfBooleanImpl extends CDOObjectImpl implements GenListOfBool
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -73,7 +63,6 @@ public class GenListOfBooleanImpl extends CDOObjectImpl implements GenListOfBool
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

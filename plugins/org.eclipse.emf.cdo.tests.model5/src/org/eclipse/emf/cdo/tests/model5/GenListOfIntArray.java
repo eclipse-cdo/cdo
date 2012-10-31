@@ -16,13 +16,14 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Gen List Of Int Array</b></em>'. <!--
  * end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model5.GenListOfIntArray#getElements <em>Elements</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model5.GenListOfIntArray#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getGenListOfIntArray()
  * @model
  * @generated
@@ -30,21 +31,14 @@ import org.eclipse.emf.ecore.EObject;
 public interface GenListOfIntArray extends EObject
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
-  /**
-   * Returns the value of the '<em><b>Elements</b></em>' attribute list. The list contents are of type {@link int}[].
+   * Returns the value of the '<em><b>Elements</b></em>' attribute list.
+   * The list contents are of type {@link int}[].
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Elements</em>' attribute list isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Elements</em>' attribute list.
    * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getGenListOfIntArray_Elements()
    * @model dataType="org.eclipse.emf.cdo.tests.model5.IntArray"

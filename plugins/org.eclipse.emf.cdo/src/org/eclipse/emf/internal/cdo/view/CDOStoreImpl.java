@@ -498,8 +498,10 @@ public final class CDOStoreImpl implements CDOStore
       CDOFeatureDelta delta = new CDORemoveFeatureDeltaImpl(feature, index);
       InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
 
-      oldValue = revision.remove(feature, index);
-      return convertToEMF(eObject, revision, feature, index, oldValue);
+      oldValue = revision.get(feature, index);
+      Object emfObject = convertToEMF(eObject, revision, feature, index, oldValue);
+      revision.remove(feature, index);
+      return emfObject;
     }
   }
 

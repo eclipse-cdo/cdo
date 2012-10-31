@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.legacy.model5.impl;
 import org.eclipse.emf.cdo.tests.legacy.model5.Model5Package;
 import org.eclipse.emf.cdo.tests.model5.Child;
 import org.eclipse.emf.cdo.tests.model5.Parent;
+import org.eclipse.emf.cdo.tests.model5.util.IsLoadingTestFixture;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -31,6 +32,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.ChildImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.ChildImpl#getPreferredBy <em>Preferred By</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.ChildImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -56,10 +58,30 @@ public class ChildImpl extends EObjectImpl implements Child
   protected Parent preferredBy;
 
   /**
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @see #getName()
    * @generated
+   * @ordered
    */
+  protected static final String NAME_EDEFAULT = null;
+
+  /**
+  	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @see #getName()
+  	 * @generated
+  	 * @ordered
+  	 */
+  protected String name = NAME_EDEFAULT;
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected ChildImpl()
   {
     super();
@@ -229,6 +251,37 @@ public class ChildImpl extends EObjectImpl implements Child
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getName()
+  {
+    return name;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public void setNameGen(String newName)
+  {
+    String oldName = name;
+    name = newName;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, Model5Package.CHILD__NAME, oldName, name));
+    }
+  }
+
+  public void setName(String newName)
+  {
+    IsLoadingTestFixture.reportLoading(eResource(), this);
+    setNameGen(newName);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -302,6 +355,8 @@ public class ChildImpl extends EObjectImpl implements Child
         return getPreferredBy();
       }
       return basicGetPreferredBy();
+    case Model5Package.CHILD__NAME:
+      return getName();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -321,6 +376,9 @@ public class ChildImpl extends EObjectImpl implements Child
       return;
     case Model5Package.CHILD__PREFERRED_BY:
       setPreferredBy((Parent)newValue);
+      return;
+    case Model5Package.CHILD__NAME:
+      setName((String)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -342,6 +400,9 @@ public class ChildImpl extends EObjectImpl implements Child
     case Model5Package.CHILD__PREFERRED_BY:
       setPreferredBy((Parent)null);
       return;
+    case Model5Package.CHILD__NAME:
+      setName(NAME_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -360,8 +421,30 @@ public class ChildImpl extends EObjectImpl implements Child
       return getParent() != null;
     case Model5Package.CHILD__PREFERRED_BY:
       return preferredBy != null;
+    case Model5Package.CHILD__NAME:
+      return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy())
+    {
+      return super.toString();
+    }
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (name: ");
+    result.append(name);
+    result.append(')');
+    return result.toString();
   }
 
 } // ChildImpl

@@ -1,0 +1,103 @@
+/*
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Christian W. Damus (CEA) - initial API and implementation
+ */
+package org.eclipse.emf.cdo.tests.model5.util;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import junit.framework.Assert;
+
+/**
+ * Test fixture for the CDO resource "is loading" tests. Bug 393164.
+ */
+public class IsLoadingTestFixture
+{
+  private static IsLoadingTestFixture instance;
+
+  private Map<Resource, Set<EObject>> objectsReportedLoading = new HashMap<Resource, Set<EObject>>();
+
+  private IsLoadingTestFixture()
+  {
+  }
+
+  public static IsLoadingTestFixture newInstance()
+  {
+    IsLoadingTestFixture result = new IsLoadingTestFixture();
+    instance = result;
+    return result;
+  }
+
+  public void dispose()
+  {
+    if (instance == this)
+    {
+      instance = null;
+    }
+
+    objectsReportedLoading.clear();
+  }
+
+  public static void reportLoading(Resource resource, EObject object)
+  {
+    if (instance != null)
+    {
+      instance.doReportLoading(resource, object);
+    }
+  }
+
+  private Set<EObject> demandObjectsReportedLoading(Resource resource)
+  {
+    Set<EObject> result = objectsReportedLoading.get(resource);
+    if (result == null)
+    {
+      result = new java.util.HashSet<EObject>();
+      objectsReportedLoading.put(resource, result);
+    }
+
+    return result;
+  }
+
+  private Set<EObject> getObjectsReportedLoading(Resource resource)
+  {
+    Set<EObject> result = objectsReportedLoading.get(resource);
+    if (result == null)
+    {
+      result = Collections.emptySet();
+    }
+
+    return result;
+  }
+
+  private void doReportLoading(Resource resource, EObject object)
+  {
+    if (resource instanceof Resource.Internal && ((Resource.Internal)resource).isLoading())
+    {
+      demandObjectsReportedLoading(resource).add(object);
+    }
+  }
+
+  public void assertReportedLoading(Resource resource, EObject object)
+  {
+    Assert.assertEquals("Object did not report loading: " + object, true,
+        getObjectsReportedLoading(resource).contains(object));
+  }
+
+  public void assertNotReportedLoading(Resource resource, EObject object)
+  {
+    Assert.assertEquals("Object reported loading: " + object, false,
+        getObjectsReportedLoading(resource).contains(object));
+  }
+}

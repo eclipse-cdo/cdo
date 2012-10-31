@@ -141,20 +141,20 @@ public interface Model5Factory extends EFactory
   Parent createParent();
 
   /**
-  	 * Returns a new object of class '<em>Child</em>'.
-  	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>Child</em>'.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @return a new object of class '<em>Child</em>'.
-  	 * @generated
-  	 */
+   * @return a new object of class '<em>Child</em>'.
+   * @generated
+   */
   Child createChild();
 
   /**
-  	 * Returns a new object of class '<em>Gen List Of String</em>'.
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @return a new object of class '<em>Gen List Of String</em>'.
-  	 * @generated
-  	 */
+   * Returns a new object of class '<em>Gen List Of String</em>'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @return a new object of class '<em>Gen List Of String</em>'.
+   * @generated
+   */
   GenListOfString createGenListOfString();
 
   /**

@@ -295,10 +295,10 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public Child createChild()
   {
     ChildImpl child = new ChildImpl();
@@ -306,9 +306,9 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
   }
 
   /**
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public int[] createIntArrayFromString(EDataType eDataType, String initialValue)
   {
     return (int[])super.createFromString(initialValue);

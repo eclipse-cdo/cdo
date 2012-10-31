@@ -434,75 +434,93 @@ public interface Model5Package extends EPackage
   int PARENT = 14;
 
   /**
-  	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Children</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int PARENT__CHILDREN = 0;
 
   /**
-  	 * The feature id for the '<em><b>Favourite</b></em>' reference.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Favourite</b></em>' reference.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int PARENT__FAVOURITE = 1;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARENT__NAME = 2;
 
   /**
   	 * The number of structural features of the '<em>Parent</em>' class.
   	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
   	 * @generated
   	 * @ordered
   	 */
-  int PARENT_FEATURE_COUNT = 2;
+  int PARENT_FEATURE_COUNT = 3;
 
   /**
-  	 * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.impl.ChildImpl <em>Child</em>}' class.
-  	 * <!-- begin-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.impl.ChildImpl <em>Child</em>}' class.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @see org.eclipse.emf.cdo.tests.model5.impl.ChildImpl
-  	 * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getChild()
-  	 * @generated
-  	 */
+   * @see org.eclipse.emf.cdo.tests.model5.impl.ChildImpl
+   * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getChild()
+   * @generated
+   */
   int CHILD = 15;
 
   /**
-  	 * The feature id for the '<em><b>Parent</b></em>' container reference.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Parent</b></em>' container reference.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int CHILD__PARENT = 0;
 
   /**
-  	 * The feature id for the '<em><b>Preferred By</b></em>' reference.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Preferred By</b></em>' reference.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int CHILD__PREFERRED_BY = 1;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CHILD__NAME = 2;
 
   /**
   	 * The number of structural features of the '<em>Child</em>' class.
   	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
   	 * @generated
   	 * @ordered
   	 */
-  int CHILD_FEATURE_COUNT = 2;
+  int CHILD_FEATURE_COUNT = 3;
 
   /**
-  	 * The meta object id for the '<em>Int Array</em>' data type.
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getIntArray()
-  	 * @generated
-  	 */
+   * The meta object id for the '<em>Int Array</em>' data type.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getIntArray()
+   * @generated
+   */
   int INT_ARRAY = 16;
 
   /**
@@ -769,31 +787,42 @@ public interface Model5Package extends EPackage
   EClass getParent();
 
   /**
-  	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model5.Parent#getChildren <em>Children</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model5.Parent#getChildren <em>Children</em>}'.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @return the meta object for the containment reference list '<em>Children</em>'.
-  	 * @see org.eclipse.emf.cdo.tests.model5.Parent#getChildren()
-  	 * @see #getParent()
-  	 * @generated
-  	 */
+   * @return the meta object for the containment reference list '<em>Children</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.Parent#getChildren()
+   * @see #getParent()
+   * @generated
+   */
   EReference getParent_Children();
 
   /**
-  	 * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model5.Parent#getFavourite <em>Favourite</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model5.Parent#getFavourite <em>Favourite</em>}'.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @return the meta object for the reference '<em>Favourite</em>'.
-  	 * @see org.eclipse.emf.cdo.tests.model5.Parent#getFavourite()
-  	 * @see #getParent()
-  	 * @generated
-  	 */
+   * @return the meta object for the reference '<em>Favourite</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.Parent#getFavourite()
+   * @see #getParent()
+   * @generated
+   */
   EReference getParent_Favourite();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model5.Parent#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.Parent#getName()
+   * @see #getParent()
+   * @generated
+   */
+  EAttribute getParent_Name();
 
   /**
   	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.Child <em>Child</em>}'.
   	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
   	 * @return the meta object for class '<em>Child</em>'.
   	 * @see org.eclipse.emf.cdo.tests.model5.Child
   	 * @generated
@@ -801,26 +830,37 @@ public interface Model5Package extends EPackage
   EClass getChild();
 
   /**
-  	 * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.model5.Child#getParent <em>Parent</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.model5.Child#getParent <em>Parent</em>}'.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @return the meta object for the container reference '<em>Parent</em>'.
-  	 * @see org.eclipse.emf.cdo.tests.model5.Child#getParent()
-  	 * @see #getChild()
-  	 * @generated
-  	 */
+   * @return the meta object for the container reference '<em>Parent</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.Child#getParent()
+   * @see #getChild()
+   * @generated
+   */
   EReference getChild_Parent();
 
   /**
-  	 * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model5.Child#getPreferredBy <em>Preferred By</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model5.Child#getPreferredBy <em>Preferred By</em>}'.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @return the meta object for the reference '<em>Preferred By</em>'.
-  	 * @see org.eclipse.emf.cdo.tests.model5.Child#getPreferredBy()
-  	 * @see #getChild()
-  	 * @generated
-  	 */
+   * @return the meta object for the reference '<em>Preferred By</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.Child#getPreferredBy()
+   * @see #getChild()
+   * @generated
+   */
   EReference getChild_PreferredBy();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model5.Child#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.Child#getName()
+   * @see #getChild()
+   * @generated
+   */
+  EAttribute getChild_Name();
 
   /**
   	 * Returns the meta object for data type '<em>Int Array</em>'.

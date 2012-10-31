@@ -128,16 +128,16 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   private EClass parentEClass = null;
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   private EClass childEClass = null;
 
   /**
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   private EDataType intArrayEDataType = null;
 
   /**
@@ -452,28 +452,38 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EReference getParent_Children()
   {
     return (EReference)parentEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EReference getParent_Favourite()
   {
     return (EReference)parentEClass.getEStructuralFeatures().get(1);
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getParent_Name()
+  {
+    return (EAttribute)parentEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
   	 * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+    	 * <!-- end-user-doc -->
   	 * @generated
   	 */
   public EClass getChild()
@@ -482,23 +492,33 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EReference getChild_Parent()
   {
     return (EReference)childEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EReference getChild_PreferredBy()
   {
     return (EReference)childEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getChild_Name()
+  {
+    return (EAttribute)childEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -601,10 +621,12 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
     parentEClass = createEClass(PARENT);
     createEReference(parentEClass, PARENT__CHILDREN);
     createEReference(parentEClass, PARENT__FAVOURITE);
+    createEAttribute(parentEClass, PARENT__NAME);
 
     childEClass = createEClass(CHILD);
     createEReference(childEClass, CHILD__PARENT);
     createEReference(childEClass, CHILD__PREFERRED_BY);
+    createEAttribute(childEClass, CHILD__NAME);
 
     // Create data types
     intArrayEDataType = createEDataType(INT_ARRAY);
@@ -725,6 +747,8 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
     initEReference(getParent_Favourite(), this.getChild(), this.getChild_PreferredBy(), "favourite", null, 0, 1,
         Parent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getParent_Name(), ecorePackage.getEString(), "name", null, 0, 1, Parent.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(childEClass, Child.class, "Child", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getChild_Parent(), this.getParent(), this.getParent_Children(), "parent", null, 0, 1, Child.class,
@@ -733,6 +757,8 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
     initEReference(getChild_PreferredBy(), this.getParent(), this.getParent_Favourite(), "preferredBy", null, 0, 1,
         Child.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getChild_Name(), ecorePackage.getEString(), "name", null, 0, 1, Child.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(intArrayEDataType, int[].class, "IntArray", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

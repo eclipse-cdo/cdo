@@ -8,6 +8,7 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Christian W. Damus (CEA) - CDOResource isLoading() support
  */
 package org.eclipse.emf.cdo.tests;
 
@@ -23,12 +24,16 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.impl.ModelConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.VAT;
+import org.eclipse.emf.cdo.tests.model5.Child;
+import org.eclipse.emf.cdo.tests.model5.Parent;
+import org.eclipse.emf.cdo.tests.model5.util.IsLoadingTestFixture;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -62,6 +67,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -1789,6 +1795,60 @@ public class ResourceTest extends AbstractCDOTest
     finally
     {
       IOUtil.close(inputStream);
+    }
+  }
+
+  /**
+   * Bug 393164: Test the support for {@code XMLResource}-like
+   * {@link org.eclipse.emf.ecore.resource.Resource.Internal#isLoading()}
+   * behaviour in {@link CDOResource}s for legacy models.
+   */
+  @Requires(ModelConfig.CAPABILITY_LEGACY)
+  public void testResourceIsLoading_legacy() throws Exception
+  {
+    final IsLoadingTestFixture fixture = IsLoadingTestFixture.newInstance();
+
+    try
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+
+      CDOResource resource = transaction.createResource(getResourcePath("/my/resource1"));
+
+      Parent parent = getModel5Factory().createParent();
+      resource.getContents().add(parent);
+
+      parent.setName("parent");
+      fixture.assertNotReportedLoading(resource, parent);
+
+      Child child1 = getModel5Factory().createChild();
+      parent.getChildren().add(child1);
+      child1.setName("child1");
+      fixture.assertNotReportedLoading(resource, child1);
+
+      Child child2 = getModel5Factory().createChild();
+      parent.getChildren().add(child2);
+      child2.setName("child2");
+      fixture.assertNotReportedLoading(resource, child2);
+
+      transaction.commit();
+      session.close();
+
+      session = openSession();
+      transaction = session.openTransaction();
+      resource = transaction.getResource(getResourcePath("/my/resource1"));
+
+      for (Iterator<EObject> iter = resource.getAllContents(); iter.hasNext();)
+      {
+        // every object in the resource detected that it was being loaded
+        fixture.assertReportedLoading(resource, iter.next());
+      }
+
+      session.close();
+    }
+    finally
+    {
+      fixture.dispose();
     }
   }
 

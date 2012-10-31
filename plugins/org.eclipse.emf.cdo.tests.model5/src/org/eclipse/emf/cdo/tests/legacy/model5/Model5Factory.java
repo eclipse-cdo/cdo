@@ -31,7 +31,7 @@ import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
  * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
  * the model. <!-- end-user-doc -->
  * @see org.eclipse.emf.cdo.tests.legacy.model5.Model5Package
- * @generated
+ * @generated NOT
  */
 public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Factory
 {
@@ -170,20 +170,20 @@ public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Fa
   Parent createParent();
 
   /**
-  	 * Returns a new object of class '<em>Child</em>'.
-  	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>Child</em>'.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @return a new object of class '<em>Child</em>'.
-  	 * @generated
-  	 */
+   * @return a new object of class '<em>Child</em>'.
+   * @generated
+   */
   Child createChild();
 
   /**
-  	 * Returns the package supported by this factory.
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @return the package supported by this factory.
-  	 * @generated
-  	 */
+   * Returns the package supported by this factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @return the package supported by this factory.
+   * @generated
+   */
   Model5Package getModel5Package();
 
 } // Model5Factory

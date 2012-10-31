@@ -74,11 +74,13 @@
         eType="#//Child" containment="true" eOpposite="#//Child/parent"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="favourite" eType="#//Child"
         eOpposite="#//Child/preferredBy"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Child">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//Parent"
         eOpposite="#//Parent/children"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="preferredBy" eType="#//Parent"
         eOpposite="#//Parent/favourite"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

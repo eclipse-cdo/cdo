@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.model5.impl;
 import org.eclipse.emf.cdo.tests.model5.Child;
 import org.eclipse.emf.cdo.tests.model5.Model5Package;
 import org.eclipse.emf.cdo.tests.model5.Parent;
+import org.eclipse.emf.cdo.tests.model5.util.IsLoadingTestFixture;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
@@ -27,6 +28,7 @@ import org.eclipse.emf.ecore.EClass;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model5.impl.ChildImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model5.impl.ChildImpl#getPreferredBy <em>Preferred By</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model5.impl.ChildImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -104,6 +106,32 @@ public class ChildImpl extends CDOObjectImpl implements Child
   public void setPreferredBy(Parent newPreferredBy)
   {
     eSet(Model5Package.eINSTANCE.getChild_PreferredBy(), newPreferredBy);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public String getName()
+  {
+    return (String)eGet(Model5Package.eINSTANCE.getChild_Name(), true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setNameGen(String newName)
+  {
+    eSet(Model5Package.eINSTANCE.getChild_Name(), newName);
+  }
+
+  public void setName(String newName)
+  {
+    IsLoadingTestFixture.reportLoading(eResource(), this);
+    setNameGen(newName);
   }
 
 } // ChildImpl

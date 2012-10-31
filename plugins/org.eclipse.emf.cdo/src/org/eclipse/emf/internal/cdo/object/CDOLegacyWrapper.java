@@ -585,7 +585,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
             // do not set the feature to null. Otherwise the object will be removed from the container which is the
             // resource instead of the original container. As a result the object will be detached. See
             // MapTest.testEObjectToEObjectValueContainedMap for more information
-            if (object != instance.eContainer())
+            if (object != instance.eContainer() || !oppositeReference.isContainment())
             {
               instance.eInverseAdd((InternalEObject)object, featureID, baseClass, null);
             }

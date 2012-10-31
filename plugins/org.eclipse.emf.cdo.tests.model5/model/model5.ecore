@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model5"
-    nsURI="http://www.eclipse.org/emf/CDO/tests/model5/1.0.0" nsPrefix="model5">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model5" nsURI="http://www.eclipse.org/emf/CDO/tests/model5/1.0.0"
+    nsPrefix="model5">
   <eClassifiers xsi:type="ecore:EClass" name="TestFeatureMap">
     <eStructuralFeatures xsi:type="ecore:EReference" name="managers" upperBound="-1"
         eType="#//Manager" transient="true">
@@ -70,4 +69,16 @@
         eType="#//IntArray"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="IntArray" instanceClassName="int[]"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Parent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="#//Child" containment="true" eOpposite="#//Child/parent"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="favourite" eType="#//Child"
+        eOpposite="#//Child/preferredBy"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Child">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//Parent"
+        eOpposite="#//Parent/children"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="preferredBy" eType="#//Parent"
+        eOpposite="#//Parent/favourite"/>
+  </eClassifiers>
 </ecore:EPackage>

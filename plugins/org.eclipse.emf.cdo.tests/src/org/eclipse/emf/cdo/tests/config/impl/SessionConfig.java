@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA) - don't remove statically registered packages from registry
  */
 package org.eclipse.emf.cdo.tests.config.impl;
 
@@ -41,6 +42,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import java.io.File;
@@ -59,11 +61,15 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
   public static final String PROP_TEST_FETCH_RULE_MANAGER = "test.session.FetchRuleManager";
 
+  private static final Registry GLOBAL_REGISTRY = EPackage.Registry.INSTANCE;
+
   private static final long serialVersionUID = 1L;
 
   private transient Set<CDOSession> sessions;
 
   private transient IListener sessionListener;
+
+  private transient Set<String> globallyRegisteredPackageURIs;
 
   public SessionConfig(String name)
   {
@@ -131,6 +137,8 @@ public abstract class SessionConfig extends Config implements ISessionConfig
         }
       }
     };
+
+    globallyRegisteredPackageURIs = captureGlobalPackageRegistry();
   }
 
   @Override
@@ -165,7 +173,8 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     }
     finally
     {
-      removeDynamicPackagesFromGlobalRegistry();
+      removeDynamicPackagesFromGlobalRegistry(globallyRegisteredPackageURIs);
+      globallyRegisteredPackageURIs = null;
     }
   }
 
@@ -202,17 +211,29 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     CDOUtil.setLegacyModeDefault(true);
   }
 
-  private void removeDynamicPackagesFromGlobalRegistry()
+  private Set<String> captureGlobalPackageRegistry()
   {
-    EPackage.Registry registry = EPackage.Registry.INSTANCE;
-    for (String uri : registry.keySet().toArray(new String[registry.size()]))
+    return new HashSet<String>(GLOBAL_REGISTRY.keySet());
+  }
+
+  private void removeDynamicPackagesFromGlobalRegistry(Set<String> urisToProtect)
+  {
+    for (String uri : GLOBAL_REGISTRY.keySet().toArray(new String[GLOBAL_REGISTRY.size()]))
     {
-      Object object = registry.get(uri);
-      if (object != null && object.getClass() == EPackageImpl.class)
+      if (urisToProtect == null || !urisToProtect.contains(uri))
       {
-        registry.remove(uri);
+        Object object = GLOBAL_REGISTRY.get(uri); // Prevent resolving descriptors
+        if (isDynamicPackage(object))
+        {
+          GLOBAL_REGISTRY.remove(uri);
+        }
       }
     }
+  }
+
+  private boolean isDynamicPackage(Object object)
+  {
+    return object != null && object.getClass() == EPackageImpl.class;
   }
 
   /**

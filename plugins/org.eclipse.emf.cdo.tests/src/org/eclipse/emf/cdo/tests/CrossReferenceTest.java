@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA) - test case for cross-reference to container
  */
 package org.eclipse.emf.cdo.tests;
 
@@ -17,6 +18,8 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
+import org.eclipse.emf.cdo.tests.model5.Child;
+import org.eclipse.emf.cdo.tests.model5.Parent;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -484,5 +487,41 @@ public class CrossReferenceTest extends AbstractCDOTest
 
     externalResource.getContents().remove(customer);
     transaction.commit(); // Should be dangling reference now, but we can not detect ;-(
+  }
+
+  /**
+   * Bug 369253: bidirectional cross-reference between containing and contained object that
+   * is not a containment reference. 
+   */
+  public void testCrossCreferenceBetweenContainerAndContained() throws Exception
+  {
+    Parent parent = getModel5Factory().createParent();
+    Child blackSheep = getModel5Factory().createChild();
+    Child whiteSheep = getModel5Factory().createChild();
+
+    // children *is* a containment reference
+    parent.getChildren().add(blackSheep);
+    parent.getChildren().add(whiteSheep);
+
+    // favourite *is not* a containment reference
+    parent.setFavourite(whiteSheep);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
+    resource.getContents().add(parent);
+    transaction.commit();
+    session.close();
+
+    session = openSession();
+    transaction = session.openTransaction();
+    resource = transaction.getResource(getResourcePath("/my/resource"));
+    EList<EObject> contents = resource.getContents();
+    assertEquals(1, contents.size());
+
+    Parent newParent = (Parent)contents.get(0);
+    assertEquals(2, newParent.getChildren().size());
+    assertSame(newParent.getChildren().get(1), newParent.getFavourite());
+    assertSame(newParent, newParent.getChildren().get(1).getPreferredBy());
   }
 }

@@ -21,7 +21,7 @@ import java.util.Map;
 
 /**
  * A strategy used to customize the default conflict resolution behaviour of {@link CDOTransaction transactions}.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  */
@@ -33,10 +33,10 @@ public interface CDOConflictResolver2 extends CDOConflictResolver
    * Depending on the decisions taken to resolve the conflict, it may be necessary to adjust the notifications that will
    * be sent to the adapters in the current transaction. This can be achieved by adjusting the {@link CDORevisionDelta}
    * in <code>deltas</code>.
-   * 
+   *
    * @param conflicts
    *          A map that contains the local objects with conflicts as the keys. Each value in this map is a {@link Pair
-   *          pair} that <b>optionally</b> contains the old remote revision (<i>ancestor</i>) as element1 and the remote
+   *          pair} that <b>optionally</b> contains the old local revision (<i>ancestor</i>) as element1 and the remote
    *          delta as element2. Any of the pair elements can be <code>null</code> if it is not possible to determine it
    *          locally (depends on local revision caching and server behaviour regarding transmission of deltas instead
    *          of invalidations).

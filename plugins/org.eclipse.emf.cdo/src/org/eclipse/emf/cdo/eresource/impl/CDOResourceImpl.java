@@ -106,7 +106,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @generated
  */
-public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOResource, Resource.Internal
+public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOResource
 {
   private static final EReference CDO_RESOURCE_CONTENTS = EresourcePackage.eINSTANCE.getCDOResource_Contents();
 
@@ -171,6 +171,9 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    */
   private transient Map<String, EObject> intrinsicIDToEObjectMap;
 
+  /**
+   * @ADDED
+   */
   private transient AtomicInteger loadingCounter = new AtomicInteger();
 
   /**
@@ -844,6 +847,39 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   }
 
   /**
+   * @ADDED
+   */
+  public boolean isLoading()
+  {
+    return loading;
+  }
+
+  /**
+   * @ADDED
+   * @since 4.2
+   */
+  public void cdoInternalLoading(EObject object)
+  {
+    if (loadingCounter.incrementAndGet() == 1)
+    {
+      loading = true;
+    }
+  }
+
+  /**
+   * @ADDED
+   * @since 4.2
+   */
+  public void cdoInternalLoadingDone(EObject object)
+  {
+    if (loadingCounter.decrementAndGet() == 0)
+    {
+      loading = false;
+    }
+  }
+
+  /**
+   * @ADDED
    * @since 2.0
    */
   @Override
@@ -1514,36 +1550,6 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     }
 
     return notifications;
-  }
-
-  /**
-   * @ADDED
-   */
-  public boolean isLoading()
-  {
-    return loading;
-  }
-
-  /**
-   * @since 4.2
-   */
-  public void cdoInternalLoading(EObject object)
-  {
-    if (loadingCounter.incrementAndGet() == 1)
-    {
-      loading = true;
-    }
-  }
-
-  /**
-   * @since 4.2
-   */
-  public void cdoInternalDoneLoading(EObject object)
-  {
-    if (loadingCounter.decrementAndGet() == 0)
-    {
-      loading = false;
-    }
   }
 
   /**

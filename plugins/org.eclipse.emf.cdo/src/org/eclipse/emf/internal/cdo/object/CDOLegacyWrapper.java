@@ -393,8 +393,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
 
     Counter counter = recursionCounter.get();
-
-    Resource resource = null;
+    InternalCDOResource resource = null;
 
     try
     {
@@ -403,10 +402,11 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       view.registerObject(this);
 
       revisionToInstanceResource();
-      resource = instance.eDirectResource();
-      if (resource instanceof InternalCDOResource)
+      Resource eResource = instance.eResource();
+      if (eResource instanceof InternalCDOResource)
       {
-        ((InternalCDOResource)resource).cdoInternalLoading(instance);
+        resource = (InternalCDOResource)eResource;
+        resource.cdoInternalLoading(instance);
       }
 
       revisionToInstanceContainer();
@@ -430,9 +430,9 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
     finally
     {
-      if (resource instanceof InternalCDOResource)
+      if (resource != null)
       {
-        ((InternalCDOResource)resource).cdoInternalDoneLoading(instance);
+        resource.cdoInternalLoadingDone(instance);
       }
 
       if (deliver)

@@ -506,16 +506,18 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       applyLocalIDMapping(changeSetData, result);
     }
 
+    CDOChangeSetData resultData = result.getChangeSetData();
+
     // New objects
-    applyNewObjects(changeSetData.getNewObjects(), result.getChangeSetData().getNewObjects());
+    applyNewObjects(changeSetData.getNewObjects(), resultData.getNewObjects());
 
     // Detached objects
-    Set<CDOObject> detachedSet = applyDetachedObjects(changeSetData.getDetachedObjects(), result.getChangeSetData()
-        .getDetachedObjects());
+    Set<CDOObject> detachedSet = applyDetachedObjects(changeSetData.getDetachedObjects(),
+        resultData.getDetachedObjects());
 
     // Changed objects
     Map<CDOID, InternalCDORevision> oldRevisions = applyChangedObjects(changeSetData.getChangedObjects(),
-        ancestorProvider, targetProvider, keepVersions, result.getChangeSetData().getChangedObjects());
+        ancestorProvider, targetProvider, keepVersions, resultData.getChangedObjects());
 
     // Delta notifications
     Collection<CDORevisionDelta> notificationDeltas = lastSavepoint.getRevisionDeltas2().values();
@@ -617,6 +619,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     Map<CDOID, InternalCDORevision> oldRevisions = new HashMap<CDOID, InternalCDORevision>();
 
+    Map<CDOID, CDOObject> detachedObjects = lastSavepoint.getDetachedObjects();
     Map<CDOID, CDOObject> dirtyObjects = lastSavepoint.getDirtyObjects();
     Map<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas2();
 
@@ -664,9 +667,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         result.add(targetGoalDelta);
 
         // handle reattached objects.
-        if (lastSavepoint.getDetachedObjects().containsKey(id))
+        if (detachedObjects.containsKey(id))
         {
-          CDOStateMachine.INSTANCE.attach(object, this);
+          CDOStateMachine.INSTANCE.internalReattach(object, this);
         }
 
         object.cdoInternalSetState(CDOState.DIRTY);

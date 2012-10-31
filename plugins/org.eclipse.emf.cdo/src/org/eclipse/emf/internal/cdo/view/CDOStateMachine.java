@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.internal.cdo.view;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
@@ -507,6 +506,57 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     process(object, CDOEvent.ATTACH, null);
   }
 
+  public void internalReattach(InternalCDOObject object, InternalCDOTransaction transaction)
+  {
+    InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
+    InternalCDORevision cleanRevision = transaction.getCleanRevisions().get(object).copy();
+    CDOID id = cleanRevision.getID();
+
+    // Bug 373096: Determine clean revision of the CURRENT/LAST savepoint
+    InternalCDOSavepoint savepoint = transaction.getFirstSavepoint();
+    while (savepoint.getNextSavepoint() != null)
+    {
+      CDORevisionDelta delta = savepoint.getRevisionDeltas2().get(id);
+      if (delta != null)
+      {
+        delta.apply(cleanRevision);
+      }
+
+      savepoint = savepoint.getNextSavepoint();
+    }
+
+    object.cdoInternalSetID(id);
+    object.cdoInternalSetView(transaction);
+
+    // Construct a new revision
+    CDORevisionFactory factory = revisionManager.getFactory();
+    InternalCDORevision revision = (InternalCDORevision)factory.createRevision(object.eClass());
+    revision.setID(id);
+    revision.setBranchPoint(cleanRevision.getBranch().getHead());
+    revision.setVersion(cleanRevision.getVersion());
+
+    // Populate the revision based on the values in the CDOObject
+    object.cdoInternalSetRevision(revision);
+    object.cdoInternalPostAttach();
+
+    // Compute a revision delta and register it with the tx
+    CDORevisionDelta revisionDelta = revision.compare(cleanRevision);
+    if (revisionDelta.isEmpty())
+    {
+      changeState(object, CDOState.CLEAN);
+    }
+    else
+    {
+      transaction.registerRevisionDelta(revisionDelta);
+      transaction.registerDirty(object, (CDOFeatureDelta)null);
+      changeState(object, CDOState.DIRTY);
+    }
+
+    // Add the object to the set of reattached objects
+    InternalCDOSavepoint lastSavepoint = transaction.getLastSavepoint();
+    lastSavepoint.getReattachedObjects().put(id, object);
+  }
+
   /**
    * Prepares a tree of transient objects to be subsequently {@link AttachTransition attached} to a CDOView.
    * <p>
@@ -668,53 +718,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, InternalCDOTransaction transaction)
     {
-      InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
-      InternalCDORevision cleanRevision = transaction.getCleanRevisions().get(object).copy();
-      CDOID id = cleanRevision.getID();
-
-      // Bug 373096: Determine clean revision of the CURRENT/LAST savepoint
-      InternalCDOSavepoint savepoint = transaction.getFirstSavepoint();
-      while (savepoint.getNextSavepoint() != null)
-      {
-        CDORevisionDelta delta = savepoint.getRevisionDeltas2().get(id);
-        if (delta != null)
-        {
-          delta.apply(cleanRevision);
-        }
-
-        savepoint = savepoint.getNextSavepoint();
-      }
-
-      object.cdoInternalSetID(id);
-      object.cdoInternalSetView(transaction);
-
-      // Construct a new revision
-      CDORevisionFactory factory = revisionManager.getFactory();
-      InternalCDORevision revision = (InternalCDORevision)factory.createRevision(object.eClass());
-      revision.setID(id);
-      revision.setBranchPoint(cleanRevision.getBranch().getHead());
-      revision.setVersion(cleanRevision.getVersion());
-
-      // Populate the revision based on the values in the CDOObject
-      object.cdoInternalSetRevision(revision);
-      object.cdoInternalPostAttach();
-
-      // Compute a revision delta and register it with the tx
-      CDORevisionDelta revisionDelta = revision.compare(cleanRevision);
-      if (revisionDelta.isEmpty())
-      {
-        changeState(object, CDOState.CLEAN);
-      }
-      else
-      {
-        transaction.registerRevisionDelta(revisionDelta);
-        transaction.registerDirty(object, (CDOFeatureDelta)null);
-        changeState(object, CDOState.DIRTY);
-      }
-
-      // Add the object to the set of reattached objects
-      Map<CDOID, CDOObject> reattachedObjects = transaction.getLastSavepoint().getReattachedObjects();
-      reattachedObjects.put(id, object);
+      internalReattach(object, transaction);
 
       // Bug 385268
       InternalEObject reattachedObject = object.cdoInternalInstance();

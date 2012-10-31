@@ -451,10 +451,8 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     final IIDHandler idHandler = getStore().getIDHandler();
     final CDOID[] min = { idHandler.getMaxCDOID() };
 
-    String dbName = getStore().getRepository().getName();
-
-    final String prefix = "SELECT MIN(\"t\"." + CDODBSchema.ATTRIBUTES_ID + ") FROM " + dbName + "."
-        + CDODBSchema.CDO_OBJECTS + " \"o\", " + dbName + ".";
+    final String prefix = "SELECT MIN(\"t\"." + CDODBSchema.ATTRIBUTES_ID + ") FROM " + CDODBSchema.CDO_OBJECTS
+        + " \"o\", ";
 
     final String suffix = " \"t\" WHERE \"t\"." + CDODBSchema.ATTRIBUTES_BRANCH + "<0 AND \"t\"."
         + CDODBSchema.ATTRIBUTES_ID + "=\"o\"." + CDODBSchema.ATTRIBUTES_ID + " AND \"t\"."

@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.id.CDOWithID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
@@ -210,6 +211,11 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     this.target = target;
   }
 
+  public int size()
+  {
+    return featureDeltas.size();
+  }
+
   public boolean isEmpty()
   {
     return featureDeltas.isEmpty();
@@ -304,7 +310,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     }
   }
 
-  private void compare(CDORevision originRevision, CDORevision dirtyRevision)
+  private void compare(final CDORevision originRevision, final CDORevision dirtyRevision)
   {
     CDORevisionData originData = originRevision.data();
     CDORevisionData dirtyData = dirtyRevision.data();
@@ -328,8 +334,8 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
             @Override
             public void analyzeLists(EList<Object> oldList, EList<?> newList, EList<ListChange> listChanges)
             {
-              checkNoProxies(oldList);
-              checkNoProxies(newList);
+              checkNoProxies(oldList, originRevision);
+              checkNoProxies(newList, dirtyRevision);
               super.analyzeLists(oldList, newList, listChanges);
             }
 
@@ -364,13 +370,22 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
               oldList.move(toIndex, index);
             }
 
-            private void checkNoProxies(EList<?> list)
+            @Override
+            protected boolean equal(Object originValue, Object dirtyValue)
             {
-              for (Object element : list)
+              return compare(originValue, dirtyValue);
+            }
+
+            private void checkNoProxies(EList<?> list, CDORevision revision)
+            {
+              if (!((InternalCDORevision)revision).isUnchunked())
               {
-                if (element instanceof CDOElementProxy || element == CDOListImpl.UNINITIALIZED)
+                for (Object element : list)
                 {
-                  throw new PartialCollectionLoadingNotSupportedException("List contains proxy elements");
+                  if (element instanceof CDOElementProxy || element == CDOListImpl.UNINITIALIZED)
+                  {
+                    throw new PartialCollectionLoadingNotSupportedException("List contains proxy elements");
+                  }
                 }
               }
             }
@@ -407,7 +422,31 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
 
   private boolean compare(Object originValue, Object dirtyValue)
   {
-    return originValue == dirtyValue || originValue != null && dirtyValue != null && originValue.equals(dirtyValue);
+    Object origin = convertEObject(originValue);
+    Object dirty = convertEObject(dirtyValue);
+
+    if (origin == null)
+    {
+      return dirty == null;
+    }
+
+    if (dirty == null)
+    {
+      return false;
+    }
+
+    return origin == dirty || origin.equals(dirty);
+  }
+
+  private Object convertEObject(Object value)
+  {
+    CDOID id = CDOIDUtil.getCDOID(value);
+    if (id != null)
+    {
+      return id;
+    }
+
+    return value;
   }
 
   @Override

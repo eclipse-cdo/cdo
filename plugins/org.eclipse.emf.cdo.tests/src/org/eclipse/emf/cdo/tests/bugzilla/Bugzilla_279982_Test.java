@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOStaleReferencePolicy;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 
 /**
  * Deadlock in CDOView
@@ -42,18 +43,18 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
     CDOResource res = tx.getOrCreateResource(getResourcePath("/resource1"));
     tx.options().setStaleReferencePolicy(CDOStaleReferencePolicy.PROXY);
     GenRefSingleContained container = getModel4Factory().createGenRefSingleContained();
-    GenRefSingleNonContained reference = getModel4Factory().createGenRefSingleNonContained();
+    GenRefSingleNonContained referencer = getModel4Factory().createGenRefSingleNonContained();
     GenRefSingleNonContained contained = getModel4Factory().createGenRefSingleNonContained();
     container.setElement(contained);
-    reference.setElement(contained);
+    referencer.setElement(contained);
     res.getContents().add(container);
-    res.getContents().add(reference);
+    res.getContents().add(referencer);
     tx.commit();
     container.setElement(null);
     tx.commit();
 
     assertNull(container.getElement());
-    EObject element = reference.getElement();
+    EObject element = referencer.getElement();
     assertNotNull(element);
 
     try
@@ -75,7 +76,7 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
 
     try
     {
-      reference.getElement();
+      referencer.getElement();
       fail("Should fail");
     }
     catch (ObjectNotFoundException ex)
@@ -87,8 +88,8 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
       fail("Should have an ObjectNotFoundException");
     }
 
-    CDOUtil.cleanStaleReference(reference, getModel4Package().getGenRefSingleNonContained_Element());
-    assertNull(reference.getElement());
+    CDOUtil.cleanStaleReference(referencer, getModel4Package().getGenRefSingleNonContained_Element());
+    assertNull(referencer.getElement());
     tx.commit();
 
     clearCache(session.getRevisionManager());
@@ -96,11 +97,11 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
     // Verification that the commit is good
     tx = session.openTransaction();
     res = tx.getOrCreateResource(getResourcePath("/resource1"));
-    reference = (GenRefSingleNonContained)res.getContents().get(1);
-    assertNull(reference.getElement());
+    referencer = (GenRefSingleNonContained)res.getContents().get(1);
+    assertNull(referencer.getElement());
   }
 
-  // As log as there is no getter interception, stale reference cannot be detected for legacy
+  // As long as there is no getter interception, stale reference cannot be detected for legacy
   @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testBugzilla_279982_Multi() throws Exception
   {
@@ -109,24 +110,24 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
     CDOResource res = tx.getOrCreateResource(getResourcePath("/resource1"));
     tx.options().setStaleReferencePolicy(CDOStaleReferencePolicy.PROXY);
     GenRefSingleContained container = getModel4Factory().createGenRefSingleContained();
-    GenRefMultiNonContained reference = getModel4Factory().createGenRefMultiNonContained();
+    GenRefMultiNonContained referencer = getModel4Factory().createGenRefMultiNonContained();
     GenRefSingleNonContained contained = getModel4Factory().createGenRefSingleNonContained();
     container.setElement(contained);
-    reference.getElements().add(contained);
+    referencer.getElements().add(contained);
     res.getContents().add(container);
-    res.getContents().add(reference);
+    res.getContents().add(referencer);
     tx.commit();
     container.setElement(null);
     tx.commit();
 
     assertNull(container.getElement());
-    assertNotNull(reference.getElements().get(0));
+    assertNotNull(referencer.getElements().get(0));
 
     tx.options().setStaleReferencePolicy(CDOStaleReferencePolicy.EXCEPTION);
 
     try
     {
-      reference.getElements().get(0);
+      referencer.getElements().get(0);
       fail("Should fail");
     }
     catch (ObjectNotFoundException ex)
@@ -138,8 +139,9 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
       fail("Should have an ObjectNotFoundException");
     }
 
-    CDOUtil.cleanStaleReference(reference, getModel4Package().getGenRefMultiNonContained_Elements(), 0);
-    assertEquals(0, reference.getElements().size());
+    EReference genRefMultiNonContained_Elements = getModel4Package().getGenRefMultiNonContained_Elements();
+    CDOUtil.cleanStaleReference(referencer, genRefMultiNonContained_Elements, 0);
+    assertEquals(0, referencer.getElements().size());
     tx.commit();
 
     clearCache(session.getRevisionManager());
@@ -147,8 +149,8 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
     // Verification that the commit is good
     tx = session.openTransaction();
     res = tx.getOrCreateResource(getResourcePath("/resource1"));
-    reference = (GenRefMultiNonContained)res.getContents().get(1);
-    assertEquals(0, reference.getElements().size());
+    referencer = (GenRefMultiNonContained)res.getContents().get(1);
+    assertEquals(0, referencer.getElements().size());
   }
 
   // As log as there is no getter interception, stale reference cannot be detected for legacy
@@ -161,14 +163,14 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
       CDOResource res = tx.getOrCreateResource(getResourcePath("/resource1"));
       // tx.options().setUnresolveableObjectToNullEnabled(true);
       GenRefSingleContained container = getModel4Factory().createGenRefSingleContained();
-      GenRefMultiNonContained reference = getModel4Factory().createGenRefMultiNonContained();
+      GenRefMultiNonContained referencer = getModel4Factory().createGenRefMultiNonContained();
       GenRefSingleNonContained contained = getModel4Factory().createGenRefSingleNonContained();
       GenRefSingleNonContained contained2 = getModel4Factory().createGenRefSingleNonContained();
       container.setElement(contained);
-      reference.getElements().add(contained);
-      reference.getElements().add(contained2);
+      referencer.getElements().add(contained);
+      referencer.getElements().add(contained2);
       res.getContents().add(container);
-      res.getContents().add(reference);
+      res.getContents().add(referencer);
       res.getContents().add(contained2);
       tx.commit();
       res.getContents().remove(contained2);

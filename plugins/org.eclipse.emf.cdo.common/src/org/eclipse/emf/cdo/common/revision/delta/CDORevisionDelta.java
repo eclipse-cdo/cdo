@@ -59,6 +59,11 @@ public interface CDORevisionDelta extends CDORevisionKey
   public CDORevisable getTarget();
 
   /**
+   * @since 4.2
+   */
+  public int size();
+
+  /**
    * @since 3.0
    */
   public boolean isEmpty();

@@ -61,6 +61,30 @@ public final class CDOIDUtil
   }
 
   /**
+   * @since 4.2
+   */
+  public static CDOID getCDOID(Object object)
+  {
+    if (object == null)
+    {
+      return CDOID.NULL;
+    }
+
+    if (object instanceof CDOID)
+    {
+      return (CDOID)object;
+    }
+
+    if (object instanceof CDOWithID)
+    {
+      CDOID id = ((CDOWithID)object).cdoID();
+      return id == null ? CDOID.NULL : id;
+    }
+
+    return null;
+  }
+
+  /**
    * @since 2.0
    */
   public static boolean isNull(CDOID id)

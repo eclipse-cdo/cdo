@@ -57,6 +57,11 @@ public class CDODetachedRevisionDeltaImpl implements CDORevisionDelta
     throw new UnsupportedOperationException();
   }
 
+  public int size()
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public boolean isEmpty()
   {
     throw new UnsupportedOperationException();

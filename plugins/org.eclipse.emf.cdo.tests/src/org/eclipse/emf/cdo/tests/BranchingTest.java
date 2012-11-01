@@ -1008,6 +1008,20 @@ public class BranchingTest extends AbstractCDOTest
     transaction.commit();
   }
 
+  /**
+   * Bug 383602: Branch with base after the last finished commit can be created
+   */
+  public void testFutureBaseTime() throws CommitException
+  {
+    CDOSession session = openSession1();
+    CDOBranchManager branchManager = session.getBranchManager();
+    CDOBranch mainBranch = branchManager.getMainBranch();
+
+    long future = System.currentTimeMillis() + 1000000L;
+    CDOBranch subBranch = mainBranch.createBranch("subBranch", future);
+    assertEquals(true, subBranch.getBase().getTimeStamp() < future);
+  }
+
   private void check(CDOSession session, CDOBranch branch, long timeStamp, String name)
   {
     CDOView view = session.openView(branch, timeStamp);

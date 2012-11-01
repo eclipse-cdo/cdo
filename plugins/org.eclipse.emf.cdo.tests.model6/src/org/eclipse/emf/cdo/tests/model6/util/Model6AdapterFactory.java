@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
+import org.eclipse.emf.cdo.tests.model6.Holdable;
+import org.eclipse.emf.cdo.tests.model6.Holder;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.MyEnumList;
 import org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable;
@@ -26,6 +28,7 @@ import org.eclipse.emf.cdo.tests.model6.PropertiesMap;
 import org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
+import org.eclipse.emf.cdo.tests.model6.Thing;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -194,6 +197,24 @@ public class Model6AdapterFactory extends AdapterFactoryImpl
     public Adapter caseMyEnumListUnsettable(MyEnumListUnsettable object)
     {
       return createMyEnumListUnsettableAdapter();
+    }
+
+    @Override
+    public Adapter caseHolder(Holder object)
+    {
+      return createHolderAdapter();
+    }
+
+    @Override
+    public Adapter caseThing(Thing object)
+    {
+      return createThingAdapter();
+    }
+
+    @Override
+    public Adapter caseHoldable(Holdable object)
+    {
+      return createHoldableAdapter();
     }
 
     @Override
@@ -453,6 +474,51 @@ public class Model6AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createMyEnumListUnsettableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model6.Holder <em>Holder</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model6.Holder
+   * @generated
+   */
+  public Adapter createHolderAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model6.Thing <em>Thing</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model6.Thing
+   * @generated
+   */
+  public Adapter createThingAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model6.Holdable <em>Holdable</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model6.Holdable
+   * @generated
+   */
+  public Adapter createHoldableAdapter()
   {
     return null;
   }

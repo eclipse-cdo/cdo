@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
+import org.eclipse.emf.cdo.tests.model6.Holdable;
+import org.eclipse.emf.cdo.tests.model6.Holder;
 import org.eclipse.emf.cdo.tests.model6.MyEnum;
 import org.eclipse.emf.cdo.tests.model6.MyEnumList;
 import org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable;
@@ -28,6 +30,7 @@ import org.eclipse.emf.cdo.tests.model6.PropertiesMap;
 import org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
+import org.eclipse.emf.cdo.tests.model6.Thing;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -152,6 +155,27 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * @generated
    */
   private EClass myEnumListUnsettableEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass holderEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass thingEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass holdableEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -668,6 +692,66 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getHolder()
+  {
+    return holderEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getHolder_Held()
+  {
+    return (EReference)holderEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getHolder_Owned()
+  {
+    return (EReference)holderEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getThing()
+  {
+    return thingEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getHoldable()
+  {
+    return holdableEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getHoldable_Name()
+  {
+    return (EAttribute)holdableEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EEnum getMyEnum()
   {
     return myEnumEEnum;
@@ -767,6 +851,15 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     myEnumListUnsettableEClass = createEClass(MY_ENUM_LIST_UNSETTABLE);
     createEAttribute(myEnumListUnsettableEClass, MY_ENUM_LIST_UNSETTABLE__MY_ENUM);
 
+    holderEClass = createEClass(HOLDER);
+    createEReference(holderEClass, HOLDER__HELD);
+    createEReference(holderEClass, HOLDER__OWNED);
+
+    thingEClass = createEClass(THING);
+
+    holdableEClass = createEClass(HOLDABLE);
+    createEAttribute(holdableEClass, HOLDABLE__NAME);
+
     // Create enums
     myEnumEEnum = createEEnum(MY_ENUM);
   }
@@ -803,6 +896,8 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     // Add supertypes to classes
     referenceObjectEClass.getESuperTypes().add(getBaseObject());
     containmentObjectEClass.getESuperTypes().add(getBaseObject());
+    holderEClass.getESuperTypes().add(getHoldable());
+    thingEClass.getESuperTypes().add(getHoldable());
 
     // Initialize classes and features; add operations and parameters
     initEClass(rootEClass, Root.class, "Root", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -933,6 +1028,20 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     initEAttribute(getMyEnumListUnsettable_MyEnum(), getMyEnum(), "myEnum", null, 0, -1, MyEnumListUnsettable.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(holderEClass, Holder.class, "Holder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getHolder_Held(), getHoldable(), null, "held", null, 0, -1, Holder.class, IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED,
+        IS_ORDERED);
+    initEReference(getHolder_Owned(), getHoldable(), null, "owned", null, 0, -1, Holder.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+
+    initEClass(thingEClass, Thing.class, "Thing", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(holdableEClass, Holdable.class, "Holdable", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getHoldable_Name(), ecorePackage.getEString(), "name", null, 1, 1, Holdable.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     // Initialize enums and add enum literals
     initEEnum(myEnumEEnum, MyEnum.class, "MyEnum");
     addEEnumLiteral(myEnumEEnum, MyEnum.ZERO);
@@ -942,6 +1051,22 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
     // Create resource
     createResource(eNS_URI);
+
+    // Create annotations
+    // http://www.eclipse.org/emf/CDO
+    createCDOAnnotations();
+  }
+
+  /**
+   * Initializes the annotations for <b>http://www.eclipse.org/emf/CDO</b>.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void createCDOAnnotations()
+  {
+    String source = "http://www.eclipse.org/emf/CDO";
+    addAnnotation(getHolder_Held(), source, new String[] { "persistent", "true", "filter", "owned" });
   }
 
 } // Model6PackageImpl

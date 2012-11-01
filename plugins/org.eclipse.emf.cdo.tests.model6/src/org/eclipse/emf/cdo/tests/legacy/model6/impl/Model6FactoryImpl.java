@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
+import org.eclipse.emf.cdo.tests.model6.Holder;
 import org.eclipse.emf.cdo.tests.model6.MyEnum;
 import org.eclipse.emf.cdo.tests.model6.MyEnumList;
 import org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable;
@@ -28,6 +29,7 @@ import org.eclipse.emf.cdo.tests.model6.PropertiesMap;
 import org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
+import org.eclipse.emf.cdo.tests.model6.Thing;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -121,6 +123,10 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
       return createMyEnumList();
     case Model6Package.MY_ENUM_LIST_UNSETTABLE:
       return createMyEnumListUnsettable();
+    case Model6Package.HOLDER:
+      return createHolder();
+    case Model6Package.THING:
+      return createThing();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -341,12 +347,36 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  public Holder createHolder()
+  {
+    HolderImpl holder = new HolderImpl();
+    return holder;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Thing createThing()
+  {
+    ThingImpl thing = new ThingImpl();
+    return thing;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public MyEnum createMyEnumFromString(EDataType eDataType, String initialValue)
   {
     MyEnum result = MyEnum.get(initialValue);
     if (result == null)
+    {
       throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
           + eDataType.getName() + "'");
+    }
     return result;
   }
 

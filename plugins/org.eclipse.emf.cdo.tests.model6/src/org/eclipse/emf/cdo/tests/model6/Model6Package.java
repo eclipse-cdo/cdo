@@ -694,6 +694,108 @@ public interface Model6Package extends EPackage
   int MY_ENUM_LIST_UNSETTABLE_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.HoldableImpl <em>Holdable</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model6.impl.HoldableImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getHoldable()
+   * @generated
+   */
+  int HOLDABLE = 19;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HOLDABLE__NAME = 0;
+
+  /**
+   * The number of structural features of the '<em>Holdable</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HOLDABLE_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.HolderImpl <em>Holder</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model6.impl.HolderImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getHolder()
+   * @generated
+   */
+  int HOLDER = 17;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HOLDER__NAME = HOLDABLE__NAME;
+
+  /**
+   * The feature id for the '<em><b>Held</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HOLDER__HELD = HOLDABLE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Owned</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HOLDER__OWNED = HOLDABLE_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Holder</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HOLDER_FEATURE_COUNT = HOLDABLE_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.ThingImpl <em>Thing</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model6.impl.ThingImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getThing()
+   * @generated
+   */
+  int THING = 18;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int THING__NAME = HOLDABLE__NAME;
+
+  /**
+   * The number of structural features of the '<em>Thing</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int THING_FEATURE_COUNT = HOLDABLE_FEATURE_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}' enum.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -701,7 +803,7 @@ public interface Model6Package extends EPackage
    * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnum()
    * @generated
    */
-  int MY_ENUM = 17;
+  int MY_ENUM = 20;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.Root <em>Root</em>}'. <!--
@@ -1193,6 +1295,69 @@ public interface Model6Package extends EPackage
   EAttribute getMyEnumListUnsettable_MyEnum();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.Holder <em>Holder</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Holder</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.Holder
+   * @generated
+   */
+  EClass getHolder();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model6.Holder#getHeld <em>Held</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Held</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.Holder#getHeld()
+   * @see #getHolder()
+   * @generated
+   */
+  EReference getHolder_Held();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.Holder#getOwned <em>Owned</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Owned</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.Holder#getOwned()
+   * @see #getHolder()
+   * @generated
+   */
+  EReference getHolder_Owned();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.Thing <em>Thing</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Thing</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.Thing
+   * @generated
+   */
+  EClass getThing();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.Holdable <em>Holdable</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Holdable</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.Holdable
+   * @generated
+   */
+  EClass getHoldable();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.Holdable#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.Holdable#getName()
+   * @see #getHoldable()
+   * @generated
+   */
+  EAttribute getHoldable_Name();
+
+  /**
    * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1627,6 +1792,60 @@ public interface Model6Package extends EPackage
      * @generated
      */
     EAttribute MY_ENUM_LIST_UNSETTABLE__MY_ENUM = eINSTANCE.getMyEnumListUnsettable_MyEnum();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.HolderImpl <em>Holder</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.tests.model6.impl.HolderImpl
+     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getHolder()
+     * @generated
+     */
+    EClass HOLDER = eINSTANCE.getHolder();
+
+    /**
+     * The meta object literal for the '<em><b>Held</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference HOLDER__HELD = eINSTANCE.getHolder_Held();
+
+    /**
+     * The meta object literal for the '<em><b>Owned</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference HOLDER__OWNED = eINSTANCE.getHolder_Owned();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.ThingImpl <em>Thing</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.tests.model6.impl.ThingImpl
+     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getThing()
+     * @generated
+     */
+    EClass THING = eINSTANCE.getThing();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.HoldableImpl <em>Holdable</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.tests.model6.impl.HoldableImpl
+     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getHoldable()
+     * @generated
+     */
+    EClass HOLDABLE = eINSTANCE.getHoldable();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute HOLDABLE__NAME = eINSTANCE.getHoldable_Name();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}' enum.

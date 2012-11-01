@@ -100,4 +100,19 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="myEnum" upperBound="-1"
         eType="#//MyEnum" unsettable="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Holder" eSuperTypes="#//Holdable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="held" upperBound="-1" eType="#//Holdable"
+        transient="true" derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/CDO">
+        <details key="persistent" value="true"/>
+        <details key="filter" value="owned"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owned" upperBound="-1"
+        eType="#//Holdable" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Thing" eSuperTypes="#//Holdable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Holdable" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

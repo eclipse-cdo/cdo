@@ -9,6 +9,12 @@
   <genPackages prefix="Model6" basePackage="org.eclipse.emf.cdo.tests.legacy" disposableProviderFactory="true"
       literalsInterface="false" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="model6.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="model6.ecore#//MyEnum">
+      <genEnumLiterals ecoreEnumLiteral="model6.ecore#//MyEnum/ZERO"/>
+      <genEnumLiterals ecoreEnumLiteral="model6.ecore#//MyEnum/ONE"/>
+      <genEnumLiterals ecoreEnumLiteral="model6.ecore#//MyEnum/TWO"/>
+      <genEnumLiterals ecoreEnumLiteral="model6.ecore#//MyEnum/THREE"/>
+    </genEnums>
     <genClasses ecoreClass="model6.ecore#//Root">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//Root/listA"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//Root/listB"/>
@@ -60,6 +66,28 @@
     </genClasses>
     <genClasses ecoreClass="model6.ecore#//F">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//F/ownedEs"/>
+    </genClasses>
+    <genClasses ecoreClass="model6.ecore#//G">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//G/dummy"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model6.ecore#//G/reference"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model6.ecore#//G/list"/>
+      <genOperations ecoreOperation="model6.ecore#//G/isAttributeModified"/>
+      <genOperations ecoreOperation="model6.ecore#//G/isReferenceModified"/>
+      <genOperations ecoreOperation="model6.ecore#//G/isListModified"/>
+    </genClasses>
+    <genClasses ecoreClass="model6.ecore#//MyEnumList">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//MyEnumList/myEnum"/>
+    </genClasses>
+    <genClasses ecoreClass="model6.ecore#//MyEnumListUnsettable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//MyEnumListUnsettable/myEnum"/>
+    </genClasses>
+    <genClasses ecoreClass="model6.ecore#//Holder">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model6.ecore#//Holder/held"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//Holder/owned"/>
+    </genClasses>
+    <genClasses ecoreClass="model6.ecore#//Thing"/>
+    <genClasses image="false" ecoreClass="model6.ecore#//Holdable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//Holdable/name"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

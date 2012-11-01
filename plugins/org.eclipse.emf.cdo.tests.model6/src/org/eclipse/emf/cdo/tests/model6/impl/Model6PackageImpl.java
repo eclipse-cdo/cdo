@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.tests.model6.impl;
 
 import org.eclipse.emf.cdo.tests.model6.BaseObject;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
+import org.eclipse.emf.cdo.tests.model6.Holdable;
+import org.eclipse.emf.cdo.tests.model6.Holder;
 import org.eclipse.emf.cdo.tests.model6.Model6Factory;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.MyEnum;
@@ -21,6 +23,7 @@ import org.eclipse.emf.cdo.tests.model6.PropertiesMap;
 import org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
+import org.eclipse.emf.cdo.tests.model6.Thing;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -151,6 +154,27 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass holderEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass thingEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass holdableEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EEnum myEnumEEnum = null;
 
   /**
@@ -192,7 +216,9 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
   public static Model6Package init()
   {
     if (isInited)
+    {
       return (Model6Package)EPackage.Registry.INSTANCE.getEPackage(Model6Package.eNS_URI);
+    }
 
     // Obtain or create and register package
     Model6PackageImpl theModel6Package = (Model6PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model6PackageImpl ? EPackage.Registry.INSTANCE
@@ -659,6 +685,66 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getHolder()
+  {
+    return holderEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getHolder_Held()
+  {
+    return (EReference)holderEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getHolder_Owned()
+  {
+    return (EReference)holderEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getThing()
+  {
+    return thingEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getHoldable()
+  {
+    return holdableEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getHoldable_Name()
+  {
+    return (EAttribute)holdableEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EEnum getMyEnum()
   {
     return myEnumEEnum;
@@ -688,7 +774,9 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -756,6 +844,15 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     myEnumListUnsettableEClass = createEClass(MY_ENUM_LIST_UNSETTABLE);
     createEAttribute(myEnumListUnsettableEClass, MY_ENUM_LIST_UNSETTABLE__MY_ENUM);
 
+    holderEClass = createEClass(HOLDER);
+    createEReference(holderEClass, HOLDER__HELD);
+    createEReference(holderEClass, HOLDER__OWNED);
+
+    thingEClass = createEClass(THING);
+
+    holdableEClass = createEClass(HOLDABLE);
+    createEAttribute(holdableEClass, HOLDABLE__NAME);
+
     // Create enums
     myEnumEEnum = createEEnum(MY_ENUM);
   }
@@ -775,7 +872,9 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -788,21 +887,23 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    referenceObjectEClass.getESuperTypes().add(this.getBaseObject());
-    containmentObjectEClass.getESuperTypes().add(this.getBaseObject());
+    referenceObjectEClass.getESuperTypes().add(getBaseObject());
+    containmentObjectEClass.getESuperTypes().add(getBaseObject());
+    holderEClass.getESuperTypes().add(getHoldable());
+    thingEClass.getESuperTypes().add(getHoldable());
 
     // Initialize classes and features; add operations and parameters
     initEClass(rootEClass, Root.class, "Root", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRoot_ListA(), this.getBaseObject(), null, "listA", null, 0, -1, Root.class, !IS_TRANSIENT,
+    initEReference(getRoot_ListA(), getBaseObject(), null, "listA", null, 0, -1, Root.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEReference(getRoot_ListB(), this.getBaseObject(), null, "listB", null, 0, -1, Root.class, !IS_TRANSIENT,
+    initEReference(getRoot_ListB(), getBaseObject(), null, "listB", null, 0, -1, Root.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEReference(getRoot_ListC(), this.getBaseObject(), null, "listC", null, 0, -1, Root.class, !IS_TRANSIENT,
+    initEReference(getRoot_ListC(), getBaseObject(), null, "listC", null, 0, -1, Root.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEReference(getRoot_ListD(), this.getBaseObject(), null, "listD", null, 0, -1, Root.class, !IS_TRANSIENT,
+    initEReference(getRoot_ListD(), getBaseObject(), null, "listD", null, 0, -1, Root.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
 
@@ -820,28 +921,28 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
     initEClass(referenceObjectEClass, ReferenceObject.class, "ReferenceObject", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getReferenceObject_ReferenceOptional(), this.getBaseObject(), null, "referenceOptional", null, 0, 1,
+    initEReference(getReferenceObject_ReferenceOptional(), getBaseObject(), null, "referenceOptional", null, 0, 1,
         ReferenceObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getReferenceObject_ReferenceList(), this.getBaseObject(), null, "referenceList", null, 0, -1,
+    initEReference(getReferenceObject_ReferenceList(), getBaseObject(), null, "referenceList", null, 0, -1,
         ReferenceObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(containmentObjectEClass, ContainmentObject.class, "ContainmentObject", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getContainmentObject_ContainmentOptional(), this.getBaseObject(), null, "containmentOptional", null,
-        0, 1, ContainmentObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+    initEReference(getContainmentObject_ContainmentOptional(), getBaseObject(), null, "containmentOptional", null, 0,
+        1, ContainmentObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getContainmentObject_ContainmentList(), this.getBaseObject(), null, "containmentList", null, 0, -1,
+    initEReference(getContainmentObject_ContainmentList(), getBaseObject(), null, "containmentList", null, 0, -1,
         ContainmentObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(unorderedListEClass, UnorderedList.class, "UnorderedList", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getUnorderedList_Contained(), this.getUnorderedList(), null, "contained", null, 0, -1,
+    initEReference(getUnorderedList_Contained(), getUnorderedList(), null, "contained", null, 0, -1,
         UnorderedList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-    initEReference(getUnorderedList_Referenced(), this.getUnorderedList(), null, "referenced", null, 0, -1,
+    initEReference(getUnorderedList_Referenced(), getUnorderedList(), null, "referenced", null, 0, -1,
         UnorderedList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
@@ -849,10 +950,10 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPropertiesMap_Label(), ecorePackage.getEString(), "label", null, 0, 1, PropertiesMap.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPropertiesMap_PersistentMap(), this.getPropertiesMapEntry(), null, "persistentMap", null, 0, -1,
+    initEReference(getPropertiesMap_PersistentMap(), getPropertiesMapEntry(), null, "persistentMap", null, 0, -1,
         PropertiesMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPropertiesMap_TransientMap(), this.getPropertiesMapEntry(), null, "transientMap", null, 0, -1,
+    initEReference(getPropertiesMap_TransientMap(), getPropertiesMapEntry(), null, "transientMap", null, 0, -1,
         PropertiesMap.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -860,7 +961,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
         !IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPropertiesMapEntry_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPropertiesMapEntry_Value(), this.getPropertiesMapEntryValue(), null, "value", null, 0, 1,
+    initEReference(getPropertiesMapEntry_Value(), getPropertiesMapEntryValue(), null, "value", null, 0, 1,
         Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -872,16 +973,16 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
     initEClass(aEClass, org.eclipse.emf.cdo.tests.model6.A.class, "A", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getA_OwnedDs(), this.getD(), null, "ownedDs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.A.class,
+    initEReference(getA_OwnedDs(), getD(), null, "ownedDs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.A.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getA_OwnedBs(), this.getB(), null, "ownedBs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.A.class,
+    initEReference(getA_OwnedBs(), getB(), null, "ownedBs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.A.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
     initEClass(bEClass, org.eclipse.emf.cdo.tests.model6.B.class, "B", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getB_OwnedC(), this.getC(), null, "ownedC", null, 0, 1, org.eclipse.emf.cdo.tests.model6.B.class,
+    initEReference(getB_OwnedC(), getC(), null, "ownedC", null, 0, 1, org.eclipse.emf.cdo.tests.model6.B.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
@@ -896,13 +997,13 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
     initEClass(eEClass, org.eclipse.emf.cdo.tests.model6.E.class, "E", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getE_OwnedAs(), this.getA(), null, "ownedAs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.E.class,
+    initEReference(getE_OwnedAs(), getA(), null, "ownedAs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.E.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
     initEClass(fEClass, org.eclipse.emf.cdo.tests.model6.F.class, "F", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getF_OwnedEs(), this.getE(), null, "ownedEs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.F.class,
+    initEReference(getF_OwnedEs(), getE(), null, "ownedEs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.F.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
@@ -911,12 +1012,12 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     initEAttribute(getG_Dummy(), ecorePackage.getEString(), "dummy", null, 1, 1,
         org.eclipse.emf.cdo.tests.model6.G.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getG_Reference(), this.getBaseObject(), null, "reference", null, 1, 1,
+    initEReference(getG_Reference(), getBaseObject(), null, "reference", null, 1, 1,
         org.eclipse.emf.cdo.tests.model6.G.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
         IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getG_List(), this.getBaseObject(), null, "list", null, 0, -1,
-        org.eclipse.emf.cdo.tests.model6.G.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getG_List(), getBaseObject(), null, "list", null, 0, -1, org.eclipse.emf.cdo.tests.model6.G.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     addEOperation(gEClass, ecorePackage.getEBoolean(), "isAttributeModified", 1, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -926,14 +1027,27 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
     initEClass(myEnumListEClass, MyEnumList.class, "MyEnumList", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getMyEnumList_MyEnum(), this.getMyEnum(), "myEnum", null, 0, -1, MyEnumList.class, !IS_TRANSIENT,
+    initEAttribute(getMyEnumList_MyEnum(), getMyEnum(), "myEnum", null, 0, -1, MyEnumList.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(myEnumListUnsettableEClass, MyEnumListUnsettable.class, "MyEnumListUnsettable", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getMyEnumListUnsettable_MyEnum(), this.getMyEnum(), "myEnum", null, 0, -1,
-        MyEnumListUnsettable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMyEnumListUnsettable_MyEnum(), getMyEnum(), "myEnum", null, 0, -1, MyEnumListUnsettable.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(holderEClass, Holder.class, "Holder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getHolder_Held(), getHoldable(), null, "held", null, 0, -1, Holder.class, IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED,
+        IS_ORDERED);
+    initEReference(getHolder_Owned(), getHoldable(), null, "owned", null, 0, -1, Holder.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+
+    initEClass(thingEClass, Thing.class, "Thing", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(holdableEClass, Holdable.class, "Holdable", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getHoldable_Name(), ecorePackage.getEString(), "name", null, 1, 1, Holdable.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(myEnumEEnum, MyEnum.class, "MyEnum");
@@ -944,6 +1058,22 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
     // Create resource
     createResource(eNS_URI);
+
+    // Create annotations
+    // http://www.eclipse.org/emf/CDO
+    createCDOAnnotations();
+  }
+
+  /**
+   * Initializes the annotations for <b>http://www.eclipse.org/emf/CDO</b>.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void createCDOAnnotations()
+  {
+    String source = "http://www.eclipse.org/emf/CDO";
+    addAnnotation(getHolder_Held(), source, new String[] { "persistent", "true", "filter", "owned" });
   }
 
 } // Model6PackageImpl

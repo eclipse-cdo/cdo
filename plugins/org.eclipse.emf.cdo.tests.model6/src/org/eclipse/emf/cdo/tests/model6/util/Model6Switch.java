@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
+import org.eclipse.emf.cdo.tests.model6.Holdable;
+import org.eclipse.emf.cdo.tests.model6.Holder;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.MyEnumList;
 import org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable;
@@ -26,6 +28,7 @@ import org.eclipse.emf.cdo.tests.model6.PropertiesMap;
 import org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
+import org.eclipse.emf.cdo.tests.model6.Thing;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -111,7 +114,9 @@ public class Model6Switch<T>
       Root root = (Root)theEObject;
       T result = caseRoot(root);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model6Package.BASE_OBJECT:
@@ -119,7 +124,9 @@ public class Model6Switch<T>
       BaseObject baseObject = (BaseObject)theEObject;
       T result = caseBaseObject(baseObject);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model6Package.REFERENCE_OBJECT:
@@ -127,9 +134,13 @@ public class Model6Switch<T>
       ReferenceObject referenceObject = (ReferenceObject)theEObject;
       T result = caseReferenceObject(referenceObject);
       if (result == null)
+      {
         result = caseBaseObject(referenceObject);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model6Package.CONTAINMENT_OBJECT:
@@ -137,9 +148,13 @@ public class Model6Switch<T>
       ContainmentObject containmentObject = (ContainmentObject)theEObject;
       T result = caseContainmentObject(containmentObject);
       if (result == null)
+      {
         result = caseBaseObject(containmentObject);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model6Package.UNORDERED_LIST:
@@ -147,7 +162,9 @@ public class Model6Switch<T>
       UnorderedList unorderedList = (UnorderedList)theEObject;
       T result = caseUnorderedList(unorderedList);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model6Package.PROPERTIES_MAP:
@@ -155,7 +172,9 @@ public class Model6Switch<T>
       PropertiesMap propertiesMap = (PropertiesMap)theEObject;
       T result = casePropertiesMap(propertiesMap);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model6Package.PROPERTIES_MAP_ENTRY:
@@ -164,7 +183,9 @@ public class Model6Switch<T>
       Map.Entry<String, PropertiesMapEntryValue> propertiesMapEntry = (Map.Entry<String, PropertiesMapEntryValue>)theEObject;
       T result = casePropertiesMapEntry(propertiesMapEntry);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model6Package.PROPERTIES_MAP_ENTRY_VALUE:
@@ -172,7 +193,9 @@ public class Model6Switch<T>
       PropertiesMapEntryValue propertiesMapEntryValue = (PropertiesMapEntryValue)theEObject;
       T result = casePropertiesMapEntryValue(propertiesMapEntryValue);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model6Package.A:
@@ -180,7 +203,9 @@ public class Model6Switch<T>
       A a = (A)theEObject;
       T result = caseA(a);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model6Package.B:
@@ -188,7 +213,9 @@ public class Model6Switch<T>
       B b = (B)theEObject;
       T result = caseB(b);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model6Package.C:
@@ -196,7 +223,9 @@ public class Model6Switch<T>
       C c = (C)theEObject;
       T result = caseC(c);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model6Package.D:
@@ -204,7 +233,9 @@ public class Model6Switch<T>
       D d = (D)theEObject;
       T result = caseD(d);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model6Package.E:
@@ -212,7 +243,9 @@ public class Model6Switch<T>
       E e = (E)theEObject;
       T result = caseE(e);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model6Package.F:
@@ -220,7 +253,9 @@ public class Model6Switch<T>
       F f = (F)theEObject;
       T result = caseF(f);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model6Package.G:
@@ -228,7 +263,9 @@ public class Model6Switch<T>
       G g = (G)theEObject;
       T result = caseG(g);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model6Package.MY_ENUM_LIST:
@@ -236,7 +273,9 @@ public class Model6Switch<T>
       MyEnumList myEnumList = (MyEnumList)theEObject;
       T result = caseMyEnumList(myEnumList);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model6Package.MY_ENUM_LIST_UNSETTABLE:
@@ -244,7 +283,47 @@ public class Model6Switch<T>
       MyEnumListUnsettable myEnumListUnsettable = (MyEnumListUnsettable)theEObject;
       T result = caseMyEnumListUnsettable(myEnumListUnsettable);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case Model6Package.HOLDER:
+    {
+      Holder holder = (Holder)theEObject;
+      T result = caseHolder(holder);
+      if (result == null)
+      {
+        result = caseHoldable(holder);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case Model6Package.THING:
+    {
+      Thing thing = (Thing)theEObject;
+      T result = caseThing(thing);
+      if (result == null)
+      {
+        result = caseHoldable(thing);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case Model6Package.HOLDABLE:
+    {
+      Holdable holdable = (Holdable)theEObject;
+      T result = caseHoldable(holdable);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     default:
@@ -498,6 +577,54 @@ public class Model6Switch<T>
    * @generated
    */
   public T caseMyEnumListUnsettable(MyEnumListUnsettable object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Holder</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Holder</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseHolder(Holder object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Thing</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Thing</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseThing(Thing object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Holdable</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Holdable</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseHoldable(Holdable object)
   {
     return null;
   }

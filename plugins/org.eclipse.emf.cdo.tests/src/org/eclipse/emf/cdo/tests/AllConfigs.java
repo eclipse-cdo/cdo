@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA) - test suite for partial/conditional persistence
  */
 package org.eclipse.emf.cdo.tests;
 

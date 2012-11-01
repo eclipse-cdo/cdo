@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
@@ -47,6 +48,7 @@ public class Bugzilla_353448_Test extends AbstractCDOTest
 
   private CDOSession session;
 
+  @Requires(IRepositoryConfig.CAPABILITY_UNAVAILABLE)
   public void testDuplicateEntry() throws Exception
   {
     bootStrapPaths();
@@ -66,12 +68,13 @@ public class Bugzilla_353448_Test extends AbstractCDOTest
 
           try
           {
+            delegate = new TransactionDelegateMock(session.openTransaction(), new Path("/" + MODEL1_PREFIX + p));
             CommitException commitEx = null;
+
             for (int j = 0; j < 10; j++)
             {
               try
               {
-                delegate = new TransactionDelegateMock(session.openTransaction(), new Path("/" + MODEL1_PREFIX + p));
                 delegate.resource.getContents().add(getModel1Factory().createOrderDetail());
                 delegate.transaction.commit();
                 msg("END OF COMMIT " + MODEL1_PREFIX + p);

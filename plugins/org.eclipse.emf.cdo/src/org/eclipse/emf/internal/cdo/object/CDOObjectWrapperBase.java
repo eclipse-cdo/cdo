@@ -477,4 +477,29 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
   {
     return instance.eURIFragmentSegment(feature, object);
   }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    return obj == this || obj == instance || //
+        obj instanceof CDOObjectWrapperBase && ((CDOObjectWrapperBase)obj).instance == instance;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    if (instance != null)
+    {
+      return instance.hashCode();
+    }
+
+    return super.hashCode();
+  }
+
+  @Override
+  public String toString()
+  {
+    return getClass().getSimpleName() + "[" + instance.getClass().getSimpleName() + "@" + id + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  }
+
 }

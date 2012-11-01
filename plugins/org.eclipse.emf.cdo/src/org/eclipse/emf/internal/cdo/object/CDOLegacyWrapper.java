@@ -299,29 +299,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     cdoInternalSetState(CDOState.CLEAN);
   }
 
-  @Override
-  public boolean equals(Object obj)
-  {
-    return obj == this || obj == instance;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    if (instance != null)
-    {
-      return instance.hashCode();
-    }
-
-    return super.hashCode();
-  }
-
-  @Override
-  public String toString()
-  {
-    return "CDOLegacyWrapper[" + instance.getClass().getSimpleName() + "@" + id + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-  }
-
   protected void instanceToRevision()
   {
     if (TRACER.isEnabled())

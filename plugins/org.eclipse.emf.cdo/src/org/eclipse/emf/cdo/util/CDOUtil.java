@@ -62,6 +62,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.FSMUtil;
@@ -386,7 +387,9 @@ public final class CDOUtil
     if (!eFeature.isMany() && eFeature.getEContainingClass() != null)
     {
       InternalCDOObject cdoObject = (InternalCDOObject)getCDOObject(eObject);
-      cdoObject.eStore().unset(cdoObject, eFeature);
+
+      EStore eStore = cdoObject.eStore();
+      eStore.unset(cdoObject, eFeature);
     }
   }
 
@@ -398,9 +401,11 @@ public final class CDOUtil
     if (eFeature.isMany() && eFeature.getEContainingClass() != null)
     {
       InternalCDOObject cdoObject = (InternalCDOObject)getCDOObject(eObject);
+
       try
       {
-        cdoObject.eStore().remove(cdoObject, eFeature, index);
+        EStore eStore = cdoObject.eStore();
+        eStore.remove(cdoObject, eFeature, index);
       }
       catch (ObjectNotFoundException ex)
       {

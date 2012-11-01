@@ -499,9 +499,17 @@ public final class CDOStoreImpl implements CDOStore
       InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
 
       oldValue = revision.get(feature, index);
-      Object emfObject = convertToEMF(eObject, revision, feature, index, oldValue);
-      revision.remove(feature, index);
-      return emfObject;
+
+      try
+      {
+        oldValue = convertToEMF(eObject, revision, feature, index, oldValue);
+      }
+      finally
+      {
+        revision.remove(feature, index);
+      }
+
+      return oldValue;
     }
   }
 

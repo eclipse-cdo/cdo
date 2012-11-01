@@ -106,24 +106,26 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
   public void testBugzilla_279982_Multi() throws Exception
   {
     CDOSession session = openSession();
-    CDOTransaction tx = session.openTransaction();
-    CDOResource res = tx.getOrCreateResource(getResourcePath("/resource1"));
-    tx.options().setStaleReferencePolicy(CDOStaleReferencePolicy.PROXY);
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("/resource1"));
+    transaction.options().setStaleReferencePolicy(CDOStaleReferencePolicy.PROXY);
+
     GenRefSingleContained container = getModel4Factory().createGenRefSingleContained();
     GenRefMultiNonContained referencer = getModel4Factory().createGenRefMultiNonContained();
     GenRefSingleNonContained contained = getModel4Factory().createGenRefSingleNonContained();
     container.setElement(contained);
     referencer.getElements().add(contained);
-    res.getContents().add(container);
-    res.getContents().add(referencer);
-    tx.commit();
-    container.setElement(null);
-    tx.commit();
 
+    resource.getContents().add(container);
+    resource.getContents().add(referencer);
+    transaction.commit();
+
+    container.setElement(null);
+    transaction.commit();
     assertNull(container.getElement());
     assertNotNull(referencer.getElements().get(0));
 
-    tx.options().setStaleReferencePolicy(CDOStaleReferencePolicy.EXCEPTION);
+    transaction.options().setStaleReferencePolicy(CDOStaleReferencePolicy.EXCEPTION);
 
     try
     {
@@ -132,24 +134,20 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
     }
     catch (ObjectNotFoundException ex)
     {
-      // ignore
-    }
-    catch (Exception ex)
-    {
-      fail("Should have an ObjectNotFoundException");
+      // Success
     }
 
     EReference genRefMultiNonContained_Elements = getModel4Package().getGenRefMultiNonContained_Elements();
     CDOUtil.cleanStaleReference(referencer, genRefMultiNonContained_Elements, 0);
     assertEquals(0, referencer.getElements().size());
-    tx.commit();
+    transaction.commit();
 
     clearCache(session.getRevisionManager());
 
     // Verification that the commit is good
-    tx = session.openTransaction();
-    res = tx.getOrCreateResource(getResourcePath("/resource1"));
-    referencer = (GenRefMultiNonContained)res.getContents().get(1);
+    transaction = session.openTransaction();
+    resource = transaction.getOrCreateResource(getResourcePath("/resource1"));
+    referencer = (GenRefMultiNonContained)resource.getContents().get(1);
     assertEquals(0, referencer.getElements().size());
   }
 

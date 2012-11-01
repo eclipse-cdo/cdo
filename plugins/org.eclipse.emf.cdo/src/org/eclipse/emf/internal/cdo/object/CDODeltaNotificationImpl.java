@@ -41,16 +41,58 @@ public class CDODeltaNotificationImpl extends ENotificationImpl implements CDODe
     super(getEObject(notifier), eventType, feature, oldValue, newValue);
   }
 
-  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, Object oldValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, Object oldValue,
       Object newValue, int position)
   {
-    super(getEObject(notifier), eventType, featureID, oldValue, newValue, position);
+    super(getEObject(notifier), eventType, feature, oldValue, newValue, position);
   }
 
-  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, Object oldValue,
-      Object newValue)
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature,
+      boolean oldBooleanValue, boolean newBooleanValue)
   {
-    super(getEObject(notifier), eventType, featureID, oldValue, newValue);
+    super(getEObject(notifier), eventType, feature, oldBooleanValue, newBooleanValue);
+  }
+
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature,
+      byte oldByteValue, byte newByteValue)
+  {
+    super(getEObject(notifier), eventType, feature, oldByteValue, newByteValue);
+  }
+
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature,
+      char oldCharValue, char newCharValue)
+  {
+    super(getEObject(notifier), eventType, feature, oldCharValue, newCharValue);
+  }
+
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature,
+      double oldDoubleValue, double newDoubleValue)
+  {
+    super(getEObject(notifier), eventType, feature, oldDoubleValue, newDoubleValue);
+  }
+
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature,
+      float oldFloatValue, float newFloatValue)
+  {
+    super(getEObject(notifier), eventType, feature, oldFloatValue, newFloatValue);
+  }
+
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, int oldIntValue,
+      int newIntValue)
+  {
+    super(getEObject(notifier), eventType, feature, oldIntValue, newIntValue);
+  }
+
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature,
+      long oldLongValue, long newLongValue)
+  {
+    super(getEObject(notifier), eventType, feature, oldLongValue, newLongValue);
+  }
+
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature,
+      short oldShortValue, short newShortValue)
+  {
+    super(getEObject(notifier), eventType, feature, oldShortValue, newShortValue);
   }
 
   @Override

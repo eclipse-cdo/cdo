@@ -113,16 +113,16 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
       }
     }
 
-    add(new CDODeltaNotificationImpl(object, Notification.MOVE, getEFeatureID(feature), Integer.valueOf(oldPosition),
-        oldValue, newPosition));
+    add(new CDODeltaNotificationImpl(object, Notification.MOVE, feature, Integer.valueOf(oldPosition), oldValue,
+        newPosition));
   }
 
   @Override
   public void visit(CDOAddFeatureDelta delta)
   {
     EStructuralFeature feature = delta.getFeature();
-    add(new CDODeltaNotificationImpl(object, Notification.ADD, getEFeatureID(feature), getOldValue(feature),
-        delta.getValue(), delta.getIndex()));
+    add(new CDODeltaNotificationImpl(object, Notification.ADD, feature, getOldValue(feature), delta.getValue(),
+        delta.getIndex()));
   }
 
   @Override
@@ -142,7 +142,7 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
       }
     }
 
-    add(new CDODeltaNotificationImpl(object, Notification.REMOVE, getEFeatureID(feature), oldValue, null, index));
+    add(new CDODeltaNotificationImpl(object, Notification.REMOVE, feature, oldValue, null, index));
   }
 
   @Override
@@ -160,8 +160,8 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
       }
     }
 
-    add(new CDODeltaNotificationImpl(object, Notification.SET, getEFeatureID(feature), oldValue, delta.getValue(),
-        delta.getIndex()));
+    Object newValue = delta.getValue();
+    add(createNotification(Notification.SET, feature, oldValue, newValue, delta.getIndex()));
   }
 
   @Override
@@ -179,7 +179,7 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
       }
     }
 
-    add(new CDODeltaNotificationImpl(object, Notification.UNSET, getEFeatureID(feature), oldValue, null));
+    add(createNotification(Notification.UNSET, feature, oldValue, null, Notification.NO_INDEX));
   }
 
   @Override
@@ -218,7 +218,31 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
       }
     }
 
-    add(new CDODeltaNotificationImpl(object, Notification.REMOVE_MANY, getEFeatureID(feature), oldValue, null));
+    add(new CDODeltaNotificationImpl(object, Notification.REMOVE_MANY, feature, oldValue, null));
+  }
+
+  @Override
+  public void visit(CDOContainerFeatureDelta delta)
+  {
+    Object oldValue = null;
+    if (oldRevision != null)
+    {
+      oldValue = oldRevision.getContainerID();
+
+      if (oldValue instanceof CDOID)
+      {
+        CDOID oldID = (CDOID)oldValue;
+        CDOObject object = findObjectByID(oldID);
+        if (object != null)
+        {
+          oldValue = object;
+        }
+      }
+
+    }
+
+    add(new CDODeltaNotificationImpl(object, Notification.SET, EcorePackage.eINSTANCE.eContainmentFeature(), oldValue,
+        delta.getContainerID()));
   }
 
   private CDOObject findObjectByID(CDOID id)
@@ -248,31 +272,72 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
     return null;
   }
 
-  @Override
-  public void visit(CDOContainerFeatureDelta delta)
+  private Object getOldValue(EStructuralFeature feature)
   {
-    Object oldValue = null;
-    if (oldRevision != null)
+    if (oldRevision == null)
     {
-      oldValue = oldRevision.getContainerID();
-
-      if (oldValue instanceof CDOID)
-      {
-        CDOID oldID = (CDOID)oldValue;
-        CDOObject object = findObjectByID(oldID);
-        if (object != null)
-        {
-          oldValue = object;
-        }
-      }
-
+      return null;
     }
 
-    add(new CDODeltaNotificationImpl(object, Notification.SET, EcorePackage.eINSTANCE.eContainmentFeature(), oldValue,
-        delta.getContainerID()));
+    return oldRevision.getValue(feature);
   }
 
-  protected void add(CDODeltaNotificationImpl newNotificaton)
+  private CDODeltaNotificationImpl createNotification(int eventType, EStructuralFeature feature, Object oldValue,
+      Object newValue, int position)
+  {
+    Class<?> instanceClass = feature.getEType().getInstanceClass();
+    if (instanceClass == Integer.TYPE)
+    {
+      int old = oldValue == null ? 0 : ((Integer)oldValue).intValue();
+      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Integer)newValue).intValue());
+    }
+
+    if (instanceClass == Boolean.TYPE)
+    {
+      boolean old = oldValue == null ? false : ((Boolean)oldValue).booleanValue();
+      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Boolean)newValue).booleanValue());
+    }
+
+    if (instanceClass == Long.TYPE)
+    {
+      long old = oldValue == null ? 0 : ((Long)oldValue).longValue();
+      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Long)newValue).longValue());
+    }
+
+    if (instanceClass == Float.TYPE)
+    {
+      float old = oldValue == null ? 0 : ((Float)oldValue).floatValue();
+      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Float)newValue).floatValue());
+    }
+
+    if (instanceClass == Double.TYPE)
+    {
+      double old = oldValue == null ? 0 : ((Double)oldValue).doubleValue();
+      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Double)newValue).doubleValue());
+    }
+
+    if (instanceClass == Short.TYPE)
+    {
+      short old = oldValue == null ? 0 : ((Short)oldValue).shortValue();
+      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Short)newValue).shortValue());
+    }
+
+    if (instanceClass == Byte.TYPE)
+    {
+      byte old = oldValue == null ? 0 : ((Byte)oldValue).byteValue();
+      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Byte)newValue).byteValue());
+    }
+
+    if (instanceClass == Character.TYPE)
+    {
+      char old = oldValue == null ? 0 : ((Character)oldValue).charValue();
+      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Character)newValue).charValue());
+    }
+
+    return new CDODeltaNotificationImpl(object, eventType, feature, oldValue, newValue, position);
+  }
+
+  private void add(CDODeltaNotificationImpl newNotificaton)
   {
     newNotificaton.setRevisionDelta(revisionDelta);
     if (notification.add(newNotificaton))
@@ -286,20 +351,5 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
         previousNotification.add(newNotificaton);
       }
     }
-  }
-
-  private int getEFeatureID(EStructuralFeature eFeature)
-  {
-    return object.eClass().getFeatureID(eFeature);
-  }
-
-  private Object getOldValue(EStructuralFeature feature)
-  {
-    if (oldRevision == null)
-    {
-      return null;
-    }
-
-    return oldRevision.getValue(feature);
   }
 }

@@ -25,7 +25,7 @@ import java.util.Collection;
  * <li>{@link Notification#REMOVE_MANY REMOVE_MANY} indicates that {@link Collection#clear() clear()} was called.
  * <li>{@link Notification#ADD_MANY Add_MANY} is not used.
  * </ul>
- * 
+ *
  * @since 2.0
  * @author Simon McDuff
  * @noextend This interface is not intended to be extended by clients.

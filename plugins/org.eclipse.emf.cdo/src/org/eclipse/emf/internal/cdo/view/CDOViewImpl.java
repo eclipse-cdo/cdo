@@ -78,9 +78,7 @@ import org.eclipse.net4j.util.ref.ReferenceType;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
 
 import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
@@ -989,9 +987,7 @@ public class CDOViewImpl extends AbstractCDOView
           {
             // if (!isLocked(object))
             {
-              NotificationImpl notification = new CDODeltaNotificationImpl(object, CDONotification.DETACH_OBJECT,
-                  Notification.NO_FEATURE_ID, null, null);
-              notification.dispatch();
+              new CDODeltaNotificationImpl(object, CDONotification.DETACH_OBJECT, null, null, null).dispatch();
             }
           }
         }

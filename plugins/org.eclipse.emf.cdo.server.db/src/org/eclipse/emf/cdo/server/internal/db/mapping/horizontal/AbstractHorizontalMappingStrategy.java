@@ -165,7 +165,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       long fromCommitTime, long toCommitTime) throws IOException
   {
     StringBuilder builder = new StringBuilder();
-    builder.append(" WHERE a_t."); //$NON-NLS-1$
+    builder.append(" WHERE \"a_t\"."); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CREATED);
     builder.append(" BETWEEN "); //$NON-NLS-1$
     builder.append(fromCommitTime);
@@ -184,7 +184,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       out.writeCDOClassifierRef(eClass);
 
       IDBTable table = classMapping.getDBTables().get(0);
-      DBUtil.serializeTable(out, connection, table, "a_t", attrSuffix);
+      DBUtil.serializeTable(out, connection, table, "\"a_t\"", attrSuffix);
 
       for (IListMapping listMapping : classMapping.getListMappings())
       {

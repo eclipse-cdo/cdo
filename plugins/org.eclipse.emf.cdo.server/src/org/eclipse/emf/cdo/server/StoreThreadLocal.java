@@ -42,7 +42,8 @@ public final class StoreThreadLocal
   public static void setSession(InternalSession session)
   {
     SESSION.set(session);
-    ACCESSOR.set(null);
+    ACCESSOR.remove();
+    COMMIT_CONTEXT.remove();
   }
 
   /**

@@ -66,10 +66,28 @@ public class Bugzilla_353448_Test extends AbstractCDOTest
 
           try
           {
-            delegate = new TransactionDelegateMock(session.openTransaction(), new Path("/" + MODEL1_PREFIX + p));
-            delegate.resource.getContents().add(getModel1Factory().createOrderDetail());
-            delegate.transaction.commit();
-            msg("END OF COMMIT " + MODEL1_PREFIX + p);
+            CommitException commitEx = null;
+            for (int j = 0; j < 10; j++)
+            {
+              try
+              {
+                delegate = new TransactionDelegateMock(session.openTransaction(), new Path("/" + MODEL1_PREFIX + p));
+                delegate.resource.getContents().add(getModel1Factory().createOrderDetail());
+                delegate.transaction.commit();
+                msg("END OF COMMIT " + MODEL1_PREFIX + p);
+                return;
+              }
+              catch (CommitException ex)
+              {
+                delegate.transaction.rollback();
+                commitEx = ex;
+
+                // Try again
+                sleep(200L);
+              }
+            }
+
+            throw commitEx;
           }
           catch (Exception ex)
           {

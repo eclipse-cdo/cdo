@@ -74,7 +74,9 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 {
   public static final String TYPE = "db"; //$NON-NLS-1$
 
-  public static final int SCHEMA_VERSION = 2;
+  public static final int SCHEMA_VERSION = 3;
+
+  private static final int FIRST_START = -1;
 
   private static final String PROP_SCHEMA_VERSION = "org.eclipse.emf.cdo.server.db.schemaVersion"; //$NON-NLS-1$
 
@@ -95,6 +97,8 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   private static final String PROP_LAST_NONLOCAL_COMMITTIME = "org.eclipse.emf.cdo.server.db.lastNonLocalCommitTime"; //$NON-NLS-1$
 
   private static final String PROP_GRACEFULLY_SHUT_DOWN = "org.eclipse.emf.cdo.server.db.gracefullyShutDown"; //$NON-NLS-1$
+
+  private static final String TABLE_NOT_FOUND = "42S02";
 
   private static final String COLUMN_NOT_FOUND = "42S22";
 
@@ -567,8 +571,8 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
       configureAccessorPool(writerPool, IDBStore.Props.WRITER_POOL_CAPACITY);
     }
 
-    Set<IDBTable> createdTables = null;
     Connection connection = getConnection();
+    int schemaVersion;
 
     try
     {
@@ -579,7 +583,13 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
         connection.commit();
       }
 
-      createdTables = CDODBSchema.INSTANCE.create(dbAdapter, connection);
+      schemaVersion = selectSchemaVersion(connection);
+      if (0 < schemaVersion && schemaVersion < SCHEMA_VERSION)
+      {
+        migrateSchema(schemaVersion);
+      }
+
+      CDODBSchema.INSTANCE.create(dbAdapter, connection);
       connection.commit();
     }
     finally
@@ -598,7 +608,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     setRevisionParallelism(mappingStrategy.hasBranchingSupport() ? RevisionParallelism.BRANCHING
         : RevisionParallelism.NONE);
 
-    if (isFirstStart(createdTables))
+    if (schemaVersion == FIRST_START)
     {
       firstStart();
     }
@@ -606,6 +616,8 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     {
       reStart();
     }
+
+    putPersistentProperty(PROP_SCHEMA_VERSION, Integer.toString(SCHEMA_VERSION));
   }
 
   @Override
@@ -666,22 +678,17 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   {
     InternalRepository repository = getRepository();
     setCreationTime(repository.getTimeStamp());
-    putPersistentProperty(PROP_SCHEMA_VERSION, Integer.toString(SCHEMA_VERSION));
     firstTime = true;
   }
 
   protected void reStart() throws Exception
   {
     Set<String> names = new HashSet<String>();
-    names.add(PROP_SCHEMA_VERSION);
     names.add(PROP_REPOSITORY_CREATED);
     names.add(PROP_GRACEFULLY_SHUT_DOWN);
 
     Map<String, String> map = getPersistentProperties(names);
     creationTime = Long.valueOf(map.get(PROP_REPOSITORY_CREATED));
-
-    String value = map.get(PROP_SCHEMA_VERSION);
-    int schemaVersion = value == null ? 0 : Integer.parseInt(value);
 
     if (map.containsKey(PROP_GRACEFULLY_SHUT_DOWN))
     {
@@ -715,12 +722,6 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     else
     {
       repairAfterCrash();
-    }
-
-    if (schemaVersion < SCHEMA_VERSION)
-    {
-      migrateSchema(schemaVersion);
-      putPersistentProperty(PROP_SCHEMA_VERSION, Integer.toString(SCHEMA_VERSION));
     }
 
     removePersistentProperties(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
@@ -800,6 +801,41 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     return new DBSchema(name);
   }
 
+  protected int selectSchemaVersion(Connection connection) throws SQLException
+  {
+    Statement statement = null;
+    ResultSet resultSet = null;
+
+    try
+    {
+      statement = connection.createStatement();
+      resultSet = statement.executeQuery("SELECT " + CDODBSchema.PROPERTIES_VALUE + " FROM " + CDODBSchema.PROPERTIES
+          + " WHERE " + CDODBSchema.PROPERTIES_NAME + "='" + PROP_SCHEMA_VERSION + "'");
+
+      if (resultSet.next())
+      {
+        String value = resultSet.getString(1);
+        return Integer.parseInt(value);
+      }
+
+      return 0;
+    }
+    catch (SQLException ex)
+    {
+      if (TABLE_NOT_FOUND.equals(ex.getSQLState()))
+      {
+        return FIRST_START;
+      }
+
+      throw ex;
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+      DBUtil.close(statement);
+    }
+  }
+
   protected void migrateSchema(int fromVersion) throws Exception
   {
     Connection connection = null;
@@ -810,11 +846,12 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
       connection = getConnection();
       statement = connection.createStatement();
 
-      for (int version = 0; version < SCHEMA_VERSION; version++)
+      for (int version = fromVersion; version < SCHEMA_VERSION; version++)
       {
         if (SCHEMA_MIGRATORS[version] != null)
         {
-          OM.LOG.info("Migrating schema from version " + version + "...");
+          int nextVersion = version + 1;
+          OM.LOG.info("Migrating schema from version " + version + " to version " + nextVersion + "...");
           SCHEMA_MIGRATORS[version].migrateSchema(this, statement);
         }
       }
@@ -838,7 +875,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
   private static final SchemaMigrator NO_MIGRATION_NEEDED = null;
 
-  private static final SchemaMigrator[] SCHEMA_MIGRATORS = { NO_MIGRATION_NEEDED, new SchemaMigrator()
+  private static final SchemaMigrator NON_AUDIT_MIGRATION = new SchemaMigrator()
   {
     @Override
     public void migrateSchema(DBStore store, final Statement statement) throws Exception
@@ -861,7 +898,21 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
         });
       }
     }
-  } };
+  };
+
+  private static final SchemaMigrator LOB_SIZE_MIGRATION = new SchemaMigrator()
+  {
+    @Override
+    public void migrateSchema(DBStore store, final Statement statement) throws Exception
+    {
+      IDBAdapter dbAdapter = store.getDBAdapter();
+      String sql = dbAdapter.sqlRenameColumn(CDODBSchema.LOBS.toString(), "size", CDODBSchema.LOBS_SIZE.toString());
+      statement.execute(sql);
+    }
+  };
+
+  private static final SchemaMigrator[] SCHEMA_MIGRATORS = { NO_MIGRATION_NEEDED, NON_AUDIT_MIGRATION,
+      LOB_SIZE_MIGRATION };
 
   static
   {

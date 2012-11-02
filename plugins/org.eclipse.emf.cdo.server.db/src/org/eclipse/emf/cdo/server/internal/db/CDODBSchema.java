@@ -170,7 +170,7 @@ public class CDODBSchema extends DBSchema
   LOBS.addField("id", DBType.VARCHAR, 64); //$NON-NLS-1$
 
   public static final IDBField LOBS_SIZE = //
-  LOBS.addField("size", DBType.BIGINT); //$NON-NLS-1$
+  LOBS.addField("lsize", DBType.BIGINT); //$NON-NLS-1$
 
   public static final IDBField LOBS_BDATA = //
   LOBS.addField("bdata", DBType.BLOB); //$NON-NLS-1$

@@ -99,6 +99,12 @@ public class H2Adapter extends DBAdapter
     return "23001".equals(sqlState) || "23505".equals(sqlState);
   }
 
+  @Override
+  public String sqlRenameColumn(String table, String from, String to)
+  {
+    return "ALTER TABLE " + table + " ALTER COLUMN " + from + " RENAME TO " + to;
+  }
+
   /**
    * @since 4.1
    */

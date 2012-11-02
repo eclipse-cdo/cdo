@@ -556,6 +556,11 @@ public abstract class DBAdapter implements IDBAdapter
     return "23001".equals(ex.getSQLState());
   }
 
+  public String sqlRenameColumn(String table, String from, String to)
+  {
+    return "ALTER TABLE " + table + " RENAME COLUMN " + from + " TO " + to;
+  }
+
   /**
    * @since 4.2
    */

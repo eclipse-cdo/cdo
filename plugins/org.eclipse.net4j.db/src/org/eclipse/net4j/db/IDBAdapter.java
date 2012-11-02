@@ -98,4 +98,9 @@ public interface IDBAdapter
    * @since 4.0
    */
   public boolean isDuplicateKeyException(SQLException ex);
+
+  /**
+   * @since 4.2
+   */
+  public String sqlRenameColumn(String table, String from, String to);
 }

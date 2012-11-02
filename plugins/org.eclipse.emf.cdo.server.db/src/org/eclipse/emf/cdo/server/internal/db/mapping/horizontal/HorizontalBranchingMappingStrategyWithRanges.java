@@ -346,7 +346,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     public void handleRow(ExtendedDataInput in, Connection connection, IDBField[] fields, Object[] values)
         throws SQLException, IOException
     {
-      int versionAdded = (Integer)values[2];
+      int versionAdded = DBUtil.asInt(values[2]);
       if (versionAdded == CDOBranchVersion.FIRST_VERSION)
       {
         return;
@@ -365,8 +365,8 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
       }
 
       Object sourceID = values[0];
-      int branch = (Integer)values[1];
-      int index = (Integer)values[4];
+      int branch = DBUtil.asInt(values[1]);
+      int index = DBUtil.asInt(values[4]);
 
       stmt.setInt(1, versionAdded);
       idHandler.setCDOIDRaw(stmt, 2, sourceID);

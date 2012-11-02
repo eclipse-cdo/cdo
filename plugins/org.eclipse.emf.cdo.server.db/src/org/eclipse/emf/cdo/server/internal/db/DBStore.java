@@ -584,7 +584,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
       }
 
       schemaVersion = selectSchemaVersion(connection);
-      if (0 < schemaVersion && schemaVersion < SCHEMA_VERSION)
+      if (0 <= schemaVersion && schemaVersion < SCHEMA_VERSION)
       {
         migrateSchema(schemaVersion);
       }

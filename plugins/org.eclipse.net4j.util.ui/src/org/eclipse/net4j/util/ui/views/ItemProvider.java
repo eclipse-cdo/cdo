@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -60,8 +60,13 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
 
   public Image getImage(Object obj)
   {
-    String imageKey = ISharedImages.IMG_OBJ_ELEMENT;
-    return PlatformUI.getWorkbench().getSharedImages().getImage(imageKey);
+    if (PlatformUI.isWorkbenchRunning())
+    {
+      String imageKey = ISharedImages.IMG_OBJ_ELEMENT;
+      return PlatformUI.getWorkbench().getSharedImages().getImage(imageKey);
+    }
+
+    return null;
   }
 
   public Color getBackground(Object element)
@@ -135,7 +140,7 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
   /**
    * Fires a label provider changed event to all registered listeners Only listeners registered at the time this method
    * is called are notified.
-   * 
+   *
    * @param event
    *          a label provider changed event
    * @see ILabelProviderListener#labelProviderChanged

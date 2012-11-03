@@ -1,0 +1,680 @@
+/*
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
+package org.eclipse.emf.cdo.examples.client.offline.nodes;
+
+import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.examples.client.offline.Application;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
+import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.server.CDOServerUtil;
+import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IRepositorySynchronizer;
+import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.db.CDODBUtil;
+import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
+
+import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.acceptor.IAcceptor;
+import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.db.h2.H2Adapter;
+import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.SetContainer;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
+import org.eclipse.wb.swt.ResourceManager;
+
+import org.h2.jdbcx.JdbcDataSource;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
+/**
+ * @author Eike Stepper
+ */
+public abstract class NodeType extends SetContainer<Node> implements IElement
+{
+  public static final String TYPE_PROPERTY = "Type";
+
+  public static final String NAME_PROPERTY = "Name";
+
+  public static final String PORT_PROPERTY = "Port";
+
+  public static final String SERVER_PROPERTY = "Server";
+
+  public static final String MONITOR_PROPERTY = "Monitor";
+
+  private final NodeManager manager;
+
+  private final List<Property> properties = new ArrayList<Property>();
+
+  private final Properties settings = new Properties();
+
+  private final Composite[] detailsControls = { null, null };
+
+  public NodeType(NodeManager manager)
+  {
+    super(Node.class);
+    this.manager = manager;
+    addProperty(new Property.Entry(this, NAME_PROPERTY));
+    settings.setProperty(TYPE_PROPERTY, getTypeName());
+    activate();
+  }
+
+  public NodeManager getManager()
+  {
+    return manager;
+  }
+
+  public List<Property> getProperties()
+  {
+    return properties;
+  }
+
+  public Properties getSettings()
+  {
+    return settings;
+  }
+
+  public void showSettings()
+  {
+    showSettings(null);
+  }
+
+  public void showSettings(Node node)
+  {
+    Composite composite = getDetailsControl(node);
+    Control[] children = composite.getChildren();
+
+    Properties settings = node == null ? this.settings : node.getSettings();
+    for (Property property : properties)
+    {
+      String name = property.getName();
+      Control control = getControl(children, name);
+      if (control != null)
+      {
+        String value = settings.getProperty(name, "");
+        property.showSetting(control, value);
+      }
+    }
+  }
+
+  public void configureWindow(IWorkbenchWindowConfigurer configurer)
+  {
+    configurer.setInitialSize(new Point(1000, 700));
+    configurer.setTitle(Application.TITLE);
+    configurer.setShowCoolBar(false);
+    configurer.setShowMenuBar(false);
+    configurer.setShowStatusLine(false);
+  }
+
+  private Control getControl(Control[] children, String name)
+  {
+    for (Control control : children)
+    {
+      if (name.equals(control.getData("name")))
+      {
+        return control;
+      }
+    }
+
+    return null;
+  }
+
+  public Image getImage()
+  {
+    return ResourceManager.getPluginImage(Application.PLUGIN_ID, "icons/Folder.gif");
+  }
+
+  public Image getInstanceImage()
+  {
+    return ResourceManager.getPluginImage(Application.PLUGIN_ID, "icons/" + getTypeName() + ".gif");
+  }
+
+  public String getTypeName()
+  {
+    String name = getClass().getSimpleName();
+    int lastDot = name.lastIndexOf('.');
+    if (lastDot != -1)
+    {
+      name = name.substring(lastDot + 1);
+    }
+
+    return name;
+  }
+
+  public Composite getDetailsControl()
+  {
+    return getDetailsControl(null);
+  }
+
+  public Composite getDetailsControl(Node node)
+  {
+    if (node == null)
+    {
+      return detailsControls[0];
+    }
+
+    return detailsControls[1];
+  }
+
+  public void start(Node node)
+  {
+    IRepository repository = createRepository(node);
+    node.getObjects().put(IRepository.class, repository);
+
+    IAcceptor acceptor = createAcceptor(node);
+    node.getObjects().put(IAcceptor.class, acceptor);
+  }
+
+  public void stop(Node node)
+  {
+    IAcceptor acceptor = (IAcceptor)node.getObjects().get(IAcceptor.class);
+    LifecycleUtil.deactivate(acceptor);
+
+    IRepository repository = (IRepository)node.getObjects().get(IRepository.class);
+    LifecycleUtil.deactivate(repository);
+  }
+
+  public Button createUI(final NodeManagerDialog dialog, int kind)
+  {
+    Composite composite = new Composite(dialog.getDetails(), SWT.NONE);
+    composite.setLayout(new GridLayout(2, false));
+
+    for (Property property : properties)
+    {
+      property.createField(dialog, composite);
+    }
+
+    new Label(composite, SWT.NONE);
+
+    Button button = new Button(composite, SWT.PUSH);
+    button.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+    if (kind == NodeManagerDialog.NODE)
+    {
+      button.setText("Delete");
+      button.addSelectionListener(new SelectionAdapter()
+      {
+        @Override
+        public void widgetSelected(SelectionEvent e)
+        {
+          dialog.onDelete(NodeType.this);
+        }
+      });
+
+      composite.setEnabled(false);
+      detailsControls[1] = composite;
+    }
+    else
+    {
+      button.setText("Create");
+      button.addSelectionListener(new SelectionAdapter()
+      {
+        @Override
+        public void widgetSelected(SelectionEvent e)
+        {
+          dialog.onCreate(NodeType.this);
+        }
+      });
+
+      detailsControls[0] = composite;
+    }
+
+    return button;
+  }
+
+  protected void addProperty(Property property)
+  {
+    properties.add(property);
+  }
+
+  @Override
+  protected Node[] sortElements(Node[] array)
+  {
+    Arrays.sort(array);
+    return array;
+  }
+
+  protected IRepository createRepository(Node node)
+  {
+    JdbcDataSource dataSource = new JdbcDataSource();
+    dataSource.setURL("jdbc:h2:" + node.getFolder() + "/repository");
+
+    IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(true, true);
+    IDBAdapter dbAdapter = new H2Adapter();
+    IDBConnectionProvider dbConnectionProvider = DBUtil.createConnectionProvider(dataSource);
+    IStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);
+
+    Map<String, String> props = new HashMap<String, String>();
+    props.put(IRepository.Props.OVERRIDE_UUID, "repository");
+    props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
+    props.put(IRepository.Props.SUPPORTING_BRANCHES, "true");
+
+    IRepository repository = createRepository(node, store, props);
+    CDOServerUtil.addRepository(IPluginContainer.INSTANCE, repository);
+    return repository;
+  }
+
+  protected IRepository createRepository(Node node, IStore store, Map<String, String> props)
+  {
+    return CDOServerUtil.createRepository("repository", store, props);
+  }
+
+  protected IAcceptor createAcceptor(Node node)
+  {
+    String description = "0.0.0.0:" + node.getSettings().getProperty(PORT_PROPERTY);
+    return (IAcceptor)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.acceptors", "tcp", description);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class Property
+  {
+    private final NodeType container;
+
+    private final String name;
+
+    public Property(NodeType container, String name)
+    {
+      this.container = container;
+      this.name = name;
+    }
+
+    public NodeType getContainer()
+    {
+      return container;
+    }
+
+    public String getName()
+    {
+      return name;
+    }
+
+    public abstract void createField(NodeManagerDialog dialog, Composite parent);
+
+    public abstract void showSetting(Control control, String value);
+
+    /**
+     * @author Eike Stepper
+     */
+    public static abstract class Labelled extends Property
+    {
+      public Labelled(NodeType container, String name)
+      {
+        super(container, name);
+      }
+
+      @Override
+      public void createField(NodeManagerDialog dialog, Composite parent)
+      {
+        String name = getName();
+        Label label = new Label(parent, SWT.NONE);
+
+        label.setText(name + ":");
+        label.setLayoutData(new GridData(GridData.END));
+
+        Control control = createControl(dialog, parent);
+        control.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        control.setData("name", name);
+      }
+
+      protected abstract Control createControl(NodeManagerDialog dialog, Composite parent);
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class Entry extends Labelled
+    {
+      public Entry(NodeType container, String name)
+      {
+        super(container, name);
+      }
+
+      @Override
+      protected Control createControl(final NodeManagerDialog dialog, Composite parent)
+      {
+        final Text text = new Text(parent, SWT.BORDER);
+        text.addModifyListener(new ModifyListener()
+        {
+          public void modifyText(ModifyEvent e)
+          {
+            if (!dialog.isUpdatingDetails())
+            {
+              dialog.onModify(Entry.this, text.getText());
+            }
+          }
+        });
+
+        return text;
+      }
+
+      @Override
+      public void showSetting(Control control, String value)
+      {
+        ((Text)control).setText(value);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class Selection extends Labelled
+    {
+      private final Class<? extends NodeType> type;
+
+      public Selection(NodeType container, String name, Class<? extends NodeType> type)
+      {
+        super(container, name);
+        this.type = type;
+      }
+
+      public Class<? extends NodeType> getType()
+      {
+        return type;
+      }
+
+      @Override
+      protected Control createControl(final NodeManagerDialog dialog, Composite parent)
+      {
+        final ComboViewer comboViewer = new ComboViewer(parent, SWT.NONE);
+        comboViewer.setLabelProvider(new LabelProvider());
+        comboViewer.setContentProvider(new IStructuredContentProvider()
+        {
+          public Object[] getElements(Object inputElement)
+          {
+            List<Node> result = new ArrayList<Node>();
+            Node[] nodes = getContainer().getManager().getNodes();
+            for (Node node : nodes)
+            {
+              if (type.isAssignableFrom(node.getType().getClass()))
+              {
+                result.add(node);
+              }
+            }
+
+            Collections.sort(result);
+            return result.toArray(new Node[result.size()]);
+          }
+
+          public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
+          {
+          }
+
+          public void dispose()
+          {
+          }
+        });
+
+        comboViewer.addSelectionChangedListener(new ISelectionChangedListener()
+        {
+          public void selectionChanged(SelectionChangedEvent event)
+          {
+            if (!dialog.isUpdatingDetails())
+            {
+              IStructuredSelection selection = (IStructuredSelection)comboViewer.getSelection();
+              Node node = (Node)selection.getFirstElement();
+              if (node != null)
+              {
+                dialog.onModify(Selection.this, node.getName());
+              }
+            }
+          }
+        });
+
+        comboViewer.setInput(new Object());
+
+        Combo combo = comboViewer.getCombo();
+        combo.setData("viewer", comboViewer);
+        return combo;
+      }
+
+      @Override
+      public void showSetting(Control control, String value)
+      {
+        ComboViewer comboViewer = (ComboViewer)control.getData("viewer");
+        comboViewer.refresh(true);
+
+        Node node = getContainer().getManager().getNode(value);
+        if (node != null)
+        {
+          comboViewer.setSelection(new StructuredSelection(node));
+        }
+        else
+        {
+          comboViewer.setSelection(StructuredSelection.EMPTY);
+        }
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class Client extends NodeType
+  {
+    public Client(NodeManager manager)
+    {
+      super(manager);
+      addProperty(new Property.Selection(this, SERVER_PROPERTY, Server.class));
+    }
+
+    @Override
+    public void start(Node node)
+    {
+      super.start(node);
+
+      CDOSession session = (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions", "cdo",
+          "jvm://example");
+      node.getObjects().put(CDOSession.class, session);
+    }
+
+    @Override
+    public void stop(Node node)
+    {
+      CDOSession session = (CDOSession)node.getObjects().get(CDOSession.class);
+      LifecycleUtil.deactivate(session);
+
+      super.stop(node);
+    }
+
+    @Override
+    protected IRepository createRepository(Node node, IStore store, Map<String, String> props)
+    {
+      String serverName = node.getSettings().getProperty(SERVER_PROPERTY);
+      Node serverNode = getManager().getNode(serverName);
+      if (serverNode == null)
+      {
+        throw new IllegalStateException("Server not found: " + serverName);
+      }
+
+      final String serverAddress = "localhost:" + serverNode.getObjects().get(PORT_PROPERTY);
+
+      CDOSessionConfigurationFactory factory = new CDOSessionConfigurationFactory()
+      {
+        public CDONet4jSessionConfiguration createSessionConfiguration()
+        {
+          IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", serverAddress);
+
+          CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
+          configuration.setConnector(connector);
+          configuration.setRepositoryName("repository");
+          configuration.setRevisionManager(CDORevisionUtil.createRevisionManager(CDORevisionCache.NOOP));
+
+          return configuration;
+        }
+      };
+
+      IRepositorySynchronizer synchronizer = CDOServerUtil.createRepositorySynchronizer(factory);
+      synchronizer.setRetryInterval(2);
+      synchronizer.setMaxRecommits(10);
+      synchronizer.setRecommitInterval(2);
+
+      return CDOServerUtil.createOfflineClone("repository", store, props, synchronizer);
+    }
+
+    @Override
+    protected IAcceptor createAcceptor(Node node)
+    {
+      return (IAcceptor)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.acceptors", "jvm", "example");
+    }
+
+    @Override
+    public String toString()
+    {
+      return "Clients";
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class Server extends NodeType
+  {
+    public Server(NodeManager manager)
+    {
+      super(manager);
+      addProperty(new Property.Entry(this, PORT_PROPERTY));
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class Repository extends Server
+  {
+    public Repository(NodeManager manager)
+    {
+      super(manager);
+    }
+
+    @Override
+    public String toString()
+    {
+      return "Normal Repositories";
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class NormalRepository extends Repository
+  {
+    public NormalRepository(NodeManager manager)
+    {
+      super(manager);
+    }
+
+    @Override
+    public String toString()
+    {
+      return "Normal Repositories";
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class FailoverRepository extends Repository
+  {
+    public FailoverRepository(NodeManager manager)
+    {
+      super(manager);
+      addProperty(new Property.Selection(this, MONITOR_PROPERTY, FailoverMonitor.class));
+    }
+
+    @Override
+    public String toString()
+    {
+      return "Failover Repositories";
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class FailoverMonitor extends Server
+  {
+    public FailoverMonitor(NodeManager manager)
+    {
+      super(manager);
+    }
+
+    @Override
+    public void start(Node node)
+    {
+      super.start(node);
+
+      org.eclipse.emf.cdo.server.net4j.FailoverMonitor monitor = (org.eclipse.emf.cdo.server.net4j.FailoverMonitor)IPluginContainer.INSTANCE
+          .getElement(org.eclipse.emf.cdo.server.net4j.FailoverMonitor.PRODUCT_GROUP,
+              org.eclipse.emf.cdo.server.net4j.FailoverMonitor.Factory.TYPE, node.getName());
+      node.getObjects().put(org.eclipse.emf.cdo.server.net4j.FailoverMonitor.class, monitor);
+    }
+
+    @Override
+    public void stop(Node node)
+    {
+      org.eclipse.emf.cdo.server.net4j.FailoverMonitor monitor = (org.eclipse.emf.cdo.server.net4j.FailoverMonitor)node
+          .getObjects().get(org.eclipse.emf.cdo.server.net4j.FailoverMonitor.class);
+      LifecycleUtil.deactivate(monitor);
+
+      super.stop(node);
+    }
+
+    @Override
+    protected IRepository createRepository(Node node)
+    {
+      return null;
+    }
+
+    @Override
+    public String toString()
+    {
+      return "Failover Monitors";
+    }
+  }
+}

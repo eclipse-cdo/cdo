@@ -14,6 +14,7 @@ import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.ISlow;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
@@ -159,6 +160,13 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   }
 
   protected void elementRemoved(Object element, Object parent)
+  {
+  }
+
+  /**
+   * @since 3.3
+   */
+  protected void handleElementEvent(IEvent event)
   {
   }
 
@@ -434,6 +442,13 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     protected IListener containerListener = new ContainerEventAdapter<Object>()
     {
       @Override
+      protected void notifyContainerEvent(IContainerEvent<Object> event)
+      {
+        super.notifyContainerEvent(event);
+        handleElementEvent(event);
+      }
+
+      @Override
       protected void onAdded(IContainer<Object> container, Object element)
       {
         AbstractContainerNode.this.onAdded(container, element);
@@ -449,6 +464,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       protected void notifyOtherEvent(IEvent event)
       {
         updateLabels(event.getSource());
+        handleElementEvent(event);
       }
     };
 
@@ -652,6 +668,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     public void notifyEvent(IEvent event)
     {
       updateLabels(event.getSource());
+      handleElementEvent(event);
     }
   }
 

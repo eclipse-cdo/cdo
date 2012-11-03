@@ -132,7 +132,6 @@ public final class ExtendedIOUtil
           return in.readByte() - Byte.MIN_VALUE;
         }
       })
-
       {
         @Override
         protected Class<?> resolveClass(ObjectStreamClass desc) throws IOException, ClassNotFoundException
@@ -173,6 +172,7 @@ public final class ExtendedIOUtil
     {
       int size = str.length();
       int start = 0;
+
       do
       {
         out.writeBoolean(true);
@@ -196,6 +196,7 @@ public final class ExtendedIOUtil
     }
 
     StringBuilder builder = new StringBuilder();
+
     do
     {
       String chunk = in.readUTF();

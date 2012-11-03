@@ -17,10 +17,10 @@
     <property name="overrideUUID" value=""/>
     <property name="supportingAudits" value="true"/>
     <property name="supportingBranches" value="true"/>
-    <property name="supportingEcore" value="true"/>
+    <property name="supportingEcore" value="false"/>
     <property name="ensureReferentialIntegrity" value="false"/>
     <property name="allowInterruptRunningQueries" value="true"/>
-    <property name="idGenerationLocation" value="STORE"/> <!-- Possible values: STORE | CLIENT -->
+    <property name="idGenerationLocation" value="CLIENT"/> <!-- Possible values: STORE | CLIENT -->
 
     <!-- Example http://bugs.eclipse.org/380629
 			<securityManager type="default" realmPath="/security"/>

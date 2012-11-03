@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -42,14 +42,14 @@ import java.io.InputStreamReader;
 /**
  * Following console parameters are allowed: <br>
  * -automerge provides an automatic merging of the offline changes to the master repository
- * 
+ *
  * @author Eike Stepper
  * @author Martin Fluegge
  * @since 4.0
  */
 public class OfflineExampleClient
 {
-  public static final int PORT = 2037;
+  public static final int PORT = OfflineExampleUtil.CLONE_PORT;
 
   private static CDOTransaction tx;
 
@@ -93,7 +93,7 @@ public class OfflineExampleClient
     int size = contents.size();
     if (size < 1)
     {
-      System.out.println("There are no objects; can't lock anything.");
+      System.out.println("There are no objects; can't unlock anything.");
     }
 
     System.out.println("Unlocking last object");
@@ -148,11 +148,9 @@ public class OfflineExampleClient
           try
           {
             CDOTransaction newTransaction = session.openTransaction(session.getBranchManager().getMainBranch());
-
-            // CDOBranch mainBranch = session.getBranchManager().getMainBranch();
             newTransaction.merge(tx.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
-
             newTransaction.commit();
+
             tx.close();
             tx = newTransaction;
           }

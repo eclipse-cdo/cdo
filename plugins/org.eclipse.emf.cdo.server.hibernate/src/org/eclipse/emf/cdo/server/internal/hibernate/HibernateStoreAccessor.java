@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.WrappedHibernateList;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
+import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -496,11 +497,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     final Criteria criteria = session.createCriteria(EresourcePackage.eINSTANCE.getCDOResourceNode().getName());
     if (folderID == null)
     {
-      criteria.add(org.hibernate.criterion.Restrictions.isNull(CDOHibernateConstants.CONTAINER_PROPERTY));
+      criteria.add(org.hibernate.criterion.Restrictions.isNull("folder"));
     }
     else
     {
-      criteria.add(org.hibernate.criterion.Restrictions.eq(CDOHibernateConstants.CONTAINER_PROPERTY, folderID));
+      criteria.add(org.hibernate.criterion.Restrictions.eq("folder.id", ((AbstractCDOIDLong)folderID).getLongValue()));
     }
 
     List<?> result = criteria.list();

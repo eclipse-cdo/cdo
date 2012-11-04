@@ -18,7 +18,7 @@ import org.eclipse.emf.teneo.annotations.pamodel.PAnnotatedEReference;
  * Prevent automatically added delete-orphan.
  * 
  * @author Martin Taal
- * @since 4.1
+ * @since 4.2
  */
 public class CDOOneToManyReferenceAnnotator extends OneToManyReferenceAnnotator
 {

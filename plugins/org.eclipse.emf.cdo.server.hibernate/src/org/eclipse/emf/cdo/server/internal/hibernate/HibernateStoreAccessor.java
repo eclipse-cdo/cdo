@@ -734,7 +734,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         try
         {
           int count = in.readInt();
-          for (int i = 0; i < count; i++)
+          for (int i = 0; i < count / 2; i++)
           {
             byte[] id = in.readByteArray();
             long size = in.readLong();

@@ -22,6 +22,15 @@ import org.eclipse.emf.teneo.PersistenceOptions;
  */
 public class HibernateExternalReferenceTest extends ExternalReferenceTest
 {
+
+  @Override
+  @CleanRepositoriesBefore
+  public void testXRefExternalObject() throws Exception
+  {
+    // xreffing an external object is not possible as the
+    // external reference does not hold type information
+  }
+
   @Override
   public void testManyViewsOnOneResourceSet() throws Exception
   {

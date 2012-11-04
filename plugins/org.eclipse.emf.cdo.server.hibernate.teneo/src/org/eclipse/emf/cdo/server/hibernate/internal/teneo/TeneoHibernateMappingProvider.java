@@ -137,6 +137,8 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
       properties.remove(PersistenceOptions.PERSISTENCE_XML);
     }
 
+    properties.setProperty(PersistenceOptions.FEATUREMAP_AS_COMPONENT, "true");
+
     // add some annotations to the CDO model so that the mapping gets generated correctly
     addTransientAnnotationToEClass(EtypesPackage.eINSTANCE.getModelElement());
     addTransientAnnotationToEClass(EtypesPackage.eINSTANCE.getAnnotation());

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateCommitContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureMapEntry;
 
 import org.eclipse.emf.ecore.EClass;
@@ -114,8 +115,16 @@ public class FeatureMapEntryFeatureURIPropertyHandler implements PropertyAccesso
     final String eClassName = eFeatureURI.substring(1 + firstSeparator, lastSeparator);
     final String eFeatureName = eFeatureURI.substring(1 + lastSeparator);
 
-    final HibernateCommitContext hbCommitContext = HibernateThreadContext.getCommitContext();
-    final EPackage ePackage = hbCommitContext.getCommitContext().getPackageRegistry().getEPackage(ePackageURI);
+    final EPackage ePackage;
+    if (HibernateThreadContext.isCommitContextSet())
+    {
+      final HibernateCommitContext hbCommitContext = HibernateThreadContext.getCommitContext();
+      ePackage = hbCommitContext.getCommitContext().getPackageRegistry().getEPackage(ePackageURI);
+    }
+    else
+    {
+      ePackage = HibernateUtil.getInstance().getPackageRegistry().getEPackage(ePackageURI);
+    }
     if (ePackage == null)
     {
       throw new IllegalArgumentException("EPackage not found using " + eFeatureURI + " and EPackageURI: " + ePackageURI); //$NON-NLS-1$ //$NON-NLS-2$

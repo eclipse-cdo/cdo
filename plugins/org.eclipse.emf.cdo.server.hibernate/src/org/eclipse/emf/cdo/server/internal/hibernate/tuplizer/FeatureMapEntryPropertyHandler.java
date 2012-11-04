@@ -11,7 +11,13 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDExternal;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureMapEntry;
+
+import org.eclipse.emf.ecore.EReference;
 
 import org.hibernate.HibernateException;
 import org.hibernate.PropertyNotFoundException;
@@ -73,7 +79,23 @@ public class FeatureMapEntryPropertyHandler implements PropertyAccessor, Getter,
       return null;
     }
 
-    return cdoFeatureMapEntry.getValue();
+    final Object value = cdoFeatureMapEntry.getValue();
+    if (cdoFeatureMapEntry.getEStructuralFeature() instanceof EReference)
+    {
+      if (value instanceof CDOID && CDOIDUtil.isNull((CDOID)value))
+      {
+        return null;
+      }
+      else if (value instanceof CDOIDExternal)
+      {
+        return value;
+      }
+      else if (value instanceof CDOID)
+      {
+        return HibernateUtil.getInstance().getCDORevision((CDOID)value);
+      }
+    }
+    return value;
   }
 
   @SuppressWarnings("rawtypes")
@@ -101,9 +123,29 @@ public class FeatureMapEntryPropertyHandler implements PropertyAccessor, Getter,
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
     final CDOFeatureMapEntry cdoFeatureMapEntry = (CDOFeatureMapEntry)target;
-    if (value != null)
+    Object localValue;
+    if (cdoFeatureMapEntry.getEStructuralFeature() instanceof EReference)
     {
-      cdoFeatureMapEntry.setValue(value);
+      if (value == null)
+      {
+        localValue = value;
+      }
+      else if (value instanceof CDOIDExternal)
+      {
+        localValue = value;
+      }
+      else
+      {
+        localValue = HibernateUtil.getInstance().getCDOID(value);
+      }
+    }
+    else
+    {
+      localValue = value;
+    }
+    if (localValue != null)
+    {
+      cdoFeatureMapEntry.setValue(localValue);
     }
   }
 

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.teneo.PersistenceOptions;
 import org.eclipse.emf.teneo.annotations.mapper.EDataTypeAnnotator;
 import org.eclipse.emf.teneo.annotations.mapper.EFeatureAnnotator;
+import org.eclipse.emf.teneo.annotations.mapper.OneToManyReferenceAnnotator;
 import org.eclipse.emf.teneo.annotations.xml.XmlPersistenceContentHandler;
 import org.eclipse.emf.teneo.extension.ExtensionManager;
 import org.eclipse.emf.teneo.extension.ExtensionManagerFactory;
@@ -23,6 +24,7 @@ import org.eclipse.emf.teneo.extension.ExtensionUtil;
 import org.eclipse.emf.teneo.hibernate.mapper.ManyAttributeMapper;
 import org.eclipse.emf.teneo.hibernate.mapper.MappingContext;
 import org.eclipse.emf.teneo.hibernate.mapper.MappingUtil;
+import org.eclipse.emf.teneo.hibernate.mapper.OneToManyMapper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,6 +57,8 @@ public class CDOMappingGenerator
     addDefaultExtension(ManyAttributeMapper.class, CDOManyAttributeMapper.class, extensionManager);
     addDefaultExtension(XmlPersistenceContentHandler.class, CDOXmlPersistenceContentHandler.class, extensionManager);
     addDefaultExtension(EDataTypeAnnotator.class, CDOEDataTypeAnnotator.class, extensionManager);
+    addDefaultExtension(OneToManyMapper.class, CDOOneToManyMapper.class, extensionManager);
+    addDefaultExtension(OneToManyReferenceAnnotator.class, CDOOneToManyReferenceAnnotator.class, extensionManager);
 
     for (String key : extensions.keySet())
     {

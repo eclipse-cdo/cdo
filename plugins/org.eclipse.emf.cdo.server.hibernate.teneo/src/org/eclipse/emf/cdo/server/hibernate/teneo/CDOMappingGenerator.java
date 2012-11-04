@@ -111,6 +111,7 @@ public class CDOMappingGenerator
       props.put(PersistenceOptions.VERSION_COLUMN_NAME, "version"); //$NON-NLS-1$
     }
 
+    props.setProperty(PersistenceOptions.FEATUREMAP_AS_COMPONENT, "true");
     props.put(PersistenceOptions.ALSO_MAP_AS_CLASS, "false"); //$NON-NLS-1$
     props.put(PersistenceOptions.EMAP_AS_TRUE_MAP, "false"); //$NON-NLS-1$
     registerCDOExtensions(extensionManager);

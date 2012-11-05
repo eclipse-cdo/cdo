@@ -60,6 +60,7 @@ public class Bugzilla_351393_Test extends AbstractCDOTest
 
     OrderDetail od1 = getModel1Factory().createOrderDetail();
     Product1 p1 = getModel1Factory().createProduct1();
+    p1.setName("test1");
     p1.getOrderDetails().add(od1);
 
     resource.getContents().add(p1);

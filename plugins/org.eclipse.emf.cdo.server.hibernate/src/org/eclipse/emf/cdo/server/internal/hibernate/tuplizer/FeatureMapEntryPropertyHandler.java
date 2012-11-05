@@ -151,6 +151,10 @@ public class FeatureMapEntryPropertyHandler implements PropertyAccessor, Getter,
 
   private boolean isApplicable(CDOFeatureMapEntry cdoFeatureMapEntry)
   {
+    if (cdoFeatureMapEntry.getEStructuralFeature() == null)
+    {
+      return false;
+    }
     return cdoFeatureMapEntry.getEStructuralFeature().getName().equals(getPropertyName());
   }
 }

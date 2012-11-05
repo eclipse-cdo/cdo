@@ -28,7 +28,7 @@ public class Bugzilla_376610_Test extends AbstractCDOTest
   public void testRemoveOneEnumLiteral() throws Throwable
   {
     Product1 product = getModel1Factory().createProduct1();
-
+    product.setName("test1");
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource mainResource = transaction.createResource(getResourcePath("/mainResource.model1"));
@@ -49,7 +49,7 @@ public class Bugzilla_376610_Test extends AbstractCDOTest
   public void testRemoveAllEnumLiterals() throws Throwable
   {
     Product1 product = getModel1Factory().createProduct1();
-
+    product.setName("test1");
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource mainResource = transaction.createResource(getResourcePath("/mainResource.model1"));

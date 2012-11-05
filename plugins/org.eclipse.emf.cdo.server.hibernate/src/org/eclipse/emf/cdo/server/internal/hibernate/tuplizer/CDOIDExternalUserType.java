@@ -112,7 +112,7 @@ public class CDOIDExternalUserType implements UserType, ParameterizedType
     }
     else
     {
-      throw new IllegalArgumentException("CDOID type " + localValue.getClass().getName() + " not supported here"); //$NON-NLS-1$ //$NON-NLS-2$
+      statement.setString(index, "#" + ((CDOID)localValue).toURIFragment());
     }
   }
 

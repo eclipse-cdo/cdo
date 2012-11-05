@@ -64,6 +64,10 @@ public class FeatureMapEntryFeatureURIPropertyHandler implements PropertyAccesso
   public Object get(Object owner) throws HibernateException
   {
     final CDOFeatureMapEntry cdoFeatureMapEntry = (CDOFeatureMapEntry)owner;
+    if (cdoFeatureMapEntry.getEStructuralFeature() == null)
+    {
+      return null;
+    }
     return getEStructuralFeatureAsString(cdoFeatureMapEntry);
   }
 

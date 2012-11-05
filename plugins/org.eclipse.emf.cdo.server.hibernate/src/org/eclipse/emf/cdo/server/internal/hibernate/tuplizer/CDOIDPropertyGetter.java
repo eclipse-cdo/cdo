@@ -38,6 +38,10 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
   @Override
   public Object get(Object target) throws HibernateException
   {
+    if (target instanceof CDOID)
+    {
+      return target;
+    }
     InternalCDORevision revision = (InternalCDORevision)target;
     if (!(HibernateUtil.getInstance().getCDOID(revision) instanceof CDOIDObject))
     {

@@ -55,6 +55,7 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.io.LimitedInputStream;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -734,17 +735,17 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         try
         {
           int count = in.readInt();
-          for (int i = 0; i < count / 2; i++)
+          for (int i = 0; i < count; i++)
           {
             byte[] id = in.readByteArray();
             long size = in.readLong();
             if (size > 0)
             {
-              writeBlob(id, size, in);
+              writeBlob(id, size, new LimitedInputStream(in, size));
             }
             else
             {
-              writeClob(id, -size, new InputStreamReader(in));
+              writeClob(id, -size, new InputStreamReader(new LimitedInputStream(in, -size)));
             }
           }
         }

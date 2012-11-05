@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.internal.hibernate.ContainerInfoConverter;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -33,6 +34,10 @@ public class CDOContainerGetter extends CDOPropertyGetter
   @Override
   public Object get(Object target) throws HibernateException
   {
+    if (target instanceof CDOID)
+    {
+      return target;
+    }
     final InternalCDORevision revision = (InternalCDORevision)target;
     return ContainerInfoConverter.getInstance().convertContainerRelationToString(revision);
   }

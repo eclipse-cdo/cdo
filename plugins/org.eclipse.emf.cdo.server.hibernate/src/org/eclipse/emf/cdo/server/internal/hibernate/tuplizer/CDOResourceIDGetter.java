@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.hibernate.HibernateException;
@@ -30,6 +31,10 @@ public class CDOResourceIDGetter extends CDOPropertyGetter
   @Override
   public Object get(Object target) throws HibernateException
   {
+    if (target instanceof CDOID)
+    {
+      return target;
+    }
     return ((InternalCDORevision)target).getResourceID();
   }
 

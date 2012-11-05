@@ -11,15 +11,12 @@
 package org.eclipse.emf.cdo.tests.hibernate;
 
 import org.eclipse.emf.cdo.tests.AllConfigs;
+import org.eclipse.emf.cdo.tests.AttributeTest;
 import org.eclipse.emf.cdo.tests.AuditSameSessionTest;
 import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.BackupTest;
-import org.eclipse.emf.cdo.tests.BranchingSameSessionTest;
-import org.eclipse.emf.cdo.tests.BranchingTest;
-import org.eclipse.emf.cdo.tests.BranchingWithCacheClearTest;
 import org.eclipse.emf.cdo.tests.CommitInfoTest;
-import org.eclipse.emf.cdo.tests.ComplexTest;
-import org.eclipse.emf.cdo.tests.ContainmentTest;
+import org.eclipse.emf.cdo.tests.DynamicXSDTest;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 import org.eclipse.emf.cdo.tests.LockingManagerRestartRepositoryTest;
 import org.eclipse.emf.cdo.tests.LockingManagerRestartSessionTest;
@@ -27,31 +24,27 @@ import org.eclipse.emf.cdo.tests.LockingManagerRestartTransactionTest;
 import org.eclipse.emf.cdo.tests.LockingManagerTest;
 import org.eclipse.emf.cdo.tests.LockingNotificationsTest;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
-import org.eclipse.emf.cdo.tests.MergingTest;
 import org.eclipse.emf.cdo.tests.MultiValuedOfAttributeTest;
-import org.eclipse.emf.cdo.tests.OCLQueryTest;
-import org.eclipse.emf.cdo.tests.PartialCommitTest;
-import org.eclipse.emf.cdo.tests.ResourceTest;
-import org.eclipse.emf.cdo.tests.RevisionManagerClientSideTest;
-import org.eclipse.emf.cdo.tests.RevisionManagerTest;
-import org.eclipse.emf.cdo.tests.SetFeatureTest;
 import org.eclipse.emf.cdo.tests.UnsetTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_272861_Test;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_273565_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_279982_Test;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_283985_1_Test;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_283985_2_Test;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_308895_Test;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_316444_Test;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_319836_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_322804_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_351393_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_352204_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_359966_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_362270_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_365832_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_381472_Test;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.util.CommitException;
+
+import org.eclipse.emf.teneo.PersistenceOptions;
 
 import java.util.List;
 
@@ -80,40 +73,53 @@ public class AllTestsHibernate extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // testClasses.clear();
-    // testClasses.add(FeatureMapTest.class);
     // testClasses.add(Hibernate_BackupTest.class);
-    // // testClasses.add(HibernateTimeStampTest.class);
     // if (true)
     // {
     // return;
     // }
 
-    // Use a hibnernate specific test class
-    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=339492
-    testClasses.add(Hibernate_BackupTest.class);
-    testClasses.remove(BackupTest.class);
-
     testClasses.add(HibernateTimeStampTest.class);
-    testClasses.add(Hibernate_Bugzilla_279982_Test.class);
-    testClasses.add(Hibernate_ContainmentTest.class);
     // removed stalls
     // testClasses.add(HibernateXATransactionTest.class);
-    testClasses.add(Hibernate_Bugzilla_308895_Test.class);
+    testClasses.add(Hibernate_Bugzilla_279982_Test.class);
     testClasses.add(HibernateExternalAnnotationTest.class);
     testClasses.add(HibernateMultiValuedOfAttributeTest.class);
     testClasses.add(HibernateExternalReferenceTest.class);
     testClasses.add(HibernateQueryTest.class);
     testClasses.add(HibernateQueryNoCachingTest.class);
-    testClasses.add(HibernateBugzilla_258933_Test.class);
     testClasses.add(HibernateUnsetTest.class);
+    testClasses.add(HibernateBugzilla_258933_Test.class);
     testClasses.add(HibernateBugzilla_301104_Test.class);
-    testClasses.add(Hibernate_SetFeatureTest.class);
-    testClasses.add(Hibernate_ResourceTest.class);
-    testClasses.add(Hibernate_ComplexTest.class);
-    testClasses.add(Hibernate_PartialCommitTest.class);
-    testClasses.add(Hibernate_Bugzilla_316444_Test.class);
+
+    testClasses.add(HibernateBugzilla_362270_Test.class);
 
     super.initTestClasses(testClasses, scenario);
+
+    testClasses.remove(DynamicXSDTest.class);
+
+    // delete repo is not yet supported
+    testClasses.remove(Bugzilla_381472_Test.class);
+
+    testClasses.remove(Bugzilla_362270_Test.class);
+
+    // persisting models in a resource is not supported
+    testClasses.remove(Bugzilla_365832_Test.class);
+    testClasses.remove(Bugzilla_352204_Test.class);
+    testClasses.remove(Bugzilla_359966_Test.class);
+
+    // external reference in a resource not supported
+    testClasses.remove(Bugzilla_351393_Test.class);
+
+    // hibernate does not support persisting
+    // java class and object
+    testClasses.add(HibernateAttributeTest.class);
+    testClasses.remove(AttributeTest.class);
+
+    // Use a hibernate specific test class
+    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=339492
+    testClasses.add(Hibernate_BackupTest.class);
+    testClasses.remove(BackupTest.class);
 
     // Teneo does not yet support lists of int arrays:
     // https://bugs.eclipse.org/bugs/show_bug.cgi?id=330212
@@ -128,32 +134,6 @@ public class AllTestsHibernate extends AllConfigs
     testClasses.remove(LockingNotificationsTest.class);
     testClasses.remove(LockingManagerRestartRepositoryTest.class);
 
-    // are replaced by Hibernate specific ones, mostly
-    // to prevent tests doing move from one container to another
-    testClasses.remove(ContainmentTest.class);
-    testClasses.remove(ComplexTest.class);
-    testClasses.remove(ResourceTest.class);
-    testClasses.remove(SetFeatureTest.class);
-    testClasses.remove(PartialCommitTest.class);
-    testClasses.remove(Bugzilla_316444_Test.class);
-    testClasses.remove(Bugzilla_308895_Test.class);
-
-    // contains a lot of containment move, which is not supported by Hibernate
-    testClasses.remove(Bugzilla_283985_1_Test.class);
-    testClasses.remove(Bugzilla_283985_2_Test.class);
-    testClasses.remove(Bugzilla_319836_Test.class);
-
-    // OCL querying not supported
-    testClasses.remove(OCLQueryTest.class);
-
-    // Branching not supported
-    testClasses.remove(BranchingTest.class);
-    testClasses.remove(MergingTest.class);
-    testClasses.remove(BranchingSameSessionTest.class);
-    testClasses.remove(BranchingWithCacheClearTest.class);
-    testClasses.remove(RevisionManagerTest.class);
-    testClasses.remove(RevisionManagerClientSideTest.class);
-
     // Commit info not supported
     testClasses.remove(CommitInfoTest.class);
 
@@ -162,7 +142,7 @@ public class AllTestsHibernate extends AllConfigs
 
     // results in infinite loops it seems
     // runs okay when run standalone
-    testClasses.remove(Bugzilla_273565_Test.class);
+    // testClasses.remove(Bugzilla_273565_Test.class);
 
     // audit support to do
     // bug 244141
@@ -215,113 +195,6 @@ public class AllTestsHibernate extends AllConfigs
     }
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  public static class Hibernate_Bugzilla_308895_Test extends Bugzilla_308895_Test
-  {
-    @Override
-    public void setUp() throws Exception
-    {
-      super.setUp();
-      // final EAttribute att = getAtt();
-
-      // add a teneo annotation
-      // final EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-      // eAnnotation.setSource("teneo.jpa");
-      // eAnnotation.getDetails().put("value", value)
-      //
-      // att.getEAnnotations().add(eAnnotation);
-    }
-  }
-
-  // unsettable is hardly supported by the Hibernate Store
-  public static class Hibernate_SetFeatureTest extends SetFeatureTest
-  {
-    @Override
-    public void testUnsettableDateNoDefault_SetDefault() throws Exception
-    {
-    }
-
-    @Override
-    public void testUnsettableStringNoDefault_SetDefault() throws Exception
-    {
-    }
-  }
-
-  // disable some container move tests, containment move is not supported
-  // by hibernate
-  public static class Hibernate_ResourceTest extends ResourceTest
-  {
-    @Override
-    public void testChangePathFromDepth3ToDepth0() throws Exception
-    {
-    }
-
-    @Override
-    public void testChangeResourceURI() throws Exception
-    {
-    }
-
-    @Override
-    public void testChangeResourceFolderURI() throws Exception
-    {
-    }
-  }
-
-  public static class Hibernate_ComplexTest extends ComplexTest
-  {
-    @Override
-    public void testMigrateContainmentMulti()
-    {
-    }
-
-  }
-
-  public static class Hibernate_PartialCommitTest extends PartialCommitTest
-  {
-    @Override
-    public void testMove() throws CommitException
-    {
-    }
-
-    @Override
-    public void testDoubleMove() throws CommitException
-    {
-    }
-  }
-
-  public static class Hibernate_Bugzilla_316444_Test extends Bugzilla_316444_Test
-  {
-    @Override
-    public void testLockParentWithEAttributeChange() throws Exception
-    {
-    }
-
-    @Override
-    public void testMovingSubtree() throws Exception
-    {
-    }
-
-  }
-
-  public static class Hibernate_ContainmentTest extends ContainmentTest
-  {
-    // see:
-    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=330207#c1
-    @Override
-    public void testModeledBackPointer_Transient() throws Exception
-    {
-    }
-
-    // see:
-    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=330207#c1
-    @Override
-    public void testModeledBackPointer_Transient_Load() throws Exception
-    {
-    }
-  }
-
   // overridden because Hibernate will treat all stale references as an exception
   public static class Hibernate_Bugzilla_279982_Test extends Bugzilla_279982_Test
   {
@@ -358,24 +231,45 @@ public class AllTestsHibernate extends AllConfigs
   {
 
     @Override
-    public void testExportFeatureMap() throws Exception
+    protected void doSetUp() throws Exception
     {
+      final IRepositoryConfig repConfig = getRepositoryConfig();
+      final HibernateConfig hbConfig = (HibernateConfig)repConfig;
+      final String persistenceXML = "org/eclipse/emf/cdo/tests/hibernate/external_model1_4.persistence.xml";
+      hbConfig.getAdditionalProperties().put(PersistenceOptions.PERSISTENCE_XML, persistenceXML);
+
+      super.doSetUp();
     }
 
     @Override
-    public void testExportExternalReference() throws Exception
+    protected void doTearDown() throws Exception
     {
+      final IRepositoryConfig repConfig = getRepositoryConfig();
+      final HibernateConfig hbConfig = (HibernateConfig)repConfig;
+      hbConfig.getAdditionalProperties().clear();
+      super.doTearDown();
     }
 
-    @Override
-    public void testImportFeatureMap() throws Exception
-    {
-    }
-
-    @Override
-    public void testImportExternalReference() throws Exception
-    {
-    }
+    //
+    // @Override
+    // public void testExportFeatureMap() throws Exception
+    // {
+    // }
+    //
+    // @Override
+    // public void testExportExternalReference() throws Exception
+    // {
+    // }
+    //
+    // @Override
+    // public void testImportFeatureMap() throws Exception
+    // {
+    // }
+    //
+    // @Override
+    // public void testImportExternalReference() throws Exception
+    // {
+    // }
 
   }
 }

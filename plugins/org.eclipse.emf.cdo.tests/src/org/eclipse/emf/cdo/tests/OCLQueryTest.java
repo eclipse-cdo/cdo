@@ -202,7 +202,9 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testDetachedObject() throws Exception
   {
-    resource.getContents().add(0, getModel1Factory().createProduct1());
+    Product1 p1 = getModel1Factory().createProduct1();
+    p1.setName("p1");
+    resource.getContents().add(0, p1);
     transaction.commit();
 
     CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1(), true);
@@ -226,7 +228,9 @@ public class OCLQueryTest extends AbstractCDOTest
     List<Product1> products = query.getResult(Product1.class);
     int numOfProducts = products.size();
 
-    resource.getContents().add(0, getModel1Factory().createProduct1());
+    Product1 p1 = getModel1Factory().createProduct1();
+    p1.setName("test");
+    resource.getContents().add(0, p1);
     transaction.commit();
 
     resource.getContents().remove(0);
@@ -240,7 +244,9 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testAuditWithDetachedObject() throws Exception
   {
-    resource.getContents().add(0, getModel1Factory().createProduct1());
+    Product1 p1 = getModel1Factory().createProduct1();
+    p1.setName("p1");
+    resource.getContents().add(0, p1);
     transaction.commit();
 
     resource.getContents().remove(0);

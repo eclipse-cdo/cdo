@@ -43,8 +43,11 @@ public class Bugzilla_359669_Test extends AbstractCDOTest
   public void testReloadFromIndexComplex() throws Exception
   {
     Product1 product0 = getModel1Factory().createProduct1();
+    product0.setName("test1");
     Product1 product1 = getModel1Factory().createProduct1();
+    product1.setName("test2");
     Product1 product2 = getModel1Factory().createProduct1();
+    product2.setName("test3");
 
     Category category = getModel1Factory().createCategory();
     category.getProducts().add(product0);

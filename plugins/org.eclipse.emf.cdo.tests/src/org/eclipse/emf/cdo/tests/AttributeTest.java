@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -350,6 +351,13 @@ public class AttributeTest extends AbstractCDOTest
     EAttribute attrBigDecimal = efactory.createEAttribute();
     attrBigDecimal.setName("bigDecimal");
     attrBigDecimal.setEType(epackage.getEBigDecimal());
+
+    // set a teneo annotation to prevent decimals
+    EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+    eAnnotation.setSource("teneo.jpa");
+    eAnnotation.getDetails().put("value", "@Column(scale=0)");
+    attrBigDecimal.getEAnnotations().add(eAnnotation);
+
     schoolBookEClass.getEStructuralFeatures().add(attrBigDecimal);
 
     EAttribute attrBigInteger = efactory.createEAttribute();

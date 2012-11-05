@@ -40,6 +40,7 @@ public class Bugzilla_373096_Test extends AbstractCDOTest
     Category category1 = getModel1Factory().createCategory();
     Category category2 = getModel1Factory().createCategory();
     Product1 productToDragAndDrop = getModel1Factory().createProduct1();
+    productToDragAndDrop.setName("test1");
 
     company.getCategories().add(category1);
     company.getCategories().add(category2);

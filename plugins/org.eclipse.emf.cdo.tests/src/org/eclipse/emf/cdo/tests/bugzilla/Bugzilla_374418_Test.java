@@ -26,6 +26,7 @@ public class Bugzilla_374418_Test extends AbstractCDOTest
   {
     Root root = getModel6Factory().createRoot();
     BaseObject childRoot = getModel6Factory().createBaseObject();
+    childRoot.setAttributeRequired("test");
     root.getListA().add(childRoot);
 
     CDOSession session = openSession();

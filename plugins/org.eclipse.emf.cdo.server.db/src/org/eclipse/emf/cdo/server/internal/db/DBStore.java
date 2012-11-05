@@ -906,7 +906,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     public void migrateSchema(DBStore store, final Statement statement) throws Exception
     {
       IDBAdapter dbAdapter = store.getDBAdapter();
-      String sql = dbAdapter.sqlRenameColumn(CDODBSchema.LOBS.toString(), "size", CDODBSchema.LOBS_SIZE.toString());
+      String sql = dbAdapter.sqlRenameField(CDODBSchema.LOBS_SIZE, "size");
       statement.execute(sql);
     }
   };

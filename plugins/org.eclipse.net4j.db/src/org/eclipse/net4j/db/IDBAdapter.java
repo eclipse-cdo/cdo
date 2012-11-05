@@ -11,6 +11,7 @@
  */
 package org.eclipse.net4j.db;
 
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.DBAdapterRegistry;
 import org.eclipse.net4j.spi.db.DBAdapter;
@@ -102,5 +103,5 @@ public interface IDBAdapter
   /**
    * @since 4.2
    */
-  public String sqlRenameColumn(String table, String from, String to);
+  public String sqlRenameField(IDBField field, String oldName);
 }

@@ -100,9 +100,9 @@ public class H2Adapter extends DBAdapter
   }
 
   @Override
-  public String sqlRenameColumn(String table, String from, String to)
+  public String sqlRenameField(IDBField field, String oldName)
   {
-    return "ALTER TABLE " + table + " ALTER COLUMN " + from + " RENAME TO " + to;
+    return "ALTER TABLE " + field.getTable() + " ALTER COLUMN " + oldName + " RENAME TO " + field;
   }
 
   /**

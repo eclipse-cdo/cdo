@@ -160,4 +160,11 @@ public class MYSQLAdapter extends DBAdapter
   {
     return "23000".equals(ex.getSQLState());
   }
+
+  @Override
+  public String sqlRenameField(IDBField field, String oldName)
+  {
+    return "ALTER TABLE " + field.getTable() + " CHANGE COLUMN " + oldName + " TO " + field + " "
+        + createFieldDefinition(field);
+  }
 }

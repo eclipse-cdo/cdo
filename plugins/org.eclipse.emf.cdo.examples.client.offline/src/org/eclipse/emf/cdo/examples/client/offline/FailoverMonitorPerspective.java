@@ -16,12 +16,12 @@ import org.eclipse.ui.IPerspectiveFactory;
 /**
  * @author Eike Stepper
  */
-public class NormalRepositoryPerspective implements IPerspectiveFactory
+public class FailoverMonitorPerspective implements IPerspectiveFactory
 {
   public void createInitialLayout(IPageLayout layout)
   {
     layout.setEditorAreaVisible(false);
     layout.setFixed(true);
-    layout.addView(NormalRepositoryView.ID, IPageLayout.LEFT, 0.5f, IPageLayout.ID_EDITOR_AREA);
+    layout.addView(FailoverMonitorView.ID, IPageLayout.LEFT, 0.5f, IPageLayout.ID_EDITOR_AREA);
   }
 }

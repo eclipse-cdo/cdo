@@ -65,6 +65,11 @@ public final class Node implements IElement, Comparable<Node>
     return settings;
   }
 
+  public String getSetting(String key)
+  {
+    return settings.getProperty(key);
+  }
+
   public void showSettings()
   {
     type.showSettings(this);
@@ -83,6 +88,12 @@ public final class Node implements IElement, Comparable<Node>
   public Map<Class<?>, Object> getObjects()
   {
     return objects;
+  }
+
+  @SuppressWarnings("unchecked")
+  public <T> T getObject(Class<T> type)
+  {
+    return (T)objects.get(type);
   }
 
   public void start()

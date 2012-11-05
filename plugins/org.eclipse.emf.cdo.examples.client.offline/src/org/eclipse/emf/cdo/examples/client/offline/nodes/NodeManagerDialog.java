@@ -64,7 +64,7 @@ public class NodeManagerDialog extends TitleAreaDialog
     super(parentShell);
     this.nodeManager = nodeManager;
     setHelpAvailable(false);
-    setShellStyle(SWT.CLOSE | SWT.RESIZE | SWT.APPLICATION_MODAL);
+    setShellStyle(SWT.CLOSE | SWT.RESIZE | SWT.TITLE | SWT.PRIMARY_MODAL);
   }
 
   public NodeManager getNodeManager()

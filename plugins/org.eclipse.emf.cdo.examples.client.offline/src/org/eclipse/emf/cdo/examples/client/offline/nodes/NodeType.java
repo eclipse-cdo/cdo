@@ -19,8 +19,10 @@ import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositorySynchronizer;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.ISynchronizableRepository;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.net4j.FailoverAgent;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 
@@ -85,6 +87,8 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
   public static final String SERVER_PROPERTY = "Server";
 
   public static final String MONITOR_PROPERTY = "Monitor";
+
+  private static final String REPOSITORY_NAME = "repository";
 
   private final NodeManager manager;
 
@@ -211,10 +215,10 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
 
   public void stop(Node node)
   {
-    IAcceptor acceptor = (IAcceptor)node.getObjects().get(IAcceptor.class);
+    IAcceptor acceptor = node.getObject(IAcceptor.class);
     LifecycleUtil.deactivate(acceptor);
 
-    IRepository repository = (IRepository)node.getObjects().get(IRepository.class);
+    IRepository repository = node.getObject(IRepository.class);
     LifecycleUtil.deactivate(repository);
   }
 
@@ -289,7 +293,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     IStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);
 
     Map<String, String> props = new HashMap<String, String>();
-    props.put(IRepository.Props.OVERRIDE_UUID, "repository");
+    props.put(IRepository.Props.OVERRIDE_UUID, REPOSITORY_NAME);
     props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
     props.put(IRepository.Props.SUPPORTING_BRANCHES, "true");
 
@@ -300,12 +304,12 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
 
   protected IRepository createRepository(Node node, IStore store, Map<String, String> props)
   {
-    return CDOServerUtil.createRepository("repository", store, props);
+    return CDOServerUtil.createRepository(REPOSITORY_NAME, store, props);
   }
 
   protected IAcceptor createAcceptor(Node node)
   {
-    String description = "0.0.0.0:" + node.getSettings().getProperty(PORT_PROPERTY);
+    String description = "0.0.0.0:" + node.getSetting(PORT_PROPERTY);
     return (IAcceptor)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.acceptors", "tcp", description);
   }
 
@@ -516,7 +520,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     @Override
     public void stop(Node node)
     {
-      CDOSession session = (CDOSession)node.getObjects().get(CDOSession.class);
+      CDOSession session = node.getObject(CDOSession.class);
       LifecycleUtil.deactivate(session);
 
       super.stop(node);
@@ -525,14 +529,14 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     @Override
     protected IRepository createRepository(Node node, IStore store, Map<String, String> props)
     {
-      String serverName = node.getSettings().getProperty(SERVER_PROPERTY);
+      String serverName = node.getSetting(SERVER_PROPERTY);
       Node serverNode = getManager().getNode(serverName);
       if (serverNode == null)
       {
         throw new IllegalStateException("Server not found: " + serverName);
       }
 
-      final String serverAddress = "localhost:" + serverNode.getObjects().get(PORT_PROPERTY);
+      final String serverAddress = "localhost:" + serverNode.getSetting(PORT_PROPERTY);
 
       CDOSessionConfigurationFactory factory = new CDOSessionConfigurationFactory()
       {
@@ -542,7 +546,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
 
           CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
           configuration.setConnector(connector);
-          configuration.setRepositoryName("repository");
+          configuration.setRepositoryName(REPOSITORY_NAME);
           configuration.setRevisionManager(CDORevisionUtil.createRevisionManager(CDORevisionCache.NOOP));
 
           return configuration;
@@ -554,7 +558,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
       synchronizer.setMaxRecommits(10);
       synchronizer.setRecommitInterval(2);
 
-      return CDOServerUtil.createOfflineClone("repository", store, props, synchronizer);
+      return CDOServerUtil.createOfflineClone(REPOSITORY_NAME, store, props, synchronizer);
     }
 
     @Override
@@ -628,6 +632,49 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     }
 
     @Override
+    protected IRepository createRepository(Node node, IStore store, Map<String, String> props)
+    {
+      String monitorName = node.getSetting(MONITOR_PROPERTY);
+      Node monitorNode = getManager().getNode(monitorName);
+      if (monitorNode == null)
+      {
+        throw new IllegalStateException("Monitor not found: " + monitorName);
+      }
+
+      final String monitorAddress = "localhost:" + monitorNode.getSetting(PORT_PROPERTY);
+
+      ISynchronizableRepository repository = CDOServerUtil.createFailoverParticipant(REPOSITORY_NAME, store, props);
+
+      FailoverAgent agent = new FailoverAgent()
+      {
+        @Override
+        protected CDONet4jSessionConfiguration createSessionConfiguration(String connectorDescription,
+            String repositoryName)
+        {
+          IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", connectorDescription);
+
+          CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
+          configuration.setConnector(connector);
+          configuration.setRepositoryName(repositoryName);
+          configuration.setRevisionManager(CDORevisionUtil.createRevisionManager(CDORevisionCache.NOOP));
+          return configuration;
+        }
+      };
+
+      IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", monitorAddress);
+
+      agent.setMonitorConnector(connector);
+      agent.setConnectorDescription("localhost:" + node.getSetting(PORT_PROPERTY));
+      agent.setRepository(repository);
+      agent.setGroup(monitorNode.getName());
+      agent.setRate(1500L);
+      agent.setTimeout(3000L);
+      agent.activate();
+
+      return repository;
+    }
+
+    @Override
     public String toString()
     {
       return "Failover Repositories";
@@ -658,8 +705,8 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     @Override
     public void stop(Node node)
     {
-      org.eclipse.emf.cdo.server.net4j.FailoverMonitor monitor = (org.eclipse.emf.cdo.server.net4j.FailoverMonitor)node
-          .getObjects().get(org.eclipse.emf.cdo.server.net4j.FailoverMonitor.class);
+      org.eclipse.emf.cdo.server.net4j.FailoverMonitor monitor = node
+          .getObject(org.eclipse.emf.cdo.server.net4j.FailoverMonitor.class);
       LifecycleUtil.deactivate(monitor);
 
       super.stop(node);

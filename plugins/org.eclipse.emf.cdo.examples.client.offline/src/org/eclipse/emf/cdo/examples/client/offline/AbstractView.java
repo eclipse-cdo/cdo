@@ -13,8 +13,6 @@ package org.eclipse.emf.cdo.examples.client.offline;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
-import org.eclipse.net4j.util.ui.views.ItemProvider;
 
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -61,17 +59,7 @@ public abstract class AbstractView<T extends IContainer<?>> extends ViewPart
 
     SashForm sash = new SashForm(container, SWT.SMOOTH | SWT.VERTICAL);
 
-    @SuppressWarnings("unchecked")
-    ItemProvider<T> itemProvider = (ItemProvider<T>)new ContainerItemProvider<IContainer<Object>>()
-    {
-      @Override
-      protected void handleElementEvent(final IEvent event)
-      {
-        addEvent(event);
-      }
-    };
-
-    createPane(sash, object, itemProvider);
+    createPane(sash, object);
 
     events = new Text(sash, SWT.BORDER | SWT.READ_ONLY | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL | SWT.MULTI);
     events.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
@@ -90,12 +78,12 @@ public abstract class AbstractView<T extends IContainer<?>> extends ViewPart
       public void run()
       {
         String text = events.getText();
-        if (text.length() != 0)
-        {
-          text += StringUtil.NL;
-        }
-
-        events.setText(text + event);
+        // if (text.length() != 0)
+        // {
+        // text += StringUtil.NL;
+        // }
+        //
+        events.setText(event + StringUtil.NL + text);
       }
     });
   }
@@ -113,5 +101,5 @@ public abstract class AbstractView<T extends IContainer<?>> extends ViewPart
   {
   }
 
-  protected abstract void createPane(Composite parent, T object, ItemProvider<T> itemProvider);
+  protected abstract void createPane(Composite parent, T object);
 }

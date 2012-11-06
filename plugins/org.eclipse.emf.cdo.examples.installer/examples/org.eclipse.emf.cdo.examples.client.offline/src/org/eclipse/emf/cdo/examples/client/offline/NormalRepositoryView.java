@@ -12,6 +12,10 @@ package org.eclipse.emf.cdo.examples.client.offline;
 
 import org.eclipse.emf.cdo.server.IRepository;
 
+import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ItemProvider;
 
 import org.eclipse.jface.viewers.TreeViewer;
@@ -27,6 +31,8 @@ public class NormalRepositoryView extends AbstractView<IRepository>
 {
   public static final String ID = "org.eclipse.emf.cdo.examples.client.offline.NormalRepositoryView"; //$NON-NLS-1$
 
+  private ItemProvider<IContainer<Object>> itemProvider;
+
   private TreeViewer treeViewer;
 
   private ScrolledComposite details;
@@ -37,14 +43,23 @@ public class NormalRepositoryView extends AbstractView<IRepository>
   }
 
   @Override
-  protected void createPane(Composite parent, IRepository repository, ItemProvider<IRepository> itemProvider)
+  protected void createPane(Composite parent, IRepository repository)
   {
+    itemProvider = new ContainerItemProvider<IContainer<Object>>()
+    {
+      @Override
+      protected void handleElementEvent(final IEvent event)
+      {
+        addEvent(event);
+      }
+    };
+
     SashForm sash = new SashForm(parent, SWT.SMOOTH);
 
     treeViewer = new TreeViewer(sash, SWT.BORDER);
     treeViewer.setLabelProvider(itemProvider);
     treeViewer.setContentProvider(itemProvider);
-    treeViewer.setInput(Application.NODE.getObject(IRepository.class));
+    treeViewer.setInput(IPluginContainer.INSTANCE);
 
     details = new ScrolledComposite(sash, SWT.V_SCROLL);
     details.setExpandHorizontal(true);
@@ -57,5 +72,12 @@ public class NormalRepositoryView extends AbstractView<IRepository>
   public void setFocus()
   {
     treeViewer.getTree().setFocus();
+  }
+
+  @Override
+  public void dispose()
+  {
+    itemProvider.dispose();
+    super.dispose();
   }
 }

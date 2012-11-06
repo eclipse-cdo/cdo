@@ -17,9 +17,9 @@ import org.eclipse.emf.cdo.server.net4j.FailoverMonitor.AgentProtocol;
 import org.eclipse.net4j.signal.SignalScheduledEvent;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.ui.views.ItemProvider;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlEvent;
@@ -51,11 +51,18 @@ public class FailoverMonitorView extends AbstractView<FailoverMonitor>
   }
 
   @Override
-  protected void createPane(Composite parent, FailoverMonitor monitor, ItemProvider<FailoverMonitor> itemProvider)
+  protected void createPane(Composite parent, FailoverMonitor monitor)
   {
     final OScope scope = new OScope(parent, SWT.NONE);
     monitor.addListener(new ContainerEventAdapter<AgentProtocol>()
     {
+      @Override
+      protected void notifyContainerEvent(IContainerEvent<AgentProtocol> event)
+      {
+        addEvent(event);
+        super.notifyContainerEvent(event);
+      }
+
       @Override
       protected void onAdded(IContainer<AgentProtocol> monitor, final AgentProtocol agent)
       {

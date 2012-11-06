@@ -10,14 +10,18 @@
  */
 package org.eclipse.emf.cdo.examples.client.offline;
 
+import org.eclipse.ui.IPageLayout;
+import org.eclipse.ui.IPerspectiveFactory;
+
 /**
  * @author Eike Stepper
  */
-public class FailoverRepositoryView extends NormalRepositoryView
+public class NormalRepositoryPerspective implements IPerspectiveFactory
 {
-  public static final String ID = "org.eclipse.emf.cdo.examples.client.offline.FailoverRepositoryView"; //$NON-NLS-1$
-
-  public FailoverRepositoryView()
+  public void createInitialLayout(IPageLayout layout)
   {
+    layout.setEditorAreaVisible(false);
+    layout.setFixed(true);
+    layout.addView(NormalRepositoryView.ID, IPageLayout.LEFT, 0.5f, IPageLayout.ID_EDITOR_AREA);
   }
 }

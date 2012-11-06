@@ -26,32 +26,33 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            name="Perspective"
-            class="org.eclipse.emf.cdo.examples.client.offline.Perspective"
-            id="org.eclipse.emf.cdo.examples.client.offline.Perspective">
-      </perspective>
+            name="Normal Repository"
+            class="org.eclipse.emf.cdo.examples.client.offline.NormalRepositoryPerspective"
+            id="org.eclipse.emf.cdo.examples.client.offline.NormalRepositoryPerspective"/>
+      <perspective
+            name="Failover Repository"
+            class="org.eclipse.emf.cdo.examples.client.offline.FailoverRepositoryPerspective"
+            id="org.eclipse.emf.cdo.examples.client.offline.FailoverRepositoryPerspective"/>
+      <perspective
+            name="Failover Monitor"
+            class="org.eclipse.emf.cdo.examples.client.offline.FailoverMonitorPerspective"
+            id="org.eclipse.emf.cdo.examples.client.offline.FailoverMonitorPerspective"/>
    </extension>
 
-	<!--
    <extension
          point="org.eclipse.ui.views">
-      <category
-            id="org.myzilla.app.category"
-            name="Myzilla">
-      </category>
       <view
-            category="org.myzilla.app.category"
-            class="org.myzilla.app.MyzillaNavigatorView"
-            id="org.myzilla.app.navigator"
-            name="Navigator">
-      </view>
+            class="org.eclipse.emf.cdo.examples.client.offline.NormalRepositoryView"
+            id="org.eclipse.emf.cdo.examples.client.offline.NormalRepositoryView"
+            name="Normal Repository"/>
       <view
-            category="org.myzilla.app.category"
-            class="org.myzilla.app.MyzillaDetailsView"
-            id="org.myzilla.app.details"
-            name="Details">
-      </view>
+            class="org.eclipse.emf.cdo.examples.client.offline.FailoverRepositoryView"
+            id="org.eclipse.emf.cdo.examples.client.offline.FailoverRepositoryView"
+            name="Failover Repository"/>
+      <view
+            class="org.eclipse.emf.cdo.examples.client.offline.FailoverMonitorView"
+            id="org.eclipse.emf.cdo.examples.client.offline.FailoverMonitorView"
+            name="Failover Monitor"/>
    </extension>
-	-->
 
 </plugin>

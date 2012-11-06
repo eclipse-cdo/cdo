@@ -8,16 +8,24 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.examples.client.offline;
+package org.eclipse.emf.cdo.examples.client.offline.nodes;
+
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Composite;
+
+import java.util.Properties;
 
 /**
  * @author Eike Stepper
  */
-public class FailoverRepositoryView extends NormalRepositoryView
+public interface IElement
 {
-  public static final String ID = "org.eclipse.emf.cdo.examples.client.offline.FailoverRepositoryView"; //$NON-NLS-1$
+  public Properties getSettings();
 
-  public FailoverRepositoryView()
-  {
-  }
+  public void showSettings();
+
+  public Image getImage();
+
+  public Composite getDetailsControl();
+
 }

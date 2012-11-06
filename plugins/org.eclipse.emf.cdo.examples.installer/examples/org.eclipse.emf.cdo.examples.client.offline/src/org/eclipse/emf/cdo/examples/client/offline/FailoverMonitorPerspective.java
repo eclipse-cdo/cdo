@@ -16,14 +16,12 @@ import org.eclipse.ui.IPerspectiveFactory;
 /**
  * @author Eike Stepper
  */
-public class Perspective implements IPerspectiveFactory
+public class FailoverMonitorPerspective implements IPerspectiveFactory
 {
   public void createInitialLayout(IPageLayout layout)
   {
-    layout.setFixed(true);
     layout.setEditorAreaVisible(false);
-
-    layout.addView("org.myzilla.app.details", IPageLayout.LEFT, 0.5f, IPageLayout.ID_EDITOR_AREA);
-    layout.addView("org.myzilla.app.navigator", IPageLayout.LEFT, 0.42f, "org.myzilla.app.details");
+    layout.setFixed(true);
+    layout.addView(FailoverMonitorView.ID, IPageLayout.LEFT, 0.5f, IPageLayout.ID_EDITOR_AREA);
   }
 }

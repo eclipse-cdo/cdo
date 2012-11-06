@@ -19,8 +19,6 @@ import org.eclipse.ui.application.WorkbenchWindowAdvisor;
  */
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor
 {
-  private static final String PERSPECTIVE_ID = "org.myzilla.app.perspective";
-
   @Override
   public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer)
   {
@@ -30,6 +28,6 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor
   @Override
   public String getInitialWindowPerspectiveId()
   {
-    return PERSPECTIVE_ID;
+    return "org.eclipse.emf.cdo.examples.client.offline." + Application.NODE.getType().getTypeName() + "Perspective";
   }
 }

@@ -10,35 +10,91 @@
  */
 package org.eclipse.emf.cdo.examples.client.offline;
 
+import org.eclipse.emf.cdo.examples.client.offline.nodes.Node;
+import org.eclipse.emf.cdo.examples.client.offline.nodes.NodeManager;
+import org.eclipse.emf.cdo.examples.client.offline.nodes.NodeManagerDialog;
+
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
+
+import java.io.File;
 
 /**
  * @author Eike Stepper
  */
 public class Application implements IApplication
 {
+  public static final String PLUGIN_ID = "org.eclipse.emf.cdo.examples.client.offline";
+
+  private static final String ROOT_PROPERTY = "node.manager.root";
+
+  public static Node NODE;
+
   public Object start(IApplicationContext context)
   {
     Display display = PlatformUI.createDisplay();
 
     try
     {
+      String rootProperty = System.getProperty(ROOT_PROPERTY);
+      if (rootProperty == null)
+      {
+        System.err.println("Property not set: " + ROOT_PROPERTY);
+        return IApplication.EXIT_OK;
+      }
+
+      NodeManager nodeManager = new NodeManager(new File(rootProperty));
+      NodeManagerDialog dialog = new NodeManagerDialog(new Shell(), nodeManager);
+      if (dialog.open() != NodeManagerDialog.OK)
+      {
+        return IApplication.EXIT_OK;
+      }
+
+      NODE = dialog.getCurrentNode();
+
+      BusyIndicator.showWhile(display, new Runnable()
+      {
+        public void run()
+        {
+          NODE.start();
+        }
+      });
+
       int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());
       if (returnCode == PlatformUI.RETURN_RESTART)
       {
         return IApplication.EXIT_RESTART;
       }
-
-      return IApplication.EXIT_OK;
+    }
+    catch (Exception ex)
+    {
+      ex.printStackTrace();
     }
     finally
     {
+      if (NODE != null)
+      {
+        try
+        {
+          NODE.stop();
+        }
+        catch (Exception ex)
+        {
+          ex.printStackTrace();
+        }
+
+        NODE = null;
+      }
+
       display.dispose();
     }
+
+    return IApplication.EXIT_OK;
   }
 
   public void stop()

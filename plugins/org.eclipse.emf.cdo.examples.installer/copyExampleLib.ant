@@ -27,6 +27,7 @@
 				<fileset dir="@{project}">
 					<exclude name=".externalToolBuilders/" />
 					<exclude name="database/" />
+					<exclude name="nodes/*/db/" />
 					<exclude name="bin/" />
 					<exclude name=".settings/org.eclipse.mylyn*" />
 					<exclude name=".settings/org.eclipse.pde.api.tools.prefs" />

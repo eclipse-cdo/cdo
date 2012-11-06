@@ -29,8 +29,6 @@ import java.io.File;
  */
 public class Application implements IApplication
 {
-  public static final String TITLE = "CDO Offline Example";
-
   public static final String PLUGIN_ID = "org.eclipse.emf.cdo.examples.client.offline";
 
   private static final String ROOT_PROPERTY = "node.manager.root";

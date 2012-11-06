@@ -293,7 +293,7 @@ public class FailoverMonitor extends Container<AgentProtocol>
     }
 
     /**
-     * @since 4.0
+     * @since 4.1
      */
     public FailoverMonitor getFailoverMonitor()
     {
@@ -301,7 +301,7 @@ public class FailoverMonitor extends Container<AgentProtocol>
     }
 
     /**
-     * @since 4.0
+     * @since 4.1
      */
     public String getConnectorDescription()
     {
@@ -309,7 +309,7 @@ public class FailoverMonitor extends Container<AgentProtocol>
     }
 
     /**
-     * @since 4.0
+     * @since 4.1
      */
     public String getRepositoryName()
     {

@@ -103,5 +103,15 @@ public interface IDBAdapter
   /**
    * @since 4.2
    */
+  public boolean isTableNotFoundException(SQLException ex);
+
+  /**
+   * @since 4.2
+   */
+  public boolean isColumnNotFoundException(SQLException ex);
+
+  /**
+   * @since 4.2
+   */
   public String sqlRenameField(IDBField field, String oldName);
 }

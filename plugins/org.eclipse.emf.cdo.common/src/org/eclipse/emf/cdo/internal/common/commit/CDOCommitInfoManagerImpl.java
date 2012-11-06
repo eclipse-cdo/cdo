@@ -242,6 +242,12 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
   }
 
   @Override
+  public String toString()
+  {
+    return "CommitInfoManager";
+  }
+
+  @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();

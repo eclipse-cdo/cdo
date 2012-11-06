@@ -206,6 +206,12 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
     return branch;
   }
 
+  @Override
+  public String toString()
+  {
+    return "BranchManager";
+  }
+
   /**
    * {@link #branches} must be synchronized by caller!
    */

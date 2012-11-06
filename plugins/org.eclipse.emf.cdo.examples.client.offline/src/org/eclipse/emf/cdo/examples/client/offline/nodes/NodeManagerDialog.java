@@ -34,7 +34,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
-import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.ExampleResourceManager;
 
 import java.util.Properties;
 
@@ -104,7 +104,7 @@ public class NodeManagerDialog extends TitleAreaDialog
     };
 
     setTitle("Node Manager");
-    setTitleImage(ResourceManager.getPluginImage(Application.PLUGIN_ID, "icons/NodeManager.gif"));
+    setTitleImage(ExampleResourceManager.getPluginImage(Application.PLUGIN_ID, "icons/NodeManager.gif"));
     setMessage("Select an existing node or create a new one.");
 
     Composite area = (Composite)super.createDialogArea(parent);

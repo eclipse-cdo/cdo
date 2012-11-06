@@ -61,7 +61,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
-import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.ExampleResourceManager;
 
 import org.h2.jdbcx.JdbcDataSource;
 
@@ -169,12 +169,12 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
 
   public Image getImage()
   {
-    return ResourceManager.getPluginImage(Application.PLUGIN_ID, "icons/Folder.gif");
+    return ExampleResourceManager.getPluginImage(Application.PLUGIN_ID, "icons/Folder.gif");
   }
 
   public Image getInstanceImage()
   {
-    return ResourceManager.getPluginImage(Application.PLUGIN_ID, "icons/" + getTypeName() + ".gif");
+    return ExampleResourceManager.getPluginImage(Application.PLUGIN_ID, "icons/" + getTypeName() + ".gif");
   }
 
   public String getTypeName()
@@ -512,8 +512,11 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     {
       super.start(node);
 
+      // IConnector connector = (IConnector)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.connectors", "jvm",
+      // "example");
+
       CDOSession session = (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions", "cdo",
-          "jvm://example");
+          "jvm://example?repositoryName=" + REPOSITORY_NAME);
       node.getObjects().put(CDOSession.class, session);
     }
 
@@ -530,25 +533,33 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     protected IRepository createRepository(Node node, IStore store, Map<String, String> props)
     {
       String serverName = node.getSetting(SERVER_PROPERTY);
-      Node serverNode = getManager().getNode(serverName);
+      final Node serverNode = getManager().getNode(serverName);
       if (serverNode == null)
       {
         throw new IllegalStateException("Server not found: " + serverName);
       }
 
-      final String serverAddress = "localhost:" + serverNode.getSetting(PORT_PROPERTY);
-
       CDOSessionConfigurationFactory factory = new CDOSessionConfigurationFactory()
       {
         public CDONet4jSessionConfiguration createSessionConfiguration()
         {
-          IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", serverAddress);
+          String serverAddress = "localhost:" + serverNode.getSetting(PORT_PROPERTY);
 
-          CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
-          configuration.setConnector(connector);
-          configuration.setRepositoryName(REPOSITORY_NAME);
+          CDONet4jSessionConfiguration configuration;
+          if (serverNode.getType() instanceof FailoverMonitor)
+          {
+            configuration = CDONet4jUtil.createFailoverSessionConfiguration(serverAddress, serverNode.getName());
+          }
+          else
+          {
+            IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", serverAddress);
+
+            configuration = CDONet4jUtil.createNet4jSessionConfiguration();
+            configuration.setConnector(connector);
+            configuration.setRepositoryName(REPOSITORY_NAME);
+          }
+
           configuration.setRevisionManager(CDORevisionUtil.createRevisionManager(CDORevisionCache.NOOP));
-
           return configuration;
         }
       };

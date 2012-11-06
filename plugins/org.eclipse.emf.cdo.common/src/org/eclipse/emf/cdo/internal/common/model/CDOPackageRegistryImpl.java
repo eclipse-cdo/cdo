@@ -561,7 +561,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}[packageLoader={1}]", getClass().getSimpleName(), getPackageLoader()); //$NON-NLS-1$
+    return "PackageRegistry";
   }
 
   public void addListener(IListener listener)

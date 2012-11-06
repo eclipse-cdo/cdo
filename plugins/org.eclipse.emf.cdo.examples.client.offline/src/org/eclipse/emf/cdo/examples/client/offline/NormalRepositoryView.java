@@ -22,7 +22,11 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.wb.swt.ExampleResourceManager;
+
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
@@ -47,6 +51,25 @@ public class NormalRepositoryView extends AbstractView<IRepository>
   {
     itemProvider = new ContainerItemProvider<IContainer<Object>>()
     {
+      private Image bean = ExampleResourceManager.getPluginImage(Application.PLUGIN_ID, "icons/Bean.gif");
+
+      @Override
+      public String getText(Object obj)
+      {
+        if (obj instanceof ExecutorService)
+        {
+          return "ExecutorService";
+        }
+
+        return super.getText(obj);
+      }
+
+      @Override
+      public Image getImage(Object obj)
+      {
+        return bean;
+      }
+
       @Override
       protected void handleElementEvent(final IEvent event)
       {

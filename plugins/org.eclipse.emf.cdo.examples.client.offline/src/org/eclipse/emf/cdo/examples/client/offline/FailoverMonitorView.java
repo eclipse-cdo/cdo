@@ -103,7 +103,7 @@ public class FailoverMonitorView extends AbstractView<FailoverMonitor>
    */
   public static class OScope extends Canvas implements Runnable, PaintListener, ControlListener
   {
-    public static final int[] PEAK = { 25, 50, 100, 80, 100, 50, 25, 10, 5 };
+    public static final int[] PEAK = { 10, 95, 80, 90, 50, 25, 10, 5 };
 
     private static final String INITIAL = "#INITIAL#";
 
@@ -134,8 +134,6 @@ public class FailoverMonitorView extends AbstractView<FailoverMonitor>
     private int height;
 
     private int channelHeight;
-
-    private int x;
 
     private boolean resizing;
 
@@ -230,8 +228,6 @@ public class FailoverMonitorView extends AbstractView<FailoverMonitor>
           return;
         }
 
-        x = Math.min(x, width);
-
         int oldChannelHeight = channelHeight;
         if (oldChannelHeight == 0)
         {
@@ -277,11 +273,6 @@ public class FailoverMonitorView extends AbstractView<FailoverMonitor>
 
       redraw();
 
-      if (++x >= width)
-      {
-        x = 0;
-      }
-
       getDisplay().timerExec(getTimerExecMillis(), this);
     }
 
@@ -310,6 +301,8 @@ public class FailoverMonitorView extends AbstractView<FailoverMonitor>
       private int headIndex;
 
       private boolean headNegate;
+
+      private int x;
 
       private int y;
 
@@ -367,6 +360,7 @@ public class FailoverMonitorView extends AbstractView<FailoverMonitor>
         }
 
         values = newValues;
+        x = Math.min(x, width);
         this.y = y;
       }
 
@@ -389,6 +383,11 @@ public class FailoverMonitorView extends AbstractView<FailoverMonitor>
         gc.setForeground(black);
         gc.setLineWidth(2);
         gc.drawRectangle(x, fx, 2, 2);
+
+        if (++x >= width)
+        {
+          x = 0;
+        }
       }
 
       void setName(String name)

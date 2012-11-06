@@ -26,6 +26,10 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
+            name="Client"
+            class="org.eclipse.emf.cdo.examples.client.offline.ClientPerspective"
+            id="org.eclipse.emf.cdo.examples.client.offline.ClientPerspective"/>
+      <perspective
             name="Normal Repository"
             class="org.eclipse.emf.cdo.examples.client.offline.NormalRepositoryPerspective"
             id="org.eclipse.emf.cdo.examples.client.offline.NormalRepositoryPerspective"/>

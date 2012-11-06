@@ -295,6 +295,12 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return getResultsAndSynthetics(infos, synthetics);
   }
 
+  @Override
+  public String toString()
+  {
+    return "RevisionManager";
+  }
+
   private List<RevisionInfo> createRevisionInfos(List<CDOID> ids, CDOBranchPoint branchPoint, int prefetchDepth,
       boolean loadOnDemand, RevisionInfo[] infos)
   {

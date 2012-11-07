@@ -17,7 +17,7 @@ import java.io.PrintStream;
 
 /**
  * Various static helper methods for dealing with strings.
- * 
+ *
  * @author Eike Stepper
  */
 public final class StringUtil
@@ -237,7 +237,7 @@ public final class StringUtil
    * <li><code>[...]</code> matches a set and/or range of characters
    * <li><code>\</code> escapes the following character
    * </ul>
-   * 
+   *
    * @since 2.0
    */
   public static boolean glob(String pattern, String string)
@@ -255,7 +255,7 @@ public final class StringUtil
    * <li><code>[...]</code> matches a set and/or range of characters
    * <li><code>\</code> escapes the following character
    * </ul>
-   * 
+   *
    * @since 2.0
    */
   public static boolean glob(String pattern, String string, String[] subStrings)

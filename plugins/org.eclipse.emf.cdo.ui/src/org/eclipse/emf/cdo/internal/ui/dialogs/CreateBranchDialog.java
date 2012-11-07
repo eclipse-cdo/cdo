@@ -34,8 +34,8 @@ public class CreateBranchDialog extends SelectBranchPointDialog
 
   private Text nameText;
 
-  public CreateBranchDialog(IWorkbenchPage page, CDOSession session, CDOBranchPoint branchPoint, boolean allowTimeStamp,
-      String name)
+  public CreateBranchDialog(IWorkbenchPage page, CDOSession session, CDOBranchPoint branchPoint,
+      boolean allowTimeStamp, String name)
   {
     super(page, session, branchPoint, allowTimeStamp);
     this.name = StringUtil.safe(name);

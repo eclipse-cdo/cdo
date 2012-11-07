@@ -38,9 +38,7 @@ import org.eclipse.emf.cdo.internal.ui.actions.OpenAuditAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenDurableViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenViewAction;
-import org.eclipse.emf.cdo.internal.ui.actions.RegisterFilesystemPackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterSinglePackageAction;
-import org.eclipse.emf.cdo.internal.ui.actions.RegisterWorkspacePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ReloadViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RollbackTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.SwitchTargetAction;
@@ -59,13 +57,11 @@ import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
 import org.eclipse.emf.ecore.EPackage;
 
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
@@ -503,13 +499,13 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       manager.add(generatedManager);
     }
 
-    IAction a1 = new RegisterWorkspacePackagesAction(page, session);
-    a1.setText(a1.getText() + SafeAction.INTERACTIVE);
-    manager.add(a1);
-
-    RegisterFilesystemPackagesAction a2 = new RegisterFilesystemPackagesAction(page, session);
-    a2.setText(a2.getText() + SafeAction.INTERACTIVE);
-    manager.add(a2);
+    // IAction a1 = new RegisterWorkspacePackagesAction(page, session);
+    // a1.setText(a1.getText() + SafeAction.INTERACTIVE);
+    // manager.add(a1);
+    //
+    // RegisterFilesystemPackagesAction a2 = new RegisterFilesystemPackagesAction(page, session);
+    // a2.setText(a2.getText() + SafeAction.INTERACTIVE);
+    // manager.add(a2);
 
     if (session.getRepositoryInfo().isSupportingBranches())
     {

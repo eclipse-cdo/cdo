@@ -4,20 +4,23 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
  */
-package org.eclipse.emf.cdo.internal.ui.dialogs;
+package org.eclipse.emf.cdo.ui.internal.ide.actions;
 
-import org.eclipse.emf.cdo.internal.ui.messages.Messages;
+import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.FilteredResourcesSelectionDialog;
 
+/**
+ * @author Eike Stepper
+ */
 public class OpenResourcesDialog extends FilteredResourcesSelectionDialog
 {
   public OpenResourcesDialog(Shell parentShell)

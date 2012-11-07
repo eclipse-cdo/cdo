@@ -46,6 +46,10 @@
    <extension
          point="org.eclipse.ui.views">
       <view
+            class="org.eclipse.emf.cdo.examples.client.offline.CloneRepositoryView"
+            id="org.eclipse.emf.cdo.examples.client.offline.CloneRepositoryView"
+            name="Clone Repository"/>
+      <view
             class="org.eclipse.emf.cdo.examples.client.offline.NormalRepositoryView"
             id="org.eclipse.emf.cdo.examples.client.offline.NormalRepositoryView"
             name="Normal Repository"/>

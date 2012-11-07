@@ -40,7 +40,7 @@ import java.util.Map;
  * @author scheglov_ke
  * @author Dan Rubel
  */
-public class SWTResourceManager
+public class ExampleSWTResourceManager
 {
   // //////////////////////////////////////////////////////////////////////////
   //

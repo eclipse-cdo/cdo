@@ -22,7 +22,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.wb.swt.ExampleSWTResourceManager;
 
 /**
  * @author Eike Stepper
@@ -62,9 +62,9 @@ public abstract class AbstractView<T extends IContainer<?>> extends ViewPart
     createPane(sash, object);
 
     events = new Text(sash, SWT.BORDER | SWT.READ_ONLY | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL | SWT.MULTI);
-    events.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+    events.setBackground(ExampleSWTResourceManager.getColor(SWT.COLOR_WHITE));
 
-    sash.setWeights(new int[] { 1, 1 });
+    sash.setWeights(new int[] { 2, 1 });
 
     createActions();
     initializeToolBar(getViewSite().getActionBars().getToolBarManager());

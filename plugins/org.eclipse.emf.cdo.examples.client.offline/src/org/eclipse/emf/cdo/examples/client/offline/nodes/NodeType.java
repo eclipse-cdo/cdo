@@ -148,7 +148,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
 
   public void configureWindow(IWorkbenchWindowConfigurer configurer)
   {
-    configurer.setInitialSize(new Point(1000, 700));
+    configurer.setInitialSize(new Point(800, 500));
     configurer.setTitle(Application.NODE.getName());
     configurer.setShowCoolBar(false);
     configurer.setShowMenuBar(false);
@@ -297,6 +297,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     props.put(IRepository.Props.OVERRIDE_UUID, REPOSITORY_NAME);
     props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
     props.put(IRepository.Props.SUPPORTING_BRANCHES, "true");
+    props.put(IRepository.Props.ID_GENERATION_LOCATION, "CLIENT");
 
     IRepository repository = createRepository(node, store, props);
     CDOServerUtil.addRepository(IPluginContainer.INSTANCE, repository);
@@ -594,6 +595,13 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     {
       super(manager);
       addProperty(new Property.Entry(this, PORT_PROPERTY));
+    }
+
+    @Override
+    public void configureWindow(IWorkbenchWindowConfigurer configurer)
+    {
+      super.configureWindow(configurer);
+      configurer.setInitialSize(new Point(600, 500));
     }
   }
 

@@ -12,8 +12,6 @@ package org.eclipse.emf.cdo.examples.client.offline;
 
 import org.eclipse.emf.cdo.server.IRepository;
 
-import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ItemProvider;
@@ -35,7 +33,7 @@ public class NormalRepositoryView extends AbstractView<IRepository>
 {
   public static final String ID = "org.eclipse.emf.cdo.examples.client.offline.NormalRepositoryView"; //$NON-NLS-1$
 
-  private ItemProvider<IContainer<Object>> itemProvider;
+  private ItemProvider<IRepository> itemProvider;
 
   private TreeViewer treeViewer;
 
@@ -49,7 +47,7 @@ public class NormalRepositoryView extends AbstractView<IRepository>
   @Override
   protected void createPane(Composite parent, IRepository repository)
   {
-    itemProvider = new ContainerItemProvider<IContainer<Object>>()
+    itemProvider = new ContainerItemProvider<IRepository>()
     {
       private Image bean = ExampleResourceManager.getPluginImage(Application.PLUGIN_ID, "icons/Bean.gif");
 
@@ -82,7 +80,7 @@ public class NormalRepositoryView extends AbstractView<IRepository>
     treeViewer = new TreeViewer(sash, SWT.BORDER);
     treeViewer.setLabelProvider(itemProvider);
     treeViewer.setContentProvider(itemProvider);
-    treeViewer.setInput(IPluginContainer.INSTANCE);
+    treeViewer.setInput(repository);
 
     details = new ScrolledComposite(sash, SWT.V_SCROLL);
     details.setExpandHorizontal(true);

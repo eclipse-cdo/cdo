@@ -19,7 +19,6 @@ import org.eclipse.net4j.util.ui.views.ItemProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.ExampleResourceManager;
@@ -36,8 +35,6 @@ public class NormalRepositoryView extends AbstractView<IRepository>
   private ItemProvider<IRepository> itemProvider;
 
   private TreeViewer treeViewer;
-
-  private ScrolledComposite details;
 
   public NormalRepositoryView()
   {
@@ -82,9 +79,9 @@ public class NormalRepositoryView extends AbstractView<IRepository>
     treeViewer.setContentProvider(itemProvider);
     treeViewer.setInput(repository);
 
-    details = new ScrolledComposite(sash, SWT.V_SCROLL);
-    details.setExpandHorizontal(true);
-    details.setExpandVertical(true);
+    // ScrolledComposite scrolledComposite = new ScrolledComposite(sash, SWT.NONE);
+    // scrolledComposite.setContent(new RepositoryDetails(scrolledComposite, repository));
+    new RepositoryDetails(sash, repository);
 
     sash.setWeights(new int[] { 1, 1 });
   }

@@ -90,10 +90,4 @@ public class TransferComposite extends SashForm implements ISelectionChangedList
   {
     return transferTreeComposite.setFocus();
   }
-
-  @Override
-  protected void checkSubclass()
-  {
-    // Do nothing
-  }
 }

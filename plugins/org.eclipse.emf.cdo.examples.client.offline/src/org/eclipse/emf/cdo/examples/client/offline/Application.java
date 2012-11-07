@@ -56,7 +56,7 @@ public class Application implements IApplication
       }
 
       NODE = dialog.getCurrentNode();
-
+      System.out.println("Node: " + NODE);
       BusyIndicator.showWhile(display, new Runnable()
       {
         public void run()

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.examples.client.offline.nodes;
 
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.examples.client.offline.Application;
@@ -512,11 +513,10 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     {
       super.start(node);
 
-      // IConnector connector = (IConnector)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.connectors", "jvm",
-      // "example");
-
       CDOSession session = (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions", "cdo",
           "jvm://example?repositoryName=" + REPOSITORY_NAME);
+
+      CDOPackageRegistryPopulator.populate(session.getPackageRegistry());
       node.getObjects().put(CDOSession.class, session);
     }
 

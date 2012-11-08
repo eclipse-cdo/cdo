@@ -43,7 +43,7 @@ import java.util.Map;
  * @author scheglov_ke
  * @author Dan Rubel
  */
-public class ResourceManager extends SWTResourceManager
+public class ExampleResourceManager extends ExampleSWTResourceManager
 {
   // //////////////////////////////////////////////////////////////////////////
   //
@@ -206,7 +206,7 @@ public class ResourceManager extends SWTResourceManager
    */
   public static void disposeImages()
   {
-    SWTResourceManager.disposeImages();
+    ExampleSWTResourceManager.disposeImages();
     // dispose ImageDescriptor images
     {
       for (Iterator<Image> I = m_descriptorImageMap.values().iterator(); I.hasNext();)

@@ -69,6 +69,15 @@ public class FailoverMonitor extends Container<AgentProtocol>
     this.group = group;
   }
 
+  @Override
+  public boolean isEmpty()
+  {
+    synchronized (agents)
+    {
+      return agents.isEmpty();
+    }
+  }
+
   public AgentProtocol[] getElements()
   {
     synchronized (agents)
@@ -104,7 +113,14 @@ public class FailoverMonitor extends Container<AgentProtocol>
 
     if (newMasterAgent != null)
     {
-      publishNewMaster(newMasterAgent, newAgents);
+      try
+      {
+        publishNewMaster(newMasterAgent, newAgents);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
     }
 
     fireElementAddedEvent(agent);
@@ -276,17 +292,26 @@ public class FailoverMonitor extends Container<AgentProtocol>
       return connectorDescription + "/" + repositoryName;
     }
 
-    protected FailoverMonitor getFailoverMonitor()
+    /**
+     * @since 4.1
+     */
+    public FailoverMonitor getFailoverMonitor()
     {
       return failoverMonitor;
     }
 
-    protected String getConnectorDescription()
+    /**
+     * @since 4.1
+     */
+    public String getConnectorDescription()
     {
       return connectorDescription;
     }
 
-    protected String getRepositoryName()
+    /**
+     * @since 4.1
+     */
+    public String getRepositoryName()
     {
       return repositoryName;
     }

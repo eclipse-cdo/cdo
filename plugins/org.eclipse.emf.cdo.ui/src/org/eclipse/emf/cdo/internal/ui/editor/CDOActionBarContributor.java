@@ -60,13 +60,6 @@ import java.util.Collection;
 public class CDOActionBarContributor extends EditingDomainActionBarContributor implements ISelectionChangedListener
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation"; //$NON-NLS-1$
-
-  /**
    * @ADDED
    */
   public static final String LOAD_RESOURCE_ID = "load-resource"; //$NON-NLS-1$
@@ -102,22 +95,22 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   protected ChangePassiveUpdateAction changePassiveUpdateAction;
 
   /**
-   * This keeps track of the active editor. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This keeps track of the active editor.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected IEditorPart activeEditorPart;
 
   /**
-   * This keeps track of the current selection provider. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This keeps track of the current selection provider.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected ISelectionProvider selectionProvider;
 
   /**
-   * This action opens the Properties view. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This action opens the Properties view.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected IAction showPropertiesViewAction = new Action(
@@ -138,9 +131,9 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   };
 
   /**
-   * This action refreshes the viewer of the current editor if the editor implements
-   * {@link org.eclipse.emf.common.ui.viewer.IViewerProvider}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This action refreshes the viewer of the current editor if the editor
+   * implements {@link org.eclipse.emf.common.ui.viewer.IViewerProvider}.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected IAction refreshViewerAction = new Action(PluginDelegator.INSTANCE.getString("_UI_RefreshViewer_menu_item"))
@@ -167,8 +160,8 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
 
   /**
    * This will contain one {@link org.eclipse.emf.edit.ui.action.CreateChildAction} corresponding to each descriptor
-   * generated for the current selection by the item provider. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * generated for the current selection by the item provider.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected Collection<IAction> createChildActions;
@@ -183,8 +176,8 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
 
   /**
    * This will contain one {@link org.eclipse.emf.edit.ui.action.CreateSiblingAction} corresponding to each descriptor
-   * generated for the current selection by the item provider. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * generated for the current selection by the item provider.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected Collection<IAction> createSiblingActions;
@@ -222,8 +215,8 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   }
 
   /**
-   * This adds Separators for editor additions to the tool bar. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This adds Separators for editor additions to the tool bar.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -234,9 +227,9 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   }
 
   /**
-   * This adds to the menu bar a menu and some separators for editor additions, as well as the sub-menus for object
-   * creation items. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This adds to the menu bar a menu and some separators for editor additions,
+   * as well as the sub-menus for object creation items.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -312,10 +305,10 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   }
 
   /**
-   * This implements {@link org.eclipse.jface.viewers.ISelectionChangedListener}, handling
-   * {@link org.eclipse.jface.viewers.SelectionChangedEvent}s by querying for the children and siblings that can be
-   * added to the selected object and updating the menus accordingly. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This implements {@link org.eclipse.jface.viewers.ISelectionChangedListener},
+   * handling {@link org.eclipse.jface.viewers.SelectionChangedEvent}s by querying for the children and siblings
+   * that can be added to the selected object and updating the menus accordingly.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void selectionChangedGen(SelectionChangedEvent event)
@@ -487,10 +480,10 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
 
   /**
    * This populates the specified <code>manager</code> with {@link org.eclipse.jface.action.ActionContributionItem}s
-   * based on the {@link org.eclipse.jface.action.IAction}s contained in the <code>actions</code> collection, by
-   * inserting them before the specified contribution item <code>contributionID</code>. If <code>contributionID</code>
-   * is <code>null</code>, they are simply added. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * based on the {@link org.eclipse.jface.action.IAction}s contained in the <code>actions</code> collection,
+   * by inserting them before the specified contribution item <code>contributionID</code>.
+   * If <code>contributionID</code> is <code>null</code>, they are simply added.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void populateManager(IContributionManager manager, Collection<? extends IAction> actions,
@@ -549,8 +542,8 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   }
 
   /**
-   * This populates the pop-up menu before it appears. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This populates the pop-up menu before it appears.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -569,8 +562,8 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   }
 
   /**
-   * This inserts global actions before the "additions-end" separator. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This inserts global actions before the "additions-end" separator.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void addGlobalActionsGen(IMenuManager menuManager)
@@ -634,9 +627,9 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   }
 
   /**
-   * This ensures that a delete action will clean up all references to deleted objects. <!-- begin-user-doc --> <!--
+   * This ensures that a delete action will clean up all references to deleted objects.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   @Override

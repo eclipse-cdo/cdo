@@ -104,6 +104,12 @@ public class TimerLifecycle extends Timer implements ILifecycle
     return delegate.deactivate();
   }
 
+  @Override
+  public String toString()
+  {
+    return "Timer";
+  }
+
   /**
    * @author Eike Stepper
    */

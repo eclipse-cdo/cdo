@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.examples.client.offline;
 
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
@@ -36,10 +35,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor
   public void preWindowOpen()
   {
     IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
-    configurer.setInitialSize(new Point(1000, 500));
-    configurer.setTitle("Myzilla");
-    configurer.setShowCoolBar(false);
-    configurer.setShowMenuBar(false);
-    configurer.setShowStatusLine(false);
+    Application.NODE.getType().configureWindow(configurer);
   }
+
 }

@@ -16,7 +16,7 @@
 	<extension
          point="org.eclipse.net4j.db.dbAdapters">
       <dbAdapter
-            class="org.eclipse.net4j.db.oracle.OracleSQLAdapter"
+            class="org.eclipse.net4j.db.oracle.OracleAdapter"
             name="oracle"
             version="11.1.0.7">
       </dbAdapter>

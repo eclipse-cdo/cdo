@@ -50,8 +50,7 @@ public class CreateBranchAction extends SessionAction
   @Override
   protected void preRun() throws Exception
   {
-    CreateBranchDialog dialog = new CreateBranchDialog(getPage(), getSession(), null, true,
-        null)
+    CreateBranchDialog dialog = new CreateBranchDialog(getPage(), getSession(), null, true, null)
     {
       @Override
       protected Control createDialogArea(Composite parent)

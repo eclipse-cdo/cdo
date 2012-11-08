@@ -36,7 +36,7 @@ import java.io.ByteArrayOutputStream;
 
 /**
  * Tests with a separate annotations.xml.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateExternalAnnotationTest extends AbstractCDOTest
@@ -63,13 +63,9 @@ public class HibernateExternalAnnotationTest extends AbstractCDOTest
     super.doTearDown();
   }
 
-  public void testOneXMIResourceManyViewsOnOneResourceSet() throws Exception
+  // TODO: deadlocks
+  public void _testOneXMIResourceManyViewsOnOneResourceSet() throws Exception
   {
-    // TODO: deadlocks
-    if (true)
-    {
-      return;
-    }
     byte[] dataOfresD = null;
     getRepository(REPOSITORY2_NAME);
 

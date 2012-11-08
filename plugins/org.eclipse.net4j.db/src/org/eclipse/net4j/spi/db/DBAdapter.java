@@ -469,7 +469,10 @@ public abstract class DBAdapter implements IDBAdapter
     }
   }
 
-  private String[] createFieldDefinitions(IDBTable table)
+  /**
+   * @since 4.2
+   */
+  protected String[] createFieldDefinitions(IDBTable table)
   {
     IDBField[] fields = table.getFields();
     int fieldCount = fields.length;
@@ -506,7 +509,10 @@ public abstract class DBAdapter implements IDBAdapter
     }
   }
 
-  private void appendFieldDefs(Appendable appendable, IDBTable table, String[] defs)
+  /**
+   * @since 4.2
+   */
+  protected void appendFieldDefs(Appendable appendable, IDBTable table, String[] defs)
   {
     try
     {
@@ -519,7 +525,6 @@ public abstract class DBAdapter implements IDBAdapter
           appendable.append(", "); //$NON-NLS-1$
         }
 
-        // String fieldName = mangleFieldName(field.getName(), 0);
         String fieldName = field.getName();
         appendable.append(fieldName);
         appendable.append(" "); //$NON-NLS-1$
@@ -552,16 +557,31 @@ public abstract class DBAdapter implements IDBAdapter
    */
   public boolean isDuplicateKeyException(SQLException ex)
   {
-    /* SQL code for duplicate keys is 23001 */
     return "23001".equals(ex.getSQLState());
   }
 
   /**
    * @since 4.2
    */
-  public String sqlRenameColumn(String table, String from, String to)
+  public boolean isTableNotFoundException(SQLException ex)
   {
-    return "ALTER TABLE " + table + " RENAME COLUMN " + from + " TO " + to;
+    return "42S02".equals(ex.getSQLState());
+  }
+
+  /**
+   * @since 4.2
+   */
+  public boolean isColumnNotFoundException(SQLException ex)
+  {
+    return "42S22".equals(ex.getSQLState());
+  }
+
+  /**
+   * @since 4.2
+   */
+  public String sqlRenameField(IDBField field, String oldName)
+  {
+    return "ALTER TABLE " + field.getTable() + " RENAME COLUMN " + oldName + " TO " + field;
   }
 
   /**

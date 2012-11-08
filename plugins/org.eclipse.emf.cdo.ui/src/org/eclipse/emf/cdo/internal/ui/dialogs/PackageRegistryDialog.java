@@ -17,13 +17,14 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterFilesystemPackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterGeneratedPackagesAction;
-import org.eclipse.emf.cdo.internal.ui.actions.RegisterWorkspacePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.widgets.CustomizeableComposite;
 
 import org.eclipse.emf.ecore.EPackage;
 
@@ -36,6 +37,8 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
@@ -59,11 +62,7 @@ import java.util.Set;
  */
 public class PackageRegistryDialog extends TitleAreaDialog
 {
-  private static final int REGISTER_GENERATED_PACKAGES_ID = IDialogConstants.CLIENT_ID + 1;
-
-  private static final int REGISTER_WORKSPACE_PACKAGES_ID = IDialogConstants.CLIENT_ID + 2;
-
-  private static final int REGISTER_FILESYSTEM_PACKAGES_ID = IDialogConstants.CLIENT_ID + 3;
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.ui.packageRegistryDialogCustomizers";
 
   private static final String TITLE = Messages.getString("PackageRegistryDialog.0"); //$NON-NLS-1$
 
@@ -83,11 +82,22 @@ public class PackageRegistryDialog extends TitleAreaDialog
     setShellStyle(getShellStyle() | SWT.APPLICATION_MODAL | SWT.MAX | SWT.TITLE | SWT.RESIZE);
   }
 
+  public IWorkbenchPage getPage()
+  {
+    return page;
+  }
+
+  public CDOSession getSession()
+  {
+    return session;
+  }
+
   @Override
   protected void configureShell(Shell newShell)
   {
     super.configureShell(newShell);
     newShell.setText(TITLE);
+    newShell.setSize(660, 500);
   }
 
   @Override
@@ -102,10 +112,10 @@ public class PackageRegistryDialog extends TitleAreaDialog
 
     table.setHeaderVisible(true);
     table.setLayoutData(UIUtil.createGridData());
-    addColumn(table, Messages.getString("PackageRegistryDialog.1"), 450, SWT.LEFT); //$NON-NLS-1$
-    addColumn(table, Messages.getString("PackageRegistryDialog.2"), 80, SWT.CENTER); //$NON-NLS-1$
-    addColumn(table, Messages.getString("PackageRegistryDialog.3"), 80, SWT.CENTER); //$NON-NLS-1$
-    addColumn(table, Messages.getString("PackageRegistryDialog.4"), 80, SWT.CENTER); //$NON-NLS-1$
+    addColumn(table, Messages.getString("PackageRegistryDialog.1"), 400, SWT.LEFT); //$NON-NLS-1$
+    addColumn(table, Messages.getString("PackageRegistryDialog.2"), 75, SWT.CENTER); //$NON-NLS-1$
+    addColumn(table, Messages.getString("PackageRegistryDialog.3"), 75, SWT.CENTER); //$NON-NLS-1$
+    addColumn(table, Messages.getString("PackageRegistryDialog.4"), 75, SWT.CENTER); //$NON-NLS-1$
 
     viewer.setContentProvider(new EPackageContentProvider());
     viewer.setLabelProvider(new EPackageLabelProvider());
@@ -117,13 +127,53 @@ public class PackageRegistryDialog extends TitleAreaDialog
   @Override
   protected void createButtonsForButtonBar(Composite parent)
   {
-    Button button = createButton(parent, REGISTER_GENERATED_PACKAGES_ID,
-        Messages.getString("PackageRegistryDialog.5"), false); //$NON-NLS-1$
+    Button button = createButton(parent, -1, Messages.getString("PackageRegistryDialog.5"), false); //$NON-NLS-1$
     button.setEnabled(isGlobalPackageAvaliable());
+    button.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        new RegisterGeneratedPackagesAction(page, session)
+        {
+          @Override
+          protected void postRegistration(List<EPackage> ePackages)
+          {
+            refreshViewer();
+          }
+        }.run();
+      }
+    });
 
-    createButton(parent, REGISTER_WORKSPACE_PACKAGES_ID, Messages.getString("PackageRegistryDialog.6"), false); //$NON-NLS-1$
-    createButton(parent, REGISTER_FILESYSTEM_PACKAGES_ID, Messages.getString("PackageRegistryDialog.7"), false); //$NON-NLS-1$
-    createButton(parent, IDialogConstants.CLOSE_ID, IDialogConstants.CLOSE_LABEL, false);
+    createButton(parent, -1, Messages.getString("PackageRegistryDialog.7"), false) //$NON-NLS-1$
+        .addSelectionListener(new SelectionAdapter()
+        {
+          @Override
+          public void widgetSelected(SelectionEvent e)
+          {
+            new RegisterFilesystemPackagesAction(page, session)
+            {
+              @Override
+              protected void postRegistration(List<EPackage> ePackages)
+              {
+                refreshViewer();
+              }
+            }.run();
+          }
+        });
+
+    CustomizeableComposite.customize(parent, IPluginContainer.INSTANCE, PRODUCT_GROUP, this);
+
+    createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CLOSE_LABEL, false);
+  }
+
+  /**
+   * Expose this method publicly.
+   */
+  @Override
+  public Button createButton(Composite parent, int id, String label, boolean defaultButton)
+  {
+    return super.createButton(parent, id, label, defaultButton);
   }
 
   private boolean isGlobalPackageAvaliable()
@@ -131,53 +181,6 @@ public class PackageRegistryDialog extends TitleAreaDialog
     Set<String> uris = new HashSet<String>(EPackage.Registry.INSTANCE.keySet());
     uris.removeAll(session.getPackageRegistry().keySet());
     return !uris.isEmpty();
-  }
-
-  @Override
-  protected void buttonPressed(int buttonId)
-  {
-    switch (buttonId)
-    {
-    case REGISTER_GENERATED_PACKAGES_ID:
-      new RegisterGeneratedPackagesAction(page, session)
-      {
-        @Override
-        protected void postRegistration(List<EPackage> ePackages)
-        {
-          refreshViewer();
-        }
-      }.run();
-
-      break;
-
-    case REGISTER_WORKSPACE_PACKAGES_ID:
-      new RegisterWorkspacePackagesAction(page, session)
-      {
-        @Override
-        protected void postRegistration(List<EPackage> ePackages)
-        {
-          refreshViewer();
-        }
-      }.run();
-
-      break;
-
-    case REGISTER_FILESYSTEM_PACKAGES_ID:
-      new RegisterFilesystemPackagesAction(page, session)
-      {
-        @Override
-        protected void postRegistration(List<EPackage> ePackages)
-        {
-          refreshViewer();
-        }
-      }.run();
-
-      break;
-
-    case IDialogConstants.CLOSE_ID:
-      close();
-      break;
-    }
   }
 
   private void addColumn(Table table, String title, int width, int alignment)
@@ -192,7 +195,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
     return null;
   }
 
-  protected void refreshViewer()
+  public void refreshViewer()
   {
     page.getWorkbenchWindow().getShell().getDisplay().asyncExec(new Runnable()
     {

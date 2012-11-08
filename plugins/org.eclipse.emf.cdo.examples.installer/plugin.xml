@@ -54,6 +54,16 @@
             category="org.eclipse.ui.Examples/org.eclipse.emf.cdo.examples"
             class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
             icon="icons/full/ctool16/NewEMFExample.gif"
+            id="org.eclipse.emf.cdo.examples.ExampleOfflineWizard"
+            name="%ExampleOfflineWizard_name"
+            project="true">
+         <description>%ExampleOfflineWizard_desc</description>
+      </wizard>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.ui.Examples/org.eclipse.emf.cdo.examples"
+            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
+            icon="icons/full/ctool16/NewEMFExample.gif"
             id="org.eclipse.emf.cdo.examples.ExampleModelWizard"
             name="%ExampleModelWizard_name"
             project="true">
@@ -109,6 +119,15 @@
                name="org.eclipse.emf.cdo.examples.company.edit"
                contentURI="examples/org.eclipse.emf.cdo.examples.company.edit/"
                description="%ExampleEditProject_desc"/>
+      </example>
+      <example
+            id="org.eclipse.emf.cdo.examples.ExampleOffline"
+            wizardID="org.eclipse.emf.cdo.examples.ExampleOfflineWizard"
+            pageImage="icons/full/wizban/NewEMFExample.gif">
+         <projectDescriptor
+               name="org.eclipse.emf.cdo.examples.client.offline"
+               contentURI="examples/org.eclipse.emf.cdo.examples.client.offline/"
+               description="%ExampleOfflineProject_desc"/>
       </example>
       <example
             id="org.eclipse.emf.cdo.examples.ExampleModel"

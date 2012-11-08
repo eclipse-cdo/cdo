@@ -12,7 +12,8 @@
  *    Kai Schlamp - bug 282976: [DB] Influence Mappings through EAnnotations
  *    Stefan Winkler - bug 282976: [DB] Influence Mappings through EAnnotations
  *    Stefan Winkler - bug 285270: [DB] Support XSD based models
- *    Stefan Winkler - Bug 285426: [DB] Implement user-defined typeMapping support
+ *    Stefan Winkler - bug 285426: [DB] Implement user-defined typeMapping support
+ *    Erdal Karaca - bug 344805: [DB] Added new type mapping Boolean from VARCHAR
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
@@ -734,6 +735,9 @@ public class CoreTypeMappings
 
     public static final Factory FACTORY_OBJECT_SMALLINT = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
         + ".BooleanObject_SMALLINT", EcorePackage.eINSTANCE.getEBooleanObject(), DBType.SMALLINT));
+
+    public static final Factory FACTORY_OBJECT_VARCHAR = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
+        + ".BooleanObject_VARCHAR", EcorePackage.eINSTANCE.getEBooleanObject(), DBType.VARCHAR));
 
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException

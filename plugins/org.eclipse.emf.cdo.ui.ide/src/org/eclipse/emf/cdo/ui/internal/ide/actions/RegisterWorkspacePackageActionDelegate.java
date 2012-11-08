@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.ui.internal.ide.actions;
 
-import org.eclipse.emf.cdo.internal.ui.actions.RegisterWorkspacePackagesAction;
 
 /**
  * @author Victor Roldan Betancort

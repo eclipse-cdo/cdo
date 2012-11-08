@@ -98,10 +98,6 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
   private static final String PROP_GRACEFULLY_SHUT_DOWN = "org.eclipse.emf.cdo.server.db.gracefullyShutDown"; //$NON-NLS-1$
 
-  private static final String TABLE_NOT_FOUND = "42S02";
-
-  private static final String COLUMN_NOT_FOUND = "42S22";
-
   private long creationTime;
 
   private boolean firstTime;
@@ -276,7 +272,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
           throw new DBException(ex1);
         }
 
-        if (!COLUMN_NOT_FOUND.equalsIgnoreCase(ex.getSQLState()))
+        if (!dbAdapter.isColumnNotFoundException(ex))
         {
           throw new DBException(ex);
         }
@@ -822,7 +818,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     }
     catch (SQLException ex)
     {
-      if (TABLE_NOT_FOUND.equals(ex.getSQLState()))
+      if (dbAdapter.isTableNotFoundException(ex))
       {
         return FIRST_START;
       }
@@ -839,12 +835,10 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   protected void migrateSchema(int fromVersion) throws Exception
   {
     Connection connection = null;
-    Statement statement = null;
 
     try
     {
       connection = getConnection();
-      statement = connection.createStatement();
 
       for (int version = fromVersion; version < SCHEMA_VERSION; version++)
       {
@@ -852,7 +846,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
         {
           int nextVersion = version + 1;
           OM.LOG.info("Migrating schema from version " + version + " to version " + nextVersion + "...");
-          SCHEMA_MIGRATORS[version].migrateSchema(this, statement);
+          SCHEMA_MIGRATORS[version].migrateSchema(this, connection);
         }
       }
 
@@ -860,7 +854,6 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     }
     finally
     {
-      DBUtil.close(statement);
       DBUtil.close(connection);
     }
   }
@@ -870,7 +863,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
    */
   private static abstract class SchemaMigrator
   {
-    public abstract void migrateSchema(DBStore store, Statement statement) throws Exception;
+    public abstract void migrateSchema(DBStore store, Connection connection) throws Exception;
   }
 
   private static final SchemaMigrator NO_MIGRATION_NEEDED = null;
@@ -878,22 +871,33 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   private static final SchemaMigrator NON_AUDIT_MIGRATION = new SchemaMigrator()
   {
     @Override
-    public void migrateSchema(DBStore store, final Statement statement) throws Exception
+    public void migrateSchema(DBStore store, Connection connection) throws Exception
     {
       InternalRepository repository = store.getRepository();
       if (!repository.isSupportingAudits())
       {
-        store.visitAllTables(statement.getConnection(), new IDBStore.TableVisitor()
+        store.visitAllTables(connection, new IDBStore.TableVisitor()
         {
           public void visitTable(Connection connection, String name) throws SQLException
           {
-            String from = " FROM " + name + " WHERE " + CDODBSchema.ATTRIBUTES_VERSION + "<"
-                + CDOBranchVersion.FIRST_VERSION;
+            Statement statement = null;
 
-            statement.executeUpdate("DELETE FROM " + CDODBSchema.CDO_OBJECTS + " WHERE " + CDODBSchema.ATTRIBUTES_ID
-                + " IN (SELECT " + CDODBSchema.ATTRIBUTES_ID + from + ")");
+            try
+            {
+              statement = connection.createStatement();
 
-            statement.executeUpdate("DELETE" + from);
+              String from = " FROM " + name + " WHERE " + CDODBSchema.ATTRIBUTES_VERSION + "<"
+                  + CDOBranchVersion.FIRST_VERSION;
+
+              statement.executeUpdate("DELETE FROM " + CDODBSchema.CDO_OBJECTS + " WHERE " + CDODBSchema.ATTRIBUTES_ID
+                  + " IN (SELECT " + CDODBSchema.ATTRIBUTES_ID + from + ")");
+
+              statement.executeUpdate("DELETE" + from);
+            }
+            finally
+            {
+              DBUtil.close(statement);
+            }
           }
         });
       }
@@ -903,11 +907,22 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   private static final SchemaMigrator LOB_SIZE_MIGRATION = new SchemaMigrator()
   {
     @Override
-    public void migrateSchema(DBStore store, final Statement statement) throws Exception
+    public void migrateSchema(DBStore store, final Connection connection) throws Exception
     {
-      IDBAdapter dbAdapter = store.getDBAdapter();
-      String sql = dbAdapter.sqlRenameColumn(CDODBSchema.LOBS.toString(), "size", CDODBSchema.LOBS_SIZE.toString());
-      statement.execute(sql);
+      Statement statement = null;
+
+      try
+      {
+        statement = connection.createStatement();
+
+        IDBAdapter dbAdapter = store.getDBAdapter();
+        String sql = dbAdapter.sqlRenameField(CDODBSchema.LOBS_SIZE, "size");
+        statement.execute(sql);
+      }
+      finally
+      {
+        DBUtil.close(statement);
+      }
     }
   };
 

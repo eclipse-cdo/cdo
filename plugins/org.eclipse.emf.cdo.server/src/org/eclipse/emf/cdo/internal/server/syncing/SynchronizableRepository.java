@@ -80,6 +80,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -171,7 +172,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   @Override
   public Object[] getElements()
   {
-    List<Object> list = Arrays.asList(super.getElements());
+    List<Object> list = new ArrayList<Object>(Arrays.asList(super.getElements()));
     list.add(synchronizer);
     return list.toArray();
   }

@@ -161,12 +161,23 @@
      </factory>
   </extension>
 
+	<!--
    <extension
          id="org.eclipse.core.filesystem.cdo.workspace"
          point="org.eclipse.core.filesystem.filesystems">
       <filesystem scheme="cdo.lob">
          <run class="org.eclipse.emf.cdo.internal.ui.CDOLobEditorInput$LobFileSystem"/>
       </filesystem>
+   </extension>
+	-->
+	
+   <extension
+         point="org.eclipse.ui.editors.documentProviders">
+      <provider
+            class="org.eclipse.emf.cdo.internal.ui.CDOLobStorage"
+            inputTypes="org.eclipse.emf.cdo.internal.ui.CDOLobEditorInput"
+            id="org.eclipse.emf.cdo.ui.CDOLobStorage">
+      </provider>
    </extension>
 
 </plugin>

@@ -232,11 +232,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     {
       if (newSignalScheduled)
       {
-        IListener[] listeners = getListeners();
-        if (listeners != null)
-        {
-          fireEvent(new SignalScheduledEvent<INFRA_STRUCTURE>(this, signal), listeners);
-        }
+        fireSignalScheduledEvent(signal);
       }
 
       BufferInputStream inputStream = signal.getBufferInputStream();
@@ -431,12 +427,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
       signals.put(correlationID, signalActor);
     }
 
-    IListener[] listeners = getListeners();
-    if (listeners != null)
-    {
-      fireEvent(new SignalScheduledEvent<INFRA_STRUCTURE>(this, signalActor), listeners);
-    }
-
+    fireSignalScheduledEvent(signalActor);
     signalActor.runSync();
   }
 
@@ -449,11 +440,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
       signals.notifyAll();
     }
 
-    IListener[] listeners = getListeners();
-    if (listeners != null)
-    {
-      fireEvent(new SignalFinishedEvent<INFRA_STRUCTURE>(this, signal, exception), listeners);
-    }
+    fireSignalFinishedEvent(signal, exception);
   }
 
   void handleRemoteException(int correlationID, Throwable t, boolean responding)
@@ -519,6 +506,26 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
       {
         throw WrappedException.wrap(ex);
       }
+    }
+  }
+
+  private void fireSignalScheduledEvent(Signal signal)
+  {
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      IEvent event = new SignalScheduledEvent<INFRA_STRUCTURE>(this, signal);
+      fireEvent(event, listeners);
+    }
+  }
+
+  private void fireSignalFinishedEvent(Signal signal, Exception exception)
+  {
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      IEvent event = new SignalFinishedEvent<INFRA_STRUCTURE>(this, signal, exception);
+      fireEvent(event, listeners);
     }
   }
 

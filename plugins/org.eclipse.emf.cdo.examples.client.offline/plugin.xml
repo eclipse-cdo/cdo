@@ -26,24 +26,41 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
+            name="Client"
+            class="org.eclipse.emf.cdo.examples.client.offline.ClientPerspective"
+            id="org.eclipse.emf.cdo.examples.client.offline.ClientPerspective"/>
+      <perspective
             name="Normal Repository"
             class="org.eclipse.emf.cdo.examples.client.offline.NormalRepositoryPerspective"
-            id="org.eclipse.emf.cdo.examples.client.offline.NormalRepositoryPerspective">
-      </perspective>
+            id="org.eclipse.emf.cdo.examples.client.offline.NormalRepositoryPerspective"/>
+      <perspective
+            name="Failover Repository"
+            class="org.eclipse.emf.cdo.examples.client.offline.FailoverRepositoryPerspective"
+            id="org.eclipse.emf.cdo.examples.client.offline.FailoverRepositoryPerspective"/>
+      <perspective
+            name="Failover Monitor"
+            class="org.eclipse.emf.cdo.examples.client.offline.FailoverMonitorPerspective"
+            id="org.eclipse.emf.cdo.examples.client.offline.FailoverMonitorPerspective"/>
    </extension>
 
    <extension
          point="org.eclipse.ui.views">
       <view
+            class="org.eclipse.emf.cdo.examples.client.offline.CloneRepositoryView"
+            id="org.eclipse.emf.cdo.examples.client.offline.CloneRepositoryView"
+            name="Clone Repository"/>
+      <view
             class="org.eclipse.emf.cdo.examples.client.offline.NormalRepositoryView"
             id="org.eclipse.emf.cdo.examples.client.offline.NormalRepositoryView"
-            name="Normal Repository">
-      </view>
+            name="Normal Repository"/>
+      <view
+            class="org.eclipse.emf.cdo.examples.client.offline.FailoverRepositoryView"
+            id="org.eclipse.emf.cdo.examples.client.offline.FailoverRepositoryView"
+            name="Failover Repository"/>
       <view
             class="org.eclipse.emf.cdo.examples.client.offline.FailoverMonitorView"
             id="org.eclipse.emf.cdo.examples.client.offline.FailoverMonitorView"
-            name="Failover Monitor">
-      </view>
+            name="Failover Monitor"/>
    </extension>
 
 </plugin>

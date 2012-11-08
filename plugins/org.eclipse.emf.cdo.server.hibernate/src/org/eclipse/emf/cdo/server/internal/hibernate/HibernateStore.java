@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
@@ -35,6 +37,17 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.teneo.Constants;
+import org.eclipse.emf.teneo.PackageRegistryProvider;
+import org.eclipse.emf.teneo.PersistenceOptions;
+import org.eclipse.emf.teneo.annotations.mapper.PersistenceMappingBuilder;
+import org.eclipse.emf.teneo.annotations.pamodel.PAnnotatedModel;
+import org.eclipse.emf.teneo.hibernate.EMFInterceptor;
+import org.eclipse.emf.teneo.hibernate.HbDataStore;
+import org.eclipse.emf.teneo.hibernate.HbSessionDataStore;
+import org.eclipse.emf.teneo.hibernate.auditing.model.teneoauditing.TeneoauditingPackage;
+import org.eclipse.emf.teneo.hibernate.mapper.HibernateMappingGenerator;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -51,10 +64,13 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -65,6 +81,8 @@ import java.util.Set;
  */
 public class HibernateStore extends Store implements IHibernateStore
 {
+  public static final String PERSISTENCE_XML = PersistenceOptions.PERSISTENCE_XML;
+
   public static final String TYPE = "hibernate"; //$NON-NLS-1$
 
   public static final String ID_TYPE_EANNOTATION_SOURCE = "teneo.cdo";
@@ -87,9 +105,7 @@ public class HibernateStore extends Store implements IHibernateStore
    */
   private static ThreadLocal<HibernateStore> currentHibernateStore = new ThreadLocal<HibernateStore>();
 
-  private Configuration hibernateConfiguration;
-
-  private SessionFactory hibernateSessionFactory;
+  private HbSessionDataStore cdoDataStore;
 
   private HibernatePackageHandler packageHandler;
 
@@ -99,9 +115,7 @@ public class HibernateStore extends Store implements IHibernateStore
 
   private SystemInformation systemInformation;
 
-  private Map<String, EClass> entityNameToEClass;
-
-  private Map<String, String> eClassToEntityName;
+  private List<EPackage> auditEPackages;
 
   private Map<String, String> identifierPropertyNameByEntity;
 
@@ -119,8 +133,8 @@ public class HibernateStore extends Store implements IHibernateStore
 
   public HibernateStore(IHibernateMappingProvider mappingProvider, Properties properties)
   {
-    super(TYPE, OBJECT_ID_TYPES, set(ChangeFormat.REVISION), set(RevisionTemporality.NONE),
-        set(RevisionParallelism.NONE));
+    super(TYPE, OBJECT_ID_TYPES, set(ChangeFormat.REVISION),
+        set(RevisionTemporality.NONE, RevisionTemporality.AUDITING), set(RevisionParallelism.NONE));
     this.mappingProvider = mappingProvider;
     packageHandler = new HibernatePackageHandler(this);
     this.properties = properties;
@@ -129,6 +143,11 @@ public class HibernateStore extends Store implements IHibernateStore
     {
       TRACER.trace("HibernateStore with mappingProvider " + mappingProvider.getClass().getName()); //$NON-NLS-1$
     }
+  }
+
+  public boolean isAuditing()
+  {
+    return getRevisionTemporality() == RevisionTemporality.AUDITING;
   }
 
   public CDOBranchPoint getMainBranchHead()
@@ -144,21 +163,6 @@ public class HibernateStore extends Store implements IHibernateStore
   public String getIdentifierPropertyName(String entityName)
   {
     return identifierPropertyNameByEntity.get(entityName);
-  }
-
-  public void addEntityNameEClassMapping(String entityName, EClass eClass)
-  {
-    if (entityNameToEClass.get(entityName) != null)
-    {
-      final EClass currentEClass = entityNameToEClass.get(entityName);
-      throw new IllegalArgumentException("There is a entity name collision for EClasses " //$NON-NLS-1$
-          + currentEClass.getEPackage().getName() + "." + currentEClass.getName() + "/" //$NON-NLS-1$ //$NON-NLS-2$
-          + eClass.getEPackage().getName() + "." + eClass.getName()); //$NON-NLS-1$
-    }
-
-    entityNameToEClass.put(entityName, eClass);
-    eClassToEntityName.put(eClass.getEPackage().getNsURI() + CDOClassifierRef.URI_SEPARATOR + eClass.getName(),
-        entityName);
   }
 
   public Properties getProperties()
@@ -177,15 +181,48 @@ public class HibernateStore extends Store implements IHibernateStore
     return properties;
   }
 
+  public void addEntityNameEClassMapping(String entityName, EClass eClass)
+  {
+    cdoDataStore.addEntityNameEClassMapping(entityName, eClass);
+  }
+
+  /**
+   * Returns all model epackages, so no audit epackages or system 
+   * epackages.
+   */
+  public List<EPackage> getModelEPackages()
+  {
+    final List<EPackage> epacks = getPackageHandler().getEPackages();
+    final ListIterator<EPackage> iterator = epacks.listIterator();
+    while (iterator.hasNext())
+    {
+      final EPackage epack = iterator.next();
+      if (CDOModelUtil.isSystemPackage(epack) && epack != EtypesPackage.eINSTANCE)
+      {
+        iterator.remove();
+      }
+      else if (isAuditEPackage(epack))
+      {
+        // an auditing package
+        iterator.remove();
+      }
+    }
+    return epacks;
+  }
+
+  private boolean isAuditEPackage(EPackage ePackage)
+  {
+    return TeneoauditingPackage.eNS_URI.equals(ePackage.getNsURI())
+        || ePackage.getEAnnotation(Constants.ANNOTATION_SOURCE_AUDITING) != null;
+  }
+
   public String getEntityName(EClass eClass)
   {
     if (eClass == null)
     {
       throw new IllegalArgumentException("EClass argument is null"); //$NON-NLS-1$
     }
-
-    final String entityName = eClassToEntityName.get(eClass.getEPackage().getNsURI() + CDOClassifierRef.URI_SEPARATOR
-        + eClass.getName());
+    final String entityName = cdoDataStore.toEntityName(eClass);
     if (entityName == null)
     {
       throw new IllegalArgumentException("EClass " + eClass.getName() //$NON-NLS-1$
@@ -202,8 +239,9 @@ public class HibernateStore extends Store implements IHibernateStore
       throw new IllegalArgumentException("classifierRef argument is null"); //$NON-NLS-1$
     }
 
-    final String entityName = eClassToEntityName.get(classifierRef.getPackageURI() + CDOClassifierRef.URI_SEPARATOR
-        + classifierRef.getClassifierName());
+    EClass eClass = (EClass)classifierRef.resolve(getRepository().getPackageRegistry());
+
+    final String entityName = cdoDataStore.toEntityName(eClass);
     if (entityName == null)
     {
       throw new IllegalArgumentException("EClass " + classifierRef //$NON-NLS-1$
@@ -220,7 +258,7 @@ public class HibernateStore extends Store implements IHibernateStore
       throw new IllegalArgumentException("entityname argument is null"); //$NON-NLS-1$
     }
 
-    final EClass eClass = entityNameToEClass.get(entityName);
+    final EClass eClass = cdoDataStore.toEClass(entityName);
     if (eClass == null)
     {
       throw new IllegalArgumentException("entityname " + entityName //$NON-NLS-1$
@@ -232,13 +270,12 @@ public class HibernateStore extends Store implements IHibernateStore
 
   public Configuration getHibernateConfiguration()
   {
-    return hibernateConfiguration;
+    return cdoDataStore.getConfiguration();
   }
 
-  @SuppressWarnings("deprecation")
   public synchronized SessionFactory getHibernateSessionFactory()
   {
-    if (hibernateSessionFactory == null)
+    if (cdoDataStore == null)
     {
       if (TRACER.isEnabled())
       {
@@ -247,22 +284,20 @@ public class HibernateStore extends Store implements IHibernateStore
 
       currentHibernateStore.set(this);
 
-      entityNameToEClass = new HashMap<String, EClass>();
-      eClassToEntityName = new HashMap<String, String>();
       identifierPropertyNameByEntity = new HashMap<String, String>();
 
       try
       {
-        initConfiguration();
+        initDataStore();
 
         // this has to be done before the classmapping is iterated
         // otherwise it is not initialized
-        hibernateSessionFactory = hibernateConfiguration.buildSessionFactory();
+        SessionFactory hibernateSessionFactory = cdoDataStore.getSessionFactory();
         ServiceRegistry serviceRegistry = ((SessionFactoryImpl)hibernateSessionFactory).getServiceRegistry();
         final EventListenerRegistry eventListenerRegistry = serviceRegistry.getService(EventListenerRegistry.class);
         eventListenerRegistry.setListeners(EventType.MERGE, new CDOMergeEventListener());
 
-        final Iterator<?> iterator = hibernateConfiguration.getClassMappings();
+        final Iterator<?> iterator = cdoDataStore.getConfiguration().getClassMappings();
         while (iterator.hasNext())
         {
           final PersistentClass pc = (PersistentClass)iterator.next();
@@ -275,13 +310,22 @@ public class HibernateStore extends Store implements IHibernateStore
           identifierPropertyNameByEntity.put(pc.getEntityName(), pc.getIdentifierProperty().getName());
         }
       }
+      catch (Throwable t)
+      {
+        t.printStackTrace(System.err);
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(t);
+        }
+        throw new RuntimeException(t);
+      }
       finally
       {
         currentHibernateStore.set(null);
       }
     }
 
-    return hibernateSessionFactory;
+    return cdoDataStore.getSessionFactory();
   }
 
   public Connection getConnection()
@@ -438,26 +482,25 @@ public class HibernateStore extends Store implements IHibernateStore
   @Override
   protected void doDeactivate() throws Exception
   {
-    if (hibernateSessionFactory != null)
+    Configuration configuration = null;
+    if (cdoDataStore != null)
     {
+      configuration = cdoDataStore.getConfiguration();
       if (TRACER.isEnabled())
       {
         TRACER.trace("Closing SessionFactory"); //$NON-NLS-1$
       }
-
-      hibernateSessionFactory.close();
-      hibernateSessionFactory = null;
+      cdoDataStore.close();
     }
 
     // and now do the drop action
-    if (doDropSchema)
+    if (configuration != null && doDropSchema)
     {
-      final Configuration conf = getHibernateConfiguration();
-      final SchemaExport se = new SchemaExport(conf);
+      final SchemaExport se = new SchemaExport(configuration);
       se.drop(false, true);
     }
 
-    hibernateConfiguration = null;
+    cdoDataStore = null;
     LifecycleUtil.deactivate(packageHandler, OMLogger.Level.WARN);
     super.doDeactivate();
   }
@@ -487,23 +530,23 @@ public class HibernateStore extends Store implements IHibernateStore
       TRACER.trace("Re-Initializing HibernateStore"); //$NON-NLS-1$
     }
 
-    if (hibernateSessionFactory != null)
+    if (cdoDataStore != null)
     {
-      if (!hibernateSessionFactory.isClosed())
+      if (!cdoDataStore.isClosed())
       {
         if (TRACER.isEnabled())
         {
           TRACER.trace("Closing SessionFactory"); //$NON-NLS-1$
         }
 
-        hibernateSessionFactory.close();
+        cdoDataStore.close();
       }
 
-      hibernateSessionFactory = null;
+      cdoDataStore = null;
     }
   }
 
-  protected void initConfiguration()
+  protected void initDataStore()
   {
     if (TRACER.isEnabled())
     {
@@ -514,11 +557,31 @@ public class HibernateStore extends Store implements IHibernateStore
 
     try
     {
-      hibernateConfiguration = new Configuration();
+      PackageRegistryProvider.getInstance().setThreadPackageRegistry(getRepository().getPackageRegistry());
+
+      cdoDataStore = new CDODataStore();
+      cdoDataStore.setResetConfigurationOnInitialization(false);
+      cdoDataStore.setName("cdo");
+      cdoDataStore.setPackageRegistry(getRepository().getPackageRegistry());
+      cdoDataStore.getExtensionManager().registerExtension(EMFInterceptor.class.getName(),
+          CDOInterceptor.class.getName());
+
+      // don't do any persistence xml mapping in this datastore
+      // make a local copy as it is adapted in the next if-statement
+      // and we want to keep the original one untouched, if not
+      // subsequent test runs will fail as they use the same
+      // properties object
+      final Properties props = new Properties();
+      props.putAll(getProperties());
+      props.remove(PersistenceOptions.PERSISTENCE_XML);
+      cdoDataStore.setDataStoreProperties(props);
+      Configuration hibernateConfiguration = cdoDataStore.getConfiguration();
+
       if (mappingProvider != null)
       {
         mappingProvider.setHibernateStore(this);
         mappingXml = mappingProvider.getMapping();
+        System.err.println(mappingXml);
         hibernateConfiguration.addXML(mappingXml);
       }
 
@@ -529,14 +592,8 @@ public class HibernateStore extends Store implements IHibernateStore
 
       in = OM.BUNDLE.getInputStream(RESOURCE_HBM_PATH);
       hibernateConfiguration.addInputStream(in);
-      hibernateConfiguration.setInterceptor(new CDOInterceptor());
+      // hibernateConfiguration.setInterceptor(new CDOInterceptor());
 
-      // make a local copy as it is adapted in the next if-statement
-      // and we want to keep the original one untouched, if not
-      // subsequent test runs will fail as they use the same
-      // properties object
-      final Properties props = new Properties();
-      props.putAll(getProperties());
       hibernateConfiguration.setProperties(props);
 
       // prevent the drop on close because the sessionfactory is also closed when
@@ -547,11 +604,39 @@ public class HibernateStore extends Store implements IHibernateStore
         doDropSchema = true;
         // note that the value create also re-creates the db and drops the old one
         hibernateConfiguration.setProperty(Environment.HBM2DDL_AUTO, HBM2DLL_UPDATE);
+        cdoDataStore.getDataStoreProperties().setProperty(Environment.HBM2DDL_AUTO, HBM2DLL_UPDATE);
       }
       else
       {
         doDropSchema = false;
       }
+
+      final List<EPackage> ePackages = new ArrayList<EPackage>(packageHandler.getEPackages());
+
+      // get rid of the system packages
+      for (EPackage ePackage : packageHandler.getEPackages())
+      {
+        if (CDOModelUtil.isSystemPackage(ePackage) && ePackage != EtypesPackage.eINSTANCE)
+        {
+          ePackages.remove(ePackage);
+        }
+      }
+      // remove the persistence xml if no epackages as this won't work without
+      // epackages
+      if (ePackages.size() == 0 && props.getProperty(PersistenceOptions.PERSISTENCE_XML) != null)
+      {
+        cdoDataStore.getDataStoreProperties().remove(PersistenceOptions.PERSISTENCE_XML);
+      }
+
+      if (isAuditing())
+      {
+        auditEPackages = createAuditEPackages(cdoDataStore);
+        final String auditMapping = mapAuditingEPackages(cdoDataStore, auditEPackages);
+        System.err.println(auditMapping);
+        hibernateConfiguration.addXML(auditMapping);
+        cdoDataStore.setAuditing(true);
+      }
+      cdoDataStore.setEPackages(ePackages.toArray(new EPackage[0]));
     }
     catch (Exception ex)
     {
@@ -559,6 +644,7 @@ public class HibernateStore extends Store implements IHibernateStore
     }
     finally
     {
+      PackageRegistryProvider.getInstance().setThreadPackageRegistry(null);
       IOUtil.close(in);
     }
   }
@@ -586,5 +672,74 @@ public class HibernateStore extends Store implements IHibernateStore
   public String getMappingXml()
   {
     return mappingXml;
+  }
+
+  private List<EPackage> createAuditEPackages(HbDataStore dataStore)
+  {
+    final PersistenceOptions po = dataStore.getPersistenceOptions();
+
+    final List<EPackage> epacks = new ArrayList<EPackage>();
+    for (EPackage ePackage : getModelEPackages())
+    {
+      if (!CDOModelUtil.isSystemPackage(ePackage) && !isAuditEPackage(ePackage))
+      {
+        epacks.add(dataStore.getAuditHandler().createAuditingEPackage(dataStore, ePackage,
+            getRepository().getPackageRegistry(), po));
+      }
+    }
+    epacks.add(TeneoauditingPackage.eINSTANCE);
+    getRepository().getPackageRegistry().put(TeneoauditingPackage.eNS_URI, TeneoauditingPackage.eINSTANCE);
+    return epacks;
+  }
+
+  public String mapAuditingEPackages(HbDataStore dataStore, List<EPackage> auditEPackages)
+  {
+    // create a new persistence options to not change the original
+    final PersistenceOptions po = dataStore.getExtensionManager().getExtension(PersistenceOptions.class);
+    final Properties props = new Properties(dataStore.getPersistenceOptions().getProperties());
+    props.remove(PersistenceOptions.PERSISTENCE_XML);
+    if (props.containsKey(PersistenceOptions.AUDITING_PERSISTENCE_XML))
+    {
+      props.setProperty(PersistenceOptions.PERSISTENCE_XML, PersistenceOptions.AUDITING_PERSISTENCE_XML);
+    }
+
+    PAnnotatedModel paModel = dataStore.getExtensionManager().getExtension(PersistenceMappingBuilder.class)
+        .buildMapping(auditEPackages, po, dataStore.getExtensionManager(), dataStore.getPackageRegistry());
+    final HibernateMappingGenerator hmg = dataStore.getExtensionManager().getExtension(HibernateMappingGenerator.class);
+    hmg.setPersistenceOptions(po);
+    final String hbm = hmg.generateToString(paModel);
+    return hbm;
+  }
+
+  private class CDODataStore extends HbSessionDataStore
+  {
+
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    protected void addContainerMapping(PersistentClass pc)
+    {
+      // prevent container mapping for cdo objects
+      if (pc.getTuplizerMap() != null)
+      {
+        for (Object tuplizerName : pc.getTuplizerMap().values())
+        {
+          if (((String)tuplizerName).contains("org.eclipse.emf.cdo"))
+          {
+            return;
+          }
+        }
+      }
+      super.addContainerMapping(pc);
+    }
+
+    @Override
+    protected void mapModel()
+    {
+      if (getPersistenceOptions().getMappingFilePath() != null || getPersistenceOptions().isUseMappingFile())
+      {
+        super.mapModel();
+      }
+    }
   }
 }

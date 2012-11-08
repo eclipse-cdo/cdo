@@ -28,7 +28,7 @@ import java.util.Properties;
  */
 public class HibernateConfig extends RepositoryConfig
 {
-  public static final String STAORE_NAME = "Hibernate";
+  public static final String STORE_NAME = "Hibernate";
 
   public static final HibernateConfig INSTANCE = new HibernateConfig();
 
@@ -40,13 +40,13 @@ public class HibernateConfig extends RepositoryConfig
 
   public HibernateConfig()
   {
-    super(STAORE_NAME, false, false, IDGenerationLocation.STORE);
+    super(STORE_NAME, true, false, IDGenerationLocation.STORE);
   }
 
   @Override
   protected String getStoreName()
   {
-    return STAORE_NAME;
+    return STORE_NAME;
   }
 
   @Override

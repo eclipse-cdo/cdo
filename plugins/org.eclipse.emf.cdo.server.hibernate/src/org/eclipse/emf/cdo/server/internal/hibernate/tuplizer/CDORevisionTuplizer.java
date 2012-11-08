@@ -167,7 +167,8 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
 
   public EntityNameResolver[] getEntityNameResolvers()
   {
-    return new EntityNameResolver[] { new CDOEntityNameResolver() };
+    return new EntityNameResolver[0];
+    // return new EntityNameResolver[] { new CDOEntityNameResolver() };
   }
 
   private class CDOEntityNameResolver implements EntityNameResolver

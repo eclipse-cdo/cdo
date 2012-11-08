@@ -69,6 +69,7 @@ public class HibernateQueryHandler implements IQueryHandler
 
     // create the query
     final Query query = session.createQuery(info.getQueryString());
+    query.setReadOnly(true);
 
     // get the parameters with some parameter conversion
     int firstResult = -1;

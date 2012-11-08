@@ -84,6 +84,12 @@
 		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<property name="contents" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOBlobUserType"/>
 	</subclass>
+	<subclass entity-name="CDOFileResource" abstract="false" lazy="false" extends="CDOResourceNode" discriminator-value="CDOFileResource">
+		<meta attribute="eclassName">CDOFileResource</meta>
+		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/Eresource/4.0.0</meta>
+		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
+		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
+	</subclass>
 		
 	<class name="org.eclipse.emf.cdo.server.internal.hibernate.HibernateStoreLob" table="`cdo_lob`" lazy="false">
 		<id name="id"/>

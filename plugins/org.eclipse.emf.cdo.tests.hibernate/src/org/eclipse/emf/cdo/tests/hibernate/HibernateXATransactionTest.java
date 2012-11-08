@@ -10,10 +10,9 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate;
 
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-
-import org.eclipse.emf.teneo.PersistenceOptions;
 
 /**
  * Override {@link XATransactionTest} to do mapping of external references.
@@ -28,7 +27,7 @@ public class HibernateXATransactionTest extends XATransactionTest
     final IRepositoryConfig repConfig = getRepositoryConfig();
     final HibernateConfig hbConfig = (HibernateConfig)repConfig;
     final String persistenceXML = "org/eclipse/emf/cdo/tests/hibernate/external_model1_4.persistence.xml";
-    hbConfig.getAdditionalProperties().put(PersistenceOptions.PERSISTENCE_XML, persistenceXML);
+    hbConfig.getAdditionalProperties().put(HibernateStore.PERSISTENCE_XML, persistenceXML);
 
     super.doSetUp();
   }

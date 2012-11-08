@@ -164,13 +164,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     }
   }
 
-  /** Clears the current hibernate session and sets a new one in the thread context */
-  public void resetHibernateSession()
-  {
-    endHibernateSession();
-    beginHibernateSession();
-  }
-
   /**
    * @return the backing store
    */
@@ -195,6 +188,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     assert hibernateSession == null;
     final SessionFactory sessionFactory = getStore().getHibernateSessionFactory();
     hibernateSession = sessionFactory.openSession();
+    hibernateSession.setDefaultReadOnly(true);
+    hibernateSession.setFlushMode(FlushMode.MANUAL);
     hibernateSession.beginTransaction();
   }
 
@@ -261,7 +256,9 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   /**
-   * @return the current hibernate session. If there is none then a new one is created and a transaction is started
+   * @return the current hibernate session. If there is none then a new one is created and a transaction is started.
+   * 
+   * Note the default is a readonly flushmode manual session.
    */
   public Session getHibernateSession()
   {
@@ -269,7 +266,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       beginHibernateSession();
     }
-
     return hibernateSession;
   }
 
@@ -278,7 +274,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
    *
    * @return a newly created Hibernate Session
    */
-  public Session getNewHibernateSession()
+  public Session getNewHibernateSession(boolean readOnly)
   {
     if (hibernateSession != null)
     {
@@ -660,8 +656,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     try
     {
       // start with fresh hibernate session to prevent side effects
-      final Session session = getNewHibernateSession();
-      session.setFlushMode(FlushMode.MANUAL);
+      final Session session = getNewHibernateSession(false);
+      session.setDefaultReadOnly(false);
 
       // order is 1) insert, 2) update and then delete
       // this order is the most stable! Do not change it without testing

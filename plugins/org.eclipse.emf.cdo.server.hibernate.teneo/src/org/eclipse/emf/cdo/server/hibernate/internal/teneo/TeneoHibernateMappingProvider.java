@@ -11,9 +11,9 @@
  */
 package org.eclipse.emf.cdo.server.hibernate.internal.teneo;
 
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
+import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle.OM;
 import org.eclipse.emf.cdo.server.hibernate.teneo.CDOMappingGenerator;
 import org.eclipse.emf.cdo.server.internal.hibernate.CDOHibernateConstants;
@@ -96,6 +96,7 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
 
     // merge the store properties with the mapping provider properties
     // the mapping provider props take precedence
+    // this also prevents overwriting the original properties
     final Properties properties = new Properties();
 
     properties.putAll(storeProperties);
@@ -106,19 +107,18 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
 
     // translate the list of EPackages to an array
     boolean hasXMLTypePackage = false;
-    final List<EPackage> epacks = getHibernateStore().getPackageHandler().getEPackages();
+    final List<EPackage> epacks = getHibernateStore().getModelEPackages();
     final ListIterator<EPackage> iterator = epacks.listIterator();
     while (iterator.hasNext())
     {
       final EPackage epack = iterator.next();
-      if (CDOModelUtil.isSystemPackage(epack) && epack != EtypesPackage.eINSTANCE)
-      {
-        iterator.remove();
-      }
-      else if (epack == XMLTypePackage.eINSTANCE)
+      if (epack == XMLTypePackage.eINSTANCE)
       {
         hasXMLTypePackage = true;
-        // iterator.remove();
+      }
+      if (SecurityPackage.eNS_URI.equals(epack.getNsURI()))
+      {
+        setEntityOnSecurityModel(epack);
       }
     }
 
@@ -151,9 +151,28 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     // to solve an issue with older versions of teneo
     hbm = hbm.replaceAll("_cont", "cont"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    // System.err.println(hbm);
+    System.err.println(hbm);
 
     return hbm;
+  }
+
+  private void setEntityOnSecurityModel(EPackage ePackage)
+  {
+    for (EClassifier eClassifier : ePackage.getEClassifiers())
+    {
+      if (eClassifier instanceof EClass)
+      {
+        final EClass eClass = (EClass)eClassifier;
+        if (eClass.getEAnnotation(Constants.ANNOTATION_SOURCE_TENEO_JPA) != null)
+        {
+          return;
+        }
+        final EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+        eAnnotation.setSource(Constants.ANNOTATION_SOURCE_TENEO_JPA);
+        eAnnotation.getDetails().put("value", "@Entity(name=\"CdoSecurity" + eClass.getName() + "\")");
+        eClass.getEAnnotations().add(eAnnotation);
+      }
+    }
   }
 
   private void addTypeAnnotationToXMLTypes()
@@ -185,11 +204,20 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
       return;
     }
 
-    final EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-    eAnnotation.setSource(Constants.ANNOTATION_SOURCE_TENEO_JPA);
-    final String typeAnnotation = "@Type(type=\"" + type + "\")";
-    eAnnotation.getDetails().put("value", typeAnnotation);
-    eDataType.getEAnnotations().add(eAnnotation);
+    {
+      final EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+      eAnnotation.setSource(Constants.ANNOTATION_SOURCE_TENEO_JPA);
+      final String typeAnnotation = "@Type(type=\"" + type + "\")";
+      eAnnotation.getDetails().put("value", typeAnnotation);
+      eDataType.getEAnnotations().add(eAnnotation);
+    }
+    {
+      final EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+      eAnnotation.setSource(Constants.ANNOTATION_SOURCE_TENEO_JPA_AUDITING);
+      final String typeAnnotation = "@Type(type=\"" + type + "\")";
+      eAnnotation.getDetails().put("value", typeAnnotation);
+      eDataType.getEAnnotations().add(eAnnotation);
+    }
   }
 
   private void addTransientAnnotationToEClass(EClass eClass)

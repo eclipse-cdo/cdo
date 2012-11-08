@@ -10,13 +10,13 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate;
 
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 import org.eclipse.emf.cdo.tests.AllConfigs;
 import org.eclipse.emf.cdo.tests.AttributeTest;
-import org.eclipse.emf.cdo.tests.AuditSameSessionTest;
-import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.BackupTest;
 import org.eclipse.emf.cdo.tests.CommitInfoTest;
 import org.eclipse.emf.cdo.tests.DynamicXSDTest;
+import org.eclipse.emf.cdo.tests.EMFCompareTest;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 import org.eclipse.emf.cdo.tests.LockingManagerRestartRepositoryTest;
 import org.eclipse.emf.cdo.tests.LockingManagerRestartSessionTest;
@@ -26,8 +26,8 @@ import org.eclipse.emf.cdo.tests.LockingNotificationsTest;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
 import org.eclipse.emf.cdo.tests.MultiValuedOfAttributeTest;
 import org.eclipse.emf.cdo.tests.UnsetTest;
+import org.eclipse.emf.cdo.tests.WorkspaceTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_272861_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_279982_Test;
@@ -43,8 +43,6 @@ import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.util.CommitException;
-
-import org.eclipse.emf.teneo.PersistenceOptions;
 
 import java.util.List;
 
@@ -73,7 +71,14 @@ public class AllTestsHibernate extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // testClasses.clear();
-    // testClasses.add(Hibernate_BackupTest.class);
+
+    // removed stalls
+    // testClasses.remove(AuditSameSessionTest.class);
+    // testClasses.add(AuditTest.class);
+    // testClasses.add(AuditSameSessionTest.class);
+    // testClasses.add(StickyViewsTest.class);
+
+    // testClasses.add(HibernateQueryTest.class);
     // if (true)
     // {
     // return;
@@ -95,6 +100,9 @@ public class AllTestsHibernate extends AllConfigs
     testClasses.add(HibernateBugzilla_362270_Test.class);
 
     super.initTestClasses(testClasses, scenario);
+
+    // workspaces are not supported
+    testClasses.remove(WorkspaceTest.class);
 
     testClasses.remove(DynamicXSDTest.class);
 
@@ -140,15 +148,14 @@ public class AllTestsHibernate extends AllConfigs
     // Locking manager not supported
     testClasses.remove(LockingManagerTest.class);
 
-    // results in infinite loops it seems
-    // runs okay when run standalone
-    // testClasses.remove(Bugzilla_273565_Test.class);
-
     // audit support to do
     // bug 244141
-    testClasses.remove(AuditTest.class);
-    testClasses.remove(AuditSameSessionTest.class);
-    testClasses.remove(Bugzilla_252214_Test.class);
+    // testClasses.remove(AuditTest.class);
+    // testClasses.remove(AuditSameSessionTest.class);
+    // testClasses.remove(Bugzilla_252214_Test.class);
+
+    // problem with wrong version of EMF Compare
+    testClasses.remove(EMFCompareTest.class);
 
     // replace a test with our local implementation:
     // the MultiValueOfAttributeTest class has a method
@@ -236,7 +243,7 @@ public class AllTestsHibernate extends AllConfigs
       final IRepositoryConfig repConfig = getRepositoryConfig();
       final HibernateConfig hbConfig = (HibernateConfig)repConfig;
       final String persistenceXML = "org/eclipse/emf/cdo/tests/hibernate/external_model1_4.persistence.xml";
-      hbConfig.getAdditionalProperties().put(PersistenceOptions.PERSISTENCE_XML, persistenceXML);
+      hbConfig.getAdditionalProperties().put(HibernateStore.PERSISTENCE_XML, persistenceXML);
 
       super.doSetUp();
     }
@@ -249,27 +256,5 @@ public class AllTestsHibernate extends AllConfigs
       hbConfig.getAdditionalProperties().clear();
       super.doTearDown();
     }
-
-    //
-    // @Override
-    // public void testExportFeatureMap() throws Exception
-    // {
-    // }
-    //
-    // @Override
-    // public void testExportExternalReference() throws Exception
-    // {
-    // }
-    //
-    // @Override
-    // public void testImportFeatureMap() throws Exception
-    // {
-    // }
-    //
-    // @Override
-    // public void testImportExternalReference() throws Exception
-    // {
-    // }
-
   }
 }

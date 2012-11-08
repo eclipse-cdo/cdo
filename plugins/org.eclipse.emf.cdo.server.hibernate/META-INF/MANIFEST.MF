@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.server.hibernate;singleton:=true
-Bundle-Version: 4.1.100.qualifier
+Bundle-Version: 4.2.0.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -41,4 +41,12 @@ Import-Package: org.apache.log4j;version="[1.2.12, 1.3.0)",
  org.hibernate.tuple.component;version="[4.0.0,5.0.0)",
  org.hibernate.tuple.entity;version="[4.0.0,5.0.0)",
  org.hibernate.type;version="[4.0.0,5.0.0)",
- org.hibernate.usertype;version="[4.0.0,5.0.0)"
+ org.hibernate.usertype;version="[4.0.0,5.0.0)",
+ org.eclipse.emf.teneo;version="[2.0.1, 3.0.0)",
+ org.eclipse.emf.teneo.extension;version="[2.0.1, 3.0.0)",
+ org.eclipse.emf.teneo.annotations.mapper;version="[2.0.1, 3.0.0)",
+ org.eclipse.emf.teneo.annotations.pamodel;version="[2.0.1, 3.0.0)",
+ org.eclipse.emf.teneo.hibernate;version="[2.0.1, 3.0.0)",
+ org.eclipse.emf.teneo.hibernate.mapper;version="[2.0.1, 3.0.0)",
+ org.eclipse.emf.teneo.hibernate.auditing;version="[2.0.1, 3.0.0)",
+ org.eclipse.emf.teneo.hibernate.auditing.model.teneoauditing;version="[2.0.1, 3.0.0)"

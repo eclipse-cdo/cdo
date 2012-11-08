@@ -10,10 +10,9 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate;
 
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-
-import org.eclipse.emf.teneo.PersistenceOptions;
 
 /**
  * Read external reference annotation.
@@ -48,7 +47,7 @@ public class HibernateBugzilla_362270_Test extends ExternalReferenceTest
     final IRepositoryConfig repConfig = getRepositoryConfig();
     final HibernateConfig hbConfig = (HibernateConfig)repConfig;
     final String persistenceXML = "org/eclipse/emf/cdo/tests/hibernate/external_model1_4.persistence.xml";
-    hbConfig.getAdditionalProperties().put(PersistenceOptions.PERSISTENCE_XML, persistenceXML);
+    hbConfig.getAdditionalProperties().put(HibernateStore.PERSISTENCE_XML, persistenceXML);
 
     super.doSetUp();
   }

@@ -15,7 +15,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
-import org.hibernate.EmptyInterceptor;
+import org.eclipse.emf.teneo.hibernate.EMFInterceptor;
+
 import org.hibernate.type.Type;
 
 import java.io.Serializable;
@@ -25,7 +26,7 @@ import java.io.Serializable;
  * 
  * @author Martin Taal
  */
-public class CDOInterceptor extends EmptyInterceptor
+public class CDOInterceptor extends EMFInterceptor
 {
   private static final long serialVersionUID = 1L;
 
@@ -56,7 +57,7 @@ public class CDOInterceptor extends EmptyInterceptor
   {
     if (!(object instanceof CDORevision))
     {
-      return object.getClass().getName();
+      return super.getEntityName(object);
     }
 
     return HibernateUtil.getInstance().getEntityName(object);

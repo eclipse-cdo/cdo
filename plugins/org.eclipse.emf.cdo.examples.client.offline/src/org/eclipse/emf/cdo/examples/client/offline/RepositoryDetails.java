@@ -94,13 +94,16 @@ public class RepositoryDetails extends Composite
     {
       public void notifyEvent(IEvent event)
       {
-        getDisplay().asyncExec(new Runnable()
+        if (!isDisposed())
         {
-          public void run()
+          getDisplay().asyncExec(new Runnable()
           {
-            updateUI();
-          }
-        });
+            public void run()
+            {
+              updateUI();
+            }
+          });
+        }
       }
     });
   }

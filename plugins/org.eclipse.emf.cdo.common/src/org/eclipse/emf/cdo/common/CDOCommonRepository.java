@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.net4j.util.event.IEvent;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.util.Set;
 
@@ -115,6 +116,11 @@ public interface CDOCommonRepository extends CDOTimeProvider, IAdaptable
    * @since 4.0
    */
   public boolean isEnsuringReferentialIntegrity();
+
+  /**
+   * @since 4.2
+   */
+  public boolean waitWhileInitial(IProgressMonitor monitor);
 
   /**
    * Enumerates the possible {@link CDOCommonRepository#getIDGenerationLocation() ID generation locations} of a CDO

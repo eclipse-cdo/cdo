@@ -64,6 +64,9 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.ThrowableEvent;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -818,6 +821,18 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       synchronizer.setRemoteSessionConfigurationFactory(masterFactory);
       synchronizer.setRetryInterval(1);
       synchronizer.setRawReplication(getTestRawReplication());
+      synchronizer.addListener(new IListener()
+      {
+        public void notifyEvent(IEvent event)
+        {
+          if (event instanceof ThrowableEvent)
+          {
+            ThrowableEvent e = (ThrowableEvent)event;
+            IOUtil.print(e.getThrowable());
+          }
+        }
+      });
+
       return synchronizer;
     }
 

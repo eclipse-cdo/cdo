@@ -71,6 +71,7 @@ import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorRegistry;
@@ -449,8 +450,11 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     return super.getFont(obj);
   }
 
+  /**
+   * @since 4.2
+   */
   @Override
-  protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
+  public void fillContextMenu(IMenuManager manager, ITreeSelection selection)
   {
     if (selection.size() == 1)
     {
@@ -482,9 +486,9 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   }
 
   /**
-   * @since 2.0
+   * @since 4.2
    */
-  protected void fillSession(IMenuManager manager, CDOSession session)
+  public void fillSession(IMenuManager manager, CDOSession session)
   {
     manager.add(new OpenTransactionAction(page, session));
     manager.add(new OpenViewAction(page, session));
@@ -499,14 +503,6 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       manager.add(generatedManager);
     }
 
-    // IAction a1 = new RegisterWorkspacePackagesAction(page, session);
-    // a1.setText(a1.getText() + SafeAction.INTERACTIVE);
-    // manager.add(a1);
-    //
-    // RegisterFilesystemPackagesAction a2 = new RegisterFilesystemPackagesAction(page, session);
-    // a2.setText(a2.getText() + SafeAction.INTERACTIVE);
-    // manager.add(a2);
-
     if (session.getRepositoryInfo().isSupportingBranches())
     {
       manager.add(new Separator());
@@ -520,9 +516,9 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   }
 
   /**
-   * @since 2.0
+   * @since 4.2
    */
-  protected boolean fillGenerated(MenuManager manager, CDOSession session)
+  public boolean fillGenerated(MenuManager manager, CDOSession session)
   {
     List<String> registeredURIs = new ArrayList<String>(EPackage.Registry.INSTANCE.keySet());
     Collections.sort(registeredURIs, new Comparator<String>()
@@ -561,9 +557,9 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   }
 
   /**
-   * @since 2.0
+   * @since 4.2
    */
-  protected void fillView(IMenuManager manager, CDOView view)
+  public void fillView(IMenuManager manager, CDOView view)
   {
     if (!view.isReadOnly())
     {
@@ -611,23 +607,23 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   /**
    * @since 4.2
    */
-  protected void fillBranch(IMenuManager manager, CDOBranch branch)
+  public void fillBranch(IMenuManager manager, CDOBranch branch)
   {
     CDOSession session = CDOUtil.getSession(branch);
     manager.add(new CreateBranchAction(page, session));
   }
 
   /**
-   * @since 3.0
+   * @since 4.2
    */
-  protected void fillResourceFolder(IMenuManager manager, CDOResourceFolder folder)
+  public void fillResourceFolder(IMenuManager manager, CDOResourceFolder folder)
   {
   }
 
   /**
    * @since 4.2
    */
-  protected void fillResourceLeaf(IMenuManager manager, Object object)
+  public void fillResourceLeaf(IMenuManager manager, Object object)
   {
     CDOEditorUtil.populateMenu(manager, (CDOResourceLeaf)object, page);
 
@@ -646,9 +642,9 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   }
 
   /**
-   * @since 3.0
+   * @since 4.2
    */
-  protected void fillResource(IMenuManager manager, CDOResource resource)
+  public void fillResource(IMenuManager manager, CDOResource resource)
   {
     // manager.add(new OpenResourceEditorAction(page, resource));
   }
@@ -656,7 +652,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   /**
    * @since 4.2
    */
-  protected void fillTextResource(IMenuManager manager, CDOTextResource resource)
+  public void fillTextResource(IMenuManager manager, CDOTextResource resource)
   {
     // manager.add(new OpenResourceEditorAction(page, resource));
   }
@@ -664,7 +660,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   /**
    * @since 4.2
    */
-  protected void fillBinaryResource(IMenuManager manager, CDOBinaryResource resource)
+  public void fillBinaryResource(IMenuManager manager, CDOBinaryResource resource)
   {
     // manager.add(new OpenResourceEditorAction(page, resource));
   }
@@ -701,6 +697,31 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
         }
       });
     }
+  }
+
+  /**
+   * @since 4.2
+   */
+  @Override
+  public int compare(Viewer viewer, Object e1, Object e2)
+  {
+    if (e1 instanceof CDOResourceFolder)
+    {
+      if (e2 instanceof CDOResourceLeaf)
+      {
+        return -1;
+      }
+    }
+
+    if (e1 instanceof CDOResourceLeaf)
+    {
+      if (e2 instanceof CDOResourceFolder)
+      {
+        return 1;
+      }
+    }
+
+    return super.compare(viewer, e1, e2);
   }
 
   /**

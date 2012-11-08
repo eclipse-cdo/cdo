@@ -23,7 +23,6 @@ public class FailoverParticipant extends SynchronizableRepository implements Int
 
   public FailoverParticipant()
   {
-    setState(OFFLINE);
   }
 
   public boolean isAllowBackupCommits()
@@ -64,19 +63,6 @@ public class FailoverParticipant extends SynchronizableRepository implements Int
     }
 
     super.changingType(oldType, newType);
-  }
-
-  @Override
-  protected void initRootResource()
-  {
-    if (getType() == BACKUP)
-    {
-      super.initRootResource();
-    }
-    else
-    {
-      doInitRootResource();
-    }
   }
 
   protected void doStartSynchronization()

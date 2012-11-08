@@ -19,13 +19,15 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 
 /**
  * @author Eike Stepper
  */
-public abstract class StructuredContentProvider<INPUT> implements IStructuredContentProvider, IListener
+public abstract class StructuredContentProvider<INPUT> extends ViewerSorter implements IStructuredContentProvider,
+    IListener
 {
   private StructuredViewer viewer;
 

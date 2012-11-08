@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.net4j;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDOSession;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
@@ -27,6 +28,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RepositoryTimeResult;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.PlatformObject;
 
 import java.util.Set;
@@ -306,6 +308,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     public IDGenerationLocation getIDGenerationLocation()
     {
       return idGenerationLocation;
+    }
+
+    public boolean waitWhileInitial(IProgressMonitor monitor)
+    {
+      return CDOCommonUtil.waitWhileInitial(this, session, monitor);
     }
 
     private RepositoryTimeResult refreshTime()

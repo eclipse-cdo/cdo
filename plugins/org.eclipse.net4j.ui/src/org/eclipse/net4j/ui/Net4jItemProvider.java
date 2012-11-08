@@ -65,8 +65,11 @@ public class Net4jItemProvider extends ContainerItemProvider<IContainer<Object>>
     return super.getImage(obj);
   }
 
+  /**
+   * @since 4.2
+   */
   @Override
-  protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
+  public void fillContextMenu(IMenuManager manager, ITreeSelection selection)
   {
     if (selection.size() == 1)
     {

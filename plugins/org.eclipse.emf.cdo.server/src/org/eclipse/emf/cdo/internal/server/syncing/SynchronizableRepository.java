@@ -339,6 +339,9 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     }
   }
 
+  /**
+   * Called by ReplicateRepositoryRawRequest.confirming().
+   */
   public void replicateRaw(CDODataInput in, OMMonitor monitor) throws IOException
   {
     try
@@ -483,9 +486,6 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   {
     super.doActivate();
 
-    // Makes setRootResource() being called later in RepositorySynchronizer.ConnectRunnable
-    setState(INITIAL);
-
     InternalStore store = getStore();
     if (!store.isFirstStart())
     {
@@ -508,8 +508,17 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
     store.removePersistentProperties(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
 
-    if (getType() != MASTER)
+    if (getType() == MASTER)
     {
+      setState(ONLINE);
+    }
+    else
+    {
+      if (getLastReplicatedCommitTime() != CDOBranchPoint.UNSPECIFIED_DATE)
+      {
+        setState(OFFLINE);
+      }
+
       startSynchronization();
     }
   }
@@ -548,21 +557,26 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     }
   }
 
+  @Override
+  protected void setPostActivateState()
+  {
+    // Do nothing (keep INITIAL)
+  }
+
   protected void setReplicationCountersToLatest()
   {
     setLastReplicatedBranchID(getStore().getLastBranchID());
     setLastReplicatedCommitTime(getStore().getLastNonLocalCommitTime());
   }
 
-  protected void doInitRootResource()
-  {
-    super.initRootResource();
-  }
-
   @Override
   protected void initRootResource()
   {
-    // Do nothing
+    // Non-MASTER repositories must wait for the first replication to receive their root resource ID
+    if (getType() == MASTER)
+    {
+      super.initRootResource();
+    }
   }
 
   @Override

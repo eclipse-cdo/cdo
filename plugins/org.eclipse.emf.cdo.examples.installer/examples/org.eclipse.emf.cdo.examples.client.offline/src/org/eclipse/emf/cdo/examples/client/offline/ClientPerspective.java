@@ -21,9 +21,10 @@ public class ClientPerspective implements IPerspectiveFactory
   public void createInitialLayout(IPageLayout layout)
   {
     layout.setFixed(true);
-    layout.addView("org.eclipse.emf.cdo.ui.CDOSessionsView", IPageLayout.LEFT, 0.5f, IPageLayout.ID_EDITOR_AREA);
-    layout.addView("org.eclipse.emf.cdo.examples.client.offline.CloneRepositoryView", IPageLayout.BOTTOM, 0.37f,
-        "org.eclipse.emf.cdo.ui.CDOSessionsView");
-    layout.addView("org.eclipse.ui.views.PropertySheet", IPageLayout.BOTTOM, 0.61f, IPageLayout.ID_EDITOR_AREA);
+    layout.addView("org.eclipse.emf.cdo.examples.client.offline.ClientView", IPageLayout.LEFT, 0.5f,
+        IPageLayout.ID_EDITOR_AREA);
+    layout.addView("org.eclipse.emf.cdo.examples.client.offline.CloneRepositoryView", IPageLayout.BOTTOM, 0.46f,
+        "org.eclipse.emf.cdo.examples.client.offline.ClientView");
+    layout.addView("org.eclipse.ui.views.PropertySheet", IPageLayout.BOTTOM, 0.67f, IPageLayout.ID_EDITOR_AREA);
   }
 }

@@ -73,6 +73,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.PlatformObject;
 
 import java.util.Collection;
@@ -657,6 +658,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     public IDGenerationLocation getIDGenerationLocation()
     {
       return repository.getIDGenerationLocation();
+    }
+
+    public boolean waitWhileInitial(IProgressMonitor monitor)
+    {
+      return repository.waitWhileInitial(monitor);
     }
 
     public void handleRepositoryTypeChanged(Type oldType, Type newType)

@@ -22,6 +22,7 @@ import org.eclipse.net4j.util.CheckUtil;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.PlatformObject;
 
 import java.util.Set;
@@ -162,6 +163,11 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
     public Set<ObjectType> getObjectIDTypes()
     {
       return session.getRepository().getObjectIDTypes();
+    }
+
+    public boolean waitWhileInitial(IProgressMonitor monitor)
+    {
+      throw new UnsupportedOperationException();
     }
   }
 }

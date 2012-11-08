@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.examples.client.offline.nodes;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -26,6 +28,8 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.net4j.FailoverAgent;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
@@ -36,6 +40,8 @@ import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.container.SetContainer;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.jface.viewers.ComboViewer;
@@ -88,6 +94,8 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
   public static final String SERVER_PROPERTY = "Server";
 
   public static final String MONITOR_PROPERTY = "Monitor";
+
+  public static final String BRANCH_PROPERTY = "branch";
 
   private static final String REPOSITORY_NAME = "repository";
 
@@ -208,10 +216,10 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
   public void start(Node node)
   {
     IRepository repository = createRepository(node);
-    node.getObjects().put(IRepository.class, repository);
+    node.setObject(IRepository.class, repository);
 
     IAcceptor acceptor = createAcceptor(node);
-    node.getObjects().put(IAcceptor.class, acceptor);
+    node.setObject(IAcceptor.class, acceptor);
   }
 
   public void stop(Node node)
@@ -510,15 +518,34 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     }
 
     @Override
-    public void start(Node node)
+    public void start(final Node node)
     {
       super.start(node);
 
-      CDOSession session = (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions", "cdo",
-          "jvm://example?repositoryName=" + REPOSITORY_NAME);
+      final CDOSession session = (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions",
+          "cdo", "jvm://example?repositoryName=" + REPOSITORY_NAME);
 
       CDOPackageRegistryPopulator.populate(session.getPackageRegistry());
-      node.getObjects().put(CDOSession.class, session);
+      node.setObject(CDOSession.class, session);
+
+      if (session.getRepositoryInfo().getState() == State.INITIAL)
+      {
+        session.addListener(new IListener()
+        {
+          public void notifyEvent(IEvent event)
+          {
+            if (session.getRepositoryInfo().getState() != State.INITIAL)
+            {
+              session.removeListener(this);
+              createTransaction(node);
+            }
+          }
+        });
+      }
+      else
+      {
+        createTransaction(node);
+      }
     }
 
     @Override
@@ -577,6 +604,31 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     protected IAcceptor createAcceptor(Node node)
     {
       return (IAcceptor)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.acceptors", "jvm", "example");
+    }
+
+    protected void createTransaction(final Node node)
+    {
+      CDOSession session = node.getObject(CDOSession.class);
+
+      int branchID = Integer.parseInt(node.getSettings().getProperty(BRANCH_PROPERTY, "0"));
+      CDOBranch branch = session.getBranchManager().getBranch(branchID);
+
+      CDOTransaction transaction = session.openTransaction(branch);
+      transaction.addListener(new IListener()
+      {
+        public void notifyEvent(IEvent event)
+        {
+          if (event instanceof CDOViewTargetChangedEvent)
+          {
+            CDOViewTargetChangedEvent e = (CDOViewTargetChangedEvent)event;
+            int branchID = e.getBranchPoint().getBranch().getID();
+            node.getSettings().setProperty(BRANCH_PROPERTY, Integer.toString(branchID));
+            getManager().saveNode(node);
+          }
+        }
+      });
+
+      node.setObject(CDOTransaction.class, transaction);
     }
 
     @Override
@@ -718,7 +770,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
       org.eclipse.emf.cdo.server.net4j.FailoverMonitor monitor = (org.eclipse.emf.cdo.server.net4j.FailoverMonitor)IPluginContainer.INSTANCE
           .getElement(org.eclipse.emf.cdo.server.net4j.FailoverMonitor.PRODUCT_GROUP,
               org.eclipse.emf.cdo.server.net4j.FailoverMonitor.Factory.TYPE, node.getName());
-      node.getObjects().put(org.eclipse.emf.cdo.server.net4j.FailoverMonitor.class, monitor);
+      node.setObject(org.eclipse.emf.cdo.server.net4j.FailoverMonitor.class, monitor);
     }
 
     @Override

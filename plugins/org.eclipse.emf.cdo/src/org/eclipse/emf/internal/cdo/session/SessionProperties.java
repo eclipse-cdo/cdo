@@ -23,6 +23,7 @@ import org.eclipse.net4j.util.properties.IProperties;
 import org.eclipse.net4j.util.properties.Properties;
 import org.eclipse.net4j.util.properties.Property;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 
 import java.util.Set;
@@ -339,6 +340,11 @@ public class SessionProperties extends Properties<CDOSession> implements CDOComm
   }
 
   public boolean isEnsuringReferentialIntegrity()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean waitWhileInitial(IProgressMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }

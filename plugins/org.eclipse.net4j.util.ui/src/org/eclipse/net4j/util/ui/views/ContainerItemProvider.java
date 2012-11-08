@@ -271,8 +271,11 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     return "Error";
   }
 
+  /**
+   * @since 3.3
+   */
   @Override
-  protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
+  public void fillContextMenu(IMenuManager manager, ITreeSelection selection)
   {
     super.fillContextMenu(manager, selection);
     if (selection.size() == 1)

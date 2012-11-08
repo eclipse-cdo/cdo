@@ -78,11 +78,6 @@ public abstract class AbstractView<T extends IContainer<?>> extends ViewPart
       public void run()
       {
         String text = events.getText();
-        // if (text.length() != 0)
-        // {
-        // text += StringUtil.NL;
-        // }
-        //
         events.setText(event + StringUtil.NL + text);
       }
     });

@@ -182,7 +182,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   protected EClass getObjectType(CDOID id)
   {
     IRepository repository = getStore().getRepository();
-    if (repository.getRootResourceID().equals(id))
+    if (id.equals(repository.getRootResourceID()))
     {
       return EresourcePackage.Literals.CDO_RESOURCE;
     }

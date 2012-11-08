@@ -96,6 +96,17 @@ public final class Node implements IElement, Comparable<Node>
     return (T)objects.get(type);
   }
 
+  @SuppressWarnings("unchecked")
+  public <T> T setObject(Class<T> type, T object)
+  {
+    if (object == null)
+    {
+      return (T)objects.remove(type);
+    }
+
+    return (T)objects.put(type, object);
+  }
+
   public void start()
   {
     type.start(this);

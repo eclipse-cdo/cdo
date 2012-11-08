@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
@@ -212,7 +213,11 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
 
   private void handleDisconnect()
   {
-    OM.LOG.info("Disconnected from master.");
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Disconnected from master."); //$NON-NLS-1$
+    }
+
     if (localRepository.getRootResourceID() == null)
     {
       localRepository.setState(CDOCommonRepository.State.INITIAL);
@@ -348,13 +353,16 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
           remoteSession = (InternalCDOSession)masterConfiguration.openSession();
 
           ensureNOOPRevisionCache();
-          setRootResourceID();
         }
         catch (Exception ex)
         {
           if (isActive())
           {
-            OM.LOG.warn("Connection attempt failed. Retrying in " + retryInterval + " seconds...", ex);
+            if (TRACER.isEnabled())
+            {
+              TRACER.format("ReplConnectionication attempt failed. Retrying in {0} seconds...", retryInterval); //$NON-NLS-1$
+            }
+
             fireThrowable(ex);
             sleepRetryInterval();
             reconnect();
@@ -363,7 +371,11 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
           return;
         }
 
-        OM.LOG.info("Connected to master.");
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Connected to master."); //$NON-NLS-1$
+        }
+
         scheduleReplicate();
 
         remoteSession.addListener(remoteSessionListener);
@@ -375,17 +387,6 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
     protected Integer getPriority()
     {
       return CONNECT_PRIORITY;
-    }
-
-    private void setRootResourceID()
-    {
-      State state = localRepository.getState();
-      if (state == CDOCommonRepository.State.INITIAL)
-      {
-        CDOID rootResourceID = remoteSession.getRepositoryInfo().getRootResourceID();
-        localRepository.setRootResourceID(rootResourceID);
-        localRepository.setState(CDOCommonRepository.State.OFFLINE);
-      }
     }
 
     private void ensureNOOPRevisionCache()
@@ -419,7 +420,11 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
           TRACER.trace("Synchronizing with master..."); //$NON-NLS-1$
         }
 
-        localRepository.setState(CDOCommonRepository.State.SYNCING);
+        boolean firstSyncing = localRepository.getLastReplicatedCommitTime() == CDOBranchPoint.UNSPECIFIED_DATE;
+        if (!firstSyncing)
+        {
+          localRepository.setState(CDOCommonRepository.State.SYNCING);
+        }
 
         CDOSessionProtocol sessionProtocol = remoteSession.getSessionProtocol();
         OMMonitor monitor = new NotifyingMonitor("Synchronizing", getListeners());
@@ -433,14 +438,27 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
           sessionProtocol.replicateRepository(localRepository, monitor);
         }
 
+        if (firstSyncing)
+        {
+          CDOID id = remoteSession.getRepositoryInfo().getRootResourceID();
+          localRepository.setRootResourceID(id);
+        }
+
         localRepository.setState(CDOCommonRepository.State.ONLINE);
-        OM.LOG.info("Synchronized with master.");
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Synchronized with master."); //$NON-NLS-1$
+        }
       }
       catch (RuntimeException ex)
       {
         if (isActive())
         {
-          OM.LOG.warn("Replication attempt failed. Retrying in " + retryInterval + " seconds...", ex);
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Replication attempt failed. Retrying in {0} seconds...", retryInterval); //$NON-NLS-1$
+          }
+
           fireThrowable(ex);
           sleepRetryInterval();
           handleDisconnect();
@@ -548,8 +566,11 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
               }
               catch (Exception ex)
               {
-                String simpleName = RetryingRunnable.this.getClass().getSimpleName();
-                OM.LOG.error(simpleName + " failed. Exiting.", ex);
+                if (TRACER.isEnabled())
+                {
+                  TRACER.format("{0} failed. Exiting.", RetryingRunnable.this.getClass().getSimpleName()); //$NON-NLS-1$
+                }
+
                 fireThrowable(ex);
               }
             }
@@ -557,7 +578,12 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
         }
         else
         {
-          OM.LOG.error(getErrorMessage(), ex);
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace(ex);
+          }
+
+          fireThrowable(ex);
         }
       }
     }

@@ -19,10 +19,10 @@ import org.eclipse.net4j.util.event.INotifier;
 /**
  * An {@link IEvent event} fired when the {@link org.eclipse.emf.cdo.common.CDOCommonRepository.Type type} of a
  * repository has changed.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
- * @noextend This interface is not intended to be extended by clients.
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public class RepositoryTypeChangedEvent extends Event implements CDOCommonRepository.TypeChangedEvent
 {

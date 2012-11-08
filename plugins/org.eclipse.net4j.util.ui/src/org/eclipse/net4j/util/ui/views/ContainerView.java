@@ -236,7 +236,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
    */
   protected ViewerSorter createViewerSorter()
   {
-    return new ContainerNameSorter();
+    return itemProvider;
   }
 
   /**

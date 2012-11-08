@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.internal.ui.views;
 
-import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenSessionAction;
 import org.eclipse.emf.cdo.internal.ui.transfer.RepositoryTransferDragListener;
@@ -23,15 +22,12 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
-import org.eclipse.net4j.util.ui.views.ContainerNameSorter;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPage;
@@ -67,35 +63,6 @@ public class CDOSessionsView extends ContainerView
     TransferDropAdapter.support(viewer);
 
     return control;
-  }
-
-  @Override
-  protected ViewerSorter createViewerSorter()
-  {
-    return new ContainerNameSorter()
-    {
-      @Override
-      public int compare(Viewer viewer, Object e1, Object e2)
-      {
-        if (e1 instanceof CDOResourceFolder)
-        {
-          if (e2 instanceof CDOResourceLeaf)
-          {
-            return -1;
-          }
-        }
-
-        if (e1 instanceof CDOResourceLeaf)
-        {
-          if (e2 instanceof CDOResourceFolder)
-          {
-            return 1;
-          }
-        }
-
-        return super.compare(viewer, e1, e2);
-      }
-    };
   }
 
   @Override

@@ -28,6 +28,7 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.monitor.NotifyingMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitorProgress;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 
 import java.io.IOException;
@@ -174,6 +175,11 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
   public boolean isEnsuringReferentialIntegrity()
   {
     return delegate.isEnsuringReferentialIntegrity();
+  }
+
+  public boolean waitWhileInitial(IProgressMonitor monitor)
+  {
+    return delegate.waitWhileInitial(monitor);
   }
 
   public IDGenerationLocation getIDGenerationLocation()

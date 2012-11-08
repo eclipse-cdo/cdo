@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.admin.CDOAdminClientRepository;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
@@ -26,6 +27,7 @@ import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.om.monitor.NotifyingMonitor;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 
 import java.io.IOException;
@@ -167,6 +169,11 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
   public IDGenerationLocation getIDGenerationLocation()
   {
     return idGenerationLocation;
+  }
+
+  public boolean waitWhileInitial(IProgressMonitor monitor)
+  {
+    return CDOCommonUtil.waitWhileInitial(this, this, monitor);
   }
 
   public long getTimeStamp() throws UnsupportedOperationException

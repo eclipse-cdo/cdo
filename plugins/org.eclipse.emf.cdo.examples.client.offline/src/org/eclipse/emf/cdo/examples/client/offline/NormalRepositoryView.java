@@ -23,8 +23,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.ExampleResourceManager;
 
-import java.util.concurrent.ExecutorService;
-
 /**
  * @author Eike Stepper
  */
@@ -49,17 +47,6 @@ public class NormalRepositoryView extends AbstractView<IRepository>
       private Image bean = ExampleResourceManager.getPluginImage(Application.PLUGIN_ID, "icons/Bean.gif");
 
       @Override
-      public String getText(Object obj)
-      {
-        if (obj instanceof ExecutorService)
-        {
-          return "ExecutorService";
-        }
-
-        return super.getText(obj);
-      }
-
-      @Override
       public Image getImage(Object obj)
       {
         return bean;
@@ -79,8 +66,6 @@ public class NormalRepositoryView extends AbstractView<IRepository>
     treeViewer.setContentProvider(itemProvider);
     treeViewer.setInput(repository);
 
-    // ScrolledComposite scrolledComposite = new ScrolledComposite(sash, SWT.NONE);
-    // scrolledComposite.setContent(new RepositoryDetails(scrolledComposite, repository));
     new RepositoryDetails(sash, repository);
 
     sash.setWeights(new int[] { 1, 1 });

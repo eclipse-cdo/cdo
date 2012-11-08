@@ -115,6 +115,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 
 import java.io.IOException;
@@ -145,7 +146,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private Type type = Type.MASTER;
 
-  private State state = State.ONLINE;
+  private State state = State.INITIAL;
 
   private Map<String, String> properties;
 
@@ -293,6 +294,11 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       sessionManager.sendRepositoryStateNotification(oldState, newState, getRootResourceID());
     }
+  }
+
+  public boolean waitWhileInitial(IProgressMonitor monitor)
+  {
+    return CDOCommonUtil.waitWhileInitial(this, this, monitor);
   }
 
   public synchronized Map<String, String> getProperties()
@@ -1203,10 +1209,10 @@ public class Repository extends Container<Object> implements InternalRepository
       throws IOException
   {
     final int fromBranchID = lastReplicatedBranchID + 1;
-    final int toBranchID = getStore().getLastBranchID();
+    final int toBranchID = store.getLastBranchID();
 
     final long fromCommitTime = lastReplicatedCommitTime + 1L;
-    final long toCommitTime = getStore().getLastCommitTime();
+    final long toCommitTime = store.getLastCommitTime();
 
     out.writeInt(toBranchID);
     out.writeLong(toCommitTime);
@@ -1822,6 +1828,11 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
+  protected void setPostActivateState()
+  {
+    setState(State.ONLINE);
+  }
+
   @Override
   protected void doBeforeActivate() throws Exception
   {
@@ -1897,15 +1908,10 @@ public class Repository extends Container<Object> implements InternalRepository
         readPackageUnits();
         readRootResource();
       }
-
-      // This check does not work for CDOWorkspace:
-      // if (CDOIDUtil.isNull(rootResourceID))
-      // {
-      // throw new IllegalStateException("Root resource ID is null");
-      // }
     }
 
-    LifecycleUtil.activate(getLockingManager()); // Needs an initialized main branch / branch manager
+    LifecycleUtil.activate(lockingManager); // Needs an initialized main branch / branch manager
+    setPostActivateState();
   }
 
   @Override

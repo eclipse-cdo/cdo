@@ -153,9 +153,16 @@ public class NodeManager extends Container<Object>
     return elements;
   }
 
-  public Node createNode(NodeType nodeType)
+  Node createNode(NodeType nodeType)
   {
     Node node = new Node(nodeType);
+    saveNode(node);
+
+    return addNode(node);
+  }
+
+  void saveNode(Node node)
+  {
     OutputStream out = null;
 
     try
@@ -175,8 +182,6 @@ public class NodeManager extends Container<Object>
     {
       IOUtil.close(out);
     }
-
-    return addNode(node);
   }
 
   private Node addNode(Node node)

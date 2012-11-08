@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.common.util;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
@@ -24,8 +26,13 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
+
+import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -175,5 +182,76 @@ public final class CDOCommonUtil
     }
 
     return DATE_FORMAT.parse(timeStamp).getTime();
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static boolean waitWhileInitial(CDOCommonRepository repository, INotifier notifier, IProgressMonitor monitor)
+  {
+    double rest = 10000000;
+    if (monitor != null)
+    {
+      monitor.beginTask("Waiting for repository " + repository.getName() + " to become initialized...", (int)rest);
+    }
+
+    IListener listener = null;
+
+    try
+    {
+      while (repository.getState() == State.INITIAL)
+      {
+        if (monitor.isCanceled())
+        {
+          return false;
+        }
+
+        if (listener == null)
+        {
+          listener = new IListener()
+          {
+            public void notifyEvent(IEvent event)
+            {
+              synchronized (this)
+              {
+                notifyAll();
+              }
+            }
+          };
+
+          notifier.addListener(listener);
+        }
+
+        synchronized (listener)
+        {
+          listener.wait(10L);
+        }
+
+        double work = rest / 1000;
+        if (work >= 0)
+        {
+          monitor.worked((int)work);
+          rest -= work;
+        }
+      }
+
+      return true;
+    }
+    catch (InterruptedException ex)
+    {
+      return false;
+    }
+    finally
+    {
+      if (listener != null)
+      {
+        notifier.removeListener(listener);
+      }
+
+      if (monitor != null)
+      {
+        monitor.done();
+      }
+    }
   }
 }

@@ -9,8 +9,6 @@ Bundle-Localization: plugin
 Bundle-Activator: org.eclipse.emf.internal.cdo.bundle.Activator$Implementation
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)";resolution:=optional,
- org.eclipse.emf.ecore;bundle-version="[2.4.0,3.0.0)";visibility:=reexport,
- org.eclipse.emf.ecore.xmi;bundle-version="[2.4.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.common;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
 Export-Package: org.eclipse.emf.cdo;version="4.2.0",
  org.eclipse.emf.cdo.eresource;version="4.2.0",

@@ -7,7 +7,8 @@
  *
  * Contributors:
  *    Stefan Winkler - initial API and implementation
- *    Stefan Winkler - Bug 285426: [DB] Implement user-defined typeMapping support
+ *    Stefan Winkler - bug 285426: [DB] Implement user-defined typeMapping support
+ *    Erdal Karaca - bug 344805: [DB] Added new type mapping Boolean from VARCHAR
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
@@ -124,6 +125,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     container.registerFactory(CoreTypeMappings.TMBoolean.FACTORY_SMALLINT);
     container.registerFactory(CoreTypeMappings.TMBoolean.FACTORY_OBJECT);
     container.registerFactory(CoreTypeMappings.TMBoolean.FACTORY_OBJECT_SMALLINT);
+    container.registerFactory(CoreTypeMappings.TMBoolean.FACTORY_OBJECT_VARCHAR);
     container.registerFactory(CoreTypeMappings.TMByte.FACTORY);
     container.registerFactory(CoreTypeMappings.TMByte.FACTORY_OBJECT);
     container.registerFactory(CoreTypeMappings.TMBytes.FACTORY);

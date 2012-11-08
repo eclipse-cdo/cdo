@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class OracleSQLAdapter extends DBAdapter
+public class OracleAdapter extends DBAdapter
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SQL, DBAdapter.class);
 
@@ -37,7 +37,7 @@ public class OracleSQLAdapter extends DBAdapter
 
   public static final String VERSION = "11.1.0.7"; //$NON-NLS-1$
 
-  public OracleSQLAdapter()
+  public OracleAdapter()
   {
     super(NAME, VERSION);
   }

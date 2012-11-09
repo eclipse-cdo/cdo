@@ -146,11 +146,10 @@ public class OracleAdapter extends DBAdapter
     case TINYINT:
       return "NUMBER(5)";
     case SMALLINT:
+    case BOOLEAN:
       return "NUMBER(7)";
     case INTEGER:
       return "NUMBER(12)";
-    case BOOLEAN:
-      return "VARCHAR2(5)";
     case DATE:
     case TIME:
       return "DATE";
@@ -167,7 +166,7 @@ public class OracleAdapter extends DBAdapter
   {
     if (type == DBType.BOOLEAN)
     {
-      return DBType.VARCHAR;
+      return DBType.SMALLINT;
     }
 
     return super.adaptType(type);

@@ -12,6 +12,7 @@
 package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
@@ -74,6 +75,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 {
   // @Singleton
   public static final CDOStateMachine INSTANCE = new CDOStateMachine();
+
+  static final ThreadLocal<Boolean> SWITCHING_TARGET = new InheritableThreadLocal<Boolean>();
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_STATEMACHINE, CDOStateMachine.class);
 
@@ -982,8 +985,12 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         CDORevisionKey newKey = null;
         if (key != null)
         {
-          int newVersion = getNewVersion(key);
-          newKey = CDORevisionUtil.createRevisionKey(key.getID(), key.getBranch(), newVersion);
+          boolean switchingTarget = SWITCHING_TARGET.get() == Boolean.TRUE;
+
+          int newVersion = getNewVersion(key, switchingTarget);
+          CDOBranch newBranch = switchingTarget ? object.cdoView().getBranch() : key.getBranch();
+
+          newKey = CDORevisionUtil.createRevisionKey(key.getID(), newBranch, newVersion);
         }
 
         InternalCDORevision newRevision = null;
@@ -1010,7 +1017,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
     }
 
-    private int getNewVersion(CDORevisionKey key)
+    private int getNewVersion(CDORevisionKey key, boolean switchingTarget)
     {
       if (key instanceof CDORevisionDelta)
       {
@@ -1022,7 +1029,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         }
       }
 
-      return key.getVersion() + 1;
+      int increase = switchingTarget ? 0 : 1;
+      return key.getVersion() + increase;
     }
   }
 

@@ -374,7 +374,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Override
-  public synchronized boolean isDirty()
+  public boolean isDirty()
   {
     if (isClosed())
     {
@@ -390,7 +390,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Override
-  public synchronized boolean hasConflict()
+  public boolean hasConflict()
   {
     checkActive();
     return conflict != 0;
@@ -501,7 +501,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     ApplyChangeSetResult result = new ApplyChangeSetResult();
 
     // Merges from local offline branches may require additional ID mappings: localID -> tempID
-    if (source != null && source.getBranch().isLocal())
+    if (source != null && source.getBranch().isLocal()
+        && getSession().getRepositoryInfo().getIDGenerationLocation() == IDGenerationLocation.STORE)
     {
       applyLocalIDMapping(changeSetData, result);
     }
@@ -579,6 +580,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDOID id = revision.getID();
       if (getObjectIfExists(id) == null)
       {
+        revision = revision.copy();
+        revision.setBranchPoint(getBranchPoint());
+        revision.setVersion(0);
+
         InternalCDOObject object = newInstance(revision.getEClass());
         object.cdoInternalSetView(this);
         object.cdoInternalSetRevision(revision);

@@ -264,7 +264,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   public synchronized boolean setBranchPoint(CDOBranch branch, long timeStamp)
   {
-    return setBranchPoint(branch.getPoint(timeStamp));
+    CDOBranchPoint branchPoint = branch.getPoint(timeStamp);
+    return setBranchPoint(branchPoint);
   }
 
   protected synchronized void basicSetBranchPoint(CDOBranchPoint branchPoint)

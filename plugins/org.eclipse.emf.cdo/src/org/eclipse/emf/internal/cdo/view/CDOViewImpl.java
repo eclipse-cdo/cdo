@@ -237,8 +237,17 @@ public class CDOViewImpl extends AbstractCDOView
     sessionProtocol.switchTarget(viewID, branchPoint, invalidObjects, allChangedObjects, allDetachedObjects, monitor);
 
     basicSetBranchPoint(branchPoint);
-    doInvalidate(branchPoint.getBranch(), CDOBranchPoint.UNSPECIFIED_DATE, allChangedObjects, allDetachedObjects,
-        oldRevisions, true);
+
+    try
+    {
+      CDOStateMachine.SWITCHING_TARGET.set(Boolean.TRUE);
+      doInvalidate(branchPoint.getBranch(), CDOBranchPoint.UNSPECIFIED_DATE, allChangedObjects, allDetachedObjects,
+          oldRevisions, true);
+    }
+    finally
+    {
+      CDOStateMachine.SWITCHING_TARGET.remove();
+    }
 
     IListener[] listeners = getListeners();
     if (listeners != null)

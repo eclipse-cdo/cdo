@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.examples.client.offline.Application;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.server.CDOServerBrowser;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositorySynchronizer;
@@ -95,7 +96,9 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
 
   public static final String MONITOR_PROPERTY = "Monitor";
 
-  public static final String BRANCH_PROPERTY = "branch";
+  public static final String BRANCH_PROPERTY = "Branch";
+
+  public static final String BROWSER_PROPERTY = "BrowserPort";
 
   private static final String REPOSITORY_NAME = "repository";
 
@@ -220,10 +223,21 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
 
     IAcceptor acceptor = createAcceptor(node);
     node.setObject(IAcceptor.class, acceptor);
+
+    String browserPort = node.getSetting(BROWSER_PROPERTY);
+    if (browserPort != null && browserPort.length() != 0)
+    {
+      CDOServerBrowser browser = (CDOServerBrowser)IPluginContainer.INSTANCE.getElement(
+          "org.eclipse.emf.cdo.server.browsers", "default", browserPort);
+      node.setObject(CDOServerBrowser.class, browser);
+    }
   }
 
   public void stop(Node node)
   {
+    CDOServerBrowser browser = node.getObject(CDOServerBrowser.class);
+    LifecycleUtil.deactivate(browser);
+
     IAcceptor acceptor = node.getObject(IAcceptor.class);
     LifecycleUtil.deactivate(acceptor);
 
@@ -515,6 +529,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     {
       super(manager);
       addProperty(new Property.Selection(this, SERVER_PROPERTY, Server.class));
+      addProperty(new Property.Entry(this, BROWSER_PROPERTY));
     }
 
     @Override
@@ -610,8 +625,14 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     {
       CDOSession session = node.getObject(CDOSession.class);
 
-      int branchID = Integer.parseInt(node.getSettings().getProperty(BRANCH_PROPERTY, "0"));
-      CDOBranch branch = session.getBranchManager().getBranch(branchID);
+      String branchPath = node.getSettings().getProperty(BRANCH_PROPERTY, CDOBranch.MAIN_BRANCH_NAME);
+      CDOBranch branch = session.getBranchManager().getBranch(branchPath);
+      if (branch == null)
+      {
+        branch = session.getBranchManager().getMainBranch();
+        node.getSettings().setProperty(BRANCH_PROPERTY, branch.getPathName());
+        getManager().saveNode(node);
+      }
 
       CDOTransaction transaction = session.openTransaction(branch);
       transaction.addListener(new IListener()
@@ -621,8 +642,8 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
           if (event instanceof CDOViewTargetChangedEvent)
           {
             CDOViewTargetChangedEvent e = (CDOViewTargetChangedEvent)event;
-            int branchID = e.getBranchPoint().getBranch().getID();
-            node.getSettings().setProperty(BRANCH_PROPERTY, Integer.toString(branchID));
+            String branchPath = e.getBranchPoint().getBranch().getPathName();
+            node.getSettings().setProperty(BRANCH_PROPERTY, branchPath);
             getManager().saveNode(node);
           }
         }
@@ -655,6 +676,20 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
       super.configureWindow(configurer);
       configurer.setInitialSize(new Point(600, 500));
     }
+
+    public void setConnectedToNetwork(Node node, boolean on)
+    {
+      if (on)
+      {
+        IAcceptor acceptor = createAcceptor(node);
+        node.setObject(IAcceptor.class, acceptor);
+      }
+      else
+      {
+        IAcceptor acceptor = node.getObject(IAcceptor.class);
+        LifecycleUtil.deactivate(acceptor);
+      }
+    }
   }
 
   /**
@@ -682,6 +717,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     public NormalRepository(NodeManager manager)
     {
       super(manager);
+      addProperty(new Property.Entry(this, BROWSER_PROPERTY));
     }
 
     @Override
@@ -700,6 +736,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     {
       super(manager);
       addProperty(new Property.Selection(this, MONITOR_PROPERTY, FailoverMonitor.class));
+      addProperty(new Property.Entry(this, BROWSER_PROPERTY));
     }
 
     @Override

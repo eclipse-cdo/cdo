@@ -27,13 +27,13 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
-import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.messages.Messages;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
@@ -469,12 +469,17 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   public Map<CDOBranch, List<CDORevision>> getAllRevisions()
   {
     final Map<CDOBranch, List<CDORevision>> result = new HashMap<CDOBranch, List<CDORevision>>();
-    IDBStoreAccessor accessor = getReader(null);
-    StoreThreadLocal.setAccessor(accessor);
+
+    InternalSession session = null;
+    if (!StoreThreadLocal.hasSession())
+    {
+      session = getRepository().getSessionManager().openSession(null);
+      StoreThreadLocal.setSession(session);
+    }
 
     try
     {
-      accessor.handleRevisions(null, null, CDOBranchPoint.UNSPECIFIED_DATE, true,
+      StoreThreadLocal.getAccessor().handleRevisions(null, null, CDOBranchPoint.UNSPECIFIED_DATE, true,
           new CDORevisionHandler.Filtered.Undetached(new CDORevisionHandler()
           {
             public boolean handleRevision(CDORevision revision)
@@ -494,7 +499,11 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     }
     finally
     {
-      StoreThreadLocal.release();
+      if (session != null)
+      {
+        StoreThreadLocal.release();
+        session.close();
+      }
     }
 
     return result;

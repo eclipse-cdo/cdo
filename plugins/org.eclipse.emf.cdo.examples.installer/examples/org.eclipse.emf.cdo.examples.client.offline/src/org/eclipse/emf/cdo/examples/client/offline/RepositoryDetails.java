@@ -10,15 +10,20 @@
  */
 package org.eclipse.emf.cdo.examples.client.offline;
 
+import org.eclipse.emf.cdo.examples.client.offline.nodes.NodeType;
 import org.eclipse.emf.cdo.server.IRepository;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -33,13 +38,13 @@ public class RepositoryDetails extends Composite
 
   private Text name;
 
-  private Text uuid;
-
   private Text type;
 
   private Text state;
 
-  public RepositoryDetails(Composite parent, IRepository repository)
+  private Button connected;
+
+  public RepositoryDetails(Composite parent, IRepository repository, final Control enablementControl)
   {
     super(parent, SWT.NONE);
     this.repository = repository;
@@ -64,15 +69,6 @@ public class RepositoryDetails extends Composite
     name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     name.setText(repository.getName());
 
-    Label lblUuid = new Label(this, SWT.NONE);
-    lblUuid.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-    lblUuid.setText("UUID:");
-
-    uuid = new Text(this, SWT.BORDER);
-    uuid.setEditable(false);
-    uuid.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-    uuid.setText(repository.getUUID());
-
     Label lblType = new Label(this, SWT.NONE);
     lblType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
     lblType.setText("Type:");
@@ -88,6 +84,29 @@ public class RepositoryDetails extends Composite
     state = new Text(this, SWT.BORDER);
     state.setEditable(false);
     state.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+    NodeType nodeType = Application.NODE.getType();
+    if (nodeType instanceof NodeType.Server && !(nodeType instanceof NodeType.FailoverMonitor))
+    {
+      final NodeType.Server server = (NodeType.Server)nodeType;
+
+      new Label(this, SWT.NONE);
+
+      connected = new Button(this, SWT.CHECK);
+      connected.setText("Connected to Network");
+      connected.setSelection(true);
+      connected.addSelectionListener(new SelectionAdapter()
+      {
+        @Override
+        public void widgetSelected(SelectionEvent e)
+        {
+          boolean on = connected.getSelection();
+          enablementControl.setEnabled(on);
+
+          server.setConnectedToNetwork(Application.NODE, on);
+        }
+      });
+    }
 
     updateUI();
     repository.addListener(new IListener()

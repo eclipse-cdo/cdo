@@ -65,14 +65,16 @@ public final class StoreThreadLocal
     return session;
   }
 
+  /**
+   * @since 4.2
+   */
+  public static boolean hasSession()
+  {
+    return SESSION.get() != null;
+  }
+
   public static void setAccessor(IStoreAccessor accessor)
   {
-    // IStoreAccessor old = ACCESSOR.get();
-    // if (old != null && old != accessor)
-    // {
-    // throw new IllegalStateException("Attempt to overwrite accessor");
-    // }
-
     SESSION.set(accessor == null ? null : accessor.getSession());
     ACCESSOR.set(accessor);
   }
@@ -101,6 +103,9 @@ public final class StoreThreadLocal
     return COMMIT_CONTEXT.get();
   }
 
+  /**
+   * @since 4.2
+   */
   public static void release()
   {
     try

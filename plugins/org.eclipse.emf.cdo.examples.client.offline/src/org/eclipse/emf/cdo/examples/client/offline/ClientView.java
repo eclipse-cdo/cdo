@@ -10,17 +10,32 @@
  */
 package org.eclipse.emf.cdo.examples.client.offline;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
+import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.container.ContainerEventAdapter;
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.ui.UIUtil;
-import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
+import org.eclipse.net4j.util.event.IListener;
 
+import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ITreeSelection;
@@ -29,7 +44,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IWorkbenchActionConstants;
-import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.wb.swt.ExampleResourceManager;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author Eike Stepper
@@ -41,6 +59,10 @@ public class ClientView extends AbstractView<CDOSession>
   private CDOItemProvider itemProvider;
 
   private TreeViewer treeViewer;
+
+  private CommitAction commitAction = new CommitAction();
+
+  private MergeAction mergeAction = new MergeAction();
 
   public ClientView()
   {
@@ -66,6 +88,42 @@ public class ClientView extends AbstractView<CDOSession>
 
     hookDoubleClick();
     hookContextMenu();
+    updateEnablement();
+
+    IRepository repository = Application.NODE.getObject(IRepository.class);
+    repository.addListener(new IListener()
+    {
+      public void notifyEvent(IEvent event)
+      {
+        updateEnablement();
+      }
+    });
+
+    final IListener transactionListener = new IListener()
+    {
+      public void notifyEvent(IEvent event)
+      {
+        updateEnablement();
+      }
+    };
+
+    CDOTransaction transaction = Application.NODE.getObject(CDOTransaction.class);
+    if (transaction != null)
+    {
+      transaction.addListener(transactionListener);
+    }
+    else
+    {
+      session.addListener(new ContainerEventAdapter<CDOView>()
+      {
+        @Override
+        protected void onAdded(IContainer<CDOView> container, CDOView view)
+        {
+          updateEnablement();
+          view.addListener(transactionListener);
+        }
+      });
+    }
   }
 
   protected void hookDoubleClick()
@@ -76,16 +134,10 @@ public class ClientView extends AbstractView<CDOSession>
       {
         ITreeSelection selection = (ITreeSelection)treeViewer.getSelection();
         Object object = selection.getFirstElement();
-        if (object instanceof ContainerItemProvider.ErrorElement)
+        if (object instanceof CDOResourceLeaf)
         {
-          try
-          {
-            UIUtil.getActiveWorkbenchPage().showView(UIUtil.ERROR_LOG_ID);
-          }
-          catch (PartInitException ex)
-          {
-            ex.printStackTrace();
-          }
+          CDOResourceLeaf resource = (CDOResourceLeaf)object;
+          CDOEditorUtil.openEditor(getSite().getPage(), resource);
         }
         else if (object != null && treeViewer.isExpandable(object))
         {
@@ -100,6 +152,22 @@ public class ClientView extends AbstractView<CDOSession>
         }
       }
     });
+  }
+
+  @Override
+  protected void initializeToolBar(IToolBarManager toolbarManager)
+  {
+    super.initializeToolBar(toolbarManager);
+    toolbarManager.add(commitAction);
+    toolbarManager.add(mergeAction);
+  }
+
+  protected void updateEnablement()
+  {
+    CDOTransaction transaction = Application.NODE.getObject(CDOTransaction.class);
+    commitAction.setEnabled(transaction != null && transaction.isDirty());
+    mergeAction.setEnabled(transaction != null && transaction.getBranch().isLocal()
+        && Application.NODE.getObject(IRepository.class).getState() == State.ONLINE);
   }
 
   protected void hookContextMenu()
@@ -137,5 +205,68 @@ public class ClientView extends AbstractView<CDOSession>
   {
     itemProvider.dispose();
     super.dispose();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class CommitAction extends Action
+  {
+    public CommitAction()
+    {
+      super("Commit", ExampleResourceManager.getPluginImageDescriptor(Application.PLUGIN_ID, "icons/Commit.gif"));
+    }
+
+    @Override
+    public void run()
+    {
+      try
+      {
+        PlatformUI.getWorkbench().getProgressService().run(true, true, new IRunnableWithProgress()
+        {
+          public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
+          {
+            CDOTransaction transaction = Application.NODE.getObject(CDOTransaction.class);
+
+            try
+            {
+              transaction.commit(monitor);
+            }
+            catch (CommitException ex)
+            {
+              ex.printStackTrace();
+              transaction.rollback();
+            }
+          }
+        });
+      }
+      catch (Exception ex)
+      {
+        ex.printStackTrace();
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class MergeAction extends Action
+  {
+    public MergeAction()
+    {
+      super("Merge", ExampleResourceManager.getPluginImageDescriptor(Application.PLUGIN_ID, "icons/Merge.gif"));
+    }
+
+    @Override
+    public void run()
+    {
+      CDOTransaction transaction = Application.NODE.getObject(CDOTransaction.class);
+
+      CDOBranch offlineBranch = transaction.getBranch();
+      CDOBranch baseBranch = offlineBranch.getBase().getBranch();
+
+      transaction.setBranch(baseBranch);
+      transaction.merge(offlineBranch.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    }
   }
 }

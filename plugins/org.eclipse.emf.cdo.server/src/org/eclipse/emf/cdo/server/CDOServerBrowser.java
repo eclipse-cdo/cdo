@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -322,7 +323,19 @@ public class CDOServerBrowser extends Worker
     if (repository != null)
     {
       pout.print("<p>\r\n");
-      page.display(this, repository, pout);
+
+      InternalSession session = repository.getSessionManager().openSession(null);
+      StoreThreadLocal.setSession(session);
+
+      try
+      {
+        page.display(this, repository, pout);
+      }
+      finally
+      {
+        StoreThreadLocal.release();
+        session.close();
+      }
     }
   }
 
@@ -706,10 +719,6 @@ public class CDOServerBrowser extends Worker
           else
           {
             versionsBuilder.append(" ");
-            if (versionsBuilder.length() > 64)
-            {
-              versionsBuilder.append("<br>");
-            }
           }
 
           String key = CDORevisionUtil.formatRevisionKey(rev);
@@ -1041,9 +1050,6 @@ public class CDOServerBrowser extends Worker
       out.print("<tr>\r\n");
       out.print("<td valign=\"top\">\r\n");
 
-      IStoreAccessor accessor = repository.getStore().getReader(null);
-      StoreThreadLocal.setAccessor(accessor);
-
       final String param = browser.getParam("id");
       final Object[] details = { null, null, null };
 
@@ -1083,10 +1089,6 @@ public class CDOServerBrowser extends Worker
       catch (IOException ex)
       {
         throw WrappedException.wrap(ex);
-      }
-      finally
-      {
-        StoreThreadLocal.release();
       }
 
       out.print("</td>\r\n");

@@ -240,7 +240,7 @@ public final class CDOEditorUtil
       editorIDs.add(editorDescriptor.getId());
     }
 
-    if (!editorIDs.contains(TEXT_EDITOR_ID))
+    if (!editorIDs.contains(TEXT_EDITOR_ID) && EDITOR_REGISTRY.findEditor(TEXT_EDITOR_ID) != null)
     {
       editorIDs.add(TEXT_EDITOR_ID);
     }

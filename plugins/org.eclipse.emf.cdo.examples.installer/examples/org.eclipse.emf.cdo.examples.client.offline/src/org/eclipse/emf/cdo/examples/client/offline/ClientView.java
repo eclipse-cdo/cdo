@@ -84,6 +84,7 @@ public class ClientView extends AbstractView<CDOSession>
     treeViewer = new TreeViewer(parent, SWT.BORDER);
     treeViewer.setLabelProvider(itemProvider);
     treeViewer.setContentProvider(itemProvider);
+    treeViewer.setSorter(itemProvider);
     treeViewer.setInput(session);
 
     hookDoubleClick();

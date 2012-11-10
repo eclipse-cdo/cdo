@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.server.net4j.FailoverAgent;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.net4j.Net4jUtil;
@@ -635,6 +636,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
       }
 
       CDOTransaction transaction = session.openTransaction(branch);
+      transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
       transaction.addListener(new IListener()
       {
         public void notifyEvent(IEvent event)

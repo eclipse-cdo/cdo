@@ -73,11 +73,17 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.container.IContainerEvent;
+import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
@@ -240,6 +246,58 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     rootResource = resource;
     rootResource.setRoot(true);
     registerObject(rootResource);
+  }
+
+  public synchronized boolean isEmpty()
+  {
+    CDOResource rootResource = getRootResource();
+    boolean empty = rootResource.getContents().isEmpty();
+
+    ensureContainerAdapter(rootResource);
+    return empty;
+  }
+
+  public synchronized CDOResourceNode[] getElements()
+  {
+    CDOResource rootResource = getRootResource();
+    EList<EObject> contents = rootResource.getContents();
+
+    List<CDOResourceNode> elements = new ArrayList<CDOResourceNode>(contents.size());
+    for (EObject object : contents)
+    {
+      if (object instanceof CDOResourceNode)
+      {
+        CDOResourceNode element = (CDOResourceNode)object;
+        elements.add(element);
+      }
+    }
+
+    ensureContainerAdapter(rootResource);
+    return elements.toArray(new CDOResourceNode[elements.size()]);
+  }
+
+  private void ensureContainerAdapter(CDOResource rootResource)
+  {
+    EList<Adapter> adapters = rootResource.eAdapters();
+    ContainerAdapter adapter = getContainerAdapter(adapters);
+    if (adapter == null)
+    {
+      adapter = new ContainerAdapter();
+      adapters.add(adapter);
+    }
+  }
+
+  private ContainerAdapter getContainerAdapter(EList<Adapter> adapters)
+  {
+    for (Adapter adapter : adapters)
+    {
+      if (adapter instanceof ContainerAdapter && ((ContainerAdapter)adapter).getView() == this)
+      {
+        return (ContainerAdapter)adapter;
+      }
+    }
+
+    return null;
   }
 
   public CDOURIHandler getURIHandler()
@@ -1722,6 +1780,76 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     public CDOBranchPoint getBranchPoint()
     {
       return branchPoint;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ContainerAdapter extends AdapterImpl
+  {
+    public AbstractCDOView getView()
+    {
+      return AbstractCDOView.this;
+    }
+
+    @Override
+    public void notifyChanged(Notification msg)
+    {
+      if (msg.isTouch())
+      {
+        return;
+      }
+
+      if (msg.getFeature() != EresourcePackage.Literals.CDO_RESOURCE__CONTENTS)
+      {
+        return;
+      }
+
+      IListener[] listeners = getListeners();
+      if (listeners.length == 0)
+      {
+        return;
+      }
+
+      IContainerEvent<CDOResourceNode> event = null;
+      int eventType = msg.getEventType();
+      switch (eventType)
+      {
+      case Notification.ADD:
+        event = new SingleDeltaContainerEvent<CDOResourceNode>(AbstractCDOView.this,
+            (CDOResourceNode)msg.getNewValue(), IContainerDelta.Kind.ADDED);
+        break;
+
+      case Notification.ADD_MANY:
+        // TODO
+        break;
+
+      case Notification.REMOVE:
+        event = new SingleDeltaContainerEvent<CDOResourceNode>(AbstractCDOView.this,
+            (CDOResourceNode)msg.getOldValue(), IContainerDelta.Kind.REMOVED);
+        break;
+
+      case Notification.REMOVE_MANY:
+        // TODO
+        break;
+
+      case Notification.SET:
+        // TODO
+        break;
+
+      case Notification.UNSET:
+        // TODO
+        break;
+
+      default:
+        break;
+      }
+
+      if (event != null)
+      {
+        fireEvent(event, listeners);
+      }
     }
   }
 }

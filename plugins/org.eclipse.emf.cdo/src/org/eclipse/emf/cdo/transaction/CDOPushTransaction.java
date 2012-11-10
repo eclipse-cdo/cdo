@@ -855,15 +855,31 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   /**
    * @since 4.2
    */
-  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  public boolean isEmpty()
   {
-    return Platform.getAdapterManager().getAdapter(this, adapter);
+    return delegate.isEmpty();
+  }
+
+  /**
+   * @since 4.2
+   */
+  public CDOResourceNode[] getElements()
+  {
+    return delegate.getElements();
   }
 
   @Override
   public String toString()
   {
     return delegate.toString();
+  }
+
+  /**
+   * @since 4.2
+   */
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  {
+    return Platform.getAdapterManager().getAdapter(this, adapter);
   }
 
   public static File createTempFile(CDOTransaction transaction) throws IOException

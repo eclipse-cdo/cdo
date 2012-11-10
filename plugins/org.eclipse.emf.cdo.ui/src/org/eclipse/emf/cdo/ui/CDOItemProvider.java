@@ -176,11 +176,6 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       return getChildren(((CDOSession)element).getBranchManager().getMainBranch());
     }
 
-    if (element instanceof CDOView)
-    {
-      return ((CDOView)element).getRootResource().getContents().toArray();
-    }
-
     if (element instanceof CDOResourceFolder)
     {
       return ((CDOResourceFolder)element).getNodes().toArray();
@@ -250,14 +245,9 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       }
     }
 
-    if (element instanceof CDOView)
-    {
-      return ((CDOView)element).getRootResource().getContents().size() > 0;
-    }
-
     if (element instanceof CDOResourceFolder)
     {
-      return ((CDOResourceFolder)element).getNodes().size() > 0;
+      return !((CDOResourceFolder)element).getNodes().isEmpty();
     }
 
     return super.hasChildren(element);

@@ -984,7 +984,7 @@ public class CDOViewImpl extends AbstractCDOView
       }
     }
 
-    if (detachedObjects != null)
+    if (detachedObjects != null && !detachedObjects.isEmpty())
     {
       if (options().isDetachmentNotificationEnabled())
       {

@@ -40,7 +40,7 @@ import org.eclipse.emf.cdo.util.ReadOnlyException;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.options.IOptionsEvent;
 import org.eclipse.net4j.util.ref.ReferenceType;
 
@@ -90,7 +90,7 @@ import java.util.Set;
  * @apiviz.uses {@link CDOViewTargetChangedEvent} - - fires
  */
 public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.Provider<CDOObject, CDOObjectHistory>,
-    INotifier
+    IContainer<CDOResourceNode>
 {
   /**
    * Returns the {@link CDOSession session} this view was opened by.

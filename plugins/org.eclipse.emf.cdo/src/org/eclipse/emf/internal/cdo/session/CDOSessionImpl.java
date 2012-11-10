@@ -321,7 +321,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   public void setSessionProtocol(CDOSessionProtocol sessionProtocol)
   {
-    checkInactive();
     if (exceptionHandler == null)
     {
       this.sessionProtocol = sessionProtocol;

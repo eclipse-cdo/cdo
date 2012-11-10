@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.examples.client.offline.Application;
+import org.eclipse.emf.cdo.examples.company.CompanyPackage;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.server.CDOServerBrowser;
@@ -754,6 +755,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
       final String monitorAddress = "localhost:" + monitorNode.getSetting(PORT_PROPERTY);
 
       ISynchronizableRepository repository = CDOServerUtil.createFailoverParticipant(REPOSITORY_NAME, store, props);
+      repository.setInitialPackages(CompanyPackage.eINSTANCE);
 
       FailoverAgent agent = new FailoverAgent()
       {

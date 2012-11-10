@@ -102,7 +102,8 @@ public class LoadChunkIndication extends CDOServerReadIndication
     MoveableList<Object> list = revision.getList(feature);
     for (int i = fromIndex; i <= toIndex; i++)
     {
-      type.writeValue(out, list.get(i));
+      Object value = list.get(i);
+      type.writeValue(out, value);
     }
   }
 }

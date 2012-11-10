@@ -105,7 +105,7 @@ public class Bugzilla_369646_Test extends AbstractCDOTest
     CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(1, 1));
 
-    // Load the categroy in the resource (is now partially loaded)
+    // Load the category into the resource (is now partially loaded)
     CDOView view = session.openView();
     CDOResource res = view.getResource(getResourcePath("/test"));
     Category cat = (Category)res.getContents().get(0);

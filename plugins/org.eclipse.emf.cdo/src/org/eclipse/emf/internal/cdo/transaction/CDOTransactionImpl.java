@@ -2310,8 +2310,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    * Synchronized through InvlidationRunner.run()
    */
   @Override
-  protected Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> invalidate(long lastUpdateTime,
-      List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects, List<CDORevisionDelta> deltas,
+  protected Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> invalidate(List<CDORevisionKey> allChangedObjects,
+      List<CDOIDAndVersion> allDetachedObjects, List<CDORevisionDelta> deltas,
       Map<CDOObject, CDORevisionDelta> revisionDeltas, Set<CDOObject> detachedObjects)
   {
     if (!allDetachedObjects.isEmpty())
@@ -2336,8 +2336,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       session.clearCommittedSinceLastRefresh();
     }
 
-    return super.invalidate(lastUpdateTime, allChangedObjects, allDetachedObjects, deltas, revisionDeltas,
-        detachedObjects);
+    return super.invalidate(allChangedObjects, allDetachedObjects, deltas, revisionDeltas, detachedObjects);
   }
 
   private void removeCrossReferences(Collection<CDOObject> referencers, Set<CDOID> referencedOIDs)

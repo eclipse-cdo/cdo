@@ -1308,8 +1308,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   /*
    * Synchronized through InvalidationRunner.run()
    */
-  protected Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> invalidate(long lastUpdateTime,
-      List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects, List<CDORevisionDelta> deltas,
+  protected Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> invalidate(List<CDORevisionKey> allChangedObjects,
+      List<CDOIDAndVersion> allDetachedObjects, List<CDORevisionDelta> deltas,
       Map<CDOObject, CDORevisionDelta> revisionDeltas, Set<CDOObject> detachedObjects)
   {
     boolean hasConflictResolvers = this instanceof CDOTransaction
@@ -1338,7 +1338,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
             changedObject.cdoRevision(), delta);
         // if (!isLocked(changedObject))
         {
-          CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)changedObject, key, lastUpdateTime);
+          CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)changedObject, key);
         }
 
         revisionDeltas.put(changedObject, delta);

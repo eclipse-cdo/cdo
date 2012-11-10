@@ -73,11 +73,11 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   private static final PerfTracer WRITING = new PerfTracer(OM.PERF_REVISION_WRITING, BaseCDORevision.class);
 
-  private static final byte UNSET = 0;
+  private static final byte UNSET_OPCODE = 0;
 
-  private static final byte SET_NULL = 1;
+  private static final byte SET_NULL_OPCODE = 1;
 
-  private static final byte SET_NOT_NULL = 2;
+  private static final byte SET_NOT_NULL_OPCODE = 2;
 
   private static final byte FROZEN_FLAG = 0x04;
 
@@ -858,7 +858,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       if (value == null)
       {
         // Feature is NOT set
-        out.writeByte(UNSET);
+        out.writeByte(UNSET_OPCODE);
         continue;
       }
 
@@ -866,12 +866,12 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       if (value == CDORevisionData.NIL)
       {
         // Feature IS null
-        out.writeByte(SET_NULL);
+        out.writeByte(SET_NULL_OPCODE);
         continue;
       }
 
       // Feature is NOT null
-      out.writeByte(SET_NOT_NULL);
+      out.writeByte(SET_NOT_NULL_OPCODE);
       if (feature.isMany())
       {
         CDOList list = (CDOList)value;
@@ -907,10 +907,10 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       byte unsetState = in.readByte();
       switch (unsetState)
       {
-      case UNSET:
+      case UNSET_OPCODE:
         continue;
 
-      case SET_NULL:
+      case SET_NULL_OPCODE:
         setValue(i, CDORevisionData.NIL);
         continue;
       }

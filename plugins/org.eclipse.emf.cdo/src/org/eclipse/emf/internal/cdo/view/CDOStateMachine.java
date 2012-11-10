@@ -12,7 +12,6 @@
 package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
@@ -402,7 +401,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @since 3.0
    */
-  public void invalidate(InternalCDOObject object, CDORevisionKey key, long lastUpdateTime)
+  public void invalidate(InternalCDOObject object, CDORevisionKey key)
   {
     synchronized (getMonitor(object))
     {
@@ -411,7 +410,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         trace(object, CDOEvent.INVALIDATE);
       }
 
-      process(object, CDOEvent.INVALIDATE, new Pair<CDORevisionKey, Long>(key, lastUpdateTime));
+      process(object, CDOEvent.INVALIDATE, key);
     }
   }
 
@@ -971,32 +970,47 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private class InvalidateTransition implements
-      ITransition<CDOState, CDOEvent, InternalCDOObject, Pair<CDORevisionKey, Long>>
+  private class InvalidateTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, CDORevisionKey>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Pair<CDORevisionKey, Long> keyAndTime)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CDORevisionKey key)
     {
-      CDORevisionKey key = keyAndTime.getElement1();
       InternalCDORevision oldRevision = object.cdoRevision();
+      InternalCDORevision newRevision = null;
+
+      InternalCDOView view = object.cdoView();
+      InternalCDORevisionCache cache = view.getSession().getRevisionManager().getCache();
+
+      if (SWITCHING_TARGET.get() == Boolean.TRUE)
+      {
+        CDORevisionDelta delta = (CDORevisionDelta)key;
+        CDORevisable target = delta.getTarget();
+        newRevision = (InternalCDORevision)cache.getRevisionByVersion(delta.getID(), target);
+        if (newRevision == null)
+        {
+          newRevision = oldRevision.copy();
+          view.getSession().resolveAllElementProxies(newRevision);
+          delta.apply(newRevision);
+          newRevision.setBranchPoint(target);
+          cache.addRevision(newRevision);
+        }
+
+        object.cdoInternalSetRevision(newRevision);
+        changeState(object, CDOState.CLEAN);
+        object.cdoInternalPostLoad();
+        return;
+      }
+
       if (key == null || key.getVersion() >= oldRevision.getVersion())
       {
-        InternalCDOView view = object.cdoView();
-
         CDORevisionKey newKey = null;
         if (key != null)
         {
-          boolean switchingTarget = SWITCHING_TARGET.get() == Boolean.TRUE;
-
-          int newVersion = getNewVersion(key, switchingTarget);
-          CDOBranch newBranch = switchingTarget ? object.cdoView().getBranch() : key.getBranch();
-
-          newKey = CDORevisionUtil.createRevisionKey(key.getID(), newBranch, newVersion);
+          int newVersion = getNewVersion(key);
+          newKey = CDORevisionUtil.createRevisionKey(key.getID(), key.getBranch(), newVersion);
         }
 
-        InternalCDORevision newRevision = null;
         if (newKey != null)
         {
-          InternalCDORevisionCache cache = view.getSession().getRevisionManager().getCache();
           newRevision = (InternalCDORevision)cache.getRevisionByVersion(newKey.getID(), newKey);
         }
 
@@ -1017,7 +1031,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
     }
 
-    private int getNewVersion(CDORevisionKey key, boolean switchingTarget)
+    private int getNewVersion(CDORevisionKey key)
     {
       if (key instanceof CDORevisionDelta)
       {
@@ -1029,8 +1043,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         }
       }
 
-      int increase = switchingTarget ? 0 : 1;
-      return key.getVersion() + increase;
+      return key.getVersion() + 1;
     }
   }
 
@@ -1041,9 +1054,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   private class ConflictTransition extends InvalidateTransition
   {
     @Override
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Pair<CDORevisionKey, Long> keyAndTime)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CDORevisionKey key)
     {
-      CDORevisionKey key = keyAndTime.getElement1();
       InternalCDORevision oldRevision = object.cdoRevision();
       if (key == null || key.getVersion() >= oldRevision.getVersion() - 1)
       {
@@ -1060,7 +1072,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   private final class InvalidConflictTransition extends ConflictTransition
   {
     @Override
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Pair<CDORevisionKey, Long> UNUSED)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CDORevisionKey UNUSED)
     {
       changeState(object, CDOState.INVALID_CONFLICT);
 

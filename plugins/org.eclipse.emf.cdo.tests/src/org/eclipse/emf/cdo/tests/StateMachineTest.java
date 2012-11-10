@@ -460,7 +460,7 @@ public class StateMachineTest extends AbstractCDOTest
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
     if (cdoObject != null)
     {
-      CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)cdoObject, null, CDOBranchPoint.UNSPECIFIED_DATE);
+      CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)cdoObject, null);
     }
   }
 

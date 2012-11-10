@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -32,7 +31,7 @@ import java.util.Map;
  * NPE when calling audit.setTimeStamp()
  * <p>
  * See bug 252214
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_252214_Test extends AbstractCDOTest
@@ -76,7 +75,7 @@ public class Bugzilla_252214_Test extends AbstractCDOTest
       CDOResource auditResource = audit.getResource(getResourcePath("/res1"));
       Company auditCompany = (Company)auditResource.getContents().get(0);
       CDOObject cdoAuditCompany = CDOUtil.getCDOObject(auditCompany);
-      CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)cdoAuditCompany, null, CDOBranchPoint.UNSPECIFIED_DATE);
+      CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)cdoAuditCompany, null);
     }
 
     audit.setTimeStamp(commitTime2);

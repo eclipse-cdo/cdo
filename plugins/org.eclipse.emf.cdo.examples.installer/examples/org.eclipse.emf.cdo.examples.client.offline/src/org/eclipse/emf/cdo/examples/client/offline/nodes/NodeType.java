@@ -674,7 +674,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     public void configureWindow(IWorkbenchWindowConfigurer configurer)
     {
       super.configureWindow(configurer);
-      configurer.setInitialSize(new Point(600, 500));
+      configurer.setInitialSize(new Point(500, 350));
     }
 
     public void setConnectedToNetwork(Node node, boolean on)

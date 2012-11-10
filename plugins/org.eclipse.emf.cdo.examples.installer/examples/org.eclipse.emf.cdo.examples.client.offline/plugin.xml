@@ -47,22 +47,27 @@
          point="org.eclipse.ui.views">
       <view
             class="org.eclipse.emf.cdo.examples.client.offline.ClientView"
+            icon="icons/Client.gif"
             id="org.eclipse.emf.cdo.examples.client.offline.ClientView"
             name="Client"/>
       <view
             class="org.eclipse.emf.cdo.examples.client.offline.CloneRepositoryView"
+            icon="icons/CloneRepository.gif"
             id="org.eclipse.emf.cdo.examples.client.offline.CloneRepositoryView"
             name="Clone Repository"/>
       <view
             class="org.eclipse.emf.cdo.examples.client.offline.NormalRepositoryView"
+            icon="icons/NormalRepository.gif"
             id="org.eclipse.emf.cdo.examples.client.offline.NormalRepositoryView"
             name="Normal Repository"/>
       <view
             class="org.eclipse.emf.cdo.examples.client.offline.FailoverRepositoryView"
+            icon="icons/FailoverRepository.gif"
             id="org.eclipse.emf.cdo.examples.client.offline.FailoverRepositoryView"
             name="Failover Repository"/>
       <view
             class="org.eclipse.emf.cdo.examples.client.offline.FailoverMonitorView"
+            icon="icons/FailoverMonitor.gif"
             id="org.eclipse.emf.cdo.examples.client.offline.FailoverMonitorView"
             name="Failover Monitor"/>
    </extension>

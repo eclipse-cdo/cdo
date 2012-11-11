@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 
-import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.container.IContainer;
 
 /**
  * Synchronizes a {@link ISynchronizableRepository synchronizable repository} with a master repository.
@@ -25,7 +25,7 @@ import org.eclipse.net4j.util.event.INotifier;
  * @apiviz.landmark
  * @apiviz.has {@link org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory} oneway - - remote
  */
-public interface IRepositorySynchronizer extends INotifier
+public interface IRepositorySynchronizer extends IContainer<CDOSession>
 {
   public int getRetryInterval();
 

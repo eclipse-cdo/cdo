@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.internal.common.revision.NOOPRevisionCache;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
@@ -34,6 +35,8 @@ import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.PriorityQueueRunnable;
 import org.eclipse.net4j.util.concurrent.PriorityQueueRunner;
+import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
@@ -170,6 +173,16 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
     this.recommitInterval = recommitInterval;
   }
 
+  public boolean isEmpty()
+  {
+    return remoteSession == null;
+  }
+
+  public CDOSession[] getElements()
+  {
+    return new CDOSession[] { remoteSession };
+  }
+
   @Override
   protected String getThreadName()
   {
@@ -211,7 +224,16 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
     super.doDeactivate();
   }
 
-  private void handleDisconnect()
+  protected void handleConnect()
+  {
+    remoteSession.addListener(remoteSessionListener);
+    remoteSession.getBranchManager().addListener(remoteSessionListener);
+
+    fireEvent(new SingleDeltaContainerEvent<CDOSession>(this, remoteSession, IContainerDelta.Kind.ADDED));
+    scheduleReplicate();
+  }
+
+  protected void handleDisconnect()
   {
     if (TRACER.isEnabled())
     {
@@ -227,10 +249,13 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
       localRepository.setState(CDOCommonRepository.State.OFFLINE);
     }
 
+    CDOSession element = remoteSession;
+
     remoteSession.getBranchManager().removeListener(remoteSessionListener);
     remoteSession.removeListener(remoteSessionListener);
     remoteSession = null;
 
+    fireEvent(new SingleDeltaContainerEvent<CDOSession>(this, element, IContainerDelta.Kind.REMOVED));
     reconnect();
   }
 
@@ -356,6 +381,8 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
         }
         catch (Exception ex)
         {
+          remoteSession = null;
+
           if (isActive())
           {
             if (TRACER.isEnabled())
@@ -376,10 +403,7 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
           TRACER.trace("Connected to master."); //$NON-NLS-1$
         }
 
-        scheduleReplicate();
-
-        remoteSession.addListener(remoteSessionListener);
-        remoteSession.getBranchManager().addListener(remoteSessionListener);
+        handleConnect();
       }
     }
 

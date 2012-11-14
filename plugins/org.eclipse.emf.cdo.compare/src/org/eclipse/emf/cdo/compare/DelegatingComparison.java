@@ -17,10 +17,10 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.Conflict;
 import org.eclipse.emf.compare.Diff;
-import org.eclipse.emf.compare.EMFCompareConfiguration;
 import org.eclipse.emf.compare.Equivalence;
 import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.MatchResource;
+import org.eclipse.emf.compare.utils.IEqualityHelper;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
@@ -104,9 +104,9 @@ public class DelegatingComparison implements Comparison
     return delegate.eContainer();
   }
 
-  public EMFCompareConfiguration getConfiguration()
+  public IEqualityHelper getEqualityHelper()
   {
-    return delegate.getConfiguration();
+    return delegate.getEqualityHelper();
   }
 
   public EList<Diff> getDifferences()

@@ -16,8 +16,6 @@ package org.eclipse.net4j.db.postgresql;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
-import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.db.internal.postgresql.bundle.OM;
 import org.eclipse.net4j.spi.db.DBAdapter;
 
 import org.postgresql.ds.PGSimpleDataSource;
@@ -26,8 +24,6 @@ import javax.sql.DataSource;
 
 import java.sql.Driver;
 import java.sql.SQLException;
-import java.sql.Savepoint;
-import java.sql.Statement;
 
 /**
  * A {@link IDBAdapter DB adapter} for <a href="http://www.postgresql.org/">PostgreSQL</a> databases.
@@ -143,30 +139,6 @@ public class PostgreSQLAdapter extends DBAdapter
   {
     // UNDEFINED COLUMN
     return "42703".equals(ex.getSQLState());
-  }
-
-  @Override
-  protected void doCreateTable(IDBTable table, Statement statement) throws SQLException
-  {
-    Savepoint savepoint = statement.getConnection().setSavepoint();
-
-    try
-    {
-      super.doCreateTable(table, statement);
-    }
-    catch (SQLException ex)
-    {
-      try
-      {
-        statement.getConnection().rollback(savepoint);
-      }
-      catch (SQLException ex1)
-      {
-        OM.LOG.error(ex1);
-      }
-
-      throw ex;
-    }
   }
 
   @Override

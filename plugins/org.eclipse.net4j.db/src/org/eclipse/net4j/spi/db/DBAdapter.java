@@ -102,26 +102,27 @@ public abstract class DBAdapter implements IDBAdapter
   public Set<IDBTable> createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException
   {
     Set<IDBTable> createdTables = new HashSet<IDBTable>();
-    Statement statement = null;
 
-    try
+    for (IDBTable table : tables)
     {
-      statement = connection.createStatement();
-      for (IDBTable table : tables)
+      Statement statement = null;
+
+      try
       {
+        statement = connection.createStatement();
         if (createTable(table, statement))
         {
           createdTables.add(table);
         }
       }
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(statement);
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+      finally
+      {
+        DBUtil.close(statement);
+      }
     }
 
     return createdTables;
@@ -151,26 +152,27 @@ public abstract class DBAdapter implements IDBAdapter
   public Collection<IDBTable> dropTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException
   {
     List<IDBTable> droppedTables = new ArrayList<IDBTable>();
-    Statement statement = null;
 
-    try
+    for (IDBTable table : tables)
     {
-      statement = connection.createStatement();
-      for (IDBTable table : tables)
+      Statement statement = null;
+
+      try
       {
+        statement = connection.createStatement();
         if (dropTable(table, statement))
         {
           droppedTables.add(table);
         }
       }
-    }
-    catch (SQLException ex)
-    {
-      OM.LOG.error(ex);
-    }
-    finally
-    {
-      DBUtil.close(statement);
+      catch (SQLException ex)
+      {
+        OM.LOG.error(ex);
+      }
+      finally
+      {
+        DBUtil.close(statement);
+      }
     }
 
     return droppedTables;

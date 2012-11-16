@@ -384,21 +384,21 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
       QueryXRefsContext context, String idString)
   {
     String tableName = getTable().getName();
-    String listJoin = getMappingStrategy().getListJoin("\"a_t\"", "\"l_t\"");
+    String listJoin = getMappingStrategy().getListJoin("a_t", "l_t");
 
     StringBuilder builder = new StringBuilder();
-    builder.append("SELECT \"l_t\"."); //$NON-NLS-1$
+    builder.append("SELECT l_t."); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(", \"l_t\"."); //$NON-NLS-1$
+    builder.append(", l_t."); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_VALUE);
-    builder.append(", \"l_t\"."); //$NON-NLS-1$
+    builder.append(", l_t."); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(tableName);
-    builder.append(" \"l_t\", ");//$NON-NLS-1$
+    builder.append(" l_t, ");//$NON-NLS-1$
     builder.append(mainTableName);
-    builder.append(" \"a_t\" WHERE ");//$NON-NLS-1$
-    builder.append("\"a_t\"." + mainTableWhere);//$NON-NLS-1$
+    builder.append(" a_t WHERE ");//$NON-NLS-1$
+    builder.append("a_t." + mainTableWhere);//$NON-NLS-1$
     builder.append(listJoin);
     builder.append(" AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_VALUE);

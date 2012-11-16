@@ -165,7 +165,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       long fromCommitTime, long toCommitTime) throws IOException
   {
     StringBuilder builder = new StringBuilder();
-    builder.append(" WHERE \"a_t\"."); //$NON-NLS-1$
+    builder.append(" WHERE a_t."); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CREATED);
     builder.append(" BETWEEN "); //$NON-NLS-1$
     builder.append(fromCommitTime);
@@ -184,7 +184,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       out.writeCDOClassifierRef(eClass);
 
       IDBTable table = classMapping.getDBTables().get(0);
-      DBUtil.serializeTable(out, connection, table, "\"a_t\"", attrSuffix);
+      DBUtil.serializeTable(out, connection, table, "a_t", attrSuffix);
 
       for (IListMapping listMapping : classMapping.getListMappings())
       {
@@ -200,14 +200,14 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   {
     for (IDBTable table : listMapping.getDBTables())
     {
-      String listSuffix = ", " + attrTable + " \"a_t\"" + attrSuffix;
-      String listJoin = getListJoinForRawExport("\"a_t\"", "\"l_t\"");
+      String listSuffix = ", " + attrTable + " a_t" + attrSuffix;
+      String listJoin = getListJoinForRawExport("a_t", "l_t");
       if (listJoin != null)
       {
         listSuffix += listJoin;
       }
 
-      DBUtil.serializeTable(out, connection, table, "\"l_t\"", listSuffix);
+      DBUtil.serializeTable(out, connection, table, "l_t", listSuffix);
     }
   }
 
@@ -451,12 +451,12 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     final IIDHandler idHandler = getStore().getIDHandler();
     final CDOID[] min = { idHandler.getMaxCDOID() };
 
-    final String prefix = "SELECT MIN(\"t\"." + CDODBSchema.ATTRIBUTES_ID + ") FROM " + CDODBSchema.CDO_OBJECTS
-        + " \"o\", ";
+    final String prefix = "SELECT MIN(t." + CDODBSchema.ATTRIBUTES_ID + ") FROM " + CDODBSchema.CDO_OBJECTS
+        + " o, ";
 
-    final String suffix = " \"t\" WHERE \"t\"." + CDODBSchema.ATTRIBUTES_BRANCH + "<0 AND \"t\"."
-        + CDODBSchema.ATTRIBUTES_ID + "=\"o\"." + CDODBSchema.ATTRIBUTES_ID + " AND \"t\"."
-        + CDODBSchema.ATTRIBUTES_CREATED + "=\"o\"." + CDODBSchema.ATTRIBUTES_CREATED;
+    final String suffix = " t WHERE t." + CDODBSchema.ATTRIBUTES_BRANCH + "<0 AND t."
+        + CDODBSchema.ATTRIBUTES_ID + "=o." + CDODBSchema.ATTRIBUTES_ID + " AND t."
+        + CDODBSchema.ATTRIBUTES_CREATED + "=o." + CDODBSchema.ATTRIBUTES_CREATED;
 
     getStore().visitAllTables(connection, new IDBStore.TableVisitor()
     {

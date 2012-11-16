@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.IDBStore;
@@ -89,12 +90,16 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   public void repairAfterCrash(IDBAdapter dbAdapter, Connection connection)
   {
     IDBStore store = getStore();
-    if (store.getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE)
+    IRepository repository = store.getRepository();
+    if (repository.getIDGenerationLocation() == IDGenerationLocation.STORE)
     {
       IIDHandler idHandler = store.getIDHandler();
 
-      CDOID minLocalID = getMinLocalID(connection);
-      idHandler.setNextLocalObjectID(minLocalID);
+      if (repository.isSupportingBranches())
+      {
+        CDOID minLocalID = getMinLocalID(connection);
+        idHandler.setNextLocalObjectID(minLocalID);
+      }
 
       CDOID maxID = objectTypeMapper.getMaxID(connection, idHandler);
       idHandler.setLastObjectID(maxID);
@@ -451,12 +456,11 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     final IIDHandler idHandler = getStore().getIDHandler();
     final CDOID[] min = { idHandler.getMaxCDOID() };
 
-    final String prefix = "SELECT MIN(t." + CDODBSchema.ATTRIBUTES_ID + ") FROM " + CDODBSchema.CDO_OBJECTS
-        + " o, ";
+    final String prefix = "SELECT MIN(t." + CDODBSchema.ATTRIBUTES_ID + ") FROM " + CDODBSchema.CDO_OBJECTS + " o, ";
 
-    final String suffix = " t WHERE t." + CDODBSchema.ATTRIBUTES_BRANCH + "<0 AND t."
-        + CDODBSchema.ATTRIBUTES_ID + "=o." + CDODBSchema.ATTRIBUTES_ID + " AND t."
-        + CDODBSchema.ATTRIBUTES_CREATED + "=o." + CDODBSchema.ATTRIBUTES_CREATED;
+    final String suffix = " t WHERE t." + CDODBSchema.ATTRIBUTES_BRANCH + "<0 AND t." + CDODBSchema.ATTRIBUTES_ID
+        + "=o." + CDODBSchema.ATTRIBUTES_ID + " AND t." + CDODBSchema.ATTRIBUTES_CREATED + "=o."
+        + CDODBSchema.ATTRIBUTES_CREATED;
 
     getStore().visitAllTables(connection, new IDBStore.TableVisitor()
     {

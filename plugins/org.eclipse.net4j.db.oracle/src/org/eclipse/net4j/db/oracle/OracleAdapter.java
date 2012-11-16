@@ -183,4 +183,25 @@ public class OracleAdapter extends DBAdapter
   {
     return 30;
   }
+
+  @Override
+  public boolean isTableNotFoundException(SQLException ex)
+  {
+    String message = ex.getMessage();
+    return message != null && message.toLowerCase().contains("ora-00942") && "42000".equals(ex.getSQLState());
+  }
+
+  @Override
+  public boolean isColumnNotFoundException(SQLException ex)
+  {
+    String message = ex.getMessage();
+    return message != null && message.toLowerCase().contains("ora-00904") && "42000".equals(ex.getSQLState());
+  }
+
+  @Override
+  public boolean isDuplicateKeyException(SQLException ex)
+  {
+    String message = ex.getMessage();
+    return message != null && message.toLowerCase().contains("ora-00001") && "23000".equals(ex.getSQLState());
+  }
 }

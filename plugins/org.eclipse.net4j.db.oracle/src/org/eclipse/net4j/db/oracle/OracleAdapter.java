@@ -155,10 +155,21 @@ public class OracleAdapter extends DBAdapter
       return "DATE";
     case CHAR:
     case VARCHAR:
-      return "VARCHAR2(4000)";
+      return "VARCHAR2(" + field.getPrecision() + ")";
     default:
       return super.getTypeName(field);
     }
+  }
+
+  @Override
+  public int getFieldLength(DBType type)
+  {
+    if (type == DBType.VARCHAR)
+    {
+      return 4000; // Oracle only supports 4000 for VARCHAR
+    }
+
+    return super.getFieldLength(type);
   }
 
   @Override

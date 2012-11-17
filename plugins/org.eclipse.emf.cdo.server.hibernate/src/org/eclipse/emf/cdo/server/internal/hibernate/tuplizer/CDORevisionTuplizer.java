@@ -171,13 +171,13 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     // return new EntityNameResolver[] { new CDOEntityNameResolver() };
   }
 
-  private class CDOEntityNameResolver implements EntityNameResolver
-  {
-    public String resolveEntityName(Object object)
-    {
-      return getEntityName();
-    }
-  }
+  // private class CDOEntityNameResolver implements EntityNameResolver
+  // {
+  // public String resolveEntityName(Object object)
+  // {
+  // return getEntityName();
+  // }
+  // }
 
   public EClass getEClass()
   {

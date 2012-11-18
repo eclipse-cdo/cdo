@@ -13,6 +13,7 @@ package org.eclipse.net4j.util.event;
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.concurrent.ExecutorService;
 
@@ -24,6 +25,8 @@ import java.util.concurrent.ExecutorService;
  */
 public class Notifier implements INotifier
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, Notifier.class);
+
   private ConcurrentArray<IListener> listeners = new ConcurrentArray<IListener>()
   {
     @Override
@@ -117,6 +120,11 @@ public class Notifier implements INotifier
    */
   protected void fireThrowable(Throwable throwable)
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(throwable);
+    }
+
     IListener[] listeners = getListeners();
     if (listeners.length != 0)
     {

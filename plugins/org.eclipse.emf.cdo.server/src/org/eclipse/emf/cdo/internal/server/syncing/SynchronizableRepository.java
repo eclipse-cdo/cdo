@@ -551,11 +551,17 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       {
         setState(OFFLINE);
       }
-      // else if (type == BACKUP)
-      // {
-      // // setLastReplicatedBranchID(???);
-      // setLastReplicatedCommitTime(getLastCommitTimeStamp());
-      // }
+      else if (type == BACKUP)
+      {
+        if (getLastReplicatedCommitTime() == CDOBranchPoint.UNSPECIFIED_DATE)
+        {
+          boolean usedToBeMaster = getRootResourceID() != null;
+          if (usedToBeMaster)
+          {
+            setLastReplicatedCommitTime(getLastCommitTimeStamp());
+          }
+        }
+      }
 
       startSynchronization();
     }

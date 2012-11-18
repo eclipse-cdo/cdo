@@ -78,6 +78,8 @@ public class Bugzilla_319552_Test extends AbstractSyncingTest
     masterCompany.getName();
     company.getName();
 
+    sleep(1000);
+
     // check revision versions.
     assertEquals(CDOUtil.getCDOObject(masterCompany).cdoRevision().getVersion(), CDOUtil.getCDOObject(company)
         .cdoRevision().getVersion());

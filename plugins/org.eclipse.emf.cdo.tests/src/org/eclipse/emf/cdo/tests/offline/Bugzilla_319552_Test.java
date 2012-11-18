@@ -47,7 +47,7 @@ public class Bugzilla_319552_Test extends AbstractSyncingTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
-    Company company = getModel1Factory().createCompany();
+    final Company company = getModel1Factory().createCompany();
     resource.getContents().add(company);
     transaction.setCommitComment("resource with one company created on clone");
     transaction.commit();
@@ -56,7 +56,7 @@ public class Bugzilla_319552_Test extends AbstractSyncingTest
     waitForOffline(clone);
 
     // do some online changes to increase the revision.
-    Company masterCompany = (Company)masterTransaction.getObject(CDOUtil.getCDOObject(company).cdoID());
+    final Company masterCompany = (Company)masterTransaction.getObject(CDOUtil.getCDOObject(company).cdoID());
 
     masterCompany.setName("revision2");
     masterTransaction.commit();
@@ -78,10 +78,15 @@ public class Bugzilla_319552_Test extends AbstractSyncingTest
     masterCompany.getName();
     company.getName();
 
-    sleep(1000);
-
-    // check revision versions.
-    assertEquals(CDOUtil.getCDOObject(masterCompany).cdoRevision().getVersion(), CDOUtil.getCDOObject(company)
-        .cdoRevision().getVersion());
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        // check revision versions.
+        return CDOUtil.getCDOObject(masterCompany).cdoRevision().getVersion() == CDOUtil.getCDOObject(company)
+            .cdoRevision().getVersion();
+      }
+    }.assertNoTimeOut();
   }
 }

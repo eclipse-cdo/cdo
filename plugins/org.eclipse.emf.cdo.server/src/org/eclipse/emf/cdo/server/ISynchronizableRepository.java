@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server;
 
 /**
  * A repository with the ability to {@link IRepositorySynchronizer synchronize} its content with another repository.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
@@ -30,6 +30,11 @@ public interface ISynchronizableRepository extends IRepository
   public int getLastReplicatedBranchID();
 
   public long getLastReplicatedCommitTime();
+
+  /**
+   * @since 4.2
+   */
+  public boolean hasBeenReplicated();
 
   /**
    * @since 4.1

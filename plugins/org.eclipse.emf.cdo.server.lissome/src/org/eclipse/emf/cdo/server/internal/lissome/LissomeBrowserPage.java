@@ -27,7 +27,7 @@ public class LissomeBrowserPage extends AbstractPage
 {
   public LissomeBrowserPage()
   {
-    super("tables", "Database Tables");
+    super("ltables", "LissomeDB Tables");
   }
 
   public boolean canDisplay(InternalRepository repository)

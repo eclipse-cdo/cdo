@@ -160,8 +160,13 @@ public final class CDOServerUtil
   {
     FailoverParticipant repository = new FailoverParticipant();
     initRepository(repository, name, store, props);
-    repository.setSynchronizer((InternalRepositorySynchronizer)synchronizer);
-    repository.setType(master ? CDOCommonRepository.Type.MASTER : CDOCommonRepository.Type.BACKUP);
+
+    if (synchronizer != null)
+    {
+      repository.setSynchronizer((InternalRepositorySynchronizer)synchronizer);
+      repository.setType(master ? CDOCommonRepository.Type.MASTER : CDOCommonRepository.Type.BACKUP);
+    }
+
     return repository;
   }
 

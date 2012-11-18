@@ -1678,27 +1678,32 @@ public class Repository extends Container<Object> implements InternalRepository
 
   public void initSystemPackages()
   {
+    List<InternalCDOPackageUnit> units = new ArrayList<InternalCDOPackageUnit>();
+    units.add(initPackage(EcorePackage.eINSTANCE));
+    units.add(initPackage(EresourcePackage.eINSTANCE));
+    units.add(initPackage(EtypesPackage.eINSTANCE));
+
+    if (initialPackages != null)
+    {
+      // if (type != Type.MASTER)
+      // {
+      // throw new IllegalStateException("Only master repositories can have initial packages");
+      // }
+
+      for (EPackage initialPackage : initialPackages)
+      {
+        if (!packageRegistry.containsKey(initialPackage.getNsURI()))
+        {
+          units.add(initPackage(initialPackage));
+        }
+      }
+    }
+
     IStoreAccessor writer = store.getWriter(null);
     StoreThreadLocal.setAccessor(writer);
 
     try
     {
-      List<InternalCDOPackageUnit> units = new ArrayList<InternalCDOPackageUnit>();
-      units.add(initSystemPackage(EcorePackage.eINSTANCE));
-      units.add(initSystemPackage(EresourcePackage.eINSTANCE));
-      units.add(initSystemPackage(EtypesPackage.eINSTANCE));
-
-      if (initialPackages != null)
-      {
-        for (EPackage initialPackage : initialPackages)
-        {
-          if (!packageRegistry.containsKey(initialPackage.getNsURI()))
-          {
-            units.add(initSystemPackage(initialPackage));
-          }
-        }
-      }
-
       InternalCDOPackageUnit[] systemUnits = units.toArray(new InternalCDOPackageUnit[units.size()]);
       writer.writePackageUnits(systemUnits, new Monitor());
       writer.commit(new Monitor());
@@ -1709,7 +1714,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  protected InternalCDOPackageUnit initSystemPackage(EPackage ePackage)
+  protected InternalCDOPackageUnit initPackage(EPackage ePackage)
   {
     EMFUtil.registerPackage(ePackage, packageRegistry);
     InternalCDOPackageInfo packageInfo = packageRegistry.getPackageInfo(ePackage);

@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.server.net4j;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
+import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IRepositorySynchronizer;
 import org.eclipse.emf.cdo.server.ISynchronizableRepository;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
@@ -56,6 +58,8 @@ public abstract class FailoverAgent extends Lifecycle implements CDOSessionConfi
 
   private InternalFailoverParticipant repository;
 
+  private long repositoryActivationTimeout = 10000L;
+
   private Protocol protocol;
 
   private String masterConnectorDescription;
@@ -66,6 +70,14 @@ public abstract class FailoverAgent extends Lifecycle implements CDOSessionConfi
 
   public FailoverAgent()
   {
+  }
+
+  /**
+   * @since 4.1
+   */
+  public IManagedContainer getContainer()
+  {
+    return IPluginContainer.INSTANCE;
   }
 
   public IConnector getMonitorConnector()
@@ -156,6 +168,23 @@ public abstract class FailoverAgent extends Lifecycle implements CDOSessionConfi
     this.repository = (InternalFailoverParticipant)repository;
   }
 
+  /**
+   * @since 4.1
+   */
+  public long getRepositoryActivationTimeout()
+  {
+    return repositoryActivationTimeout;
+  }
+
+  /**
+   * @since 4.1
+   */
+  public void setRepositoryActivationTimeout(long repositoryActivationTimeout)
+  {
+    checkInactive();
+    this.repositoryActivationTimeout = repositoryActivationTimeout;
+  }
+
   public Protocol getProtocol()
   {
     return protocol;
@@ -180,20 +209,25 @@ public abstract class FailoverAgent extends Lifecycle implements CDOSessionConfi
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    IManagedContainer container = getContainer();
 
     if (timer == null)
     {
-      timer = (Timer)getContainer().getElement(TimerLifecycle.PRODUCT_GROUP, DaemonFactory.TYPE, null);
+      timer = (Timer)container.getElement(TimerLifecycle.PRODUCT_GROUP, DaemonFactory.TYPE, null);
     }
 
-    synchronizer = (InternalRepositorySynchronizer)CDOServerUtil.createRepositorySynchronizer(this);
+    synchronizer = (InternalRepositorySynchronizer)createRepositorySynchronizer();
     repository.setSynchronizer(synchronizer);
-    setMaster(); // Will be adjusted with the following SIGNAL_PUBLISH_MASTER
-
-    LifecycleUtil.activate(repository);
+    // setMaster(); // Will be adjusted with the following SIGNAL_PUBLISH_MASTER
 
     protocol = new Protocol(this);
     protocol.start(rate, timeout);
+
+    // Repository will be activated asynchronously by the agent protocol, so wait
+    if (!LifecycleUtil.waitForActive(repository, repositoryActivationTimeout))
+    {
+      LifecycleUtil.checkActive(repository);
+    }
   }
 
   @Override
@@ -220,13 +254,16 @@ public abstract class FailoverAgent extends Lifecycle implements CDOSessionConfi
     repository.setType(CDOCommonRepository.Type.BACKUP);
   }
 
+  /**
+   * @since 4.1
+   */
+  protected IRepositorySynchronizer createRepositorySynchronizer()
+  {
+    return CDOServerUtil.createRepositorySynchronizer(this);
+  }
+
   protected abstract CDOSessionConfiguration createSessionConfiguration(String connectorDescription,
       String repositoryName);
-
-  protected IManagedContainer getContainer()
-  {
-    return IPluginContainer.INSTANCE;
-  }
 
   /**
    * The agent-side implementation of the {@link FailoverMonitor fail-over monitor} protocol.
@@ -278,6 +315,13 @@ public abstract class FailoverAgent extends Lifecycle implements CDOSessionConfi
               String connectorDescription = in.readString();
               String repositoryName = in.readString();
               agent.setBackup(connectorDescription, repositoryName);
+            }
+
+            IRepository repository = agent.getRepository();
+            if (!repository.isActive())
+            {
+              IManagedContainer container = agent.getContainer();
+              CDOServerUtil.addRepository(container, repository);
             }
           }
         };

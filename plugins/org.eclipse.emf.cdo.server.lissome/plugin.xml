@@ -18,7 +18,7 @@
       <factory
             class="org.eclipse.emf.cdo.server.internal.lissome.LissomeBrowserPage$Factory"
             productGroup="org.eclipse.emf.cdo.server.browserPages"
-            type="db">
+            type="lissome">
       </factory>
    </extension>
 

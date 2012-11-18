@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -48,7 +49,7 @@ import java.util.Set;
  * @apiviz.composedOf {@link org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler}
  * @apiviz.composedOf {@link IRepository.Handler} - - accessHandlers
  */
-public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider, IContainer<Object>
+public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider, IContainer<Object>, ILifecycle
 {
   /**
    * @since 3.0

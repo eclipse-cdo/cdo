@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Caspar De Groot - initial API and implementation
  */
@@ -25,7 +25,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Bugzilla 297940, 290032
- * 
+ *
  * @author Caspar De Groot
  */
 class TimeStampAuthority
@@ -130,7 +130,7 @@ class TimeStampAuthority
       while (!finishedTransactions.isEmpty() && (oldestFinished = finishedTransactions.first()) < oldestRunning)
       {
         finishedTransactions.remove(oldestFinished);
-        lastFinishedTimeStamp = oldestFinished;
+        internalSetLastFinished(oldestFinished);
       }
 
       // If we actually changed the lastFinishedTimeStamp, we need to notify waiting threads
@@ -203,15 +203,21 @@ class TimeStampAuthority
     {
       if (lastFinishedTimeStamp < lastCommitTimeStamp)
       {
-        lastFinishedTimeStamp = lastCommitTimeStamp;
+        internalSetLastFinished(lastCommitTimeStamp);
         lastCommitTimeStampLock.notifyAll();
       }
     }
   }
 
+  private void internalSetLastFinished(long lastCommitTimeStamp)
+  {
+    lastFinishedTimeStamp = lastCommitTimeStamp;
+    repository.getStore().setLastCommitTime(lastFinishedTimeStamp);
+  }
+
   /**
    * A separate class for better monitor debugging.
-   * 
+   *
    * @author Eike Stepper
    */
   private static final class LastCommitTimeStampLock
@@ -220,7 +226,7 @@ class TimeStampAuthority
 
   /**
    * A separate class for better monitor debugging.
-   * 
+   *
    * @author Eike Stepper
    */
   private static final class StrictOrderingLock extends ReentrantLock

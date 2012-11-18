@@ -1122,8 +1122,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     IIDHandler idHandler = store.getIDHandler();
     idHandler.rawExport(connection, out, fromCommitTime, toCommitTime);
 
-    IMetaDataManager metaDataManager = store.getMetaDataManager();
-    metaDataManager.rawExport(connection, out, fromCommitTime, toCommitTime);
+    // IMetaDataManager metaDataManager = store.getMetaDataManager();
+    // metaDataManager.rawExport(connection, out, fromCommitTime, toCommitTime);
 
     IMappingStrategy mappingStrategy = store.getMappingStrategy();
     mappingStrategy.rawExport(this, out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
@@ -1156,7 +1156,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
       idHandler.rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork());
 
-      rawImportPackageUnits(in, fromCommitTime, toCommitTime, packageUnits, monitor.fork());
+      // rawImportPackageUnits(in, fromCommitTime, toCommitTime, packageUnits, monitor.fork());
 
       mappingStrategy.rawImport(this, in, fromCommitTime, toCommitTime, monitor.fork(size));
 

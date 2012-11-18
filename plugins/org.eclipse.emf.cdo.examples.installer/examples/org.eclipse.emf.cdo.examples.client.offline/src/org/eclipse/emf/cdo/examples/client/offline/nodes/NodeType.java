@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.examples.client.offline.nodes;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.examples.client.offline.Application;
@@ -45,6 +44,7 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.container.SetContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.ThrowableEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.jface.viewers.ComboViewer;
@@ -324,13 +324,20 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     props.put(IRepository.Props.ID_GENERATION_LOCATION, "CLIENT");
 
     IRepository repository = createRepository(node, store, props);
-    CDOServerUtil.addRepository(IPluginContainer.INSTANCE, repository);
+    repository.setInitialPackages(CompanyPackage.eINSTANCE);
+    activateRepository(repository);
     return repository;
   }
 
   protected IRepository createRepository(Node node, IStore store, Map<String, String> props)
   {
     return CDOServerUtil.createRepository(REPOSITORY_NAME, store, props);
+  }
+
+  protected void activateRepository(IRepository repository)
+  {
+    // Don't do this with failover participants!
+    CDOServerUtil.addRepository(IPluginContainer.INSTANCE, repository);
   }
 
   protected IAcceptor createAcceptor(Node node)
@@ -541,8 +548,8 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
 
       final CDOSession session = (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions",
           "cdo", "jvm://example?repositoryName=" + REPOSITORY_NAME);
+      session.getPackageRegistry().putEPackage(CompanyPackage.eINSTANCE);
 
-      CDOPackageRegistryPopulator.populate(session.getPackageRegistry());
       node.setObject(CDOSession.class, session);
 
       if (session.getRepositoryInfo().getState() == State.INITIAL)
@@ -735,6 +742,8 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
    */
   public static class FailoverRepository extends Repository
   {
+    private FailoverAgent agent;
+
     public FailoverRepository(NodeManager manager)
     {
       super(manager);
@@ -755,10 +764,17 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
       final String monitorAddress = "localhost:" + monitorNode.getSetting(PORT_PROPERTY);
 
       ISynchronizableRepository repository = CDOServerUtil.createFailoverParticipant(REPOSITORY_NAME, store, props);
-      repository.setInitialPackages(CompanyPackage.eINSTANCE);
 
-      FailoverAgent agent = new FailoverAgent()
+      agent = new FailoverAgent()
       {
+        @Override
+        protected IRepositorySynchronizer createRepositorySynchronizer()
+        {
+          IRepositorySynchronizer synchronizer = super.createRepositorySynchronizer();
+          synchronizer.addListener(ThrowableEventAdapter.ToPrintStream.CONSOLE);
+          return synchronizer;
+        }
+
         @Override
         protected CDONet4jSessionConfiguration createSessionConfiguration(String connectorDescription,
             String repositoryName)
@@ -773,17 +789,20 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
         }
       };
 
-      IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", monitorAddress);
-
-      agent.setMonitorConnector(connector);
+      agent.setMonitorConnector(Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", monitorAddress));
       agent.setConnectorDescription("localhost:" + node.getSetting(PORT_PROPERTY));
       agent.setRepository(repository);
       agent.setGroup(monitorNode.getName());
       agent.setRate(1500L);
       agent.setTimeout(3000L);
-      agent.activate();
 
       return repository;
+    }
+
+    @Override
+    protected void activateRepository(IRepository repository)
+    {
+      agent.activate();
     }
 
     @Override

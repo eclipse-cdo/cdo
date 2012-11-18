@@ -35,8 +35,11 @@ public class ReplicateRepositoryRawRequest extends CDOClientRequestWithMonitorin
   @Override
   protected void requesting(CDODataOutput out, OMMonitor monitor) throws IOException
   {
-    out.writeInt(context.getLastReplicatedBranchID());
-    out.writeLong(context.getLastReplicatedCommitTime());
+    int lastReplicatedBranchID = context.getLastReplicatedBranchID();
+    long lastReplicatedCommitTime = context.getLastReplicatedCommitTime();
+
+    out.writeInt(lastReplicatedBranchID);
+    out.writeLong(lastReplicatedCommitTime);
   }
 
   @Override

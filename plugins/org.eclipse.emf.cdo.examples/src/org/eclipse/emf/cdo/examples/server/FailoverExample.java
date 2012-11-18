@@ -440,7 +440,7 @@ public abstract class FailoverExample
         }
 
         @Override
-        protected IManagedContainer getContainer()
+        public IManagedContainer getContainer()
         {
           return container;
         }

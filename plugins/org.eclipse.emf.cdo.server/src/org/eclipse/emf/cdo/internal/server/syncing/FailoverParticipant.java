@@ -51,6 +51,7 @@ public class FailoverParticipant extends SynchronizableRepository implements Int
       {
         // Switch off synchronizer
         doStopSynchronization();
+        setState(ONLINE);
       }
       else
       {

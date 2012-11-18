@@ -42,6 +42,8 @@ import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
@@ -177,6 +179,11 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     return list.toArray();
   }
 
+  public boolean hasBeenReplicated()
+  {
+    return getLastReplicatedCommitTime() != CDOBranchPoint.UNSPECIFIED_DATE;
+  }
+
   public int getLastReplicatedBranchID()
   {
     return lastReplicatedBranchID;
@@ -200,6 +207,18 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     if (this.lastReplicatedCommitTime < lastReplicatedCommitTime)
     {
       this.lastReplicatedCommitTime = lastReplicatedCommitTime;
+    }
+  }
+
+  @Override
+  public void setLastCommitTimeStamp(long lastCommitTimeStamp)
+  {
+    super.setLastCommitTimeStamp(lastCommitTimeStamp);
+
+    if (getType() == MASTER)
+    {
+      // This MASTER might become a BACKUP, so don't replicate this commit in the future
+      setLastReplicatedCommitTime(lastCommitTimeStamp);
     }
   }
 
@@ -462,6 +481,19 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   }
 
   @Override
+  public void notifyWriteAccessHandlers(ITransaction transaction, CommitContext commitContext, boolean beforeCommit,
+      OMMonitor monitor)
+  {
+    if (beforeCommit && commitContext.getNewPackageUnits().length != 0)
+    {
+      throw new IllegalStateException(
+          "Synchronizable repositories don't support dynamic addition of new packages. Use IRepository.setInitialPackages() instead.");
+    }
+
+    super.notifyWriteAccessHandlers(transaction, commitContext, beforeCommit, monitor);
+  }
+
+  @Override
   public abstract InternalCommitContext createCommitContext(InternalTransaction transaction);
 
   protected InternalCommitContext createNormalCommitContext(InternalTransaction transaction)
@@ -508,16 +540,22 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
     store.removePersistentProperties(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
 
-    if (getType() == MASTER)
+    Type type = getType();
+    if (type == MASTER)
     {
       setState(ONLINE);
     }
     else
     {
-      if (getLastReplicatedCommitTime() != CDOBranchPoint.UNSPECIFIED_DATE)
+      if (hasBeenReplicated())
       {
         setState(OFFLINE);
       }
+      // else if (type == BACKUP)
+      // {
+      // // setLastReplicatedBranchID(???);
+      // setLastReplicatedCommitTime(getLastCommitTimeStamp());
+      // }
 
       startSynchronization();
     }

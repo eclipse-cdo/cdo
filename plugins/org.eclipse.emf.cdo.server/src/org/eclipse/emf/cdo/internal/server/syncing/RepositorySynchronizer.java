@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
@@ -180,6 +179,11 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
 
   public CDOSession[] getElements()
   {
+    if (remoteSession == null)
+    {
+      return new CDOSession[0];
+    }
+
     return new CDOSession[] { remoteSession };
   }
 
@@ -226,11 +230,12 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
 
   protected void handleConnect()
   {
+    scheduleReplicate();
+
     remoteSession.addListener(remoteSessionListener);
     remoteSession.getBranchManager().addListener(remoteSessionListener);
 
     fireEvent(new SingleDeltaContainerEvent<CDOSession>(this, remoteSession, IContainerDelta.Kind.ADDED));
-    scheduleReplicate();
   }
 
   protected void handleDisconnect()
@@ -240,22 +245,27 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
       TRACER.trace("Disconnected from master."); //$NON-NLS-1$
     }
 
-    if (localRepository.getRootResourceID() == null)
-    {
-      localRepository.setState(CDOCommonRepository.State.INITIAL);
-    }
-    else
+    if (localRepository.hasBeenReplicated())
     {
       localRepository.setState(CDOCommonRepository.State.OFFLINE);
     }
+    else
+    {
+      localRepository.setState(CDOCommonRepository.State.INITIAL);
+    }
 
-    CDOSession element = remoteSession;
+    if (remoteSession != null)
+    {
+      CDOSession element = remoteSession;
 
-    remoteSession.getBranchManager().removeListener(remoteSessionListener);
-    remoteSession.removeListener(remoteSessionListener);
-    remoteSession = null;
+      remoteSession.getBranchManager().removeListener(remoteSessionListener);
+      remoteSession.removeListener(remoteSessionListener);
+      remoteSession.close();
+      remoteSession = null;
 
-    fireEvent(new SingleDeltaContainerEvent<CDOSession>(this, element, IContainerDelta.Kind.REMOVED));
+      fireEvent(new SingleDeltaContainerEvent<CDOSession>(this, element, IContainerDelta.Kind.REMOVED));
+    }
+
     reconnect();
   }
 
@@ -387,7 +397,7 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
           {
             if (TRACER.isEnabled())
             {
-              TRACER.format("ReplConnectionication attempt failed. Retrying in {0} seconds...", retryInterval); //$NON-NLS-1$
+              TRACER.format("Connection attempt failed. Retrying in {0} seconds...", retryInterval); //$NON-NLS-1$
             }
 
             fireThrowable(ex);
@@ -419,8 +429,9 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
       InternalCDORevisionCache cache = remoteSession.getRevisionManager().getCache();
       if (!(cache instanceof NOOPRevisionCache))
       {
-        throw new IllegalStateException("Master session does not use a NOOPRevisionCache: "
-            + cache.getClass().getName());
+        String message = "Master session does not use a NOOPRevisionCache: " + cache.getClass().getName();
+        OM.LOG.error(message);
+        throw new Error(message);
       }
     }
   }
@@ -444,7 +455,7 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
           TRACER.trace("Synchronizing with master..."); //$NON-NLS-1$
         }
 
-        boolean firstSyncing = localRepository.getLastReplicatedCommitTime() == CDOBranchPoint.UNSPECIFIED_DATE;
+        boolean firstSyncing = !localRepository.hasBeenReplicated();
         if (!firstSyncing)
         {
           localRepository.setState(CDOCommonRepository.State.SYNCING);

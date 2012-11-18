@@ -372,7 +372,16 @@ public class FailoverMonitorView extends AbstractView<FailoverMonitor>
           return;
         }
 
-        int value = getNextValue() + RANDOM.nextInt(4) - 2;
+        int value = getNextValue() * (90 + RANDOM.nextInt(20)) / 100 + RANDOM.nextInt(4) - 2;
+        if (value > 100)
+        {
+          value = 100;
+        }
+        else if (value < -100)
+        {
+          value = -100;
+        }
+
         int fx = y + value * channelHeight / 100;
         values[i] = fx;
 

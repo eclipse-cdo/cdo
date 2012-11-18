@@ -175,7 +175,7 @@ public class CompareTest extends AbstractCDOTest
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
 
-    CDOResource resource = transaction.createResource("/res" + 0);
+    CDOResource resource = transaction.createResource(getResourcePath("/res" + 0));
     EList<EObject> contents = resource.getContents();
     addCompany(contents);
     addCompany(contents);

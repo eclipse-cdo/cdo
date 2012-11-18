@@ -41,7 +41,7 @@ import java.util.List;
 
 /**
  * An abstract superclass that may be subclassed to test behaviour common to all CDORevisionCaches
- * 
+ *
  * @author Andre Dietisheim
  * @see CDORevisionCache
  * @see DBRevisionCache
@@ -52,6 +52,8 @@ import java.util.List;
 public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 {
   private static final String RESOURCE_PATH = "/res1";
+
+  private static final String COMPANY = "Eclipse";
 
   private static final int MAX_THREADS = 10;
 
@@ -88,7 +90,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testAddedRevisionIsGettable()
   {
-    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
+    CompanyImpl company = (CompanyImpl)createCompanyInResource(COMPANY);
     InternalCDORevision cdoRevision = company.cdoRevision();
     addRevision(cdoRevision);
 
@@ -104,7 +106,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testGetRevisionReturnsLatestVersion() throws Exception
   {
-    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
+    CompanyImpl company = (CompanyImpl)createCompanyInResource(COMPANY);
     InternalCDORevision firstRevision = company.cdoRevision();
     addRevision(firstRevision);
 
@@ -120,7 +122,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testAddedRevisionIsNotRevised() throws Exception
   {
-    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
+    CompanyImpl company = (CompanyImpl)createCompanyInResource(COMPANY);
     InternalCDORevision firstRevision = company.cdoRevision();
     addRevision(firstRevision);
 
@@ -131,7 +133,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testFormerVersionIsGettable() throws Exception
   {
-    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
+    CompanyImpl company = (CompanyImpl)createCompanyInResource(COMPANY);
     InternalCDORevision firstRevision = company.cdoRevision();
     addRevision(firstRevision);
 
@@ -151,7 +153,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testAddRevisionUpdatesRevisedTimeStampOfLastRevision() throws Exception
   {
-    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
+    CompanyImpl company = (CompanyImpl)createCompanyInResource(COMPANY);
     CDOID id = company.cdoID();
 
     InternalCDORevision firstVersion = company.cdoRevision();
@@ -175,7 +177,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testTheFormerRevisionOf2VersionsMayBeFetchedByTimestamp() throws Exception
   {
-    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
+    CompanyImpl company = (CompanyImpl)createCompanyInResource(COMPANY);
     CDOID id = CDOUtil.getCDOObject(company).cdoID();
     InternalCDORevision firstRevision = company.cdoRevision();
     addRevision(firstRevision);
@@ -200,7 +202,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testGiven3ObjectsOf2TypesGetRevisionsReturns2Versions() throws Exception
   {
-    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
+    CompanyImpl company = (CompanyImpl)createCompanyInResource(COMPANY);
     addRevision(company.cdoRevision());
 
     company.setName("Andre");
@@ -219,7 +221,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testReturnsRemovedVersionWhenRemoving() throws Exception
   {
-    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
+    CompanyImpl company = (CompanyImpl)createCompanyInResource(COMPANY);
     InternalCDORevision firstVersion = company.cdoRevision();
     addRevision(firstVersion);
 
@@ -236,7 +238,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testRemovedRevisionIsRemovedFromCache() throws Exception
   {
-    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
+    CompanyImpl company = (CompanyImpl)createCompanyInResource(COMPANY);
     InternalCDORevision firstVersion = company.cdoRevision();
     addRevision(firstVersion);
 
@@ -252,7 +254,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testRemoveSecondRevisionResultsInNoActiveRevision() throws Exception
   {
-    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
+    CompanyImpl company = (CompanyImpl)createCompanyInResource(COMPANY);
     InternalCDORevision firstVersion = company.cdoRevision();
     addRevision(firstVersion);
 
@@ -269,7 +271,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testRemovedRevisionIsNotGettableByTimeStamp() throws Exception
   {
-    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
+    CompanyImpl company = (CompanyImpl)createCompanyInResource(COMPANY);
     InternalCDORevision firstVersion = company.cdoRevision();
     addRevision(firstVersion);
 
@@ -285,7 +287,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testClearedCacheDoesNotContainAnyRevisions() throws Exception
   {
-    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
+    CompanyImpl company = (CompanyImpl)createCompanyInResource(COMPANY);
     InternalCDORevision firstVersion = company.cdoRevision();
     addRevision(firstVersion);
 
@@ -312,9 +314,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     {
       public void run()
       {
-        // transactions are not thread safe, open a new one, this is probably a bug
-        // CDOObject company = createCompanyInResource("Puzzle", (CDOTransaction)resource.cdoView());
-        CDOObject company = createCompanyInResource("Puzzle", session.openTransaction());
+        CDOObject company = createCompanyInResource(COMPANY, session.openTransaction());
         CDORevision revision = company.cdoRevision();
         addRevision(revision);
         CDORevision fetchedRevision = revisionCache.getRevision(revision.getID(), BRANCH_POINT);
@@ -326,7 +326,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
         {
           public void run()
           {
-            CDOObject company = createCompanyInResource("Puzzle", session.openTransaction());
+            CDOObject company = createCompanyInResource(COMPANY, session.openTransaction());
             CDORevision revision = company.cdoRevision();
             addRevision(revision);
             CDORevision fetchedRevision = revisionCache.getRevisionByVersion(revision.getID(),
@@ -340,7 +340,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
         {
           public void run()
           {
-            CDOObject company = createCompanyInResource("Puzzle", session.openTransaction());
+            CDOObject company = createCompanyInResource(COMPANY, session.openTransaction());
             CDORevision revision = company.cdoRevision();
             addRevision(revision);
             revisionCache.removeRevision(revision.getID(), revision);
@@ -359,7 +359,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
         {
           public void run()
           {
-            CDOObject company = createCompanyInResource("Puzzle", session.openTransaction());
+            CDOObject company = createCompanyInResource(COMPANY, session.openTransaction());
             CDORevision revision = company.cdoRevision();
             addRevision(revision);
             CDORevision fetchedRevision = revisionCache.getRevision(revision.getID(), BRANCH_POINT);

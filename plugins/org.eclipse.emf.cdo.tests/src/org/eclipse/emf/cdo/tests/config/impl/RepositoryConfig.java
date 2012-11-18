@@ -50,6 +50,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
+import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
@@ -704,14 +705,21 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
         boolean failover)
     {
       IStore masterStore = createStore(masterName);
+
+      InternalRepository repository;
       if (failover)
       {
         InternalRepositorySynchronizer synchronizer = createSynchronizer("backup", name);
-        return (InternalRepository)CDOServerUtil.createFailoverParticipant(masterName, masterStore, props,
+        repository = (InternalRepository)CDOServerUtil.createFailoverParticipant(masterName, masterStore, props,
             synchronizer, true);
       }
+      else
+      {
+        repository = (InternalRepository)CDOServerUtil.createRepository(masterName, masterStore, props);
+      }
 
-      return (InternalRepository)CDOServerUtil.createRepository(masterName, masterStore, props);
+      setInitialPackages(repository);
+      return repository;
     }
 
     @Override
@@ -742,35 +750,46 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       InternalRepositorySynchronizer synchronizer = createSynchronizer("master", masterName);
       IStore store = createStore(name);
 
+      InternalSynchronizableRepository repository;
       if (failover)
       {
-        return (InternalRepository)CDOServerUtil.createFailoverParticipant(name, store, props, synchronizer, false);
+        repository = (InternalSynchronizableRepository)CDOServerUtil.createFailoverParticipant(name, store, props,
+            synchronizer, false);
+      }
+      else
+      {
+        repository = new OfflineClone()
+        {
+          @Override
+          public void handleCommitInfo(CDOCommitInfo commitInfo)
+          {
+            waitIfLockAvailable();
+            super.handleCommitInfo(commitInfo);
+          }
+
+          private void waitIfLockAvailable()
+          {
+            long millis = getTestDelayedCommitHandling();
+            if (millis != 0L)
+            {
+              ConcurrencyUtil.sleep(millis);
+            }
+          }
+        };
+
+        repository.setName(name);
+        repository.setStore((InternalStore)store);
+        repository.setProperties(props);
+        repository.setSynchronizer(synchronizer);
       }
 
-      OfflineClone repository = new OfflineClone()
-      {
-        @Override
-        public void handleCommitInfo(CDOCommitInfo commitInfo)
-        {
-          waitIfLockAvailable();
-          super.handleCommitInfo(commitInfo);
-        }
-
-        private void waitIfLockAvailable()
-        {
-          long millis = getTestDelayedCommitHandling();
-          if (millis != 0L)
-          {
-            ConcurrencyUtil.sleep(millis);
-          }
-        }
-      };
-
-      repository.setName(name);
-      repository.setStore((InternalStore)store);
-      repository.setProperties(props);
-      repository.setSynchronizer(synchronizer);
+      setInitialPackages(repository);
       return repository;
+    }
+
+    protected void setInitialPackages(IRepository repository)
+    {
+      repository.setInitialPackages(getCurrentTest().getModel1Package(), getCurrentTest().getModel3Package());
     }
 
     protected InternalRepositorySynchronizer createSynchronizer(final String acceptorName, final String repositoryName)

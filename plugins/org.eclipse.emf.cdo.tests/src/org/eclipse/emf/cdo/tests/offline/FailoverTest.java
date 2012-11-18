@@ -114,7 +114,7 @@ public class FailoverTest extends AbstractSyncingTest
   {
     CDOSession masterSession = openSession("master");
     CDOTransaction transaction = masterSession.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     TestListener listener = new TestListener();
     CDOSession backupSession = openSession();
@@ -126,7 +126,7 @@ public class FailoverTest extends AbstractSyncingTest
     resource.getContents().add(company);
     long timeStamp = transaction.commit().getTimeStamp();
     assertEquals(true, backupSession.waitForUpdate(timeStamp, DEFAULT_TIMEOUT));
-    checkEvent(listener, 1, 3, 1, 0);
+    checkEvent(listener, 0, 4, 1, 0);
 
     for (int i = 0; i < 10; i++)
     {
@@ -158,8 +158,7 @@ public class FailoverTest extends AbstractSyncingTest
 
   public void testClientCommitsToBackupForbidden() throws Exception
   {
-    /* InternalRepository backup = */
-    getRepository();
+    InternalRepository backup = getRepository();
 
     InternalRepository master = getRepository("master");
 
@@ -170,7 +169,7 @@ public class FailoverTest extends AbstractSyncingTest
     Company company = getModel1Factory().createCompany();
     company.setName("Test");
 
-    CDOSession backupSession = openSession();
+    CDOSession backupSession = openSession(backup.getName());
     waitForOnline(backupSession.getRepositoryInfo());
 
     CDOTransaction transaction = backupSession.openTransaction();

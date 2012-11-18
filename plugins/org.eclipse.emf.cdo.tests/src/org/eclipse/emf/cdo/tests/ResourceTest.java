@@ -633,6 +633,7 @@ public class ResourceTest extends AbstractCDOTest
     changePath(3, 0);
   }
 
+  @CleanRepositoriesBefore
   public void testChangeResourceURI() throws Exception
   {
     {
@@ -913,7 +914,7 @@ public class ResourceTest extends AbstractCDOTest
     transaction.close();
 
     CDOView view = session.openView();
-    assertEquals(false, view.hasResource("/resource1"));
+    assertEquals(false, view.hasResource(getResourcePath("/resource1")));
 
     try
     {
@@ -972,7 +973,7 @@ public class ResourceTest extends AbstractCDOTest
 
     clearCache(getRepository().getRevisionManager());
     CDOView view = session.openView();
-    assertEquals(false, view.hasResource("/resource1"));
+    assertEquals(false, view.hasResource(getResourcePath("/resource1")));
 
     try
     {
@@ -1035,7 +1036,7 @@ public class ResourceTest extends AbstractCDOTest
     commitAndSync(transaction, view);
     transaction.close();
 
-    assertEquals(false, view.hasResource("/resource1"));
+    assertEquals(false, view.hasResource(getResourcePath("/resource1")));
 
     try
     {
@@ -1099,7 +1100,7 @@ public class ResourceTest extends AbstractCDOTest
     transaction.close();
 
     clearCache(getRepository().getRevisionManager());
-    assertEquals(false, view.hasResource("/resource1"));
+    assertEquals(false, view.hasResource(getResourcePath("/resource1")));
 
     try
     {
@@ -1182,7 +1183,7 @@ public class ResourceTest extends AbstractCDOTest
     transaction.close();
 
     CDOView view = session.openView();
-    assertEquals(false, view.hasResource("/folder/resource1"));
+    assertEquals(false, view.hasResource(getResourcePath("/folder/resource1")));
 
     try
     {
@@ -1261,7 +1262,7 @@ public class ResourceTest extends AbstractCDOTest
 
     clearCache(getRepository().getRevisionManager());
     CDOView view = session.openView();
-    assertEquals(false, view.hasResource("/folder/resource1"));
+    assertEquals(false, view.hasResource(getResourcePath("/folder/resource1")));
 
     try
     {
@@ -1344,7 +1345,7 @@ public class ResourceTest extends AbstractCDOTest
     commitAndSync(transaction, view);
     transaction.close();
 
-    assertEquals(false, view.hasResource("/folder/resource1"));
+    assertEquals(false, view.hasResource(getResourcePath("/folder/resource1")));
 
     try
     {
@@ -1429,7 +1430,7 @@ public class ResourceTest extends AbstractCDOTest
     transaction.close();
 
     clearCache(getRepository().getRevisionManager());
-    assertEquals(false, view.hasResource("/folder/resource1"));
+    assertEquals(false, view.hasResource(getResourcePath("/folder/resource1")));
 
     try
     {

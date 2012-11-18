@@ -59,8 +59,8 @@ public class XATransactionTest extends AbstractCDOTest
     CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
     CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
 
-    CDOResource resA = transactionA1.createResource("/resA");
-    CDOResource resB = transactionB1.createResource("/resB");
+    CDOResource resA = transactionA1.createResource(getResourcePath("/resA"));
+    CDOResource resB = transactionB1.createResource(getResourcePath("/resB"));
 
     Supplier supplier = getModel1Factory().createSupplier();
     PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
@@ -101,8 +101,8 @@ public class XATransactionTest extends AbstractCDOTest
     CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
     CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
 
-    CDOResource resA = transactionA1.createResource("/resA");
-    CDOResource resB = transactionB1.createResource("/resB");
+    CDOResource resA = transactionA1.createResource(getResourcePath("/resA"));
+    CDOResource resB = transactionB1.createResource(getResourcePath("/resB"));
 
     Supplier supplier = getModel1Factory().createSupplier();
     PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
@@ -306,8 +306,8 @@ public class XATransactionTest extends AbstractCDOTest
     CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
     CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
 
-    CDOResource resA = transactionA1.createResource("/resA");
-    CDOResource resB = transactionB1.createResource("/resB");
+    CDOResource resA = transactionA1.createResource(getResourcePath("/resA"));
+    CDOResource resB = transactionB1.createResource(getResourcePath("/resB"));
 
     Supplier supplier = getModel1Factory().createSupplier();
     PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
@@ -325,7 +325,7 @@ public class XATransactionTest extends AbstractCDOTest
     sessionC.getPackageRegistry().putEPackage(getModel1Package());
 
     PurchaseOrder purchaseOrder3 = getModel1Factory().createPurchaseOrder();
-    CDOResource resC = transactionC1.createResource("/resC");
+    CDOResource resC = transactionC1.createResource(getResourcePath("/resC"));
     resC.getContents().add(purchaseOrder3);
     supplier.getPurchaseOrders().add(purchaseOrder3);
     purchaseOrder.setDate(new Date());

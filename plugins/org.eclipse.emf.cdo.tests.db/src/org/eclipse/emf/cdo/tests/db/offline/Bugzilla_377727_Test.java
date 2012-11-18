@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.AbstractSyncingTest;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.OfflineConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -26,21 +26,11 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
-import java.util.Map;
-
 /**
  * @author Stefan Winkler
  */
-public class Bugzilla_377727_Test extends AbstractCDOTest
+public class Bugzilla_377727_Test extends AbstractSyncingTest
 {
-  @Override
-  public synchronized Map<String, Object> getTestProperties()
-  {
-    Map<String, Object> testProperties = super.getTestProperties();
-    testProperties.put(OfflineConfig.PROP_TEST_RAW_REPLICATION, Boolean.TRUE);
-    return testProperties;
-  }
-
   @Requires(RepositoryConfig.CAPABILITY_OFFLINE)
   @CleanRepositoriesBefore
   public void testAsyncPackages() throws Exception
@@ -52,7 +42,6 @@ public class Bugzilla_377727_Test extends AbstractCDOTest
 
     // disconnect clone from master
     ((OfflineConfig)getRepositoryConfig()).stopMasterTransport();
-    ConcurrencyUtil.sleep(1000L);
     while (getRepository().getState() == CDOCommonRepository.State.ONLINE)
     {
       ConcurrencyUtil.sleep(250L);
@@ -81,7 +70,7 @@ public class Bugzilla_377727_Test extends AbstractCDOTest
     }
 
     // reconnect clone and let sync
-    IOUtil.OUT().println("=== reconnect clone ===");
+    IOUtil.OUT().println("=== Reconnect clone ===");
 
     ((OfflineConfig)getRepositoryConfig()).startMasterTransport();
     while (getRepository().getState() != CDOCommonRepository.State.ONLINE)

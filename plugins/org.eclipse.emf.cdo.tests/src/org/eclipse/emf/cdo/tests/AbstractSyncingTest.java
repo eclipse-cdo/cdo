@@ -106,35 +106,45 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
     return false;
   }
 
-  protected static void checkEvent(final TestListener listener, int newPackageUnits, int newObjects,
-      int changedObjects, int detachedObjects) throws InterruptedException
+  protected static void checkEvent(final TestListener listener, final int newPackageUnits, final int newObjects,
+      final int changedObjects, final int detachedObjects) throws InterruptedException
   {
-    new PollingTimeOuter()
+    try
     {
-      @Override
-      protected boolean successful()
+      final int[] counts = { 0, 0, 0, 0 };
+
+      new PollingTimeOuter()
       {
-        IEvent[] events = listener.getEvents();
-        return events.length >= 1;
-      }
-    }.assertNoTimeOut();
+        @Override
+        protected boolean successful()
+        {
+          IEvent[] events = listener.getEvents();
+          for (IEvent event : events)
+          {
+            if (event instanceof CDOSessionInvalidationEvent)
+            {
+              CDOSessionInvalidationEvent e = (CDOSessionInvalidationEvent)event;
+              counts[0] += e.getNewPackageUnits().size();
+              counts[1] += e.getNewObjects().size();
+              counts[2] += e.getChangedObjects().size();
+              counts[3] += e.getDetachedObjects().size();
+            }
+          }
 
-    IEvent[] events = listener.getEvents();
-    IEvent event = events[0];
-    if (event instanceof CDOSessionInvalidationEvent)
-    {
-      CDOSessionInvalidationEvent e = (CDOSessionInvalidationEvent)event;
-      assertEquals(newPackageUnits, e.getNewPackageUnits().size());
-      assertEquals(newObjects, e.getNewObjects().size());
-      assertEquals(changedObjects, e.getChangedObjects().size());
-      assertEquals(detachedObjects, e.getDetachedObjects().size());
-    }
-    else
-    {
-      fail("Invalid event: " + event);
-    }
+          return counts[0] >= newPackageUnits && counts[1] >= newObjects && counts[2] >= changedObjects
+              && counts[3] >= detachedObjects;
+        }
+      }.assertNoTimeOut();
 
-    listener.clearEvents();
+      assertEquals(newPackageUnits, counts[0]);
+      assertEquals(newObjects, counts[1]);
+      assertEquals(changedObjects, counts[2]);
+      assertEquals(detachedObjects, counts[3]);
+    }
+    finally
+    {
+      listener.clearEvents();
+    }
   }
 
   protected static void checkRevision(EObject object, InternalRepository repository, String location)

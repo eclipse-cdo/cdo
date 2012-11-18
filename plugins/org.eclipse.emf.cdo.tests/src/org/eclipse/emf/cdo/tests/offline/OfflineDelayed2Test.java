@@ -38,7 +38,7 @@ public class OfflineDelayed2Test extends AbstractSyncingTest
 
     CDOSession masterSession = openSession(master.getName());
     CDOTransaction masterTransaction = masterSession.openTransaction();
-    CDOResource masterResource = masterTransaction.createResource("/my/resource");
+    CDOResource masterResource = masterTransaction.createResource(getResourcePath("/my/resource"));
 
     Company masterCompany = getModel1Factory().createCompany();
     masterCompany.setName("Test");

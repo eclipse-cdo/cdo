@@ -76,7 +76,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
     sessionA.getPackageRegistry().putEPackage(getModel4Package());
     CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
 
-    CDOResource resA = transactionA1.createResource("/resA");
+    CDOResource resA = transactionA1.createResource(getResourcePath("/resA"));
     Resource resD = resourceSet.createResource(URI.createURI("test://1"));
 
     EPackage schoolPackage = createDynamicEPackage();
@@ -377,8 +377,8 @@ public class ExternalReferenceTest extends AbstractCDOTest
     CDOTransaction transaction1 = session.openTransaction();
     CDOTransaction transaction2 = session.openTransaction();
 
-    CDOResource resource1 = transaction1.createResource("/test1");
-    CDOResource resource2 = transaction2.createResource("/test2");
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/test1"));
+    CDOResource resource2 = transaction2.createResource(getResourcePath("/test2"));
 
     Supplier supplier = getModel1Factory().createSupplier();
     PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();

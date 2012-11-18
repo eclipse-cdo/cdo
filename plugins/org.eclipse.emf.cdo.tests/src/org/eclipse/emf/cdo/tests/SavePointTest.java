@@ -99,7 +99,7 @@ public class SavePointTest extends AbstractCDOTest
 
     CDOTransaction transaction1 = session.openTransaction();
     // Client1
-    CDOResource resource1 = transaction1.createResource("/test1");
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/test1"));
     Company company1 = getModel1Factory().createCompany();
     resource1.getContents().add(company1);
     Category category1 = getModel1Factory().createCategory();
@@ -128,7 +128,7 @@ public class SavePointTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOUserSavepoint savePoint0 = transaction.setSavepoint();
 
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     Company company = getModel1Factory().createCompany();
     resource.getContents().add(company);
 
@@ -282,8 +282,8 @@ public class SavePointTest extends AbstractCDOTest
   {
     CDOSession client1 = openSession();
     CDOTransaction transaction1 = client1.openTransaction();
-    CDOResource object1X = transaction1.createResource("/object1");
-    CDOResource object2X = transaction1.createResource("/object2");
+    CDOResource object1X = transaction1.createResource(getResourcePath("/object1"));
+    CDOResource object2X = transaction1.createResource(getResourcePath("/object2"));
     transaction1.commit();
 
     // client1 sets a save point

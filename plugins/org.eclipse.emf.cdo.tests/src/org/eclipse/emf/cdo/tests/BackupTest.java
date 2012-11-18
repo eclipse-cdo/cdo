@@ -242,7 +242,7 @@ public class BackupTest extends AbstractCDOTest
     }
 
     // Add content from a new package
-    CDOResource resource = transaction2.createResource("/r1");
+    CDOResource resource = transaction2.createResource(getResourcePath("/r1"));
     resource.getContents().add(getModel3Factory().createPolygon());
     transaction2.commit();
 

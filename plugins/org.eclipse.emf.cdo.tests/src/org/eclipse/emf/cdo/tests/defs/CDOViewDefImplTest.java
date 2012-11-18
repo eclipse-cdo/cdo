@@ -85,8 +85,8 @@ public class CDOViewDefImplTest extends AbstractCDOTest
 
     CDOView cdoView = (CDOView)cdoViewDef.getInstance();
 
-    assertEquals(true, cdoView.hasResource(RESOURCE_ID));
-    assertEquals(false, cdoView.hasResource("/test2"));
+    assertEquals(true, cdoView.hasResource(getResourcePath(RESOURCE_ID)));
+    assertEquals(false, cdoView.hasResource(getResourcePath("/test2")));
   }
 
   public void testViewMayBeUnset()

@@ -45,7 +45,7 @@ public class OfflineDelayedTest extends AbstractSyncingTest
 
       CDOSession masterSession = openSession("master");
       CDOTransaction masterTransaction = masterSession.openTransaction();
-      CDOResource masterResource = masterTransaction.createResource("/master/resource");
+      CDOResource masterResource = masterTransaction.createResource(getResourcePath("/master/resource"));
       for (int i = 0; i < 10; i++)
       {
         masterResource.getContents().add(getModel1Factory().createCompany());
@@ -83,7 +83,7 @@ public class OfflineDelayedTest extends AbstractSyncingTest
     {
       CDOSession masterSession = openSession("master");
       CDOTransaction masterTransaction = masterSession.openTransaction();
-      CDOResource masterResource = masterTransaction.createResource("/master/resource");
+      CDOResource masterResource = masterTransaction.createResource(getResourcePath("/master/resource"));
 
       masterResource.getContents().add(getModel1Factory().createCompany());
       masterTransaction.commit();
@@ -129,7 +129,7 @@ public class OfflineDelayedTest extends AbstractSyncingTest
 
       CDOSession masterSession = openSession("master");
       CDOTransaction masterTransaction = masterSession.openTransaction();
-      CDOResource masterResource = masterTransaction.createResource("/master/resource");
+      CDOResource masterResource = masterTransaction.createResource(getResourcePath("/master/resource"));
       for (int i = 0; i < 20; i++)
       {
         masterResource.getContents().add(getModel1Factory().createCompany());

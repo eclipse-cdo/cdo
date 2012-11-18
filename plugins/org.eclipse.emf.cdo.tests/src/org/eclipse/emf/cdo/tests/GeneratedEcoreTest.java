@@ -38,7 +38,7 @@ public class GeneratedEcoreTest extends AbstractCDOTest
     CDOSession session1 = openSession();
     session1.getPackageRegistry().putEPackage(ecore);
     CDOTransaction transaction1 = session1.openTransaction();
-    CDOResource res1 = transaction1.createResource("/res");
+    CDOResource res1 = transaction1.createResource(getResourcePath("/res"));
 
     EPackage root1 = TestEMFUtil.loadEcore("model1.ecore", session1.getPackageRegistry());
     res1.getContents().add(root1);

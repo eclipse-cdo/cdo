@@ -183,7 +183,7 @@ Provides access to the information that specifies a query from a <A HREF="../../
 </TR>
 </TABLE>
 </CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#getResult(java.lang.Class)">getResult</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</A>&lt;T&gt;&nbsp;classObject)</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#getResult(java.lang.Class)">getResult</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</A>&lt;T&gt;&nbsp;type)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sends this query to the server and returns a typed <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><CODE>list</CODE></A> containing the query result.</TD>
@@ -217,6 +217,36 @@ Provides access to the information that specifies a query from a <A HREF="../../
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sends this query to the server and returns a typed <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection"><CODE>iterator</CODE></A> over the query result.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T&gt; T</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#getResultValue()">getResultValue</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T&gt; T</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#getResultValue(java.lang.Class)">getResultValue</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</A>&lt;T&gt;&nbsp;type)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -332,7 +362,7 @@ getResultAsync</H3>
 <A NAME="getResult(java.lang.Class)"><!-- --></A><H3>
 getResult</H3>
 <PRE>
-&lt;T&gt; <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt; <B>getResult</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</A>&lt;T&gt;&nbsp;classObject)</PRE>
+&lt;T&gt; <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt; <B>getResult</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</A>&lt;T&gt;&nbsp;type)</PRE>
 <DL>
 <DD>Sends this query to the server and returns a typed <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><CODE>list</CODE></A> containing the query result.
  <p>
@@ -362,6 +392,38 @@ getResult</H3>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getResultValue(java.lang.Class)"><!-- --></A><H3>
+getResultValue</H3>
+<PRE>
+&lt;T&gt; T <B>getResultValue</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</A>&lt;T&gt;&nbsp;type)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getResultValue()"><!-- --></A><H3>
+getResultValue</H3>
+<PRE>
+&lt;T&gt; T <B>getResultValue</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>

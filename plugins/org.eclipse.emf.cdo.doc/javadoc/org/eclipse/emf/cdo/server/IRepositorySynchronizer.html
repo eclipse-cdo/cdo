@@ -92,7 +92,7 @@ org.eclipse.emf.cdo.server</FONT>
 <BR>
 Interface IRepositorySynchronizer</H2>
 <DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></DD>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&gt;, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></DD>
 </DL>
 <DL>
 <DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/spi/server/InternalRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepositorySynchronizer</A></DD>
@@ -100,14 +100,14 @@ Interface IRepositorySynchronizer</H2>
 <HR>
 <DL>
   <DT>public interface <B>IRepositorySynchronizer</B>
-  <DD>extends <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>
+  <DD>extends <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&gt;
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="../spi/server/InternalRepositorySynchronizer.html" title="&#171;interface&#187; InternalRepositorySynchronizer (org.eclipse.emf.cdo.spi.server)" alt="" coords="5,201,208,255"/>
-<area shape="rect" id="node2" href="ISynchronizableRepository.html" title="&#171;interface&#187; ISynchronizableRepository" alt="" coords="33,13,209,53"/>
+<area shape="rect" id="node2" href="ISynchronizableRepository.html" title="&#171;interface&#187; ISynchronizableRepository" alt="" coords="28,13,204,53"/>
 <area shape="rect" id="node3" href="IRepositorySynchronizer.html" title="&#171;interface&#187; IRepositorySynchronizer" alt="" coords="144,104,307,144"/>
-<area shape="rect" id="node4" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="239,6,419,61"/>
+<area shape="rect" id="node4" title="&#171;interface&#187; IContainer (org.eclipse.net4j.util.container)" alt="" coords="233,6,436,61"/>
 <area shape="rect" id="node5" href="../session/CDOSessionConfigurationFactory.html" title="&#171;interface&#187; CDOSessionConfigurationFactory (org.eclipse.emf.cdo.session)" alt="" coords="237,201,453,255"/>
 </map>
 
@@ -131,6 +131,25 @@ Synchronizes a <A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizabl
 <HR>
 
 <P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</A>&lt;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</A>&gt;</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
 
 <!-- ========== METHOD SUMMARY =========== -->
 
@@ -227,6 +246,15 @@ Synchronizes a <A HREF="../../../../../org/eclipse/emf/cdo/server/ISynchronizabl
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements()" title="class or interface in org.eclipse.net4j.util.container">getElements</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#isEmpty()" title="class or interface in org.eclipse.net4j.util.container">isEmpty</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier"><!-- --></A>

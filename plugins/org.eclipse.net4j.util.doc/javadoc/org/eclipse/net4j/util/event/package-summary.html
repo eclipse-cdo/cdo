@@ -88,18 +88,19 @@ A framework for sending of and listening to events.
 <P>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="Event.html" title="Event" alt="" coords="191,163,246,189"/>
-<area shape="rect" id="node2" title="EventObject (java.util)" alt="" coords="6,165,98,205"/>
-<area shape="rect" id="node3" href="Notifier.html" title="Notifier" alt="" coords="374,98,437,123"/>
-<area shape="rect" id="node4" title="Object (java.lang)" alt="" coords="685,115,765,155"/>
-<area shape="rect" id="node5" href="ThrowableEvent.html" title="ThrowableEvent" alt="" coords="349,197,461,222"/>
-<area shape="rect" id="node6" href="ValueEvent.html" title="ValueEvent" alt="" coords="362,147,449,173"/>
-<area shape="rect" id="node7" href="ValueNotifier.html" title="ValueNotifier" alt="" coords="531,122,626,147"/>
-<area shape="rect" id="node8" title="&#171;interface&#187; EventListener (java.util)" alt="" coords="169,5,269,59"/>
-<area shape="rect" id="node9" href="IEvent.html" title="&#171;interface&#187; IEvent" alt="" coords="9,95,95,135"/>
-<area shape="rect" id="node10" href="IListener.html" title="&#171;interface&#187; IListener" alt="" coords="363,23,448,63"/>
-<area shape="rect" id="node11" href="INotifier.html" title="&#171;interface&#187; INotifier" alt="" coords="176,88,261,128"/>
-<area shape="rect" id="node12" href="EventUtil.html" title="&#171;static&#187; EventUtil" alt="" coords="15,31,89,71"/>
+<area shape="rect" id="node1" href="Event.html" title="Event" alt="" coords="193,198,247,223"/>
+<area shape="rect" id="node2" title="EventObject (java.util)" alt="" coords="6,208,98,248"/>
+<area shape="rect" id="node3" href="FinishedEvent.html" title="FinishedEvent" alt="" coords="169,149,271,174"/>
+<area shape="rect" id="node4" href="Notifier.html" title="Notifier" alt="" coords="377,99,439,125"/>
+<area shape="rect" id="node5" title="Object (java.lang)" alt="" coords="688,116,768,156"/>
+<area shape="rect" id="node6" href="ThrowableEvent.html" title="ThrowableEvent" alt="" coords="352,198,464,223"/>
+<area shape="rect" id="node7" href="ValueEvent.html" title="ValueEvent" alt="" coords="365,149,451,174"/>
+<area shape="rect" id="node8" href="ValueNotifier.html" title="ValueNotifier" alt="" coords="534,123,629,149"/>
+<area shape="rect" id="node9" title="&#171;interface&#187; EventListener (java.util)" alt="" coords="170,5,270,59"/>
+<area shape="rect" id="node10" href="IEvent.html" title="&#171;interface&#187; IEvent" alt="" coords="9,141,95,181"/>
+<area shape="rect" id="node11" href="IListener.html" title="&#171;interface&#187; IListener" alt="" coords="365,24,451,64"/>
+<area shape="rect" id="node12" href="INotifier.html" title="&#171;interface&#187; INotifier" alt="" coords="177,84,263,124"/>
+<area shape="rect" id="node13" href="EventUtil.html" title="&#171;static&#187; EventUtil" alt="" coords="15,77,89,117"/>
 </map>
 
 <CENTER><IMG SRC="package-summary.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -150,12 +151,25 @@ A framework for sending of and listening to events.
 <TD><B>Deprecated.</B></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/event/FinishedEvent.html" title="class in org.eclipse.net4j.util.event">FinishedEvent</A></B></TD>
+<TD>An <A HREF="../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event"><CODE>IEvent</CODE></A> that is fired after a method has called a handler multiple times.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</A></B></TD>
 <TD>A default implementation of a <A HREF="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event"><CODE>notifier</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/event/ThrowableEvent.html" title="class in org.eclipse.net4j.util.event">ThrowableEvent</A></B></TD>
 <TD>An <A HREF="../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event"><CODE>IEvent</CODE></A> typically fired from <A HREF="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event"><CODE>notifiers</CODE></A> that execute operations in the background.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/event/ThrowableEventAdapter.html" title="class in org.eclipse.net4j.util.event">ThrowableEventAdapter</A></B></TD>
+<TD>A <A HREF="../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event"><CODE>listener</CODE></A> that dispatches throwable <A HREF="../../../../../org/eclipse/net4j/util/event/ThrowableEvent.html" title="class in org.eclipse.net4j.util.event"><CODE>events</CODE></A> to methods that can be
+ overridden by extenders.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/event/ThrowableEventAdapter.ToPrintStream.html" title="class in org.eclipse.net4j.util.event">ThrowableEventAdapter.ToPrintStream</A></B></TD>
+<TD>Prints the stack traces of throwable <A HREF="../../../../../org/eclipse/net4j/util/event/ThrowableEvent.html" title="class in org.eclipse.net4j.util.event"><CODE>events</CODE></A> to a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io"><CODE>PrintStream</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/event/ValueEvent.html" title="class in org.eclipse.net4j.util.event">ValueEvent&lt;VALUE&gt;</A></B></TD>

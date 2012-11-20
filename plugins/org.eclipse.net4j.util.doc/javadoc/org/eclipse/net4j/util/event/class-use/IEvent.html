@@ -320,6 +320,14 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/IEvent.html" tit
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/event/FinishedEvent.html" title="class in org.eclipse.net4j.util.event">FinishedEvent</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An <A HREF="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event"><CODE>IEvent</CODE></A> that is fired after a method has called a handler multiple times.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/event/ThrowableEvent.html" title="class in org.eclipse.net4j.util.event">ThrowableEvent</A></B></CODE>
 
 <BR>
@@ -332,6 +340,22 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/IEvent.html" tit
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An <A HREF="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event"><CODE>IEvent</CODE></A> fired from <A HREF="../../../../../../org/eclipse/net4j/util/event/ValueNotifier.html" title="class in org.eclipse.net4j.util.event"><CODE>value notifiers</CODE></A> after value changes.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Fields in <A HREF="../../../../../../org/eclipse/net4j/util/event/package-summary.html">org.eclipse.net4j.util.event</A> declared as <A HREF="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</A></CODE></FONT></TD>
+<TD><CODE><B>FinishedEvent.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/event/FinishedEvent.html#INSTANCE">INSTANCE</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -362,6 +386,22 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/IEvent.html" tit
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>IListener.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/event/IListener.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)">notifyEvent</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</A>&nbsp;event)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>ThrowableEventAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/event/ThrowableEventAdapter.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)">notifyEvent</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</A>&nbsp;event)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>ThrowableEventAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/event/ThrowableEventAdapter.html#notifyOtherEvent(org.eclipse.net4j.util.event.IEvent)">notifyOtherEvent</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</A>&nbsp;event)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -647,6 +687,14 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/IEvent.html" tit
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
 <TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/package-summary.html">org.eclipse.net4j.util.ui.views</A> with parameters of type <A HREF="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>ContainerItemProvider.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#handleElementEvent(org.eclipse.net4j.util.event.IEvent)">handleElementEvent</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</A>&nbsp;event)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">

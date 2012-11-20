@@ -54,6 +54,9 @@
         <topic label="org.eclipse.emf.cdo.ui" href="javadoc/org/eclipse/emf/cdo/ui/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.ui.widgets" href="javadoc/org/eclipse/emf/cdo/ui/widgets/package-summary.html" icon="package" />
       </topic>
+      <topic label="CDO Model Repository Client UI Compare" href="javadoc/org/eclipse/emf/cdo/ui/compare/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.ui.compare" href="javadoc/org/eclipse/emf/cdo/ui/compare/package-summary.html" icon="package" />
+      </topic>
       <topic label="CDO Model Repository Client UI IDE" href="javadoc/org/eclipse/emf/cdo/ui/ide/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.ui.ide" href="javadoc/org/eclipse/emf/cdo/ui/ide/package-summary.html" icon="package" />
       </topic>

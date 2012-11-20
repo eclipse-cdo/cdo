@@ -98,12 +98,24 @@ Packages that use <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommo
 <TD>Common concepts for the protocol to administer CDO repositories remotely.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.common.branch"><B>org.eclipse.emf.cdo.common.branch</B></A></TD>
+<TD>Common concepts for dealing with branches.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.common.util"><B>org.eclipse.emf.cdo.common.util</B></A></TD>
+<TD>Common utility classes, some common interfaces and exceptions.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.server"><B>org.eclipse.emf.cdo.server</B></A></TD>
 <TD>Server concepts for dealing with repositories and stores.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.session"><B>org.eclipse.emf.cdo.session</B></A></TD>
 <TD>Client concepts for dealing with sessions to CDO repositories.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.common.branch"><B>org.eclipse.emf.cdo.spi.common.branch</B></A></TD>
+<TD>Common service provider interfaces and useful base implementations for dealing with branches.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.spi.server"><B>org.eclipse.emf.cdo.spi.server</B></A></TD>
@@ -162,6 +174,58 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepositor
 </TABLE>
 &nbsp;
 <P>
+<A NAME="org.eclipse.emf.cdo.common.branch"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</A> in <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/package-summary.html">org.eclipse.emf.cdo.common.branch</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/package-summary.html">org.eclipse.emf.cdo.common.branch</A> that return <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</A></CODE></FONT></TD>
+<TD><CODE><B>CDOBranchManager.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getRepository()">getRepository</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the repository this branch manager is associated with.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.common.util"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</A> in <A HREF="../../../../../../org/eclipse/emf/cdo/common/util/package-summary.html">org.eclipse.emf.cdo.common.util</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/emf/cdo/common/util/package-summary.html">org.eclipse.emf.cdo.common.util</A> with parameters of type <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>CDOCommonUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/CDOCommonUtil.html#waitWhileInitial(org.eclipse.emf.cdo.common.CDOCommonRepository, org.eclipse.net4j.util.event.INotifier, org.eclipse.core.runtime.IProgressMonitor)">waitWhileInitial</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</A>&nbsp;repository,
+                 <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>&nbsp;notifier,
+                 <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;monitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
 <A NAME="org.eclipse.emf.cdo.server"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -216,6 +280,31 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepositor
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Describes a model repository a <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> is connected to.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.spi.common.branch"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</A> in <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/branch/package-summary.html">org.eclipse.emf.cdo.spi.common.branch</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/branch/package-summary.html">org.eclipse.emf.cdo.spi.common.branch</A> with parameters of type <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>InternalCDOBranchManager.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.html#setRepository(org.eclipse.emf.cdo.common.CDOCommonRepository)">setRepository</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</A>&nbsp;repository)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;

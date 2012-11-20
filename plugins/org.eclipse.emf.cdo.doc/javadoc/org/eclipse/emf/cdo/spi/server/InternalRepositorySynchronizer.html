@@ -92,7 +92,7 @@ org.eclipse.emf.cdo.spi.server</FONT>
 <BR>
 Interface InternalRepositorySynchronizer</H2>
 <DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</A></DD>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&gt;, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</A></DD>
 </DL>
 <HR>
 <DL>
@@ -135,7 +135,17 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <B>Nested Class Summary</B></FONT></TH>
 </TR>
 </TABLE>
-&nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle"><!-- --></A>
+&nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</A>&lt;<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</A>&gt;</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
 <TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.util.lifecycle.<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A></B></TH>
@@ -196,13 +206,13 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html#getMaxRecommits()">getMaxRecommits</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html#getRecommitInterval()">getRecommitInterval</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html#getRemoteSessionConfigurationFactory()">getRemoteSessionConfigurationFactory</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html#getRetryInterval()">getRetryInterval</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html#isRawReplication()">isRawReplication</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html#setMaxRecommits(int)">setMaxRecommits</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html#setRawReplication(boolean)">setRawReplication</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html#setRecommitInterval(int)">setRecommitInterval</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html#setRetryInterval(int)">setRetryInterval</A></CODE></TD>
 </TR>
 </TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle"><!-- --></A>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.lifecycle.<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#activate()" title="class or interface in org.eclipse.net4j.util.lifecycle">activate</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#deactivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">deactivate</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#getLifecycleState()" title="class or interface in org.eclipse.net4j.util.lifecycle">getLifecycleState</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive()" title="class or interface in org.eclipse.net4j.util.lifecycle">isActive</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements()" title="class or interface in org.eclipse.net4j.util.container">getElements</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#isEmpty()" title="class or interface in org.eclipse.net4j.util.container">isEmpty</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier"><!-- --></A>
@@ -212,6 +222,15 @@ If the meaning of this type isn't clear, there really should be more of a descri
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.lifecycle.<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#activate()" title="class or interface in org.eclipse.net4j.util.lifecycle">activate</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#deactivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">deactivate</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#getLifecycleState()" title="class or interface in org.eclipse.net4j.util.lifecycle">getLifecycleState</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive()" title="class or interface in org.eclipse.net4j.util.lifecycle">isActive</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;

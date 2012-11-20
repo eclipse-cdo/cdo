@@ -201,6 +201,14 @@ A repository-side agent for a <A HREF="../../../../../../org/eclipse/emf/cdo/ser
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverAgent.html#createRepositorySynchronizer()">createRepositorySynchronizer</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverAgent.html#createSessionConfiguration()">createSessionConfiguration</A></B>()</CODE>
 
@@ -250,7 +258,7 @@ A repository-side agent for a <A HREF="../../../../../../org/eclipse/emf/cdo/ser
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected &nbsp;<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</A></CODE></FONT></TD>
+<CODE>&nbsp;<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverAgent.html#getContainer()">getContainer</A></B>()</CODE>
 
 <BR>
@@ -292,6 +300,14 @@ A repository-side agent for a <A HREF="../../../../../../org/eclipse/emf/cdo/ser
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverAgent.html#getRepository()">getRepository</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverAgent.html#getRepositoryActivationTimeout()">getRepositoryActivationTimeout</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -365,6 +381,14 @@ A repository-side agent for a <A HREF="../../../../../../org/eclipse/emf/cdo/ser
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverAgent.html#setRepository(org.eclipse.emf.cdo.server.ISynchronizableRepository)">setRepository</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</A>&nbsp;repository)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverAgent.html#setRepositoryActivationTimeout(long)">setRepositoryActivationTimeout</A></B>(long&nbsp;repositoryActivationTimeout)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -451,6 +475,22 @@ public <B>FailoverAgent</B>()</PRE>
 <B>Method Detail</B></FONT></TH>
 </TR>
 </TABLE>
+
+<A NAME="getContainer()"><!-- --></A><H3>
+getContainer</H3>
+<PRE>
+public <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</A> <B>getContainer</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
 
 <A NAME="getMonitorConnector()"><!-- --></A><H3>
 getMonitorConnector</H3>
@@ -648,6 +688,38 @@ public void <B>setRepository</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/
 </DL>
 <HR>
 
+<A NAME="getRepositoryActivationTimeout()"><!-- --></A><H3>
+getRepositoryActivationTimeout</H3>
+<PRE>
+public long <B>getRepositoryActivationTimeout</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setRepositoryActivationTimeout(long)"><!-- --></A><H3>
+setRepositoryActivationTimeout</H3>
+<PRE>
+public void <B>setRepositoryActivationTimeout</B>(long&nbsp;repositoryActivationTimeout)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="getProtocol()"><!-- --></A><H3>
 getProtocol</H3>
 <PRE>
@@ -756,25 +828,27 @@ protected void <B>setBackup</B>(<A HREF="http://download.oracle.com/javase/1.5.0
 </DL>
 <HR>
 
-<A NAME="createSessionConfiguration(java.lang.String, java.lang.String)"><!-- --></A><H3>
-createSessionConfiguration</H3>
+<A NAME="createRepositorySynchronizer()"><!-- --></A><H3>
+createRepositorySynchronizer</H3>
 <PRE>
-protected abstract <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</A> <B>createSessionConfiguration</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;connectorDescription,
-                                                                      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;repositoryName)</PRE>
+protected <A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</A> <B>createRepositorySynchronizer</B>()</PRE>
 <DL>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
 </DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="getContainer()"><!-- --></A><H3>
-getContainer</H3>
+<A NAME="createSessionConfiguration(java.lang.String, java.lang.String)"><!-- --></A><H3>
+createSessionConfiguration</H3>
 <PRE>
-protected <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</A> <B>getContainer</B>()</PRE>
+protected abstract <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</A> <B>createSessionConfiguration</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;connectorDescription,
+                                                                      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;repositoryName)</PRE>
 <DL>
 <DD><DL>
 </DL>

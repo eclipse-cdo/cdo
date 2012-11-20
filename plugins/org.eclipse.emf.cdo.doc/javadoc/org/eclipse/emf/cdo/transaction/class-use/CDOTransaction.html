@@ -245,6 +245,14 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactio
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A></CODE></FONT></TD>
+<TD><CODE><B>CDOTransactionCommentator.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionCommentator.html#getTransaction()">getTransaction</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A></CODE></FONT></TD>
 <TD><CODE><B>CDOTransactionContainer.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#getTransaction(int)">getTransaction</A></B>(int&nbsp;viewID)</CODE>
 
 <BR>
@@ -256,7 +264,15 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactio
 <TD><CODE><B>CDOTransactionContainer.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#getTransactions()">getTransactions</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an array of all open <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>views</CODE></A> and <A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transactions</CODE></A> of this session.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an array of all open <A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transactions</CODE></A> of this session.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>[]</CODE></FONT></TD>
+<TD><CODE><B>CDOTransactionContainer.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#getTransactions(org.eclipse.emf.cdo.common.branch.CDOBranch)">getTransactions</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an array of all <A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transactions</CODE></A> of this session that are open on the given branch.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -758,6 +774,12 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactio
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#CDOPushTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, java.io.File, boolean)">CDOPushTransaction</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;delegate,
                    <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
                    boolean&nbsp;reconstructSavepoints)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionCommentator.html#CDOTransactionCommentator(org.eclipse.emf.cdo.transaction.CDOTransaction)">CDOTransactionCommentator</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>

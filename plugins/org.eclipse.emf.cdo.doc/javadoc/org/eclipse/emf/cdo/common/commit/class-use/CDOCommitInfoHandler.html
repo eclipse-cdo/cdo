@@ -90,6 +90,10 @@ function windowTitle()
 Packages that use <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo"><B>org.eclipse.emf.cdo</B></A></TD>
+<TD>Client concepts like <A HREF="../../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>CDOObject</CODE></A> and <A HREF="../../../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo"><CODE>CDOState</CODE></A>.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.common.commit"><B>org.eclipse.emf.cdo.common.commit</B></A></TD>
 <TD>Common concepts for dealing with commits and change sets.&nbsp;</TD>
 </TR>
@@ -116,6 +120,31 @@ Packages that use <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commi
 </TABLE>
 &nbsp;
 <P>
+<A NAME="org.eclipse.emf.cdo"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/package-summary.html">org.eclipse.emf.cdo</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/package-summary.html">org.eclipse.emf.cdo</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/CDOObjectHistory.html" title="interface in org.eclipse.emf.cdo">CDOObjectHistory</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A cache for the <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit infos</CODE></A> of an <A HREF="../../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>object</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
 <A NAME="org.eclipse.emf.cdo.common.commit"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -128,7 +157,47 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommi
 
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/package-summary.html">org.eclipse.emf.cdo.common.commit</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A cache for the <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit infos</CODE></A> of a branch or of an entire repository.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/package-summary.html">org.eclipse.emf.cdo.common.commit</A> that return <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A>[]</CODE></FONT></TD>
+<TD><CODE><B>CDOCommitInfoProvider.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html#getCommitInfoHandlers()">getCommitInfoHandlers</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
 <TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/package-summary.html">org.eclipse.emf.cdo.common.commit</A> with parameters of type <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>CDOCommitInfoProvider.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html#addCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">addCommitInfoHandler</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A>&nbsp;handler)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -146,10 +215,26 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommi
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>CDOCommitInfoManager.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html#getCommitInfos(org.eclipse.emf.cdo.common.branch.CDOBranch, long, java.lang.String, java.lang.String, int, org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">getCommitInfos</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch,
                long&nbsp;startTime,
-               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID,
-               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;comment,
+               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;reserved1,
+               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;reserved2,
                int&nbsp;count,
                <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A>&nbsp;handler)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>CDOCommitInfoProvider.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html#removeCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">removeCommitInfoHandler</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A>&nbsp;handler)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>CDOCommitHistory.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#triggerLoad(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">triggerLoad</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A>&nbsp;handler)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -235,7 +320,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommi
 <TD><CODE><B>IRepository.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/IRepository.html#getCommitInfoHandlers()">getCommitInfoHandlers</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 call <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html#getCommitInfoHandlers()"><CODE>CDOCommitInfoProvider.getCommitInfoHandlers()</CODE></A></I></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -251,7 +336,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommi
 <TD><CODE><B>IRepository.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/IRepository.html#addCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">addCommitInfoHandler</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A>&nbsp;handler)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 call <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html#addCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)"><CODE>CDOCommitInfoProvider.addCommitInfoHandler(CDOCommitInfoHandler)</CODE></A></I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -259,7 +344,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommi
 <TD><CODE><B>IRepository.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/IRepository.html#removeCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">removeCommitInfoHandler</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A>&nbsp;handler)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 call <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html#removeCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)"><CODE>CDOCommitInfoProvider.removeCommitInfoHandler(CDOCommitInfoHandler)</CODE></A></I></TD>
 </TR>
 </TABLE>
 &nbsp;

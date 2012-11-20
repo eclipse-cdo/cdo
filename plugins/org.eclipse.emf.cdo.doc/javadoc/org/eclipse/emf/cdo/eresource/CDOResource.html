@@ -95,6 +95,9 @@ Interface CDOResource</H2>
 <DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>, <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</A>, <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">Resource</A></DD>
 </DL>
 <DL>
+<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOResource.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOResource</A></DD>
+</DL>
+<DL>
 <DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</A></DD>
 </DL>
 <HR>
@@ -104,12 +107,12 @@ Interface CDOResource</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" title="&#171;interface&#187; Resource (org.eclipse.emf.ecore.resource)" alt="" coords="39,6,247,61"/>
-<area shape="rect" id="node2" href="EresourcePackage.html" title="&#171;interface&#187; EresourcePackage" alt="" coords="5,200,136,240"/>
-<area shape="rect" id="node3" href="CDOResourceLeaf.html" title="&#171;interface&#187; CDOResourceLeaf" alt="" coords="277,13,405,53"/>
-<area shape="rect" id="node4" href="CDOResourceFactory.html" title="&#171;interface&#187; CDOResourceFactory" alt="" coords="167,200,316,240"/>
-<area shape="rect" id="node5" href="CDOResource.html" title="&#171;interface&#187; CDOResource" alt="" coords="189,104,293,144"/>
-<area shape="rect" id="node6" href="impl/CDOResourceImpl.html" title="CDOResourceImpl (org.eclipse.emf.cdo.eresource.impl)" alt="" coords="345,200,577,240"/>
+<area shape="rect" id="node1" title="&#171;interface&#187; Resource (org.eclipse.emf.ecore.resource)" alt="" coords="61,6,269,61"/>
+<area shape="rect" id="node2" href="../../spi/cdo/InternalCDOResource.html" title="&#171;interface&#187; InternalCDOResource (org.eclipse.emf.spi.cdo)" alt="" coords="5,201,168,255"/>
+<area shape="rect" id="node3" href="EresourcePackage.html" title="&#171;interface&#187; EresourcePackage" alt="" coords="198,208,329,248"/>
+<area shape="rect" id="node4" href="CDOResourceLeaf.html" title="&#171;interface&#187; CDOResourceLeaf" alt="" coords="299,13,428,53"/>
+<area shape="rect" id="node5" href="CDOResourceFactory.html" title="&#171;interface&#187; CDOResourceFactory" alt="" coords="360,208,509,248"/>
+<area shape="rect" id="node6" href="CDOResource.html" title="&#171;interface&#187; CDOResource" alt="" coords="211,104,316,144"/>
 </map>
 
 <CENTER><IMG SRC="CDOResource.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -360,7 +363,7 @@ Interface CDOResource</H2>
 <TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.<A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoConflict()">cdoConflict</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoDirectResource()">cdoDirectResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoID()">cdoID</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoInvalid()">cdoInvalid</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoLockState()">cdoLockState</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoPrefetch(int)">cdoPrefetch</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoReadLock()">cdoReadLock</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoReload()">cdoReload</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoResource()">cdoResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoRevision()">cdoRevision</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoState()">cdoState</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoView()">cdoView</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoWriteLock()">cdoWriteLock</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoWriteOption()">cdoWriteOption</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoConflict()">cdoConflict</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoDirectResource()">cdoDirectResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoHistory()">cdoHistory</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoID()">cdoID</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoInvalid()">cdoInvalid</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoLockState()">cdoLockState</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoPrefetch(int)">cdoPrefetch</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoReadLock()">cdoReadLock</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoReload()">cdoReload</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoResource()">cdoResource</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoRevision()">cdoRevision</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoState()">cdoState</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoView()">cdoView</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoWriteLock()">cdoWriteLock</A>, <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoWriteOption()">cdoWriteOption</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.ecore.EObject"><!-- --></A>

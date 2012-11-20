@@ -112,58 +112,11 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/compare/CloseableComparis
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;class</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.CDOComparison.html" title="class in org.eclipse.emf.cdo.compare">CDOCompareUtil.CDOComparison</A></B></CODE>
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOComparison.html" title="class in org.eclipse.emf.cdo.compare">CDOComparison</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.CDOComparison.html" title="class in org.eclipse.emf.cdo.compare"><CODE>comparison</CODE></A> that can be closed to dispose of used resources.</TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/emf/cdo/compare/package-summary.html">org.eclipse.emf.cdo.compare</A> that return <A HREF="../../../../../../org/eclipse/emf/cdo/compare/CloseableComparison.html" title="interface in org.eclipse.emf.cdo.compare">CloseableComparison</A></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/compare/CloseableComparison.html" title="interface in org.eclipse.emf.cdo.compare">CloseableComparison</A></CODE></FONT></TD>
-<TD><CODE><B>CDOCompareUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">compare</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
-        <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;right)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Same as <A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><CODE>compare(leftView, right, true)</CODE></A>.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/compare/CloseableComparison.html" title="interface in org.eclipse.emf.cdo.compare">CloseableComparison</A></CODE></FONT></TD>
-<TD><CODE><B>CDOCompareUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)">compare</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
-        <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;right,
-        boolean&nbsp;tryThreeWay)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Takes a <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A>/<A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A>
- and returns <CODE>matches</CODE> only for the <b>changed</b> elements of the entire content tree of its <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html#getRootResource()"><CODE>root resource</CODE></A>.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/compare/CloseableComparison.html" title="interface in org.eclipse.emf.cdo.compare">CloseableComparison</A></CODE></FONT></TD>
-<TD><CODE><B>CDOCompareUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">compare</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&nbsp;leftRoot,
-        <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;right)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Same as <A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><CODE>compare(leftRoot, right, true)</CODE></A>.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/compare/CloseableComparison.html" title="interface in org.eclipse.emf.cdo.compare">CloseableComparison</A></CODE></FONT></TD>
-<TD><CODE><B>CDOCompareUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)">compare</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&nbsp;leftRoot,
-        <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;right,
-        boolean&nbsp;tryThreeWay)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Takes an arbitrary <A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>object</CODE></A> (including <A HREF="../../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>resource nodes</CODE></A>) and returns <CODE>matches</CODE> for <b>all</b> elements of its <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore"><CODE>content tree</CODE></A>.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <CODE>comparison</CODE> that can be closed to dispose of used resources.</TD>
 </TR>
 </TABLE>
 &nbsp;

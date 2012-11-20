@@ -102,6 +102,22 @@ Packages that use <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/
 <TD>Common concepts for the protocol to administer CDO repositories remotely.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.common.branch"><B>org.eclipse.emf.cdo.common.branch</B></A></TD>
+<TD>Common concepts for dealing with branches.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.common.commit"><B>org.eclipse.emf.cdo.common.commit</B></A></TD>
+<TD>Common concepts for dealing with commits and change sets.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.common.lock"><B>org.eclipse.emf.cdo.common.lock</B></A></TD>
+<TD>Common concepts for dealing with durable locks and views.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.common.revision"><B>org.eclipse.emf.cdo.common.revision</B></A></TD>
+<TD>Common concepts for dealing with revisions and revision lists.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.server"><B>org.eclipse.emf.cdo.server</B></A></TD>
 <TD>Server concepts for dealing with repositories and stores.&nbsp;</TD>
 </TR>
@@ -114,8 +130,28 @@ Packages that use <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/
 <TD>Common service provider interfaces and useful base implementations for dealing with branches.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.common.commit"><B>org.eclipse.emf.cdo.spi.common.commit</B></A></TD>
+<TD>Common service provider interfaces and useful base implementations for dealing with commits and change sets.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.spi.common.revision"><B>org.eclipse.emf.cdo.spi.common.revision</B></A></TD>
+<TD>Common service provider interfaces and useful base implementations for dealing with revisions and deltas.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.spi.server"><B>org.eclipse.emf.cdo.spi.server</B></A></TD>
 <TD>Server service provider interfaces and useful base implementations.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.transaction"><B>org.eclipse.emf.cdo.transaction</B></A></TD>
+<TD>Client concepts for dealing with transactions, distributed transactions and their save points.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.view"><B>org.eclipse.emf.cdo.view</B></A></TD>
+<TD>Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.spi.cdo"><B>org.eclipse.emf.spi.cdo</B></A></TD>
+<TD>Client service provider interfaces and useful base implementations.&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -167,6 +203,22 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimePro
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Abstracts the information about CDO repositories that is common to both client and server side.</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/CDOCommonTransaction.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonTransaction</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Abstracts the information about CDO transactions that is common to both client and server side.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Abstracts the information about CDO views that is common to both client and server side.</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -195,6 +247,144 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimePro
 </TABLE>
 &nbsp;
 <P>
+<A NAME="org.eclipse.emf.cdo.common.branch"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/package-summary.html">org.eclipse.emf.cdo.common.branch</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/package-summary.html">org.eclipse.emf.cdo.common.branch</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><CODE>point in time</CODE></A> in a particular <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><CODE>branch</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchTag.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchTag</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A named <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch point</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.common.commit"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/package-summary.html">org.eclipse.emf.cdo.common.commit</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/package-summary.html">org.eclipse.emf.cdo.common.commit</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.TriggerLoadElement.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.TriggerLoadElement</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A virtual <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>history</CODE></A> element that can be returned from <A HREF="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements()" title="class or interface in org.eclipse.net4j.util.container"><CODE>IContainer.getElements()</CODE></A>
+ if <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#isAppendingTriggerLoadElement()"><CODE>CDOCommitHistory.isAppendingTriggerLoadElement()</CODE></A> is <code>true</code> to indicate that
+ the history is not <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#isFull()"><CODE>fully</CODE></A> loaded, yet.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Commit data</CODE></A> in the context of a <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit info manager</CODE></A> with
+ additional commit informations.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.common.lock"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/common/lock/package-summary.html">org.eclipse.emf.cdo.common.lock</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/common/lock/package-summary.html">org.eclipse.emf.cdo.common.lock</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents a change in the lock state of a set of objects.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Encapsulates the persistable information about a single durable CDO view like <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch point</CODE></A>
+ and acquired locks.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.common.revision"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/package-summary.html">org.eclipse.emf.cdo.common.revision</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/package-summary.html">org.eclipse.emf.cdo.common.revision</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisable</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An entity that has a defined lifetime (creation plus revision) and a version in a <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Encapsulates the immutable system information of a <b>single</b> CDO <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>object</CODE></A> between two
+ <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commits</CODE></A> in a <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch</CODE></A> and provides access to its modeled
+ <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>data</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
 <A NAME="org.eclipse.emf.cdo.server"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -212,10 +402,45 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimePro
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/IQueryContext.html" title="interface in org.eclipse.emf.cdo.server">IQueryContext</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents the execution state of a <A HREF="../../../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view"><CODE>query</CODE></A> in the server towards a <A HREF="../../../../../../../org/eclipse/emf/cdo/server/IQueryHandler.html" title="interface in org.eclipse.emf.cdo.server"><CODE>query
+ handler</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A CDO repository.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryResourcesContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryResourcesContext</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents the query execution state of a <A HREF="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryResources(org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)"><CODE>resources
+ query</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryResourcesContext.ExactMatch.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryResourcesContext.ExactMatch</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents the query execution state of a <A HREF="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryResources(org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)"><CODE>resources
+ query</CODE></A> that is supposed to deliver one exact resource, or <code>null</code>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryXRefsContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents the query execution state of a <A HREF="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryXRefs(org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext)"><CODE>XRefs query</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -224,6 +449,22 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimePro
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A repository with the ability to <A HREF="../../../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server"><CODE>synchronize</CODE></A> its content with another repository.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The server-side representation of a client <A HREF="../../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The server-side representation of a client <A HREF="../../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -249,6 +490,23 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimePro
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Describes a model repository a <A HREF="../../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> is connected to.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionInvalidationEvent</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../../org/eclipse/emf/cdo/session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session event</CODE></A> fired when passive updates (commit notifications) are being received from a
+ remote repository.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/session/CDOSessionLocksChangedEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionLocksChangedEvent</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../../org/eclipse/emf/cdo/session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session event</CODE></A> fired when lock-change notifications are received from a remote repository.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -289,7 +547,123 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimePro
 <TD><CODE><B>InternalCDOBranchManager.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.html#setTimeProvider(org.eclipse.emf.cdo.common.util.CDOTimeProvider)">setTimeProvider</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A>&nbsp;timeProvider)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 replaced by <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.html#setRepository(org.eclipse.emf.cdo.common.CDOCommonRepository)"><CODE>InternalCDOBranchManager.setRepository(CDOCommonRepository)</CODE></A></I></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.spi.common.commit"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/package-summary.html">org.eclipse.emf.cdo.spi.common.commit</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Classes in <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/package-summary.html">org.eclipse.emf.cdo.spi.common.commit</A> that implement <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.spi.common.revision"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Classes in <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</A> that implement <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">AbstractCDORevision</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/BaseCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">BaseCDORevision</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevision</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/DetachedCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DetachedCDORevision</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/PointerCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">PointerCDORevision</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision"><CODE>synthetic</CODE></A> revision that represents the initial period of an object in a
+ <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch</CODE></A> when the object is still associated with a revision from one of the baseline branches.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">StubCDORevision</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A synthetic revision that represents the initial period of an object in a <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch</CODE></A> when the object is
+ still associated with a revision from one of the baseline branches.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -328,6 +702,172 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimePro
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;interface</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSynchronizableRepository</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalTransaction.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTransaction</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Classes in <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</A> that implement <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/DelegatingQueryResourcesContext.html" title="class in org.eclipse.emf.cdo.spi.server">DelegatingQueryResourcesContext</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/server/DurableLockArea.html" title="class in org.eclipse.emf.cdo.spi.server">DurableLockArea</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockUtil.html#createLockArea(java.lang.String, java.lang.String, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean, java.util.Map)"><CODE>CDOLockUtil.createLockArea(String, String, CDOBranchPoint, boolean, Map)</CODE></A> instead</I></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.transaction"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A read-write view to the <em>current</em> (i.e. latest) state of the object graph in the repository.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Classes in <A HREF="../../../../../../../org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</A> that implement <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html" title="class in org.eclipse.emf.cdo.transaction">CDOPushTransaction</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A> that persists changes to the object graph locally on commit and can later load
+ these changes and push them to the <A HREF="../../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><CODE>repository</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.view"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A> in <A HREF="../../../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A read-only view to the state of the object graph in the repository of the underlying <A HREF="../../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> at a
+ specific <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><CODE>time</CODE></A> at a specific <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><CODE>branch</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/view/CDOViewLocksChangedEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOViewLocksChangedEvent</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view event</CODE></A> fired when <A HREF="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock"><CODE>lock changes</CODE></A> are being received from a remote
+ repository.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.spi.cdo"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A> in <A HREF="../../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A> in <A HREF="../../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Classes in <A HREF="../../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</A> that implement <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.CommitTransactionResult</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the meaning of this type isn't clear, there really should be more of a description here...</TD>

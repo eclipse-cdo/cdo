@@ -55,7 +55,7 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/event/ExecutorServiceNotifier.ThreadPool.html" title="class in org.eclipse.net4j.util.event"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/event/FinishedEvent.html" title="class in org.eclipse.net4j.util.event"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/net4j/util/event/IEvent.html" target="_top"><B>FRAMES</B></A>  &nbsp;
@@ -95,7 +95,7 @@ Interface IEvent</H2>
 <DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/cache/ICacheMonitorEvent.html" title="interface in org.eclipse.net4j.util.cache">ICacheMonitorEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/container/IContainerEvent.html" title="interface in org.eclipse.net4j.util.container">IContainerEvent</A>&lt;E&gt;, <A HREF="../../../../../org/eclipse/net4j/util/collection/IHistoryChangeEvent.html" title="interface in org.eclipse.net4j.util.collection">IHistoryChangeEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEvent.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycleEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/options/IOptionsEvent.html" title="interface in org.eclipse.net4j.util.options">IOptionsEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/om/pref/OMPreferencesChangeEvent.html" title="interface in org.eclipse.net4j.util.om.pref">OMPreferencesChangeEvent</A>&lt;T&gt;</DD>
 </DL>
 <DL>
-<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="class in org.eclipse.net4j.util.container">ContainerEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</A>, <A HREF="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.StateChangedEvent.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.StateChangedEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleEvent.html" title="class in org.eclipse.net4j.util.lifecycle">LifecycleEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/om/monitor/NotifyingMonitor.ProgressEvent.html" title="class in org.eclipse.net4j.util.om.monitor">NotifyingMonitor.ProgressEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/options/OptionsEvent.html" title="class in org.eclipse.net4j.util.options">OptionsEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.OrientationChangedEvent.html" title="class in org.eclipse.net4j.util.ui.widgets">SashComposite.OrientationChangedEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/container/SingleDeltaContainerEvent.html" title="class in org.eclipse.net4j.util.container">SingleDeltaContainerEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/ThrowableEvent.html" title="class in org.eclipse.net4j.util.event">ThrowableEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/ValueEvent.html" title="class in org.eclipse.net4j.util.event">ValueEvent</A></DD>
+<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="class in org.eclipse.net4j.util.container">ContainerEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/FinishedEvent.html" title="class in org.eclipse.net4j.util.event">FinishedEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.StateChangedEvent.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.StateChangedEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleEvent.html" title="class in org.eclipse.net4j.util.lifecycle">LifecycleEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/om/monitor/NotifyingMonitor.ProgressEvent.html" title="class in org.eclipse.net4j.util.om.monitor">NotifyingMonitor.ProgressEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/options/OptionsEvent.html" title="class in org.eclipse.net4j.util.options">OptionsEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.OrientationChangedEvent.html" title="class in org.eclipse.net4j.util.ui.widgets">SashComposite.OrientationChangedEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/container/SingleDeltaContainerEvent.html" title="class in org.eclipse.net4j.util.container">SingleDeltaContainerEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/ThrowableEvent.html" title="class in org.eclipse.net4j.util.event">ThrowableEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/ValueEvent.html" title="class in org.eclipse.net4j.util.event">ValueEvent</A></DD>
 </DL>
 <HR>
 <DL>
@@ -104,15 +104,16 @@ Interface IEvent</H2>
 
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="Event.html" title="Event" alt="" coords="326,5,381,30"/>
-<area shape="rect" id="node2" href="../fsm/FiniteStateMachine.StateChangedEvent.html" title="FiniteStateMachine.StateChangedEvent (org.eclipse.net4j.util.fsm)" alt="" coords="227,49,479,89"/>
-<area shape="rect" id="node3" href="../cache/ICacheMonitorEvent.html" title="&#171;interface&#187; ICacheMonitorEvent (org.eclipse.net4j.util.cache)" alt="" coords="261,109,446,163"/>
-<area shape="rect" id="node4" href="../container/IContainerEvent.html" title="&#171;interface&#187; IContainerEvent (org.eclipse.net4j.util.container)" alt="" coords="252,182,455,237"/>
-<area shape="rect" id="node5" href="IEvent.html" title="&#171;interface&#187; IEvent" alt="" coords="5,263,91,303"/>
-<area shape="rect" id="node6" href="../collection/IHistoryChangeEvent.html" title="&#171;interface&#187; IHistoryChangeEvent (org.eclipse.net4j.util.collection)" alt="" coords="251,255,456,310"/>
-<area shape="rect" id="node7" href="../lifecycle/ILifecycleEvent.html" title="&#171;interface&#187; ILifecycleEvent (org.eclipse.net4j.util.lifecycle)" alt="" coords="255,329,452,383"/>
-<area shape="rect" id="node8" href="INotifier.html" title="&#171;interface&#187; INotifier" alt="" coords="311,403,396,443"/>
-<area shape="rect" id="node9" href="../options/IOptionsEvent.html" title="&#171;interface&#187; IOptionsEvent (org.eclipse.net4j.util.options)" alt="" coords="257,462,449,517"/>
-<area shape="rect" id="node10" href="../om/pref/OMPreferencesChangeEvent.html" title="&#171;interface&#187; OMPreferencesChangeEvent (org.eclipse.net4j.util.om.pref)" alt="" coords="257,535,450,590"/>
+<area shape="rect" id="node2" href="FinishedEvent.html" title="FinishedEvent" alt="" coords="302,49,405,74"/>
+<area shape="rect" id="node3" href="../fsm/FiniteStateMachine.StateChangedEvent.html" title="FiniteStateMachine.StateChangedEvent (org.eclipse.net4j.util.fsm)" alt="" coords="227,93,479,133"/>
+<area shape="rect" id="node4" href="../cache/ICacheMonitorEvent.html" title="&#171;interface&#187; ICacheMonitorEvent (org.eclipse.net4j.util.cache)" alt="" coords="261,153,446,207"/>
+<area shape="rect" id="node5" href="../container/IContainerEvent.html" title="&#171;interface&#187; IContainerEvent (org.eclipse.net4j.util.container)" alt="" coords="252,226,455,281"/>
+<area shape="rect" id="node6" href="IEvent.html" title="&#171;interface&#187; IEvent" alt="" coords="5,271,91,311"/>
+<area shape="rect" id="node7" href="../collection/IHistoryChangeEvent.html" title="&#171;interface&#187; IHistoryChangeEvent (org.eclipse.net4j.util.collection)" alt="" coords="251,299,456,354"/>
+<area shape="rect" id="node8" href="../lifecycle/ILifecycleEvent.html" title="&#171;interface&#187; ILifecycleEvent (org.eclipse.net4j.util.lifecycle)" alt="" coords="255,373,452,427"/>
+<area shape="rect" id="node9" href="INotifier.html" title="&#171;interface&#187; INotifier" alt="" coords="311,447,396,487"/>
+<area shape="rect" id="node10" href="../options/IOptionsEvent.html" title="&#171;interface&#187; IOptionsEvent (org.eclipse.net4j.util.options)" alt="" coords="257,506,449,561"/>
+<area shape="rect" id="node11" href="../om/pref/OMPreferencesChangeEvent.html" title="&#171;interface&#187; OMPreferencesChangeEvent (org.eclipse.net4j.util.om.pref)" alt="" coords="257,579,450,634"/>
 </map>
 
 <CENTER><IMG SRC="IEvent.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -197,7 +198,7 @@ getSource</H3>
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/event/ExecutorServiceNotifier.ThreadPool.html" title="class in org.eclipse.net4j.util.event"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/event/FinishedEvent.html" title="class in org.eclipse.net4j.util.event"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/net4j/util/event/IEvent.html" target="_top"><B>FRAMES</B></A>  &nbsp;

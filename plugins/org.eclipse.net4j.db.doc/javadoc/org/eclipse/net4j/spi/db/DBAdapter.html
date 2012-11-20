@@ -193,6 +193,16 @@ A useful base class for implementing custom <A HREF="../../../../../org/eclipse/
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#appendFieldDefs(java.lang.Appendable, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String[])">appendFieldDefs</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</A>&nbsp;appendable,
+                <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A>&nbsp;table,
+                <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>[]&nbsp;defs)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#appendFieldNames(java.lang.Appendable, org.eclipse.net4j.db.ddl.IDBTable)">appendFieldNames</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</A>&nbsp;appendable,
                  <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A>&nbsp;table)</CODE>
@@ -212,6 +222,14 @@ A useful base class for implementing custom <A HREF="../../../../../org/eclipse/
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createFieldDefinition(org.eclipse.net4j.db.ddl.IDBField)">createFieldDefinition</A></B>(<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>&nbsp;field)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>[]</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createFieldDefinitions(org.eclipse.net4j.db.ddl.IDBTable)">createFieldDefinitions</A></B>(<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A>&nbsp;table)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -289,11 +307,27 @@ A useful base class for implementing custom <A HREF="../../../../../org/eclipse/
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getDefaultDBLength(org.eclipse.net4j.db.DBType)">getDefaultDBLength</A></B>(<A HREF="../../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</A>&nbsp;type)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getDropTableSQL(org.eclipse.net4j.db.ddl.IDBTable)">getDropTableSQL</A></B>(<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A>&nbsp;table)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getFieldLength(org.eclipse.net4j.db.DBType)">getFieldLength</A></B>(<A HREF="../../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</A>&nbsp;type)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the column length for the given database type.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -346,6 +380,14 @@ A useful base class for implementing custom <A HREF="../../../../../org/eclipse/
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isColumnNotFoundException(java.sql.SQLException)">isColumnNotFoundException</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A>&nbsp;ex)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isDuplicateKeyException(java.sql.SQLException)">isDuplicateKeyException</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A>&nbsp;ex)</CODE>
 
 <BR>
@@ -355,6 +397,14 @@ A useful base class for implementing custom <A HREF="../../../../../org/eclipse/
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;boolean</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isReservedWord(java.lang.String)">isReservedWord</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;word)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isTableNotFoundException(java.sql.SQLException)">isTableNotFoundException</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A>&nbsp;ex)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -374,6 +424,15 @@ A useful base class for implementing custom <A HREF="../../../../../org/eclipse/
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Check if a character is valid as first character.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField, java.lang.String)">sqlRenameField</A></B>(<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>&nbsp;field,
+               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;oldName)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -585,6 +644,26 @@ public int <B>getMaxFieldNameLength</B>()</PRE>
 </DL>
 <HR>
 
+<A NAME="getFieldLength(org.eclipse.net4j.db.DBType)"><!-- --></A><H3>
+getFieldLength</H3>
+<PRE>
+public int <B>getFieldLength</B>(<A HREF="../../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</A>&nbsp;type)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html#getFieldLength(org.eclipse.net4j.db.DBType)">IDBAdapter</A></CODE></B></DD>
+<DD>Returns the column length for the given database type.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html#getFieldLength(org.eclipse.net4j.db.DBType)">getFieldLength</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>type</CODE> - the <A HREF="../../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db"><CODE>DBType</CODE></A> to check.
+<DT><B>Returns:</B><DD>the supported column length for the type.<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="isTypeIndexable(org.eclipse.net4j.db.DBType)"><!-- --></A><H3>
 isTypeIndexable</H3>
 <PRE>
@@ -763,6 +842,22 @@ protected void <B>validateTable</B>(<A HREF="../../../../../org/eclipse/net4j/db
 </DL>
 <HR>
 
+<A NAME="createFieldDefinitions(org.eclipse.net4j.db.ddl.IDBTable)"><!-- --></A><H3>
+createFieldDefinitions</H3>
+<PRE>
+protected <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>[] <B>createFieldDefinitions</B>(<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A>&nbsp;table)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="appendFieldNames(java.lang.Appendable, org.eclipse.net4j.db.ddl.IDBTable)"><!-- --></A><H3>
 appendFieldNames</H3>
 <PRE>
@@ -773,6 +868,24 @@ public void <B>appendFieldNames</B>(<A HREF="http://download.oracle.com/javase/1
 </DL>
 </DD>
 <DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="appendFieldDefs(java.lang.Appendable, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String[])"><!-- --></A><H3>
+appendFieldDefs</H3>
+<PRE>
+protected void <B>appendFieldDefs</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</A>&nbsp;appendable,
+                               <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A>&nbsp;table,
+                               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>[]&nbsp;defs)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -837,6 +950,55 @@ public boolean <B>isDuplicateKeyException</B>(<A HREF="http://download.oracle.co
 </DL>
 <HR>
 
+<A NAME="isTableNotFoundException(java.sql.SQLException)"><!-- --></A><H3>
+isTableNotFoundException</H3>
+<PRE>
+public boolean <B>isTableNotFoundException</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A>&nbsp;ex)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html#isTableNotFoundException(java.sql.SQLException)">isTableNotFoundException</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isColumnNotFoundException(java.sql.SQLException)"><!-- --></A><H3>
+isColumnNotFoundException</H3>
+<PRE>
+public boolean <B>isColumnNotFoundException</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A>&nbsp;ex)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html#isColumnNotFoundException(java.sql.SQLException)">isColumnNotFoundException</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="sqlRenameField(org.eclipse.net4j.db.ddl.IDBField, java.lang.String)"><!-- --></A><H3>
+sqlRenameField</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>sqlRenameField</B>(<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>&nbsp;field,
+                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;oldName)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField, java.lang.String)">sqlRenameField</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="format(java.sql.PreparedStatement)"><!-- --></A><H3>
 format</H3>
 <PRE>
@@ -857,6 +1019,22 @@ public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Strin
 format</H3>
 <PRE>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>format</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</A>&nbsp;resultSet)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getDefaultDBLength(org.eclipse.net4j.db.DBType)"><!-- --></A><H3>
+getDefaultDBLength</H3>
+<PRE>
+public static int <B>getDefaultDBLength</B>(<A HREF="../../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</A>&nbsp;type)</PRE>
 <DL>
 <DD><DL>
 </DL>

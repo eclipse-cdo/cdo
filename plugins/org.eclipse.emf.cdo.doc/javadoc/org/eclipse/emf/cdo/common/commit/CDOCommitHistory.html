@@ -1,0 +1,638 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+CDOCommitHistory (CDO Model Repository Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../../html/book.css" TITLE="Style">
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="CDOCommitHistory (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CDOCommitHistory.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="CDOCommitHistory.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.emf.cdo.common.commit</FONT>
+<BR>
+Interface CDOCommitHistory</H2>
+<DL>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A>&gt;, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></DD>
+</DL>
+<DL>
+<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/CDOObjectHistory.html" title="interface in org.eclipse.emf.cdo">CDOObjectHistory</A></DD>
+</DL>
+<HR>
+<DL>
+  <DT>public interface <B>CDOCommitHistory</B>
+  <DD>extends <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A>&gt;, <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A>
+</DL>
+
+<map id="APIVIZ" name="APIVIZ">
+<area shape="rect" id="node1" title="&#171;interface&#187; IContainer (org.eclipse.net4j.util.container)" alt="" coords="5,6,208,61"/>
+<area shape="rect" id="node2" href="../../CDOObjectHistory.html" title="&#171;interface&#187; CDOObjectHistory (org.eclipse.emf.cdo)" alt="" coords="141,179,283,234"/>
+<area shape="rect" id="node3" href="CDOCommitInfoHandler.html" title="&#171;interface&#187; CDOCommitInfoHandler" alt="" coords="238,13,396,53"/>
+<area shape="rect" id="node4" href="CDOCommitHistory.html" title="&#171;interface&#187; CDOCommitHistory" alt="" coords="144,100,280,140"/>
+</map>
+
+<CENTER><IMG SRC="CDOCommitHistory.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+
+
+
+<P>
+A cache for the <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit infos</CODE></A> of a branch or of an entire repository.
+<P>
+
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html" title="type parameter in CDOCommitHistory.Provider">KEY</A>,<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html" title="type parameter in CDOCommitHistory.Provider">HISTORY</A> extends <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory</A>&gt;</B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides consumers with <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>histories</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.TriggerLoadElement.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.TriggerLoadElement</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A virtual <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>history</CODE></A> element that can be returned from <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements()" title="class or interface in org.eclipse.net4j.util.container"><CODE>IContainer.getElements()</CODE></A>
+ if <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#isAppendingTriggerLoadElement()"><CODE>isAppendingTriggerLoadElement()</CODE></A> is <code>true</code> to indicate that
+ the history is not <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#isFull()"><CODE>fully</CODE></A> loaded, yet.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</A>&lt;<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</A>&gt;</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#DEFAULT_LOAD_COUNT">DEFAULT_LOAD_COUNT</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#EMPTY">EMPTY</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#getBranch()">getBranch</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#getElement(int)">getElement</A></B>(int&nbsp;index)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#getFirstElement()">getFirstElement</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#getLastElement()">getLastElement</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#getLoadCount()">getLoadCount</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#getManager()">getManager</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#isAppendingTriggerLoadElement()">isAppendingTriggerLoadElement</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#isFull()">isFull</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#isLoading()">isLoading</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#setAppendingTriggerLoadElement(boolean)">setAppendingTriggerLoadElement</A></B>(boolean&nbsp;appendingTriggerLoadElement)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#setLoadCount(int)">setLoadCount</A></B>(int&nbsp;loadCount)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#size()">size</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#triggerLoad()">triggerLoad</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#triggerLoad(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">triggerLoad</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A>&nbsp;handler)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements()" title="class or interface in org.eclipse.net4j.util.container">getElements</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#isEmpty()" title="class or interface in org.eclipse.net4j.util.container">isEmpty</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.event.<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.common.commit.<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html#handleCommitInfo(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">handleCommitInfo</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ FIELD DETAIL =========== -->
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Field Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="EMPTY"><!-- --></A><H3>
+EMPTY</H3>
+<PRE>
+static final <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory</A> <B>EMPTY</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="DEFAULT_LOAD_COUNT"><!-- --></A><H3>
+DEFAULT_LOAD_COUNT</H3>
+<PRE>
+static final int <B>DEFAULT_LOAD_COUNT</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.commit.CDOCommitHistory.DEFAULT_LOAD_COUNT">Constant Field Values</A></DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="getManager()"><!-- --></A><H3>
+getManager</H3>
+<PRE>
+<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</A> <B>getManager</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getBranch()"><!-- --></A><H3>
+getBranch</H3>
+<PRE>
+<A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A> <B>getBranch</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getFirstElement()"><!-- --></A><H3>
+getFirstElement</H3>
+<PRE>
+<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A> <B>getFirstElement</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getLastElement()"><!-- --></A><H3>
+getLastElement</H3>
+<PRE>
+<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A> <B>getLastElement</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getElement(int)"><!-- --></A><H3>
+getElement</H3>
+<PRE>
+<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A> <B>getElement</B>(int&nbsp;index)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="size()"><!-- --></A><H3>
+size</H3>
+<PRE>
+int <B>size</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isFull()"><!-- --></A><H3>
+isFull</H3>
+<PRE>
+boolean <B>isFull</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isLoading()"><!-- --></A><H3>
+isLoading</H3>
+<PRE>
+boolean <B>isLoading</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isAppendingTriggerLoadElement()"><!-- --></A><H3>
+isAppendingTriggerLoadElement</H3>
+<PRE>
+boolean <B>isAppendingTriggerLoadElement</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setAppendingTriggerLoadElement(boolean)"><!-- --></A><H3>
+setAppendingTriggerLoadElement</H3>
+<PRE>
+void <B>setAppendingTriggerLoadElement</B>(boolean&nbsp;appendingTriggerLoadElement)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getLoadCount()"><!-- --></A><H3>
+getLoadCount</H3>
+<PRE>
+int <B>getLoadCount</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setLoadCount(int)"><!-- --></A><H3>
+setLoadCount</H3>
+<PRE>
+void <B>setLoadCount</B>(int&nbsp;loadCount)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="triggerLoad()"><!-- --></A><H3>
+triggerLoad</H3>
+<PRE>
+boolean <B>triggerLoad</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="triggerLoad(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)"><!-- --></A><H3>
+triggerLoad</H3>
+<PRE>
+boolean <B>triggerLoad</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A>&nbsp;handler)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CDOCommitHistory.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="CDOCommitHistory.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

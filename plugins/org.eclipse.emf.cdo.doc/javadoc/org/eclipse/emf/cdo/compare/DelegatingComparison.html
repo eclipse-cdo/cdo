@@ -96,7 +96,7 @@ Class DelegatingComparison</H2>
   <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.emf.cdo.compare.DelegatingComparison</B>
 </PRE>
 <DL>
-<DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.CDOComparison.html" title="class in org.eclipse.emf.cdo.compare">CDOCompareUtil.CDOComparison</A></DD>
+<DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparison.html" title="class in org.eclipse.emf.cdo.compare">CDOComparison</A></DD>
 </DL>
 <HR>
 <DL>
@@ -105,8 +105,8 @@ Class DelegatingComparison</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="DelegatingComparison.html" title="DelegatingComparison" alt="" coords="40,6,192,31"/>
-<area shape="rect" id="node2" href="CDOCompareUtil.CDOComparison.html" title="CDOCompareUtil.CDOComparison" alt="" coords="5,71,227,97"/>
+<area shape="rect" id="node1" href="DelegatingComparison.html" title="DelegatingComparison" alt="" coords="5,6,157,31"/>
+<area shape="rect" id="node2" href="CDOComparison.html" title="CDOComparison" alt="" coords="22,71,140,97"/>
 </map>
 
 <CENTER><IMG SRC="DelegatingComparison.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -320,14 +320,6 @@ A <CODE>comparison</CODE> that delegates all methods to another comparison.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;EMFCompareConfiguration</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/DelegatingComparison.html#getConfiguration()">getConfiguration</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;Conflict&gt;</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/DelegatingComparison.html#getConflicts()">getConflicts</A></B>()</CODE>
 
@@ -354,6 +346,14 @@ A <CODE>comparison</CODE> that delegates all methods to another comparison.
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;Diff&gt;</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/DelegatingComparison.html#getDifferences(org.eclipse.emf.ecore.EObject)">getDifferences</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&nbsp;element)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;IEqualityHelper</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/DelegatingComparison.html#getEqualityHelper()">getEqualityHelper</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -597,10 +597,10 @@ public <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/e
 </DL>
 <HR>
 
-<A NAME="getConfiguration()"><!-- --></A><H3>
-getConfiguration</H3>
+<A NAME="getEqualityHelper()"><!-- --></A><H3>
+getEqualityHelper</H3>
 <PRE>
-public EMFCompareConfiguration <B>getConfiguration</B>()</PRE>
+public IEqualityHelper <B>getEqualityHelper</B>()</PRE>
 <DL>
 <DD><DL>
 </DL>

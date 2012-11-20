@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;NEXT CLASS</FONT></TD>
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="CDOCommitInfoManager.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -92,18 +92,24 @@ org.eclipse.emf.cdo.common.commit</FONT>
 <BR>
 Interface CDOCommitInfoManager</H2>
 <DL>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>,<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory</A>&gt;, <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoProvider</A></DD>
+</DL>
+<DL>
 <DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/commit/InternalCDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager</A></DD>
 </DL>
 <HR>
 <DL>
   <DT>public interface <B>CDOCommitInfoManager</B>
+  <DD>extends <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoProvider</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>,<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory</A>&gt;
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="../../spi/common/commit/InternalCDOCommitInfoManager.html" title="&#171;interface&#187; InternalCDOCommitInfoManager (org.eclipse.emf.cdo.spi.common.commit)" alt="" coords="59,201,324,255"/>
+<area shape="rect" id="node1" href="../../spi/common/commit/InternalCDOCommitInfoManager.html" title="&#171;interface&#187; InternalCDOCommitInfoManager (org.eclipse.emf.cdo.spi.common.commit)" alt="" coords="259,201,524,255"/>
 <area shape="rect" id="node2" href="../../session/CDOSession.html" title="&#171;interface&#187; CDOSession (org.eclipse.emf.cdo.session)" alt="" coords="5,6,197,61"/>
-<area shape="rect" id="node3" href="CDOCommitInfoManager.html" title="&#171;interface&#187; CDOCommitInfoManager" alt="" coords="109,117,275,157"/>
-<area shape="rect" id="node4" href="CDOCommitInfo.html" title="&#171;interface&#187; CDOCommitInfo" alt="" coords="227,13,341,53"/>
+<area shape="rect" id="node3" href="CDOCommitInfoProvider.html" title="&#171;interface&#187; CDOCommitInfoProvider" alt="" coords="227,13,388,53"/>
+<area shape="rect" id="node4" href="CDOCommitInfoManager.html" title="&#171;interface&#187; CDOCommitInfoManager" alt="" coords="309,117,475,157"/>
+<area shape="rect" id="node5" href="CDOCommitInfo.html" title="&#171;interface&#187; CDOCommitInfo" alt="" coords="419,13,533,53"/>
+<area shape="rect" id="node6" href="CDOCommitHistory.Provider.html" title="&#171;interface&#187; CDOCommitHistory.Provider" alt="" coords="563,13,749,53"/>
 </map>
 
 <CENTER><IMG SRC="CDOCommitInfoManager.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -138,6 +144,24 @@ Loads, provides and possible manages <A HREF="../../../../../../org/eclipse/emf/
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html#getBaseOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)">getBaseOfBranch</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html#getCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch, long, boolean)">getCommitInfo</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch,
+              long&nbsp;startTime,
+              boolean&nbsp;up)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html#getCommitInfo(long)">getCommitInfo</A></B>(long&nbsp;timeStamp)</CODE>
 
 <BR>
@@ -159,13 +183,47 @@ Loads, provides and possible manages <A HREF="../../../../../../org/eclipse/emf/
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html#getCommitInfos(org.eclipse.emf.cdo.common.branch.CDOBranch, long, java.lang.String, java.lang.String, int, org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">getCommitInfos</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch,
                long&nbsp;startTime,
-               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID,
-               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;comment,
+               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;reserved1,
+               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;reserved2,
                int&nbsp;count,
                <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A>&nbsp;handler)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html#getFirstOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)">getFirstOfBranch</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html#getLastOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)">getLastOfBranch</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.commit.CDOCommitInfoProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.common.commit.<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html#addCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">addCommitInfoHandler</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html#getCommitInfoHandlers()">getCommitInfoHandlers</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html#removeCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">removeCommitInfoHandler</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.commit.CDOCommitHistory.Provider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.common.commit.<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html#getHistory()">getHistory</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html#getHistory(KEY)">getHistory</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -187,8 +245,29 @@ getCommitInfo</H3>
 <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A> <B>getCommitInfo</B>(long&nbsp;timeStamp)</PRE>
 <DL>
 <DD><DL>
+</DL>
+</DD>
+<DD><DL>
 <DT><B>Since:</B></DT>
   <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch, long, boolean)"><!-- --></A><H3>
+getCommitInfo</H3>
+<PRE>
+<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A> <B>getCommitInfo</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch,
+                            long&nbsp;startTime,
+                            boolean&nbsp;up)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -205,6 +284,9 @@ void <B>getCommitInfos</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common
 <DD><DL>
 </DL>
 </DD>
+<DD><DL>
+</DL>
+</DD>
 </DL>
 <HR>
 
@@ -213,14 +295,65 @@ getCommitInfos</H3>
 <PRE>
 void <B>getCommitInfos</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch,
                     long&nbsp;startTime,
-                    <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID,
-                    <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;comment,
+                    <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;reserved1,
+                    <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;reserved2,
                     int&nbsp;count,
                     <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</A>&nbsp;handler)</PRE>
 <DL>
 <DD><DL>
+</DL>
+</DD>
+<DD><DL>
 <DT><B>Since:</B></DT>
   <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getBaseOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)"><!-- --></A><H3>
+getBaseOfBranch</H3>
+<PRE>
+<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A> <B>getBaseOfBranch</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getFirstOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)"><!-- --></A><H3>
+getFirstOfBranch</H3>
+<PRE>
+<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A> <B>getFirstOfBranch</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getLastOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)"><!-- --></A><H3>
+getLastOfBranch</H3>
+<PRE>
+<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A> <B>getLastOfBranch</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -255,7 +388,7 @@ void <B>getCommitInfos</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;NEXT CLASS</FONT></TD>
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="CDOCommitInfoManager.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

@@ -139,8 +139,17 @@ Method in interface org.eclipse.net4j.db.ddl.<A HREF="./org/eclipse/net4j/db/ddl
 <DT><A HREF="./org/eclipse/net4j/spi/db/DBSchema.html#addTable(java.lang.String)"><B>addTable(String)</B></A> - 
 Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBSchema.html" title="class in org.eclipse.net4j.spi.db">DBSchema</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#appendFieldDefs(java.lang.Appendable, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String[])"><B>appendFieldDefs(Appendable, IDBTable, String[])</B></A> - 
+Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#appendFieldNames(java.lang.Appendable, org.eclipse.net4j.db.ddl.IDBTable)"><B>appendFieldNames(Appendable, IDBTable)</B></A> - 
 Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/DBUtil.html#asInt(java.lang.Object)"><B>asInt(Object)</B></A> - 
+Static method in class org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/DBUtil.html#asLong(java.lang.Object)"><B>asLong(Object)</B></A> - 
+Static method in class org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/spi/db/DBSchema.html#assertUnlocked()"><B>assertUnlocked()</B></A> - 
 Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBSchema.html" title="class in org.eclipse.net4j.spi.db">DBSchema</A>
@@ -201,6 +210,9 @@ Static method in class org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBUt
 <DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#createFieldDefinition(org.eclipse.net4j.db.ddl.IDBField)"><B>createFieldDefinition(IDBField)</B></A> - 
 Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#createFieldDefinitions(org.eclipse.net4j.db.ddl.IDBTable)"><B>createFieldDefinitions(IDBTable)</B></A> - 
+Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#createIndex(org.eclipse.net4j.db.ddl.IDBIndex, java.sql.Statement, int)"><B>createIndex(IDBIndex, Statement, int)</B></A> - 
 Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
 <DD>&nbsp;
@@ -230,9 +242,6 @@ Static method in class org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBUt
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/db/IDBAdapter.html#createTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)"><B>createTable(IDBTable, Statement)</B></A> - 
 Method in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>
-<DD>&nbsp;
-<DT><A HREF="./org/eclipse/net4j/db/postgresql/PostgreSQLAdapter.html#createTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)"><B>createTable(IDBTable, Statement)</B></A> - 
-Method in class org.eclipse.net4j.db.postgresql.<A HREF="./org/eclipse/net4j/db/postgresql/PostgreSQLAdapter.html" title="class in org.eclipse.net4j.db.postgresql">PostgreSQLAdapter</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#createTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)"><B>createTable(IDBTable, Statement)</B></A> - 
 Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
@@ -402,6 +411,9 @@ Method in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/IDBConn
 <DT><A HREF="./org/eclipse/net4j/db/DBUtil.html#getDBAdapter(java.lang.String)"><B>getDBAdapter(String)</B></A> - 
 Static method in class org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</A>
 <DD>Can only be used when Eclipse is running.
+<DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#getDefaultDBLength(org.eclipse.net4j.db.DBType)"><B>getDefaultDBLength(DBType)</B></A> - 
+Static method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#getDropTableSQL(org.eclipse.net4j.db.ddl.IDBTable)"><B>getDropTableSQL(IDBTable)</B></A> - 
 Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
 <DD>&nbsp;
@@ -419,6 +431,12 @@ Method in interface org.eclipse.net4j.db.ddl.<A HREF="./org/eclipse/net4j/db/ddl
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/db/ddl/IDBTable.html#getFieldCount()"><B>getFieldCount()</B></A> - 
 Method in interface org.eclipse.net4j.db.ddl.<A HREF="./org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/IDBAdapter.html#getFieldLength(org.eclipse.net4j.db.DBType)"><B>getFieldLength(DBType)</B></A> - 
+Method in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>
+<DD>Returns the column length for the given database type.
+<DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#getFieldLength(org.eclipse.net4j.db.DBType)"><B>getFieldLength(DBType)</B></A> - 
+Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/db/ddl/IDBIndex.html#getFields()"><B>getFields()</B></A> - 
 Method in interface org.eclipse.net4j.db.ddl.<A HREF="./org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A>
@@ -642,7 +660,16 @@ Constructor for class org.eclipse.net4j.db.hsqldb.<A HREF="./org/eclipse/net4j/d
 <B>I</B></H2>
 <DL>
 <DT><A HREF="./org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db"><B>IDBAdapter</B></A> - Interface in <A HREF="./org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</A><DD>Abstracts all aspects of a database that are vendor-specific.<DT><A HREF="./org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db"><B>IDBConnectionProvider</B></A> - Interface in <A HREF="./org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</A><DD>Provides a database <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql"><CODE>connection</CODE></A>, roughly comparable with a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql"><CODE>data source</CODE></A>.<DT><A HREF="./org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl"><B>IDBField</B></A> - Interface in <A HREF="./org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</A><DD>A field (column) specification in a <A HREF="./org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.<DT><A HREF="./org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl"><B>IDBIndex</B></A> - Interface in <A HREF="./org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</A><DD>An index specification in a <A HREF="./org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.<DT><A HREF="./org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl"><B>IDBIndex.Type</B></A> - Enum in <A HREF="./org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</A><DD>The type of an <A HREF="./org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>index</CODE></A> specification in a <A HREF="./org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.<DT><A HREF="./org/eclipse/net4j/db/dml/IDBParameter.html" title="interface in org.eclipse.net4j.db.dml"><B>IDBParameter</B></A> - Interface in <A HREF="./org/eclipse/net4j/db/dml/package-summary.html">org.eclipse.net4j.db.dml</A><DD>A parameter specification in a <A HREF="./org/eclipse/net4j/db/dml/IDBStatement.html" title="interface in org.eclipse.net4j.db.dml"><CODE>DB statement</CODE></A>.<DT><A HREF="./org/eclipse/net4j/db/IDBRowHandler.html" title="interface in org.eclipse.net4j.db"><B>IDBRowHandler</B></A> - Interface in <A HREF="./org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</A><DD>Call-back that handles the values of, for example, a row in a database table.<DT><A HREF="./org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><B>IDBSchema</B></A> - Interface in <A HREF="./org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</A><DD>Specifies a number of <A HREF="./org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB tables</CODE></A> that can be created in or dropped from a database through a
- <A HREF="./org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db"><CODE>DB adapter</CODE></A>.<DT><A HREF="./org/eclipse/net4j/db/ddl/IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl"><B>IDBSchemaElement</B></A> - Interface in <A HREF="./org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</A><DD>Specifies a hierachical namespace for elements in a <A HREF="./org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB schema</CODE></A>.<DT><A HREF="./org/eclipse/net4j/db/dml/IDBStatement.html" title="interface in org.eclipse.net4j.db.dml"><B>IDBStatement</B></A> - Interface in <A HREF="./org/eclipse/net4j/db/dml/package-summary.html">org.eclipse.net4j.db.dml</A><DD>Specifies an SQL statement with zero or more <A HREF="./org/eclipse/net4j/db/dml/IDBParameter.html" title="interface in org.eclipse.net4j.db.dml"><CODE>parameters</CODE></A>.<DT><A HREF="./org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><B>IDBTable</B></A> - Interface in <A HREF="./org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</A><DD>A table specification in a <A HREF="./org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB schema</CODE></A>.<DT><A HREF="./org/eclipse/net4j/db/h2/H2Adapter.html#isDuplicateKeyException(java.sql.SQLException)"><B>isDuplicateKeyException(SQLException)</B></A> - 
+ <A HREF="./org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db"><CODE>DB adapter</CODE></A>.<DT><A HREF="./org/eclipse/net4j/db/ddl/IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl"><B>IDBSchemaElement</B></A> - Interface in <A HREF="./org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</A><DD>Specifies a hierachical namespace for elements in a <A HREF="./org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB schema</CODE></A>.<DT><A HREF="./org/eclipse/net4j/db/dml/IDBStatement.html" title="interface in org.eclipse.net4j.db.dml"><B>IDBStatement</B></A> - Interface in <A HREF="./org/eclipse/net4j/db/dml/package-summary.html">org.eclipse.net4j.db.dml</A><DD>Specifies an SQL statement with zero or more <A HREF="./org/eclipse/net4j/db/dml/IDBParameter.html" title="interface in org.eclipse.net4j.db.dml"><CODE>parameters</CODE></A>.<DT><A HREF="./org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><B>IDBTable</B></A> - Interface in <A HREF="./org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</A><DD>A table specification in a <A HREF="./org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB schema</CODE></A>.<DT><A HREF="./org/eclipse/net4j/db/IDBAdapter.html#isColumnNotFoundException(java.sql.SQLException)"><B>isColumnNotFoundException(SQLException)</B></A> - 
+Method in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/postgresql/PostgreSQLAdapter.html#isColumnNotFoundException(java.sql.SQLException)"><B>isColumnNotFoundException(SQLException)</B></A> - 
+Method in class org.eclipse.net4j.db.postgresql.<A HREF="./org/eclipse/net4j/db/postgresql/PostgreSQLAdapter.html" title="class in org.eclipse.net4j.db.postgresql">PostgreSQLAdapter</A>
+<DD>See <a href="http://www.postgresql.org/docs/9.0/static/errcodes-appendix.html">Appendix A.
+<DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#isColumnNotFoundException(java.sql.SQLException)"><B>isColumnNotFoundException(SQLException)</B></A> - 
+Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/h2/H2Adapter.html#isDuplicateKeyException(java.sql.SQLException)"><B>isDuplicateKeyException(SQLException)</B></A> - 
 Method in class org.eclipse.net4j.db.h2.<A HREF="./org/eclipse/net4j/db/h2/H2Adapter.html" title="class in org.eclipse.net4j.db.h2">H2Adapter</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/db/IDBAdapter.html#isDuplicateKeyException(java.sql.SQLException)"><B>isDuplicateKeyException(SQLException)</B></A> - 
@@ -651,6 +678,9 @@ Method in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/IDBAdap
 <DT><A HREF="./org/eclipse/net4j/db/mysql/MYSQLAdapter.html#isDuplicateKeyException(java.sql.SQLException)"><B>isDuplicateKeyException(SQLException)</B></A> - 
 Method in class org.eclipse.net4j.db.mysql.<A HREF="./org/eclipse/net4j/db/mysql/MYSQLAdapter.html" title="class in org.eclipse.net4j.db.mysql">MYSQLAdapter</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/postgresql/PostgreSQLAdapter.html#isDuplicateKeyException(java.sql.SQLException)"><B>isDuplicateKeyException(SQLException)</B></A> - 
+Method in class org.eclipse.net4j.db.postgresql.<A HREF="./org/eclipse/net4j/db/postgresql/PostgreSQLAdapter.html" title="class in org.eclipse.net4j.db.postgresql">PostgreSQLAdapter</A>
+<DD>See <a href="http://www.postgresql.org/docs/9.0/static/errcodes-appendix.html">Appendix A.
 <DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#isDuplicateKeyException(java.sql.SQLException)"><B>isDuplicateKeyException(SQLException)</B></A> - 
 Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
 <DD>&nbsp;
@@ -664,6 +694,15 @@ Method in interface org.eclipse.net4j.db.ddl.<A HREF="./org/eclipse/net4j/db/ddl
 Method in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#isReservedWord(java.lang.String)"><B>isReservedWord(String)</B></A> - 
+Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/IDBAdapter.html#isTableNotFoundException(java.sql.SQLException)"><B>isTableNotFoundException(SQLException)</B></A> - 
+Method in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/postgresql/PostgreSQLAdapter.html#isTableNotFoundException(java.sql.SQLException)"><B>isTableNotFoundException(SQLException)</B></A> - 
+Method in class org.eclipse.net4j.db.postgresql.<A HREF="./org/eclipse/net4j/db/postgresql/PostgreSQLAdapter.html" title="class in org.eclipse.net4j.db.postgresql">PostgreSQLAdapter</A>
+<DD>See <a href="http://www.postgresql.org/docs/9.0/static/errcodes-appendix.html">Appendix A.
+<DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#isTableNotFoundException(java.sql.SQLException)"><B>isTableNotFoundException(SQLException)</B></A> - 
 Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/db/DBUtil.html#isTracerEnabled()"><B>isTracerEnabled()</B></A> - 
@@ -805,6 +844,18 @@ Static method in class org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBUt
 <DD><B>Deprecated.</B>&nbsp;<I>Should only be used when debugging.</I>
 <DT><A HREF="./org/eclipse/net4j/db/ddl/IDBTable.html#sqlInsert()"><B>sqlInsert()</B></A> - 
 Method in interface org.eclipse.net4j.db.ddl.<A HREF="./org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/h2/H2Adapter.html#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField, java.lang.String)"><B>sqlRenameField(IDBField, String)</B></A> - 
+Method in class org.eclipse.net4j.db.h2.<A HREF="./org/eclipse/net4j/db/h2/H2Adapter.html" title="class in org.eclipse.net4j.db.h2">H2Adapter</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/IDBAdapter.html#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField, java.lang.String)"><B>sqlRenameField(IDBField, String)</B></A> - 
+Method in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/mysql/MYSQLAdapter.html#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField, java.lang.String)"><B>sqlRenameField(IDBField, String)</B></A> - 
+Method in class org.eclipse.net4j.db.mysql.<A HREF="./org/eclipse/net4j/db/mysql/MYSQLAdapter.html" title="class in org.eclipse.net4j.db.mysql">MYSQLAdapter</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField, java.lang.String)"><B>sqlRenameField(IDBField, String)</B></A> - 
+Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
 <DD>&nbsp;
 </DL>
 <HR>

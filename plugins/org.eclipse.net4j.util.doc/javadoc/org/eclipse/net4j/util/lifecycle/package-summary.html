@@ -91,14 +91,15 @@ A framework for components with a simple lifecycle.
 <P>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="../event/IEvent.html" title="&#171;interface&#187; IEvent (org.eclipse.net4j.util.event)" alt="" coords="13,134,193,189"/>
-<area shape="rect" id="node2" href="ILifecycle.html" title="&#171;interface&#187; ILifecycle" alt="" coords="509,209,595,249"/>
-<area shape="rect" id="node3" href="ILifecycle.DeferrableActivation.html" title="&#171;interface&#187; ILifecycle.DeferrableActivation" alt="" coords="5,69,200,109"/>
-<area shape="rect" id="node4" href="ILifecycleEvent.html" title="&#171;interface&#187; ILifecycleEvent" alt="" coords="269,141,377,181"/>
-<area shape="rect" id="node5" href="../event/INotifier.html" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="233,209,413,263"/>
-<area shape="rect" id="node6" href="LifecycleUtil.html" title="&#171;static&#187; LifecycleUtil" alt="" coords="57,5,149,45"/>
-<area shape="rect" id="node7" href="ILifecycleEvent.Kind.html" title="&#171;enum&#187; ILifecycleEvent.Kind" alt="" coords="483,137,621,177"/>
-<area shape="rect" id="node8" href="LifecycleState.html" title="&#171;enum&#187; LifecycleState" alt="" coords="653,209,757,249"/>
+<area shape="rect" id="node1" href="ShareableLifecycle.html" title="ShareableLifecycle" alt="" coords="37,213,168,238"/>
+<area shape="rect" id="node2" href="../event/IEvent.html" title="&#171;interface&#187; IEvent (org.eclipse.net4j.util.event)" alt="" coords="13,134,193,189"/>
+<area shape="rect" id="node3" href="ILifecycle.html" title="&#171;interface&#187; ILifecycle" alt="" coords="509,209,595,249"/>
+<area shape="rect" id="node4" href="ILifecycle.DeferrableActivation.html" title="&#171;interface&#187; ILifecycle.DeferrableActivation" alt="" coords="5,69,200,109"/>
+<area shape="rect" id="node5" href="ILifecycleEvent.html" title="&#171;interface&#187; ILifecycleEvent" alt="" coords="269,141,377,181"/>
+<area shape="rect" id="node6" href="../event/INotifier.html" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="233,209,413,263"/>
+<area shape="rect" id="node7" href="LifecycleUtil.html" title="&#171;static&#187; LifecycleUtil" alt="" coords="57,5,149,45"/>
+<area shape="rect" id="node8" href="ILifecycleEvent.Kind.html" title="&#171;enum&#187; ILifecycleEvent.Kind" alt="" coords="483,137,621,177"/>
+<area shape="rect" id="node9" href="LifecycleState.html" title="&#171;enum&#187; LifecycleState" alt="" coords="653,209,757,249"/>
 </map>
 
 <CENTER><IMG SRC="package-summary.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -152,6 +153,10 @@ A framework for components with a simple lifecycle.
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.Delegator.html" title="class in org.eclipse.net4j.util.lifecycle">LifecycleUtil.Delegator&lt;T&gt;</A></B></TD>
 <TD>The <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/reflect/InvocationHandler.html?is-external=true" title="class or interface in java.lang.reflect"><CODE>invocation handler</CODE></A> of the <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/reflect/Proxy.html?is-external=true" title="class or interface in java.lang.reflect"><CODE>dynamic proxy</CODE></A> created in
  <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.html#delegateLifecycle(java.lang.ClassLoader, T, org.eclipse.net4j.util.lifecycle.ILifecycle)"><CODE>LifecycleUtil.delegateLifecycle()</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ShareableLifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">ShareableLifecycle</A></B></TD>
+<TD>A <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle"><CODE>lifecycle</CODE></A> entity with a reference count that can be <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#activate()"><CODE>activated</CODE></A> multiple times.</TD>
 </TR>
 </TABLE>
 &nbsp;

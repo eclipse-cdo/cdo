@@ -113,6 +113,10 @@ Abstracts all aspects of a database that are vendor-specific.
 <P>
 
 <P>
+<DL>
+<DT><B>No Implement</B></DT>
+  <DD>This interface is not intended to be implemented by clients. Subclass <A HREF="../../../../org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db"><CODE>DBAdapter</CODE></A> instead.</DD>
+</DL>
 <HR>
 
 <P>
@@ -196,6 +200,14 @@ Abstracts all aspects of a database that are vendor-specific.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html#getFieldLength(org.eclipse.net4j.db.DBType)">getFieldLength</A></B>(<A HREF="../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</A>&nbsp;type)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the column length for the given database type.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Driver.html?is-external=true" title="class or interface in java.sql">Driver</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html#getJDBCDriver()">getJDBCDriver</A></B>()</CODE>
 
@@ -245,6 +257,14 @@ Abstracts all aspects of a database that are vendor-specific.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html#isColumnNotFoundException(java.sql.SQLException)">isColumnNotFoundException</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A>&nbsp;ex)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html#isDuplicateKeyException(java.sql.SQLException)">isDuplicateKeyException</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A>&nbsp;ex)</CODE>
 
 <BR>
@@ -254,6 +274,14 @@ Abstracts all aspects of a database that are vendor-specific.
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;boolean</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html#isReservedWord(java.lang.String)">isReservedWord</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;word)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html#isTableNotFoundException(java.sql.SQLException)">isTableNotFoundException</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A>&nbsp;ex)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -273,6 +301,15 @@ Abstracts all aspects of a database that are vendor-specific.
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Check if a character is valid as first character.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField, java.lang.String)">sqlRenameField</A></B>(<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>&nbsp;field,
+               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;oldName)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -456,6 +493,22 @@ int <B>getMaxFieldNameLength</B>()</PRE>
 </DL>
 <HR>
 
+<A NAME="getFieldLength(org.eclipse.net4j.db.DBType)"><!-- --></A><H3>
+getFieldLength</H3>
+<PRE>
+int <B>getFieldLength</B>(<A HREF="../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</A>&nbsp;type)</PRE>
+<DL>
+<DD>Returns the column length for the given database type.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>type</CODE> - the <A HREF="../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db"><CODE>DBType</CODE></A> to check.
+<DT><B>Returns:</B><DD>the supported column length for the type.<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="isTypeIndexable(org.eclipse.net4j.db.DBType)"><!-- --></A><H3>
 isTypeIndexable</H3>
 <PRE>
@@ -509,6 +562,46 @@ boolean <B>isDuplicateKeyException</B>(<A HREF="http://download.oracle.com/javas
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isTableNotFoundException(java.sql.SQLException)"><!-- --></A><H3>
+isTableNotFoundException</H3>
+<PRE>
+boolean <B>isTableNotFoundException</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A>&nbsp;ex)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isColumnNotFoundException(java.sql.SQLException)"><!-- --></A><H3>
+isColumnNotFoundException</H3>
+<PRE>
+boolean <B>isColumnNotFoundException</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A>&nbsp;ex)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="sqlRenameField(org.eclipse.net4j.db.ddl.IDBField, java.lang.String)"><!-- --></A><H3>
+sqlRenameField</H3>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>sqlRenameField</B>(<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>&nbsp;field,
+                      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;oldName)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>

@@ -92,7 +92,7 @@ org.eclipse.emf.cdo.spi.server</FONT>
 <BR>
 Interface InternalSession</H2>
 <DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermissionProvider.html" title="interface in org.eclipse.emf.cdo.common.security">CDOPermissionProvider</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</A>&gt;, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptions</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserAware</A></DD>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermissionProvider.html" title="interface in org.eclipse.emf.cdo.common.security">CDOPermissionProvider</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>, <A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</A>&gt;, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptions</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserAware</A></DD>
 </DL>
 <HR>
 <DL>
@@ -367,6 +367,14 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html#setUserID(java.lang.String)">setUserID</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html#viewClosed(org.eclipse.emf.cdo.spi.server.InternalView)">viewClosed</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</A>&nbsp;view)</CODE>
 
 <BR>
@@ -389,6 +397,15 @@ If the meaning of this type isn't clear, there really should be more of a descri
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html#getSessionID()">getSessionID</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html#options()">options</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.core.runtime.IAdaptable"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.core.runtime.<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true#getAdapter(java.lang.Class)" title="class or interface in org.eclipse.core.runtime">getAdapter</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.security.IUserAware"><!-- --></A>
@@ -495,6 +512,22 @@ getManager</H3>
 <DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/ISession.html#getManager()">getManager</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</A></CODE></DL>
 </DD>
 <DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setUserID(java.lang.String)"><!-- --></A><H3>
+setUserID</H3>
+<PRE>
+void <B>setUserID</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>

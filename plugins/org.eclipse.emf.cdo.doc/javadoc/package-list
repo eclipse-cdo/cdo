@@ -69,6 +69,7 @@ org.eclipse.emf.cdo.transfer.spi.workspace
 org.eclipse.emf.cdo.transfer.ui
 org.eclipse.emf.cdo.transfer.ui.swt
 org.eclipse.emf.cdo.ui
+org.eclipse.emf.cdo.ui.compare
 org.eclipse.emf.cdo.ui.ide
 org.eclipse.emf.cdo.ui.widgets
 org.eclipse.emf.cdo.util

@@ -141,6 +141,14 @@ The main entry point to the API of CDO's proprietary object/relational mapper.
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contains symbolic constants that specifiy valid keys of <A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepository.html#getProperties()"><CODE>DB store properties</CODE></A>.</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.TableVisitor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore.TableVisitor</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Called back from <A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html#visitAllTables(java.sql.Connection, org.eclipse.emf.cdo.server.db.IDBStore.TableVisitor)"><CODE>visitAllTables(Connection, TableVisitor)</CODE></A> for all tables in the database.</TD>
+</TR>
 </TABLE>
 &nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.cdo.server.IStore"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
@@ -216,6 +224,15 @@ The main entry point to the API of CDO's proprietary object/relational mapper.
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a writer that can be used to write to this store in the context of the given view.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html#visitAllTables(java.sql.Connection, org.eclipse.emf.cdo.server.db.IDBStore.TableVisitor)">visitAllTables</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+               <A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.TableVisitor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore.TableVisitor</A>&nbsp;visitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.server.IStore"><!-- --></A>
@@ -304,6 +321,23 @@ getDBSchema</H3>
 </DL>
 </DD>
 <DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="visitAllTables(java.sql.Connection, org.eclipse.emf.cdo.server.db.IDBStore.TableVisitor)"><!-- --></A><H3>
+visitAllTables</H3>
+<PRE>
+void <B>visitAllTables</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+                    <A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.TableVisitor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore.TableVisitor</A>&nbsp;visitor)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>

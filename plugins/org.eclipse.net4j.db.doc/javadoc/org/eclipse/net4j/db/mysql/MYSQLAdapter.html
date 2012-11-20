@@ -204,7 +204,7 @@ A <A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;com.mysql.jdbc.Driver</CODE></FONT></TD>
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Driver.html?is-external=true" title="class or interface in java.sql">Driver</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/db/mysql/MYSQLAdapter.html#getJDBCDriver()">getJDBCDriver</A></B>()</CODE>
 
 <BR>
@@ -258,6 +258,15 @@ A <A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/db/mysql/MYSQLAdapter.html#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField, java.lang.String)">sqlRenameField</A></B>(<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>&nbsp;field,
+               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;oldName)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.spi.db.DBAdapter"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
@@ -265,7 +274,7 @@ A <A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface
 <TH ALIGN="left"><B>Methods inherited from class org.eclipse.net4j.spi.db.<A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#adaptType(org.eclipse.net4j.db.DBType)">adaptType</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#appendFieldNames(java.lang.Appendable, org.eclipse.net4j.db.ddl.IDBTable)">appendFieldNames</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createConstraints(org.eclipse.net4j.db.ddl.IDBTable)">createConstraints</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createFieldDefinition(org.eclipse.net4j.db.ddl.IDBField)">createFieldDefinition</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex(org.eclipse.net4j.db.ddl.IDBIndex, java.sql.Statement, int)">createIndex</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)">createTable</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTables(java.lang.Iterable, java.sql.Connection)">createTables</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#doCreateTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)">doCreateTable</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)">dropTable</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTables(java.lang.Iterable, java.sql.Connection)">dropTables</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#format(java.sql.PreparedStatement)">format</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#format(java.sql.ResultSet)">format</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getDropTableSQL(org.eclipse.net4j.db.ddl.IDBTable)">getDropTableSQL</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getName()">getName</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getSQL92ReservedWords()">getSQL92ReservedWords</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getVersion()">getVersion</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isReservedWord(java.lang.String)">isReservedWord</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isValidFirstChar(char)">isValidFirstChar</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#toString()">toString</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#validateTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)">validateTable</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#adaptType(org.eclipse.net4j.db.DBType)">adaptType</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#appendFieldDefs(java.lang.Appendable, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String[])">appendFieldDefs</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#appendFieldNames(java.lang.Appendable, org.eclipse.net4j.db.ddl.IDBTable)">appendFieldNames</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createConstraints(org.eclipse.net4j.db.ddl.IDBTable)">createConstraints</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createFieldDefinition(org.eclipse.net4j.db.ddl.IDBField)">createFieldDefinition</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createFieldDefinitions(org.eclipse.net4j.db.ddl.IDBTable)">createFieldDefinitions</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex(org.eclipse.net4j.db.ddl.IDBIndex, java.sql.Statement, int)">createIndex</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)">createTable</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTables(java.lang.Iterable, java.sql.Connection)">createTables</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#doCreateTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)">doCreateTable</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)">dropTable</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTables(java.lang.Iterable, java.sql.Connection)">dropTables</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#format(java.sql.PreparedStatement)">format</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#format(java.sql.ResultSet)">format</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getDefaultDBLength(org.eclipse.net4j.db.DBType)">getDefaultDBLength</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getDropTableSQL(org.eclipse.net4j.db.ddl.IDBTable)">getDropTableSQL</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getFieldLength(org.eclipse.net4j.db.DBType)">getFieldLength</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getName()">getName</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getSQL92ReservedWords()">getSQL92ReservedWords</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getVersion()">getVersion</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isColumnNotFoundException(java.sql.SQLException)">isColumnNotFoundException</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isReservedWord(java.lang.String)">isReservedWord</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isTableNotFoundException(java.sql.SQLException)">isTableNotFoundException</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isValidFirstChar(char)">isValidFirstChar</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#toString()">toString</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#validateTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)">validateTable</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -339,7 +348,7 @@ public <B>MYSQLAdapter</B>()</PRE>
 <A NAME="getJDBCDriver()"><!-- --></A><H3>
 getJDBCDriver</H3>
 <PRE>
-public com.mysql.jdbc.Driver <B>getJDBCDriver</B>()</PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Driver.html?is-external=true" title="class or interface in java.sql">Driver</A> <B>getJDBCDriver</B>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -454,6 +463,21 @@ public boolean <B>isDuplicateKeyException</B>(<A HREF="http://download.oracle.co
 <P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html#isDuplicateKeyException(java.sql.SQLException)">isDuplicateKeyException</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isDuplicateKeyException(java.sql.SQLException)">isDuplicateKeyException</A></CODE> in class <CODE><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="sqlRenameField(org.eclipse.net4j.db.ddl.IDBField, java.lang.String)"><!-- --></A><H3>
+sqlRenameField</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>sqlRenameField</B>(<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>&nbsp;field,
+                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;oldName)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField, java.lang.String)">sqlRenameField</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField, java.lang.String)">sqlRenameField</A></CODE> in class <CODE><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A></CODE></DL>
 </DD>
 <DD><DL>
 </DL>

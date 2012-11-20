@@ -211,6 +211,11 @@ function windowTitle()
 <B>Deprecated Methods</B></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/IRepository.html#addCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">org.eclipse.emf.cdo.server.IRepository.addCommitInfoHandler(CDOCommitInfoHandler)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 call <A HREF="org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html#addCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)"><CODE>CDOCommitInfoProvider.addCommitInfoHandler(CDOCommitInfoHandler)</CODE></A></I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSetData(org.eclipse.emf.cdo.common.commit.CDOChangeSetData, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">org.eclipse.emf.spi.cdo.InternalCDOTransaction.applyChangeSetData(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint)</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use
@@ -244,7 +249,7 @@ function windowTitle()
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#commitDelegation(org.eclipse.emf.cdo.common.branch.CDOBranch, java.lang.String, java.lang.String, org.eclipse.emf.cdo.common.commit.CDOCommitData, java.util.Map, java.util.Collection, org.eclipse.net4j.util.om.monitor.OMMonitor)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.commitDelegation(CDOBranch, String, String, CDOCommitData, Map<CDOID, EClass>, Collection<CDOLob<?>>, OMMonitor)</A>
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#commitDelegation(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore. Use <CODE>#commitDelegation(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler3.committedTransaction(CDOTransaction, CDOCommitContext)</A>
@@ -254,7 +259,7 @@ function windowTitle()
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#commitTransaction(int, java.lang.String, boolean, org.eclipse.emf.cdo.common.id.CDOIDProvider, org.eclipse.emf.cdo.common.commit.CDOCommitData, java.util.Collection, org.eclipse.net4j.util.om.monitor.OMMonitor)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.commitTransaction(int, String, boolean, CDOIDProvider, CDOCommitData, Collection<CDOLob<?>>, OMMonitor)</A>
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#commitTransaction(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore. Use <CODE>#commitTransaction(InternalCDOCommitContext, OMMonitor)</CODE> instead.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOSession.html#createRevisionAvailabilityInfo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">org.eclipse.emf.spi.cdo.InternalCDOSession.createRevisionAvailabilityInfo(CDOBranchPoint)</A>
@@ -295,6 +300,11 @@ function windowTitle()
 <TD><A HREF="org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#get(boolean, boolean)">org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade.get(boolean, boolean)</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#get(boolean, boolean, boolean)"><CODE>IDurableLockingManager.LockGrade.get(boolean, boolean, boolean)</CODE></A></I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/IRepository.html#getCommitInfoHandlers()">org.eclipse.emf.cdo.server.IRepository.getCommitInfoHandlers()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 call <A HREF="org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html#getCommitInfoHandlers()"><CODE>CDOCommitInfoProvider.getCommitInfoHandlers()</CODE></A></I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOView.html#getFeatureAnalyzer()">org.eclipse.emf.spi.cdo.InternalCDOView.getFeatureAnalyzer()</A>
@@ -414,7 +424,7 @@ function windowTitle()
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#lockObjects(java.util.List, int, org.eclipse.emf.cdo.common.branch.CDOBranch, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.lockObjects(List<InternalCDORevision>, int, CDOBranch, IRWLockManager.LockType, long)</A>
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#lockObjects2(List, int, CDOBranch, LockType, boolean, long)</CODE> instead.</I>&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore. Use <CODE>#lockObjects2(List, int, CDOBranch, LockType, boolean, long)</CODE> instead.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#open(org.eclipse.emf.cdo.server.IStore, org.eclipse.emf.cdo.workspace.CDOWorkspaceBase, org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)">org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil.open(IStore, CDOWorkspaceBase, CDOSessionConfigurationFactory)</A>
@@ -435,6 +445,11 @@ function windowTitle()
 <TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#recalculateSharedDetachedObjects()">org.eclipse.emf.spi.cdo.InternalCDOSavepoint.recalculateSharedDetachedObjects()</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/IRepository.html#removeCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">org.eclipse.emf.cdo.server.IRepository.removeCommitInfoHandler(CDOCommitInfoHandler)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 call <A HREF="org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html#removeCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)"><CODE>CDOCommitInfoProvider.removeCommitInfoHandler(CDOCommitInfoHandler)</CODE></A></I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#rollbackObject(org.eclipse.emf.cdo.CDOObject)">org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.rollbackObject(CDOObject)</A>
@@ -491,6 +506,11 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferencePolicy(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)"><CODE>CDOView.Options.setStaleReferencePolicy(CDOStaleReferencePolicy)</CODE></A></I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.html#setTimeProvider(org.eclipse.emf.cdo.common.util.CDOTimeProvider)">org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.setTimeProvider(CDOTimeProvider)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.2 replaced by <A HREF="org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.html#setRepository(org.eclipse.emf.cdo.common.CDOCommonRepository)"><CODE>InternalCDOBranchManager.setRepository(CDOCommonRepository)</CODE></A></I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock(boolean, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.server.IView, java.util.Collection)">org.eclipse.emf.cdo.spi.server.InternalLockManager.unlock(boolean, IRWLockManager.LockType, IView, Collection<? extends Object>)</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -503,7 +523,7 @@ function windowTitle()
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#unlockObjects(org.eclipse.emf.cdo.view.CDOView, java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.unlockObjects(CDOView, Collection<CDOID>, IRWLockManager.LockType)</A>
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#unlockObjects2(CDOView, Collection, LockType, boolean)</CODE> instead.</I>&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore. Use <CODE>#unlockObjects2(CDOView, Collection, LockType, boolean)</CODE> instead.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspaceBase.html#updateAfterCommit(org.eclipse.emf.cdo.transaction.CDOTransaction)">org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceBase.updateAfterCommit(CDOTransaction)</A>

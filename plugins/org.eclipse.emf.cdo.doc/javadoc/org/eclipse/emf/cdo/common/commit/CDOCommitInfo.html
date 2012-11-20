@@ -55,7 +55,7 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.TriggerLoadElement.html" title="interface in org.eclipse.emf.cdo.common.commit"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" target="_top"><B>FRAMES</B></A>  &nbsp;
@@ -92,10 +92,10 @@ org.eclipse.emf.cdo.common.commit</FONT>
 <BR>
 Interface CDOCommitInfo</H2>
 <DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeKindProvider</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</A></DD>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeKindProvider</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A></DD>
 </DL>
 <DL>
-<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionInvalidationEvent</A></DD>
+<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.TriggerLoadElement.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.TriggerLoadElement</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionInvalidationEvent</A></DD>
 </DL>
 <HR>
 <DL>
@@ -107,9 +107,10 @@ Interface CDOCommitInfo</H2>
 <area shape="rect" id="node1" href="../../session/CDOSessionInvalidationEvent.html" title="&#171;interface&#187; CDOSessionInvalidationEvent (org.eclipse.emf.cdo.session)" alt="" coords="5,214,197,269"/>
 <area shape="rect" id="node2" href="CDOCommitInfoManager.html" title="&#171;interface&#187; CDOCommitInfoManager" alt="" coords="227,221,392,261"/>
 <area shape="rect" id="node3" href="CDOCommitInfoHandler.html" title="&#171;interface&#187; CDOCommitInfoHandler" alt="" coords="422,221,580,261"/>
-<area shape="rect" id="node4" href="CDOCommitInfo.html" title="&#171;interface&#187; CDOCommitInfo" alt="" coords="252,117,367,157"/>
-<area shape="rect" id="node5" href="CDOCommitData.html" title="&#171;interface&#187; CDOCommitData" alt="" coords="89,13,212,53"/>
-<area shape="rect" id="node6" href="../branch/CDOBranchPoint.html" title="&#171;interface&#187; CDOBranchPoint (org.eclipse.emf.cdo.common.branch)" alt="" coords="241,6,481,61"/>
+<area shape="rect" id="node4" href="CDOCommitInfo.html" title="&#171;interface&#187; CDOCommitInfo" alt="" coords="348,117,463,157"/>
+<area shape="rect" id="node5" href="CDOCommitHistory.TriggerLoadElement.html" title="&#171;interface&#187; CDOCommitHistory.TriggerLoadElement" alt="" coords="610,221,864,261"/>
+<area shape="rect" id="node6" href="CDOCommitData.html" title="&#171;interface&#187; CDOCommitData" alt="" coords="185,13,308,53"/>
+<area shape="rect" id="node7" href="../branch/CDOBranchPoint.html" title="&#171;interface&#187; CDOBranchPoint (org.eclipse.emf.cdo.common.branch)" alt="" coords="337,6,577,61"/>
 </map>
 
 <CENTER><IMG SRC="CDOCommitInfo.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -191,6 +192,22 @@ Interface CDOCommitInfo</H2>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html#isCommitDataLoaded()">isCommitDataLoaded</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html#isInitialCommit()">isInitialCommit</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <code>true</code> if this commit info describes the first initializing commit in the <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><CODE>repository</CODE></A>, <code>false</code> otherwise.</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.branch.CDOBranchPoint"><!-- --></A>
@@ -298,6 +315,40 @@ getComment</H3>
 </DL>
 </DD>
 </DL>
+<HR>
+
+<A NAME="isInitialCommit()"><!-- --></A><H3>
+isInitialCommit</H3>
+<PRE>
+boolean <B>isInitialCommit</B>()</PRE>
+<DL>
+<DD>Returns <code>true</code> if this commit info describes the first initializing commit in the <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><CODE>repository</CODE></A>, <code>false</code> otherwise.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isCommitDataLoaded()"><!-- --></A><H3>
+isCommitDataLoaded</H3>
+<PRE>
+boolean <B>isCommitDataLoaded</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
 <!-- ========= END OF CLASS DATA ========= -->
 <HR>
 
@@ -328,7 +379,7 @@ getComment</H3>
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.TriggerLoadElement.html" title="interface in org.eclipse.emf.cdo.common.commit"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" target="_top"><B>FRAMES</B></A>  &nbsp;

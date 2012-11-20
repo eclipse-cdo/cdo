@@ -149,6 +149,7 @@
 				<include name="org.eclipse.emf.cdo.transfer.workspace/src/org/eclipse/emf/cdo/transfer/spi/workspace/*.java" />
 				<include name="org.eclipse.emf.cdo.transfer/src/org/eclipse/emf/cdo/spi/transfer/*.java" />
 				<include name="org.eclipse.emf.cdo.transfer/src/org/eclipse/emf/cdo/transfer/*.java" />
+				<include name="org.eclipse.emf.cdo.ui.compare/src/org/eclipse/emf/cdo/ui/compare/*.java" />
 				<include name="org.eclipse.emf.cdo.ui.ide/src/org/eclipse/emf/cdo/ui/ide/*.java" />
 				<include name="org.eclipse.emf.cdo.ui/src/org/eclipse/emf/cdo/ui/*.java" />
 				<include name="org.eclipse.emf.cdo.ui/src/org/eclipse/emf/cdo/ui/widgets/*.java" />
@@ -210,6 +211,9 @@
 			<group title="CDO Model Repository Client UI">
 				<package name="org.eclipse.emf.cdo.ui" />
 				<package name="org.eclipse.emf.cdo.ui.widgets" />
+			</group>
+			<group title="CDO Model Repository Client UI Compare">
+				<package name="org.eclipse.emf.cdo.ui.compare" />
 			</group>
 			<group title="CDO Model Repository Client UI IDE">
 				<package name="org.eclipse.emf.cdo.ui.ide" />

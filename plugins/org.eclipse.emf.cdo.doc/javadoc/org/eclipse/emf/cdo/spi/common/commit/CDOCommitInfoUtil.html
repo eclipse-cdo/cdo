@@ -140,9 +140,33 @@ If the meaning of this type isn't clear, there really should be more of a descri
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/InternalCDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOCommitInfoUtil.html#createCommitInfoManager(boolean)">createCommitInfoManager</A></B>(boolean&nbsp;caching)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOCommitInfoUtil.html#decodeCount(long)">decodeCount</A></B>(long&nbsp;timeStamp)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOCommitInfoUtil.html#dump(java.io.PrintStream, org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">dump</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</A>&nbsp;out,
      <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</A>&nbsp;changeSetData)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;long</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOCommitInfoUtil.html#encodeCount(int)">encodeCount</A></B>(int&nbsp;count)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -170,12 +194,51 @@ If the meaning of this type isn't clear, there really should be more of a descri
 </TR>
 </TABLE>
 
+<A NAME="createCommitInfoManager(boolean)"><!-- --></A><H3>
+createCommitInfoManager</H3>
+<PRE>
+public static <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/InternalCDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager</A> <B>createCommitInfoManager</B>(boolean&nbsp;caching)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="createCommitInfoManager()"><!-- --></A><H3>
 createCommitInfoManager</H3>
 <PRE>
 public static <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/InternalCDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager</A> <B>createCommitInfoManager</B>()</PRE>
 <DL>
 <DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="encodeCount(int)"><!-- --></A><H3>
+encodeCount</H3>
+<PRE>
+public static long <B>encodeCount</B>(int&nbsp;count)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="decodeCount(long)"><!-- --></A><H3>
+decodeCount</H3>
+<PRE>
+public static int <B>decodeCount</B>(long&nbsp;timeStamp)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>

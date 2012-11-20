@@ -42,9 +42,13 @@
     <packages name="org.eclipse.emf.cdo.ui.widgets"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.ui.admin" label="CDO Model Repository Client UI Admin"/>
+  <article:Plugin name="org.eclipse.emf.cdo.ui.compare" label="CDO Model Repository Client UI Compare">
+    <packages name="org.eclipse.emf.cdo.ui.compare"/>
+  </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.ui.ide" label="CDO Model Repository Client UI IDE">
     <packages name="org.eclipse.emf.cdo.ui.ide"/>
   </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.ui.team" label="CDO Model Repository Client UI Team"/>
   <article:Plugin name="org.eclipse.emf.cdo.workspace" label="CDO Model Repository Client Workspace">
     <packages name="org.eclipse.emf.cdo.spi.workspace"/>
     <packages name="org.eclipse.emf.cdo.workspace"/>

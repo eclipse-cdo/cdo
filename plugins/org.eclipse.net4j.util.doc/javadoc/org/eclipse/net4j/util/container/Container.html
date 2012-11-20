@@ -95,7 +95,8 @@ Class Container&lt;E&gt;</H2>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
   <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</A>
       <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.Lifecycle</A>
-          <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.container.Container&lt;E&gt;</B>
+          <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ShareableLifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.ShareableLifecycle</A>
+              <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.container.Container&lt;E&gt;</B>
 </PRE>
 <DL>
 <DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;E&gt;, <A HREF="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</A></DD>
@@ -106,7 +107,7 @@ Class Container&lt;E&gt;</H2>
 <HR>
 <DL>
   <DT>public abstract class <B>Container&lt;E&gt;</B>
-  <DD>extends <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</A>
+  <DD>extends <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ShareableLifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">ShareableLifecycle</A>
   <DD>implements <A HREF="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;E&gt;
 </DL>
 
@@ -114,8 +115,8 @@ Class Container&lt;E&gt;</H2>
 <area shape="rect" id="node1" href="IContainer.html" title="&#171;interface&#187; IContainer" alt="" coords="60,5,145,45"/>
 <area shape="rect" id="node2" href="../registry/Registry.html" title="Registry (org.eclipse.net4j.util.registry)" alt="" coords="5,149,197,189"/>
 <area shape="rect" id="node3" href="Container.html" title="Container" alt="" coords="149,85,227,110"/>
-<area shape="rect" id="node4" href="SetContainer.html" title="SetContainer" alt="" coords="227,157,324,182"/>
-<area shape="rect" id="node5" href="../lifecycle/Lifecycle.html" title="Lifecycle (org.eclipse.net4j.util.lifecycle)" alt="" coords="175,5,372,45"/>
+<area shape="rect" id="node4" href="../lifecycle/ShareableLifecycle.html" title="ShareableLifecycle (org.eclipse.net4j.util.lifecycle)" alt="" coords="175,5,372,45"/>
+<area shape="rect" id="node5" href="SetContainer.html" title="SetContainer" alt="" coords="227,157,324,182"/>
 </map>
 
 <CENTER><IMG SRC="Container.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -188,6 +189,12 @@ An abstract base implementation of a <A HREF="../../../../../org/eclipse/net4j/u
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/container/Container.html#Container()">Container</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/container/Container.html#Container(boolean)">Container</A></B>(boolean&nbsp;shareable)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -357,6 +364,18 @@ Container</H3>
 <PRE>
 public <B>Container</B>()</PRE>
 <DL>
+</DL>
+<HR>
+
+<A NAME="Container(boolean)"><!-- --></A><H3>
+Container</H3>
+<PRE>
+public <B>Container</B>(boolean&nbsp;shareable)</PRE>
+<DL>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>3.3</DD>
+</DL>
 </DL>
 
 <!-- ============ METHOD DETAIL ========== -->

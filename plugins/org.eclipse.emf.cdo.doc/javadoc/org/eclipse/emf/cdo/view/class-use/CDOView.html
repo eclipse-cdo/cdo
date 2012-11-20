@@ -200,7 +200,17 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title=
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/compare/CloseableComparison.html" title="interface in org.eclipse.emf.cdo.compare">CloseableComparison</A></CODE></FONT></TD>
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>CDOComparisonScope.Minimal.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.Minimal.html#collectRequiredParentID(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.id.CDOID, java.util.Set)">collectRequiredParentID</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;view,
+                        <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id,
+                        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;&nbsp;requiredParentIDs)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOComparison.html" title="class in org.eclipse.emf.cdo.compare">CDOComparison</A></CODE></FONT></TD>
 <TD><CODE><B>CDOCompareUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">compare</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
         <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;right)</CODE>
 
@@ -209,7 +219,7 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title=
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/compare/CloseableComparison.html" title="interface in org.eclipse.emf.cdo.compare">CloseableComparison</A></CODE></FONT></TD>
+<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOComparison.html" title="class in org.eclipse.emf.cdo.compare">CDOComparison</A></CODE></FONT></TD>
 <TD><CODE><B>CDOCompareUtil.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)">compare</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
         <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;right,
         boolean&nbsp;tryThreeWay)</CODE>
@@ -227,10 +237,10 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title=
 <TH ALIGN="left" COLSPAN="2">Constructors in <A HREF="../../../../../../org/eclipse/emf/cdo/compare/package-summary.html">org.eclipse.emf.cdo.compare</A> with parameters of type <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.CDOComparisonScope.Minimal.html#CDOCompareUtil.CDOComparisonScope.Minimal(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView, java.util.Set)">CDOCompareUtil.CDOComparisonScope.Minimal</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
-                                          <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;rightView,
-                                          <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;originView,
-                                          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;&nbsp;ids)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.Minimal.html#CDOComparisonScope.Minimal(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView, java.util.Set)">CDOComparisonScope.Minimal</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;leftView,
+                           <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;rightView,
+                           <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;originView,
+                           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;&nbsp;ids)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -641,7 +651,7 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title=
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected &nbsp;void</CODE></FONT></TD>
+<CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>CDOItemProvider.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillView(org.eclipse.jface.action.IMenuManager, org.eclipse.emf.cdo.view.CDOView)">fillView</A></B>(<A HREF="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</A>&nbsp;manager,
          <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;view)</CODE>
 
@@ -865,6 +875,14 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title=
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>[]</CODE></FONT></TD>
+<TD><CODE><B>CDOViewContainer.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#getViews(org.eclipse.emf.cdo.common.branch.CDOBranch)">getViews</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an array of all <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>views</CODE></A> and <A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transactions</CODE></A> of this session that are open on the given branch.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -1211,7 +1229,7 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title=
               <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;lockType)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>CDOSessionProtocol#unlockObjects2(CDOView, Collection, LockType, boolean)</CODE> instead.</I></TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Not called anymore. Use <CODE>#unlockObjects2(CDOView, Collection, LockType, boolean)</CODE> instead.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">

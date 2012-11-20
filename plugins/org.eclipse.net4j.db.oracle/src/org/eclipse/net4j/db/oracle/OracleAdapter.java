@@ -14,25 +14,18 @@ package org.eclipse.net4j.db.oracle;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
-import org.eclipse.net4j.db.ddl.IDBIndex;
-import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.db.oracle.internal.bundle.OM;
 import org.eclipse.net4j.spi.db.DBAdapter;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import javax.sql.DataSource;
 
 import java.sql.Driver;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class OracleAdapter extends DBAdapter
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SQL, DBAdapter.class);
-
   public static final String NAME = "oracle"; //$NON-NLS-1$
 
   public static final String VERSION = "11.1.0.7"; //$NON-NLS-1$
@@ -57,56 +50,6 @@ public class OracleAdapter extends DBAdapter
     {
       throw new DBException(e);
     }
-  }
-
-  @Override
-  protected void createIndex(IDBIndex index, Statement statement, int num) throws SQLException
-  {
-    IDBTable table = index.getTable();
-    StringBuilder builder = new StringBuilder();
-    builder.append("CREATE "); //$NON-NLS-1$
-    if (index.getType() == IDBIndex.Type.UNIQUE || index.getType() == IDBIndex.Type.PRIMARY_KEY)
-    {
-      builder.append("UNIQUE "); //$NON-NLS-1$
-    }
-
-    builder.append("INDEX I"); //$NON-NLS-1$
-    builder.append(System.currentTimeMillis());
-
-    try
-    {
-      Thread.sleep(1);
-    }
-    catch (InterruptedException ex)
-    {
-      OM.LOG.error(ex);
-      return;
-    }
-
-    builder.append("_");
-    builder.append(num);
-    builder.append(" ON "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append(" ("); //$NON-NLS-1$
-    IDBField[] fields = index.getFields();
-    for (int i = 0; i < fields.length; i++)
-    {
-      if (i != 0)
-      {
-        builder.append(", "); //$NON-NLS-1$
-      }
-
-      addIndexField(builder, fields[i]);
-    }
-
-    builder.append(")"); //$NON-NLS-1$
-    String sql = builder.toString();
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace(sql);
-    }
-
-    statement.execute(sql);
   }
 
   public String[] getReservedWords()

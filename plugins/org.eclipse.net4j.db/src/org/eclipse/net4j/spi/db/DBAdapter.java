@@ -83,6 +83,8 @@ public abstract class DBAdapter implements IDBAdapter
 
   private Set<String> reservedWords;
 
+  private int indexCounter;
+
   public DBAdapter(String name, String version)
   {
     this.name = name;
@@ -303,9 +305,7 @@ public abstract class DBAdapter implements IDBAdapter
     }
 
     builder.append("INDEX "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append("_idx"); //$NON-NLS-1$
-    builder.append(num);
+    builder.append(getIndexNameFor(index, num));
     builder.append(" ON "); //$NON-NLS-1$
     builder.append(table);
     builder.append(" ("); //$NON-NLS-1$
@@ -328,6 +328,14 @@ public abstract class DBAdapter implements IDBAdapter
     }
 
     statement.execute(sql);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected String getIndexNameFor(IDBIndex index, int num)
+  {
+    return "I" + System.currentTimeMillis() + "_" + ++indexCounter;
   }
 
   protected void addIndexField(StringBuilder builder, IDBField field)

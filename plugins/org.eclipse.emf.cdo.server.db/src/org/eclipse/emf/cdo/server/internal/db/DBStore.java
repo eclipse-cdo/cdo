@@ -827,6 +827,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     }
     catch (SQLException ex)
     {
+      connection.rollback();
       if (dbAdapter.isTableNotFoundException(ex))
       {
         return FIRST_START;

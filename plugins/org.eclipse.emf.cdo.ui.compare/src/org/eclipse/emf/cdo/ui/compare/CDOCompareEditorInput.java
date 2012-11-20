@@ -85,7 +85,7 @@ public class CDOCompareEditorInput extends CompareEditorInput
       ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(registry);
 
       final CompareEditorInput input = new CDOCompareEditorInput(configuration, adapterFactory);
-      input.setTitle("My own compare dialog");
+      input.setTitle("Model Comparison");
 
       configuration.setContainer(input);
       CompareUI.openCompareDialog(input);

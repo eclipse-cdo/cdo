@@ -48,7 +48,7 @@ public class CDOHistoryPage extends HistoryPage
 {
   private CommitHistoryComposite commitHistoryComposite;
 
-  private boolean commitOnDoubleClick = true;
+  private boolean commitOnDoubleClick;
 
   private Input input;
 
@@ -253,10 +253,6 @@ public class CDOHistoryPage extends HistoryPage
 
     manager.add(new Action("Test Commit on Double Click", SWT.CHECK)
     {
-      {
-        setChecked(commitOnDoubleClick);
-      }
-
       @Override
       public void run()
       {

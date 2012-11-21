@@ -209,8 +209,8 @@ public final class CDOServerUtil
     String type = RepositoryFactory.TYPE;
     String name = repository.getName();
 
-    container.putElement(productGroup, type, name, repository);
     LifecycleUtil.activate(repository);
+    container.putElement(productGroup, type, name, repository);
   }
 
   public static IRepository getRepository(IManagedContainer container, String name)

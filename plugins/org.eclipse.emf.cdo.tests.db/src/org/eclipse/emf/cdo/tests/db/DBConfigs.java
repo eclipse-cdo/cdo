@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.tests.AllConfigs;
+import org.eclipse.emf.cdo.tests.AuditEMapTest;
 import org.eclipse.emf.cdo.tests.AuditSameSessionTest;
 import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.BranchingSameSessionTest;
@@ -55,6 +56,7 @@ public abstract class DBConfigs extends AllConfigs
     {
       // non-audit mode - remove audit tests
       testClasses.remove(AuditTest.class);
+      testClasses.remove(AuditEMapTest.class);
       testClasses.remove(AuditSameSessionTest.class);
       testClasses.remove(Bugzilla_252214_Test.class);
     }

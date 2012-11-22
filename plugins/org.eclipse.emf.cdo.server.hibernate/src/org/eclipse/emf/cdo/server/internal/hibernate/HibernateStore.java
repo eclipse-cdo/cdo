@@ -673,7 +673,7 @@ public class HibernateStore extends Store implements IHibernateStore
       {
         auditEPackages = createAuditEPackages(cdoDataStore);
         final String auditMapping = mapAuditingEPackages(cdoDataStore, auditEPackages);
-        System.err.println(auditMapping);
+        // System.err.println(auditMapping);
         hibernateConfiguration.addXML(auditMapping);
         cdoDataStore.setAuditing(true);
       }

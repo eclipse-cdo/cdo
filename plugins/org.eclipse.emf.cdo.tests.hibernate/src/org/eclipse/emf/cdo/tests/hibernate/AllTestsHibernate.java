@@ -25,23 +25,29 @@ import org.eclipse.emf.cdo.tests.LockingManagerTest;
 import org.eclipse.emf.cdo.tests.LockingNotificationsTest;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
 import org.eclipse.emf.cdo.tests.MultiValuedOfAttributeTest;
+import org.eclipse.emf.cdo.tests.PackageRegistryTest;
+import org.eclipse.emf.cdo.tests.SecurityManagerTest;
 import org.eclipse.emf.cdo.tests.UnsetTest;
 import org.eclipse.emf.cdo.tests.WorkspaceTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_272861_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_279982_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_303466_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_306998_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_322804_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_334995_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_347964_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_351393_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_352204_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_359966_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_362270_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_365832_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_381472_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_390185_Test;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
-import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.util.CommitException;
 
 import java.util.List;
@@ -54,8 +60,6 @@ import junit.framework.TestSuite;
  */
 public class AllTestsHibernate extends AllConfigs
 {
-  public static final RepositoryConfig HIBERNATE = HibernateConfig.INSTANCE;
-
   public static Test suite()
   {
     return new AllTestsHibernate().getTestSuite("CDO Tests (Hibernate)");
@@ -64,21 +68,15 @@ public class AllTestsHibernate extends AllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, HIBERNATE, JVM, NATIVE);
+    addScenario(parent, COMBINED, HibernateConfig.INSTANCE, JVM, NATIVE);
+    addScenario(parent, COMBINED, HibernateConfig.AUDIT_INSTANCE, JVM, NATIVE);
   }
 
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
-    // testClasses.clear();
-
-    // removed stalls
-    // testClasses.remove(AuditSameSessionTest.class);
-    // testClasses.add(AuditTest.class);
-    // testClasses.add(AuditSameSessionTest.class);
-    // testClasses.add(StickyViewsTest.class);
-
-    // testClasses.add(HibernateQueryTest.class);
+    testClasses.clear();
+    // testClasses.add(Bugzilla_306998_Test.class);
     // if (true)
     // {
     // return;
@@ -100,6 +98,39 @@ public class AllTestsHibernate extends AllConfigs
     testClasses.add(HibernateBugzilla_362270_Test.class);
 
     super.initTestClasses(testClasses, scenario);
+
+    // for some reason this test needs to be done first...
+    testClasses.remove(Bugzilla_306998_Test.class);
+    testClasses.add(0, Bugzilla_306998_Test.class);
+
+    // the hb store throws an error on deadlocked transaction
+    // and does not block
+    testClasses.remove(Bugzilla_390185_Test.class);
+
+    if (scenario.getCapabilities().contains(IRepositoryConfig.CAPABILITY_AUDITING))
+    {
+      // the security model inherits from the ecore model
+      // not so well supported for now
+      testClasses.remove(SecurityManagerTest.class);
+
+      // the package registry count changes when auditing
+      // as auditing adds epackages
+      testClasses.remove(PackageRegistryTest.class);
+      testClasses.add(HibernatePackageRegistryTest.class);
+      testClasses.remove(Bugzilla_303466_Test.class);
+      testClasses.add(Hibernate_Bugzilla_303466_Test.class);
+    }
+    else
+    {
+      testClasses.remove(CommitInfoTest.class);
+    }
+
+    // renaming a resource is not possible in the hibernate store.
+    testClasses.remove(Bugzilla_334995_Test.class);
+
+    // repository restart is not supported in the hibernate store
+    // as it clears the database
+    testClasses.remove(Bugzilla_347964_Test.class);
 
     // workspaces are not supported
     testClasses.remove(WorkspaceTest.class);
@@ -142,17 +173,8 @@ public class AllTestsHibernate extends AllConfigs
     testClasses.remove(LockingNotificationsTest.class);
     testClasses.remove(LockingManagerRestartRepositoryTest.class);
 
-    // Commit info not supported
-    testClasses.remove(CommitInfoTest.class);
-
     // Locking manager not supported
     testClasses.remove(LockingManagerTest.class);
-
-    // audit support to do
-    // bug 244141
-    // testClasses.remove(AuditTest.class);
-    // testClasses.remove(AuditSameSessionTest.class);
-    // testClasses.remove(Bugzilla_252214_Test.class);
 
     // problem with wrong version of EMF Compare
     testClasses.remove(EMFCompareTest.class);
@@ -198,6 +220,22 @@ public class AllTestsHibernate extends AllConfigs
   {
     @Override
     public void testUnsettableBaseTypeVsObjectType()
+    {
+    }
+  }
+
+  public static class HibernatePackageRegistryTest extends PackageRegistryTest
+  {
+
+    @Override
+    @CleanRepositoriesBefore
+    public void testCommitNestedPackages() throws Exception
+    {
+    }
+
+    @Override
+    @CleanRepositoriesBefore
+    public void testCommitTopLevelPackages() throws Exception
     {
     }
   }
@@ -256,5 +294,16 @@ public class AllTestsHibernate extends AllConfigs
       hbConfig.getAdditionalProperties().clear();
       super.doTearDown();
     }
+  }
+
+  public static class Hibernate_Bugzilla_303466_Test extends Bugzilla_303466_Test
+  {
+
+    @Override
+    @CleanRepositoriesBefore
+    public void test_missingDependency() throws Exception
+    {
+    }
+
   }
 }

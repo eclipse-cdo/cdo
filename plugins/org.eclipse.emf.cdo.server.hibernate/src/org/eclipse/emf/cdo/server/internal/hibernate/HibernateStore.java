@@ -16,7 +16,9 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
+import org.eclipse.emf.cdo.internal.server.TransactionCommitContext.TransactionPackageRegistry;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
@@ -46,9 +48,12 @@ import org.eclipse.emf.teneo.annotations.pamodel.PAnnotatedModel;
 import org.eclipse.emf.teneo.hibernate.EMFInterceptor;
 import org.eclipse.emf.teneo.hibernate.HbDataStore;
 import org.eclipse.emf.teneo.hibernate.HbSessionDataStore;
+import org.eclipse.emf.teneo.hibernate.auditing.AuditHandler;
+import org.eclipse.emf.teneo.hibernate.auditing.AuditProcessHandler;
 import org.eclipse.emf.teneo.hibernate.auditing.model.teneoauditing.TeneoauditingPackage;
 import org.eclipse.emf.teneo.hibernate.mapper.HibernateMappingGenerator;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
@@ -106,6 +111,8 @@ public class HibernateStore extends Store implements IHibernateStore
   private static ThreadLocal<HibernateStore> currentHibernateStore = new ThreadLocal<HibernateStore>();
 
   private HbSessionDataStore cdoDataStore;
+
+  private HibernateAuditHandler hibernateAuditHandler;
 
   private HibernatePackageHandler packageHandler;
 
@@ -328,6 +335,23 @@ public class HibernateStore extends Store implements IHibernateStore
     return cdoDataStore.getSessionFactory();
   }
 
+  public void ensureCorrectPackageRegistry()
+  {
+    if (cdoDataStore == null)
+    {
+      return;
+    }
+    if (cdoDataStore.getPackageRegistry() instanceof TransactionPackageRegistry)
+    {
+      setInteralPackageRegistry();
+    }
+  }
+
+  private synchronized void setInteralPackageRegistry()
+  {
+    cdoDataStore.setPackageRegistry(getRepository().getPackageRegistry(false));
+  }
+
   public Connection getConnection()
   {
     String connectionURL = getProperties().getProperty("hibernate.connection.url");
@@ -501,6 +525,16 @@ public class HibernateStore extends Store implements IHibernateStore
     }
 
     cdoDataStore = null;
+    hibernateAuditHandler = null;
+    // get rid of the audit epackages
+    if (auditEPackages != null)
+    {
+      for (EPackage ePackage : auditEPackages)
+      {
+        getRepository().getPackageRegistry().remove(ePackage.getNsURI());
+      }
+      auditEPackages = null;
+    }
     LifecycleUtil.deactivate(packageHandler, OMLogger.Level.WARN);
     super.doDeactivate();
   }
@@ -560,11 +594,19 @@ public class HibernateStore extends Store implements IHibernateStore
       PackageRegistryProvider.getInstance().setThreadPackageRegistry(getRepository().getPackageRegistry());
 
       cdoDataStore = new CDODataStore();
+      hibernateAuditHandler = new HibernateAuditHandler();
+      hibernateAuditHandler.setCdoDataStore(cdoDataStore);
+      hibernateAuditHandler.setHibernateStore(this);
+
       cdoDataStore.setResetConfigurationOnInitialization(false);
       cdoDataStore.setName("cdo");
       cdoDataStore.setPackageRegistry(getRepository().getPackageRegistry());
       cdoDataStore.getExtensionManager().registerExtension(EMFInterceptor.class.getName(),
           CDOInterceptor.class.getName());
+      cdoDataStore.getExtensionManager().registerExtension(AuditHandler.class.getName(),
+          CDOAuditHandler.class.getName());
+      cdoDataStore.getExtensionManager().registerExtension(AuditProcessHandler.class.getName(),
+          CDOAuditProcessHandler.class.getName());
 
       // don't do any persistence xml mapping in this datastore
       // make a local copy as it is adapted in the next if-statement
@@ -581,7 +623,6 @@ public class HibernateStore extends Store implements IHibernateStore
       {
         mappingProvider.setHibernateStore(this);
         mappingXml = mappingProvider.getMapping();
-        System.err.println(mappingXml);
         hibernateConfiguration.addXML(mappingXml);
       }
 
@@ -687,8 +728,16 @@ public class HibernateStore extends Store implements IHibernateStore
             getRepository().getPackageRegistry(), po));
       }
     }
+    epacks.add(dataStore.getAuditHandler().createAuditingEPackage(dataStore, EresourcePackage.eINSTANCE,
+        getRepository().getPackageRegistry(), po));
     epacks.add(TeneoauditingPackage.eINSTANCE);
     getRepository().getPackageRegistry().put(TeneoauditingPackage.eNS_URI, TeneoauditingPackage.eINSTANCE);
+
+    // also register them all in the non-transaction registry
+    for (EPackage ePackage : epacks)
+    {
+      getRepository().getPackageRegistry(false).put(ePackage.getNsURI(), ePackage);
+    }
     return epacks;
   }
 
@@ -739,6 +788,57 @@ public class HibernateStore extends Store implements IHibernateStore
       if (getPersistenceOptions().getMappingFilePath() != null || getPersistenceOptions().isUseMappingFile())
       {
         super.mapModel();
+      }
+    }
+  }
+
+  public HibernateAuditHandler getHibernateAuditHandler()
+  {
+    ensureCorrectPackageRegistry();
+    return hibernateAuditHandler;
+  }
+
+  public void setHibernateAuditHandler(HibernateAuditHandler hibernateAuditHandler)
+  {
+    this.hibernateAuditHandler = hibernateAuditHandler;
+  }
+
+  public static class CDOAuditProcessHandler extends AuditProcessHandler
+  {
+
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    protected long getCommitTime()
+    {
+      if (HibernateThreadContext.isCommitContextSet())
+      {
+        return HibernateThreadContext.getCommitContext().getCommitContext().getBranchPoint().getTimeStamp();
+      }
+      return super.getCommitTime();
+    }
+
+    @Override
+    protected void doAuditWorkInSession(Session session, List<AuditWork> auditWorks)
+    {
+      try
+      {
+        PackageRegistryProvider.getInstance().setThreadPackageRegistry(getDataStore().getPackageRegistry());
+
+        if (HibernateThreadContext.isCommitContextSet())
+        {
+          AuditProcessHandler.setCurrentUserName(HibernateThreadContext.getCommitContext().getCommitContext()
+              .getUserID());
+          AuditProcessHandler.setCurrentComment(HibernateThreadContext.getCommitContext().getCommitContext()
+              .getCommitComment());
+        }
+        super.doAuditWorkInSession(session, auditWorks);
+      }
+      finally
+      {
+        PackageRegistryProvider.getInstance().setThreadPackageRegistry(null);
+        AuditProcessHandler.setCurrentUserName(null);
+        AuditProcessHandler.setCurrentComment(null);
       }
     }
   }

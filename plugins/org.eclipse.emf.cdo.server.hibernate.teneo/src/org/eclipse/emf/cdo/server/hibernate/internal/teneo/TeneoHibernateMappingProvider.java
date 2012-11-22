@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.server.internal.hibernate.HibernateMappingProvider;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOBlobUserType;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOClobUserType;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -29,6 +30,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import org.eclipse.emf.teneo.Constants;
@@ -144,6 +146,7 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     addTransientAnnotationToEClass(EtypesPackage.eINSTANCE.getAnnotation());
     addTypeAnnotationToEDataType(EtypesPackage.eINSTANCE.getBlob(), CDOBlobUserType.class.getName());
     addTypeAnnotationToEDataType(EtypesPackage.eINSTANCE.getClob(), CDOClobUserType.class.getName());
+    addTypeAnnotationToAuditingResourcePackage();
 
     final CDOMappingGenerator mappingGenerator = new CDOMappingGenerator();
     mappingGenerator.getExtensions().putAll(extensions);
@@ -218,6 +221,26 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
       eAnnotation.getDetails().put("value", typeAnnotation);
       eDataType.getEAnnotations().add(eAnnotation);
     }
+  }
+
+  private void addTypeAnnotationToAuditingResourcePackage()
+  {
+    addTypeAnnotationToAuditingResourceContents(EresourcePackage.eINSTANCE.getCDOResource_Contents());
+    addTypeAnnotationToAuditingResourceContents(EresourcePackage.eINSTANCE.getCDOResourceFolder_Nodes());
+  }
+
+  private void addTypeAnnotationToAuditingResourceContents(EStructuralFeature eFeature)
+  {
+    EAnnotation eAnnotation = eFeature.getEAnnotation(Constants.ANNOTATION_SOURCE_TENEO_JPA_AUDITING);
+    if (eAnnotation != null)
+    {
+      return;
+    }
+    eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+    eAnnotation.setSource(Constants.ANNOTATION_SOURCE_TENEO_JPA_AUDITING);
+    final String typeAnnotation = "@Type(type=\"" + CDOIDUserType.class.getName() + "\")";
+    eAnnotation.getDetails().put("value", typeAnnotation);
+    eFeature.getEAnnotations().add(eAnnotation);
   }
 
   private void addTransientAnnotationToEClass(EClass eClass)

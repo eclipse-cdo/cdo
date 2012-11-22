@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
@@ -38,6 +39,8 @@ import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.WrappedHibernateList;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
+import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
@@ -65,6 +68,10 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.teneo.Constants;
+import org.eclipse.emf.teneo.hibernate.auditing.model.teneoauditing.TeneoAuditCommitInfo;
+import org.eclipse.emf.teneo.hibernate.auditing.model.teneoauditing.TeneoAuditEntry;
+import org.eclipse.emf.teneo.hibernate.auditing.model.teneoauditing.TeneoauditingPackage;
 
 import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
@@ -360,6 +367,18 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       return null;
     }
 
+    if (getStore().isAuditing() && branchPoint.getTimeStamp() != 0)
+    {
+      InternalCDORevision revision = getStore().getHibernateAuditHandler().readRevision(getHibernateSession(), id,
+          branchPoint.getTimeStamp());
+      // found one, use it
+      if (revision != null)
+      {
+        revision.setBranchPoint(getStore().getMainBranchHead());
+        return revision;
+      }
+    }
+
     final InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(id);
     if (revision == null)
     {
@@ -403,8 +422,49 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
-    // TODO: implement HibernateStoreAccessor.loadCommitInfos(branch, startTime, endTime, handler)
-    // throw new UnsupportedOperationException();
+    // no commit info support
+    if (!getStore().isAuditing())
+    {
+      return;
+    }
+
+    final Session session = getHibernateSession();
+    final InternalCDOCommitInfoManager commitInfoManager = getStore().getRepository().getCommitInfoManager();
+
+    // only get a specific range of objects
+    String direction = " desc ";
+    int count = 0;
+    if (endTime < CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      count = CDOCommitInfoUtil.decodeCount(endTime);
+      if (count < 0)
+      {
+        direction = " desc ";
+        count = -1 * count;
+      }
+      else
+      {
+        direction = " asc ";
+      }
+    }
+
+    final String qryStr = "select e from TeneoAuditCommitInfo e where e.commitTime>=:startTime and e.commitTime<=:endTime order by e.commitTime "
+        + direction;
+    final Query qry = session.createQuery(qryStr);
+    if (count > 0)
+    {
+      qry.setMaxResults(count);
+    }
+    qry.setParameter("startTime", startTime);
+    qry.setParameter("endTime", endTime == CDOBranchPoint.UNSPECIFIED_DATE || endTime < 0 ? Long.MAX_VALUE : endTime);
+    for (Object o : qry.list())
+    {
+      final TeneoAuditCommitInfo teneoCommitInfo = (TeneoAuditCommitInfo)o;
+      final CDOCommitInfo cdoCommitInfo = commitInfoManager.createCommitInfo(getStore().getRepository()
+          .getBranchManager().getMainBranch(), teneoCommitInfo.getCommitTime(), teneoCommitInfo.getCommitTime() - 1,
+          teneoCommitInfo.getUser(), teneoCommitInfo.getComment(), null);
+      handler.handleCommitInfo(cdoCommitInfo);
+    }
   }
 
   public Set<CDOID> readChangeSet(OMMonitor monitor, CDOChangeSetSegment... segments)
@@ -418,12 +478,19 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   {
     if (eClass != null)
     {
-      handleRevisionsByEClass(eClass, handler);
+      handleRevisionsByEClass(eClass, handler, timeStamp);
     }
     else
     {
       for (EPackage ePackage : getStore().getPackageHandler().getEPackages())
       {
+        // an auditing epackage
+        if (ePackage == TeneoauditingPackage.eINSTANCE
+            || ePackage.getEAnnotation(Constants.ANNOTATION_SOURCE_AUDITING) != null)
+        {
+          continue;
+        }
+
         for (EClassifier eClassifier : ePackage.getEClassifiers())
         {
           if (eClassifier instanceof EClass)
@@ -438,26 +505,37 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
               // a non-mapped eclass
               continue;
             }
-            handleRevisionsByEClass(eClazz, handler);
+            handleRevisionsByEClass(eClazz, handler, timeStamp);
           }
         }
       }
     }
   }
 
-  private void handleRevisionsByEClass(EClass eClass, CDORevisionHandler handler)
+  private void handleRevisionsByEClass(EClass eClass, CDORevisionHandler handler, long timeStamp)
   {
     // get a transaction, the hibernateStoreAccessor is placed in a threadlocal
     // so all db access uses the same session.
     final Session session = getHibernateSession();
-
-    // create the query
-    final Query query = session.createQuery("select e from " + getStore().getEntityName(eClass) + " e");
-    for (Object o : query.list())
+    try
     {
-      handler.handleRevision((CDORevision)o);
+      if (timeStamp > 0)
+      {
+        getStore().getHibernateAuditHandler().handleRevisionsByEClass(session, eClass, handler, timeStamp);
+        return;
+      }
+
+      // create the query
+      final Query query = session.createQuery("select e from " + getStore().getEntityName(eClass) + " e");
+      for (Object o : query.list())
+      {
+        handler.handleRevision((CDORevision)o);
+      }
     }
-    session.clear();
+    finally
+    {
+      session.clear();
+    }
   }
 
   /**
@@ -486,25 +564,48 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
    */
   public void queryResources(QueryResourcesContext context)
   {
+    final Session session = getHibernateSession();
+
     final CDOID folderID = getHibernateID(context.getFolderID());
     String name = context.getName();
     boolean exactMatch = context.exactMatch();
+    final HibernateAuditHandler hibernateAuditHandler = getStore().getHibernateAuditHandler();
 
-    final Session session = getHibernateSession();
-    final Criteria criteria = session.createCriteria(EresourcePackage.eINSTANCE.getCDOResourceNode().getName());
-    if (folderID == null)
+    List<?> result = null;
+    if (context.getTimeStamp() == 0 || !getStore().isAuditing())
     {
-      criteria.add(org.hibernate.criterion.Restrictions.isNull("folder"));
+
+      final Criteria criteria = session.createCriteria(EresourcePackage.eINSTANCE.getCDOResourceNode().getName());
+      if (folderID == null)
+      {
+        criteria.add(org.hibernate.criterion.Restrictions.isNull("folder"));
+      }
+      else
+      {
+        criteria
+            .add(org.hibernate.criterion.Restrictions.eq("folder.id", ((AbstractCDOIDLong)folderID).getLongValue()));
+      }
+
+      result = criteria.list();
     }
     else
     {
-      criteria.add(org.hibernate.criterion.Restrictions.eq("folder.id", ((AbstractCDOIDLong)folderID).getLongValue()));
+      result = hibernateAuditHandler.getCDOResources(session, folderID, context.getTimeStamp());
     }
 
-    List<?> result = criteria.list();
     for (Object o : result)
     {
-      final CDORevision revision = (CDORevision)o;
+      final CDORevision revision;
+      if (o instanceof CDORevision)
+      {
+        revision = (CDORevision)o;
+      }
+      else
+      {
+        final TeneoAuditEntry teneoAuditEntry = (TeneoAuditEntry)o;
+        revision = hibernateAuditHandler.getCDORevision(session, teneoAuditEntry);
+      }
+
       final EStructuralFeature feature = revision.getEClass().getEStructuralFeature(NAME_EFEATURE_NAME);
       if (feature != null)
       {
@@ -844,7 +945,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
       String comment, OMMonitor monitor)
   {
-    // Do nothing
+    // is done in dowrite
   }
 
   @Override
@@ -1063,6 +1164,9 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
       OMMonitor monitor)
   {
+    System.err.println(timeStamp);
+    System.err.println(previousTimeStamp);
+
     // don't support commit info, but don't throw an exception either
     // throw new UnsupportedOperationException();
   }
@@ -1094,6 +1198,13 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       clearThreadState();
     }
+  }
+
+  @Override
+  public void release()
+  {
+    super.release();
+    getStore().ensureCorrectPackageRegistry();
   }
 
   @Override

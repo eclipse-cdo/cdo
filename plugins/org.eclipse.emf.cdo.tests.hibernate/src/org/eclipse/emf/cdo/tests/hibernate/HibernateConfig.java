@@ -30,7 +30,9 @@ public class HibernateConfig extends RepositoryConfig
 {
   public static final String STORE_NAME = "Hibernate";
 
-  public static final HibernateConfig INSTANCE = new HibernateConfig();
+  public static final HibernateConfig INSTANCE = new HibernateConfig(false);
+
+  public static final HibernateConfig AUDIT_INSTANCE = new HibernateConfig(true);
 
   public static final String MAPPING_FILE = "mappingfile";
 
@@ -38,9 +40,9 @@ public class HibernateConfig extends RepositoryConfig
 
   private Map<String, String> additionalProperties = new HashMap<String, String>();
 
-  public HibernateConfig()
+  public HibernateConfig(boolean supportAuditing)
   {
-    super(STORE_NAME, true, false, IDGenerationLocation.STORE);
+    super(STORE_NAME, supportAuditing, false, IDGenerationLocation.STORE);
   }
 
   @Override

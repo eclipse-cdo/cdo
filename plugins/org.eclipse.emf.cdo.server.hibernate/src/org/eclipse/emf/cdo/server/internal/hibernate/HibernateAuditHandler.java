@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
@@ -18,6 +19,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.common.util.Enumerator;
@@ -34,7 +36,6 @@ import org.eclipse.emf.teneo.hibernate.auditing.model.teneoauditing.TeneoAuditKi
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -50,9 +51,23 @@ public class HibernateAuditHandler
 
   private HbDataStore cdoDataStore;
 
-  public AuditHandler getAuditHandler()
+  public CDOAuditHandler getCDOAuditHandler()
   {
-    return cdoDataStore.getAuditHandler();
+    return (CDOAuditHandler)cdoDataStore.getAuditHandler();
+  }
+
+  public InternalCDORevision readRevisionByVersion(Session session, CDOID id, int version)
+  {
+    final CDOClassifierRef classifierRef = CDOIDUtil.getClassifierRef(id);
+    if (classifierRef == null)
+    {
+      throw new IllegalArgumentException("This CDOID type of " + id + " is not supported by this store."); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+    final EClass eClass = HibernateUtil.getInstance().getEClass(classifierRef);
+    AuditVersionProvider auditVersionProvider = cdoDataStore.getAuditVersionProvider();
+    auditVersionProvider.setSession(session);
+    final TeneoAuditEntry auditEntry = auditVersionProvider.getAuditEntryForVersion(eClass, id, version);
+    return (InternalCDORevision)getCDORevision(session, auditEntry);
   }
 
   public InternalCDORevision readRevision(Session session, CDOID id, long timeStamp)
@@ -72,10 +87,6 @@ public class HibernateAuditHandler
     AuditVersionProvider auditVersionProvider = cdoDataStore.getAuditVersionProvider();
     auditVersionProvider.setSession(session);
     final TeneoAuditEntry auditEntry = auditVersionProvider.getAuditEntry(eClass, id, timeStamp);
-    if (auditEntry.getTeneo_audit_kind() == TeneoAuditKind.DELETE)
-    {
-      return null;
-    }
     return getCDORevision(session, auditEntry);
   }
 
@@ -87,17 +98,37 @@ public class HibernateAuditHandler
 
   protected CDORevision convertAuditEntryToCDORevision(TeneoAuditEntry teneoAuditEntry)
   {
-    final HibernateStoreAccessor storeAccessor = HibernateThreadContext.getCurrentStoreAccessor();
-    final EClass domainEClass = getAuditHandler().getModelElement(teneoAuditEntry.eClass());
-    final CDOID cdoID = HibernateUtil.getInstance().convertStringToCDOID(teneoAuditEntry.getTeneo_object_id());
-    final InternalCDORevision revision = hibernateStore.createRevision(domainEClass, cdoID);
-    revision.setBranchPoint(storeAccessor.getStore().getMainBranchHead().getBranch()
-        .getPoint(teneoAuditEntry.getTeneo_start()));
-    if (teneoAuditEntry.getTeneo_end() > 0)
+    if (teneoAuditEntry == null)
     {
-      revision.setRevised(teneoAuditEntry.getTeneo_end());
+      return null;
     }
-    convertContent(teneoAuditEntry, revision);
+    final HibernateStoreAccessor storeAccessor = HibernateThreadContext.getCurrentStoreAccessor();
+    final EClass domainEClass = getCDOAuditHandler().getModelElement(teneoAuditEntry.eClass());
+    final CDOID cdoID = HibernateUtil.getInstance().convertStringToCDOID(teneoAuditEntry.getTeneo_object_id());
+    final InternalCDORevision revision;
+    if (teneoAuditEntry.getTeneo_audit_kind() == TeneoAuditKind.DELETE)
+    {
+      revision = new DetachedCDORevision(domainEClass, cdoID, hibernateStore.getRepository().getBranchManager()
+          .getMainBranch(), new Long(teneoAuditEntry.getTeneo_object_version()).intValue(),
+          teneoAuditEntry.getTeneo_start(), CDOBranchPoint.UNSPECIFIED_DATE);
+      revision.setRevised(CDOBranchPoint.UNSPECIFIED_DATE);
+    }
+    else
+    {
+      revision = hibernateStore.createRevision(domainEClass, cdoID);
+      revision.setVersion(new Long(teneoAuditEntry.getTeneo_object_version()).intValue());
+      revision.setBranchPoint(storeAccessor.getStore().getMainBranchHead().getBranch()
+          .getPoint(teneoAuditEntry.getTeneo_start()));
+      if (teneoAuditEntry.getTeneo_end() > 0)
+      {
+        revision.setRevised(teneoAuditEntry.getTeneo_end());
+      }
+      else
+      {
+        revision.setRevised(CDOBranchPoint.UNSPECIFIED_DATE);
+      }
+      convertContent(teneoAuditEntry, revision);
+    }
     return revision;
   }
 
@@ -161,7 +192,7 @@ public class HibernateAuditHandler
 
   public List<?> getCDOResources(Session session, CDOID folderId, long timeStamp)
   {
-    final AuditHandler auditHandler = getAuditHandler();
+    final AuditHandler auditHandler = getCDOAuditHandler();
     final EClass auditEClass = auditHandler.getAuditingModelElement(EresourcePackage.eINSTANCE.getCDOResourceNode());
     final String entityName = cdoDataStore.toEntityName(auditEClass);
     return getCDOResources(session, folderId, timeStamp, entityName);
@@ -169,7 +200,7 @@ public class HibernateAuditHandler
 
   public List<?> getCDOResources(Session session, CDOID folderId, long timeStamp, String entityName)
   {
-    final AuditHandler auditHandler = getAuditHandler();
+    final AuditHandler auditHandler = getCDOAuditHandler();
     String idStr = null;
     if (folderId != null)
     {
@@ -190,19 +221,19 @@ public class HibernateAuditHandler
     return qry.list();
   }
 
-  public List<CDORevision> handleRevisionsByEClass(Session session, EClass eClass, CDORevisionHandler handler,
-      long timeStamp)
+  public void handleRevisionsByEClass(Session session, EClass eClass, CDORevisionHandler handler, long timeStamp)
   {
     AuditVersionProvider auditVersionProvider = cdoDataStore.getAuditVersionProvider();
     auditVersionProvider.setSession(session);
-    final List<TeneoAuditEntry> teneoAuditEntries = auditVersionProvider.getAllAuditEntries(eClass, timeStamp);
-    final List<CDORevision> revisions = new ArrayList<CDORevision>();
+    final List<TeneoAuditEntry> teneoAuditEntries = auditVersionProvider.getSpecificAuditEntries(eClass, timeStamp);
     for (TeneoAuditEntry teneoAuditEntry : teneoAuditEntries)
     {
       final CDORevision cdoRevision = getCDORevision(session, teneoAuditEntry);
-      handler.handleRevision(cdoRevision);
+      if (!handler.handleRevision(cdoRevision))
+      {
+        return;
+      }
     }
-    return revisions;
   }
 
   public HbDataStore getCdoDataStore()

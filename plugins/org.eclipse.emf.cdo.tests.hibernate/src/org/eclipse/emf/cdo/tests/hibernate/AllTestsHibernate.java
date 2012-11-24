@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_279982_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_303466_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_306998_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_322804_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_329254_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_334995_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_347964_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_351393_Test;
@@ -75,8 +76,8 @@ public class AllTestsHibernate extends AllConfigs
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
-    testClasses.clear();
-    // testClasses.add(Bugzilla_306998_Test.class);
+    // testClasses.clear();
+    // testClasses.add(RevisionDeltaTest.class);
     // if (true)
     // {
     // return;
@@ -109,6 +110,8 @@ public class AllTestsHibernate extends AllConfigs
 
     if (scenario.getCapabilities().contains(IRepositoryConfig.CAPABILITY_AUDITING))
     {
+      testClasses.add(CDOObjectHistoryTest.class);
+
       // the security model inherits from the ecore model
       // not so well supported for now
       testClasses.remove(SecurityManagerTest.class);
@@ -122,6 +125,8 @@ public class AllTestsHibernate extends AllConfigs
     }
     else
     {
+      testClasses.remove(Bugzilla_329254_Test.class);
+      testClasses.remove(Hibernate_Bugzilla_329254_Test.class);
       testClasses.remove(CommitInfoTest.class);
     }
 
@@ -302,6 +307,17 @@ public class AllTestsHibernate extends AllConfigs
     @Override
     @CleanRepositoriesBefore
     public void test_missingDependency() throws Exception
+    {
+    }
+
+  }
+
+  public static class Hibernate_Bugzilla_329254_Test extends Bugzilla_329254_Test
+  {
+
+    // does not work for non audited cases
+    @Override
+    public void testCommitTimeStampUpdateOnError() throws Exception
     {
     }
 

@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.internal.hibernate.CDOHibernateConstants;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
@@ -377,5 +378,15 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
   protected ProxyFactory buildProxyFactory(EntityBinding arg0, Getter arg1, Setter arg2)
   {
     return null;
+  }
+
+  @Override
+  public Object getVersion(Object entity) throws HibernateException
+  {
+    if (entity instanceof CDORevision)
+    {
+      return ((CDORevision)entity).getVersion();
+    }
+    return super.getVersion(entity);
   }
 }

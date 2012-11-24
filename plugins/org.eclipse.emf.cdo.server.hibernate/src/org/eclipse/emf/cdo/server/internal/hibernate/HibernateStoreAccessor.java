@@ -367,14 +367,15 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       return null;
     }
 
-    if (getStore().isAuditing() && branchPoint.getTimeStamp() != 0)
+    if (getStore().getHibernateAuditHandler().getCDOAuditHandler().isAudited(id) && getStore().isAuditing()
+        && branchPoint.getTimeStamp() != 0)
     {
       InternalCDORevision revision = getStore().getHibernateAuditHandler().readRevision(getHibernateSession(), id,
           branchPoint.getTimeStamp());
       // found one, use it
-      if (revision != null)
+      if (revision != null && !(revision instanceof DetachedCDORevision))
       {
-        revision.setBranchPoint(getStore().getMainBranchHead());
+        revision.setBranchPoint(branchPoint);
         return revision;
       }
     }
@@ -529,7 +530,10 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       final Query query = session.createQuery("select e from " + getStore().getEntityName(eClass) + " e");
       for (Object o : query.list())
       {
-        handler.handleRevision((CDORevision)o);
+        if (!handler.handleRevision((CDORevision)o))
+        {
+          return;
+        }
       }
     }
     finally
@@ -539,15 +543,28 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   /**
-   * Not supported by the Hibernate Store, auditing is not supported. Currently ignores the branchVersion and calls the
-   * {@readRevision(CDOID, CDOBranchPoint, int, CDORevisionCacheAdder)} .
+   * @see #readRevision(CDOID, CDOBranchPoint, int, CDORevisionCacheAdder)
    */
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
       CDORevisionCacheAdder cache)
   {
-    InternalCDORevision revision = readRevision(id, branchVersion.getBranch().getPoint(System.currentTimeMillis()),
-        listChunk, cache);
-    if (revision != null)
+    InternalCDORevision revision = null;
+    if (getStore().getHibernateAuditHandler().getCDOAuditHandler().isAudited(id))
+    {
+      revision = getStore().getHibernateAuditHandler().readRevisionByVersion(getHibernateSession(), id,
+          branchVersion.getVersion());
+    }
+    else
+    {
+      revision = readRevision(id, branchVersion.getBranch().getPoint(System.currentTimeMillis()), listChunk, cache);
+      if (revision != null)
+      {
+        // otherwise CDO gets confused and we get wrong version numbers later
+        revision.setVersion(branchVersion.getVersion());
+      }
+    }
+
+    if (revision != null && !(revision instanceof DetachedCDORevision))
     {
       revision.freeze();
     }
@@ -760,6 +777,9 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       final Session session = getNewHibernateSession(false);
       session.setDefaultReadOnly(false);
 
+      // decrement version, hibernate will increment it
+      decrementVersions(context);
+
       // order is 1) insert, 2) update and then delete
       // this order is the most stable! Do not change it without testing
 
@@ -790,11 +810,17 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       {
         final String entityName = HibernateUtil.getInstance().getEntityName(revision.getID());
         session.merge(entityName, revision);
+
         if (TRACER.isEnabled())
         {
           TRACER.trace("Updated Object " + revision.getEClass().getName() + " id: " + revision.getID()); //$NON-NLS-1$ //$NON-NLS-2$
         }
       }
+
+      // and increment the versions again so that the objects are cached correctly
+      // note that this is needed because above a merge is done and not a
+      // saveupdate, so hibernate does not update the version back in the revision
+      incrementVersions(context);
 
       session.flush();
 
@@ -867,6 +893,31 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
     context.applyIDMappings(monitor.fork());
     monitor.done();
+  }
+
+  // set the version one back, hibernate will update it
+  private void decrementVersions(CommitContext context)
+  {
+    for (InternalCDORevision revision : context.getNewObjects())
+    {
+      revision.setVersion(revision.getVersion() - 1);
+    }
+    for (InternalCDORevision revision : context.getDirtyObjects())
+    {
+      revision.setVersion(revision.getVersion() - 1);
+    }
+  }
+
+  private void incrementVersions(CommitContext context)
+  {
+    for (InternalCDORevision revision : context.getNewObjects())
+    {
+      revision.setVersion(1);
+    }
+    for (InternalCDORevision revision : context.getDirtyObjects())
+    {
+      revision.setVersion(revision.getVersion() + 1);
+    }
   }
 
   private void repairContainerIDs(List<InternalCDORevision> repairContainerIDs, Session session)

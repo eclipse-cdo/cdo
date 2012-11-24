@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -64,6 +65,26 @@ public class CDOAuditHandler extends AuditHandler
     }
     final CDORevision cdoRevision = (CDORevision)entity;
     final EClass auditEClass = getAuditingModelElement(cdoRevision.getEClass());
+    return auditEClass != null;
+  }
+
+  public boolean isAudited(CDOID id)
+  {
+    if (!getDataStore().isAuditing())
+    {
+      return false;
+    }
+    if (!(id instanceof CDOClassifierRef.Provider))
+    {
+      return false;
+    }
+    CDOClassifierRef cdoClassifierRef = ((CDOClassifierRef.Provider)id).getClassifierRef();
+    final EClass eClass = HibernateUtil.getInstance().getEClass(cdoClassifierRef);
+    if (eClass == null)
+    {
+      return false;
+    }
+    final EClass auditEClass = getAuditingModelElement(eClass);
     return auditEClass != null;
   }
 

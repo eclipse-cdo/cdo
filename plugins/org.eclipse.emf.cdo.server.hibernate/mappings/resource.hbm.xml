@@ -24,9 +24,9 @@
 			<generator class="native"/>
 		</id>
 		<discriminator column="`dtype`" type="string"/>
-		<property name="e_version" column="`e_version`" type="java.lang.Integer" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticVersionPropertyHandler">
+		<version name="e_version" column="`e_version`" type="java.lang.Integer" >
 			<meta attribute="version">true</meta>
-		</property>
+		</version>
 		<property name="resourceID" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType">
 			<column name="`resource_id`"/>
 		</property>

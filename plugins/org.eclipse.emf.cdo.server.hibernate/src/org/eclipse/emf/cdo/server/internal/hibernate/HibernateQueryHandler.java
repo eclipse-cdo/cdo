@@ -148,6 +148,10 @@ public class HibernateQueryHandler implements IQueryHandler
       {
         addToRevisionCache((CDORevision)o);
       }
+      if (o instanceof InternalCDORevision)
+      {
+        ((InternalCDORevision)o).freeze();
+      }
 
       if (!addOneMore)
       {

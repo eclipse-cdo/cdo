@@ -394,6 +394,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     }
 
     revision.setBranchPoint(getStore().getMainBranchHead());
+    revision.freeze();
     return revision;
   }
 
@@ -623,6 +624,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         revision = hibernateAuditHandler.getCDORevision(session, teneoAuditEntry);
       }
 
+      ((InternalCDORevision)revision).freeze();
+
       final EStructuralFeature feature = revision.getEClass().getEStructuralFeature(NAME_EFEATURE_NAME);
       if (feature != null)
       {
@@ -676,6 +679,9 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
           while (result.next())
           {
             final InternalCDORevision sourceRevision = (InternalCDORevision)result.get()[0];
+
+            sourceRevision.freeze();
+
             int sourceIndex = 0;
             if (eref.isMany())
             {

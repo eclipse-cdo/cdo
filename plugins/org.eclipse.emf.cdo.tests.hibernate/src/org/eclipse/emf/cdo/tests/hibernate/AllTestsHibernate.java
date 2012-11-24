@@ -77,11 +77,13 @@ public class AllTestsHibernate extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // testClasses.clear();
-    // testClasses.add(RevisionDeltaTest.class);
+    // testClasses.add(AuditTest.class);
     // if (true)
     // {
     // return;
     // }
+
+    testClasses.add(Bugzilla_333473_Test.class);
 
     testClasses.add(HibernateTimeStampTest.class);
     // removed stalls
@@ -92,7 +94,6 @@ public class AllTestsHibernate extends AllConfigs
     testClasses.add(HibernateExternalReferenceTest.class);
     testClasses.add(HibernateQueryTest.class);
     testClasses.add(HibernateQueryNoCachingTest.class);
-    testClasses.add(HibernateUnsetTest.class);
     testClasses.add(HibernateBugzilla_258933_Test.class);
     testClasses.add(HibernateBugzilla_301104_Test.class);
 
@@ -210,8 +211,9 @@ public class AllTestsHibernate extends AllConfigs
     // has a different meaning of unset
     testClasses.remove(Bugzilla_258933_Test.class);
 
-    // remove as unsettable has to be re-visited for the hb store
-    // see bugzilla 298579
+    // replace as unsettable has to be re-visited for the hb store
+    // see bugzilla 298579, it does not work for object types
+    testClasses.add(HibernateUnsetTest.class);
     testClasses.remove(UnsetTest.class);
   }
 

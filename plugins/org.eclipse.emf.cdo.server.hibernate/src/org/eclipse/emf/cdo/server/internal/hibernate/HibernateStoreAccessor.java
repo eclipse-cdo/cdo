@@ -1215,9 +1215,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
       OMMonitor monitor)
   {
-    System.err.println(timeStamp);
-    System.err.println(previousTimeStamp);
-
     // don't support commit info, but don't throw an exception either
     // throw new UnsupportedOperationException();
   }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://org.eclipse.emf.cdo.tests.hibernate"
+            class="org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestPackage"
+            genModel="model/hibernate-test.genmodel"/>
+   </extension>
+
+</plugin>

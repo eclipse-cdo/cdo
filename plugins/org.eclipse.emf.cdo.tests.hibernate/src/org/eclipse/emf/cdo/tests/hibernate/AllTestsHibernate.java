@@ -78,10 +78,9 @@ public class AllTestsHibernate extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // testClasses.clear();
-    // // testClasses.add(HibernateQueryTest.class);
-    // // testClasses.add(AuditTest.class);
-    // // testClasses.add(HibernateBugzilla_373545_Test.class);
-    // testClasses.add(Bugzilla_308895_Test.class);
+    // testClasses.add(HibernateQueryTest.class);
+    // testClasses.add(AuditTest.class);
+    // testClasses.add(HibernateBugzilla_373545_Test.class);
     // if (true)
     // {
     // return;
@@ -104,6 +103,8 @@ public class AllTestsHibernate extends AllConfigs
     // for some reason this test needs to be done first...
     testClasses.remove(Bugzilla_306998_Test.class);
     testClasses.add(0, Bugzilla_306998_Test.class);
+
+    testClasses.add(HibernateBugzilla_356181_Test.class);
 
     // the hb store throws an error on deadlocked transaction
     // and does not block

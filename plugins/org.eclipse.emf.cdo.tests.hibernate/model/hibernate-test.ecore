@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="HibernateTest" nsURI="http://org.eclipse.emf.cdo.tests.hibernate"
+    nsPrefix="hibernatetests">
+  <eClassifiers xsi:type="ecore:EClass" name="Bz356181_Main">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transient" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="teneo.jpa">
+        <details key="value" value="@Transient"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nonTransient" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transientRef" eType="#//Bz356181_Transient"
+        transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transientOtherRef" eType="#//Bz356181_NonTransient"
+        transient="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bz356181_Transient">
+    <eAnnotations source="teneo.jpa">
+      <details key="value" value="@Transient"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bz356181_NonTransient">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="main" eType="#//Bz356181_Main"/>
+  </eClassifiers>
+</ecore:EPackage>

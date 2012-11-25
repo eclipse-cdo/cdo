@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
+import org.eclipse.emf.teneo.Constants;
 import org.eclipse.emf.teneo.hibernate.auditing.AuditHandler;
 import org.eclipse.emf.teneo.hibernate.auditing.model.teneoauditing.TeneoAuditEntry;
 
@@ -90,6 +91,12 @@ public class CDOAuditHandler extends AuditHandler
     }
     final EClass auditEClass = getAuditingModelElement(eClass);
     return auditEClass != null;
+  }
+
+  @Override
+  protected boolean supportCustomType()
+  {
+    return true;
   }
 
   @Override
@@ -286,7 +293,24 @@ public class CDOAuditHandler extends AuditHandler
     {
       eFeature.setEType(EcorePackage.eINSTANCE.getEString());
     }
+
+    if (isCustomType(eAttribute.getEAttributeType()))
+    {
+      if (!isTeneoAnnotated(eAttribute))
+      {
+        eFeature.setEType(EcorePackage.eINSTANCE.getEString());
+      }
+    }
+
     return eFeature;
+  }
+
+  private boolean isTeneoAnnotated(EAttribute eAttribute)
+  {
+    return eAttribute.getEAnnotation(Constants.ANNOTATION_SOURCE_TENEO_JPA) != null
+        || eAttribute.getEAnnotation(Constants.ANNOTATION_SOURCE_TENEO_JPA) != null
+        || eAttribute.getEAttributeType().getEAnnotation(Constants.ANNOTATION_SOURCE_TENEO_JPA_AUDITING) != null
+        || eAttribute.getEAttributeType().getEAnnotation(Constants.ANNOTATION_SOURCE_TENEO_JPA) != null;
   }
 
 }

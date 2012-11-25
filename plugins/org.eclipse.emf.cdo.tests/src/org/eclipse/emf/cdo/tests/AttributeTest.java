@@ -353,10 +353,18 @@ public class AttributeTest extends AbstractCDOTest
     attrBigDecimal.setEType(epackage.getEBigDecimal());
 
     // set a teneo annotation to prevent decimals
-    EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-    eAnnotation.setSource("teneo.jpa");
-    eAnnotation.getDetails().put("value", "@Column(scale=0)");
-    attrBigDecimal.getEAnnotations().add(eAnnotation);
+    {
+      EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+      eAnnotation.setSource("teneo.jpa");
+      eAnnotation.getDetails().put("value", "@Column(scale=0)");
+      attrBigDecimal.getEAnnotations().add(eAnnotation);
+    }
+    {
+      EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+      eAnnotation.setSource("teneo.jpa.auditing");
+      eAnnotation.getDetails().put("value", "@Column(scale=0)");
+      attrBigDecimal.getEAnnotations().add(eAnnotation);
+    }
 
     schoolBookEClass.getEStructuralFeatures().add(attrBigDecimal);
 

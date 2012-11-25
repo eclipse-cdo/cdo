@@ -15,7 +15,10 @@
 		<property name="overrideUUID" value=""/>
 		<property name="supportingAudits" value="false"/>
 
-
+		<!-- 
+		<initialPackage nsURI="http://www.eclipse.org/emf/CDO/tests/model1/1.0.0"/>
+		-->
+		
 		<!--
 			NOTE: the following properties are currently defined on repository level.
 			In future builds of the CDO Hibernate store these properties are defined

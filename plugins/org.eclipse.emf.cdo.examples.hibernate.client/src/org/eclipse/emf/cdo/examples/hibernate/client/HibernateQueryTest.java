@@ -27,6 +27,8 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOQuery;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.junit.Before;
+import org.junit.BeforeClass;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -58,6 +60,7 @@ public class HibernateQueryTest extends BaseTest
    * Calls super.setUp and then removes the old data and creates new one.
    */
   @Override
+  @Before
   public void setUp() throws Exception
   {
     super.setUp();

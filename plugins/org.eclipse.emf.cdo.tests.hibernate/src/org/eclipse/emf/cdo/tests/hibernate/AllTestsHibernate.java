@@ -79,12 +79,14 @@ public class AllTestsHibernate extends AllConfigs
   {
     // testClasses.clear();
     // testClasses.add(HibernateQueryTest.class);
-    // testClasses.add(AuditTest.class);
-    // testClasses.add(HibernateBugzilla_373545_Test.class);
     // if (true)
     // {
     // return;
     // }
+
+    testClasses.add(HibernateBugzilla_392653_Test.class);
+
+    // testClasses.add(HibernateBugzilla_387752_Test.class);
 
     testClasses.add(Bugzilla_333473_Test.class);
 

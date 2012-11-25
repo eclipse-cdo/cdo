@@ -4,6 +4,7 @@ package org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -159,6 +160,72 @@ public interface HibernateTestPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz387752_MainImpl <em>Bz387752 Main</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz387752_MainImpl
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl#getBz387752_Main()
+	 * @generated
+	 */
+	int BZ387752_MAIN = 3;
+
+	/**
+	 * The feature id for the '<em><b>Str Unsettable</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ387752_MAIN__STR_UNSETTABLE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Str Settable</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ387752_MAIN__STR_SETTABLE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Enum Settable</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ387752_MAIN__ENUM_SETTABLE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Enum Unsettable</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ387752_MAIN__ENUM_UNSETTABLE = 3;
+
+	/**
+	 * The number of structural features of the '<em>Bz387752 Main</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ387752_MAIN_FEATURE_COUNT = 4;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum <em>Bz387752 Enum</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl#getBz387752_Enum()
+	 * @generated
+	 */
+	int BZ387752_ENUM = 4;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Main <em>Bz356181 Main</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -242,6 +309,70 @@ public interface HibernateTestPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getBz356181_NonTransient_Main();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main <em>Bz387752 Main</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Bz387752 Main</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main
+	 * @generated
+	 */
+	EClass getBz387752_Main();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main#getStrUnsettable <em>Str Unsettable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Str Unsettable</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main#getStrUnsettable()
+	 * @see #getBz387752_Main()
+	 * @generated
+	 */
+	EAttribute getBz387752_Main_StrUnsettable();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main#getStrSettable <em>Str Settable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Str Settable</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main#getStrSettable()
+	 * @see #getBz387752_Main()
+	 * @generated
+	 */
+	EAttribute getBz387752_Main_StrSettable();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main#getEnumSettable <em>Enum Settable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Enum Settable</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main#getEnumSettable()
+	 * @see #getBz387752_Main()
+	 * @generated
+	 */
+	EAttribute getBz387752_Main_EnumSettable();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main#getEnumUnsettable <em>Enum Unsettable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Enum Unsettable</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main#getEnumUnsettable()
+	 * @see #getBz387752_Main()
+	 * @generated
+	 */
+	EAttribute getBz387752_Main_EnumUnsettable();
+
+	/**
+	 * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum <em>Bz387752 Enum</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Bz387752 Enum</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum
+	 * @generated
+	 */
+	EEnum getBz387752_Enum();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -334,6 +465,58 @@ public interface HibernateTestPackage extends EPackage {
 		 * @generated
 		 */
 		EReference BZ356181_NON_TRANSIENT__MAIN = eINSTANCE.getBz356181_NonTransient_Main();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz387752_MainImpl <em>Bz387752 Main</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz387752_MainImpl
+		 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl#getBz387752_Main()
+		 * @generated
+		 */
+		EClass BZ387752_MAIN = eINSTANCE.getBz387752_Main();
+
+		/**
+		 * The meta object literal for the '<em><b>Str Unsettable</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BZ387752_MAIN__STR_UNSETTABLE = eINSTANCE.getBz387752_Main_StrUnsettable();
+
+		/**
+		 * The meta object literal for the '<em><b>Str Settable</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BZ387752_MAIN__STR_SETTABLE = eINSTANCE.getBz387752_Main_StrSettable();
+
+		/**
+		 * The meta object literal for the '<em><b>Enum Settable</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BZ387752_MAIN__ENUM_SETTABLE = eINSTANCE.getBz387752_Main_EnumSettable();
+
+		/**
+		 * The meta object literal for the '<em><b>Enum Unsettable</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BZ387752_MAIN__ENUM_UNSETTABLE = eINSTANCE.getBz387752_Main_EnumUnsettable();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum <em>Bz387752 Enum</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum
+		 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl#getBz387752_Enum()
+		 * @generated
+		 */
+		EEnum BZ387752_ENUM = eINSTANCE.getBz387752_Enum();
 
 	}
 

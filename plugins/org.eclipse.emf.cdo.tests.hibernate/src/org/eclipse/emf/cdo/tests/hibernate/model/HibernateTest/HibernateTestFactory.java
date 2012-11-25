@@ -49,6 +49,15 @@ public interface HibernateTestFactory extends EFactory {
 	Bz356181_NonTransient createBz356181_NonTransient();
 
 	/**
+	 * Returns a new object of class '<em>Bz387752 Main</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Bz387752 Main</em>'.
+	 * @generated
+	 */
+	Bz387752_Main createBz387752_Main();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

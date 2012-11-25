@@ -32,14 +32,12 @@ import java.util.List;
  */
 public class HibernateBugzilla_356181_Test extends AbstractCDOTest
 {
-
   public void testBugzilla() throws Exception
   {
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
 
-      msg("Creating resource");
       CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       Bz356181_Main main = HibernateTestFactory.eINSTANCE.createBz356181_Main();
@@ -56,7 +54,6 @@ public class HibernateBugzilla_356181_Test extends AbstractCDOTest
 
       main.setTransientOtherRef(HibernateTestFactory.eINSTANCE.createBz356181_NonTransient());
 
-      msg("Committing");
       transaction.commit();
       session.close();
     }
@@ -79,6 +76,7 @@ public class HibernateBugzilla_356181_Test extends AbstractCDOTest
       assertEquals(true,
           results.get(0).getSourceObject().eClass() == HibernateTestPackage.eINSTANCE.getBz356181_NonTransient());
       assertEquals(true, results.get(0).getTargetObject().eClass() == HibernateTestPackage.eINSTANCE.getBz356181_Main());
+      session.close();
     }
   }
 }

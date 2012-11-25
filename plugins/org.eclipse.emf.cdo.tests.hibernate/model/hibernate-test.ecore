@@ -22,4 +22,17 @@
   <eClassifiers xsi:type="ecore:EClass" name="Bz356181_NonTransient">
     <eStructuralFeatures xsi:type="ecore:EReference" name="main" eType="#//Bz356181_Main"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bz387752_Main">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="strUnsettable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="def_value" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="strSettable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="value"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="enumSettable" eType="#//Bz387752_Enum"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="enumUnsettable" eType="#//Bz387752_Enum"
+        defaultValueLiteral="VAL1" unsettable="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Bz387752_Enum">
+    <eLiterals name="VAL0"/>
+    <eLiterals name="VAL1"/>
+  </eClassifiers>
 </ecore:EPackage>

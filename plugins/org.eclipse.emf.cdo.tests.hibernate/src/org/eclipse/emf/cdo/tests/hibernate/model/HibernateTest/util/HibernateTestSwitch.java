@@ -84,6 +84,12 @@ public class HibernateTestSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case HibernateTestPackage.BZ387752_MAIN: {
+				Bz387752_Main bz387752_Main = (Bz387752_Main)theEObject;
+				T result = caseBz387752_Main(bz387752_Main);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -130,6 +136,21 @@ public class HibernateTestSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseBz356181_NonTransient(Bz356181_NonTransient object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Bz387752 Main</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Bz387752 Main</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseBz387752_Main(Bz387752_Main object) {
 		return null;
 	}
 

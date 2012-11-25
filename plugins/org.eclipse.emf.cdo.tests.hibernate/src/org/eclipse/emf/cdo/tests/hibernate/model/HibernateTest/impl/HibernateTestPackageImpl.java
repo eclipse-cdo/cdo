@@ -5,11 +5,14 @@ package org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Main;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_NonTransient;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Transient;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestFactory;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -42,6 +45,20 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 	 * @generated
 	 */
 	private EClass bz356181_NonTransientEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass bz387752_MainEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum bz387752_EnumEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -181,6 +198,60 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getBz387752_Main() {
+		return bz387752_MainEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBz387752_Main_StrUnsettable() {
+		return (EAttribute)bz387752_MainEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBz387752_Main_StrSettable() {
+		return (EAttribute)bz387752_MainEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBz387752_Main_EnumSettable() {
+		return (EAttribute)bz387752_MainEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBz387752_Main_EnumUnsettable() {
+		return (EAttribute)bz387752_MainEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getBz387752_Enum() {
+		return bz387752_EnumEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public HibernateTestFactory getHibernateTestFactory() {
 		return (HibernateTestFactory)getEFactoryInstance();
 	}
@@ -214,6 +285,15 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 
 		bz356181_NonTransientEClass = createEClass(BZ356181_NON_TRANSIENT);
 		createEReference(bz356181_NonTransientEClass, BZ356181_NON_TRANSIENT__MAIN);
+
+		bz387752_MainEClass = createEClass(BZ387752_MAIN);
+		createEAttribute(bz387752_MainEClass, BZ387752_MAIN__STR_UNSETTABLE);
+		createEAttribute(bz387752_MainEClass, BZ387752_MAIN__STR_SETTABLE);
+		createEAttribute(bz387752_MainEClass, BZ387752_MAIN__ENUM_SETTABLE);
+		createEAttribute(bz387752_MainEClass, BZ387752_MAIN__ENUM_UNSETTABLE);
+
+		// Create enums
+		bz387752_EnumEEnum = createEEnum(BZ387752_ENUM);
 	}
 
 	/**
@@ -256,6 +336,17 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 
 		initEClass(bz356181_NonTransientEClass, Bz356181_NonTransient.class, "Bz356181_NonTransient", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getBz356181_NonTransient_Main(), this.getBz356181_Main(), null, "main", null, 0, 1, Bz356181_NonTransient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(bz387752_MainEClass, Bz387752_Main.class, "Bz387752_Main", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getBz387752_Main_StrUnsettable(), ecorePackage.getEString(), "strUnsettable", "def_value", 0, 1, Bz387752_Main.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBz387752_Main_StrSettable(), ecorePackage.getEString(), "strSettable", "value", 0, 1, Bz387752_Main.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBz387752_Main_EnumSettable(), this.getBz387752_Enum(), "enumSettable", null, 0, 1, Bz387752_Main.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBz387752_Main_EnumUnsettable(), this.getBz387752_Enum(), "enumUnsettable", "VAL1", 0, 1, Bz387752_Main.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(bz387752_EnumEEnum, Bz387752_Enum.class, "Bz387752_Enum");
+		addEEnumLiteral(bz387752_EnumEEnum, Bz387752_Enum.VAL0);
+		addEEnumLiteral(bz387752_EnumEEnum, Bz387752_Enum.VAL1);
 
 		// Create resource
 		createResource(eNS_URI);

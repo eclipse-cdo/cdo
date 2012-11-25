@@ -80,6 +80,10 @@ public class HibernateTestAdapterFactory extends AdapterFactoryImpl {
 				return createBz356181_NonTransientAdapter();
 			}
 			@Override
+			public Adapter caseBz387752_Main(Bz387752_Main object) {
+				return createBz387752_MainAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -138,6 +142,20 @@ public class HibernateTestAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createBz356181_NonTransientAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main <em>Bz387752 Main</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main
+	 * @generated
+	 */
+	public Adapter createBz387752_MainAdapter() {
 		return null;
 	}
 

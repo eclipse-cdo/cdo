@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.teneo.PersistenceOptions;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
@@ -38,6 +39,8 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
   private final boolean isEEnum;
 
   private final EEnum eEnum;
+
+  private boolean handleUnsetAsNull = false;
 
   public CDOPropertyGetter(CDORevisionTuplizer tuplizer, String propertyName)
   {
@@ -78,12 +81,12 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
         return null;
       }
 
-      if (getEStructuralFeature().isUnsettable())
+      if (handleUnsetAsNull && getEStructuralFeature().isUnsettable())
       {
         return null;
       }
 
-      if (isEEnum)
+      if (isEEnum || !handleUnsetAsNull)
       {
         // handle it a few lines lower
         value = getEStructuralFeature().getDefaultValue();
@@ -133,5 +136,12 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
   public Class getReturnType()
   {
     return Object.class;
+  }
+
+  @Override
+  public void setPersistenceOptions(PersistenceOptions persistenceOptions)
+  {
+    super.setPersistenceOptions(persistenceOptions);
+    handleUnsetAsNull = persistenceOptions.getHandleUnsetAsNull();
   }
 }

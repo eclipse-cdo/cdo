@@ -63,12 +63,15 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.teneo.Constants;
+import org.eclipse.emf.teneo.PackageRegistryProvider;
 import org.eclipse.emf.teneo.hibernate.auditing.model.teneoauditing.TeneoAuditCommitInfo;
 import org.eclipse.emf.teneo.hibernate.auditing.model.teneoauditing.TeneoAuditEntry;
 import org.eclipse.emf.teneo.hibernate.auditing.model.teneoauditing.TeneoauditingPackage;
@@ -113,6 +116,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateStoreAccessor.class);
 
   private static final String NAME_EFEATURE_NAME = "name";//$NON-NLS-1$
+
+  // used to tag an ereference
+  private static final String TENEO_MAPPED_SOURCE = "teneo.mapped";
+
+  private static final String TENEO_UNMAPPED_SOURCE = "teneo.unmapped";
 
   private Session hibernateSession;
 
@@ -367,15 +375,13 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       return null;
     }
 
-    if (getStore().getHibernateAuditHandler().getCDOAuditHandler().isAudited(id) && getStore().isAuditing()
-        && branchPoint.getTimeStamp() != 0)
+    if (getStore().isAuditing() && getStore().getHibernateAuditHandler().getCDOAuditHandler().isAudited(id))
     {
       InternalCDORevision revision = getStore().getHibernateAuditHandler().readRevision(getHibernateSession(), id,
           branchPoint.getTimeStamp());
       // found one, use it
-      if (revision != null && !(revision instanceof DetachedCDORevision))
+      if (revision != null)
       {
-        revision.setBranchPoint(branchPoint);
         return revision;
       }
     }
@@ -475,11 +481,18 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     throw new UnsupportedOperationException();
   }
 
+  // should only return revisions of the eclass itself and not of its subclasses.
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
       CDORevisionHandler handler)
   {
+
     if (eClass != null)
     {
+      if (!getStore().isMapped(eClass))
+      {
+        return;
+      }
+
       handleRevisionsByEClass(eClass, handler, timeStamp);
     }
     else
@@ -498,13 +511,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
           if (eClassifier instanceof EClass)
           {
             final EClass eClazz = (EClass)eClassifier;
-            try
+            if (!getStore().isMapped(eClazz))
             {
-              getStore().getEntityName(eClazz);
-            }
-            catch (IllegalArgumentException ex)
-            {
-              // a non-mapped eclass
               continue;
             }
             handleRevisionsByEClass(eClazz, handler, timeStamp);
@@ -531,7 +539,15 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       final Query query = session.createQuery("select e from " + getStore().getEntityName(eClass) + " e");
       for (Object o : query.list())
       {
-        if (!handler.handleRevision((CDORevision)o))
+        CDORevision cdoRevision = (CDORevision)o;
+
+        // if a subclass ignore
+        if (cdoRevision.getEClass() != eClass)
+        {
+          continue;
+        }
+
+        if (!handler.handleRevision(cdoRevision))
         {
           return;
         }
@@ -655,13 +671,31 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       final CDORevision revision = HibernateUtil.getInstance().getCDORevision(targetCdoId);
       final EClass targetEClass = context.getTargetObjects().get(targetCdoId);
+
+      if (!getStore().isMapped(targetEClass))
+      {
+        continue;
+      }
+
       final String targetEntityName = getStore().getEntityName(targetEClass);
       final Map<EClass, List<EReference>> sourceCandidates = context.getSourceCandidates();
       for (EClass sourceEClass : sourceCandidates.keySet())
       {
+
+        if (!getStore().isMapped(sourceEClass))
+        {
+          continue;
+        }
+
         final String sourceEntityName = getStore().getEntityName(sourceEClass);
         for (EReference eref : sourceCandidates.get(sourceEClass))
         {
+          // handle transient ereferences
+          if (!isEReferenceMapped(session, sourceEntityName, eref))
+          {
+            continue;
+          }
+
           final String hql;
           if (eref.isMany())
           {
@@ -700,6 +734,38 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         }
       }
     }
+  }
+
+  private boolean isEReferenceMapped(Session session, String entityName, EReference eref)
+  {
+    // mapped
+    if (null != eref.getEAnnotation(TENEO_MAPPED_SOURCE))
+    {
+      return true;
+    }
+    else
+    // not mapped
+    if (null != eref.getEAnnotation(TENEO_UNMAPPED_SOURCE))
+    {
+      return false;
+    }
+
+    // not computed yet
+    for (String propName : session.getSessionFactory().getClassMetadata(entityName).getPropertyNames())
+    {
+      if (propName.equals(eref.getName()))
+      {
+        final EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+        eAnnotation.setSource(TENEO_MAPPED_SOURCE);
+        eref.getEAnnotations().add(eAnnotation);
+        return true;
+      }
+    }
+    // not mapped
+    final EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+    eAnnotation.setSource(TENEO_UNMAPPED_SOURCE);
+    eref.getEAnnotations().add(eAnnotation);
+    return false;
   }
 
   private CDOID getHibernateID(CDOID id)
@@ -1271,11 +1337,13 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   {
     PersistableListHolder.getInstance().clearListMapping();
     HibernateThreadContext.setCommitContext(null);
+    PackageRegistryProvider.getInstance().setThreadPackageRegistry(null);
   }
 
   @Override
   protected void doActivate() throws Exception
   {
+    PackageRegistryProvider.getInstance().setThreadPackageRegistry(getStore().getRepository().getPackageRegistry());
   }
 
   @Override

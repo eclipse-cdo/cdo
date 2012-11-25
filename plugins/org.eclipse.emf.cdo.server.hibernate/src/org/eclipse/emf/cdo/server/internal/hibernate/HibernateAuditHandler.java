@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -86,7 +87,13 @@ public class HibernateAuditHandler
   {
     AuditVersionProvider auditVersionProvider = cdoDataStore.getAuditVersionProvider();
     auditVersionProvider.setSession(session);
-    final TeneoAuditEntry auditEntry = auditVersionProvider.getAuditEntry(eClass, id, timeStamp);
+    long useTimeStamp = timeStamp;
+    if (useTimeStamp == 0)
+    {
+      // use the last revision
+      useTimeStamp = Long.MAX_VALUE;
+    }
+    final TeneoAuditEntry auditEntry = auditVersionProvider.getAuditEntry(eClass, id, useTimeStamp);
     return getCDORevision(session, auditEntry);
   }
 
@@ -165,6 +172,12 @@ public class HibernateAuditHandler
       cdoRevision.setContainerID(HibernateUtil.getInstance().convertStringToCDOID(auditEntry.getTeneo_container_id()));
       cdoRevision.setContainingFeatureID(auditEntry.getTeneo_container_feature_id());
     }
+
+    final String resourceID = auditEntry.getTeneo_resourceid();
+    if (resourceID != null)
+    {
+      cdoRevision.setResourceID(HibernateUtil.getInstance().convertStringToCDOID(resourceID));
+    }
   }
 
   private Object convertValue(EStructuralFeature targetEFeature, Object value)
@@ -186,6 +199,10 @@ public class HibernateAuditHandler
     if (value instanceof EEnumLiteral)
     {
       return ((EEnumLiteral)value).getValue();
+    }
+    if (value instanceof String && targetEFeature.getEType() instanceof EEnum)
+    {
+      return ((EEnum)targetEFeature.getEType()).getEEnumLiteral((String)value).getValue();
     }
     return value;
   }
@@ -229,6 +246,13 @@ public class HibernateAuditHandler
     for (TeneoAuditEntry teneoAuditEntry : teneoAuditEntries)
     {
       final CDORevision cdoRevision = getCDORevision(session, teneoAuditEntry);
+
+      // if a subclass ignore
+      if (cdoRevision.getEClass() != eClass)
+      {
+        continue;
+      }
+
       if (!handler.handleRevision(cdoRevision))
       {
         return;

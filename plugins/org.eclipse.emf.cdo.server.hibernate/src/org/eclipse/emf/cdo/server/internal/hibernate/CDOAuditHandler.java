@@ -17,11 +17,15 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.teneo.hibernate.auditing.AuditHandler;
@@ -159,13 +163,23 @@ public class CDOAuditHandler extends AuditHandler
             {
               for (Object value : (Collection<?>)source.getList(sourceEFeature))
               {
-                ((Collection<Object>)auditEntry.eGet(targetEFeature)).add(convertValue(targetEFeature, value));
+                ((Collection<Object>)auditEntry.eGet(targetEFeature)).add(convertValue(sourceEFeature, targetEFeature,
+                    value));
               }
             }
           }
           else
           {
-            auditEntry.eSet(targetEFeature, convertValue(targetEFeature, source.getValue(sourceEFeature)));
+            // not set
+            if (sourceEFeature.isUnsettable() && source.getValue(sourceEFeature) == null)
+            {
+              auditEntry.eUnset(targetEFeature);
+            }
+            else
+            {
+              auditEntry.eSet(targetEFeature,
+                  convertValue(sourceEFeature, targetEFeature, source.getValue(sourceEFeature)));
+            }
           }
         }
       }
@@ -222,14 +236,57 @@ public class CDOAuditHandler extends AuditHandler
     return HibernateUtil.getInstance().convertCDOIDToString((CDOID)id);
   }
 
-  @Override
-  public Object convertValue(EStructuralFeature eFeature, Object value)
+  public Object convertValue(EStructuralFeature sourceEFeature, EStructuralFeature eFeature, Object value)
   {
     if (value == CDORevisionData.NIL)
     {
       return null;
     }
+    if (value instanceof EEnumLiteral)
+    {
+      return ((EEnumLiteral)value).getLiteral();
+    }
+    if (value instanceof Enumerator)
+    {
+      return ((Enumerator)value).getLiteral();
+    }
+
+    if (sourceEFeature.getEType() instanceof EEnum && value instanceof Integer)
+    {
+      final int ordinal = (Integer)value;
+      final EEnum eeNum = (EEnum)sourceEFeature.getEType();
+      if (eeNum.getInstanceClass() != null && eeNum.getInstanceClass().isEnum())
+      {
+        final Object[] constants = eeNum.getInstanceClass().getEnumConstants();
+        for (Object constant : constants)
+        {
+          if (constant instanceof Enumerator)
+          {
+            final Enumerator enumerator = (Enumerator)constant;
+            if (enumerator.getValue() == ordinal)
+            {
+              return enumerator.getLiteral();
+            }
+          }
+        }
+        return ((Enum<?>)constants[ordinal]).name();
+      }
+      return eeNum.getEEnumLiteral((Integer)value).getLiteral();
+    }
+
     return super.convertValue(eFeature, value);
+  }
+
+  // map all enums as string
+  @Override
+  protected EStructuralFeature createEAttribute(EAttribute eAttribute)
+  {
+    final EStructuralFeature eFeature = super.createEAttribute(eAttribute);
+    if (eFeature.getEType() instanceof EEnum)
+    {
+      eFeature.setEType(EcorePackage.eINSTANCE.getEString());
+    }
+    return eFeature;
   }
 
 }

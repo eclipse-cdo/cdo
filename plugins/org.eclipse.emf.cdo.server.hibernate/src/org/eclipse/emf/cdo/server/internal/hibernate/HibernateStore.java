@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOInterceptor;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOMergeEventListener;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
@@ -50,6 +51,7 @@ import org.eclipse.emf.teneo.hibernate.HbDataStore;
 import org.eclipse.emf.teneo.hibernate.HbSessionDataStore;
 import org.eclipse.emf.teneo.hibernate.auditing.AuditHandler;
 import org.eclipse.emf.teneo.hibernate.auditing.AuditProcessHandler;
+import org.eclipse.emf.teneo.hibernate.auditing.model.teneoauditing.TeneoAuditEntry;
 import org.eclipse.emf.teneo.hibernate.auditing.model.teneoauditing.TeneoauditingPackage;
 import org.eclipse.emf.teneo.hibernate.mapper.HibernateMappingGenerator;
 
@@ -170,6 +172,11 @@ public class HibernateStore extends Store implements IHibernateStore
   public String getIdentifierPropertyName(String entityName)
   {
     return identifierPropertyNameByEntity.get(entityName);
+  }
+
+  public boolean isMapped(EClass eClass)
+  {
+    return null != cdoDataStore.toEntityName(eClass);
   }
 
   public Properties getProperties()
@@ -343,11 +350,11 @@ public class HibernateStore extends Store implements IHibernateStore
     }
     if (cdoDataStore.getPackageRegistry() instanceof TransactionPackageRegistry)
     {
-      setInteralPackageRegistry();
+      setInternalPackageRegistry();
     }
   }
 
-  private synchronized void setInteralPackageRegistry()
+  private synchronized void setInternalPackageRegistry()
   {
     cdoDataStore.setPackageRegistry(getRepository().getPackageRegistry(false));
   }
@@ -616,6 +623,12 @@ public class HibernateStore extends Store implements IHibernateStore
       final Properties props = new Properties();
       props.putAll(getProperties());
       props.remove(PersistenceOptions.PERSISTENCE_XML);
+
+      if (!props.containsKey(PersistenceOptions.HANDLE_UNSET_AS_NULL))
+      {
+        props.setProperty(PersistenceOptions.HANDLE_UNSET_AS_NULL, "true");
+      }
+
       cdoDataStore.setDataStoreProperties(props);
       Configuration hibernateConfiguration = cdoDataStore.getConfiguration();
 
@@ -730,7 +743,9 @@ public class HibernateStore extends Store implements IHibernateStore
     }
     epacks.add(dataStore.getAuditHandler().createAuditingEPackage(dataStore, EresourcePackage.eINSTANCE,
         getRepository().getPackageRegistry(), po));
+
     epacks.add(TeneoauditingPackage.eINSTANCE);
+
     getRepository().getPackageRegistry().put(TeneoauditingPackage.eNS_URI, TeneoauditingPackage.eINSTANCE);
 
     // also register them all in the non-transaction registry
@@ -757,6 +772,7 @@ public class HibernateStore extends Store implements IHibernateStore
     final HibernateMappingGenerator hmg = dataStore.getExtensionManager().getExtension(HibernateMappingGenerator.class);
     hmg.setPersistenceOptions(po);
     final String hbm = hmg.generateToString(paModel);
+
     return hbm;
   }
 
@@ -841,5 +857,34 @@ public class HibernateStore extends Store implements IHibernateStore
         AuditProcessHandler.setCurrentComment(null);
       }
     }
+
+    @Override
+    protected void setContainerInfo(Session session, TeneoAuditEntry auditEntry, Object entity)
+    {
+      if (!(entity instanceof InternalCDORevision))
+      {
+        return;
+      }
+      final InternalCDORevision cdoRevision = (InternalCDORevision)entity;
+
+      // set the resource id
+      if (cdoRevision.getResourceID() != null)
+      {
+        auditEntry.setTeneo_resourceid(getAuditHandler().entityToIdString(session, cdoRevision.getResourceID()));
+      }
+
+      if (cdoRevision.getContainerID() == null || cdoRevision.getContainerID() == CDOID.NULL)
+      {
+        return;
+      }
+
+      auditEntry.setTeneo_container_id(getAuditHandler().entityToIdString(session, cdoRevision.getContainerID()));
+      auditEntry.setTeneo_container_feature_id(cdoRevision.getContainingFeatureID());
+    }
+  }
+
+  public HbSessionDataStore getCDODataStore()
+  {
+    return cdoDataStore;
   }
 }

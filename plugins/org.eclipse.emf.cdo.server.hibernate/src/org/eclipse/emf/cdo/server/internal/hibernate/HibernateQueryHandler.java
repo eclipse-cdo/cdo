@@ -22,12 +22,16 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.teneo.hibernate.auditing.model.teneoauditing.TeneoAuditEntry;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.ScrollMode;
+import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 
 /**
  * Implements server side HQL query execution..
@@ -49,6 +53,8 @@ public class HibernateQueryHandler implements IQueryHandler
   public static final String FIRST_RESULT = IHibernateStore.FIRST_RESULT;
 
   private HibernateStoreAccessor hibernateStoreAccessor;
+
+  private HibernateAuditHandler hibernateAuditHandler;
 
   /**
    * Executes hql queries. Gets the session from the {@link HibernateStoreAccessor} creates a hibernate query and sets
@@ -139,25 +145,74 @@ public class HibernateQueryHandler implements IQueryHandler
       query.setMaxResults(info.getMaxResults());
     }
 
+    final ScrollableResults scroller = query.scroll(ScrollMode.FORWARD_ONLY);
+
     // and go for the query
     // future extension: support iterate, scroll through a parameter
-    for (Object o : query.list())
+    int i = 0;
+    try
     {
-      final boolean addOneMore = context.addResult(o);
-      if (cacheResults && o instanceof CDORevision)
+      while (scroller.next())
       {
-        addToRevisionCache((CDORevision)o);
-      }
-      if (o instanceof InternalCDORevision)
-      {
-        ((InternalCDORevision)o).freeze();
-      }
+        Object[] os = scroller.get();
+        Object o;
+        if (os.length == 1)
+        {
+          o = handleAuditEntries(os[0]);
+        }
+        else
+        {
+          o = handleAuditEntries(os);
+        }
 
-      if (!addOneMore)
-      {
-        return;
+        final boolean addOneMore = context.addResult(o);
+        if (cacheResults && o instanceof CDORevision)
+        {
+          addToRevisionCache((CDORevision)o);
+        }
+        if (o instanceof InternalCDORevision)
+        {
+          ((InternalCDORevision)o).freeze();
+        }
+
+        // clear the session every 1000 results or so
+        if (i++ % 1000 == 0)
+        {
+          session.clear();
+        }
+
+        if (!addOneMore)
+        {
+          return;
+        }
       }
     }
+    finally
+    {
+      scroller.close();
+    }
+  }
+
+  private Object handleAuditEntries(Object o)
+  {
+    if (o.getClass().isArray())
+    {
+      for (int i = 0; i < Array.getLength(o); i++)
+      {
+        Array.set(o, i, handleAuditEntry(Array.get(o, i)));
+      }
+      return o;
+    }
+    return handleAuditEntry(o);
+  }
+
+  private Object handleAuditEntry(Object o)
+  {
+    if (!(o instanceof TeneoAuditEntry))
+    {
+      return o;
+    }
+    return hibernateAuditHandler.convertAuditEntryToCDORevision((TeneoAuditEntry)o);
   }
 
   private void addToRevisionCache(CDORevision revision)
@@ -213,5 +268,6 @@ public class HibernateQueryHandler implements IQueryHandler
   public void setHibernateStoreAccessor(HibernateStoreAccessor hibernateStoreAccessor)
   {
     this.hibernateStoreAccessor = hibernateStoreAccessor;
+    hibernateAuditHandler = hibernateStoreAccessor.getStore().getHibernateAuditHandler();
   }
 }

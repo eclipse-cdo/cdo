@@ -198,42 +198,52 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     {
       return mappedProperty.getGetter(mappedEntity.getMappedClass());
     }
-    else if (mappedProperty == mappedEntity.getIdentifierProperty())
+    final CDOPropertyGetter getter;
+    if (mappedProperty == mappedEntity.getIdentifierProperty())
     {
-      return new CDOIDPropertyGetter(this, mappedProperty.getName());
+      getter = new CDOIDPropertyGetter(this, mappedProperty.getName());
     }
     else if (mappedProperty.getMetaAttribute("version") != null)
     {
-      return new CDOVersionPropertyGetter(this, mappedProperty.getName());
+      getter = new CDOVersionPropertyGetter(this, mappedProperty.getName());
     }
     else if (mappedProperty.getName().compareTo(CDOHibernateConstants.RESOURCE_PROPERTY) == 0)
     {
-      return new CDOResourceIDGetter(this, mappedProperty.getName());
+      getter = new CDOResourceIDGetter(this, mappedProperty.getName());
     }
     else if (mappedProperty.getName().compareTo(CDOHibernateConstants.CONTAINER_PROPERTY) == 0)
     {
-      return new CDOContainerGetter(this, mappedProperty.getName());
+      getter = new CDOContainerGetter(this, mappedProperty.getName());
     }
     else if (mappedProperty.getName().compareTo(CDOHibernateConstants.COMMITTIMESTAMP_PROPERTY) == 0)
     {
-      return new CDOBranchTimeStampGetter(this, mappedProperty.getName());
+      getter = new CDOBranchTimeStampGetter(this, mappedProperty.getName());
+    }
+    else
+    {
+
+      EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());
+      if (feature instanceof EReference && feature.isMany())
+      {
+        getter = new CDOManyReferenceGetter(this, mappedProperty.getName());
+      }
+      else if (feature instanceof EReference)
+      {
+        getter = new CDOReferenceGetter(this, mappedProperty.getName());
+      }
+      else if (feature instanceof EAttribute && feature.isMany())
+      {
+        getter = new CDOManyAttributeGetter(this, mappedProperty.getName());
+      }
+      else
+      {
+        getter = new CDOPropertyGetter(this, mappedProperty.getName());
+      }
     }
 
-    EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());
-    if (feature instanceof EReference && feature.isMany())
-    {
-      return new CDOManyReferenceGetter(this, mappedProperty.getName());
-    }
-    else if (feature instanceof EReference)
-    {
-      return new CDOReferenceGetter(this, mappedProperty.getName());
-    }
-    else if (feature instanceof EAttribute && feature.isMany())
-    {
-      return new CDOManyAttributeGetter(this, mappedProperty.getName());
-    }
-
-    return new CDOPropertyGetter(this, mappedProperty.getName());
+    HibernateStore hbStore = HibernateStore.getCurrentHibernateStore();
+    getter.setPersistenceOptions(hbStore.getCDODataStore().getPersistenceOptions());
+    return getter;
   }
 
   @Override
@@ -250,52 +260,56 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
       return mappedProperty.getSetter(mappedEntity.getMappedClass());
     }
 
+    final CDOPropertySetter setter;
     if (mappedProperty == mappedEntity.getIdentifierProperty())
     {
       setIdentifierTypeAsAnnotation(mappedProperty);
-      return new CDOIDPropertySetter(this, mappedProperty.getName());
+      setter = new CDOIDPropertySetter(this, mappedProperty.getName());
     }
-
-    if (mappedProperty.getMetaAttribute("version") != null)
+    else if (mappedProperty.getMetaAttribute("version") != null)
     {
-      return new CDOVersionPropertySetter(this, mappedProperty.getName());
+      setter = new CDOVersionPropertySetter(this, mappedProperty.getName());
     }
+    else
 
     if (mappedProperty.getName().compareTo(CDOHibernateConstants.RESOURCE_PROPERTY) == 0)
     {
-      return new CDOResourceIDSetter(this, mappedProperty.getName());
+      setter = new CDOResourceIDSetter(this, mappedProperty.getName());
     }
-
-    if (mappedProperty.getName().compareTo(CDOHibernateConstants.CONTAINER_PROPERTY) == 0)
+    else if (mappedProperty.getName().compareTo(CDOHibernateConstants.CONTAINER_PROPERTY) == 0)
     {
-      return new CDOContainerSetter(this, mappedProperty.getName());
+      setter = new CDOContainerSetter(this, mappedProperty.getName());
     }
-
-    if (mappedProperty.getName().compareTo(CDOHibernateConstants.COMMITTIMESTAMP_PROPERTY) == 0)
+    else if (mappedProperty.getName().compareTo(CDOHibernateConstants.COMMITTIMESTAMP_PROPERTY) == 0)
     {
-      return new CDOBranchTimeStampSetter(this, mappedProperty.getName());
+      setter = new CDOBranchTimeStampSetter(this, mappedProperty.getName());
     }
-
-    EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());
-    if (feature instanceof EReference && feature.isMany())
+    else
     {
-      // TODO Clarify feature maps
-      return new CDOManyReferenceSetter(this, mappedProperty.getName());
+      EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());
+      if (feature instanceof EReference && feature.isMany())
+      {
+        setter = new CDOManyReferenceSetter(this, mappedProperty.getName());
+      }
+      else if (feature instanceof EAttribute && feature.isMany())
+      {
+        setter = new CDOManyAttributeSetter(this, mappedProperty.getName());
+      }
+      else
+
+      if (feature instanceof EReference)
+      {
+        setter = new CDOReferenceSetter(this, mappedProperty.getName());
+      }
+      else
+      {
+        setter = new CDOPropertySetter(this, mappedProperty.getName());
+      }
     }
 
-    if (feature instanceof EAttribute && feature.isMany())
-    {
-      // TODO Clarify feature maps
-      return new CDOManyAttributeSetter(this, mappedProperty.getName());
-    }
-
-    if (feature instanceof EReference)
-    {
-      // TODO Clarify feature maps
-      return new CDOReferenceSetter(this, mappedProperty.getName());
-    }
-
-    return new CDOPropertySetter(this, mappedProperty.getName());
+    HibernateStore hbStore = HibernateStore.getCurrentHibernateStore();
+    setter.setPersistenceOptions(hbStore.getCDODataStore().getPersistenceOptions());
+    return setter;
   }
 
   @Override

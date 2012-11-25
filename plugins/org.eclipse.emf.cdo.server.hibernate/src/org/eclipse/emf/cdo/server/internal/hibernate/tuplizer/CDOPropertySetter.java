@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.teneo.PersistenceOptions;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
@@ -37,6 +38,8 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
   private static final long serialVersionUID = 1L;
 
   private final boolean convertByteArray;
+
+  private boolean handleUnsetAsNull = false;
 
   public CDOPropertySetter(CDORevisionTuplizer tuplizer, String propertyName)
   {
@@ -110,7 +113,7 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
         {
           newValue = null;
         }
-        else if (getEStructuralFeature().isUnsettable())
+        else if (handleUnsetAsNull && getEStructuralFeature().isUnsettable())
         {
           newValue = null;
         }
@@ -145,4 +148,12 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
     }
     return false;
   }
+
+  @Override
+  public void setPersistenceOptions(PersistenceOptions persistenceOptions)
+  {
+    super.setPersistenceOptions(persistenceOptions);
+    handleUnsetAsNull = persistenceOptions.getHandleUnsetAsNull();
+  }
+
 }

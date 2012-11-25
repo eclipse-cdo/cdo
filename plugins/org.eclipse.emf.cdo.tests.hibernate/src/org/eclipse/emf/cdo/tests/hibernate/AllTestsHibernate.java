@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.tests.CommitInfoTest;
 import org.eclipse.emf.cdo.tests.DynamicXSDTest;
 import org.eclipse.emf.cdo.tests.EMFCompareTest;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
+import org.eclipse.emf.cdo.tests.FeatureMapTest;
 import org.eclipse.emf.cdo.tests.LockingManagerRestartRepositoryTest;
 import org.eclipse.emf.cdo.tests.LockingManagerRestartSessionTest;
 import org.eclipse.emf.cdo.tests.LockingManagerRestartTransactionTest;
@@ -77,7 +78,10 @@ public class AllTestsHibernate extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // testClasses.clear();
+    // testClasses.add(HibernateQueryTest.class);
     // testClasses.add(AuditTest.class);
+    // testClasses.add(HibernateBugzilla_373545_Test.class);
+    // testClasses.add(Bugzilla_308895_Test.class);
     // if (true)
     // {
     // return;
@@ -88,13 +92,9 @@ public class AllTestsHibernate extends AllConfigs
     testClasses.add(HibernateTimeStampTest.class);
     // removed stalls
     // testClasses.add(HibernateXATransactionTest.class);
-    testClasses.add(Hibernate_Bugzilla_279982_Test.class);
     testClasses.add(HibernateExternalAnnotationTest.class);
-    testClasses.add(HibernateMultiValuedOfAttributeTest.class);
-    testClasses.add(HibernateExternalReferenceTest.class);
     testClasses.add(HibernateQueryTest.class);
     testClasses.add(HibernateQueryNoCachingTest.class);
-    testClasses.add(HibernateBugzilla_258933_Test.class);
     testClasses.add(HibernateBugzilla_301104_Test.class);
 
     testClasses.add(HibernateBugzilla_362270_Test.class);
@@ -114,7 +114,7 @@ public class AllTestsHibernate extends AllConfigs
       testClasses.add(CDOObjectHistoryTest.class);
 
       // the security model inherits from the ecore model
-      // not so well supported for now
+      // not so well supported for now for auditing
       testClasses.remove(SecurityManagerTest.class);
 
       // the package registry count changes when auditing
@@ -123,11 +123,18 @@ public class AllTestsHibernate extends AllConfigs
       testClasses.add(HibernatePackageRegistryTest.class);
       testClasses.remove(Bugzilla_303466_Test.class);
       testClasses.add(Hibernate_Bugzilla_303466_Test.class);
+
+      // feature maps are not handled correctly in CDO with auditing
+      testClasses.remove(FeatureMapTest.class);
     }
     else
     {
+      // these testcases uses commitinfo
+      // only supported with auditing
       testClasses.remove(Bugzilla_329254_Test.class);
       testClasses.remove(Hibernate_Bugzilla_329254_Test.class);
+
+      // Commit info only works with auditing
       testClasses.remove(CommitInfoTest.class);
     }
 
@@ -170,6 +177,8 @@ public class AllTestsHibernate extends AllConfigs
     // https://bugs.eclipse.org/bugs/show_bug.cgi?id=330212
     testClasses.remove(Bugzilla_322804_Test.class);
 
+    // overridden because Hibernate will treat all stale references as an exception
+    testClasses.add(Hibernate_Bugzilla_279982_Test.class);
     testClasses.remove(Bugzilla_279982_Test.class);
 
     // locking not supported
@@ -190,6 +199,7 @@ public class AllTestsHibernate extends AllConfigs
     // testListOfInteger which has a List with a null value
     // this is not nicely supported by Hibernate
     // therefore this step is removed
+    testClasses.add(HibernateMultiValuedOfAttributeTest.class);
     testClasses.remove(MultiValuedOfAttributeTest.class);
 
     // MemStore is not relevant
@@ -200,6 +210,7 @@ public class AllTestsHibernate extends AllConfigs
 
     // replace test case with one, disabling some non working testcases
     // see the HibernateExternalReferenceTest for a description
+    testClasses.add(HibernateExternalReferenceTest.class);
     testClasses.remove(ExternalReferenceTest.class);
 
     // this testcases removes and creates a resource with the
@@ -209,6 +220,7 @@ public class AllTestsHibernate extends AllConfigs
 
     // override a testcase because the hibernate store
     // has a different meaning of unset
+    testClasses.add(HibernateBugzilla_258933_Test.class);
     testClasses.remove(Bugzilla_258933_Test.class);
 
     // replace as unsettable has to be re-visited for the hb store

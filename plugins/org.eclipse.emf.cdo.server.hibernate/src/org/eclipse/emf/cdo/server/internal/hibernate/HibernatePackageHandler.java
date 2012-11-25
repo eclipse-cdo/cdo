@@ -95,10 +95,7 @@ public class HibernatePackageHandler extends Lifecycle
           hbPackageUnitDTO.setEPackageByteArray(session, EMFUtil.getEPackageBytes(rootEPackage, true, registry));
         }
 
-        if (session.get(CDO_PACKAGE_UNIT_ENTITY_NAME, hbPackageUnitDTO.getNsUri()) == null)
-        {
-          session.saveOrUpdate(CDO_PACKAGE_UNIT_ENTITY_NAME, hbPackageUnitDTO);
-        }
+        session.saveOrUpdate(CDO_PACKAGE_UNIT_ENTITY_NAME, hbPackageUnitDTO);
 
         updated = true;
       }

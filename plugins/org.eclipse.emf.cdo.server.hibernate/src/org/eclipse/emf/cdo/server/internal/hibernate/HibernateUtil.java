@@ -451,13 +451,10 @@ public class HibernateUtil
       }
 
       // maybe the temp was already translated
-      if (id instanceof CDOIDTemp)
+      final CDOID newID = commitContext.getCommitContext().getIDMappings().get(id);
+      if (newID != null)
       {
-        final CDOID newID = commitContext.getCommitContext().getIDMappings().get(id);
-        if (newID != null)
-        {
-          return getCDORevision(newID);
-        }
+        return getCDORevision(newID);
       }
     }
 

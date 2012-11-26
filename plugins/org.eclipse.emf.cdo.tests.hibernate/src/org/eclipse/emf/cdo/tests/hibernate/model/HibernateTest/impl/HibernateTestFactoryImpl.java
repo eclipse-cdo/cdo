@@ -2,15 +2,22 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl;
 
-import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.*;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Main;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_NonTransient;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Transient;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Group;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Place;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestFactory;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestPackage;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
@@ -61,6 +68,9 @@ public class HibernateTestFactoryImpl extends EFactoryImpl implements HibernateT
 			case HibernateTestPackage.BZ356181_TRANSIENT: return createBz356181_Transient();
 			case HibernateTestPackage.BZ356181_NON_TRANSIENT: return createBz356181_NonTransient();
 			case HibernateTestPackage.BZ387752_MAIN: return createBz387752_Main();
+			case HibernateTestPackage.BZ380987_GROUP: return createBz380987_Group();
+			case HibernateTestPackage.BZ380987_PLACE: return createBz380987_Place();
+			case HibernateTestPackage.BZ380987_PERSON: return createBz380987_Person();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -134,6 +144,36 @@ public class HibernateTestFactoryImpl extends EFactoryImpl implements HibernateT
 	public Bz387752_Main createBz387752_Main() {
 		Bz387752_MainImpl bz387752_Main = new Bz387752_MainImpl();
 		return bz387752_Main;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Bz380987_Group createBz380987_Group() {
+		Bz380987_GroupImpl bz380987_Group = new Bz380987_GroupImpl();
+		return bz380987_Group;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Bz380987_Place createBz380987_Place() {
+		Bz380987_PlaceImpl bz380987_Place = new Bz380987_PlaceImpl();
+		return bz380987_Place;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Bz380987_Person createBz380987_Person() {
+		Bz380987_PersonImpl bz380987_Person = new Bz380987_PersonImpl();
+		return bz380987_Person;
 	}
 
 	/**

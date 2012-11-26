@@ -2,13 +2,18 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.util;
 
-import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.*;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Main;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_NonTransient;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Transient;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Group;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Place;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestPackage;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -84,6 +89,18 @@ public class HibernateTestAdapterFactory extends AdapterFactoryImpl {
 				return createBz387752_MainAdapter();
 			}
 			@Override
+			public Adapter caseBz380987_Group(Bz380987_Group object) {
+				return createBz380987_GroupAdapter();
+			}
+			@Override
+			public Adapter caseBz380987_Place(Bz380987_Place object) {
+				return createBz380987_PlaceAdapter();
+			}
+			@Override
+			public Adapter caseBz380987_Person(Bz380987_Person object) {
+				return createBz380987_PersonAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -156,6 +173,48 @@ public class HibernateTestAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createBz387752_MainAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Group <em>Bz380987 Group</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Group
+	 * @generated
+	 */
+	public Adapter createBz380987_GroupAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Place <em>Bz380987 Place</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Place
+	 * @generated
+	 */
+	public Adapter createBz380987_PlaceAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person <em>Bz380987 Person</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person
+	 * @generated
+	 */
+	public Adapter createBz380987_PersonAdapter() {
 		return null;
 	}
 

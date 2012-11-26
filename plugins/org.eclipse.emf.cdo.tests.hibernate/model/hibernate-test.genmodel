@@ -26,5 +26,17 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hibernate-test.ecore#//Bz387752_Main/enumSettable"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hibernate-test.ecore#//Bz387752_Main/enumUnsettable"/>
     </genClasses>
+    <genClasses ecoreClass="hibernate-test.ecore#//Bz380987_Group">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference hibernate-test.ecore#//Bz380987_Group/people"/>
+    </genClasses>
+    <genClasses ecoreClass="hibernate-test.ecore#//Bz380987_Place">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hibernate-test.ecore#//Bz380987_Place/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference hibernate-test.ecore#//Bz380987_Place/people"/>
+    </genClasses>
+    <genClasses ecoreClass="hibernate-test.ecore#//Bz380987_Person">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hibernate-test.ecore#//Bz380987_Person/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference hibernate-test.ecore#//Bz380987_Person/group"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference hibernate-test.ecore#//Bz380987_Person/places"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

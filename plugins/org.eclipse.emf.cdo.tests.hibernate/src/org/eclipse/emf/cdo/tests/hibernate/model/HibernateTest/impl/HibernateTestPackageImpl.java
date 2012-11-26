@@ -5,6 +5,9 @@ package org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Main;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_NonTransient;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Transient;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Group;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Place;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestFactory;
@@ -15,7 +18,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -52,6 +54,27 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 	 * @generated
 	 */
 	private EClass bz387752_MainEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass bz380987_GroupEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass bz380987_PlaceEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass bz380987_PersonEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -243,6 +266,87 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getBz380987_Group() {
+		return bz380987_GroupEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBz380987_Group_People() {
+		return (EReference)bz380987_GroupEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getBz380987_Place() {
+		return bz380987_PlaceEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBz380987_Place_Name() {
+		return (EAttribute)bz380987_PlaceEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBz380987_Place_People() {
+		return (EReference)bz380987_PlaceEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getBz380987_Person() {
+		return bz380987_PersonEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBz380987_Person_Name() {
+		return (EAttribute)bz380987_PersonEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBz380987_Person_Group() {
+		return (EReference)bz380987_PersonEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBz380987_Person_Places() {
+		return (EReference)bz380987_PersonEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getBz387752_Enum() {
 		return bz387752_EnumEEnum;
 	}
@@ -291,6 +395,18 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 		createEAttribute(bz387752_MainEClass, BZ387752_MAIN__STR_SETTABLE);
 		createEAttribute(bz387752_MainEClass, BZ387752_MAIN__ENUM_SETTABLE);
 		createEAttribute(bz387752_MainEClass, BZ387752_MAIN__ENUM_UNSETTABLE);
+
+		bz380987_GroupEClass = createEClass(BZ380987_GROUP);
+		createEReference(bz380987_GroupEClass, BZ380987_GROUP__PEOPLE);
+
+		bz380987_PlaceEClass = createEClass(BZ380987_PLACE);
+		createEAttribute(bz380987_PlaceEClass, BZ380987_PLACE__NAME);
+		createEReference(bz380987_PlaceEClass, BZ380987_PLACE__PEOPLE);
+
+		bz380987_PersonEClass = createEClass(BZ380987_PERSON);
+		createEAttribute(bz380987_PersonEClass, BZ380987_PERSON__NAME);
+		createEReference(bz380987_PersonEClass, BZ380987_PERSON__GROUP);
+		createEReference(bz380987_PersonEClass, BZ380987_PERSON__PLACES);
 
 		// Create enums
 		bz387752_EnumEEnum = createEEnum(BZ387752_ENUM);
@@ -342,6 +458,18 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 		initEAttribute(getBz387752_Main_StrSettable(), ecorePackage.getEString(), "strSettable", "value", 0, 1, Bz387752_Main.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getBz387752_Main_EnumSettable(), this.getBz387752_Enum(), "enumSettable", null, 0, 1, Bz387752_Main.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getBz387752_Main_EnumUnsettable(), this.getBz387752_Enum(), "enumUnsettable", "VAL1", 0, 1, Bz387752_Main.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(bz380987_GroupEClass, Bz380987_Group.class, "Bz380987_Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getBz380987_Group_People(), this.getBz380987_Person(), this.getBz380987_Person_Group(), "people", null, 0, -1, Bz380987_Group.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(bz380987_PlaceEClass, Bz380987_Place.class, "Bz380987_Place", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getBz380987_Place_Name(), ecorePackage.getEString(), "name", null, 0, 1, Bz380987_Place.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getBz380987_Place_People(), this.getBz380987_Person(), this.getBz380987_Person_Places(), "people", null, 0, -1, Bz380987_Place.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(bz380987_PersonEClass, Bz380987_Person.class, "Bz380987_Person", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getBz380987_Person_Name(), ecorePackage.getEString(), "name", null, 0, 1, Bz380987_Person.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getBz380987_Person_Group(), this.getBz380987_Group(), this.getBz380987_Group_People(), "group", null, 0, -1, Bz380987_Person.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getBz380987_Person_Places(), this.getBz380987_Place(), this.getBz380987_Place_People(), "places", null, 0, -1, Bz380987_Person.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(bz387752_EnumEEnum, Bz387752_Enum.class, "Bz387752_Enum");

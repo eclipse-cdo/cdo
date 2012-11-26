@@ -35,4 +35,20 @@
     <eLiterals name="VAL0"/>
     <eLiterals name="VAL1"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bz380987_Group">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="people" upperBound="-1"
+        eType="#//Bz380987_Person" eOpposite="#//Bz380987_Person/group"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bz380987_Place">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="people" upperBound="-1"
+        eType="#//Bz380987_Person" eOpposite="#//Bz380987_Person/places"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bz380987_Person">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="group" upperBound="-1"
+        eType="#//Bz380987_Group" eOpposite="#//Bz380987_Group/people"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="places" upperBound="-1"
+        eType="#//Bz380987_Place" eOpposite="#//Bz380987_Place/people"/>
+  </eClassifiers>
 </ecore:EPackage>

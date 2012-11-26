@@ -22,7 +22,7 @@ import java.util.Collections;
 /**
  * @author Michael Tkacz
  */
-public class Bugzilla_333473_Test extends AbstractCDOTest
+public class HibernateBugzilla_333473_Test extends AbstractCDOTest
 {
   @CleanRepositoriesBefore
   public void testRemovalFirstAttempt() throws Exception

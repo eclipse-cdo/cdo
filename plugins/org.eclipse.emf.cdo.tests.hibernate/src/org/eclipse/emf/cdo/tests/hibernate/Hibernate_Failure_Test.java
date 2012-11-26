@@ -23,24 +23,16 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 /**
- * Tests:
- * 
- * https://bugs.eclipse.org/bugs/show_bug.cgi?id=381013
- * 
  * @author Martin Taal
  */
 @CleanRepositoriesBefore
-public class Bugzilla_Export_Import_Test extends AbstractCDOTest
+public class Hibernate_Failure_Test extends AbstractCDOTest
 {
   @Override
   protected void doSetUp() throws Exception
@@ -57,13 +49,24 @@ public class Bugzilla_Export_Import_Test extends AbstractCDOTest
     super.doTearDown();
   }
 
-  public void testExport() throws Exception
+  /**
+   * TODO
+   * {@link org.eclipse.emf.cdo.server.IStoreAccessor.Raw#rawStore(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, org.eclipse.net4j.util.om.monitor.OMMonitor)
+   * rawStore()} is not adequate with range-based list mappings because they need deltas!
+   */
+  @Skips("DB.ranges")
+  public void testImport() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/res1"));
-    resource.getContents().add(createCustomer("Eike"));
     transaction.commit();
+    // Customer eike = createCustomer("Eike");
+    // resource.getContents().add(eike);
+    // SalesOrder salesOrder = createSalesOrder(eike);
+    // salesOrder.getOrderDetails().add(getModel1Factory().createOrderDetail());
+    // resource.getContents().add(salesOrder);
+    // transaction.commit();
     session.close();
 
     InternalRepository repo1 = getRepository();
@@ -72,6 +75,14 @@ public class Bugzilla_Export_Import_Test extends AbstractCDOTest
     CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
     System.out.println(baos.toString());
+
+    InternalRepository repo2 = getRepository("repo2", false);
+
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
+    importer.importRepository(bais);
+
+    useAfterImport("repo2");
   }
 
   private void useAfterImport(String repoName) throws CommitException
@@ -94,48 +105,6 @@ public class Bugzilla_Export_Import_Test extends AbstractCDOTest
     session2.close();
   }
 
-  public void testImport() throws Exception
-  {
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
-    Customer eike = createCustomer("Eike");
-    resource.getContents().add(eike);
-    resource.getContents().add(createCustomer("Jos"));
-    resource.getContents().add(createCustomer("Simon"));
-    transaction.commit();
-    SalesOrder salesOrder = createSalesOrder(eike);
-    salesOrder.getOrderDetails().add(getModel1Factory().createOrderDetail());
-    resource.getContents().add(salesOrder);
-    transaction.commit();
-    session.close();
-
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-    System.out.println(baos.toString());
-
-    InternalRepository repo2 = getRepository("repo2", false);
-
-    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
-    importer.importRepository(bais);
-
-    useAfterImport("repo2");
-  }
-
-  private Customer initExtResource(ResourceSet resourceSet)
-  {
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
-    Resource extResource = resourceSet.createResource(URI.createURI("ext.xmi"));
-
-    Customer customer = getModel1Factory().createCustomer();
-    extResource.getContents().add(customer);
-    return customer;
-  }
-
   private Customer createCustomer(String name)
   {
     Customer customer = getModel1Factory().createCustomer();
@@ -150,5 +119,4 @@ public class Bugzilla_Export_Import_Test extends AbstractCDOTest
     salesOrder.setCustomer(customer);
     return salesOrder;
   }
-
 }

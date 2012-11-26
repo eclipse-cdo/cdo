@@ -8,6 +8,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/HibernateRawCommitContext.java" type="org.eclipse.emf.cdo.server.internal.hibernate.HibernateRawCommitContext">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="InternalCommitContext"/>
+                <message_argument value="HibernateRawCommitContext"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/tuplizer/WrappedHibernateList.java" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.WrappedHibernateList">
         <filter id="574660632">
             <message_arguments>

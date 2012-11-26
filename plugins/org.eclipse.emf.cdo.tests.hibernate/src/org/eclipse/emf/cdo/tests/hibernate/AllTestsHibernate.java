@@ -70,7 +70,7 @@ public class AllTestsHibernate extends AllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, HibernateConfig.INSTANCE, JVM, NATIVE);
+    // addScenario(parent, COMBINED, HibernateConfig.INSTANCE, JVM, NATIVE);
     addScenario(parent, COMBINED, HibernateConfig.AUDIT_INSTANCE, JVM, NATIVE);
   }
 
@@ -78,17 +78,21 @@ public class AllTestsHibernate extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // testClasses.clear();
-    // testClasses.add(HibernateQueryTest.class);
+    // testClasses.add(Hibernate_Failure_Test.class);
     // if (true)
     // {
     // return;
     // }
 
+    testClasses.add(Hibernate_Failure_Test.class);
+    testClasses.add(Hibernate_Export_Test.class);
+    testClasses.add(HibernateBugzilla_381013_Test.class);
+    testClasses.add(HibernateBugzilla_380987_Test.class);
     testClasses.add(HibernateBugzilla_392653_Test.class);
 
     // testClasses.add(HibernateBugzilla_387752_Test.class);
 
-    testClasses.add(Bugzilla_333473_Test.class);
+    testClasses.add(HibernateBugzilla_333473_Test.class);
 
     testClasses.add(HibernateTimeStampTest.class);
     // removed stalls

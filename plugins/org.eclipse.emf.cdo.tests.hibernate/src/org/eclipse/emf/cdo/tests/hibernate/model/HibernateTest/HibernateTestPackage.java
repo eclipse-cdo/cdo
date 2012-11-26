@@ -215,6 +215,117 @@ public interface HibernateTestPackage extends EPackage {
 	int BZ387752_MAIN_FEATURE_COUNT = 4;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz380987_GroupImpl <em>Bz380987 Group</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz380987_GroupImpl
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl#getBz380987_Group()
+	 * @generated
+	 */
+	int BZ380987_GROUP = 4;
+
+	/**
+	 * The feature id for the '<em><b>People</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ380987_GROUP__PEOPLE = 0;
+
+	/**
+	 * The number of structural features of the '<em>Bz380987 Group</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ380987_GROUP_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz380987_PlaceImpl <em>Bz380987 Place</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz380987_PlaceImpl
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl#getBz380987_Place()
+	 * @generated
+	 */
+	int BZ380987_PLACE = 5;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ380987_PLACE__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>People</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ380987_PLACE__PEOPLE = 1;
+
+	/**
+	 * The number of structural features of the '<em>Bz380987 Place</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ380987_PLACE_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz380987_PersonImpl <em>Bz380987 Person</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz380987_PersonImpl
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl#getBz380987_Person()
+	 * @generated
+	 */
+	int BZ380987_PERSON = 6;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ380987_PERSON__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Group</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ380987_PERSON__GROUP = 1;
+
+	/**
+	 * The feature id for the '<em><b>Places</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ380987_PERSON__PLACES = 2;
+
+	/**
+	 * The number of structural features of the '<em>Bz380987 Person</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ380987_PERSON_FEATURE_COUNT = 3;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum <em>Bz387752 Enum</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -222,7 +333,7 @@ public interface HibernateTestPackage extends EPackage {
 	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl#getBz387752_Enum()
 	 * @generated
 	 */
-	int BZ387752_ENUM = 4;
+	int BZ387752_ENUM = 7;
 
 
 	/**
@@ -363,6 +474,102 @@ public interface HibernateTestPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getBz387752_Main_EnumUnsettable();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Group <em>Bz380987 Group</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Bz380987 Group</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Group
+	 * @generated
+	 */
+	EClass getBz380987_Group();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Group#getPeople <em>People</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>People</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Group#getPeople()
+	 * @see #getBz380987_Group()
+	 * @generated
+	 */
+	EReference getBz380987_Group_People();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Place <em>Bz380987 Place</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Bz380987 Place</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Place
+	 * @generated
+	 */
+	EClass getBz380987_Place();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Place#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Place#getName()
+	 * @see #getBz380987_Place()
+	 * @generated
+	 */
+	EAttribute getBz380987_Place_Name();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Place#getPeople <em>People</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>People</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Place#getPeople()
+	 * @see #getBz380987_Place()
+	 * @generated
+	 */
+	EReference getBz380987_Place_People();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person <em>Bz380987 Person</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Bz380987 Person</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person
+	 * @generated
+	 */
+	EClass getBz380987_Person();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person#getName()
+	 * @see #getBz380987_Person()
+	 * @generated
+	 */
+	EAttribute getBz380987_Person_Name();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person#getGroup <em>Group</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Group</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person#getGroup()
+	 * @see #getBz380987_Person()
+	 * @generated
+	 */
+	EReference getBz380987_Person_Group();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person#getPlaces <em>Places</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Places</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person#getPlaces()
+	 * @see #getBz380987_Person()
+	 * @generated
+	 */
+	EReference getBz380987_Person_Places();
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum <em>Bz387752 Enum</em>}'.
@@ -507,6 +714,84 @@ public interface HibernateTestPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute BZ387752_MAIN__ENUM_UNSETTABLE = eINSTANCE.getBz387752_Main_EnumUnsettable();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz380987_GroupImpl <em>Bz380987 Group</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz380987_GroupImpl
+		 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl#getBz380987_Group()
+		 * @generated
+		 */
+		EClass BZ380987_GROUP = eINSTANCE.getBz380987_Group();
+
+		/**
+		 * The meta object literal for the '<em><b>People</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference BZ380987_GROUP__PEOPLE = eINSTANCE.getBz380987_Group_People();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz380987_PlaceImpl <em>Bz380987 Place</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz380987_PlaceImpl
+		 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl#getBz380987_Place()
+		 * @generated
+		 */
+		EClass BZ380987_PLACE = eINSTANCE.getBz380987_Place();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BZ380987_PLACE__NAME = eINSTANCE.getBz380987_Place_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>People</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference BZ380987_PLACE__PEOPLE = eINSTANCE.getBz380987_Place_People();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz380987_PersonImpl <em>Bz380987 Person</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz380987_PersonImpl
+		 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl#getBz380987_Person()
+		 * @generated
+		 */
+		EClass BZ380987_PERSON = eINSTANCE.getBz380987_Person();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BZ380987_PERSON__NAME = eINSTANCE.getBz380987_Person_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Group</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference BZ380987_PERSON__GROUP = eINSTANCE.getBz380987_Person_Group();
+
+		/**
+		 * The meta object literal for the '<em><b>Places</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference BZ380987_PERSON__PLACES = eINSTANCE.getBz380987_Person_Places();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum <em>Bz387752 Enum</em>}' enum.

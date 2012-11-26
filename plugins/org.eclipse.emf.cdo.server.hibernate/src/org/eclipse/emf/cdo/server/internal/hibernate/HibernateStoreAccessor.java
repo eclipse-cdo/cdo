@@ -90,6 +90,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.Serializable;
 import java.io.Writer;
 import java.sql.Clob;
 import java.sql.SQLException;
@@ -125,6 +126,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   private Session hibernateSession;
 
   private boolean errorOccured;
+
+  private HibernateRawCommitContext rawCommitContext = new HibernateRawCommitContext();
 
   public void addToRevisionCache(Object object)
   {
@@ -846,7 +849,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     try
     {
       // start with fresh hibernate session to prevent side effects
-      final Session session = getNewHibernateSession(false);
+      final Session session = context instanceof HibernateRawCommitContext ? getHibernateSession()
+          : getNewHibernateSession(false);
       session.setDefaultReadOnly(false);
 
       // decrement version, hibernate will increment it
@@ -881,7 +885,14 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       for (CDORevision revision : context.getDirtyObjects())
       {
         final String entityName = HibernateUtil.getInstance().getEntityName(revision.getID());
-        session.merge(entityName, revision);
+        final InternalCDORevision cdoRevision = (InternalCDORevision)session.merge(entityName, revision);
+        if (getStore().isAuditing() && cdoRevision.getVersion() == revision.getVersion())
+        {
+          // do a direct update of the version in the db to get it in sync with
+          // hibernate, a special case, hibernate does not send the change back, do it ourselves
+          // only needs to be done in case of auditing
+          cdoRevision.setVersion(cdoRevision.getVersion() + 1);
+        }
 
         if (TRACER.isEnabled())
         {
@@ -1236,6 +1247,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   {
     final String id = HexUtil.bytesToHex(idBytes);
     final Session session = getHibernateSession();
+    session.setDefaultReadOnly(false);
     HibernateStoreLob lob = (HibernateStoreLob)session.get(HibernateStoreLob.class, id);
     if (lob == null)
     {
@@ -1271,7 +1283,18 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   public void rawStore(InternalCDORevision revision, OMMonitor monitor)
   {
-    getHibernateSession().merge(revision);
+    final String entityName = HibernateUtil.getInstance().getEntityName(revision.getID());
+    final Serializable idValue = HibernateUtil.getInstance().getIdValue(revision.getID());
+    final CDORevision existingRevision = (CDORevision)getHibernateSession().get(entityName, idValue);
+    if (existingRevision == null)
+    {
+      rawCommitContext.addNewObject(revision);
+    }
+    else
+    {
+      revision.setVersion(1 + existingRevision.getVersion());
+      rawCommitContext.addDirtyObject(revision);
+    }
   }
 
   public void rawStore(byte[] id, long size, InputStream inputStream) throws IOException
@@ -1287,12 +1310,12 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
       OMMonitor monitor)
   {
-    // don't support commit info, but don't throw an exception either
-    // throw new UnsupportedOperationException();
+    // TODO: support export and import and auditing
   }
 
   public void rawCommit(double commitWork, OMMonitor monitor)
   {
+    doWrite(rawCommitContext, monitor);
     commit(monitor);
   }
 

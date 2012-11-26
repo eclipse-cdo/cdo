@@ -15,9 +15,11 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
+import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.common.util.Enumerator;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -25,6 +27,7 @@ import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
@@ -219,7 +222,7 @@ public class CDOAuditHandler extends AuditHandler
       return null;
     }
 
-    final CDOID cdoID;
+    CDOID cdoID;
     if (entity instanceof CDOID)
     {
       cdoID = (CDOID)entity;
@@ -232,6 +235,25 @@ public class CDOAuditHandler extends AuditHandler
     if (cdoID == CDOID.NULL)
     {
       return null;
+    }
+
+    // get the correct id
+    if (HibernateThreadContext.isCommitContextSet())
+    {
+      final CommitContext commitContext = HibernateThreadContext.getCommitContext().getCommitContext();
+      CDOID newID = cdoID;
+      int cnt = 0;
+      while (commitContext.getIDMappings().containsKey(newID))
+      {
+        newID = commitContext.getIDMappings().get(newID);
+        cnt++;
+        if (cnt > 1000)
+        {
+          throw new IllegalStateException("Cycle detected in id mappings " + newID + " maps to "
+              + commitContext.getIDMappings().get(newID));
+        }
+      }
+      cdoID = newID;
     }
 
     return HibernateUtil.getInstance().convertCDOIDToString(cdoID);
@@ -292,6 +314,15 @@ public class CDOAuditHandler extends AuditHandler
     if (eFeature.getEType() instanceof EEnum)
     {
       eFeature.setEType(EcorePackage.eINSTANCE.getEString());
+      // add a dummy teneo.jpa to prevent anyone of accidentally mapping
+      // enumerated in a different way
+      if (eFeature.getEAnnotation(Constants.ANNOTATION_SOURCE_TENEO_JPA_AUDITING) == null)
+      {
+        final EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+        eAnnotation.setSource(Constants.ANNOTATION_SOURCE_TENEO_JPA_AUDITING);
+        eAnnotation.getDetails().put(Constants.ANNOTATION_KEY_VALUE, "");
+        eFeature.getEAnnotations().add(eAnnotation);
+      }
     }
 
     if (isCustomType(eAttribute.getEAttributeType()))

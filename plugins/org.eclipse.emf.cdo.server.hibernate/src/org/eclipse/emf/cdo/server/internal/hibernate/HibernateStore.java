@@ -255,6 +255,9 @@ public class HibernateStore extends Store implements IHibernateStore
 
     EClass eClass = (EClass)classifierRef.resolve(getRepository().getPackageRegistry());
 
+    // initialize everything
+    getHibernateSessionFactory();
+
     final String entityName = cdoDataStore.toEntityName(eClass);
     if (entityName == null)
     {

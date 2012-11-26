@@ -2,11 +2,17 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.util;
 
-import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.*;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Main;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_NonTransient;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Transient;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Group;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Place;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestPackage;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
 
 /**
@@ -90,6 +96,24 @@ public class HibernateTestSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case HibernateTestPackage.BZ380987_GROUP: {
+				Bz380987_Group bz380987_Group = (Bz380987_Group)theEObject;
+				T result = caseBz380987_Group(bz380987_Group);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case HibernateTestPackage.BZ380987_PLACE: {
+				Bz380987_Place bz380987_Place = (Bz380987_Place)theEObject;
+				T result = caseBz380987_Place(bz380987_Place);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case HibernateTestPackage.BZ380987_PERSON: {
+				Bz380987_Person bz380987_Person = (Bz380987_Person)theEObject;
+				T result = caseBz380987_Person(bz380987_Person);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -151,6 +175,51 @@ public class HibernateTestSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseBz387752_Main(Bz387752_Main object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Bz380987 Group</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Bz380987 Group</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseBz380987_Group(Bz380987_Group object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Bz380987 Place</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Bz380987 Place</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseBz380987_Place(Bz380987_Place object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Bz380987 Person</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Bz380987 Person</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseBz380987_Person(Bz380987_Person object) {
 		return null;
 	}
 

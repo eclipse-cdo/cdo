@@ -187,6 +187,13 @@ public class CDOObjectHistoryTest extends AbstractCDOTest
       final InternalCDORevision revision2 = (InternalCDORevision)CDOUtil.getRevisionByVersion(cdoObject, 2);
       final InternalCDORevision revision1 = (InternalCDORevision)CDOUtil.getRevisionByVersion(cdoObject, 1);
 
+      CDORevisionDelta revisionDelta = revision3.compare(revision2);
+      for (CDOFeatureDelta featureDelta : revisionDelta.getFeatureDeltas())
+      {
+        System.err.println(featureDelta.getFeature().getName() + " changed through changeType "
+            + featureDelta.getType());
+      }
+
       assertEquals("ESC", revision1.getValue(revision1.getEClass().getEStructuralFeature("name")));
       assertEquals("Sympedia", revision2.getValue(revision1.getEClass().getEStructuralFeature("name")));
       assertEquals("Eclipse", revision3.getValue(revision1.getEClass().getEStructuralFeature("name")));

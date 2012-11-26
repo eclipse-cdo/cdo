@@ -23,12 +23,14 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.legacy.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
@@ -44,8 +46,6 @@ import java.util.List;
 public class CDOObjectHistoryTest extends AbstractCDOTest
 {
   protected CDOSession session1;
-
-  private boolean finishedLoadingHistory = false;
 
   @Override
   protected void doTearDown() throws Exception
@@ -153,6 +153,7 @@ public class CDOObjectHistoryTest extends AbstractCDOTest
     audit = session.openView(commitTime3);
     {
       CDOResource auditResource = audit.getResource(getResourcePath("/res1"));
+
       Company auditCompany = (Company)auditResource.getContents().get(0);
       assertEquals("Eclipse", auditCompany.getName());
 
@@ -177,6 +178,19 @@ public class CDOObjectHistoryTest extends AbstractCDOTest
           fail();
         }
       }
+
+      final CDOObject cdoObject = CDOUtil.getCDOObject(auditCompany);
+      int initialVersion = cdoObject.cdoRevision().getVersion();
+      assertEquals(3, initialVersion);
+
+      final InternalCDORevision revision3 = (InternalCDORevision)CDOUtil.getRevisionByVersion(cdoObject, 3);
+      final InternalCDORevision revision2 = (InternalCDORevision)CDOUtil.getRevisionByVersion(cdoObject, 2);
+      final InternalCDORevision revision1 = (InternalCDORevision)CDOUtil.getRevisionByVersion(cdoObject, 1);
+
+      assertEquals("ESC", revision1.getValue(revision1.getEClass().getEStructuralFeature("name")));
+      assertEquals("Sympedia", revision2.getValue(revision1.getEClass().getEStructuralFeature("name")));
+      assertEquals("Eclipse", revision3.getValue(revision1.getEClass().getEStructuralFeature("name")));
+
       audit.close();
     }
 

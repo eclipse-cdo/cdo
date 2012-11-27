@@ -316,13 +316,15 @@ public class CDOAuditHandler extends AuditHandler
       eFeature.setEType(EcorePackage.eINSTANCE.getEString());
       // add a dummy teneo.jpa to prevent anyone of accidentally mapping
       // enumerated in a different way
-      if (eFeature.getEAnnotation(Constants.ANNOTATION_SOURCE_TENEO_JPA_AUDITING) == null)
+      // set in the source efeature will be found there
+      if (eAttribute.getEAnnotation(Constants.ANNOTATION_SOURCE_TENEO_JPA_AUDITING) == null)
       {
         final EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
         eAnnotation.setSource(Constants.ANNOTATION_SOURCE_TENEO_JPA_AUDITING);
         eAnnotation.getDetails().put(Constants.ANNOTATION_KEY_VALUE, "");
-        eFeature.getEAnnotations().add(eAnnotation);
+        eAttribute.getEAnnotations().add(eAnnotation);
       }
+      return eFeature;
     }
 
     if (isCustomType(eAttribute.getEAttributeType()))

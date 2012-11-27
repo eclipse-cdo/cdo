@@ -73,8 +73,7 @@ public class CDOENumIntegerType extends CDOENumStringType
     {
       st.setNull(index, Types.INTEGER);
     }
-
-    if (value instanceof Integer)
+    else if (value instanceof Integer)
     {
       st.setInt(index, (Integer)value);
     }

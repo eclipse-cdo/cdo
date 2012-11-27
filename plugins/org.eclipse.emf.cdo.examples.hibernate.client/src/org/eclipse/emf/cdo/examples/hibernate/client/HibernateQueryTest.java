@@ -10,6 +10,10 @@
  */
 package org.eclipse.emf.cdo.examples.hibernate.client;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -25,14 +29,8 @@ import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDString;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOQuery;
-
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.junit.Before;
-import org.junit.BeforeClass;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Test different aspects of HQL querying using the CDO query api.

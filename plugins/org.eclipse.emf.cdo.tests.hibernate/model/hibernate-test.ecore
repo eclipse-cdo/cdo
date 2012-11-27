@@ -33,7 +33,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Bz387752_Enum">
     <eLiterals name="VAL0"/>
-    <eLiterals name="VAL1"/>
+    <eLiterals name="VAL1" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Bz380987_Group">
     <eStructuralFeatures xsi:type="ecore:EReference" name="people" upperBound="-1"

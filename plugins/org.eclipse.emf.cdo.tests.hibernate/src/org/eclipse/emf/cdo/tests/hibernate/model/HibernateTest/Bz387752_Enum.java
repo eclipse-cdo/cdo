@@ -36,7 +36,7 @@ public enum Bz387752_Enum implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	VAL1(0, "VAL1", "VAL1");
+	VAL1(1, "VAL1", "VAL1");
 
 	/**
 	 * The '<em><b>VAL0</b></em>' literal value.
@@ -66,7 +66,7 @@ public enum Bz387752_Enum implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int VAL1_VALUE = 0;
+	public static final int VAL1_VALUE = 1;
 
 	/**
 	 * An array of all the '<em><b>Bz387752 Enum</b></em>' enumerators.
@@ -129,6 +129,7 @@ public enum Bz387752_Enum implements Enumerator {
 	public static Bz387752_Enum get(int value) {
 		switch (value) {
 			case VAL0_VALUE: return VAL0;
+			case VAL1_VALUE: return VAL1;
 		}
 		return null;
 	}

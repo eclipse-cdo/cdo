@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.teneo.PersistenceOptions;
 
 import org.hibernate.HibernateException;
@@ -74,28 +75,32 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
       return null;
     }
 
+    final EStructuralFeature eFeature = getEStructuralFeature();
     if (value == null)
     {
-      if (getEStructuralFeature().getDefaultValue() == null)
+      if (eFeature.getDefaultValue() == null)
       {
         return null;
       }
 
-      if (handleUnsetAsNull && getEStructuralFeature().isUnsettable())
+      if (!handleUnsetAsNull && eFeature.isUnsettable())
       {
-        return null;
-      }
-
-      if (isEEnum || !handleUnsetAsNull)
-      {
-        // handle it a few lines lower
-        value = getEStructuralFeature().getDefaultValue();
+        value = eFeature.getDefaultValue();
       }
       else
       {
-        return null;
+        value = null;
       }
     }
+    
+    // this happens when you don't set a value explicitly in CDO
+    // then null is passed while the user may expect the default 
+    // value to be set.
+    if (value == null && eFeature.isRequired()) {
+      value = eFeature.getDefaultValue();
+    }
+
+    System.err.println(value);
 
     // hibernate sees eenums, CDO sees int
     if (isEEnum && value != null)

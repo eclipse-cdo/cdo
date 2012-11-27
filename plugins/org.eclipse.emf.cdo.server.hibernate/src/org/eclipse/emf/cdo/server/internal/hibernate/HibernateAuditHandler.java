@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
@@ -184,6 +185,18 @@ public class HibernateAuditHandler
   {
     if (value == null)
     {
+      final Object defaultValue = targetEFeature.getDefaultValue();
+      if (defaultValue == null)
+      {
+        return null;
+      }
+      final boolean handleUnsetAsNull = getCdoDataStore().getPersistenceOptions().getHandleUnsetAsNull();
+      if (!handleUnsetAsNull && targetEFeature.isUnsettable())
+      {
+        // there was a default value so was explicitly set to null
+        // otherwise the default value would be in the db
+        return CDORevisionData.NIL;
+      }
       return null;
     }
     if (targetEFeature instanceof EReference)

@@ -113,15 +113,15 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
         {
           newValue = null;
         }
-        else if (handleUnsetAsNull && getEStructuralFeature().isUnsettable())
-        {
-          newValue = null;
-        }
-        else
+        else if (!handleUnsetAsNull && getEStructuralFeature().isUnsettable())
         {
           // there was a default value so was explicitly set to null
           // otherwise the default value would be in the db
           newValue = CDORevisionData.NIL;
+        }
+        else
+        {
+          newValue = null;
         }
       }
       else
@@ -130,8 +130,8 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
       }
     }
     final Object currentValue = revision.getValue(getEStructuralFeature());
-    final boolean notChanged = currentValue == newValue || currentValue == null && newValue == CDORevisionData.NIL
-        || isEenumDefaultValue(value) || currentValue != null && newValue != null && currentValue.equals(newValue);
+    final boolean notChanged = currentValue == newValue || isEenumDefaultValue(value) || currentValue != null
+        && newValue != null && currentValue.equals(newValue);
     final boolean hasChanged = !notChanged;
     if (hasChanged)
     {

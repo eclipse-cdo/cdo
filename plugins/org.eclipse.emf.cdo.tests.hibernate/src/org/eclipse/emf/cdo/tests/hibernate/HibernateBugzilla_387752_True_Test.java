@@ -13,40 +13,19 @@ package org.eclipse.emf.cdo.tests.hibernate;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestFactory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.teneo.PersistenceOptions;
-
 /**
  * Read external reference annotation.
  * 
  * @author Martin Taal
  */
-public class HibernateBugzilla_387752_Test extends AbstractCDOTest
+public class HibernateBugzilla_387752_True_Test extends AbstractCDOTest
 {
-
-  @Override
-  protected void doSetUp() throws Exception
-  {
-    final IRepositoryConfig repConfig = getRepositoryConfig();
-    final HibernateConfig hbConfig = (HibernateConfig)repConfig;
-    hbConfig.getAdditionalProperties().put(PersistenceOptions.HANDLE_UNSET_AS_NULL, "false");
-    super.doSetUp();
-  }
-
-  @Override
-  protected void doTearDown() throws Exception
-  {
-    final IRepositoryConfig repConfig = getRepositoryConfig();
-    final HibernateConfig hbConfig = (HibernateConfig)repConfig;
-    hbConfig.getAdditionalProperties().clear();
-    super.doTearDown();
-  }
 
   public void testBugzilla() throws Exception
   {
@@ -79,7 +58,7 @@ public class HibernateBugzilla_387752_Test extends AbstractCDOTest
       Bz387752_Main main = (Bz387752_Main)cdoResource.getContents().get(0);
       assertEquals("value", main.getStrSettable());
       assertEquals(Bz387752_Enum.VAL0, main.getEnumSettable());
-      assertEquals(null, main.getStrUnsettable());
+      assertEquals("def_value", main.getStrUnsettable());
       assertEquals(Bz387752_Enum.VAL1, main.getEnumUnsettable());
 
       // db store results

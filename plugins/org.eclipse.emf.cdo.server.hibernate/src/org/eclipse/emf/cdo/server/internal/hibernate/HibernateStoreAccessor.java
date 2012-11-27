@@ -96,6 +96,7 @@ import java.sql.Clob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -856,6 +857,26 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       // decrement version, hibernate will increment it
       decrementVersions(context);
 
+      // now check the versions and store the hibernate revision to repair
+      // versions later on. The versions can be updated when inserting new objects
+      // this will result in a version difference when the object gets merged
+      // this repair is done just before the merge
+      final Map<CDOID, InternalCDORevision> existingRevisions = new HashMap<CDOID, InternalCDORevision>();
+      for (InternalCDORevision revision : context.getDirtyObjects())
+      {
+        final String entityName = HibernateUtil.getInstance().getEntityName(revision.getID());
+        final Serializable idValue = HibernateUtil.getInstance().getIdValue(revision.getID());
+        final InternalCDORevision cdoRevision = (InternalCDORevision)session.get(entityName, idValue);
+        if (cdoRevision != null)
+        {
+          if (cdoRevision.getVersion() != revision.getVersion())
+          {
+            throw new IllegalStateException("Revision " + cdoRevision + " was already updated by another transaction");
+          }
+          existingRevisions.put(revision.getID(), cdoRevision);
+        }
+      }
+
       // order is 1) insert, 2) update and then delete
       // this order is the most stable! Do not change it without testing
 
@@ -885,17 +906,10 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       for (InternalCDORevision revision : context.getDirtyObjects())
       {
         final String entityName = HibernateUtil.getInstance().getEntityName(revision.getID());
-        if (revision.getVersion() == 0)
+        final InternalCDORevision existingRevision = existingRevisions.get(revision.getID());
+        if (existingRevision != null)
         {
-          // a revision which does not have the version set correctly
-          // read from the db and copy the version
-          final String entityNameValue = HibernateUtil.getInstance().getEntityName(revision.getID());
-          final Serializable idValue = HibernateUtil.getInstance().getIdValue(revision.getID());
-          final CDORevision cdoRevision = (CDORevision)session.get(entityNameValue, idValue);
-          if (cdoRevision != null)
-          {
-            revision.setVersion(cdoRevision.getVersion());
-          }
+          revision.setVersion(existingRevision.getVersion());
         }
 
         final InternalCDORevision cdoRevision = (InternalCDORevision)session.merge(entityName, revision);

@@ -882,9 +882,22 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
       session.flush();
 
-      for (CDORevision revision : context.getDirtyObjects())
+      for (InternalCDORevision revision : context.getDirtyObjects())
       {
         final String entityName = HibernateUtil.getInstance().getEntityName(revision.getID());
+        if (revision.getVersion() == 0)
+        {
+          // a revision which does not have the version set correctly
+          // read from the db and copy the version
+          final String entityNameValue = HibernateUtil.getInstance().getEntityName(revision.getID());
+          final Serializable idValue = HibernateUtil.getInstance().getIdValue(revision.getID());
+          final CDORevision cdoRevision = (CDORevision)session.get(entityNameValue, idValue);
+          if (cdoRevision != null)
+          {
+            revision.setVersion(cdoRevision.getVersion());
+          }
+        }
+
         final InternalCDORevision cdoRevision = (InternalCDORevision)session.merge(entityName, revision);
         if (getStore().isAuditing() && cdoRevision.getVersion() == revision.getVersion())
         {

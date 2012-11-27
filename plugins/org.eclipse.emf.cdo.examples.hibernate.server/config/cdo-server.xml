@@ -15,8 +15,8 @@
 		<property name="overrideUUID" value=""/>
 		<property name="supportingAudits" value="false"/>
 
-		<initialPackage nsURI="http://www.eclipse.org/emf/CDO/examples/company/1.0.0"/>
 		<!-- 
+		<initialPackage nsURI="http://www.eclipse.org/emf/CDO/examples/company/1.0.0"/>
 		<initialPackage nsURI="http://www.eclipse.org/emf/CDO/tests/model1/1.0.0"/>
 		-->
 		
@@ -81,15 +81,15 @@
 			<property name="hibernate.connection.password" value="root"/>
 			 -->
 		<store type="hibernate">
-		<!--
 			<mappingProvider type="teneo">
 				<extension name="org.eclipse.emf.teneo.annotations.mapper.EFeatureAnnotator"
 					value="org.eclipse.emf.cdo.examples.hibernate.server.CDOExampleEFeatureAnnotator"/>
 			</mappingProvider>
-			 -->
+			<!--
 			<mappingProvider type="file">
 				<mappingFile location="generated_hbm.xml"/>
 			</mappingProvider>
+			-->
 		</store>
 	</repository>
 

@@ -15,9 +15,12 @@ import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -54,6 +57,15 @@ public class FileHibernateMappingProvider extends HibernateMappingProvider
     try
     {
       is = getClass().getResourceAsStream(mappingFileLocation);
+
+      if (is == null)
+      {
+        final File file = OMPlatform.INSTANCE.getConfigFile(mappingFileLocation);
+        if (file.exists())
+        {
+          is = new FileInputStream(file);
+        }
+      }
 
       StringBuilder sb = new StringBuilder();
       String line;

@@ -2,17 +2,18 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false">
-	<class entity-name="Address" abstract="false" lazy="false" table="`address`">
-		<meta attribute="eclassName">Address</meta>
-		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
+	<class entity-name="Addressable" abstract="true" lazy="true" table="`addressable`">
+		<meta attribute="eclassName" inherit="false">Addressable</meta>
+		<meta attribute="epackage" inherit="false">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
 		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
-		<id type="long" name="e_id" column="e_id" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticIdPropertyHandler">
-			<meta attribute="syntheticId">true</meta>
+		<id type="long" name="idcol" column="idcol" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticIdPropertyHandler">
+			<meta attribute="syntheticId" inherit="false">true</meta>
 			<generator class="native"/>
 		</id>
-		<version name="e_version" column="e_version" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticVersionPropertyHandler">
-			<meta attribute="syntheticVersion">true</meta>
+		<version name="cdo_teneo_version" type="java.lang.Integer">
+			<meta attribute="version">true</meta>
+			<column name="version"/>
 		</version>
 		<property name="resourceID" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType">
 			<column name="resource_id"/>
@@ -20,6 +21,7 @@
 		<property name="containerID" type="string">
 			<column name="container_id"/>
 		</property>
+		<property name="commit_TimeStamp" type="java.lang.Long"/>
 		<property name="name" lazy="false" insert="true" update="true" not-null="false" unique="false" type="java.lang.String">
 			<column not-null="false" unique="false" name="`name`"/>
 		</property>
@@ -30,100 +32,101 @@
 			<column not-null="false" unique="false" name="`city`"/>
 		</property>
 	</class>
-	<joined-subclass entity-name="Company" abstract="false" lazy="false" extends="Address" table="`company`">
-		<meta attribute="eclassName">Company</meta>
-		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
+	<joined-subclass entity-name="Company" abstract="false" lazy="true" extends="Addressable" table="`company`">
+		<meta attribute="eclassName" inherit="false">Company</meta>
+		<meta attribute="epackage" inherit="false">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
 		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<key>
-			<column name="`address_e_id`"/>
+			<column name="`addressable_e_id`"/>
 		</key>
-		<list name="categories" lazy="true" cascade="all,delete-orphan">
+		<list name="categories" lazy="true" cascade="all">
 			<key update="true" foreign-key="company_categories">
-				<column name="`company_categories_e_id`" not-null="false" unique="false" index="Company_categories"/>
+				<column name="`company_categories_e_id`" unique="false"/>
 			</key>
 			<list-index column="`company_categories_idx`"/>
 			<one-to-many entity-name="Category"/>
 		</list>
-		<list name="suppliers" lazy="true" cascade="all,delete-orphan">
+		<list name="suppliers" lazy="true" cascade="all">
 			<key update="true" foreign-key="company_suppliers">
-				<column name="`company_suppliers_e_id`" not-null="false" unique="false" index="Company_suppliers"/>
+				<column name="`company_suppliers_e_id`" unique="false"/>
 			</key>
 			<list-index column="`company_suppliers_idx`"/>
 			<one-to-many entity-name="Supplier"/>
 		</list>
-		<list name="customers" lazy="true" cascade="all,delete-orphan">
+		<list name="customers" lazy="true" cascade="all">
 			<key update="true" foreign-key="company_customers">
-				<column name="`company_customers_e_id`" not-null="false" unique="false" index="Company_customers"/>
+				<column name="`company_customers_e_id`" unique="false"/>
 			</key>
 			<list-index column="`company_customers_idx`"/>
 			<one-to-many entity-name="Customer"/>
 		</list>
-		<list name="purchaseOrders" lazy="true" cascade="all,delete-orphan">
+		<list name="purchaseOrders" lazy="true" cascade="all">
 			<key update="true" foreign-key="company_purchaseorders">
-				<column name="`company_purchaseorders_e_id`" not-null="false" unique="false" index="Company_purchaseOrders"/>
+				<column name="`company_purchaseorders_e_id`" unique="false"/>
 			</key>
 			<list-index column="`company_purchaseorders_idx`"/>
 			<one-to-many entity-name="PurchaseOrder"/>
 		</list>
-		<list name="salesOrders" lazy="true" cascade="all,delete-orphan">
+		<list name="salesOrders" lazy="true" cascade="all">
 			<key update="true" foreign-key="company_salesorders">
-				<column name="`company_salesorders_e_id`" not-null="false" unique="false" index="Company_salesOrders"/>
+				<column name="`company_salesorders_e_id`" unique="false"/>
 			</key>
 			<list-index column="`company_salesorders_idx`"/>
 			<one-to-many entity-name="SalesOrder"/>
 		</list>
 	</joined-subclass>
-	<joined-subclass entity-name="Supplier" abstract="false" lazy="false" extends="Address" table="`supplier`">
-		<meta attribute="eclassName">Supplier</meta>
-		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
+	<joined-subclass entity-name="Supplier" abstract="false" lazy="true" extends="Addressable" table="`supplier`">
+		<meta attribute="eclassName" inherit="false">Supplier</meta>
+		<meta attribute="epackage" inherit="false">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
 		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<key>
-			<column name="`address_e_id`"/>
+			<column name="`addressable_e_id`"/>
 		</key>
 		<list name="purchaseOrders" table="`supplier_purchaseorders`" lazy="true" cascade="merge,persist,save-update,lock">
 			<key update="true">
-				<column name="`supplier_e_id`" not-null="true" unique="false" index="Supplier_purchaseOrders"/>
+				<column name="`supplier_e_id`" unique="false"/>
 			</key>
 			<list-index column="`supplier_purchaseorders_idx`"/>
 			<many-to-many entity-name="PurchaseOrder" unique="true">
-				<column name="`purchaseorder_e_id`" not-null="true" unique="false" index="Supplier_purchaseOrders"/>
+				<column name="`purchaseorder_e_id`" unique="false"/>
 			</many-to-many>
 		</list>
 		<property name="preferred" lazy="false" insert="true" update="true" not-null="false" unique="false" type="boolean">
 			<column not-null="false" unique="false" name="`preferred`"/>
 		</property>
 	</joined-subclass>
-	<joined-subclass entity-name="Customer" abstract="false" lazy="false" extends="Address" table="`customer`">
-		<meta attribute="eclassName">Customer</meta>
-		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
+	<joined-subclass entity-name="Customer" abstract="false" lazy="true" extends="Addressable" table="`customer`">
+		<meta attribute="eclassName" inherit="false">Customer</meta>
+		<meta attribute="epackage" inherit="false">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
 		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<key>
-			<column name="`address_e_id`"/>
+			<column name="`addressable_e_id`"/>
 		</key>
 		<list name="salesOrders" table="`customer_salesorders`" lazy="true" cascade="merge,persist,save-update,lock">
 			<key update="true">
-				<column name="`customer_e_id`" not-null="true" unique="false" index="Customer_salesOrders"/>
+				<column name="`customer_e_id`" unique="false"/>
 			</key>
 			<list-index column="`customer_salesorders_idx`"/>
 			<many-to-many entity-name="SalesOrder" unique="true">
-				<column name="`salesorder_e_id`" not-null="true" unique="false" index="Customer_salesOrders"/>
+				<column name="`salesorder_e_id`" unique="false"/>
 			</many-to-many>
 		</list>
 	</joined-subclass>
-	<class entity-name="BaseOrder" abstract="false" lazy="false" table="`baseorder`">
-		<meta attribute="eclassName">Order</meta>
-		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
+	<class entity-name="BaseOrder" abstract="false" lazy="true" table="`baseorder`">
+		<meta attribute="eclassName" inherit="false">Order</meta>
+		<meta attribute="epackage" inherit="false">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
 		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
-		<id type="long" name="e_id" column="e_id" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticIdPropertyHandler">
-			<meta attribute="syntheticId">true</meta>
+		<id type="long" name="idcol" column="idcol" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticIdPropertyHandler">
+			<meta attribute="syntheticId" inherit="false">true</meta>
 			<generator class="native"/>
 		</id>
-		<version name="e_version" column="e_version" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticVersionPropertyHandler">
-			<meta attribute="syntheticVersion">true</meta>
+		<version name="cdo_teneo_version" type="java.lang.Integer">
+			<meta attribute="version">true</meta>
+			<column name="version"/>
 		</version>
 		<property name="resourceID" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType">
 			<column name="resource_id"/>
@@ -131,25 +134,27 @@
 		<property name="containerID" type="string">
 			<column name="container_id"/>
 		</property>
-		<list name="orderDetails" lazy="true" cascade="all,delete-orphan">
+		<property name="commit_TimeStamp" type="java.lang.Long"/>
+		<list name="orderDetails" lazy="true" cascade="all">
 			<key update="true">
-				<column name="`orderdetail_order_e_id`" not-null="false" unique="false" index="BaseOrder_orderDetails"/>
+				<column name="`orderdetail_order_e_id`" unique="false"/>
 			</key>
 			<list-index column="`order_orderdetails_idx`"/>
 			<one-to-many entity-name="OrderDetail"/>
 		</list>
 	</class>
-	<class entity-name="OrderDetail" abstract="false" lazy="false" table="`orderdetail`">
-		<meta attribute="eclassName">OrderDetail</meta>
-		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
+	<class entity-name="OrderDetail" abstract="false" lazy="true" table="`orderdetail`">
+		<meta attribute="eclassName" inherit="false">OrderDetail</meta>
+		<meta attribute="epackage" inherit="false">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
 		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
-		<id type="long" name="e_id" column="e_id" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticIdPropertyHandler">
-			<meta attribute="syntheticId">true</meta>
+		<id type="long" name="idcol" column="idcol" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticIdPropertyHandler">
+			<meta attribute="syntheticId" inherit="false">true</meta>
 			<generator class="native"/>
 		</id>
-		<version name="e_version" column="e_version" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticVersionPropertyHandler">
-			<meta attribute="syntheticVersion">true</meta>
+		<version name="cdo_teneo_version" type="java.lang.Integer">
+			<meta attribute="version">true</meta>
+			<column name="version"/>
 		</version>
 		<property name="resourceID" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType">
 			<column name="resource_id"/>
@@ -157,6 +162,7 @@
 		<property name="containerID" type="string">
 			<column name="container_id"/>
 		</property>
+		<property name="commit_TimeStamp" type="java.lang.Long"/>
 		<many-to-one name="order" entity-name="BaseOrder" lazy="false" cascade="merge,persist,save-update,lock" foreign-key="orderdetail_order" insert="false" update="false" not-null="false">
 			<column not-null="false" unique="false" name="`orderdetail_order_e_id`" index="OrderDetail_order,OrderDetail_order"/>
 		</many-to-one>
@@ -165,35 +171,9 @@
 			<column not-null="false" unique="false" name="`price`"/>
 		</property>
 	</class>
-	<joined-subclass entity-name="OrderAddress" abstract="false" lazy="false" extends="Address" table="`orderaddress`">
-		<meta attribute="eclassName">OrderAddress</meta>
-		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
-		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
-		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
-		<key>
-			<column name="`address_e_id`"/>
-		</key>
-		<list name="orderDetails" lazy="true" cascade="all,delete-orphan">
-			<key update="true">
-				<column name="`orderdetails_orderaddressid`" not-null="false" unique="false" index="BaseOrder_orderDetails"/>
-			</key>
-			<list-index column="`order_orderdetails_idx`"/>
-			<one-to-many entity-name="OrderDetail"/>
-		</list>
-		<many-to-one name="order" entity-name="BaseOrder" lazy="false" cascade="merge,persist,save-update,lock" foreign-key="orderdetail_order" insert="false" update="false" not-null="false">
-			<column not-null="false" unique="false" name="`orderaddress_order_e_id`" index="OrderDetail_order,OrderDetail_order"/>
-		</many-to-one>
-		<many-to-one name="product" entity-name="Product" lazy="false" cascade="merge,persist,save-update,lock" foreign-key="orderdetail_product" insert="true" update="true" not-null="false"/>
-		<property name="price" lazy="false" insert="true" update="true" not-null="false" unique="false" type="float">
-			<column not-null="false" unique="false" name="`price`"/>
-		</property>
-		<property name="testAttribute" lazy="false" insert="true" update="true" not-null="false" unique="false" type="boolean">
-			<column not-null="false" unique="false" name="`testattribute`"/>
-		</property>
-	</joined-subclass>
-	<joined-subclass entity-name="PurchaseOrder" abstract="false" lazy="false" extends="BaseOrder" table="`purchaseorder`">
-		<meta attribute="eclassName">PurchaseOrder</meta>
-		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
+	<joined-subclass entity-name="PurchaseOrder" abstract="false" lazy="true" extends="BaseOrder" table="`purchaseorder`">
+		<meta attribute="eclassName" inherit="false">PurchaseOrder</meta>
+		<meta attribute="epackage" inherit="false">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
 		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<key>
@@ -204,9 +184,9 @@
 		</property>
 		<many-to-one name="supplier" entity-name="Supplier" lazy="false" cascade="merge,persist,save-update,lock" foreign-key="purchaseorder_supplier" insert="true" update="true" not-null="false"/>
 	</joined-subclass>
-	<joined-subclass entity-name="SalesOrder" abstract="false" lazy="false" extends="BaseOrder" table="`salesorder`">
-		<meta attribute="eclassName">SalesOrder</meta>
-		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
+	<joined-subclass entity-name="SalesOrder" abstract="false" lazy="true" extends="BaseOrder" table="`salesorder`">
+		<meta attribute="eclassName" inherit="false">SalesOrder</meta>
+		<meta attribute="epackage" inherit="false">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
 		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<key>
@@ -217,17 +197,18 @@
 		</property>
 		<many-to-one name="customer" entity-name="Customer" lazy="false" cascade="merge,persist,save-update,lock" foreign-key="salesorder_customer" insert="true" update="true" not-null="false"/>
 	</joined-subclass>
-	<class entity-name="Category" abstract="false" lazy="false" table="`category`">
-		<meta attribute="eclassName">Category</meta>
-		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
+	<class entity-name="Category" abstract="false" lazy="true" table="`category`">
+		<meta attribute="eclassName" inherit="false">Category</meta>
+		<meta attribute="epackage" inherit="false">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
 		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
-		<id type="long" name="e_id" column="e_id" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticIdPropertyHandler">
-			<meta attribute="syntheticId">true</meta>
-			<generator class="native"/>
+		<id name="name" type="java.lang.String">
+			<column not-null="true" unique="false" name="`name`"/>
+			<generator class="org.eclipse.emf.cdo.examples.hibernate.server.CDOExampleUUIDHexGenerator"/>
 		</id>
-		<version name="e_version" column="e_version" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticVersionPropertyHandler">
-			<meta attribute="syntheticVersion">true</meta>
+		<version name="cdo_teneo_version" type="java.lang.Integer">
+			<meta attribute="version">true</meta>
+			<column name="version"/>
 		</version>
 		<property name="resourceID" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType">
 			<column name="resource_id"/>
@@ -235,34 +216,33 @@
 		<property name="containerID" type="string">
 			<column name="container_id"/>
 		</property>
-		<property name="name" lazy="false" insert="true" update="true" not-null="false" unique="false" type="java.lang.String">
-			<column not-null="false" unique="false" name="`name`"/>
-		</property>
-		<list name="categories" lazy="true" cascade="all,delete-orphan">
+		<property name="commit_TimeStamp" type="java.lang.Long"/>
+		<list name="categories" lazy="true" cascade="all">
 			<key update="true" foreign-key="category_categories">
-				<column name="`category_categories_e_id`" not-null="false" unique="false" index="Category_categories"/>
+				<column name="`category_categories_name`" unique="false"/>
 			</key>
 			<list-index column="`category_categories_idx`"/>
 			<one-to-many entity-name="Category"/>
 		</list>
-		<list name="products" lazy="true" cascade="all,delete-orphan">
+		<list name="products" lazy="true" cascade="all">
 			<key update="true" foreign-key="category_products">
-				<column name="`category_products_e_id`" not-null="false" unique="false" index="Category_products"/>
+				<column name="`category_products_name`" unique="false"/>
 			</key>
 			<list-index column="`category_products_idx`"/>
 			<one-to-many entity-name="Product"/>
 		</list>
 	</class>
-	<class entity-name="Product" abstract="false" lazy="false" table="`product`">
-		<meta attribute="eclassName">Product</meta>
-		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
+	<class entity-name="Product" abstract="false" lazy="true" table="`product`">
+		<meta attribute="eclassName" inherit="false">Product</meta>
+		<meta attribute="epackage" inherit="false">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</meta>
 		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<id name="name" type="java.lang.String">
 			<column not-null="true" unique="false" name="`name`"/>
 		</id>
-		<version name="e_version" column="e_version" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticVersionPropertyHandler">
-			<meta attribute="syntheticVersion">true</meta>
+		<version name="cdo_teneo_version" type="java.lang.Integer">
+			<meta attribute="version">true</meta>
+			<column name="version"/>
 		</version>
 		<property name="resourceID" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType">
 			<column name="resource_id"/>
@@ -270,22 +250,26 @@
 		<property name="containerID" type="string">
 			<column name="container_id"/>
 		</property>
+		<property name="commit_TimeStamp" type="java.lang.Long"/>
 		<list name="orderDetails" table="`product_orderdetails`" lazy="true" cascade="merge,persist,save-update,lock">
 			<key update="true">
-				<column name="`product_name`" not-null="true" unique="false" index="Product_orderDetails"/>
+				<column name="`product_name`" unique="false"/>
 			</key>
 			<list-index column="`product_orderdetails_idx`"/>
 			<many-to-many entity-name="OrderDetail" unique="true">
-				<column name="`orderdetail_e_id`" not-null="true" unique="false" index="Product_orderDetails"/>
+				<column name="`orderdetail_e_id`" unique="false"/>
 			</many-to-many>
 		</list>
-		<property name="vat" lazy="false" not-null="false" insert="true" update="true" unique="false">
-			<column not-null="false" unique="false" name="`vat`"/>
+		<property name="vat" lazy="false" not-null="true" insert="true" update="true" unique="false">
+			<column not-null="true" unique="false" name="`vat`"/>
 			<type name="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOENumStringType">
 				<param name="enumClass">org.eclipse.emf.cdo.examples.company.VAT</param>
 				<param name="eclassifier">VAT</param>
 				<param name="epackage">http://www.eclipse.org/emf/CDO/examples/company/1.0.0</param>
 			</type>
+		</property>
+		<property name="price" lazy="false" insert="true" update="true" not-null="false" unique="false" type="float">
+			<column not-null="false" unique="false" name="`price`"/>
 		</property>
 	</class>
 </hibernate-mapping>

@@ -215,7 +215,7 @@ public class HibernateAuditHandler
     }
     if (value instanceof String && targetEFeature.getEType() instanceof EEnum)
     {
-      return ((EEnum)targetEFeature.getEType()).getEEnumLiteral((String)value).getValue();
+      return ((EEnum)targetEFeature.getEType()).getEEnumLiteralByLiteral((String)value).getValue();
     }
     return value;
   }

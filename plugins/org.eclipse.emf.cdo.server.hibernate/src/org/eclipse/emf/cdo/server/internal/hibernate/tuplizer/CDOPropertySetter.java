@@ -67,6 +67,13 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
     }
   }
 
+  // see CDOPropertySetter#useDefaultValue
+  private boolean useDefaultValue()
+  {
+    final EStructuralFeature eFeature = getEStructuralFeature();
+    return eFeature.isRequired() || !handleUnsetAsNull && eFeature.isUnsettable();
+  }
+
   public Method getMethod()
   {
     return null;
@@ -81,7 +88,8 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
   {
     InternalCDORevision revision = (InternalCDORevision)target;
 
-    final Object defaultValue = getEStructuralFeature().getDefaultValue();
+    final EStructuralFeature eFeature = getEStructuralFeature();
+    final Object defaultValue = eFeature.getDefaultValue();
 
     // handle a special case: the byte array.
     // hibernate will pass a Byte[] while CDO wants a byte[] (object vs. primitive array)
@@ -114,7 +122,7 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
         {
           newValue = null;
         }
-        else if (!handleUnsetAsNull && getEStructuralFeature().isUnsettable())
+        else if (!handleUnsetAsNull && eFeature.isUnsettable())
         {
           // there was a default value so was explicitly set to null
           // otherwise the default value would be in the db
@@ -130,13 +138,13 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
         newValue = value;
       }
     }
-    final Object currentValue = revision.getValue(getEStructuralFeature());
+    final Object currentValue = revision.getValue(eFeature);
     // do a simpler change check for ismany
-    if (getEStructuralFeature().isMany())
+    if (eFeature.isMany())
     {
       if (currentValue != newValue)
       {
-        revision.setValue(getEStructuralFeature(), newValue);
+        revision.setValue(eFeature, newValue);
       }
     }
     else
@@ -145,7 +153,7 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
           || isEenumDefaultValue(value) || currentValue != null && newValue != null && currentValue.equals(newValue);
       final boolean hasChanged = !notChanged;
       // hibernate stores the default value, CDO maintains it as null
-      final boolean defaultValueSet = !handleUnsetAsNull && currentValue == null && defaultValue != null
+      final boolean defaultValueSet = useDefaultValue() && currentValue == null && defaultValue != null
           && newValue != null && newValue.equals(defaultValue);
       if (!defaultValueSet && hasChanged)
       {

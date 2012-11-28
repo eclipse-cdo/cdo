@@ -83,7 +83,10 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
         return null;
       }
 
-      if (!handleUnsetAsNull && eFeature.isUnsettable())
+      // this happens when you don't set a value explicitly in CDO
+      // then null is passed while the user may expect the default
+      // value to be set.
+      if (useDefaultValue())
       {
         value = eFeature.getDefaultValue();
       }
@@ -91,14 +94,6 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
       {
         value = null;
       }
-    }
-
-    // this happens when you don't set a value explicitly in CDO
-    // then null is passed while the user may expect the default
-    // value to be set.
-    if (value == null && eFeature.isRequired())
-    {
-      value = eFeature.getDefaultValue();
     }
 
     // hibernate sees eenums, CDO sees int
@@ -113,6 +108,13 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
     }
 
     return value;
+  }
+
+  // see CDOPropertyGetter#useDefaultValue
+  private boolean useDefaultValue()
+  {
+    final EStructuralFeature eFeature = getEStructuralFeature();
+    return eFeature.isRequired() || !handleUnsetAsNull && eFeature.isUnsettable();
   }
 
   @SuppressWarnings("rawtypes")

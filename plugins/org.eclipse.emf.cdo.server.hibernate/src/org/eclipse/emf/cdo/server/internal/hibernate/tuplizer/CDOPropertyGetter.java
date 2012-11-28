@@ -92,15 +92,14 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
         value = null;
       }
     }
-    
+
     // this happens when you don't set a value explicitly in CDO
-    // then null is passed while the user may expect the default 
+    // then null is passed while the user may expect the default
     // value to be set.
-    if (value == null && eFeature.isRequired()) {
+    if (value == null && eFeature.isRequired())
+    {
       value = eFeature.getDefaultValue();
     }
-
-    System.err.println(value);
 
     // hibernate sees eenums, CDO sees int
     if (isEEnum && value != null)

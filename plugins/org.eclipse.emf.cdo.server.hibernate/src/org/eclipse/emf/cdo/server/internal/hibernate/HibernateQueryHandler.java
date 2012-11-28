@@ -11,14 +11,17 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
+import org.eclipse.emf.cdo.internal.common.branch.CDOBranchVersionImpl;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.WrappedHibernateList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -210,9 +213,40 @@ public class HibernateQueryHandler implements IQueryHandler
   {
     if (!(o instanceof TeneoAuditEntry))
     {
+      // repair revision numbers
+      if (o instanceof InternalCDORevision && hibernateStoreAccessor.getStore().isAuditing())
+      {
+        final InternalCDORevision internalCDORevision = (InternalCDORevision)o;
+        // a later revision, get the previous revision
+        if (internalCDORevision.getVersion() > 1)
+        {
+          final CDORevision previousVersion = getPreviousRevision(internalCDORevision);
+          if (previousVersion != null)
+          {
+            internalCDORevision.setBranchPoint(hibernateStoreAccessor.getStore().getMainBranchHead().getBranch()
+                .getPoint(1 + previousVersion.getRevised()));
+          }
+        }
+      }
+
       return o;
     }
     return hibernateAuditHandler.convertAuditEntryToCDORevision((TeneoAuditEntry)o);
+  }
+
+  private CDORevision getPreviousRevision(InternalCDORevision internalCDORevision)
+  {
+    final InternalCDORevisionManager cdoRevisionManager = hibernateStoreAccessor.getStore().getRepository()
+        .getRevisionManager();
+
+    final CDOBranchVersion cdoBranchVersion = new CDOBranchVersionImpl(hibernateStoreAccessor.getStore()
+        .getMainBranchHead().getBranch(), internalCDORevision.getVersion() - 1);
+    if (cdoRevisionManager.containsRevisionByVersion(internalCDORevision.getID(), cdoBranchVersion))
+    {
+      return cdoRevisionManager.getRevisionByVersion(internalCDORevision.getID(), cdoBranchVersion, -1, true);
+    }
+    return hibernateStoreAccessor.readRevisionByVersion(internalCDORevision.getID(), cdoBranchVersion, -1,
+        cdoRevisionManager);
   }
 
   private void addToRevisionCache(CDORevision revision)

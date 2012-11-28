@@ -386,6 +386,13 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       // found one, use it
       if (revision != null)
       {
+
+        if (cache != null)
+        {
+          cache.addRevision(revision);
+        }
+        revision.freeze();
+
         return revision;
       }
     }
@@ -405,6 +412,12 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
     revision.setBranchPoint(getStore().getMainBranchHead());
     revision.freeze();
+
+    if (cache != null)
+    {
+      cache.addRevision(revision);
+    }
+
     return revision;
   }
 
@@ -588,6 +601,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     if (revision != null && !(revision instanceof DetachedCDORevision))
     {
       revision.freeze();
+    }
+
+    if (cache != null)
+    {
+      cache.addRevision(revision);
     }
 
     return revision;
@@ -847,6 +865,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     // Note: instead of an Async here, we could do much more fine-grained monitoring below. But this
     // simplistic solution is sufficient to prevent timeout errors.
     final Async async = monitor.forkAsync();
+    HibernateThreadContext.getCommitContext().setInDoWrite(true);
     try
     {
       // start with fresh hibernate session to prevent side effects
@@ -998,6 +1017,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     }
     finally
     {
+      HibernateThreadContext.getCommitContext().setInDoWrite(false);
       async.stop();
     }
 

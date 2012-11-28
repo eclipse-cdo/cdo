@@ -130,12 +130,23 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
       }
     }
     final Object currentValue = revision.getValue(getEStructuralFeature());
-    final boolean notChanged = currentValue == newValue || isEenumDefaultValue(value) || currentValue != null
-        && newValue != null && currentValue.equals(newValue);
-    final boolean hasChanged = !notChanged;
-    if (hasChanged)
+    // do a simpler change check for ismany
+    if (getEStructuralFeature().isMany())
     {
-      revision.setValue(getEStructuralFeature(), newValue);
+      if (currentValue != newValue)
+      {
+        revision.setValue(getEStructuralFeature(), newValue);
+      }
+    }
+    else
+    {
+      final boolean notChanged = currentValue == CDORevisionData.NIL && newValue == null || currentValue == newValue
+          || isEenumDefaultValue(value) || currentValue != null && newValue != null && currentValue.equals(newValue);
+      final boolean hasChanged = !notChanged;
+      if (hasChanged)
+      {
+        revision.setValue(getEStructuralFeature(), newValue);
+      }
     }
   }
 

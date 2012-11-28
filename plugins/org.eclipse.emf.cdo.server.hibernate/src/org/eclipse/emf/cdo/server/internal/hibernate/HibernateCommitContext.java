@@ -31,6 +31,8 @@ public class HibernateCommitContext
 
   private HashMap<CDOID, InternalCDORevision> newObjects;
 
+  private boolean inDoWrite = false;
+
   public InternalCommitContext getCommitContext()
   {
     return commitContext;
@@ -93,5 +95,15 @@ public class HibernateCommitContext
       newObjects.put(newId, cdoRevision);
       return;
     }
+  }
+
+  public boolean isInDoWrite()
+  {
+    return inDoWrite;
+  }
+
+  public void setInDoWrite(boolean inDoWrite)
+  {
+    this.inDoWrite = inDoWrite;
   }
 }

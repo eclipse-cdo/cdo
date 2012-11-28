@@ -81,6 +81,8 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
   {
     InternalCDORevision revision = (InternalCDORevision)target;
 
+    final Object defaultValue = getEStructuralFeature().getDefaultValue();
+
     // handle a special case: the byte array.
     // hibernate will pass a Byte[] while CDO wants a byte[] (object vs. primitive array)
     final Object newValue;
@@ -108,7 +110,6 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
       }
       else if (value == null)
       {
-        final Object defaultValue = getEStructuralFeature().getDefaultValue();
         if (defaultValue == null)
         {
           newValue = null;
@@ -143,7 +144,10 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
       final boolean notChanged = currentValue == CDORevisionData.NIL && newValue == null || currentValue == newValue
           || isEenumDefaultValue(value) || currentValue != null && newValue != null && currentValue.equals(newValue);
       final boolean hasChanged = !notChanged;
-      if (hasChanged)
+      // hibernate stores the default value, CDO maintains it as null
+      final boolean defaultValueSet = !handleUnsetAsNull && currentValue == null && defaultValue != null
+          && newValue != null && newValue.equals(defaultValue);
+      if (!defaultValueSet && hasChanged)
       {
         revision.setValue(getEStructuralFeature(), newValue);
       }

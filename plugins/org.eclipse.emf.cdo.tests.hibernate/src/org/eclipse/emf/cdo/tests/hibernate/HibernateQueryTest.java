@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
+import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -48,6 +49,24 @@ public class HibernateQueryTest extends AbstractCDOTest
   private static final int NUM_OF_PRODUCTS_CUSTOMER = NUM_OF_PRODUCTS / NUM_OF_CUSTOMERS;
 
   private static final int NUM_OF_SALES_ORDERS = 5;
+
+  private static final int NUM_OF_SUPPLIERS = 5;
+
+  @Override
+  public void doSetUp() throws Exception
+  {
+    org.eclipse.emf.cdo.tests.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(1);
+    org.eclipse.emf.cdo.tests.legacy.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(1);
+    super.doSetUp();
+  }
+
+  @Override
+  public void doTearDown() throws Exception
+  {
+    org.eclipse.emf.cdo.tests.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(0);
+    org.eclipse.emf.cdo.tests.legacy.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(0);
+    super.doTearDown();
+  }
 
   public void testSimpleQueries() throws Exception
   {
@@ -448,6 +467,24 @@ public class HibernateQueryTest extends AbstractCDOTest
 
       productCounter += NUM_OF_PRODUCTS_CUSTOMER;
     }
+
+    final List<Supplier> suppliers = new ArrayList<Supplier>();
+    for (int i = 0; i < NUM_OF_SUPPLIERS; i++)
+    {
+      suppliers.add(createSupplier(i));
+    }
+
+    resource.getContents().addAll(suppliers);
+  }
+
+  private Supplier createSupplier(int i)
+  {
+    Supplier supplier = getModel1Factory().createSupplier();
+    supplier.setCity("City " + i);
+    supplier.setName(i + "");
+    supplier.setStreet("Street " + i);
+    // supplier.setPreferred(false); // will be persisted with its default value
+    return supplier;
   }
 
   private SalesOrder createSalesOrder(int num, Customer customer, List<Product1> products)

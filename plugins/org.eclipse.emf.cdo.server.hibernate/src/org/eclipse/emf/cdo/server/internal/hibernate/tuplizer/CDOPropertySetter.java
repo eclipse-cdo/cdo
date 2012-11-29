@@ -149,13 +149,9 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
     }
     else
     {
-      final boolean notChanged = currentValue == CDORevisionData.NIL && newValue == null || currentValue == newValue
-          || isEenumDefaultValue(value) || currentValue != null && newValue != null && currentValue.equals(newValue);
-      final boolean hasChanged = !notChanged;
-      // hibernate stores the default value, CDO maintains it as null
-      final boolean defaultValueSet = useDefaultValue() && currentValue == null && defaultValue != null
+      boolean overwriteNilOrNull = currentValue == CDORevisionData.NIL && newValue == null || currentValue == null
           && newValue != null && newValue.equals(defaultValue);
-      if (!defaultValueSet && hasChanged)
+      if (!revision.isFrozen() && !overwriteNilOrNull)
       {
         revision.setValue(getEStructuralFeature(), newValue);
       }

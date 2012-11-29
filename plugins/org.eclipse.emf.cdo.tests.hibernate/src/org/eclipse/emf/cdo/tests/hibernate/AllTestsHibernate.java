@@ -78,6 +78,9 @@ public class AllTestsHibernate extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // testClasses.clear();
+    // testClasses.add(HibernateBugzilla_387752_Test.class);
+    // testClasses.add(HibernateBugzilla_387752_True_Test.class);
+    // // testClasses.add(Hibernate_Missing_Version_Test.class);
     // if (true)
     // {
     // return;
@@ -210,6 +213,11 @@ public class AllTestsHibernate extends AllConfigs
     testClasses.add(HibernateMultiValuedOfAttributeTest.class);
     testClasses.remove(MultiValuedOfAttributeTest.class);
 
+    // storing settable/unsettable not supported
+    // TODO: check this some more
+    testClasses.add(Hibernate_Bugzilla_258933_Test.class);
+    testClasses.remove(Bugzilla_258933_Test.class);
+
     // MemStore is not relevant
     testClasses.remove(MEMStoreQueryTest.class);
 
@@ -340,6 +348,15 @@ public class AllTestsHibernate extends AllConfigs
     // does not work for non audited cases
     @Override
     public void testCommitTimeStampUpdateOnError() throws Exception
+    {
+    }
+
+  }
+
+  public static class Hibernate_Bugzilla_258933_Test extends Bugzilla_258933_Test
+  {
+    @Override
+    public void testBugzilla_258933_String_SetToDefaultValue_unsettable() throws Exception
     {
     }
 

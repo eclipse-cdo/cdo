@@ -13,11 +13,15 @@ package org.eclipse.emf.cdo.tests.hibernate;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestFactory;
+import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.emf.teneo.PersistenceOptions;
 
 /**
  * Read external reference annotation.
@@ -26,6 +30,28 @@ import org.eclipse.emf.cdo.view.CDOView;
  */
 public class HibernateBugzilla_387752_True_Test extends AbstractCDOTest
 {
+
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    final IRepositoryConfig repConfig = getRepositoryConfig();
+    final HibernateConfig hbConfig = (HibernateConfig)repConfig;
+    hbConfig.getAdditionalProperties().put(PersistenceOptions.HANDLE_UNSET_AS_NULL, "false");
+    org.eclipse.emf.cdo.tests.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(1);
+    org.eclipse.emf.cdo.tests.legacy.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(1);
+    super.doSetUp();
+  }
+
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    final IRepositoryConfig repConfig = getRepositoryConfig();
+    final HibernateConfig hbConfig = (HibernateConfig)repConfig;
+    org.eclipse.emf.cdo.tests.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(0);
+    org.eclipse.emf.cdo.tests.legacy.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(0);
+    hbConfig.getAdditionalProperties().clear();
+    super.doTearDown();
+  }
 
   public void testBugzilla() throws Exception
   {
@@ -45,6 +71,10 @@ public class HibernateBugzilla_387752_True_Test extends AbstractCDOTest
       Bz387752_Main main2 = HibernateTestFactory.eINSTANCE.createBz387752_Main();
       resource.getContents().add(main2);
 
+      resource.getContents().add(createSupplier(1));
+      resource.getContents().add(createSupplier(2));
+      resource.getContents().add(createSupplier(3));
+
       transaction.commit();
       session.close();
     }
@@ -58,7 +88,7 @@ public class HibernateBugzilla_387752_True_Test extends AbstractCDOTest
       Bz387752_Main main = (Bz387752_Main)cdoResource.getContents().get(0);
       assertEquals("value", main.getStrSettable());
       assertEquals(Bz387752_Enum.VAL0, main.getEnumSettable());
-      assertEquals("def_value", main.getStrUnsettable());
+      assertEquals(null, main.getStrUnsettable());
       assertEquals(Bz387752_Enum.VAL1, main.getEnumUnsettable());
 
       // db store results
@@ -81,4 +111,15 @@ public class HibernateBugzilla_387752_True_Test extends AbstractCDOTest
       session.close();
     }
   }
+
+  private Supplier createSupplier(int i)
+  {
+    Supplier supplier = getModel1Factory().createSupplier();
+    supplier.setCity("City " + i);
+    supplier.setName(i + "");
+    supplier.setStreet("Street " + i);
+    // supplier.setPreferred(false); // will be persisted with its default value
+    return supplier;
+  }
+
 }

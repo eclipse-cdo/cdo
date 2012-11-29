@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestFactory;
+import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -36,6 +37,8 @@ public class HibernateBugzilla_387752_Test extends AbstractCDOTest
     final IRepositoryConfig repConfig = getRepositoryConfig();
     final HibernateConfig hbConfig = (HibernateConfig)repConfig;
     hbConfig.getAdditionalProperties().put(PersistenceOptions.HANDLE_UNSET_AS_NULL, "false");
+    org.eclipse.emf.cdo.tests.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(1);
+    org.eclipse.emf.cdo.tests.legacy.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(1);
     super.doSetUp();
   }
 
@@ -44,6 +47,8 @@ public class HibernateBugzilla_387752_Test extends AbstractCDOTest
   {
     final IRepositoryConfig repConfig = getRepositoryConfig();
     final HibernateConfig hbConfig = (HibernateConfig)repConfig;
+    org.eclipse.emf.cdo.tests.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(0);
+    org.eclipse.emf.cdo.tests.legacy.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(0);
     hbConfig.getAdditionalProperties().clear();
     super.doTearDown();
   }
@@ -65,6 +70,9 @@ public class HibernateBugzilla_387752_Test extends AbstractCDOTest
 
       Bz387752_Main main2 = HibernateTestFactory.eINSTANCE.createBz387752_Main();
       resource.getContents().add(main2);
+      resource.getContents().add(createSupplier(1));
+      resource.getContents().add(createSupplier(2));
+      resource.getContents().add(createSupplier(3));
 
       transaction.commit();
       session.close();
@@ -102,4 +110,15 @@ public class HibernateBugzilla_387752_Test extends AbstractCDOTest
       session.close();
     }
   }
+
+  private Supplier createSupplier(int i)
+  {
+    Supplier supplier = getModel1Factory().createSupplier();
+    supplier.setCity("City " + i);
+    supplier.setName(i + "");
+    supplier.setStreet("Street " + i);
+    // supplier.setPreferred(false); // will be persisted with its default value
+    return supplier;
+  }
+
 }

@@ -290,6 +290,14 @@ public class StubCDORevision extends AbstractCDORevision
   }
 
   /**
+   * @since 4.2
+   */
+  public boolean isFrozen()
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
+  /**
    * @since 4.1
    */
   public boolean isUnchunked()

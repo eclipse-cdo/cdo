@@ -135,6 +135,11 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
   public void freeze();
 
   /**
+   * @since 4.2
+   */
+  public boolean isFrozen();
+
+  /**
    * @since 4.1
    */
   public boolean isUnchunked();

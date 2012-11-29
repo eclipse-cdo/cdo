@@ -759,6 +759,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   }
 
   /**
+   * @since 4.2
+   */
+  public boolean isFrozen()
+  {
+    return (flags & FROZEN_FLAG) != 0;
+  }
+
+  /**
    * @since 4.1
    */
   public boolean isUnchunked()

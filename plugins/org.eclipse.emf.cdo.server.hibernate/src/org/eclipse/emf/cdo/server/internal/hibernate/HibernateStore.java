@@ -884,6 +884,12 @@ public class HibernateStore extends Store implements IHibernateStore
       auditEntry.setTeneo_container_id(getAuditHandler().entityToIdString(session, cdoRevision.getContainerID()));
       auditEntry.setTeneo_container_feature_id(cdoRevision.getContainingFeatureID());
     }
+
+    @Override
+    protected boolean performVersionCheck()
+    {
+      return true;
+    }
   }
 
   public HbSessionDataStore getCDODataStore()

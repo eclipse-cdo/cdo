@@ -920,8 +920,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         session.saveOrUpdate(entityName, revision);
       }
 
-      session.flush();
-
       for (InternalCDORevision revision : context.getDirtyObjects())
       {
         final String entityName = HibernateUtil.getInstance().getEntityName(revision.getID());

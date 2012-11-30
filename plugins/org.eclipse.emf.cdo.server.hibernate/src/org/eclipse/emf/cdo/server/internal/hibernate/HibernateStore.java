@@ -763,7 +763,6 @@ public class HibernateStore extends Store implements IHibernateStore
   public String mapAuditingEPackages(HbDataStore dataStore, List<EPackage> auditEPackages)
   {
     // create a new persistence options to not change the original
-    final PersistenceOptions po = dataStore.getExtensionManager().getExtension(PersistenceOptions.class);
     final Properties props = new Properties();
     props.putAll(dataStore.getPersistenceOptions().getProperties());
     props.remove(PersistenceOptions.PERSISTENCE_XML);
@@ -771,7 +770,8 @@ public class HibernateStore extends Store implements IHibernateStore
     {
       props.setProperty(PersistenceOptions.PERSISTENCE_XML, PersistenceOptions.AUDITING_PERSISTENCE_XML);
     }
-
+    final PersistenceOptions po = dataStore.getExtensionManager().getExtension(PersistenceOptions.class,
+        new Object[] { props });
     PAnnotatedModel paModel = dataStore.getExtensionManager().getExtension(PersistenceMappingBuilder.class)
         .buildMapping(auditEPackages, po, dataStore.getExtensionManager(), dataStore.getPackageRegistry());
     final HibernateMappingGenerator hmg = dataStore.getExtensionManager().getExtension(HibernateMappingGenerator.class);

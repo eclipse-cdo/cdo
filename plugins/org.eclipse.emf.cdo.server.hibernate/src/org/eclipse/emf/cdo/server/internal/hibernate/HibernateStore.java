@@ -744,7 +744,8 @@ public class HibernateStore extends Store implements IHibernateStore
             getRepository().getPackageRegistry(), po));
       }
     }
-    epacks.add(dataStore.getAuditHandler().createAuditingEPackage(dataStore, EresourcePackage.eINSTANCE,
+    epacks.add(dataStore.getAuditHandler().createAuditingEPackage(dataStore,
+        getRepository().getPackageRegistry().getEPackage(EresourcePackage.eNS_URI),
         getRepository().getPackageRegistry(), po));
 
     epacks.add(TeneoauditingPackage.eINSTANCE);
@@ -763,7 +764,8 @@ public class HibernateStore extends Store implements IHibernateStore
   {
     // create a new persistence options to not change the original
     final PersistenceOptions po = dataStore.getExtensionManager().getExtension(PersistenceOptions.class);
-    final Properties props = new Properties(dataStore.getPersistenceOptions().getProperties());
+    final Properties props = new Properties();
+    props.putAll(dataStore.getPersistenceOptions().getProperties());
     props.remove(PersistenceOptions.PERSISTENCE_XML);
     if (props.containsKey(PersistenceOptions.AUDITING_PERSISTENCE_XML))
     {

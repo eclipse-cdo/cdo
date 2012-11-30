@@ -22,6 +22,11 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
 public class HibernateBugzilla_258933_Test extends Bugzilla_258933_Test
 {
   @Override
+  public void testBugzilla_258933_String_SetToDefaultValue_unsettable() throws Exception
+  {
+  }
+
+  @Override
   public void testBugzilla_258933_String() throws Exception
   {
   }

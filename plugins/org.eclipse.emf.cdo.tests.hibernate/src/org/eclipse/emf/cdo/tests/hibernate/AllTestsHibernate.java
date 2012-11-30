@@ -213,11 +213,6 @@ public class AllTestsHibernate extends AllConfigs
     testClasses.add(HibernateMultiValuedOfAttributeTest.class);
     testClasses.remove(MultiValuedOfAttributeTest.class);
 
-    // storing settable/unsettable not supported
-    // TODO: check this some more
-    testClasses.add(Hibernate_Bugzilla_258933_Test.class);
-    testClasses.remove(Bugzilla_258933_Test.class);
-
     // MemStore is not relevant
     testClasses.remove(MEMStoreQueryTest.class);
 
@@ -348,15 +343,6 @@ public class AllTestsHibernate extends AllConfigs
     // does not work for non audited cases
     @Override
     public void testCommitTimeStampUpdateOnError() throws Exception
-    {
-    }
-
-  }
-
-  public static class Hibernate_Bugzilla_258933_Test extends Bugzilla_258933_Test
-  {
-    @Override
-    public void testBugzilla_258933_String_SetToDefaultValue_unsettable() throws Exception
     {
     }
 

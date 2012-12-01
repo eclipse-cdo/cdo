@@ -90,10 +90,6 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
       {
         value = eFeature.getDefaultValue();
       }
-      else
-      {
-        value = null;
-      }
     }
 
     // hibernate sees eenums, CDO sees int

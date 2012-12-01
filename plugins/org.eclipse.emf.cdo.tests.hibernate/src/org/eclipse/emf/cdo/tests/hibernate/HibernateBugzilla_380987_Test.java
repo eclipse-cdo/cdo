@@ -47,8 +47,8 @@ public class HibernateBugzilla_380987_Test extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource(getResourcePath("/res1"));
-      CDOResource resource2 = transaction.createResource(getResourcePath("/res2"));
-      CDOResource resource3 = transaction.createResource(getResourcePath("/res3"));
+      transaction.createResource(getResourcePath("/res2"));
+      transaction.createResource(getResourcePath("/res3"));
 
       List<Bz380987_Person> persons = new ArrayList<Bz380987_Person>();
       List<Bz380987_Place> places = new ArrayList<Bz380987_Place>();

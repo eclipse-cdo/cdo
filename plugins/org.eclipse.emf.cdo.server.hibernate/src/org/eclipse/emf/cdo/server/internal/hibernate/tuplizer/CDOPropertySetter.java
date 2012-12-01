@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.teneo.PersistenceOptions;
@@ -65,13 +64,6 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
     {
       convertByteArray = false;
     }
-  }
-
-  // see CDOPropertySetter#useDefaultValue
-  private boolean useDefaultValue()
-  {
-    final EStructuralFeature eFeature = getEStructuralFeature();
-    return eFeature.isRequired() || !handleUnsetAsNull && eFeature.isUnsettable();
   }
 
   public Method getMethod()
@@ -156,16 +148,6 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
         revision.setValue(getEStructuralFeature(), newValue);
       }
     }
-  }
-
-  private boolean isEenumDefaultValue(Object value)
-  {
-    if (getEStructuralFeature().getEType() instanceof EEnum)
-    {
-      final Object defaultValue = getEStructuralFeature().getDefaultValue();
-      return defaultValue == value;
-    }
-    return false;
   }
 
   @Override

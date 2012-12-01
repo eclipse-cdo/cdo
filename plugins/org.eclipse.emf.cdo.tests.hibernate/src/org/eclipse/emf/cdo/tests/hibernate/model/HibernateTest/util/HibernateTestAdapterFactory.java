@@ -2,7 +2,6 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.util;
 
-import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.*;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Main;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_NonTransient;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Transient;

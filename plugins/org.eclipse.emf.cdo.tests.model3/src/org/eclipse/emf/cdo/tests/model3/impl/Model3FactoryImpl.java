@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.model3.impl;
 
-import org.eclipse.emf.cdo.tests.model3.*;
 import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;

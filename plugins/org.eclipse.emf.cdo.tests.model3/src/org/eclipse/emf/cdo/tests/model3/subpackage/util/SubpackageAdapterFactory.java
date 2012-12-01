@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.model3.subpackage.util;
 
-import org.eclipse.emf.cdo.tests.model3.subpackage.*;
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage;
 

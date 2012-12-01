@@ -19,9 +19,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.hsqldb;bundle-version="[2.0.0,3.0.0)",
  com.mysql.jdbc;bundle-version="[5.1.7,6.0.0)",
  org.dom4j;bundle-version="[1.6.1,2.0.0)",
- javax.persistence;bundle-version="[2.0.0,3.0.0)",
- de.kdo.info51.shared.model;bundle-version="1.0.0",
- prepared-testdata-mtaal;bundle-version="1.0.0"
+ javax.persistence;bundle-version="[2.0.0,3.0.0)"
 Export-Package: mappings;version="4.1.100";x-friends:="org.eclipse.emf.cdo.tests.hudson",
  org.eclipse.emf.cdo.tests.hibernate;version="4.1.100";x-friends:="org.eclipse.emf.cdo.tests.hudson",
  org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest;version="4.1.100",

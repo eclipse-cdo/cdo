@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOBranchTimeStamp
  * @see CDOBranchTimeStampSetter
  * @author Martin Taal
  */
-@SuppressWarnings("restriction")
 public class CDOHibernateBranchPointImpl extends CDOBranchPointImpl
 {
 

@@ -50,7 +50,7 @@ public class Hibernate_Export_Test extends AbstractCDOTest
       CDOResource resource = transaction.getResource(getResourcePath("/res1"));
       Customer customer = (Customer)resource.getContents().get(0);
       customer.setStreet("2");
-      CDOResource resource2 = transaction.createResource(getResourcePath("/res2"));
+      transaction.createResource(getResourcePath("/res2"));
       transaction.commit();
       session.close();
     }

@@ -17,8 +17,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
-import org.eclipse.emf.cdo.tests.model1.Customer;
-import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
@@ -59,7 +57,7 @@ public class Hibernate_Failure_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
+    // CDOResource resource = transaction.createResource(getResourcePath("/res1"));
     transaction.commit();
     // Customer eike = createCustomer("Eike");
     // resource.getContents().add(eike);
@@ -103,20 +101,5 @@ public class Hibernate_Failure_Test extends AbstractCDOTest
     transaction2.commit();
 
     session2.close();
-  }
-
-  private Customer createCustomer(String name)
-  {
-    Customer customer = getModel1Factory().createCustomer();
-    customer.setName(name);
-    return customer;
-  }
-
-  private SalesOrder createSalesOrder(Customer customer)
-  {
-    SalesOrder salesOrder = getModel1Factory().createSalesOrder();
-    salesOrder.setId(4711);
-    salesOrder.setCustomer(customer);
-    return salesOrder;
   }
 }

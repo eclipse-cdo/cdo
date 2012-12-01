@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.tests.hibernate;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectHistory;
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -121,10 +120,10 @@ public class Hibernate_Missing_Version_Test extends AbstractCDOTest
 
       CDOObjectHistory history = getCDOObjectHistory(view, customer);
       assertEquals(5, history.getElements().length);
-      for (CDOCommitInfo cdoCommitInfo : history.getElements())
-      {
-
-      }
+      // for (CDOCommitInfo cdoCommitInfo : history.getElements())
+      // {
+      //
+      // }
       view.close();
       session2.close();
     }

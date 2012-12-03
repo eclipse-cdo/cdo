@@ -357,7 +357,7 @@ public class CDOObjectHistoryTest extends AbstractCDOTest
     // due to a bug/issue in cdo hibernate store, there are 2 changedobjects
     // need to revisit after default/enum value setting has been changed
     // https://bugs.eclipse.org/bugs/show_bug.cgi?id=387752
-    assertEquals(2, changedObjects.size());
+    assertEquals(1, changedObjects.size());
     for (Object o : changedObjects)
     {
       final CDORevisionDelta cdoRevisionDelta = (CDORevisionDelta)o;

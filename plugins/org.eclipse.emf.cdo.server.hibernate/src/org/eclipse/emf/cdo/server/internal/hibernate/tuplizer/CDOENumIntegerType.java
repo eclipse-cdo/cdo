@@ -53,12 +53,12 @@ public class CDOENumIntegerType extends CDOENumStringType
     Enumerator enumValue = localCache.get(objValue);
     if (enumValue != null)
     {
-      return enumValue.getValue();
+      return enumValue;
     }
 
     enumValue = getEEnum().getEEnumLiteral(objValue.intValue());
     localCache.put(objValue, enumValue);
-    return enumValue.getValue();
+    return enumValue;
   }
 
   /*

@@ -44,9 +44,6 @@
 			<rm:uri format="http://download.eclipse.org/eclipse/updates/{0}">
 				<bc:propertyRef key="platform.version"/>
 			</rm:uri>
-			<rm:uri format="http://download.eclipse.org/eclipse/updates/{0}-M-builds">
-				<bc:propertyRef key="platform.version"/>
-			</rm:uri>
 		</rm:provider>
 
 		<!-- EMF -->

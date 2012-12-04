@@ -52,6 +52,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
+import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -75,7 +76,9 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
+import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -85,6 +88,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1421,8 +1425,10 @@ public class TransactionCommitContext implements InternalCommitContext
   /**
    * @author Martin Fluegge
    */
-  private static abstract class DeltaLockWrapper
+  private static abstract class DeltaLockWrapper extends AbstractCDOID
   {
+    private static final long serialVersionUID = 1L;
+
     private Object key;
 
     private InternalCDORevisionDelta delta;
@@ -1441,6 +1447,69 @@ public class TransactionCommitContext implements InternalCommitContext
     public InternalCDORevisionDelta getDelta()
     {
       return delta;
+    }
+
+    public abstract CDOID getID();
+
+    public Type getType()
+    {
+      return getID().getType();
+    }
+
+    public boolean isNull()
+    {
+      return getID().isNull();
+    }
+
+    public boolean isObject()
+    {
+      return getID().isObject();
+    }
+
+    public boolean isTemporary()
+    {
+      return getID().isTemporary();
+    }
+
+    public boolean isDangling()
+    {
+      return getID().isDangling();
+    }
+
+    public boolean isExternal()
+    {
+      return getID().isExternal();
+    }
+
+    public String toURIFragment()
+    {
+      return getID().toURIFragment();
+    }
+
+    @Override
+    protected int doCompareTo(CDOID o) throws ClassCastException
+    {
+      return getID().compareTo(o);
+    }
+
+    @Override
+    public void write(ExtendedDataOutput out) throws IOException
+    {
+      ((AbstractCDOID)getID()).write(out);
+    }
+
+    @Override
+    public void read(ExtendedDataInput in) throws IOException
+    {
+      // Not called on the server-side
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void read(String fragmentPart)
+    {
+      // Not called on the server-side
+      throw new UnsupportedOperationException();
     }
 
     @Override
@@ -1470,7 +1539,7 @@ public class TransactionCommitContext implements InternalCommitContext
     /**
      * @author Eike Stepper
      */
-    private static final class ForID extends DeltaLockWrapper implements CDOID
+    private static final class ForID extends DeltaLockWrapper
     {
       private static final long serialVersionUID = 1L;
 
@@ -1485,44 +1554,10 @@ public class TransactionCommitContext implements InternalCommitContext
         return (CDOID)super.getKey();
       }
 
-      public Type getType()
+      @Override
+      public CDOID getID()
       {
-        return getKey().getType();
-      }
-
-      public boolean isNull()
-      {
-        return getKey().isNull();
-      }
-
-      public boolean isObject()
-      {
-        return getKey().isObject();
-      }
-
-      public boolean isTemporary()
-      {
-        return getKey().isTemporary();
-      }
-
-      public boolean isDangling()
-      {
-        return getKey().isDangling();
-      }
-
-      public boolean isExternal()
-      {
-        return getKey().isExternal();
-      }
-
-      public String toURIFragment()
-      {
-        return getKey().toURIFragment();
-      }
-
-      public int compareTo(CDOID o)
-      {
-        return getKey().compareTo(o);
+        return getKey();
       }
     }
 
@@ -1531,6 +1566,8 @@ public class TransactionCommitContext implements InternalCommitContext
      */
     private static final class ForIDAndBranch extends DeltaLockWrapper implements CDOIDAndBranch
     {
+      private static final long serialVersionUID = 1L;
+
       public ForIDAndBranch(CDOIDAndBranch key, InternalCDORevisionDelta delta)
       {
         super(key, delta);
@@ -1542,6 +1579,7 @@ public class TransactionCommitContext implements InternalCommitContext
         return (CDOIDAndBranch)super.getKey();
       }
 
+      @Override
       public CDOID getID()
       {
         return getKey().getID();

@@ -78,8 +78,6 @@ public class AllTestsHibernate extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // testClasses.clear();
-    // testClasses.add(HibernateBugzilla_387752_Test.class);
-    // testClasses.add(HibernateBugzilla_387752_True_Test.class);
     // // testClasses.add(Hibernate_Missing_Version_Test.class);
     // if (true)
     // {
@@ -122,6 +120,8 @@ public class AllTestsHibernate extends AllConfigs
 
     if (scenario.getCapabilities().contains(IRepositoryConfig.CAPABILITY_AUDITING))
     {
+      testClasses.add(HibernateBugzilla_395684_Test.class);
+
       testClasses.add(CDOObjectHistoryTest.class);
 
       // the security model inherits from the ecore model

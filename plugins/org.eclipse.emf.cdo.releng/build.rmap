@@ -148,10 +148,11 @@
 			<rm:uri format="http://download.eclipse.org/modeling/emf/teneo/updates/2.0.0/interim"/>
 		</rm:provider>
 
-		<!-- ORACLE.COM -->
+		<!-- ORACLE.COM
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.oracle.com/otn_software/oepe/juno"/>
 		</rm:provider>
+		-->
 
 		<!-- EVLER.ORG -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">

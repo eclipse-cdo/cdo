@@ -108,9 +108,11 @@
    <feature id="org.eclipse.net4j.db.mysql" version="0.0.0">
       <category name="org.eclipse.net4j.db.category"/>
    </feature>
+<!--
    <feature id="org.eclipse.net4j.db.oracle" version="0.0.0">
       <category name="org.eclipse.net4j.db.category"/>
    </feature>
+-->
    <feature id="org.eclipse.net4j.db.postgresql" version="0.0.0">
       <category name="org.eclipse.net4j.db.category"/>
    </feature>

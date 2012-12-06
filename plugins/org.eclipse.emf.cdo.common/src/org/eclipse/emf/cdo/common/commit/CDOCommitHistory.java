@@ -31,6 +31,10 @@ public interface CDOCommitHistory extends IContainer<CDOCommitInfo>, CDOCommitIn
 
   public CDOBranch getBranch();
 
+  public boolean isAppendingTriggerLoadElement();
+
+  public void setAppendingTriggerLoadElement(boolean appendingTriggerLoadElement);
+
   public CDOCommitInfo getFirstElement();
 
   public CDOCommitInfo getLastElement();
@@ -43,9 +47,7 @@ public interface CDOCommitHistory extends IContainer<CDOCommitInfo>, CDOCommitIn
 
   public boolean isLoading();
 
-  public boolean isAppendingTriggerLoadElement();
-
-  public void setAppendingTriggerLoadElement(boolean appendingTriggerLoadElement);
+  public void waitWhileLoading(long timeout);
 
   public int getLoadCount();
 

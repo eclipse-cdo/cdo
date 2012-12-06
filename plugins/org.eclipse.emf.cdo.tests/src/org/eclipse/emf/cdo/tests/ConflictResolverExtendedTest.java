@@ -165,7 +165,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   // --- single value conflict resolver tests --------------------------
 
-  public void testConflictResolverChangeChangeTest() throws Exception
+  public void testChangeChangeTest() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction thisTransaction = session.openTransaction();
@@ -186,7 +186,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(true, thatTransaction.hasConflict());
   }
 
-  public void testConflictResolverRemoveChangeTest() throws Exception
+  public void testRemoveChangeTest() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction thisTransaction = session.openTransaction();
@@ -216,7 +216,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(objects - 1, getTestModelRoot(thisTransaction).getListA().size());
   }
 
-  public void testConflictResolverChangeRemoveTest() throws Exception
+  public void testChangeRemoveTest() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction thisTransaction = session.openTransaction();
@@ -247,7 +247,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(objects - 1, getTestModelRoot(thisTransaction).getListA().size());
   }
 
-  public void testConflictResolverRemoveAddTest() throws Exception
+  public void testRemoveAddTest() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction thisTransaction = session.openTransaction();
@@ -281,7 +281,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(false, thatTransaction.isDirty());
   }
 
-  public void testConflictResolverAddRemoveTest() throws Exception
+  public void testAddRemoveTest() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction thisTransaction = session.openTransaction();
@@ -316,7 +316,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(objects - 1, getTestModelRoot(thisTransaction).getListB().size());
   }
 
-  public void testConflictResolverRemoveRemoveTest() throws Exception
+  public void testRemoveRemoveTest() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction thisTransaction = session.openTransaction();

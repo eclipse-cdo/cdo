@@ -150,10 +150,7 @@
 
 		<!-- ORACLE.COM -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.oracle.com/otn_software/oepe/12.1.1.2/juno"/>
-			<!--
-				<rm:uri format="http://download.oracle.com/otn_software/oepe/juno"/>
-				-->
+			<rm:uri format="http://download.oracle.com/otn_software/oepe/juno"/>
 		</rm:provider>
 
 		<!-- EVLER.ORG -->

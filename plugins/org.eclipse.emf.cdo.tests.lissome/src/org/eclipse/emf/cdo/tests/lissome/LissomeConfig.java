@@ -12,8 +12,8 @@ package org.eclipse.emf.cdo.tests.lissome;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.internal.lissome.LissomeBrowserPage;
 import org.eclipse.emf.cdo.server.internal.lissome.LissomeStore;
-import org.eclipse.emf.cdo.server.internal.lissome.db.DBBrowserPage;
 import org.eclipse.emf.cdo.server.internal.lissome.db.Index;
 import org.eclipse.emf.cdo.server.internal.lissome.file.Journal;
 import org.eclipse.emf.cdo.server.internal.lissome.file.Vob;
@@ -92,7 +92,7 @@ public class LissomeConfig extends RepositoryConfig
   @Override
   public void setUp() throws Exception
   {
-    IPluginContainer.INSTANCE.registerFactory(new DBBrowserPage.Factory());
+    IPluginContainer.INSTANCE.registerFactory(new LissomeBrowserPage.Factory());
     super.setUp();
   }
 }

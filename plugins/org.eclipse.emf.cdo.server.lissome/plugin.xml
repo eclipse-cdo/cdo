@@ -26,7 +26,7 @@
          point="org.eclipse.emf.cdo.server.storeFactories">
       <storeFactory
             class="org.eclipse.emf.cdo.server.internal.lissome.LissomeStoreFactory"
-            storeType="db">
+            storeType="lissome">
       </storeFactory>
    </extension>
 

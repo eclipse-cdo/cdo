@@ -41,7 +41,7 @@ public class CDOAdminServer extends AbstractCDOAdmin
 {
   private final IManagedContainer container;
 
-  private final IListener containerListener = new ContainerEventAdapter<Object>()
+  private final IListener containerListener = new ContainerEventAdapter<Object>(true)
   {
     @Override
     protected void onAdded(IContainer<Object> container, Object element)

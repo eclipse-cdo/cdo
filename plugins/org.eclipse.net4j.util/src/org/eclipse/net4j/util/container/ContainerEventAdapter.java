@@ -10,20 +10,43 @@
  */
 package org.eclipse.net4j.util.container;
 
+import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
  * A {@link IListener listener} that dispatches container {@link IContainerEvent events} to methods that can be
  * overridden by extenders.
- * 
+ *
  * @author Eike Stepper
  * @apiviz.exclude
  */
 public class ContainerEventAdapter<E> implements IListener
 {
+  private boolean waitForActive;
+
+  /**
+   * @since 3.3
+   */
+  public ContainerEventAdapter(boolean waitForActive)
+  {
+    this.waitForActive = waitForActive;
+  }
+
   public ContainerEventAdapter()
   {
+    this(false);
+  }
+
+  /**
+   * @since 3.3
+   */
+  public boolean isWaitForActive()
+  {
+    return waitForActive;
   }
 
   public final void notifyEvent(IEvent event)
@@ -45,9 +68,24 @@ public class ContainerEventAdapter<E> implements IListener
     final IContainer<E> container = event.getSource();
     event.accept(new IContainerEventVisitor<E>()
     {
-      public void added(E element)
+      public void added(final E element)
       {
-        onAdded(container, element);
+        if (waitForActive && !LifecycleUtil.isActive(element))
+        {
+          EventUtil.addListener(element, new LifecycleEventAdapter()
+          {
+            @Override
+            protected void onActivated(ILifecycle lifecycle)
+            {
+              onAdded(container, element);
+              lifecycle.removeListener(this);
+            }
+          });
+        }
+        else
+        {
+          onAdded(container, element);
+        }
       }
 
       public void removed(E element)

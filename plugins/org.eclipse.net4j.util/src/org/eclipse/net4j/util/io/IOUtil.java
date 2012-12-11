@@ -488,19 +488,21 @@ public final class IOUtil
   public static void copyBinary(InputStream inputStream, OutputStream outputStream, long size) throws IOException
   {
     byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+    long remaining = size;
 
-    while (size > 0L)
+    while (remaining > 0L)
     {
-      int bytesToCopy = (int)Math.min(size, buffer.length);
+      int bytesToCopy = (int)Math.min(remaining, buffer.length);
 
       int bytesRead = inputStream.read(buffer, 0, bytesToCopy);
-      if (bytesRead < bytesToCopy)
+      if (bytesRead < 1)
       {
-        throw new EOFException();
+        throw new EOFException("Read only " + (size - remaining) + "+" + bytesRead + "="
+            + (size - remaining + bytesRead) + "  but expected to read " + size);
       }
 
-      outputStream.write(buffer, 0, bytesToCopy);
-      size -= bytesRead;
+      outputStream.write(buffer, 0, bytesRead);
+      remaining -= bytesRead;
     }
 
     outputStream.flush();
@@ -539,19 +541,21 @@ public final class IOUtil
   public static void copyCharacter(Reader reader, Writer writer, long size) throws IOException
   {
     char[] buffer = new char[DEFAULT_BUFFER_SIZE];
+    long remaining = size;
 
-    while (size > 0L)
+    while (remaining > 0L)
     {
-      int charsToCopy = (int)Math.min(size, buffer.length);
+      int charsToCopy = (int)Math.min(remaining, buffer.length);
 
       int charsRead = reader.read(buffer, 0, charsToCopy);
-      if (charsRead < charsToCopy)
+      if (charsRead < 1)
       {
-        throw new EOFException();
+        throw new EOFException("Read only " + (size - remaining) + "+" + charsRead + "="
+            + (size - remaining + charsRead) + "  but expected to read " + size);
       }
 
       writer.write(buffer, 0, charsRead);
-      size -= charsRead;
+      remaining -= charsRead;
     }
 
     writer.flush();

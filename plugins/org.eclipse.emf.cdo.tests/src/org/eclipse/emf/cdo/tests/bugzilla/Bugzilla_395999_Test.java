@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
-import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
-import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 
 import org.eclipse.emf.common.util.URI;
@@ -31,30 +29,20 @@ public class Bugzilla_395999_Test extends AbstractCDOTest
 {
   public void testTwiceGetCDOResourceOnResourceSetImpl() throws Exception
   {
-    Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
-    registry.getProtocolToFactoryMap().put(CDONet4jUtil.PROTOCOL_TCP, CDOResourceFactory.INSTANCE);
+    URI uri = URI.createURI(getURIPrefix() + "/" + getRepository().getName() + getResourcePath("/res1")
+        + "?transactional=true");
 
-    try
-    {
-      URI uri = URI.createURI(getURIPrefix() + "/" + getRepository().getName() + getResourcePath("/res1")
-          + "?transactional=true");
+    ResourceSet resourceSet = new ResourceSetImpl();
+    Resource resource = resourceSet.createResource(uri);
+    resource.save(Collections.emptyMap());
 
-      ResourceSet resourceSet = new ResourceSetImpl();
-      Resource resource = resourceSet.createResource(uri);
-      resource.save(Collections.emptyMap());
-
-      loadTwiceAndSaveResource(uri);
-    }
-    finally
-    {
-      registry.getProtocolToFactoryMap().remove(CDONet4jUtil.PROTOCOL_TCP);
-    }
+    loadTwiceAndSaveResource(uri);
   }
 
   public void testTwiceGetXMIResourceOnResourceSetImpl() throws Exception
   {
     Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
-    registry.getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
+    Object oldFactory = registry.getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
 
     try
     {
@@ -68,7 +56,14 @@ public class Bugzilla_395999_Test extends AbstractCDOTest
     }
     finally
     {
-      registry.getExtensionToFactoryMap().remove("model1");
+      if (oldFactory == null)
+      {
+        registry.getExtensionToFactoryMap().remove("model1");
+      }
+      else
+      {
+        registry.getExtensionToFactoryMap().put("model1", oldFactory);
+      }
     }
   }
 

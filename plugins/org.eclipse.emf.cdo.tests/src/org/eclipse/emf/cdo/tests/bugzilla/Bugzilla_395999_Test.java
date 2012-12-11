@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
+import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 
 import org.eclipse.emf.common.util.URI;
@@ -29,14 +30,31 @@ public class Bugzilla_395999_Test extends AbstractCDOTest
 {
   public void testTwiceGetCDOResourceOnResourceSetImpl() throws Exception
   {
-    URI uri = URI.createURI(getURIPrefix() + "/" + getRepository().getName() + getResourcePath("/res1")
-        + "?transactional=true");
+    Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
+    Object oldFactory = registry.getProtocolToFactoryMap().put(getURIProtocol(), CDOResourceFactory.INSTANCE);
 
-    ResourceSet resourceSet = new ResourceSetImpl();
-    Resource resource = resourceSet.createResource(uri);
-    resource.save(Collections.emptyMap());
+    try
+    {
+      URI uri = URI.createURI(getURIPrefix() + "/" + getRepository().getName() + getResourcePath("/res1")
+          + "?transactional=true");
 
-    loadTwiceAndSaveResource(uri);
+      ResourceSet resourceSet = new ResourceSetImpl();
+      Resource resource = resourceSet.createResource(uri);
+      resource.save(Collections.emptyMap());
+
+      loadTwiceAndSaveResource(uri);
+    }
+    finally
+    {
+      if (oldFactory == null)
+      {
+        registry.getExtensionToFactoryMap().remove(getURIProtocol());
+      }
+      else
+      {
+        registry.getExtensionToFactoryMap().put(getURIProtocol(), oldFactory);
+      }
+    }
   }
 
   public void testTwiceGetXMIResourceOnResourceSetImpl() throws Exception

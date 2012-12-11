@@ -19,15 +19,18 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Creates default {@link CDOResource} instances.
- * 
+ *
  * @author Eike Stepper
- * @noextend This interface is not intended to be extended by clients.
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public class CDOResourceFactoryImpl implements CDOResourceFactory
 {
-  private static final String RESOURCE_SET_CLASS_NAME = ResourceSetImpl.class.getName();
+  private Set<String> resourceSetClassNames = new HashSet<String>();
 
   /**
    * @since 4.0
@@ -36,6 +39,18 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
 
   public CDOResourceFactoryImpl()
   {
+    resourceSetClassNames.add(ResourceSetImpl.class.getName());
+    resourceSetClassNames.add("org.eclipse.xtext.resource.XtextResourceSet");
+    resourceSetClassNames.add("org.eclipse.xtext.resource.ResourceSetReferencingResourceSetImpl");
+    resourceSetClassNames.add("org.eclipse.xtext.resource.SynchronizedXtextResourceSet");
+  }
+
+  /**
+   * @since 4.2
+   */
+  public Set<String> getResourceSetClassNames()
+  {
+    return resourceSetClassNames;
   }
 
   public Resource createResource(URI uri)
@@ -55,7 +70,7 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
 
   /**
    * TODO Add TCs to ensure that Ecore internally doesn't change the way the stack is used!!!
-   * 
+   *
    * @since 3.0
    */
   protected boolean isGetResource()
@@ -65,7 +80,7 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
     for (int i = 3; i < elements.length; i++)
     {
       StackTraceElement element = elements[i];
-      if (RESOURCE_SET_CLASS_NAME.equals(element.getClassName()))
+      if (resourceSetClassNames.contains(element.getClassName()))
       {
         inResourceSet = true;
       }

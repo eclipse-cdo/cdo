@@ -26,11 +26,11 @@ import java.util.RandomAccess;
  */
 public class GrowingRandomAccessList<E> extends AbstractList<E> implements Deque<E>, RandomAccess
 {
-  private final List<E[]> pages = new ArrayList<E[]>();
-
   private final Class<E> componentType;
 
   private final int pageCapacity;
+
+  private List<E[]> pages = new ArrayList<E[]>();
 
   private int firstFree;
 
@@ -52,7 +52,7 @@ public class GrowingRandomAccessList<E> extends AbstractList<E> implements Deque
     }
 
     index += firstFree;
-    E[] page = pages.get(index / pageCapacity);
+    E[] page = getPage(index);
     return page[index % pageCapacity];
   }
 
@@ -129,7 +129,39 @@ public class GrowingRandomAccessList<E> extends AbstractList<E> implements Deque
   @Override
   public void add(int index, E element)
   {
-    throw new UnsupportedOperationException();
+    int size = size();
+    if (index > size || index < 0)
+    {
+      throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+    }
+
+    if (index == 0)
+    {
+      addFirst(element);
+    }
+    else if (index == size)
+    {
+      addLast(element);
+    }
+    else
+    {
+      GrowingRandomAccessList<E> result = new GrowingRandomAccessList<E>(componentType, pageCapacity);
+      for (int i = 0; i < size; i++)
+      {
+        E e = get(i);
+
+        if (i == index)
+        {
+          result.add(element);
+        }
+
+        result.add(e);
+      }
+
+      pages = result.pages;
+      firstFree = result.firstFree;
+      lastFree = result.lastFree;
+    }
   }
 
   @Override
@@ -286,6 +318,16 @@ public class GrowingRandomAccessList<E> extends AbstractList<E> implements Deque
     @SuppressWarnings("unchecked")
     E[] page = (E[])Array.newInstance(componentType, pageCapacity);
     return page;
+  }
+
+  protected E[] getPage(int index)
+  {
+    return pages.get(getPageIndex(index));
+  }
+
+  protected int getPageIndex(int index)
+  {
+    return index / pageCapacity;
   }
 
   private void initFirstPage()

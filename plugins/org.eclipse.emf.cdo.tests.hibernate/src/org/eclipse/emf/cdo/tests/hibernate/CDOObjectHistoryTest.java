@@ -110,18 +110,22 @@ public class CDOObjectHistoryTest extends AbstractCDOTest
     long commitTime1 = transaction.commit().getTimeStamp();
     assertEquals(true, session.getRepositoryInfo().getCreationTime() < commitTime1);
     assertEquals("ESC", company.getName());
+    final CDOObject cdoObjectCompany = CDOUtil.getCDOObject(company);
+    assertEquals(1, cdoObjectCompany.cdoRevision().getVersion());
 
     company.setName("Sympedia");
     long commitTime2 = transaction.commit().getTimeStamp();
     assertEquals(true, commitTime1 < commitTime2);
     assertEquals(true, session.getRepositoryInfo().getCreationTime() < commitTime2);
     assertEquals("Sympedia", company.getName());
+    assertEquals(2, cdoObjectCompany.cdoRevision().getVersion());
 
     company.setName("Eclipse");
     long commitTime3 = transaction.commit().getTimeStamp();
     assertEquals(true, commitTime2 < commitTime3);
     assertEquals(true, session.getRepositoryInfo().getCreationTime() < commitTime2);
     assertEquals("Eclipse", company.getName());
+    assertEquals(3, cdoObjectCompany.cdoRevision().getVersion());
 
     resource.getContents().remove(company);
     long commitTime4 = transaction.commit().getTimeStamp();

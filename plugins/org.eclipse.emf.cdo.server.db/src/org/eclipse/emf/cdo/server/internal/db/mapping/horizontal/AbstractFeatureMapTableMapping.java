@@ -61,7 +61,7 @@ import java.util.Map;
 
 /**
  * This abstract base class provides basic behavior needed for mapping many-valued attributes to tables.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  */
@@ -308,7 +308,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
 
         if (TRACER.isEnabled())
         {
-          TRACER.format("Read value for index {0} from result set: {1}", list.size(), value);
+          TRACER.format("Read value for index {0} from result set: {1}", currentIndex, value);
         }
 
         list.set(currentIndex++, CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(tag), value));
@@ -493,7 +493,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
 
   /**
    * Get column name (lazy)
-   * 
+   *
    * @param tag
    *          The feature's MetaID in CDO
    * @return the column name where the values are stored
@@ -512,7 +512,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
 
   /**
    * Get type mapping (lazy)
-   * 
+   *
    * @param tag
    *          The feature's MetaID in CDO
    * @return the corresponding type mapping
@@ -552,7 +552,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
 
   /**
    * Used by subclasses to indicate which fields should be in the table. I.e. just a pair of name and DBType ...
-   * 
+   *
    * @author Stefan Winkler
    */
   protected static class FieldInfo

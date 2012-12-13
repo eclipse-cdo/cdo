@@ -321,7 +321,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
         Object value = typeMapping.readValue(resultSet);
         if (TRACER.isEnabled())
         {
-          TRACER.format("Read value for index {0} from result set: {1}", list.size(), value); //$NON-NLS-1$
+          TRACER.format("Read value for index {0} from result set: {1}", currentIndex, value); //$NON-NLS-1$
         }
 
         list.set(currentIndex++, value);

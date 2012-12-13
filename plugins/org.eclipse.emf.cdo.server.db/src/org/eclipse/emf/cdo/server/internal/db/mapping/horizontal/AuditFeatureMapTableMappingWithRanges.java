@@ -428,7 +428,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
 
         if (TRACER.isEnabled())
         {
-          TRACER.format("Read value for index {0} from result set: {1}", list.size(), value); //$NON-NLS-1$
+          TRACER.format("Read value for index {0} from result set: {1}", currentIndex, value); //$NON-NLS-1$
         }
 
         list.set(currentIndex++, CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(tag), value));

@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
-import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorInput;
+import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.LabelProvider;
@@ -109,7 +109,7 @@ public class CDOHistoryPage extends HistoryPage
           {
             CDOSession session = input.getSession();
             CDOBranchPoint previous = CDOBranchUtil.normalizeBranchPoint(commitInfo.getBranch(), previousTimeStamp);
-            CDOCompareEditorInput.openCompareDialog(session, commitInfo, previous);
+            CDOCompareEditorUtil.openCompareDialog(session, commitInfo, previous);
           }
         }
       }

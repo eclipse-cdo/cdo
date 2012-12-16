@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.EMFCompare;
 import org.eclipse.emf.compare.Match;
@@ -35,6 +36,7 @@ import org.eclipse.emf.compare.match.DefaultComparisonFactory;
 import org.eclipse.emf.compare.match.DefaultEqualityHelperFactory;
 import org.eclipse.emf.compare.match.DefaultMatchEngine;
 import org.eclipse.emf.compare.match.IComparisonFactory;
+import org.eclipse.emf.compare.match.IMatchEngine;
 import org.eclipse.emf.compare.match.eobject.IEObjectMatcher;
 import org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher;
 import org.eclipse.emf.compare.scope.IComparisonScope;
@@ -86,6 +88,27 @@ import java.util.Set;
  */
 public final class CDOCompareUtil
 {
+  /**
+   * @author Eike Stepper
+   */
+  private static final class CDOMatchEngine extends DefaultMatchEngine
+  {
+    private CDOMatchEngine(IEObjectMatcher matcher, IComparisonFactory comparisonFactory)
+    {
+      super(matcher, comparisonFactory);
+    }
+
+    /**
+     * FIXME: CDO-specific.
+     */
+    @Override
+    protected void match(Comparison comparison, IComparisonScope scope, final Notifier left, final Notifier right,
+        final Notifier origin, Monitor monitor)
+    {
+      match(comparison, scope, (EObject)left, (EObject)right, (EObject)origin, monitor);
+    }
+  }
+
   private CDOCompareUtil()
   {
   }
@@ -213,8 +236,8 @@ public final class CDOCompareUtil
     IEObjectMatcher matcher = new IdentifierEObjectMatcher(idFunction);
 
     IComparisonFactory comparisonFactory = new DefaultComparisonFactory(new DefaultEqualityHelperFactory());
-    EMFCompare comparator = EMFCompare.builder().setMatchEngine(new DefaultMatchEngine(matcher, comparisonFactory))
-        .build();
+    IMatchEngine matchEngine = new CDOMatchEngine(matcher, comparisonFactory);
+    EMFCompare comparator = EMFCompare.builder().setMatchEngine(matchEngine).build();
     return comparator;
   }
 

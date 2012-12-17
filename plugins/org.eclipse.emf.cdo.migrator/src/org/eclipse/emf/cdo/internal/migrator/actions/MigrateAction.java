@@ -45,9 +45,6 @@ import java.util.Map;
  */
 public class MigrateAction implements IObjectActionDelegate
 {
-  @SuppressWarnings("unused")
-  private IAction action;
-
   private ISelection selection;
 
   public MigrateAction()
@@ -56,13 +53,11 @@ public class MigrateAction implements IObjectActionDelegate
 
   public void selectionChanged(IAction action, ISelection selection)
   {
-    this.action = action;
     this.selection = selection;
   }
 
   public void setActivePart(IAction action, IWorkbenchPart targetPart)
   {
-    this.action = action;
   }
 
   public void run(IAction action)

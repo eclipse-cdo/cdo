@@ -455,6 +455,16 @@ public final class EMFUtil
     return options;
   }
 
+  /**
+   * @since 4.2
+   */
+  public static <T> T getAdapter(Notifier notifier, Class<T> type)
+  {
+    @SuppressWarnings("unchecked")
+    T adapter = (T)EcoreUtil.getAdapter(notifier.eAdapters(), type);
+    return adapter;
+  }
+
   public static void addAdapter(Notifier notifier, Adapter adapter)
   {
     synchronized (notifier)

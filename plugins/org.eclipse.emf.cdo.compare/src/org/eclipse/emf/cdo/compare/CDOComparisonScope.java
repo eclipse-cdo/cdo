@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.compare;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -65,10 +64,9 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
    * and returns {@link Match matches} for <b>all</b> elements of its {@link EObject#eAllContents() content tree}. This scope has the advantage that the comparison can
    * be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
    * matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.
-   * The following methods return comparisons that are based on this scope algorithm:
+   * The following method returns comparisons that are based on this scope algorithm:
    * <ul>
-   * <li>{@link CDOCompareUtil#compare(EObject, CDOBranchPoint)}
-   * <li>{@link CDOCompareUtil#compare(EObject, CDOBranchPoint, boolean)}
+   * <li>{@link CDOCompareUtil#compare(CDOObject, CDOView, CDOView[])}
    * </ul>
    *
    * @author Eike Stepper
@@ -91,10 +89,9 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
    * and returns {@link Match matches} only for the <b>changed</b> elements of the entire content tree of its {@link CDOView#getRootResource() root resource}.
    * The advantage of this scope is that CDO-specific mechanisms are used to efficiently (remotely) determine the set of changed objects. Only those and their container
    * objects are considered as matches, making this scope scale seamlessly with the overall size of a repository.
-   * The following methods return comparisons that are based on this scope algorithm:
+   * The following method returns comparisons that are based on this scope algorithm:
    * <ul>
-   * <li>{@link CDOCompareUtil#compare(CDOView, CDOBranchPoint)}
-   * <li>{@link CDOCompareUtil#compare(CDOView, CDOBranchPoint, boolean)}
+   * <li>{@link CDOCompareUtil#compare(CDOView, CDOView, CDOView[])}
    * </ul>
    *
    * @author Eike Stepper

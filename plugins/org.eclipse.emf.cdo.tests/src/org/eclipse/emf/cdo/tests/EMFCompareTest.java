@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.compare.CDOCompareUtil;
-import org.eclipse.emf.cdo.compare.CloseableComparison;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
@@ -55,10 +54,8 @@ public class EMFCompareTest extends AbstractCDOTest
     company.setName("Eclipse");
     CDOCommitInfo commit3 = transaction.commit();
 
-    // CloseableComparison comparison = CDOCompareUtil.compare(session.openView(commit2).getObject(company), commit3);
-    CloseableComparison comparison = CDOCompareUtil.compare(company, commit2);
+    Comparison comparison = CDOCompareUtil.compare(CDOUtil.getCDOObject(company), session.openView(commit2), null);
     dump(comparison);
-    comparison.close();
   }
 
   @SuppressWarnings("unused")
@@ -82,10 +79,9 @@ public class EMFCompareTest extends AbstractCDOTest
     company.setName("Eclipse");
     CDOCommitInfo commit3 = transaction.commit();
 
-    // CloseableComparison comparison = CDOCompareUtil.compare(session.openView(commit2).getObject(company), commit3);
-    CloseableComparison comparison = CDOCompareUtil.compare(transaction.getRootResource(), commit2);
+    Comparison comparison = CDOCompareUtil.compare(CDOUtil.getCDOObject(transaction.getRootResource()),
+        session.openView(commit2), null);
     dump(comparison);
-    comparison.close();
   }
 
   @SuppressWarnings("unused")
@@ -108,10 +104,8 @@ public class EMFCompareTest extends AbstractCDOTest
     company.setName("Eclipse");
     CDOCommitInfo commit3 = transaction.commit();
 
-    // CloseableComparison comparison = CDOCompareUtil.compare(session.openView(commit2).getObject(company), commit3);
-    CloseableComparison comparison = CDOCompareUtil.compare(transaction, commit2);
+    Comparison comparison = CDOCompareUtil.compare(transaction, session.openView(commit2), null);
     dump(comparison);
-    comparison.close();
   }
 
   private Company createCompany()

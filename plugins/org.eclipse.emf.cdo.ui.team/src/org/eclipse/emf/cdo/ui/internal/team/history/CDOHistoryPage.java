@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.LabelProvider;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -107,9 +108,24 @@ public class CDOHistoryPage extends HistoryPage
           long previousTimeStamp = commitInfo.getPreviousTimeStamp();
           if (previousTimeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
           {
-            CDOSession session = input.getSession();
             CDOBranchPoint previous = CDOBranchUtil.normalizeBranchPoint(commitInfo.getBranch(), previousTimeStamp);
-            CDOCompareEditorUtil.openCompareDialog(session, commitInfo, previous);
+
+            CDOView leftView = null;
+            CDOView rightView = null;
+
+            try
+            {
+              CDOSession session = input.getSession();
+              leftView = session.openView(commitInfo);
+              rightView = session.openView(previous);
+
+              CDOCompareEditorUtil.openDialog(leftView, rightView, null);
+            }
+            finally
+            {
+              LifecycleUtil.deactivate(rightView);
+              LifecycleUtil.deactivate(leftView);
+            }
           }
         }
       }

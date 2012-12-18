@@ -10,15 +10,15 @@
  */
 package org.eclipse.emf.cdo.ui.compare;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.compare.CDOCompareUtil;
-import org.eclipse.emf.cdo.compare.CDOComparison;
-import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.compare.ComparisonScopeAdapter;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.domain.ICompareEditingDomain;
 import org.eclipse.emf.compare.domain.impl.EMFCompareEditingDomain;
-import org.eclipse.emf.compare.ide.ui.internal.editor.ComparisonEditorInput;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -27,39 +27,58 @@ import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareUI;
 
 /**
- * A CDO-specific implementation of the compare editor input.
+ * Static methods to open an EMF Compare dialog.
  *
  * @author Eike Stepper
  * @since 4.2
  */
-@SuppressWarnings("restriction")
 public class CDOCompareEditorUtil
 {
-  public static void openCompareDialog(CDOSession session, CDOBranchPoint left, CDOBranchPoint right)
+  public static boolean openDialog(CDOView leftView, CDOView rightView, CDOView[] originView)
   {
-    CDOView leftView = session.openView(left);
-    CDOComparison comparison = CDOCompareUtil.compare(leftView, right);
+    Comparison comparison = CDOCompareUtil.compare(leftView, rightView, originView);
 
-    IComparisonScope scope = comparison.getScope();
+    IComparisonScope scope = EMFUtil.getAdapter(comparison, ComparisonScopeAdapter.class).getScope();
+    ICompareEditingDomain editingDomain = EMFCompareEditingDomain.create(scope.getLeft(), scope.getRight(),
+        scope.getOrigin());
 
-    try
+    ComposedAdapterFactory.Descriptor.Registry registry = EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry();
+    ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(registry);
+
+    CompareConfiguration configuration = new CompareConfiguration();
+    configuration.setLeftEditable(!leftView.isReadOnly());
+    configuration.setRightEditable(!rightView.isReadOnly());
+
+    Input input = new Input(configuration, comparison, editingDomain, adapterFactory);
+    CompareUI.openCompareDialog(input);
+    return input.isOK();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  @SuppressWarnings("restriction")
+  private static final class Input extends org.eclipse.emf.compare.ide.ui.internal.editor.ComparisonEditorInput
+  {
+    private boolean ok;
+
+    private Input(CompareConfiguration configuration, Comparison comparison, ICompareEditingDomain editingDomain,
+        AdapterFactory adapterFactory)
     {
-      ICompareEditingDomain editingDomain = EMFCompareEditingDomain.create(scope.getLeft(), scope.getRight(),
-          scope.getOrigin());
-
-      ComposedAdapterFactory.Descriptor.Registry registry = EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry();
-      ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(registry);
-
-      CompareConfiguration configuration = new CompareConfiguration();
-      ComparisonEditorInput input = new ComparisonEditorInput(configuration, comparison, editingDomain, adapterFactory);
-      input.setTitle("Model Comparison");
-
-      CompareUI.openCompareDialog(input);
+      super(configuration, comparison, editingDomain, adapterFactory);
+      setTitle("Model Comparison");
     }
-    finally
+
+    public boolean isOK()
     {
-      comparison.close();
-      leftView.close();
+      return ok;
+    }
+
+    @Override
+    public boolean okPressed()
+    {
+      ok = true;
+      return super.okPressed();
     }
   }
 }

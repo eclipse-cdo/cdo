@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.hibernate.teneo;
 
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOCustomTypeUserType;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOENumIntegerType;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOENumStringType;
@@ -49,6 +50,12 @@ public class CDOMappingContext extends MappingContext
     tuplizerElement = new Element("tuplizer").addAttribute("entity-mode", "pojo").addAttribute("class", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         CDORevisionTuplizer.class.getName());
     entityElement.add(0, tuplizerElement);
+
+    if (entityElement.getAttributeValue("name") != null)
+    {
+      entityElement.addAttribute("proxy", CDORevision.class.getName());
+      entityElement.removeAttribute("name");
+    }
   }
 
   @Override

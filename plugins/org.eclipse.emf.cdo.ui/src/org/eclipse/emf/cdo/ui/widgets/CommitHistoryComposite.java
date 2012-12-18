@@ -48,7 +48,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -90,6 +92,18 @@ public class CommitHistoryComposite extends Composite
     tableViewer = new TableViewer(this, SWT.BORDER | SWT.FULL_SELECTION);
     tableViewer.setContentProvider(new ContentProvider());
     tableViewer.addDoubleClickListener(new DoubleClickListener());
+    tableViewer.addSelectionChangedListener(new ISelectionChangedListener()
+    {
+      public void selectionChanged(SelectionChangedEvent event)
+      {
+        IStructuredSelection selection = (IStructuredSelection)tableViewer.getSelection();
+        Object selectedElement = selection.getFirstElement();
+        if (selectedElement instanceof CDOCommitInfo)
+        {
+          commitInfoChanged((CDOCommitInfo)selectedElement);
+        }
+      }
+    });
 
     labelProvider = new LabelProvider();
     labelProvider.support(tableViewer);

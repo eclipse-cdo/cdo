@@ -1591,6 +1591,10 @@ public class CDOViewImpl extends AbstractCDOView
         doInvalidate(branch, lastUpdateTime, allChangedObjects, allDetachedObjects, oldRevisions,
             clearResourcePathCache);
       }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
       finally
       {
         invalidationRunnerActive = false;

@@ -10,17 +10,25 @@
  */
 package org.eclipse.net4j.util.security;
 
-import org.eclipse.net4j.util.factory.Factory;
-
 /**
+ * TODO Consider file attributes when creating initially empty file
+ *
  * @author Eike Stepper
+ * @since 3.3
  */
-public abstract class UserManagerFactory extends Factory
+public class FileAuthenticatorFactory extends AuthenticatorFactory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.userManagers"; //$NON-NLS-1$
+  public static final String TYPE = "file"; //$NON-NLS-1$
 
-  public UserManagerFactory(String type)
+  public FileAuthenticatorFactory()
   {
-    super(PRODUCT_GROUP, type);
+    super(TYPE);
+  }
+
+  public FileUserManager create(String description)
+  {
+    FileUserManager userManager = new FileUserManager();
+    userManager.setFileName(description);
+    return userManager;
   }
 }

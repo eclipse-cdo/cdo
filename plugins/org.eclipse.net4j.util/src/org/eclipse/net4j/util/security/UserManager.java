@@ -14,13 +14,14 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public class UserManager extends Lifecycle implements IUserManager
+public class UserManager extends Lifecycle implements IUserManager, IAuthenticator
 {
   @ExcludeFromDump
   protected transient Map<String, char[]> users = new HashMap<String, char[]>();
@@ -40,6 +41,36 @@ public class UserManager extends Lifecycle implements IUserManager
     if (users.remove(userID) != null)
     {
       save(users);
+    }
+  }
+
+  /**
+   * @since 3.3
+   */
+  public char[] getPassword(String userID)
+  {
+    return users.get(userID);
+  }
+
+  /**
+   * @since 3.3
+   */
+  public void authenticate(String userID, char[] password)
+  {
+    char[] userPassword;
+    synchronized (this)
+    {
+      userPassword = users.get(userID);
+    }
+
+    if (userPassword == null)
+    {
+      throw new SecurityException("No such user: " + userID); //$NON-NLS-1$
+    }
+
+    if (!Arrays.equals(userPassword, password))
+    {
+      throw new SecurityException("Wrong password for user: " + userID); //$NON-NLS-1$
     }
   }
 

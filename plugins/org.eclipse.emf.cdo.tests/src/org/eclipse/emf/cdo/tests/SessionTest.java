@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.signal.ISignalProtocol;
-import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.SignalProtocol.TimeoutChangedEvent;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
@@ -272,7 +271,7 @@ public class SessionTest extends AbstractCDOTest
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD1);
 
-    getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
+    getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     IRepository repository = getRepository("authrepo2");
 
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
@@ -292,17 +291,17 @@ public class SessionTest extends AbstractCDOTest
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD1);
 
-    getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
+    getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     getRepository("authrepo3");
 
     try
     {
       openSession("authrepo3");
-      fail("RemoteException expected");
+      fail("NotAuthenticatedException expected");
     }
-    catch (RemoteException success)
+    catch (NotAuthenticatedException expected)
     {
-      assertEquals(SecurityException.class, success.getCause().getClass());
+      // SUCCESS
     }
   }
 
@@ -312,7 +311,7 @@ public class SessionTest extends AbstractCDOTest
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD1);
 
-    getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
+    getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     getRepository("authrepo4");
 
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER, new PasswordCredentialsProvider(null));
@@ -334,7 +333,7 @@ public class SessionTest extends AbstractCDOTest
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD1);
 
-    getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
+    getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     getRepository("authrepo5");
 
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
@@ -343,11 +342,11 @@ public class SessionTest extends AbstractCDOTest
     try
     {
       openSession("authrepo5");
-      fail("RemoteException expected");
+      fail("SecurityException expected");
     }
-    catch (RemoteException success)
+    catch (SecurityException expected)
     {
-      assertEquals(SecurityException.class, success.getCause().getClass());
+      // SUCCESS
     }
   }
 
@@ -357,7 +356,7 @@ public class SessionTest extends AbstractCDOTest
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD1);
 
-    getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
+    getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     getRepository("authrepo6");
 
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
@@ -366,11 +365,11 @@ public class SessionTest extends AbstractCDOTest
     try
     {
       openSession("authrepo6");
-      fail("RemoteException expected");
+      fail("NotAuthenticatedException expected");
     }
-    catch (RemoteException success)
+    catch (NotAuthenticatedException expected)
     {
-      assertEquals(SecurityException.class, success.getCause().getClass());
+      // SUCCESS
     }
   }
 
@@ -380,7 +379,7 @@ public class SessionTest extends AbstractCDOTest
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD1);
 
-    getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
+    getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     getRepository("authrepo7");
 
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
@@ -389,11 +388,11 @@ public class SessionTest extends AbstractCDOTest
     try
     {
       openSession("authrepo7");
-      fail("RemoteException expected");
+      fail("NotAuthenticatedException expected");
     }
-    catch (RemoteException success)
+    catch (NotAuthenticatedException expected)
     {
-      assertEquals(SecurityException.class, success.getCause().getClass());
+      // SUCCESS
     }
   }
 

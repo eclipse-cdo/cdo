@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
-import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -36,6 +35,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.Revisi
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
@@ -63,13 +63,27 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
 
   /**
    * @since 4.0
+   * @deprecated As of 4.2 use {@link #getCredentialsProvider()}
    */
-  public CDOAuthenticator getAuthenticator();
+  @Deprecated
+  public org.eclipse.emf.cdo.common.protocol.CDOAuthenticator getAuthenticator();
 
   /**
    * @since 4.0
+   * @deprecated As of 4.2 use {@link #setCredentialsProvider(IPasswordCredentialsProvider)}
    */
-  public void setAuthenticator(CDOAuthenticator authenticator);
+  @Deprecated
+  public void setAuthenticator(org.eclipse.emf.cdo.common.protocol.CDOAuthenticator authenticator);
+
+  /**
+   * @since 4.2
+   */
+  public IPasswordCredentialsProvider getCredentialsProvider();
+
+  /**
+   * @since 4.2
+   */
+  public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider);
 
   public InternalCDOPackageRegistry getPackageRegistry();
 

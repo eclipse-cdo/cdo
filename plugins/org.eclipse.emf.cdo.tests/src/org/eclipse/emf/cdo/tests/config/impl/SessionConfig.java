@@ -106,7 +106,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     IPasswordCredentialsProvider credentialsProvider = getTestCredentialsProvider();
     if (credentialsProvider != null)
     {
-      configuration.getAuthenticator().setCredentialsProvider(credentialsProvider);
+      configuration.setCredentialsProvider(credentialsProvider);
     }
 
     CDOSession session = configuration.openSession();

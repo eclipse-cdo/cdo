@@ -10,9 +10,6 @@
  */
 package org.eclipse.emf.internal.cdo.session;
 
-import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
-import org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult;
-
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.SecurityUtil;
@@ -20,7 +17,8 @@ import org.eclipse.net4j.util.security.SecurityUtil;
 /**
  * @author Eike Stepper
  */
-public class CDOAuthenticatorImpl implements CDOAuthenticator
+@Deprecated
+public class CDOAuthenticatorImpl implements org.eclipse.emf.cdo.common.protocol.CDOAuthenticator
 {
   private String encryptionAlgorithmName = SecurityUtil.PBE_WITH_MD5_AND_DES;
 
@@ -74,7 +72,7 @@ public class CDOAuthenticatorImpl implements CDOAuthenticator
     this.credentialsProvider = credentialsProvider;
   }
 
-  public CDOAuthenticationResult authenticate(byte[] randomToken)
+  public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult authenticate(byte[] randomToken)
   {
     if (credentialsProvider == null)
     {
@@ -86,7 +84,7 @@ public class CDOAuthenticatorImpl implements CDOAuthenticator
     {
       String userID = credentials.getUserID();
       byte[] cryptedToken = encryptToken(credentials.getPassword(), randomToken);
-      return new CDOAuthenticationResult(userID, cryptedToken);
+      return new org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult(userID, cryptedToken);
     }
 
     return null;

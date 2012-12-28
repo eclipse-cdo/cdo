@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
-import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDOList;
@@ -109,6 +108,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.options.OptionsEvent;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.ecore.EPackage;
@@ -197,7 +197,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   private boolean mainBranchLocal;
 
-  private CDOAuthenticator authenticator;
+  private IPasswordCredentialsProvider credentialsProvider;
 
   private InternalCDORemoteSessionManager remoteSessionManager;
 
@@ -365,14 +365,26 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     this.fetchRuleManager = fetchRuleManager;
   }
 
-  public CDOAuthenticator getAuthenticator()
+  @Deprecated
+  public org.eclipse.emf.cdo.common.protocol.CDOAuthenticator getAuthenticator()
   {
-    return authenticator;
+    throw new UnsupportedOperationException();
   }
 
-  public void setAuthenticator(CDOAuthenticator authenticator)
+  @Deprecated
+  public void setAuthenticator(org.eclipse.emf.cdo.common.protocol.CDOAuthenticator authenticator)
   {
-    this.authenticator = authenticator;
+    throw new UnsupportedOperationException();
+  }
+
+  public IPasswordCredentialsProvider getCredentialsProvider()
+  {
+    return credentialsProvider;
+  }
+
+  public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
+  {
+    this.credentialsProvider = credentialsProvider;
   }
 
   public boolean isMainBranchLocal()

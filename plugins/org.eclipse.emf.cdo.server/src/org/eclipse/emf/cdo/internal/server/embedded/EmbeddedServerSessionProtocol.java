@@ -15,13 +15,14 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
-import org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
+import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 
 /**
  * @author Eike Stepper
@@ -57,9 +58,16 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
     return session;
   }
 
-  public CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken) throws Exception
+  @Deprecated
+  public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken)
+      throws Exception
   {
     return clientSessionProtocol.handleAuthenticationChallenge(randomToken);
+  }
+
+  public Response sendAuthenticationChallenge(Challenge challenge) throws Exception
+  {
+    throw new UnsupportedOperationException();
   }
 
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)

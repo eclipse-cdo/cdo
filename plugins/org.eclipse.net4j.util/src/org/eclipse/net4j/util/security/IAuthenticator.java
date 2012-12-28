@@ -10,17 +10,19 @@
  */
 package org.eclipse.net4j.util.security;
 
-import org.eclipse.net4j.util.factory.Factory;
-
 /**
+ * Authenticates users.
+ *
  * @author Eike Stepper
+ * @since 3.3
  */
-public abstract class UserManagerFactory extends Factory
+public interface IAuthenticator
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.userManagers"; //$NON-NLS-1$
-
-  public UserManagerFactory(String type)
-  {
-    super(PRODUCT_GROUP, type);
-  }
+  /**
+   * Authenticates the user with the passed <code>userID</code> by checking whether the supplied <code>password</code>
+   * matches the password <i>stored</i> for this user.
+   * <p>
+   * The implementation is required to throw a {@link SecurityException} if the passwords do <b>not</b> match.
+   */
+  public void authenticate(String userID, char[] password) throws SecurityException;
 }

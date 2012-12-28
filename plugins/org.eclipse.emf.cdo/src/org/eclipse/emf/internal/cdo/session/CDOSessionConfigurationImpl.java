@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
-import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
@@ -32,6 +31,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration;
@@ -49,7 +49,7 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
 
   private LockNotificationMode lockNotificationMode = LockNotificationMode.IF_REQUIRED_BY_VIEWS;
 
-  private CDOAuthenticator authenticator = new CDOAuthenticatorImpl();
+  private IPasswordCredentialsProvider credentialsProvider;
 
   private CDOSession.ExceptionHandler exceptionHandler;
 
@@ -155,15 +155,64 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
     this.lockNotificationMode = lockNotificationMode;
   }
 
-  public CDOAuthenticator getAuthenticator()
+  @Deprecated
+  public org.eclipse.emf.cdo.common.protocol.CDOAuthenticator getAuthenticator()
   {
-    return authenticator;
+    return new org.eclipse.emf.cdo.common.protocol.CDOAuthenticator()
+    {
+      public String getEncryptionAlgorithmName()
+      {
+        return null;
+      }
+
+      public void setEncryptionAlgorithmName(String encryptionAlgorithmName)
+      {
+      }
+
+      public byte[] getEncryptionSaltBytes()
+      {
+        return null;
+      }
+
+      public void setEncryptionSaltBytes(byte[] encryptionSaltBytes)
+      {
+      }
+
+      public int getEncryptionIterationCount()
+      {
+        return 0;
+      }
+
+      public void setEncryptionIterationCount(int encryptionIterationCount)
+      {
+      }
+
+      public IPasswordCredentialsProvider getCredentialsProvider()
+      {
+        return CDOSessionConfigurationImpl.this.getCredentialsProvider();
+      }
+
+      public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
+      {
+        CDOSessionConfigurationImpl.this.setCredentialsProvider(credentialsProvider);
+      }
+
+      public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult authenticate(byte[] randomToken)
+      {
+        throw new UnsupportedOperationException();
+      }
+    };
   }
 
-  public void setAuthenticator(CDOAuthenticator authenticator)
+  public IPasswordCredentialsProvider getCredentialsProvider()
+  {
+    return credentialsProvider;
+  }
+
+  public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
   {
     checkNotOpen();
-    this.authenticator = authenticator;
+    this.credentialsProvider = credentialsProvider;
   }
 
   public CDOSession.ExceptionHandler getExceptionHandler()
@@ -324,7 +373,7 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
     session.setExceptionHandler(exceptionHandler);
     session.setFetchRuleManager(fetchRuleManager);
     session.setIDGenerator(idGenerator);
-    session.setAuthenticator(authenticator);
+    session.setCredentialsProvider(credentialsProvider);
     session.setRevisionManager(revisionManager);
     session.setBranchManager(branchManager);
     session.setCommitInfoManager(commitInfoManager);

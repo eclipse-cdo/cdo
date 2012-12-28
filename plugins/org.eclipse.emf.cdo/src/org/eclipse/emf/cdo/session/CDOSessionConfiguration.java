@@ -13,11 +13,11 @@ package org.eclipse.emf.cdo.session;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
-import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 /**
  * Configures and opens new {@link CDOSession sessions}.
@@ -125,8 +125,21 @@ public interface CDOSessionConfiguration extends INotifier
 
   /**
    * Returns the authenticator of this configuration, never <code>null</code>.
+   *
+   * @deprecated As of 4.2 use {@link #getCredentialsProvider()} and {@link #setCredentialsProvider(IPasswordCredentialsProvider)}, respectively
    */
-  public CDOAuthenticator getAuthenticator();
+  @Deprecated
+  public org.eclipse.emf.cdo.common.protocol.CDOAuthenticator getAuthenticator();
+
+  /**
+   * @since 4.2
+   */
+  public IPasswordCredentialsProvider getCredentialsProvider();
+
+  /**
+   * @since 4.2
+   */
+  public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider);
 
   /**
    * Returns <code>true</code> if the session opened by {@link #openSession()} will be automatically activated,

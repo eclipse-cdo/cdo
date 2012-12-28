@@ -32,7 +32,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.security.IUserManager;
+import org.eclipse.net4j.util.security.IAuthenticator;
 import org.eclipse.net4j.util.security.UserManager;
 
 import org.h2.jdbcx.JdbcDataSource;
@@ -149,8 +149,8 @@ public class DemoConfiguration extends Lifecycle
 
     if (userIDs != null)
     {
-      IUserManager userManager = createUserManager();
-      sessionManager.setUserManager(userManager);
+      IAuthenticator authenticator = createAuthenticator();
+      sessionManager.setAuthenticator(authenticator);
     }
 
     CDOServerUtil.addRepository(IPluginContainer.INSTANCE, repository);
@@ -235,7 +235,7 @@ public class DemoConfiguration extends Lifecycle
     return sessionManager;
   }
 
-  protected IUserManager createUserManager()
+  protected IAuthenticator createAuthenticator()
   {
     userManager = new DemoUserManager();
     for (int i = 0; i < userIDs.length; i++)

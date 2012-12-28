@@ -12,42 +12,42 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
-import org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult;
 
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.RequestWithMonitoring;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
+import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 
 /**
  * @author Eike Stepper
  */
-public class AuthenticationRequest extends RequestWithMonitoring<CDOAuthenticationResult>
+public class AuthenticationRequest extends RequestWithMonitoring<Response>
 {
-  private byte[] randomToken;
+  private Challenge challenge;
 
-  public AuthenticationRequest(CDOServerProtocol protocol, byte[] randomToken)
+  public AuthenticationRequest(CDOServerProtocol protocol, Challenge challenge)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_AUTHENTICATION);
-    this.randomToken = randomToken;
+    this.challenge = challenge;
   }
 
   @Override
   protected void requesting(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
   {
-    out.writeByteArray(randomToken);
+    challenge.write(out);
   }
 
   @Override
-  protected CDOAuthenticationResult confirming(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
+  protected Response confirming(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
   {
     try
     {
-      boolean authenticated = in.readBoolean();
-      if (authenticated)
+      if (in.readBoolean())
       {
-        return new CDOAuthenticationResult(in);
+        return new Response(in);
       }
     }
     catch (RemoteException ex)

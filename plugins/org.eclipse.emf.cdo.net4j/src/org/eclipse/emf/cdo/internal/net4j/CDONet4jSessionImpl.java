@@ -36,6 +36,7 @@ import org.eclipse.emf.internal.cdo.session.DelegatingSessionProtocol;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 
@@ -223,21 +224,33 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     setSessionProtocol(protocol);
     hookSessionProtocol();
 
-    // TODO (CD) The next call is on the CDOClientProtocol; shouldn't it be on the DelegatingSessionProtocol instead?
-    OpenSessionResult result = protocol.openSession(repositoryName, getUserID(), options().isPassiveUpdateEnabled(),
-        options().getPassiveUpdateMode(), options().getLockNotificationMode());
-
-    if (result == null)
+    try
     {
-      // Skip to response because the user has canceled the authentication
-      return null;
-    }
+      // TODO (CD) The next call is on the CDOClientProtocol; shouldn't it be on the DelegatingSessionProtocol instead?
+      OpenSessionResult result = protocol.openSession(repositoryName, getUserID(), options().isPassiveUpdateEnabled(),
+          options().getPassiveUpdateMode(), options().getLockNotificationMode());
 
-    setSessionID(result.getSessionID());
-    setUserID(result.getUserID());
-    setLastUpdateTime(result.getLastUpdateTime());
-    setRepositoryInfo(new RepositoryInfo(this, repositoryName, result));
-    return result;
+      if (result == null)
+      {
+        // Skip to response because the user has canceled the authentication
+        return null;
+      }
+
+      setSessionID(result.getSessionID());
+      setUserID(result.getUserID());
+      setLastUpdateTime(result.getLastUpdateTime());
+      setRepositoryInfo(new RepositoryInfo(this, repositoryName, result));
+      return result;
+    }
+    catch (RemoteException ex)
+    {
+      if (ex.getCause() instanceof SecurityException)
+      {
+        throw (SecurityException)ex.getCause();
+      }
+
+      throw ex;
+    }
   }
 
   @Override

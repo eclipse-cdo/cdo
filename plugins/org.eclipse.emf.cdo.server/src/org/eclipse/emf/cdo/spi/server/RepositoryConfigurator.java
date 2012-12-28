@@ -24,7 +24,10 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.security.AuthenticatorFactory;
+import org.eclipse.net4j.util.security.IAuthenticator;
 import org.eclipse.net4j.util.security.IUserManager;
+import org.eclipse.net4j.util.security.UserManagerFactory;
 
 import org.eclipse.emf.ecore.EPackage;
 
@@ -170,22 +173,8 @@ public class RepositoryConfigurator
     repository.setStore((InternalStore)store);
     repository.setProperties(properties);
 
-    Element userManagerConfig = getUserManagerConfig(repositoryConfig);
-    if (userManagerConfig != null)
-    {
-      IUserManager userManager = getUserManager(userManagerConfig);
-      if (userManager != null)
-      {
-        InternalSessionManager sessionManager = repository.getSessionManager();
-        if (sessionManager == null)
-        {
-          sessionManager = new SessionManager();
-          repository.setSessionManager(sessionManager);
-        }
-
-        sessionManager.setUserManager(userManager);
-      }
-    }
+    setUserManager(repository, repositoryConfig);
+    setAuthenticator(repository, repositoryConfig);
 
     EPackage[] initialPackages = getInitialPackages(repositoryConfig);
     if (initialPackages.length != 0)
@@ -223,13 +212,100 @@ public class RepositoryConfigurator
 
   protected IUserManager getUserManager(String type, String description) throws CoreException
   {
-    IUserManager userManager = (IUserManager)container.getElement("org.eclipse.net4j.userManagers", type, description); //$NON-NLS-1$
+    IUserManager userManager = (IUserManager)container.getElement(UserManagerFactory.PRODUCT_GROUP, type, description);
     if (userManager == null)
     {
       throw new IllegalStateException("UserManager factory not found: " + type); //$NON-NLS-1$
     }
 
     return userManager;
+  }
+
+  /**
+   * @since 4.2
+   */
+  @SuppressWarnings("deprecation")
+  protected void setUserManager(InternalRepository repository, Element repositoryConfig) throws CoreException
+  {
+    Element userManagerConfig = getUserManagerConfig(repositoryConfig);
+    if (userManagerConfig != null)
+    {
+      IUserManager userManager = getUserManager(userManagerConfig);
+      if (userManager != null)
+      {
+        InternalSessionManager sessionManager = repository.getSessionManager();
+        if (sessionManager == null)
+        {
+          sessionManager = new SessionManager();
+          repository.setSessionManager(sessionManager);
+        }
+
+        sessionManager.setUserManager(userManager);
+      }
+    }
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected Element getAuthenticatorConfig(Element repositoryConfig)
+  {
+    NodeList authenticatorConfig = repositoryConfig.getElementsByTagName("authenticator"); //$NON-NLS-1$
+    if (authenticatorConfig.getLength() > 1)
+    {
+      String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
+      throw new IllegalStateException("At most one authenticator must be configured for repository " + repositoryName); //$NON-NLS-1$
+    }
+
+    return (Element)(authenticatorConfig.getLength() > 0 ? authenticatorConfig.item(0) : null);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected IAuthenticator getAuthenticator(Element authenticatorConfig) throws CoreException
+  {
+    String type = authenticatorConfig.getAttribute("type"); //$NON-NLS-1$
+    String description = authenticatorConfig.getAttribute("description"); //$NON-NLS-1$
+    return getAuthenticator(type, description);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected IAuthenticator getAuthenticator(String type, String description) throws CoreException
+  {
+    IAuthenticator authenticator = (IAuthenticator)container.getElement(AuthenticatorFactory.PRODUCT_GROUP, type,
+        description);
+    if (authenticator == null)
+    {
+      throw new IllegalStateException("Authenticator factory not found: " + type); //$NON-NLS-1$
+    }
+
+    return authenticator;
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void setAuthenticator(InternalRepository repository, Element repositoryConfig) throws CoreException
+  {
+    Element authenticatorConfig = getAuthenticatorConfig(repositoryConfig);
+    if (authenticatorConfig != null)
+    {
+      IAuthenticator authenticator = getAuthenticator(authenticatorConfig);
+      if (authenticator != null)
+      {
+        InternalSessionManager sessionManager = repository.getSessionManager();
+        if (sessionManager == null)
+        {
+          sessionManager = new SessionManager();
+          repository.setSessionManager(sessionManager);
+        }
+
+        sessionManager.setAuthenticator(authenticator);
+      }
+    }
   }
 
   protected EPackage[] getInitialPackages(Element repositoryConfig)

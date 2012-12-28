@@ -56,13 +56,12 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.security.IUserManager;
-import org.eclipse.net4j.util.security.SecurityUtil;
+import org.eclipse.net4j.util.security.IAuthenticator;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,20 +76,17 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     @Override
     protected void onActivated(ILifecycle lifecycle)
     {
-      if (isActive())
-      {
-        init();
-      }
+      init();
     }
 
     @Override
     protected void onDeactivated(ILifecycle lifecycle)
     {
-      deactivate();
+      SecurityManager.this.deactivate();
     }
   };
 
-  private final IUserManager userManager = new UserManager();
+  private final IAuthenticator authenticator = new Authenticator();
 
   private final IPermissionManager permissionManager = new PermissionManager();
 
@@ -242,7 +238,11 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     {
       public void execute(Realm realm)
       {
+        UserPassword userPassword = SecurityFactory.eINSTANCE.createUserPassword();
+        userPassword.setEncrypted(new String(password));
+
         result[0] = realm.addUser(id);
+        result[0].setPassword(userPassword);
       }
     });
 
@@ -373,14 +373,22 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   protected void init()
   {
+    if (realm != null)
+    {
+      // Already initialized
+      return;
+    }
+
     if (repository == null)
     {
+      // Cannot initialize
       return;
     }
 
     repository.addListener(repositoryListener);
     if (!LifecycleUtil.isActive(repository))
     {
+      // Cannot initialize now
       return;
     }
 
@@ -422,7 +430,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     }
 
     InternalSessionManager sessionManager = repository.getSessionManager();
-    sessionManager.setUserManager(userManager);
+    sessionManager.setAuthenticator(authenticator);
     sessionManager.setPermissionManager(permissionManager);
     repository.addHandler(writeAccessHandler);
   }
@@ -561,61 +569,17 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   /**
    * @author Eike Stepper
    */
-  private final class UserManager implements IUserManager
+  private final class Authenticator implements IAuthenticator
   {
-    public void addUser(final String userID, final char[] password)
-    {
-      modify(new RealmOperation()
-      {
-        public void execute(Realm realm)
-        {
-          UserPassword userPassword = SecurityFactory.eINSTANCE.createUserPassword();
-          userPassword.setEncrypted(new String(password));
-
-          User user = SecurityFactory.eINSTANCE.createUser();
-          user.setId(userID);
-          user.setPassword(userPassword);
-
-          realm.getItems().add(user);
-        }
-      });
-    }
-
-    public void removeUser(final String userID)
-    {
-      modify(new RealmOperation()
-      {
-        public void execute(Realm realm)
-        {
-          User user = getUser(userID);
-          EcoreUtil.remove(user);
-        }
-      });
-    }
-
-    public byte[] encrypt(String userID, byte[] data, String algorithmName, byte[] salt, int count)
-        throws SecurityException
+    public void authenticate(String userID, char[] password) throws SecurityException
     {
       User user = getUser(userID);
       UserPassword userPassword = user.getPassword();
-      String encrypted = userPassword == null ? null : userPassword.getEncrypted();
-      char[] password = encrypted == null ? null : encrypted.toCharArray();
-      if (password == null)
-      {
-        throw new SecurityException("No password: " + userID);
-      }
 
-      try
+      String encrypted = userPassword.getEncrypted();
+      if (!Arrays.equals(password, encrypted == null ? null : encrypted.toCharArray()))
       {
-        return SecurityUtil.encrypt(data, password, algorithmName, salt, count);
-      }
-      catch (RuntimeException ex)
-      {
-        throw ex;
-      }
-      catch (Exception ex)
-      {
-        throw new SecurityException(ex);
+        throw new SecurityException("Access denied"); //$NON-NLS-1$
       }
     }
   }

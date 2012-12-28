@@ -18,10 +18,12 @@ import java.io.Serializable;
 
 /**
  * The result of an authentication operation. Carries a userID and a crypted token.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
+ * @deprecated As of 4.2
  */
+@Deprecated
 public final class CDOAuthenticationResult implements Serializable
 {
   private static final long serialVersionUID = 1L;

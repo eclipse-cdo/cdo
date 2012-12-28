@@ -100,7 +100,7 @@ public class CommitInfoTest extends AbstractCDOTest
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD);
 
-    getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
+    getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
         new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
 
@@ -206,7 +206,7 @@ public class CommitInfoTest extends AbstractCDOTest
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD);
 
-    getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
+    getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
         new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
 
@@ -332,7 +332,7 @@ public class CommitInfoTest extends AbstractCDOTest
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD);
 
-    getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
+    getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
         new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
 
@@ -454,7 +454,7 @@ public class CommitInfoTest extends AbstractCDOTest
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD);
 
-    getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
+    getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
         new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
 
@@ -568,7 +568,7 @@ public class CommitInfoTest extends AbstractCDOTest
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD);
 
-    getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
+    getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
         new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
 
@@ -677,7 +677,7 @@ public class CommitInfoTest extends AbstractCDOTest
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD);
 
-    getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
+    getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
         new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
 
@@ -786,7 +786,7 @@ public class CommitInfoTest extends AbstractCDOTest
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD);
 
-    getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
+    getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
         new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
 

@@ -310,7 +310,7 @@ public class CDOAdminView extends ContainerView
     public void prepare(CDONet4jSessionConfiguration configuration)
     {
       IPasswordCredentialsProvider credentialsProvider = getCredentialsProvider();
-      configuration.getAuthenticator().setCredentialsProvider(credentialsProvider);
+      configuration.setCredentialsProvider(credentialsProvider);
     }
   }
 }

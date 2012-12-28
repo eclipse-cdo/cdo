@@ -11,10 +11,11 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.security.IAuthenticator;
 
 /**
  * Manages the user {@link ISession sessions} of a {@link IRepository repository}.
- * 
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -34,4 +35,14 @@ public interface ISessionManager extends IContainer<ISession>
    * @since 2.0
    */
   public ISession getSession(int sessionID);
+
+  /**
+   * @since 4.2
+   */
+  public IAuthenticator getAuthenticator();
+
+  /**
+   * @since 4.2
+   */
+  public void setAuthenticator(IAuthenticator authenticator);
 }

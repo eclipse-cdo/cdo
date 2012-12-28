@@ -16,10 +16,12 @@ import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 /**
  * The front-end of the CDO challenge/response authentication.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
+ * @deprecated As of 4.2 use {@link IPasswordCredentialsProvider} directly
  */
+@Deprecated
 public interface CDOAuthenticator
 {
   public String getEncryptionAlgorithmName();

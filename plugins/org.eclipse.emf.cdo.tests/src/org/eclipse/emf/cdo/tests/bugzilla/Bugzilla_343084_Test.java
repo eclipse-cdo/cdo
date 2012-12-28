@@ -73,7 +73,7 @@ public class Bugzilla_343084_Test extends AbstractCDOTest
       }
     };
 
-    getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
+    getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     getTestProperties().put(RepositoryConfig.PROP_TEST_PERMISSION_MANAGER, permissionManager);
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
         new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));

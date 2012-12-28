@@ -13,12 +13,12 @@ package org.eclipse.emf.cdo.tests.util;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
-import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
 import org.eclipse.net4j.util.event.Notifier;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 /**
  * @author Eike Stepper
@@ -50,7 +50,18 @@ public abstract class TestSessionConfiguration extends Notifier implements CDOSe
     throw new UnsupportedOperationException();
   }
 
-  public CDOAuthenticator getAuthenticator()
+  @Deprecated
+  public org.eclipse.emf.cdo.common.protocol.CDOAuthenticator getAuthenticator()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public IPasswordCredentialsProvider getCredentialsProvider()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
   {
     throw new UnsupportedOperationException();
   }

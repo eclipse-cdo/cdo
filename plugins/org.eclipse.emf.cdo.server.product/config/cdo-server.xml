@@ -28,11 +28,7 @@
     -->
 
     <!-- Example http://bugs.eclipse.org/302775
-			<userManager type="file" description="_database/repo1.users"/>
-    -->
-
-    <!-- Example http://bugs.eclipse.org/34583
-			<userManager type="TestRepository" description="repo1"/>
+			<authenticator type="file" description="_database/repo1.users"/>
     -->
 
     <!-- Example http://bugs.eclipse.org/345431

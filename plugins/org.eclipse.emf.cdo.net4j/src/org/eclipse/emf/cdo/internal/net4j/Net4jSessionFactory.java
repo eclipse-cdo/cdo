@@ -51,7 +51,7 @@ public class Net4jSessionFactory extends CDOSessionFactory
     CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setRepositoryName(repositoryName);
     configuration.setUserID(userID);
-    configuration.getAuthenticator().setCredentialsProvider(getCredentialsProvider());
+    configuration.setCredentialsProvider(getCredentialsProvider());
 
     // The session will be activated by the container
     configuration.setActivateOnOpen(false);

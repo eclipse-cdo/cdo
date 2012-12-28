@@ -73,7 +73,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.security.IUserManager;
+import org.eclipse.net4j.util.security.IAuthenticator;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -98,7 +98,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   public static final String PROP_TEST_SESSION_MANAGER = "test.repository.SessionManager";
 
-  public static final String PROP_TEST_USER_MANAGER = "test.repository.UserManager";
+  public static final String PROP_TEST_AUTHENTICATOR = "test.repository.Authenticator";
 
   public static final String PROP_TEST_PERMISSION_MANAGER = "test.repository.PermissionManager";
 
@@ -514,10 +514,10 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     repository.setSessionManager(sessionManager);
 
-    IUserManager userManager = getTestUserManager();
-    if (userManager != null)
+    IAuthenticator authenticator = getTestAuthenticator();
+    if (authenticator != null)
     {
-      sessionManager.setUserManager(userManager);
+      sessionManager.setAuthenticator(authenticator);
     }
 
     IPermissionManager permissionManager = getTestPermissionManager();
@@ -559,9 +559,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return (InternalSessionManager)getTestProperty(PROP_TEST_SESSION_MANAGER);
   }
 
-  protected IUserManager getTestUserManager()
+  protected IAuthenticator getTestAuthenticator()
   {
-    return (IUserManager)getTestProperty(PROP_TEST_USER_MANAGER);
+    return (IAuthenticator)getTestProperty(PROP_TEST_AUTHENTICATOR);
   }
 
   protected IPermissionManager getTestPermissionManager()

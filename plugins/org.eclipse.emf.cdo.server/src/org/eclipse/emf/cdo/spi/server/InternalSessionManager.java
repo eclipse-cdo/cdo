@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 
+import org.eclipse.net4j.util.security.DiffieHellman;
+import org.eclipse.net4j.util.security.IAuthenticator;
 import org.eclipse.net4j.util.security.IUserManager;
 
 import java.util.List;
@@ -39,10 +41,26 @@ public interface InternalSessionManager extends ISessionManager
 
   /**
    * @since 4.1
+   * @deprecated As of 4.2 use {@link #getAuthenticator()}
    */
+  @Deprecated
   public IUserManager getUserManager();
 
+  /**
+   * @deprecated As of 4.2 use {@link #setAuthenticator(IAuthenticator)}
+   */
+  @Deprecated
   public void setUserManager(IUserManager userManager);
+
+  /**
+   * @since 4.2
+   */
+  public DiffieHellman.Server getAuthenticationServer();
+
+  /**
+   * @since 4.2
+   */
+  public void setAuthenticationServer(DiffieHellman.Server authenticationServer);
 
   /**
    * @since 4.1

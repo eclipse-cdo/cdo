@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
-import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -58,6 +57,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleState;
 import org.eclipse.net4j.util.ref.ReferenceType;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
@@ -941,12 +941,24 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
-    public CDOAuthenticator getAuthenticator()
+    @Deprecated
+    public org.eclipse.emf.cdo.common.protocol.CDOAuthenticator getAuthenticator()
     {
       throw new UnsupportedOperationException();
     }
 
-    public void setAuthenticator(CDOAuthenticator authenticator)
+    @Deprecated
+    public void setAuthenticator(org.eclipse.emf.cdo.common.protocol.CDOAuthenticator authenticator)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public IPasswordCredentialsProvider getCredentialsProvider()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
     {
       throw new UnsupportedOperationException();
     }

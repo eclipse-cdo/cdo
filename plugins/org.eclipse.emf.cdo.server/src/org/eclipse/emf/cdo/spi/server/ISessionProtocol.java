@@ -16,8 +16,10 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
-import org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
+
+import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
+import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -31,8 +33,16 @@ public interface ISessionProtocol extends CDOProtocol
 {
   /**
    * @since 4.0
+   * @deprecated As of 4.2 {@link #sendAuthenticationChallenge(Challenge)} is called.
    */
-  public CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken) throws Exception;
+  @Deprecated
+  public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken)
+      throws Exception;
+
+  /**
+   * @since 4.2
+   */
+  public Response sendAuthenticationChallenge(Challenge challenge) throws Exception;
 
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
       throws Exception;

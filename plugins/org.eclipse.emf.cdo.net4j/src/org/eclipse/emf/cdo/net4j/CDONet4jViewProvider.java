@@ -195,7 +195,7 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
       }
     }
 
-    configuration.getAuthenticator().setCredentialsProvider(credentialsProvider);
+    configuration.setCredentialsProvider(credentialsProvider);
     return configuration;
   }
 

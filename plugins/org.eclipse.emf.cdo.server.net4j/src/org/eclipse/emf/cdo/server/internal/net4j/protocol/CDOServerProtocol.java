@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
-import org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -32,6 +31,8 @@ import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
+import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 
 /**
  * @author Eike Stepper
@@ -83,9 +84,16 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     this.negotiationTimeout = negotiationTimeout;
   }
 
-  public CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken) throws Exception
+  @Deprecated
+  public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken)
+      throws Exception
   {
-    return new AuthenticationRequest(this, randomToken).send(negotiationTimeout);
+    throw new UnsupportedOperationException();
+  }
+
+  public Response sendAuthenticationChallenge(Challenge challenge) throws Exception
+  {
+    return new AuthenticationRequest(this, challenge).send(negotiationTimeout);
   }
 
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)

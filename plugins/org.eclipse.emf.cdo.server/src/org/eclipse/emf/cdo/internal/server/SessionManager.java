@@ -23,25 +23,25 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
-import org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
-import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.security.IRandomizer;
+import org.eclipse.net4j.util.security.DiffieHellman;
+import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
+import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
+import org.eclipse.net4j.util.security.IAuthenticator;
 import org.eclipse.net4j.util.security.IUserManager;
-import org.eclipse.net4j.util.security.NegotiationException;
-import org.eclipse.net4j.util.security.Randomizer;
-import org.eclipse.net4j.util.security.SecurityUtil;
+import org.eclipse.net4j.util.security.UserManagerAuthenticator;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,26 +52,13 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class SessionManager extends Container<ISession> implements InternalSessionManager
 {
-  public static final int DEFAULT_TOKEN_LENGTH = 1024;
-
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, SessionManager.class);
 
   private InternalRepository repository;
 
-  @ExcludeFromDump
-  private String encryptionAlgorithmName = SecurityUtil.PBE_WITH_MD5_AND_DES;
+  private DiffieHellman.Server authenticationServer;
 
-  @ExcludeFromDump
-  private byte[] encryptionSaltBytes = SecurityUtil.DEFAULT_SALT;
-
-  @ExcludeFromDump
-  private int encryptionIterationCount = SecurityUtil.DEFAULT_ITERATION_COUNT;
-
-  private int tokenLength = DEFAULT_TOKEN_LENGTH;
-
-  private IRandomizer randomizer;
-
-  private IUserManager userManager;
+  private IAuthenticator authenticator;
 
   private IPermissionManager permissionManager;
 
@@ -103,69 +90,48 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     this.repository = repository;
   }
 
-  public String getEncryptionAlgorithmName()
-  {
-    return encryptionAlgorithmName;
-  }
-
-  public void setEncryptionAlgorithmName(String encryptionAlgorithmName)
-  {
-    checkInactive();
-    this.encryptionAlgorithmName = encryptionAlgorithmName;
-  }
-
-  public byte[] getEncryptionSaltBytes()
-  {
-    return encryptionSaltBytes;
-  }
-
-  public void setEncryptionSaltBytes(byte[] encryptionSaltBytes)
-  {
-    checkInactive();
-    this.encryptionSaltBytes = encryptionSaltBytes;
-  }
-
-  public int getEncryptionIterationCount()
-  {
-    return encryptionIterationCount;
-  }
-
-  public void setEncryptionIterationCount(int encryptionIterationCount)
-  {
-    checkInactive();
-    this.encryptionIterationCount = encryptionIterationCount;
-  }
-
-  public int getTokenLength()
-  {
-    return tokenLength;
-  }
-
-  public void setTokenLength(int tokenLength)
-  {
-    checkInactive();
-    this.tokenLength = tokenLength;
-  }
-
-  public IRandomizer getRandomizer()
-  {
-    return randomizer;
-  }
-
-  public void setRandomizer(IRandomizer randomizer)
-  {
-    checkInactive();
-    this.randomizer = randomizer;
-  }
-
+  @Deprecated
   public IUserManager getUserManager()
   {
-    return userManager;
+    if (authenticator instanceof UserManagerAuthenticator)
+    {
+      return ((UserManagerAuthenticator)authenticator).getUserManager();
+    }
+
+    return null;
   }
 
+  @Deprecated
   public void setUserManager(IUserManager userManager)
   {
-    this.userManager = userManager;
+    UserManagerAuthenticator userManagerAuthenticator = new UserManagerAuthenticator();
+    userManagerAuthenticator.setUserManager(userManager);
+
+    setAuthenticator(userManagerAuthenticator);
+  }
+
+  public DiffieHellman.Server getAuthenticationServer()
+  {
+    return authenticationServer;
+  }
+
+  public void setAuthenticationServer(DiffieHellman.Server authenticationServer)
+  {
+    this.authenticationServer = authenticationServer;
+  }
+
+  public IAuthenticator getAuthenticator()
+  {
+    return authenticator;
+  }
+
+  public void setAuthenticator(IAuthenticator authenticator)
+  {
+    this.authenticator = authenticator;
+    if (isActive() && authenticator != null)
+    {
+      initAuthentication();
+    }
   }
 
   public IPermissionManager getPermissionManager()
@@ -422,30 +388,27 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       return null;
     }
 
-    if (userManager == null)
+    if (authenticationServer == null || authenticator == null)
     {
       return null;
     }
 
     try
     {
-      byte[] randomToken = createRandomToken();
-      CDOAuthenticationResult result = protocol.sendAuthenticationChallenge(randomToken);
-      if (result == null)
+      Challenge challenge = authenticationServer.getChallenge();
+      Response response = protocol.sendAuthenticationChallenge(challenge);
+      if (response == null)
       {
         throw new NotAuthenticatedException();
       }
 
-      String userID = result.getUserID();
+      ByteArrayInputStream baos = new ByteArrayInputStream(authenticationServer.handleResponse(response));
+      ExtendedDataInputStream stream = new ExtendedDataInputStream(baos);
+      String userID = stream.readString();
+      char[] password = stream.readString().toCharArray();
 
-      byte[] cryptedToken = encryptToken(userID, randomToken);
-      boolean success = Arrays.equals(result.getCryptedToken(), cryptedToken);
-      if (success)
-      {
-        return userID;
-      }
-
-      throw new SecurityException("Access denied"); //$NON-NLS-1$
+      authenticator.authenticate(userID, password);
+      return userID;
     }
     catch (SecurityException ex)
     {
@@ -463,47 +426,36 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
-  protected byte[] createRandomToken()
-  {
-    byte[] token = new byte[tokenLength];
-    randomizer.nextBytes(token);
-    return token;
-  }
-
-  protected byte[] encryptToken(String userID, byte[] token) throws NegotiationException
-  {
-    try
-    {
-      return userManager.encrypt(userID, token, getEncryptionAlgorithmName(), getEncryptionSaltBytes(),
-          getEncryptionIterationCount());
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error("Token encryption failed", ex); //$NON-NLS-1$
-      return null;
-    }
-  }
-
   @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    initAuthentication();
+  }
 
-    if (randomizer == null)
+  protected void initAuthentication()
+  {
+    if (authenticator != null)
     {
-      randomizer = new Randomizer();
-    }
+      if (authenticationServer == null)
+      {
+        authenticationServer = new DiffieHellman.Server();
+      }
 
-    LifecycleUtil.activate(randomizer);
+      LifecycleUtil.activate(authenticationServer);
+      LifecycleUtil.activate(authenticator);
+    }
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    InternalSession[] activeSessions = getSessions();
-    for (int i = 0; i < activeSessions.length; i++)
+    LifecycleUtil.deactivate(authenticator);
+    LifecycleUtil.deactivate(authenticationServer);
+
+    for (InternalSession session : getSessions())
     {
-      LifecycleUtil.deactivate(activeSessions[i]);
+      LifecycleUtil.deactivate(session);
     }
 
     super.doDeactivate();

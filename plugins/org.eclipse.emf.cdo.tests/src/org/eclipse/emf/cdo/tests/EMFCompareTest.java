@@ -33,7 +33,6 @@ import org.eclipse.emf.ecore.EObject;
 @Requires(IRepositoryConfig.CAPABILITY_AUDITING)
 public class EMFCompareTest extends AbstractCDOTest
 {
-  @SuppressWarnings("unused")
   public void testAllContentsOfCompany() throws Exception
   {
     CDOSession session = openSession();
@@ -46,19 +45,18 @@ public class EMFCompareTest extends AbstractCDOTest
     resource.getContents().add(company);
     resource.getContents().add(createCompany());
     resource.getContents().add(createCompany());
-    CDOCommitInfo commit1 = transaction.commit();
+    transaction.commit();
 
     company.setName("Sympedia");
     CDOCommitInfo commit2 = transaction.commit();
 
     company.setName("Eclipse");
-    CDOCommitInfo commit3 = transaction.commit();
+    transaction.commit();
 
     Comparison comparison = CDOCompareUtil.compare(CDOUtil.getCDOObject(company), session.openView(commit2), null);
     dump(comparison);
   }
 
-  @SuppressWarnings("unused")
   public void testAllContentsOfRoot() throws Exception
   {
     CDOSession session = openSession();
@@ -71,20 +69,19 @@ public class EMFCompareTest extends AbstractCDOTest
     resource.getContents().add(company);
     resource.getContents().add(createCompany());
     resource.getContents().add(createCompany());
-    CDOCommitInfo commit1 = transaction.commit();
+    transaction.commit();
 
     company.setName("Sympedia");
     CDOCommitInfo commit2 = transaction.commit();
 
     company.setName("Eclipse");
-    CDOCommitInfo commit3 = transaction.commit();
+    transaction.commit();
 
     Comparison comparison = CDOCompareUtil.compare(CDOUtil.getCDOObject(transaction.getRootResource()),
         session.openView(commit2), null);
     dump(comparison);
   }
 
-  @SuppressWarnings("unused")
   public void testMinimal() throws Exception
   {
     CDOSession session = openSession();
@@ -96,13 +93,13 @@ public class EMFCompareTest extends AbstractCDOTest
     resource.getContents().add(company);
     resource.getContents().add(createCompany());
     resource.getContents().add(createCompany());
-    CDOCommitInfo commit1 = transaction.commit();
+    transaction.commit();
 
     company.setName("Sympedia");
     CDOCommitInfo commit2 = transaction.commit();
 
     company.setName("Eclipse");
-    CDOCommitInfo commit3 = transaction.commit();
+    transaction.commit();
 
     Comparison comparison = CDOCompareUtil.compare(transaction, session.openView(commit2), null);
     dump(comparison);

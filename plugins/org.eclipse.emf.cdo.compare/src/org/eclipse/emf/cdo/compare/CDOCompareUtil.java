@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.Notifier;
@@ -97,8 +98,8 @@ public final class CDOCompareUtil
 
     CDOView view = openOriginView(leftView, rightView, originView);
 
-    CDOObject right = rightView.getObject(left);
-    CDOObject origin = view == null ? null : view.getObject(left);
+    CDOObject right = CDOUtil.getCDOObject(rightView.getObject(left));
+    CDOObject origin = view == null ? null : CDOUtil.getCDOObject(view.getObject(left));
 
     IComparisonScope scope = new CDOComparisonScope.AllContents(left, right, origin);
     return createComparison(scope);

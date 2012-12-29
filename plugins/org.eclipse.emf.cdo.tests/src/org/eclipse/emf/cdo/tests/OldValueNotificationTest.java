@@ -59,7 +59,7 @@ public class OldValueNotificationTest extends AbstractCDOTest
 
     final CDOView view = session.openView();
     SpecialPurchaseOrder roOrder = view.getObject(order);
-    System.out.println(CDOUtil.getCDOObject(roOrder).cdoState());
+    msg(CDOUtil.getCDOObject(roOrder).cdoState());
     roOrder.eAdapters().add(adapter);
 
     Address address2 = getModel1Factory().createAddress();

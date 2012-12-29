@@ -1029,6 +1029,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
 
     cleanObject(object, revision);
+    CDOStateMachine.INSTANCE.dispatchLoadNotification(object);
     return object;
   }
 

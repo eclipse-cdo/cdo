@@ -10,8 +10,11 @@
  */
 package org.eclipse.emf.cdo.tests.model6;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+
+import java.util.List;
 
 /**
  * <!-- begin-user-doc -->
@@ -100,6 +103,11 @@ public interface G extends EObject
    * @generated
    */
   EList<BaseObject> getList();
+
+  /**
+   * @ADDED
+   */
+  public List<Notification> getNotifications();
 
   /**
    * <!-- begin-user-doc -->

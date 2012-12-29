@@ -559,6 +559,32 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     lastSavepoint.getReattachedObjects().put(id, object);
   }
 
+  public void dispatchLoadNotification(InternalCDOObject object)
+  {
+    InternalCDOView view = object.cdoView();
+    if (view.options().isLoadNotificationEnabled())
+    {
+      try
+      {
+        InternalCDORevision revision = object.cdoRevision();
+        CDONotificationBuilder builder = new CDONotificationBuilder(view);
+
+        NotificationChain notification = builder.buildNotification(object, revision);
+        if (notification != null)
+        {
+          notification.dispatch();
+        }
+      }
+      catch (PartialCollectionLoadingNotSupportedException ex)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(ex);
+        }
+      }
+    }
+  }
+
   /**
    * Prepares a tree of transient objects to be subsequently {@link AttachTransition attached} to a CDOView.
    * <p>
@@ -1114,27 +1140,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       object.cdoInternalSetRevision(revision);
       changeState(object, CDOState.CLEAN);
       object.cdoInternalPostLoad();
-
-      if (view.options().isLoadNotificationEnabled())
-      {
-        try
-        {
-          CDONotificationBuilder builder = new CDONotificationBuilder(view);
-
-          NotificationChain notification = builder.buildNotification(object, revision);
-          if (notification != null)
-          {
-            notification.dispatch();
-          }
-        }
-        catch (PartialCollectionLoadingNotSupportedException ex)
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.trace(ex);
-          }
-        }
-      }
+      dispatchLoadNotification(object);
 
       if (forWrite)
       {

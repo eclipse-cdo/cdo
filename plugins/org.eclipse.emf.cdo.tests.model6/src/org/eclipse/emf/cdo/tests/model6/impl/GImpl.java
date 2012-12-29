@@ -22,6 +22,9 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>G</b></em>'.
@@ -39,10 +42,24 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  */
 public class GImpl extends CDOObjectImpl implements G
 {
+  /**
+   * @ADDED
+   */
+  private List<Notification> notifications = new ArrayList<Notification>();
+
+  /**
+   * @ADDED
+   */
   private boolean listModified = false;
 
+  /**
+   * @ADDED
+   */
   private boolean referenceModified = false;
 
+  /**
+   * @ADDED
+   */
   private boolean attributeModified = false;
 
   /**
@@ -54,18 +71,24 @@ public class GImpl extends CDOObjectImpl implements G
       @Override
       public void notifyChanged(Notification msg)
       {
-        String feature = ((EStructuralFeature)msg.getFeature()).getName();
-        if (feature.equals("dummy"))
+        notifications.add(msg);
+
+        EStructuralFeature feature = (EStructuralFeature)msg.getFeature();
+        if (feature != null)
         {
-          attributeModified = true;
-        }
-        else if (feature.equals("reference"))
-        {
-          referenceModified = true;
-        }
-        else if (feature.equals("list"))
-        {
-          listModified = true;
+          String featureName = feature.getName();
+          if ("dummy".equals(featureName))
+          {
+            attributeModified = true;
+          }
+          else if ("reference".equals(featureName))
+          {
+            referenceModified = true;
+          }
+          else if ("list".equals(featureName))
+          {
+            listModified = true;
+          }
         }
       }
     });
@@ -152,6 +175,14 @@ public class GImpl extends CDOObjectImpl implements G
   public EList<BaseObject> getList()
   {
     return (EList<BaseObject>)eGet(Model6Package.Literals.G__LIST, true);
+  }
+
+  /**
+   * @ADDED
+   */
+  public List<Notification> getNotifications()
+  {
+    return notifications;
   }
 
   /**

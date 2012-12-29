@@ -24,7 +24,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * <!-- begin-user-doc -->
@@ -83,10 +85,24 @@ public class GImpl extends EObjectImpl implements G
    */
   protected EList<BaseObject> list;
 
+  /**
+   * @ADDED
+   */
+  private List<Notification> notifications = new ArrayList<Notification>();
+
+  /**
+   * @ADDED
+   */
   private boolean listModified = false;
 
+  /**
+   * @ADDED
+   */
   private boolean referenceModified = false;
 
+  /**
+   * @ADDED
+   */
   private boolean attributeModified = false;
 
   /**
@@ -98,18 +114,23 @@ public class GImpl extends EObjectImpl implements G
       @Override
       public void notifyChanged(Notification msg)
       {
-        String feature = ((EStructuralFeature)msg.getFeature()).getName();
-        if (feature.equals("dummy"))
+        notifications.add(msg);
+
+        EStructuralFeature feature = (EStructuralFeature)msg.getFeature();
+        if (feature != null)
         {
-          attributeModified = true;
-        }
-        else if (feature.equals("reference"))
-        {
-          referenceModified = true;
-        }
-        else if (feature.equals("list"))
-        {
-          listModified = true;
+          if (feature.equals("dummy"))
+          {
+            attributeModified = true;
+          }
+          else if (feature.equals("reference"))
+          {
+            referenceModified = true;
+          }
+          else if (feature.equals("list"))
+          {
+            listModified = true;
+          }
         }
       }
     });
@@ -220,6 +241,14 @@ public class GImpl extends EObjectImpl implements G
       list = new EObjectResolvingEList<BaseObject>(BaseObject.class, this, Model6Package.G__LIST);
     }
     return list;
+  }
+
+  /**
+   * @ADDED
+   */
+  public List<Notification> getNotifications()
+  {
+    return notifications;
   }
 
   /**

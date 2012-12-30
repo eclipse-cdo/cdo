@@ -304,47 +304,6 @@ public class PushTransactionTest extends AbstractCDOTest
     assertEquals(4, resource.getContents().size());
   }
 
-  @CleanRepositoriesBefore
-  public void testAddNewResource() throws Exception
-  {
-    String resourcePath2 = "res2";
-
-    {
-      msg("Open session & local transaction");
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = openPushTransaction(transaction);
-      file = pushTransaction.getFile();
-      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
-      msg("Create a new resource");
-      CDOResource resource2 = transaction.createResource(resourcePath2);
-      resource.getContents().add(resource2);
-      msg("Commit");
-      pushTransaction.commit();
-      session.close();
-    }
-
-    {
-      msg("Reload previous local session");
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = openPushTransaction(transaction, file);
-      assertEquals(true, transaction.isDirty());
-      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
-      CDOResource resource2 = (CDOResource)resource.getContents().get(2);
-      assertNotNull(resource2);
-      push(transaction, pushTransaction);
-      session.close();
-    }
-
-    CDOSession session = openSession();
-    CDOView view = session.openView();
-    assertEquals(1, view.getRootResource().getContents().size());
-    CDOResource resource = view.getResource(getResourcePath(resourcePath));
-    CDOResource resource2 = (CDOResource)resource.getContents().get(2);
-    assertNotNull(resource2);
-  }
-
   public void testAddNewHierarchy() throws Exception
   {
     final String currentSupplierName = "supplier" + System.currentTimeMillis();

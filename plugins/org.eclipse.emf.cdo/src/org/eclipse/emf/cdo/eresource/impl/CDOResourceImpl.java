@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOModificationTrackingAdapter;
@@ -1782,6 +1783,20 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
     protected boolean isUnique()
     {
       return true;
+    }
+
+    /**
+     * @since 4.2
+     */
+    @Override
+    protected Object validate(int index, Object object)
+    {
+      if (!root && object instanceof CDOResourceNode)
+      {
+        throw new IllegalArgumentException("CDOResource.contents must not contain other resource nodes");
+      }
+
+      return super.validate(index, object);
     }
 
     /**

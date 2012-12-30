@@ -35,6 +35,8 @@ public class QueryIndication extends CDOServerReadIndication
 
   private boolean xrefs;
 
+  private boolean disableResponseFlushing;
+
   private InternalQueryResult queryResult;
 
   public QueryIndication(CDOServerProtocol protocol)
@@ -51,6 +53,9 @@ public class QueryIndication extends CDOServerReadIndication
     CDOQueryInfo queryInfo = new CDOQueryInfoImpl(in);
     xrefs = queryInfo.getQueryLanguage().equals(CDOProtocolConstants.QUERY_LANGUAGE_XREFS);
 
+    Object param = queryInfo.getParameters().get(CDOQueryInfo.PARAM_DISABLE_RESPONSE_FLUSHING);
+    disableResponseFlushing = xrefs || Boolean.TRUE.equals(param);
+
     InternalQueryManager queryManager = getRepository().getQueryManager();
     queryResult = queryManager.execute(view, queryInfo);
   }
@@ -60,7 +65,7 @@ public class QueryIndication extends CDOServerReadIndication
   {
     // Return queryID immediately.
     out.writeInt(queryResult.getQueryID());
-    flush();
+    flushUnlessDisabled();
 
     int numberOfResults = 0;
     while (queryResult.hasNext())
@@ -83,7 +88,7 @@ public class QueryIndication extends CDOServerReadIndication
 
       if (queryResult.peek() == null)
       {
-        flush();
+        flushUnlessDisabled();
       }
     }
 
@@ -94,5 +99,13 @@ public class QueryIndication extends CDOServerReadIndication
 
     // Query is done successfully
     out.writeBoolean(false);
+  }
+
+  private void flushUnlessDisabled() throws IOException
+  {
+    if (!disableResponseFlushing)
+    {
+      flush();
+    }
   }
 }

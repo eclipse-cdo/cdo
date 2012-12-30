@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Encapsulates all the transferrable information that fully specifies a query from a {@link CDOCommonView view} to a
  * {@link CDOCommonRepository repository}.
- * 
+ *
  * @author Simon McDuff
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
@@ -29,6 +29,13 @@ import java.util.Map;
 public interface CDOQueryInfo
 {
   public static final int UNLIMITED_RESULTS = -1;
+
+  /**
+   * The name of a {@link Boolean} typed {@link #getParameters() parameter} to influence automatic response flushing (the default) after each query result.
+   *
+   * @since 4.2
+   */
+  public static final String PARAM_DISABLE_RESPONSE_FLUSHING = "disable.response.flushing";
 
   /**
    * Returns the language identifier of this query, never <code>null</code>.
@@ -47,7 +54,7 @@ public interface CDOQueryInfo
 
   /**
    * Returns the context object, or <code>null</code> if no context is bound.
-   * 
+   *
    * @since 4.0
    */
   public Object getContext();
@@ -60,7 +67,7 @@ public interface CDOQueryInfo
   /**
    * Returns <code>true</code> if the view of this query had legacy mode enabled at the time this query was created,
    * <code>false</code> otherwise.
-   * 
+   *
    * @since 4.0
    */
   public boolean isLegacyModeEnabled();
@@ -68,7 +75,7 @@ public interface CDOQueryInfo
   /**
    * Returns the {@link CDOChangeSetData change set} to be considered if this query has been created by a dirty
    * transaction, <code>null</code> otherwise.
-   * 
+   *
    * @since 4.0
    */
   public CDOChangeSetData getChangeSetData();

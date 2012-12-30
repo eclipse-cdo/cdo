@@ -213,7 +213,7 @@ public class BufferPool extends BufferProvider implements IBufferPool.Introspect
       {
         while (isActive() && !isInterrupted())
         {
-          Reference<? extends IBuffer> bufferRef = referenceQueue.remove(200);
+          Reference<? extends IBuffer> bufferRef = pollQueue();
           if (bufferRef != null)
           {
             if (buffers.remove(bufferRef))
@@ -238,6 +238,14 @@ public class BufferPool extends BufferProvider implements IBufferPool.Introspect
           TRACER.trace("Stop monitoring"); //$NON-NLS-1$
         }
       }
+    }
+
+    /**
+     * Factored out for better profiling.
+     */
+    private Reference<? extends IBuffer> pollQueue() throws InterruptedException
+    {
+      return referenceQueue.remove(5000);
     }
   }
 }

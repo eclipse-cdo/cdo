@@ -82,11 +82,19 @@ public abstract class QueueWorker<E> extends Worker
 
   private void doWork(WorkContext context) throws InterruptedException
   {
-    E element = queue.poll(pollMillis, TimeUnit.MILLISECONDS);
+    E element = pollQueue();
     if (element != null)
     {
       work(context, element);
     }
+  }
+
+  /**
+   * Factored out for better profiling.
+   */
+  private E pollQueue() throws InterruptedException
+  {
+    return queue.poll(pollMillis, TimeUnit.MILLISECONDS);
   }
 
   protected abstract void work(WorkContext context, E element);

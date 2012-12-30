@@ -2,6 +2,8 @@
  */
 package org.eclipse.emf.cdo.internal.ui.editor;
 
+//import org.eclipse.emf.cdo.internal.ui.editor.PluginDelegator;
+
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.ui.action.WorkbenchWindowActionDelegate;
 import org.eclipse.emf.common.util.URI;
@@ -94,7 +96,7 @@ public final class EditorEditorAdvisor extends WorkbenchAdvisor
      * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.IApplicationContext)
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
+     * @generated NOT
      */
     public Object start(IApplicationContext context) throws Exception
     {
@@ -107,6 +109,7 @@ public final class EditorEditorAdvisor extends WorkbenchAdvisor
         {
           return IApplication.EXIT_RESTART;
         }
+
         return IApplication.EXIT_OK;
       }
       finally
@@ -540,7 +543,7 @@ public final class EditorEditorAdvisor extends WorkbenchAdvisor
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public static boolean openEditor(IWorkbench workbench, URI uri)
   {
@@ -554,6 +557,7 @@ public final class EditorEditorAdvisor extends WorkbenchAdvisor
           getString("_WARN_No_Editor", uri.lastSegment()));
       return false;
     }
+
     try
     {
       page.openEditor(new URIEditorInput(uri), editorDescriptor.getId());
@@ -564,6 +568,7 @@ public final class EditorEditorAdvisor extends WorkbenchAdvisor
           exception.getMessage());
       return false;
     }
+
     return true;
   }
 

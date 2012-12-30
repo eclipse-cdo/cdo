@@ -173,6 +173,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+//import org.eclipse.emf.cdo.internal.ui.editor.provider.CDOItemProviderAdapterFactory;
+//import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
  * @author Eike Stepper
@@ -1895,7 +1897,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * This returns whether something has been persisted to the URI of the specified resource.
-   * The implementation uses the URI converter from the editor's resource set to try to open an input stream.
+   * The implementation uses the URI converter from the editor's resource set to try to open an input stream. 
    * <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * @generated

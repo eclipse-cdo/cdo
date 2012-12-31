@@ -181,7 +181,7 @@ public class CDOResourceNodeItemProvider extends ItemProviderAdapter implements 
   }
 
   /**
-   * Returns the parent of the argument CDOResource
+   * Returns the parent of the argument CDOResourceNode
    *
    * @ADDED
    * @since 4.2

@@ -253,10 +253,10 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
   {
     if (delta instanceof CDOListFeatureDelta)
     {
-      CDOListFeatureDelta deltas = (CDOListFeatureDelta)delta;
-      for (CDOFeatureDelta childDelta : deltas.getListChanges())
+      CDOListFeatureDelta listDelta = (CDOListFeatureDelta)delta;
+      for (CDOFeatureDelta listChange : listDelta.getListChanges())
       {
-        addFeatureDelta(childDelta);
+        addFeatureDelta(listChange);
       }
     }
     else

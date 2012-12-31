@@ -217,24 +217,6 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
   }
 
   /**
-   * Returns the parent of the argument CDOResource
-   *
-   * @ADDED
-   * @since 2.0
-   */
-  @Override
-  public Object getParent(Object object)
-  {
-    CDOResource resource = (CDOResource)object;
-    if (resource.isRoot())
-    {
-      return resource.getResourceSet();
-    }
-
-    return resource.getFolder();
-  }
-
-  /**
    * This handles model notifications by calling {@link #updateChildren} to update any cached
    * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
    * <!-- begin-user-doc --> <!-- end-user-doc -->

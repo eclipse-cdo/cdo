@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.eresource.provider;
 
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 
@@ -39,7 +40,7 @@ import java.util.List;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.eresource.CDOResourceNode} object. <!--
  * begin-user-doc -->
- * 
+ *
  * @noextend This class is not intended to be subclassed by clients. <!-- end-user-doc -->
  * @generated
  * @since 2.0
@@ -179,4 +180,21 @@ public class CDOResourceNodeItemProvider extends ItemProviderAdapter implements 
     return ((IChildCreationExtender)adapterFactory).getResourceLocator();
   }
 
+  /**
+   * Returns the parent of the argument CDOResource
+   *
+   * @ADDED
+   * @since 4.2
+   */
+  @Override
+  public Object getParent(Object object)
+  {
+    CDOResourceNode resourceNode = (CDOResourceNode)object;
+    if (resourceNode.isRoot())
+    {
+      return ((CDOResource)resourceNode).getResourceSet();
+    }
+
+    return resourceNode.getFolder();
+  }
 }

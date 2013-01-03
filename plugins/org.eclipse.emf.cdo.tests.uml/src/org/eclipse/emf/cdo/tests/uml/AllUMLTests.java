@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Christian W. Damus - initial API and implementation
+ *    Christian W. Damus (CEA) - initial API and implementation
  */
 package org.eclipse.emf.cdo.tests.uml;
 
@@ -41,6 +41,6 @@ public class AllUMLTests extends ConfigTestSuite
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     testClasses.add(LegacyDynamicPackageTest.class);
-    testClasses.add(RegisteredDynamicProfileTest.class);
+    testClasses.add(DynamicProfileTest.class);
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,7 +9,8 @@
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
  *    Simon McDuff - maintenance
- *    Christian W. Damus - support registered dynamic UML profiles
+ *    Christian W. Damus (CEA) - support registered dynamic UML profiles
+ *    Christian W. Damus (CEA) - don't process EAnnotations for proxy resolution
  */
 package org.eclipse.emf.cdo.common.model;
 
@@ -22,6 +23,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -571,10 +573,20 @@ public final class EMFUtil
       if (notifier instanceof EObject)
       {
         safeResolve((EObject)notifier, resourceSet);
-        Iterator<EObject> it2 = ((EObject)notifier).eCrossReferences().iterator();
-        while (it2.hasNext())
+
+        if (notifier instanceof EAnnotation)
         {
-          safeResolve(it2.next(), resourceSet);
+          // we don't need to validate the structure of annotations. The applications that
+          // define annotations will have to take what they can get
+          it.prune();
+        }
+        else
+        {
+          Iterator<EObject> it2 = ((EObject)notifier).eCrossReferences().iterator();
+          while (it2.hasNext())
+          {
+            safeResolve(it2.next(), resourceSet);
+          }
         }
       }
     }

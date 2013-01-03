@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - Bug 332912 - Caching subtype-relationships in the CDOPackageRegistry
  *    Erdal Karaca - added support for HASHMAP CDO Type
+ *    Christian W. Damus (CEA) - don't validate cross-references in EAnnotations
  */
 package org.eclipse.emf.cdo.common.model;
 
@@ -28,6 +29,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
@@ -572,63 +574,73 @@ public final class CDOModelUtil implements CDOModelConstants
     while (it.hasNext())
     {
       EObject e = it.next();
-      for (EObject r : e.eCrossReferences())
+
+      if (e instanceof EAnnotation)
       {
-        EObject refTarget = null;
-
-        if (r.eIsProxy())
+        // we don't need to validate the structure of annotations. The applications that
+        // define annotations will have to take what they can get
+        it.prune();
+      }
+      else
+      {
+        for (EObject r : e.eCrossReferences())
         {
-          String msg = "Package '%s' contains unresolved proxy '%s'";
-          msg = String.format(msg, ePackage.getNsURI(), ((InternalEObject)r).eProxyURI());
-          throw new IllegalStateException(msg);
-        }
+          EObject refTarget = null;
 
-        if (r.eResource() != null && r.eResource() != e.eResource())
-        {
-          // It's a ref into another resource
-          EPackage pkg = null;
-          if (r instanceof EClassifier)
+          if (r.eIsProxy())
           {
-            refTarget = r;
-            pkg = ((EClassifier)r).getEPackage();
-          }
-          else if (r instanceof EStructuralFeature)
-          {
-            refTarget = r;
-            EStructuralFeature feature = (EStructuralFeature)r;
-            EClass ownerClass = (EClass)feature.eContainer();
-            pkg = ownerClass.getEPackage();
-          }
-          else if (r instanceof EGenericType)
-          {
-            EGenericType genType = (EGenericType)r;
-            EClassifier c = genType.getEClassifier();
-            if (c != null)
-            {
-              refTarget = c;
-              pkg = c.getEPackage();
-            }
-          }
-
-          if (pkg == null)
-          {
-            continue;
-          }
-
-          while (pkg.getESuperPackage() != null)
-          {
-            pkg = pkg.getESuperPackage();
-          }
-
-          String resourceURI = refTarget.eResource().getURI().toString();
-          if (!resourceURI.toString().equals(pkg.getNsURI()))
-          {
-            String msg = "URI of the resource (%s) does not match the nsURI (%s) of the top-level package;\n"
-                + "this can be fixed by calling Resource.setURI(URI) after loading the packages,\n"
-                + "or by configuring a URI mapping from nsURI's to location URI's before loading the packages,\n"
-                + "and then loading them with their nsURI's";
-            msg = String.format(msg, resourceURI, pkg.getNsURI());
+            String msg = "Package '%s' contains unresolved proxy '%s'";
+            msg = String.format(msg, ePackage.getNsURI(), ((InternalEObject)r).eProxyURI());
             throw new IllegalStateException(msg);
+          }
+
+          if (r.eResource() != null && r.eResource() != e.eResource())
+          {
+            // It's a ref into another resource
+            EPackage pkg = null;
+            if (r instanceof EClassifier)
+            {
+              refTarget = r;
+              pkg = ((EClassifier)r).getEPackage();
+            }
+            else if (r instanceof EStructuralFeature)
+            {
+              refTarget = r;
+              EStructuralFeature feature = (EStructuralFeature)r;
+              EClass ownerClass = (EClass)feature.eContainer();
+              pkg = ownerClass.getEPackage();
+            }
+            else if (r instanceof EGenericType)
+            {
+              EGenericType genType = (EGenericType)r;
+              EClassifier c = genType.getEClassifier();
+              if (c != null)
+              {
+                refTarget = c;
+                pkg = c.getEPackage();
+              }
+            }
+
+            if (pkg == null)
+            {
+              continue;
+            }
+
+            while (pkg.getESuperPackage() != null)
+            {
+              pkg = pkg.getESuperPackage();
+            }
+
+            String resourceURI = refTarget.eResource().getURI().toString();
+            if (!resourceURI.toString().equals(pkg.getNsURI()))
+            {
+              String msg = "URI of the resource (%s) does not match the nsURI (%s) of the top-level package;\n"
+                  + "this can be fixed by calling Resource.setURI(URI) after loading the packages,\n"
+                  + "or by configuring a URI mapping from nsURI's to location URI's before loading the packages,\n"
+                  + "and then loading them with their nsURI's";
+              msg = String.format(msg, resourceURI, pkg.getNsURI());
+              throw new IllegalStateException(msg);
+            }
           }
         }
       }

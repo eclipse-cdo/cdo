@@ -8,11 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: EObjectToEObjectValueContainedMapImpl.java,v 1.2 2011-01-01 11:01:57 estepper Exp $
+ * $Id: EObjectToEObjectKeyContainedMapImpl.java,v 1.2 2011-01-01 11:01:57 estepper Exp $
  */
-package org.eclipse.emf.cdo.tests.legacy.model2.impl;
+package org.eclipse.emf.cdo.tests.model2.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model2.legacy.Model2Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -25,26 +25,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>EObject To EObject Value Contained Map</b></em>
- * '. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>EObject To EObject Key Contained Map</b></em>'.
+ * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.EObjectToEObjectValueContainedMapImpl#getTypedKey <em>Key
- * </em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.EObjectToEObjectValueContainedMapImpl#getTypedValue <em>Value
- * </em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.EObjectToEObjectKeyContainedMapImpl#getTypedKey <em>Key</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.EObjectToEObjectKeyContainedMapImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
-public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implements BasicEMap.Entry<EObject, EObject>
+public class EObjectToEObjectKeyContainedMapImpl extends EObjectImpl implements BasicEMap.Entry<EObject, EObject>
 {
   /**
-   * The cached value of the '{@link #getTypedKey() <em>Key</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
-   * 
+   * The cached value of the '{@link #getTypedKey() <em>Key</em>}' containment reference.
+   * <!-- begin-user-doc --> <!--
+   * end-user-doc -->
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -52,9 +50,9 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
   protected EObject key;
 
   /**
-   * The cached value of the '{@link #getTypedValue() <em>Value</em>}' containment reference. <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference.
+   * <!-- begin-user-doc --> <!--
+   * end-user-doc -->
    * @see #getTypedValue()
    * @generated
    * @ordered
@@ -63,93 +61,44 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  protected EObjectToEObjectValueContainedMapImpl()
+  protected EObjectToEObjectKeyContainedMapImpl()
   {
     super();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.eINSTANCE.getEObjectToEObjectValueContainedMap();
+    return Model2Package.eINSTANCE.getEObjectToEObjectKeyContainedMap();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EObject getTypedKey()
   {
-    if (key != null && key.eIsProxy())
-    {
-      InternalEObject oldKey = (InternalEObject)key;
-      key = eResolveProxy(oldKey);
-      if (key != oldKey)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__KEY, oldKey, key));
-      }
-    }
     return key;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public EObject basicGetTypedKey()
-  {
-    return key;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public void setTypedKey(EObject newKey)
+  public NotificationChain basicSetTypedKey(EObject newKey, NotificationChain msgs)
   {
     EObject oldKey = key;
     key = newKey;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__KEY,
-          oldKey, key));
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EObject getTypedValue()
-  {
-    return value;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public NotificationChain basicSetTypedValue(EObject newValue, NotificationChain msgs)
-  {
-    EObject oldValue = value;
-    value = newValue;
-    if (eNotificationRequired())
     {
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__VALUE, oldValue, newValue);
+          Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY, oldKey, newKey);
       if (msgs == null)
         msgs = notification;
       else
@@ -160,32 +109,72 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public void setTypedValue(EObject newValue)
+  public void setTypedKey(EObject newKey)
   {
-    if (newValue != value)
+    if (newKey != key)
     {
       NotificationChain msgs = null;
-      if (value != null)
-        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-            - Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__VALUE, null, msgs);
-      if (newValue != null)
-        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-            - Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__VALUE, null, msgs);
-      msgs = basicSetTypedValue(newValue, msgs);
+      if (key != null)
+        msgs = ((InternalEObject)key).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
+            - Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY, null, msgs);
+      if (newKey != null)
+        msgs = ((InternalEObject)newKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
+            - Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY, null, msgs);
+      msgs = basicSetTypedKey(newKey, msgs);
       if (msgs != null)
         msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__VALUE, newValue, newValue));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY,
+          newKey, newKey));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * @generated
+   */
+  public EObject getTypedValue()
+  {
+    if (value != null && value.eIsProxy())
+    {
+      InternalEObject oldValue = (InternalEObject)value;
+      value = eResolveProxy(oldValue);
+      if (value != oldValue)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+              Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__VALUE, oldValue, value));
+      }
+    }
+    return value;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  public EObject basicGetTypedValue()
+  {
+    return value;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  public void setTypedValue(EObject newValue)
+  {
+    EObject oldValue = value;
+    value = newValue;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__VALUE,
+          oldValue, value));
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -193,15 +182,14 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
   {
     switch (featureID)
     {
-    case Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__VALUE:
-      return basicSetTypedValue(null, msgs);
+    case Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY:
+      return basicSetTypedKey(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -209,19 +197,18 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
   {
     switch (featureID)
     {
-    case Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__KEY:
+    case Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY:
+      return getTypedKey();
+    case Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__VALUE:
       if (resolve)
-        return getTypedKey();
-      return basicGetTypedKey();
-    case Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__VALUE:
-      return getTypedValue();
+        return getTypedValue();
+      return basicGetTypedValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -229,10 +216,10 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
   {
     switch (featureID)
     {
-    case Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__KEY:
+    case Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY:
       setTypedKey((EObject)newValue);
       return;
-    case Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__VALUE:
+    case Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__VALUE:
       setTypedValue((EObject)newValue);
       return;
     }
@@ -241,7 +228,6 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -249,10 +235,10 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
   {
     switch (featureID)
     {
-    case Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__KEY:
+    case Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY:
       setTypedKey((EObject)null);
       return;
-    case Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__VALUE:
+    case Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__VALUE:
       setTypedValue((EObject)null);
       return;
     }
@@ -261,7 +247,6 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -269,9 +254,9 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
   {
     switch (featureID)
     {
-    case Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__KEY:
+    case Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY:
       return key != null;
-    case Model2Package.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP__VALUE:
+    case Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__VALUE:
       return value != null;
     }
     return super.eIsSet(featureID);
@@ -279,14 +264,12 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected int hash = -1;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public int getHash()
@@ -301,7 +284,6 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setHash(int hash)
@@ -311,7 +293,6 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EObject getKey()
@@ -321,7 +302,6 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setKey(EObject key)
@@ -331,7 +311,6 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EObject getValue()
@@ -341,7 +320,6 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EObject setValue(EObject value)
@@ -353,7 +331,6 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -363,4 +340,4 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
     return container == null ? null : (EMap<EObject, EObject>)container.eGet(eContainmentFeature());
   }
 
-} // EObjectToEObjectValueContainedMapImpl
+} // EObjectToEObjectKeyContainedMapImpl

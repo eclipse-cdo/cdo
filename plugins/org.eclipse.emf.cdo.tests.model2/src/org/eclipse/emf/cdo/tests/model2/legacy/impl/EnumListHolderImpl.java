@@ -8,11 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model2.impl;
+package org.eclipse.emf.cdo.tests.model2.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.tests.model2.EnumListHolder;
+import org.eclipse.emf.cdo.tests.model2.legacy.Model2Package;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -36,9 +36,9 @@ import java.util.Collection;
 public class EnumListHolderImpl extends EObjectImpl implements EnumListHolder
 {
   /**
-   * The cached value of the '{@link #getEnumList() <em>Enum List</em>}' attribute list. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getEnumList() <em>Enum List</em>}' attribute list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getEnumList()
    * @generated
    * @ordered
@@ -47,7 +47,6 @@ public class EnumListHolderImpl extends EObjectImpl implements EnumListHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected EnumListHolderImpl()
@@ -57,7 +56,6 @@ public class EnumListHolderImpl extends EObjectImpl implements EnumListHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -68,7 +66,6 @@ public class EnumListHolderImpl extends EObjectImpl implements EnumListHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<VAT> getEnumList()
@@ -82,7 +79,6 @@ public class EnumListHolderImpl extends EObjectImpl implements EnumListHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -98,7 +94,6 @@ public class EnumListHolderImpl extends EObjectImpl implements EnumListHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -117,7 +112,6 @@ public class EnumListHolderImpl extends EObjectImpl implements EnumListHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -134,7 +128,6 @@ public class EnumListHolderImpl extends EObjectImpl implements EnumListHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -150,7 +143,6 @@ public class EnumListHolderImpl extends EObjectImpl implements EnumListHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

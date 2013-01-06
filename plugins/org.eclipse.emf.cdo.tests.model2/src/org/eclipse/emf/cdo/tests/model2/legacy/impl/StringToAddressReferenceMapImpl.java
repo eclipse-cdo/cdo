@@ -8,11 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: EObjectToEObjectMapImpl.java,v 1.2 2011-01-01 11:01:57 estepper Exp $
+ * $Id: StringToAddressReferenceMapImpl.java,v 1.2 2011-01-01 11:01:57 estepper Exp $
  */
-package org.eclipse.emf.cdo.tests.legacy.model2.impl;
+package org.eclipse.emf.cdo.tests.model2.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model1.Address;
+import org.eclipse.emf.cdo.tests.model2.legacy.Model2Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEMap;
@@ -24,121 +25,106 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>EObject To EObject Map</b></em>'. <!--
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>String To Address Reference Map</b></em>'. <!--
  * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.EObjectToEObjectMapImpl#getTypedKey <em>Key</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.EObjectToEObjectMapImpl#getTypedValue <em>Value</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.StringToAddressReferenceMapImpl#getTypedKey <em>Key</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.StringToAddressReferenceMapImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
-public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.Entry<EObject, EObject>
+public class StringToAddressReferenceMapImpl extends EObjectImpl implements BasicEMap.Entry<String, Address>
 {
   /**
-   * The cached value of the '{@link #getTypedKey() <em>Key</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc
+   * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
    * 
    * @see #getTypedKey()
    * @generated
    * @ordered
    */
-  protected EObject key;
+  protected static final String KEY_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * The cached value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
    * 
+   * @see #getTypedKey()
+   * @generated
+   * @ordered
+   */
+  protected String key = KEY_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference.
+   * <!-- begin-user-doc --> <!--
+   * end-user-doc -->
    * @see #getTypedValue()
    * @generated
    * @ordered
    */
-  protected EObject value;
+  protected Address value;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  protected EObjectToEObjectMapImpl()
+  protected StringToAddressReferenceMapImpl()
   {
     super();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.eINSTANCE.getEObjectToEObjectMap();
+    return Model2Package.eINSTANCE.getStringToAddressReferenceMap();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public EObject getTypedKey()
-  {
-    if (key != null && key.eIsProxy())
-    {
-      InternalEObject oldKey = (InternalEObject)key;
-      key = eResolveProxy(oldKey);
-      if (key != oldKey)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model2Package.EOBJECT_TO_EOBJECT_MAP__KEY, oldKey,
-              key));
-      }
-    }
-    return key;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EObject basicGetTypedKey()
+  public String getTypedKey()
   {
     return key;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public void setTypedKey(EObject newKey)
+  public void setTypedKey(String newKey)
   {
-    EObject oldKey = key;
+    String oldKey = key;
     key = newKey;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_MAP__KEY, oldKey, key));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__KEY, oldKey,
+          key));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public EObject getTypedValue()
+  public Address getTypedValue()
   {
     if (value != null && value.eIsProxy())
     {
       InternalEObject oldValue = (InternalEObject)value;
-      value = eResolveProxy(oldValue);
+      value = (Address)eResolveProxy(oldValue);
       if (value != oldValue)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model2Package.EOBJECT_TO_EOBJECT_MAP__VALUE,
-              oldValue, value));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+              Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE, oldValue, value));
       }
     }
     return value;
@@ -146,31 +132,28 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public EObject basicGetTypedValue()
+  public Address basicGetTypedValue()
   {
     return value;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public void setTypedValue(EObject newValue)
+  public void setTypedValue(Address newValue)
   {
-    EObject oldValue = value;
+    Address oldValue = value;
     value = newValue;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_MAP__VALUE, oldValue,
-          value));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE,
+          oldValue, value));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -178,11 +161,9 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
   {
     switch (featureID)
     {
-    case Model2Package.EOBJECT_TO_EOBJECT_MAP__KEY:
-      if (resolve)
-        return getTypedKey();
-      return basicGetTypedKey();
-    case Model2Package.EOBJECT_TO_EOBJECT_MAP__VALUE:
+    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__KEY:
+      return getTypedKey();
+    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE:
       if (resolve)
         return getTypedValue();
       return basicGetTypedValue();
@@ -192,7 +173,6 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -200,11 +180,11 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
   {
     switch (featureID)
     {
-    case Model2Package.EOBJECT_TO_EOBJECT_MAP__KEY:
-      setTypedKey((EObject)newValue);
+    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__KEY:
+      setTypedKey((String)newValue);
       return;
-    case Model2Package.EOBJECT_TO_EOBJECT_MAP__VALUE:
-      setTypedValue((EObject)newValue);
+    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE:
+      setTypedValue((Address)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -212,7 +192,6 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -220,11 +199,11 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
   {
     switch (featureID)
     {
-    case Model2Package.EOBJECT_TO_EOBJECT_MAP__KEY:
-      setTypedKey((EObject)null);
+    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__KEY:
+      setTypedKey(KEY_EDEFAULT);
       return;
-    case Model2Package.EOBJECT_TO_EOBJECT_MAP__VALUE:
-      setTypedValue((EObject)null);
+    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE:
+      setTypedValue((Address)null);
       return;
     }
     super.eUnset(featureID);
@@ -232,7 +211,6 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -240,9 +218,9 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
   {
     switch (featureID)
     {
-    case Model2Package.EOBJECT_TO_EOBJECT_MAP__KEY:
-      return key != null;
-    case Model2Package.EOBJECT_TO_EOBJECT_MAP__VALUE:
+    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__KEY:
+      return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
+    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE:
       return value != null;
     }
     return super.eIsSet(featureID);
@@ -250,14 +228,29 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy())
+      return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (key: ");
+    result.append(key);
+    result.append(')');
+    return result.toString();
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected int hash = -1;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public int getHash()
@@ -272,7 +265,6 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setHash(int hash)
@@ -282,56 +274,51 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public EObject getKey()
+  public String getKey()
   {
     return getTypedKey();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public void setKey(EObject key)
+  public void setKey(String key)
   {
     setTypedKey(key);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public EObject getValue()
+  public Address getValue()
   {
     return getTypedValue();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public EObject setValue(EObject value)
+  public Address setValue(Address value)
   {
-    EObject oldValue = getValue();
+    Address oldValue = getValue();
     setTypedValue(value);
     return oldValue;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
-  public EMap<EObject, EObject> getEMap()
+  public EMap<String, Address> getEMap()
   {
     EObject container = eContainer();
-    return container == null ? null : (EMap<EObject, EObject>)container.eGet(eContainmentFeature());
+    return container == null ? null : (EMap<String, Address>)container.eGet(eContainmentFeature());
   }
 
-} // EObjectToEObjectMapImpl
+} // StringToAddressReferenceMapImpl

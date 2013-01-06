@@ -8,34 +8,37 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: StringToStringMapImpl.java,v 1.2 2011-01-01 11:01:57 estepper Exp $
+ * $Id: StringToAddressContainmentMapImpl.java,v 1.2 2011-01-01 11:01:57 estepper Exp $
  */
-package org.eclipse.emf.cdo.tests.legacy.model2.impl;
+package org.eclipse.emf.cdo.tests.model2.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model1.Address;
+import org.eclipse.emf.cdo.tests.model2.legacy.Model2Package;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>String To String Map</b></em>'. <!--
- * end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>String To Address Containment Map</b></em>'.
+ * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.StringToStringMapImpl#getTypedKey <em>Key</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.StringToStringMapImpl#getTypedValue <em>Value</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.StringToAddressContainmentMapImpl#getTypedKey <em>Key</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.StringToAddressContainmentMapImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
-public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entry<String, String>
+public class StringToAddressContainmentMapImpl extends EObjectImpl implements BasicEMap.Entry<String, Address>
 {
   /**
    * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
@@ -58,49 +61,36 @@ public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entr
   protected String key = KEY_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getTypedValue() <em>Value</em>}' attribute. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
-   * 
+   * The cached value of the '{@link #getTypedValue() <em>Value</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getTypedValue()
    * @generated
    * @ordered
    */
-  protected static final String VALUE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getTypedValue() <em>Value</em>}' attribute. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
-   * 
-   * @see #getTypedValue()
-   * @generated
-   * @ordered
-   */
-  protected String value = VALUE_EDEFAULT;
+  protected Address value;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  protected StringToStringMapImpl()
+  protected StringToAddressContainmentMapImpl()
   {
     super();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.eINSTANCE.getStringToStringMap();
+    return Model2Package.eINSTANCE.getStringToAddressContainmentMap();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getTypedKey()
@@ -110,7 +100,6 @@ public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTypedKey(String newKey)
@@ -118,35 +107,80 @@ public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entr
     String oldKey = key;
     key = newKey;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_STRING_MAP__KEY, oldKey, key));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__KEY,
+          oldKey, key));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public String getTypedValue()
+  public Address getTypedValue()
   {
     return value;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public void setTypedValue(String newValue)
+  public NotificationChain basicSetTypedValue(Address newValue, NotificationChain msgs)
   {
-    String oldValue = value;
+    Address oldValue = value;
     value = newValue;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_STRING_MAP__VALUE, oldValue, value));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+          Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE, oldValue, newValue);
+      if (msgs == null)
+        msgs = notification;
+      else
+        msgs.add(notification);
+    }
+    return msgs;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * @generated
+   */
+  public void setTypedValue(Address newValue)
+  {
+    if (newValue != value)
+    {
+      NotificationChain msgs = null;
+      if (value != null)
+        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
+            - Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE, null, msgs);
+      if (newValue != null)
+        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
+            - Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE, null, msgs);
+      msgs = basicSetTypedValue(newValue, msgs);
+      if (msgs != null)
+        msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE,
+          newValue, newValue));
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+    case Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE:
+      return basicSetTypedValue(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -154,9 +188,9 @@ public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entr
   {
     switch (featureID)
     {
-    case Model2Package.STRING_TO_STRING_MAP__KEY:
+    case Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__KEY:
       return getTypedKey();
-    case Model2Package.STRING_TO_STRING_MAP__VALUE:
+    case Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE:
       return getTypedValue();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -164,7 +198,6 @@ public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -172,11 +205,11 @@ public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entr
   {
     switch (featureID)
     {
-    case Model2Package.STRING_TO_STRING_MAP__KEY:
+    case Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__KEY:
       setTypedKey((String)newValue);
       return;
-    case Model2Package.STRING_TO_STRING_MAP__VALUE:
-      setTypedValue((String)newValue);
+    case Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE:
+      setTypedValue((Address)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -184,7 +217,6 @@ public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -192,11 +224,11 @@ public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entr
   {
     switch (featureID)
     {
-    case Model2Package.STRING_TO_STRING_MAP__KEY:
+    case Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__KEY:
       setTypedKey(KEY_EDEFAULT);
       return;
-    case Model2Package.STRING_TO_STRING_MAP__VALUE:
-      setTypedValue(VALUE_EDEFAULT);
+    case Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE:
+      setTypedValue((Address)null);
       return;
     }
     super.eUnset(featureID);
@@ -204,7 +236,6 @@ public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -212,17 +243,16 @@ public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entr
   {
     switch (featureID)
     {
-    case Model2Package.STRING_TO_STRING_MAP__KEY:
+    case Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__KEY:
       return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
-    case Model2Package.STRING_TO_STRING_MAP__VALUE:
-      return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+    case Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE:
+      return value != null;
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -234,22 +264,18 @@ public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entr
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (key: ");
     result.append(key);
-    result.append(", value: ");
-    result.append(value);
     result.append(')');
     return result.toString();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected int hash = -1;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public int getHash()
@@ -264,7 +290,6 @@ public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setHash(int hash)
@@ -274,7 +299,6 @@ public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getKey()
@@ -284,7 +308,6 @@ public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setKey(String key)
@@ -294,36 +317,33 @@ public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public String getValue()
+  public Address getValue()
   {
     return getTypedValue();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public String setValue(String value)
+  public Address setValue(Address value)
   {
-    String oldValue = getValue();
+    Address oldValue = getValue();
     setTypedValue(value);
     return oldValue;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
-  public EMap<String, String> getEMap()
+  public EMap<String, Address> getEMap()
   {
     EObject container = eContainer();
-    return container == null ? null : (EMap<String, String>)container.eGet(eContainmentFeature());
+    return container == null ? null : (EMap<String, Address>)container.eGet(eContainmentFeature());
   }
 
-} // StringToStringMapImpl
+} // StringToAddressContainmentMapImpl

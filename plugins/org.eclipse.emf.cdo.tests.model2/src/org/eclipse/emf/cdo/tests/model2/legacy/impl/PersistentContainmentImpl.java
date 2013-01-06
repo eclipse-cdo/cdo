@@ -8,11 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model2.impl;
+package org.eclipse.emf.cdo.tests.model2.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.PersistentContainment;
 import org.eclipse.emf.cdo.tests.model2.TransientContainer;
+import org.eclipse.emf.cdo.tests.model2.legacy.Model2Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -32,21 +32,20 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.PersistentContainmentImpl#getAttrBefore <em>Attr Before</em>}
- * </li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.PersistentContainmentImpl#getChildren <em>Children</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.PersistentContainmentImpl#getAttrAfter <em>Attr After</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.PersistentContainmentImpl#getAttrBefore <em>Attr Before</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.PersistentContainmentImpl#getChildren <em>Children</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.PersistentContainmentImpl#getAttrAfter <em>Attr After</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class PersistentContainmentImpl extends EObjectImpl implements PersistentContainment
 {
   /**
-   * The default value of the '{@link #getAttrBefore() <em>Attr Before</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #getAttrBefore() <em>Attr Before</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getAttrBefore()
    * @generated
    * @ordered
@@ -54,9 +53,9 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
   protected static final String ATTR_BEFORE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getAttrBefore() <em>Attr Before</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getAttrBefore() <em>Attr Before</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getAttrBefore()
    * @generated
    * @ordered
@@ -64,9 +63,9 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
   protected String attrBefore = ATTR_BEFORE_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list. <!-- begin-user-doc
+   * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @see #getChildren()
    * @generated
    * @ordered
@@ -74,9 +73,9 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
   protected EList<TransientContainer> children;
 
   /**
-   * The default value of the '{@link #getAttrAfter() <em>Attr After</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #getAttrAfter() <em>Attr After</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getAttrAfter()
    * @generated
    * @ordered
@@ -84,9 +83,9 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
   protected static final String ATTR_AFTER_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getAttrAfter() <em>Attr After</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getAttrAfter() <em>Attr After</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getAttrAfter()
    * @generated
    * @ordered
@@ -95,7 +94,6 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected PersistentContainmentImpl()
@@ -105,7 +103,6 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -116,7 +113,6 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getAttrBefore()
@@ -126,7 +122,6 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setAttrBefore(String newAttrBefore)
@@ -140,7 +135,6 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<TransientContainer> getChildren()
@@ -155,7 +149,6 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getAttrAfter()
@@ -165,7 +158,6 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setAttrAfter(String newAttrAfter)
@@ -179,7 +171,6 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -196,7 +187,6 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -212,7 +202,6 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -232,7 +221,6 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -257,7 +245,6 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -280,7 +267,6 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -300,7 +286,6 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

@@ -8,37 +8,35 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: StringToAddressReferenceMapImpl.java,v 1.2 2011-01-01 11:01:57 estepper Exp $
+ * $Id: StringToVATMapImpl.java,v 1.2 2011-01-01 11:01:57 estepper Exp $
  */
-package org.eclipse.emf.cdo.tests.legacy.model2.impl;
+package org.eclipse.emf.cdo.tests.model2.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model2.Model2Package;
-import org.eclipse.emf.cdo.tests.model1.Address;
+import org.eclipse.emf.cdo.tests.model1.VAT;
+import org.eclipse.emf.cdo.tests.model2.legacy.Model2Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>String To Address Reference Map</b></em>'. <!--
- * end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>String To VAT Map</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.StringToAddressReferenceMapImpl#getTypedKey <em>Key</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.StringToAddressReferenceMapImpl#getTypedValue <em>Value</em>}
- * </li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.StringToVATMapImpl#getTypedKey <em>Key</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.StringToVATMapImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
  * </p>
  * 
  * @generated
  */
-public class StringToAddressReferenceMapImpl extends EObjectImpl implements BasicEMap.Entry<String, Address>
+public class StringToVATMapImpl extends EObjectImpl implements BasicEMap.Entry<String, VAT>
 {
   /**
    * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
@@ -61,39 +59,46 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
   protected String key = KEY_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference. <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #getTypedValue() <em>Value</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getTypedValue()
    * @generated
    * @ordered
    */
-  protected Address value;
+  protected static final VAT VALUE_EDEFAULT = VAT.VAT0;
+
+  /**
+   * The cached value of the '{@link #getTypedValue() <em>Value</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * @see #getTypedValue()
+   * @generated
+   * @ordered
+   */
+  protected VAT value = VALUE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  protected StringToAddressReferenceMapImpl()
+  protected StringToVATMapImpl()
   {
     super();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.eINSTANCE.getStringToAddressReferenceMap();
+    return Model2Package.eINSTANCE.getStringToVATMap();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getTypedKey()
@@ -103,7 +108,6 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTypedKey(String newKey)
@@ -111,58 +115,32 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
     String oldKey = key;
     key = newKey;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__KEY, oldKey,
-          key));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_VAT_MAP__KEY, oldKey, key));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public Address getTypedValue()
-  {
-    if (value != null && value.eIsProxy())
-    {
-      InternalEObject oldValue = (InternalEObject)value;
-      value = (Address)eResolveProxy(oldValue);
-      if (value != oldValue)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE, oldValue, value));
-      }
-    }
-    return value;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public Address basicGetTypedValue()
+  public VAT getTypedValue()
   {
     return value;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public void setTypedValue(Address newValue)
+  public void setTypedValue(VAT newValue)
   {
-    Address oldValue = value;
-    value = newValue;
+    VAT oldValue = value;
+    value = newValue == null ? VALUE_EDEFAULT : newValue;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE,
-          oldValue, value));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_VAT_MAP__VALUE, oldValue, value));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -170,19 +148,16 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
   {
     switch (featureID)
     {
-    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__KEY:
+    case Model2Package.STRING_TO_VAT_MAP__KEY:
       return getTypedKey();
-    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE:
-      if (resolve)
-        return getTypedValue();
-      return basicGetTypedValue();
+    case Model2Package.STRING_TO_VAT_MAP__VALUE:
+      return getTypedValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -190,11 +165,11 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
   {
     switch (featureID)
     {
-    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__KEY:
+    case Model2Package.STRING_TO_VAT_MAP__KEY:
       setTypedKey((String)newValue);
       return;
-    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE:
-      setTypedValue((Address)newValue);
+    case Model2Package.STRING_TO_VAT_MAP__VALUE:
+      setTypedValue((VAT)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -202,7 +177,6 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -210,11 +184,11 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
   {
     switch (featureID)
     {
-    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__KEY:
+    case Model2Package.STRING_TO_VAT_MAP__KEY:
       setTypedKey(KEY_EDEFAULT);
       return;
-    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE:
-      setTypedValue((Address)null);
+    case Model2Package.STRING_TO_VAT_MAP__VALUE:
+      setTypedValue(VALUE_EDEFAULT);
       return;
     }
     super.eUnset(featureID);
@@ -222,7 +196,6 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -230,17 +203,16 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
   {
     switch (featureID)
     {
-    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__KEY:
+    case Model2Package.STRING_TO_VAT_MAP__KEY:
       return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
-    case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE:
-      return value != null;
+    case Model2Package.STRING_TO_VAT_MAP__VALUE:
+      return value != VALUE_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -252,20 +224,20 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (key: ");
     result.append(key);
+    result.append(", value: ");
+    result.append(value);
     result.append(')');
     return result.toString();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected int hash = -1;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public int getHash()
@@ -280,7 +252,6 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setHash(int hash)
@@ -290,7 +261,6 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getKey()
@@ -300,7 +270,6 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setKey(String key)
@@ -310,36 +279,33 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public Address getValue()
+  public VAT getValue()
   {
     return getTypedValue();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
-  public Address setValue(Address value)
+  public VAT setValue(VAT value)
   {
-    Address oldValue = getValue();
+    VAT oldValue = getValue();
     setTypedValue(value);
     return oldValue;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
-  public EMap<String, Address> getEMap()
+  public EMap<String, VAT> getEMap()
   {
     EObject container = eContainer();
-    return container == null ? null : (EMap<String, Address>)container.eGet(eContainmentFeature());
+    return container == null ? null : (EMap<String, VAT>)container.eGet(eContainmentFeature());
   }
 
-} // StringToAddressReferenceMapImpl
+} // StringToVATMapImpl

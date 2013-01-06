@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.model2.util;
+package org.eclipse.emf.cdo.tests.model2.legacy.util;
 
 import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.Order;
@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.tests.model2.EnumListHolder;
 import org.eclipse.emf.cdo.tests.model2.MapHolder;
-import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettable;
 import org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault;
 import org.eclipse.emf.cdo.tests.model2.PersistentContainment;
@@ -26,6 +25,7 @@ import org.eclipse.emf.cdo.tests.model2.TaskContainer;
 import org.eclipse.emf.cdo.tests.model2.TransientContainer;
 import org.eclipse.emf.cdo.tests.model2.Unsettable1;
 import org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault;
+import org.eclipse.emf.cdo.tests.model2.legacy.Model2Package;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -34,25 +34,32 @@ import org.eclipse.emf.ecore.util.Switch;
 import java.util.Map;
 
 /**
- * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call
- * {@link #doSwitch(EObject) doSwitch(object)} to invoke the <code>caseXXX</code> method for each class of the model,
- * starting with the actual class of the object and proceeding up the inheritance hierarchy until a non-null result is
- * returned, which is the result of the switch. <!-- end-user-doc -->
- * @see org.eclipse.emf.cdo.tests.model2.Model2Package
+ * <!-- begin-user-doc -->
+ * The <b>Switch</b> for the model's inheritance hierarchy.
+ * It supports the call {@link #doSwitch(EObject) doSwitch(object)}
+ * to invoke the <code>caseXXX</code> method for each class of the model,
+ * starting with the actual class of the object
+ * and proceeding up the inheritance hierarchy
+ * until a non-null result is returned,
+ * which is the result of the switch.
+ * <!-- end-user-doc -->
+ * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package
  * @generated
  */
 public class Model2Switch<T> extends Switch<T>
 {
   /**
    * The cached model package
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected static Model2Package modelPackage;
 
   /**
    * Creates an instance of the switch.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public Model2Switch()
@@ -79,7 +86,8 @@ public class Model2Switch<T> extends Switch<T>
 
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -267,12 +275,12 @@ public class Model2Switch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Special Purchase Order</em>'. <!--
-   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
-   * end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>Special Purchase Order</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Special Purchase Order</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -285,7 +293,9 @@ public class Model2Switch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Task Container</em>'.
    * <!-- begin-user-doc -->
-   * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Task Container</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -298,8 +308,10 @@ public class Model2Switch<T> extends Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Task</em>'.
-   * <!-- begin-user-doc --> This
-   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Task</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -313,7 +325,9 @@ public class Model2Switch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Unsettable1</em>'.
    * <!-- begin-user-doc -->
-   * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Unsettable1</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -325,12 +339,12 @@ public class Model2Switch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Unsettable2 With Default</em>'. <!--
-   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
-   * end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>Unsettable2 With Default</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Unsettable2 With Default</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -341,12 +355,12 @@ public class Model2Switch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Persistent Containment</em>'. <!--
-   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
-   * end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>Persistent Containment</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Persistent Containment</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -358,8 +372,10 @@ public class Model2Switch<T> extends Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Transient Container</em>'.
-   * <!-- begin-user-doc
-   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Transient Container</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -373,7 +389,9 @@ public class Model2Switch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Not Unsettable</em>'.
    * <!-- begin-user-doc -->
-   * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Not Unsettable</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -385,12 +403,12 @@ public class Model2Switch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Not Unsettable With Default</em>'. <!--
-   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
-   * end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>Not Unsettable With Default</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Not Unsettable With Default</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -402,8 +420,10 @@ public class Model2Switch<T> extends Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Map Holder</em>'.
-   * <!-- begin-user-doc --> This
-   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Map Holder</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -415,12 +435,12 @@ public class Model2Switch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>String To String Map</em>'. <!--
-   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
-   * end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>String To String Map</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>String To String Map</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -431,12 +451,12 @@ public class Model2Switch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Integer To String Map</em>'. <!--
-   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
-   * end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>Integer To String Map</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Integer To String Map</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -448,8 +468,10 @@ public class Model2Switch<T> extends Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>String To VAT Map</em>'.
-   * <!-- begin-user-doc
-   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>String To VAT Map</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -461,12 +483,12 @@ public class Model2Switch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>String To Address Containment Map</em>'. <!--
-   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
-   * end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>String To Address Containment Map</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>String To Address Containment Map</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -477,12 +499,12 @@ public class Model2Switch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>String To Address Reference Map</em>'. <!--
-   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
-   * end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>String To Address Reference Map</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>String To Address Reference Map</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -493,12 +515,12 @@ public class Model2Switch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>EObject To EObject Map</em>'. <!--
-   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
-   * end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>EObject To EObject Map</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject To EObject Map</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -510,7 +532,9 @@ public class Model2Switch<T> extends Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>EObject To EObject Key Contained Map</em>'.
-   * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject To EObject Key Contained Map</em>'.
@@ -524,7 +548,9 @@ public class Model2Switch<T> extends Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>EObject To EObject Both Contained Map</em>'.
-   * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject To EObject Both Contained Map</em>'.
@@ -538,7 +564,9 @@ public class Model2Switch<T> extends Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>EObject To EObject Value Contained Map</em>'.
-   * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject To EObject Value Contained Map</em>'.
@@ -552,8 +580,10 @@ public class Model2Switch<T> extends Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Enum List Holder</em>'.
-   * <!-- begin-user-doc
-   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Enum List Holder</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -566,8 +596,10 @@ public class Model2Switch<T> extends Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Order</em>'.
-   * <!-- begin-user-doc --> This
-   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Order</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -581,7 +613,9 @@ public class Model2Switch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Purchase Order</em>'.
    * <!-- begin-user-doc -->
-   * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Purchase Order</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -594,9 +628,10 @@ public class Model2Switch<T> extends Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
-   * <!-- begin-user-doc --> This
-   * implementation returns null; returning a non-null result will terminate the switch, but this is the last case
-   * anyway. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch, but this is the last case anyway.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
@@ -608,4 +643,4 @@ public class Model2Switch<T> extends Switch<T>
     return null;
   }
 
-} // Model2Switch
+} //Model2Switch

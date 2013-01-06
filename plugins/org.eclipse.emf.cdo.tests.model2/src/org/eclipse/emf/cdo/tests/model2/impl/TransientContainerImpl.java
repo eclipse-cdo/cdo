@@ -24,19 +24,18 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TransientContainerImpl#getAttrBefore <em>Attr Before</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TransientContainerImpl#getParent <em>Parent</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TransientContainerImpl#getAttrAfter <em>Attr After</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TransientContainerImpl#getAttrBefore <em>Attr Before</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TransientContainerImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TransientContainerImpl#getAttrAfter <em>Attr After</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class TransientContainerImpl extends CDOObjectImpl implements TransientContainer
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected TransientContainerImpl()
@@ -46,7 +45,6 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -57,7 +55,6 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -68,7 +65,6 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getAttrBefore()
@@ -78,7 +74,6 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setAttrBefore(String newAttrBefore)
@@ -88,7 +83,6 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public PersistentContainment getParent()
@@ -98,7 +92,6 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setParent(PersistentContainment newParent)
@@ -108,7 +101,6 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getAttrAfter()
@@ -118,7 +110,6 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setAttrAfter(String newAttrAfter)

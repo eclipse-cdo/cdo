@@ -25,19 +25,18 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.PersistentContainmentImpl#getAttrBefore <em>Attr Before</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.PersistentContainmentImpl#getChildren <em>Children</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.PersistentContainmentImpl#getAttrAfter <em>Attr After</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.PersistentContainmentImpl#getAttrBefore <em>Attr Before</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.PersistentContainmentImpl#getChildren <em>Children</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.PersistentContainmentImpl#getAttrAfter <em>Attr After</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class PersistentContainmentImpl extends CDOObjectImpl implements PersistentContainment
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected PersistentContainmentImpl()
@@ -47,7 +46,6 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -58,7 +56,6 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -69,7 +66,6 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getAttrBefore()
@@ -79,7 +75,6 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setAttrBefore(String newAttrBefore)
@@ -89,7 +84,6 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -100,7 +94,6 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getAttrAfter()
@@ -110,7 +103,6 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setAttrAfter(String newAttrAfter)

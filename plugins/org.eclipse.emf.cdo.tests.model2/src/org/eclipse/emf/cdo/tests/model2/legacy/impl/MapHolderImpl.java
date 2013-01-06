@@ -10,12 +10,12 @@
  *
  * $Id: MapHolderImpl.java,v 1.2 2011-01-01 11:01:57 estepper Exp $
  */
-package org.eclipse.emf.cdo.tests.legacy.model2.impl;
+package org.eclipse.emf.cdo.tests.model2.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.tests.model2.MapHolder;
+import org.eclipse.emf.cdo.tests.model2.legacy.Model2Package;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EMap;
@@ -32,34 +32,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.MapHolderImpl#getIntegerToStringMap <em>Integer To String Map
- * </em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.MapHolderImpl#getStringToStringMap <em>String To String Map
- * </em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.MapHolderImpl#getStringToVATMap <em>String To VAT Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.MapHolderImpl#getStringToAddressContainmentMap <em>String To
- * Address Containment Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.MapHolderImpl#getStringToAddressReferenceMap <em>String To
- * Address Reference Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.MapHolderImpl#getEObjectToEObjectMap <em>EObject To EObject
- * Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.MapHolderImpl#getEObjectToEObjectKeyContainedMap <em>EObject
- * To EObject Key Contained Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.MapHolderImpl#getEObjectToEObjectBothContainedMap <em>EObject
- * To EObject Both Contained Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.MapHolderImpl#getEObjectToEObjectValueContainedMap <em>
- * EObject To EObject Value Contained Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.MapHolderImpl#getIntegerToStringMap <em>Integer To String Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.MapHolderImpl#getStringToStringMap <em>String To String Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.MapHolderImpl#getStringToVATMap <em>String To VAT Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.MapHolderImpl#getStringToAddressContainmentMap <em>String To Address Containment Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.MapHolderImpl#getStringToAddressReferenceMap <em>String To Address Reference Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.MapHolderImpl#getEObjectToEObjectMap <em>EObject To EObject Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.MapHolderImpl#getEObjectToEObjectKeyContainedMap <em>EObject To EObject Key Contained Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.MapHolderImpl#getEObjectToEObjectBothContainedMap <em>EObject To EObject Both Contained Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.MapHolderImpl#getEObjectToEObjectValueContainedMap <em>EObject To EObject Value Contained Map</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class MapHolderImpl extends EObjectImpl implements MapHolder
 {
   /**
-   * The cached value of the '{@link #getIntegerToStringMap() <em>Integer To String Map</em>}' map. <!-- begin-user-doc
+   * The cached value of the '{@link #getIntegerToStringMap() <em>Integer To String Map</em>}' map.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @see #getIntegerToStringMap()
    * @generated
    * @ordered
@@ -67,9 +59,9 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   protected EMap<Integer, String> integerToStringMap;
 
   /**
-   * The cached value of the '{@link #getStringToStringMap() <em>String To String Map</em>}' map. <!-- begin-user-doc
+   * The cached value of the '{@link #getStringToStringMap() <em>String To String Map</em>}' map.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @see #getStringToStringMap()
    * @generated
    * @ordered
@@ -77,9 +69,9 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   protected EMap<String, String> stringToStringMap;
 
   /**
-   * The cached value of the '{@link #getStringToVATMap() <em>String To VAT Map</em>}' map. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getStringToVATMap() <em>String To VAT Map</em>}' map.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getStringToVATMap()
    * @generated
    * @ordered
@@ -87,9 +79,8 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   protected EMap<String, VAT> stringToVATMap;
 
   /**
-   * The cached value of the '{@link #getStringToAddressContainmentMap() <em>String To Address Containment Map</em>}'
-   * map. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getStringToAddressContainmentMap() <em>String To Address Containment Map</em>}' map.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getStringToAddressContainmentMap()
    * @generated
    * @ordered
@@ -99,7 +90,6 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   /**
    * The cached value of the '{@link #getStringToAddressReferenceMap() <em>String To Address Reference Map</em>}' map.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @see #getStringToAddressReferenceMap()
    * @generated
    * @ordered
@@ -117,9 +107,8 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   protected EMap<EObject, EObject> eObjectToEObjectMap;
 
   /**
-   * The cached value of the '{@link #getEObjectToEObjectKeyContainedMap()
-   * <em>EObject To EObject Key Contained Map</em>}' map. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getEObjectToEObjectKeyContainedMap() <em>EObject To EObject Key Contained Map</em>}' map.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getEObjectToEObjectKeyContainedMap()
    * @generated
    * @ordered
@@ -127,9 +116,8 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   protected EMap<EObject, EObject> eObjectToEObjectKeyContainedMap;
 
   /**
-   * The cached value of the '{@link #getEObjectToEObjectBothContainedMap()
-   * <em>EObject To EObject Both Contained Map</em>}' map. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getEObjectToEObjectBothContainedMap() <em>EObject To EObject Both Contained Map</em>}' map.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getEObjectToEObjectBothContainedMap()
    * @generated
    * @ordered
@@ -137,9 +125,8 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   protected EMap<EObject, EObject> eObjectToEObjectBothContainedMap;
 
   /**
-   * The cached value of the '{@link #getEObjectToEObjectValueContainedMap()
-   * <em>EObject To EObject Value Contained Map</em>}' map. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getEObjectToEObjectValueContainedMap() <em>EObject To EObject Value Contained Map</em>}' map.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getEObjectToEObjectValueContainedMap()
    * @generated
    * @ordered
@@ -148,7 +135,6 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected MapHolderImpl()
@@ -158,7 +144,6 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -169,7 +154,6 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EMap<Integer, String> getIntegerToStringMap()
@@ -184,7 +168,6 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EMap<String, String> getStringToStringMap()
@@ -199,7 +182,6 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EMap<String, VAT> getStringToVATMap()
@@ -214,7 +196,6 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EMap<String, Address> getStringToAddressContainmentMap()
@@ -230,7 +211,6 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EMap<String, Address> getStringToAddressReferenceMap()
@@ -246,7 +226,6 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EMap<EObject, EObject> getEObjectToEObjectMap()
@@ -261,7 +240,6 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EMap<EObject, EObject> getEObjectToEObjectKeyContainedMap()
@@ -277,7 +255,6 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EMap<EObject, EObject> getEObjectToEObjectBothContainedMap()
@@ -293,7 +270,6 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EMap<EObject, EObject> getEObjectToEObjectValueContainedMap()
@@ -309,7 +285,6 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -341,7 +316,6 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -400,7 +374,6 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -441,7 +414,6 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -482,7 +454,6 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

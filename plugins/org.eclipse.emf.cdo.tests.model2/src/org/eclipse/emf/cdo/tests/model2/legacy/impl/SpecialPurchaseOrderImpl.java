@@ -8,12 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model2.impl;
+package org.eclipse.emf.cdo.tests.model2.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model1.impl.PurchaseOrderImpl;
-import org.eclipse.emf.cdo.tests.legacy.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model1.Address;
+import org.eclipse.emf.cdo.tests.model1.legacy.impl.PurchaseOrderImpl;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
+import org.eclipse.emf.cdo.tests.model2.legacy.Model2Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -27,21 +27,19 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.SpecialPurchaseOrderImpl#getDiscountCode <em>Discount Code
- * </em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.SpecialPurchaseOrderImpl#getShippingAddress <em>Shipping
- * Address</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.SpecialPurchaseOrderImpl#getDiscountCode <em>Discount Code</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.SpecialPurchaseOrderImpl#getShippingAddress <em>Shipping Address</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements SpecialPurchaseOrder
 {
   /**
-   * The default value of the '{@link #getDiscountCode() <em>Discount Code</em>}' attribute. <!-- begin-user-doc -->
+   * The default value of the '{@link #getDiscountCode() <em>Discount Code</em>}' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getDiscountCode()
    * @generated
    * @ordered
@@ -49,9 +47,9 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
   protected static final String DISCOUNT_CODE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getDiscountCode() <em>Discount Code</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getDiscountCode() <em>Discount Code</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getDiscountCode()
    * @generated
    * @ordered
@@ -70,7 +68,6 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected SpecialPurchaseOrderImpl()
@@ -80,7 +77,6 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -91,7 +87,6 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getDiscountCode()
@@ -101,7 +96,6 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setDiscountCode(String newDiscountCode)
@@ -115,7 +109,6 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Address getShippingAddress()
@@ -125,7 +118,6 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public NotificationChain basicSetShippingAddress(Address newShippingAddress, NotificationChain msgs)
@@ -146,7 +138,6 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setShippingAddress(Address newShippingAddress)
@@ -171,7 +162,6 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -187,7 +177,6 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -205,7 +194,6 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -225,7 +213,6 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -245,7 +232,6 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -263,7 +249,6 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

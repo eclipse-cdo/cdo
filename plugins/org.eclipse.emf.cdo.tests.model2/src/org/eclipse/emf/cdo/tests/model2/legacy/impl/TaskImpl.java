@@ -8,11 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model2.impl;
+package org.eclipse.emf.cdo.tests.model2.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.Task;
 import org.eclipse.emf.cdo.tests.model2.TaskContainer;
+import org.eclipse.emf.cdo.tests.model2.legacy.Model2Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -27,20 +27,20 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.TaskImpl#getTaskContainer <em>Task Container</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.TaskImpl#getDescription <em>Description</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.TaskImpl#isDone <em>Done</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.TaskImpl#getTaskContainer <em>Task Container</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.TaskImpl#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.TaskImpl#isDone <em>Done</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class TaskImpl extends EObjectImpl implements Task
 {
   /**
-   * The default value of the '{@link #getDescription() <em>Description</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getDescription()
    * @generated
    * @ordered
@@ -48,9 +48,9 @@ public class TaskImpl extends EObjectImpl implements Task
   protected static final String DESCRIPTION_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getDescription()
    * @generated
    * @ordered
@@ -58,8 +58,8 @@ public class TaskImpl extends EObjectImpl implements Task
   protected String description = DESCRIPTION_EDEFAULT;
 
   /**
-   * The default value of the '{@link #isDone() <em>Done</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The default value of the '{@link #isDone() <em>Done</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isDone()
    * @generated
    * @ordered
@@ -67,8 +67,8 @@ public class TaskImpl extends EObjectImpl implements Task
   protected static final boolean DONE_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isDone() <em>Done</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #isDone() <em>Done</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isDone()
    * @generated
    * @ordered
@@ -77,7 +77,6 @@ public class TaskImpl extends EObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected TaskImpl()
@@ -87,7 +86,6 @@ public class TaskImpl extends EObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -98,7 +96,6 @@ public class TaskImpl extends EObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public TaskContainer getTaskContainer()
@@ -110,7 +107,6 @@ public class TaskImpl extends EObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public NotificationChain basicSetTaskContainer(TaskContainer newTaskContainer, NotificationChain msgs)
@@ -121,7 +117,6 @@ public class TaskImpl extends EObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTaskContainer(TaskContainer newTaskContainer)
@@ -148,7 +143,6 @@ public class TaskImpl extends EObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getDescription()
@@ -158,7 +152,6 @@ public class TaskImpl extends EObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setDescription(String newDescription)
@@ -172,7 +165,6 @@ public class TaskImpl extends EObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isDone()
@@ -182,7 +174,6 @@ public class TaskImpl extends EObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setDone(boolean newDone)
@@ -195,7 +186,6 @@ public class TaskImpl extends EObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -213,7 +203,6 @@ public class TaskImpl extends EObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -229,7 +218,6 @@ public class TaskImpl extends EObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -245,7 +233,6 @@ public class TaskImpl extends EObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -265,7 +252,6 @@ public class TaskImpl extends EObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -288,7 +274,6 @@ public class TaskImpl extends EObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -311,7 +296,6 @@ public class TaskImpl extends EObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -331,7 +315,6 @@ public class TaskImpl extends EObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

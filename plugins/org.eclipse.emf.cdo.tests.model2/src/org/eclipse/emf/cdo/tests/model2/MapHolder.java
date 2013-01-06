@@ -20,79 +20,75 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Map Holder</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getIntegerToStringMap <em>Integer To String Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToStringMap <em>String To String Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToVATMap <em>String To VAT Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToAddressContainmentMap <em>String To Address
- * Containment Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToAddressReferenceMap <em>String To Address Reference
- * Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectMap <em>EObject To EObject Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectKeyContainedMap <em>EObject To EObject Key
- * Contained Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectBothContainedMap <em>EObject To EObject Both
- * Contained Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectValueContainedMap <em>EObject To EObject
- * Value Contained Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getIntegerToStringMap <em>Integer To String Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToStringMap <em>String To String Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToVATMap <em>String To VAT Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToAddressContainmentMap <em>String To Address Containment Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToAddressReferenceMap <em>String To Address Reference Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectMap <em>EObject To EObject Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectKeyContainedMap <em>EObject To EObject Key Contained Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectBothContainedMap <em>EObject To EObject Both Contained Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectValueContainedMap <em>EObject To EObject Value Contained Map</em>}</li>
  * </ul>
  * </p>
- * 
- * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder()
+ *
+ * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getMapHolder()
  * @model
  * @generated
  */
 public interface MapHolder extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Integer To String Map</b></em>' map. The key is of type {@link java.lang.Integer},
-   * and the value is of type {@link java.lang.String}, <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Integer To String Map</b></em>' map.
+   * The key is of type {@link java.lang.Integer},
+   * and the value is of type {@link java.lang.String},
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Integer To String Map</em>' map isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Integer To String Map</em>' map.
-   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_IntegerToStringMap()
-   * @model mapType=
-   *        "org.eclipse.emf.cdo.tests.model2.IntegerToStringMap<org.eclipse.emf.ecore.EIntegerObject, org.eclipse.emf.ecore.EString>"
+   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getMapHolder_IntegerToStringMap()
+   * @model mapType="org.eclipse.emf.cdo.tests.model2.IntegerToStringMap<org.eclipse.emf.ecore.EIntegerObject, org.eclipse.emf.ecore.EString>"
    * @generated
    */
   EMap<Integer, String> getIntegerToStringMap();
 
   /**
-   * Returns the value of the '<em><b>String To String Map</b></em>' map. The key is of type {@link java.lang.String},
-   * and the value is of type {@link java.lang.String}, <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>String To String Map</b></em>' map.
+   * The key is of type {@link java.lang.String},
+   * and the value is of type {@link java.lang.String},
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>String To String Map</em>' map isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>String To String Map</em>' map.
-   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_StringToStringMap()
-   * @model mapType=
-   *        "org.eclipse.emf.cdo.tests.model2.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getMapHolder_StringToStringMap()
+   * @model mapType="org.eclipse.emf.cdo.tests.model2.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
    * @generated
    */
   EMap<String, String> getStringToStringMap();
 
   /**
-   * Returns the value of the '<em><b>String To VAT Map</b></em>' map. The key is of type {@link java.lang.String}, and
-   * the value is of type {@link org.eclipse.emf.cdo.tests.model1.VAT}, <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>String To VAT Map</b></em>' map.
+   * The key is of type {@link java.lang.String},
+   * and the value is of type {@link org.eclipse.emf.cdo.tests.model1.VAT},
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>String To VAT Map</em>' map isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>String To VAT Map</em>' map.
-   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_StringToVATMap()
-   * @model mapType=
-   *        "org.eclipse.emf.cdo.tests.model2.StringToVATMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.cdo.tests.model1.VAT>"
+   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getMapHolder_StringToVATMap()
+   * @model mapType="org.eclipse.emf.cdo.tests.model2.StringToVATMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.cdo.tests.model1.VAT>"
    * @generated
    */
   EMap<String, VAT> getStringToVATMap();

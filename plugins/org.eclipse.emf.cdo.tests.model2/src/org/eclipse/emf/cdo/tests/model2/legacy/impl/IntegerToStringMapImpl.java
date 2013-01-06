@@ -10,9 +10,9 @@
  *
  * $Id: IntegerToStringMapImpl.java,v 1.2 2011-01-01 11:01:57 estepper Exp $
  */
-package org.eclipse.emf.cdo.tests.legacy.model2.impl;
+package org.eclipse.emf.cdo.tests.model2.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model2.legacy.Model2Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEMap;
@@ -28,11 +28,11 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.IntegerToStringMapImpl#getTypedKey <em>Key</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.IntegerToStringMapImpl#getTypedValue <em>Value</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.IntegerToStringMapImpl#getTypedKey <em>Key</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.IntegerToStringMapImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Entry<Integer, String>
@@ -58,9 +58,9 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
   protected Integer key = KEY_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getTypedValue() <em>Value</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #getTypedValue() <em>Value</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getTypedValue()
    * @generated
    * @ordered
@@ -68,9 +68,9 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
   protected static final String VALUE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getTypedValue() <em>Value</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getTypedValue() <em>Value</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getTypedValue()
    * @generated
    * @ordered
@@ -79,7 +79,6 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected IntegerToStringMapImpl()
@@ -89,7 +88,6 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -100,7 +98,6 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Integer getTypedKey()
@@ -110,7 +107,6 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTypedKey(Integer newKey)
@@ -123,7 +119,6 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getTypedValue()
@@ -133,7 +128,6 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTypedValue(String newValue)
@@ -146,7 +140,6 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -164,7 +157,6 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -184,7 +176,6 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -204,7 +195,6 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -222,7 +212,6 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -242,14 +231,12 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected int hash = -1;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public int getHash()
@@ -264,7 +251,6 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setHash(int hash)
@@ -274,7 +260,6 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Integer getKey()
@@ -284,7 +269,6 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setKey(Integer key)
@@ -294,7 +278,6 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getValue()
@@ -304,7 +287,6 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String setValue(String value)
@@ -316,7 +298,6 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

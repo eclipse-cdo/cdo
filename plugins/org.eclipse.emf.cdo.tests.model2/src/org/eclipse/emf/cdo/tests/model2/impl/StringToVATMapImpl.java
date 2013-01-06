@@ -39,7 +39,6 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected StringToVATMapImpl()
@@ -49,7 +48,6 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -60,7 +58,6 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -71,7 +68,6 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getTypedKey()
@@ -81,7 +77,6 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTypedKey(String newKey)
@@ -91,7 +86,6 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public VAT getTypedValue()
@@ -101,7 +95,6 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTypedValue(VAT newValue)
@@ -111,14 +104,12 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected int hash = -1;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public int getHash()
@@ -133,7 +124,6 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setHash(int hash)
@@ -143,7 +133,6 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getKey()
@@ -153,7 +142,6 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setKey(String key)
@@ -163,7 +151,6 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public VAT getValue()
@@ -173,7 +160,6 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public VAT setValue(VAT value)
@@ -185,7 +171,6 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

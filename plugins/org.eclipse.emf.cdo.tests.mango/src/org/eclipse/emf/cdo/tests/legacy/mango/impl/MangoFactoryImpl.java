@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
@@ -38,7 +38,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public static MangoFactory init()
@@ -59,13 +59,13 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
     MangoFactoryImpl factory = new MangoFactoryImpl();
     // EPackage.Registry.INSTANCE.put(factory.getEPackage().getNsURI(), factory);
-    EPackage.Registry.INSTANCE.put("http://www.eclipse.org/emf/CDO/tests/mango", factory);
+    EPackage.Registry.INSTANCE.put("http://www.eclipse.org/emf/CDO/tests/legacy/mango", factory);
     return factory;
   }
 
   /**
    * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public MangoFactoryImpl()
@@ -75,7 +75,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -96,7 +96,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -113,7 +113,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -130,7 +130,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public MangoValueList createMangoValueList()
@@ -141,7 +141,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public MangoValue createMangoValue()
@@ -152,7 +152,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public MangoParameter createMangoParameter()
@@ -163,21 +163,23 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public ParameterPassing createParameterPassingFromString(EDataType eDataType, String initialValue)
   {
     ParameterPassing result = ParameterPassing.get(initialValue);
     if (result == null)
+    {
       throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
           + eDataType.getName() + "'");
+    }
     return result;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String convertParameterPassingToString(EDataType eDataType, Object instanceValue)
@@ -187,7 +189,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public MangoPackage getMangoPackage()
@@ -197,7 +199,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @deprecated
    * @generated
    */

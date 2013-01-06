@@ -8,11 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model1.impl;
+package org.eclipse.emf.cdo.tests.model1.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
+import org.eclipse.emf.cdo.tests.model1.legacy.Model1Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -25,8 +25,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.SalesOrderImpl#getId <em>Id</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.SalesOrderImpl#getCustomer <em>Customer</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.SalesOrderImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.SalesOrderImpl#getCustomer <em>Customer</em>}</li>
  * </ul>
  * </p>
  *

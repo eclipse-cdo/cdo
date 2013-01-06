@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<genmodel:GenModel xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.tests.model1/src"
-    modelPluginID="org.eclipse.emf.cdo.tests.model1" modelName="Model1.martin" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="5.0" copyrightFields="false" runtimeVersion="2.6">
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;   Eike Stepper - initial API and implementation"
+    modelDirectory="/org.eclipse.emf.cdo.tests.model1/src" editDirectory="" editorDirectory=""
+    modelPluginID="org.eclipse.emf.cdo.tests.model1" modelName="Model1" updateClasspath="false"
+    codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" runtimeVersion="2.6">
   <foreignModel>model1.ecore</foreignModel>
-  <genPackages prefix="Model1" disposableProviderFactory="true" ecorePackage="model1.ecore#/">
+  <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
+  <genPackages prefix="Model1" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"
+      metaDataPackageSuffix="legacy" classPackageSuffix="legacy.impl" utilityPackageSuffix="legacy.util"
+      literalsInterface="false" extensibleProviderFactory="true" childCreationExtenders="true"
+      ecorePackage="model1.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="model1.ecore#//VAT">
       <genEnumLiterals ecoreEnumLiteral="model1.ecore#//VAT/vat0"/>
       <genEnumLiterals ecoreEnumLiteral="model1.ecore#//VAT/vat7"/>
@@ -56,6 +61,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model1.ecore#//Product1/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model1.ecore#//Product1/orderDetails"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model1.ecore#//Product1/vat"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model1.ecore#//Product1/otherVATs"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model1.ecore#//Product1/description"/>
     </genClasses>
     <genClasses ecoreClass="model1.ecore#//OrderAddress">

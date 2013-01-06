@@ -24,12 +24,19 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getOrderDetail()
+ * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getOrderDetail()
  * @model
  * @generated
  */
 public interface OrderDetail extends EObject
 {
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+
   /**
    * Returns the value of the '<em><b>Order</b></em>' container reference.
    * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.Order#getOrderDetails <em>Order Details</em>}'.
@@ -41,7 +48,7 @@ public interface OrderDetail extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Order</em>' container reference.
    * @see #setOrder(Order)
-   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getOrderDetail_Order()
+   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getOrderDetail_Order()
    * @see org.eclipse.emf.cdo.tests.model1.Order#getOrderDetails
    * @model opposite="orderDetails" required="true" transient="false"
    * @generated
@@ -68,7 +75,7 @@ public interface OrderDetail extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Product</em>' reference.
    * @see #setProduct(Product1)
-   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getOrderDetail_Product()
+   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getOrderDetail_Product()
    * @see org.eclipse.emf.cdo.tests.model1.Product1#getOrderDetails
    * @model opposite="orderDetails"
    * @generated
@@ -93,7 +100,7 @@ public interface OrderDetail extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Price</em>' attribute.
    * @see #setPrice(float)
-   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getOrderDetail_Price()
+   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getOrderDetail_Price()
    * @model
    * @generated
    */

@@ -8,12 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model1.impl;
+package org.eclipse.emf.cdo.tests.model1.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
+import org.eclipse.emf.cdo.tests.model1.legacy.Model1Package;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -32,8 +32,8 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CustomerImpl#getSalesOrders <em>Sales Orders</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CustomerImpl#getOrderByProduct <em>Order By Product</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.CustomerImpl#getSalesOrders <em>Sales Orders</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.CustomerImpl#getOrderByProduct <em>Order By Product</em>}</li>
  * </ul>
  * </p>
  *

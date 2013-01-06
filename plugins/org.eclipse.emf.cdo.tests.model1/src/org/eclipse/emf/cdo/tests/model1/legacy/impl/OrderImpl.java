@@ -8,11 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model1.impl;
+package org.eclipse.emf.cdo.tests.model1.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
+import org.eclipse.emf.cdo.tests.model1.legacy.Model1Package;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -29,7 +29,7 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderImpl#getOrderDetails <em>Order Details</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.OrderImpl#getOrderDetails <em>Order Details</em>}</li>
  * </ul>
  * </p>
  *

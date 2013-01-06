@@ -21,12 +21,19 @@ package org.eclipse.emf.cdo.tests.model1;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getSalesOrder()
+ * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getSalesOrder()
  * @model
  * @generated
  */
 public interface SalesOrder extends Order
 {
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+
   /**
    * Returns the value of the '<em><b>Id</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -36,7 +43,7 @@ public interface SalesOrder extends Order
    * <!-- end-user-doc -->
    * @return the value of the '<em>Id</em>' attribute.
    * @see #setId(int)
-   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getSalesOrder_Id()
+   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getSalesOrder_Id()
    * @model
    * @generated
    */
@@ -64,7 +71,7 @@ public interface SalesOrder extends Order
    * <!-- end-user-doc -->
    * @return the value of the '<em>Customer</em>' reference.
    * @see #setCustomer(Customer)
-   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getSalesOrder_Customer()
+   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getSalesOrder_Customer()
    * @see org.eclipse.emf.cdo.tests.model1.Customer#getSalesOrders
    * @model opposite="salesOrders" required="true"
    * @generated

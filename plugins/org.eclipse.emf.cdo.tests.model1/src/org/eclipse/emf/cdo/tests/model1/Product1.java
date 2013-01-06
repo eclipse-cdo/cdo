@@ -27,12 +27,19 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getProduct1()
+ * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getProduct1()
  * @model
  * @generated
  */
 public interface Product1 extends EObject
 {
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -42,7 +49,7 @@ public interface Product1 extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getProduct1_Name()
+   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getProduct1_Name()
    * @model annotation="teneo.jpa value='@Id'"
    * @generated
    */
@@ -70,7 +77,7 @@ public interface Product1 extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Order Details</em>' reference list.
-   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getProduct1_OrderDetails()
+   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getProduct1_OrderDetails()
    * @see org.eclipse.emf.cdo.tests.model1.OrderDetail#getProduct
    * @model opposite="product"
    * @generated
@@ -89,7 +96,7 @@ public interface Product1 extends EObject
    * @return the value of the '<em>Vat</em>' attribute.
    * @see org.eclipse.emf.cdo.tests.model1.VAT
    * @see #setVat(VAT)
-   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getProduct1_Vat()
+   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getProduct1_Vat()
    * @model default="vat15"
    * @generated
    */
@@ -119,7 +126,7 @@ public interface Product1 extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Other VA Ts</em>' attribute list.
    * @see org.eclipse.emf.cdo.tests.model1.VAT
-   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getProduct1_OtherVATs()
+   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getProduct1_OtherVATs()
    * @model default="vat15"
    * @generated
    */
@@ -135,7 +142,7 @@ public interface Product1 extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Description</em>' attribute.
    * @see #setDescription(String)
-   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getProduct1_Description()
+   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getProduct1_Description()
    * @model transient="true"
    * @generated
    */

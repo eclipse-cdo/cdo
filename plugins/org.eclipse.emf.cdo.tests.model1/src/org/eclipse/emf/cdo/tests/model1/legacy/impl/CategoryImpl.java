@@ -8,11 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model1.impl;
+package org.eclipse.emf.cdo.tests.model1.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Product1;
+import org.eclipse.emf.cdo.tests.model1.legacy.Model1Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -31,9 +31,9 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CategoryImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CategoryImpl#getCategories <em>Categories</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CategoryImpl#getProducts <em>Products</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.CategoryImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.CategoryImpl#getCategories <em>Categories</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.CategoryImpl#getProducts <em>Products</em>}</li>
  * </ul>
  * </p>
  *

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model1;
+package org.eclipse.emf.cdo.tests.model1.legacy;
 
 import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -20,14 +20,17 @@ import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
+import org.eclipse.emf.ecore.EFactory;
 
 /**
- * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
- * the model. <!-- end-user-doc -->
- * @see org.eclipse.emf.cdo.tests.legacy.model1.Model1Package
+ * <!-- begin-user-doc -->
+ * The <b>Factory</b> for the model. It provides a create method for each non-abstract class of the model.
+ * @extends org.eclipse.emf.cdo.tests.model1.Model1Factory
+ * <!-- end-user-doc -->
+ * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package
  * @generated
  */
-public interface Model1Factory extends org.eclipse.emf.cdo.tests.model1.Model1Factory
+public interface Model1Factory extends EFactory, org.eclipse.emf.cdo.tests.model1.Model1Factory
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -40,7 +43,7 @@ public interface Model1Factory extends org.eclipse.emf.cdo.tests.model1.Model1Fa
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  Model1Factory eINSTANCE = org.eclipse.emf.cdo.tests.legacy.model1.impl.Model1FactoryImpl.init();
+  Model1Factory eINSTANCE = org.eclipse.emf.cdo.tests.model1.legacy.impl.Model1FactoryImpl.init();
 
   /**
    * Returns a new object of class '<em>Address</em>'.

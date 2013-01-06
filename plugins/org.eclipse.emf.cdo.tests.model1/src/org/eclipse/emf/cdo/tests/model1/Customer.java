@@ -24,12 +24,19 @@ import org.eclipse.emf.common.util.EMap;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCustomer()
+ * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getCustomer()
  * @model
  * @generated
  */
 public interface Customer extends Address
 {
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+
   /**
    * Returns the value of the '<em><b>Sales Orders</b></em>' reference list.
    * The list contents are of type {@link org.eclipse.emf.cdo.tests.model1.SalesOrder}.
@@ -41,7 +48,7 @@ public interface Customer extends Address
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Sales Orders</em>' reference list.
-   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCustomer_SalesOrders()
+   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getCustomer_SalesOrders()
    * @see org.eclipse.emf.cdo.tests.model1.SalesOrder#getCustomer
    * @model opposite="customer"
    * @generated
@@ -59,7 +66,7 @@ public interface Customer extends Address
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Order By Product</em>' map.
-   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCustomer_OrderByProduct()
+   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getCustomer_OrderByProduct()
    * @model mapType="org.eclipse.emf.cdo.tests.model1.ProductToOrder<org.eclipse.emf.cdo.tests.model1.Product1, org.eclipse.emf.cdo.tests.model1.SalesOrder>"
    * @generated
    */

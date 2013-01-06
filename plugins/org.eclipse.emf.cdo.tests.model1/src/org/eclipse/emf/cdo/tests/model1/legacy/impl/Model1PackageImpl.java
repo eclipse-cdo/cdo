@@ -8,10 +8,8 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model1.impl;
+package org.eclipse.emf.cdo.tests.model1.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.legacy.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
@@ -23,7 +21,8 @@ import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
-import org.eclipse.emf.cdo.tests.model1.VAT;
+import org.eclipse.emf.cdo.tests.model1.legacy.Model1Factory;
+import org.eclipse.emf.cdo.tests.model1.legacy.Model1Package;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -33,6 +32,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import java.util.Map;
+//import org.eclipse.emf.cdo.tests.model1.VAT;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
@@ -824,7 +824,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
         !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
-    initEEnum(vatEEnum, VAT.class, "VAT");
+    initEEnum(vatEEnum, org.eclipse.emf.cdo.tests.model1.VAT.class, "VAT");
     addEEnumLiteral(vatEEnum, org.eclipse.emf.cdo.tests.model1.VAT.VAT0);
     addEEnumLiteral(vatEEnum, org.eclipse.emf.cdo.tests.model1.VAT.VAT7);
     addEEnumLiteral(vatEEnum, org.eclipse.emf.cdo.tests.model1.VAT.VAT15);

@@ -8,58 +8,41 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model1.impl;
+package org.eclipse.emf.cdo.tests.model1.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Order;
-import org.eclipse.emf.cdo.tests.model1.OrderAddress;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
+import org.eclipse.emf.cdo.tests.model1.legacy.Model1Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.InternalEList;
-
-import java.util.Collection;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Order Address</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Order Detail</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderAddressImpl#getOrderDetails <em>Order Details</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderAddressImpl#getOrder <em>Order</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderAddressImpl#getProduct <em>Product</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderAddressImpl#getPrice <em>Price</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderAddressImpl#isTestAttribute <em>Test Attribute</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.OrderDetailImpl#getOrder <em>Order</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.OrderDetailImpl#getProduct <em>Product</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.OrderDetailImpl#getPrice <em>Price</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class OrderAddressImpl extends AddressImpl implements OrderAddress
+public class OrderDetailImpl extends EObjectImpl implements OrderDetail
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
-  /**
-   * The cached value of the '{@link #getOrderDetails() <em>Order Details</em>}' containment reference list. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @see #getOrderDetails()
-   * @generated
-   * @ordered
-   */
-  protected EList<OrderDetail> orderDetails;
 
   /**
    * The cached value of the '{@link #getProduct() <em>Product</em>}' reference.
@@ -92,30 +75,10 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   protected float price = PRICE_EDEFAULT;
 
   /**
-   * The default value of the '{@link #isTestAttribute() <em>Test Attribute</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isTestAttribute()
-   * @generated
-   * @ordered
-   */
-  protected static final boolean TEST_ATTRIBUTE_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isTestAttribute() <em>Test Attribute</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isTestAttribute()
-   * @generated
-   * @ordered
-   */
-  protected boolean testAttribute = TEST_ATTRIBUTE_EDEFAULT;
-
-  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected OrderAddressImpl()
+  protected OrderDetailImpl()
   {
     super();
   }
@@ -127,21 +90,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   @Override
   protected EClass eStaticClass()
   {
-    return Model1Package.eINSTANCE.getOrderAddress();
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<OrderDetail> getOrderDetails()
-  {
-    if (orderDetails == null)
-    {
-      orderDetails = new EObjectContainmentWithInverseEList<OrderDetail>(OrderDetail.class, this,
-          Model1Package.ORDER_ADDRESS__ORDER_DETAILS, Model1Package.ORDER_DETAIL__ORDER);
-    }
-    return orderDetails;
+    return Model1Package.eINSTANCE.getOrderDetail();
   }
 
   /**
@@ -150,7 +99,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
    */
   public Order getOrder()
   {
-    if (eContainerFeatureID() != Model1Package.ORDER_ADDRESS__ORDER)
+    if (eContainerFeatureID() != Model1Package.ORDER_DETAIL__ORDER)
       return null;
     return (Order)eContainer();
   }
@@ -161,7 +110,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
    */
   public NotificationChain basicSetOrder(Order newOrder, NotificationChain msgs)
   {
-    msgs = eBasicSetContainer((InternalEObject)newOrder, Model1Package.ORDER_ADDRESS__ORDER, msgs);
+    msgs = eBasicSetContainer((InternalEObject)newOrder, Model1Package.ORDER_DETAIL__ORDER, msgs);
     return msgs;
   }
 
@@ -172,7 +121,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   public void setOrder(Order newOrder)
   {
     if (newOrder != eInternalContainer()
-        || (eContainerFeatureID() != Model1Package.ORDER_ADDRESS__ORDER && newOrder != null))
+        || (eContainerFeatureID() != Model1Package.ORDER_DETAIL__ORDER && newOrder != null))
     {
       if (EcoreUtil.isAncestor(this, newOrder))
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
@@ -186,7 +135,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
         msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__ORDER, newOrder, newOrder));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_DETAIL__ORDER, newOrder, newOrder));
   }
 
   /**
@@ -202,7 +151,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
       if (product != oldProduct)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.ORDER_ADDRESS__PRODUCT, oldProduct,
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.ORDER_DETAIL__PRODUCT, oldProduct,
               product));
       }
     }
@@ -229,7 +178,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
     if (eNotificationRequired())
     {
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          Model1Package.ORDER_ADDRESS__PRODUCT, oldProduct, newProduct);
+          Model1Package.ORDER_DETAIL__PRODUCT, oldProduct, newProduct);
       if (msgs == null)
         msgs = notification;
       else
@@ -258,8 +207,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
         msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__PRODUCT, newProduct,
-          newProduct));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_DETAIL__PRODUCT, newProduct, newProduct));
   }
 
   /**
@@ -280,48 +228,23 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
     float oldPrice = price;
     price = newPrice;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__PRICE, oldPrice, price));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_DETAIL__PRICE, oldPrice, price));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public boolean isTestAttribute()
-  {
-    return testAttribute;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  public void setTestAttribute(boolean newTestAttribute)
-  {
-    boolean oldTestAttribute = testAttribute;
-    testAttribute = newTestAttribute;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__TEST_ATTRIBUTE,
-          oldTestAttribute, testAttribute));
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
-    case Model1Package.ORDER_ADDRESS__ORDER_DETAILS:
-      return ((InternalEList<InternalEObject>)(InternalEList<?>)getOrderDetails()).basicAdd(otherEnd, msgs);
-    case Model1Package.ORDER_ADDRESS__ORDER:
+    case Model1Package.ORDER_DETAIL__ORDER:
       if (eInternalContainer() != null)
         msgs = eBasicRemoveFromContainer(msgs);
       return basicSetOrder((Order)otherEnd, msgs);
-    case Model1Package.ORDER_ADDRESS__PRODUCT:
+    case Model1Package.ORDER_DETAIL__PRODUCT:
       if (product != null)
         msgs = ((InternalEObject)product).eInverseRemove(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class,
             msgs);
@@ -339,11 +262,9 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   {
     switch (featureID)
     {
-    case Model1Package.ORDER_ADDRESS__ORDER_DETAILS:
-      return ((InternalEList<?>)getOrderDetails()).basicRemove(otherEnd, msgs);
-    case Model1Package.ORDER_ADDRESS__ORDER:
+    case Model1Package.ORDER_DETAIL__ORDER:
       return basicSetOrder(null, msgs);
-    case Model1Package.ORDER_ADDRESS__PRODUCT:
+    case Model1Package.ORDER_DETAIL__PRODUCT:
       return basicSetProduct(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -358,7 +279,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   {
     switch (eContainerFeatureID())
     {
-    case Model1Package.ORDER_ADDRESS__ORDER:
+    case Model1Package.ORDER_DETAIL__ORDER:
       return eInternalContainer().eInverseRemove(this, Model1Package.ORDER__ORDER_DETAILS, Order.class, msgs);
     }
     return super.eBasicRemoveFromContainerFeature(msgs);
@@ -373,18 +294,14 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   {
     switch (featureID)
     {
-    case Model1Package.ORDER_ADDRESS__ORDER_DETAILS:
-      return getOrderDetails();
-    case Model1Package.ORDER_ADDRESS__ORDER:
+    case Model1Package.ORDER_DETAIL__ORDER:
       return getOrder();
-    case Model1Package.ORDER_ADDRESS__PRODUCT:
+    case Model1Package.ORDER_DETAIL__PRODUCT:
       if (resolve)
         return getProduct();
       return basicGetProduct();
-    case Model1Package.ORDER_ADDRESS__PRICE:
+    case Model1Package.ORDER_DETAIL__PRICE:
       return getPrice();
-    case Model1Package.ORDER_ADDRESS__TEST_ATTRIBUTE:
-      return isTestAttribute();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -393,27 +310,19 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-    case Model1Package.ORDER_ADDRESS__ORDER_DETAILS:
-      getOrderDetails().clear();
-      getOrderDetails().addAll((Collection<? extends OrderDetail>)newValue);
-      return;
-    case Model1Package.ORDER_ADDRESS__ORDER:
+    case Model1Package.ORDER_DETAIL__ORDER:
       setOrder((Order)newValue);
       return;
-    case Model1Package.ORDER_ADDRESS__PRODUCT:
+    case Model1Package.ORDER_DETAIL__PRODUCT:
       setProduct((Product1)newValue);
       return;
-    case Model1Package.ORDER_ADDRESS__PRICE:
+    case Model1Package.ORDER_DETAIL__PRICE:
       setPrice((Float)newValue);
-      return;
-    case Model1Package.ORDER_ADDRESS__TEST_ATTRIBUTE:
-      setTestAttribute((Boolean)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -428,20 +337,14 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   {
     switch (featureID)
     {
-    case Model1Package.ORDER_ADDRESS__ORDER_DETAILS:
-      getOrderDetails().clear();
-      return;
-    case Model1Package.ORDER_ADDRESS__ORDER:
+    case Model1Package.ORDER_DETAIL__ORDER:
       setOrder((Order)null);
       return;
-    case Model1Package.ORDER_ADDRESS__PRODUCT:
+    case Model1Package.ORDER_DETAIL__PRODUCT:
       setProduct((Product1)null);
       return;
-    case Model1Package.ORDER_ADDRESS__PRICE:
+    case Model1Package.ORDER_DETAIL__PRICE:
       setPrice(PRICE_EDEFAULT);
-      return;
-    case Model1Package.ORDER_ADDRESS__TEST_ATTRIBUTE:
-      setTestAttribute(TEST_ATTRIBUTE_EDEFAULT);
       return;
     }
     super.eUnset(featureID);
@@ -456,86 +359,14 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   {
     switch (featureID)
     {
-    case Model1Package.ORDER_ADDRESS__ORDER_DETAILS:
-      return orderDetails != null && !orderDetails.isEmpty();
-    case Model1Package.ORDER_ADDRESS__ORDER:
+    case Model1Package.ORDER_DETAIL__ORDER:
       return getOrder() != null;
-    case Model1Package.ORDER_ADDRESS__PRODUCT:
+    case Model1Package.ORDER_DETAIL__PRODUCT:
       return product != null;
-    case Model1Package.ORDER_ADDRESS__PRICE:
+    case Model1Package.ORDER_DETAIL__PRICE:
       return price != PRICE_EDEFAULT;
-    case Model1Package.ORDER_ADDRESS__TEST_ATTRIBUTE:
-      return testAttribute != TEST_ATTRIBUTE_EDEFAULT;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == Order.class)
-    {
-      switch (derivedFeatureID)
-      {
-      case Model1Package.ORDER_ADDRESS__ORDER_DETAILS:
-        return Model1Package.ORDER__ORDER_DETAILS;
-      default:
-        return -1;
-      }
-    }
-    if (baseClass == OrderDetail.class)
-    {
-      switch (derivedFeatureID)
-      {
-      case Model1Package.ORDER_ADDRESS__ORDER:
-        return Model1Package.ORDER_DETAIL__ORDER;
-      case Model1Package.ORDER_ADDRESS__PRODUCT:
-        return Model1Package.ORDER_DETAIL__PRODUCT;
-      case Model1Package.ORDER_ADDRESS__PRICE:
-        return Model1Package.ORDER_DETAIL__PRICE;
-      default:
-        return -1;
-      }
-    }
-    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == Order.class)
-    {
-      switch (baseFeatureID)
-      {
-      case Model1Package.ORDER__ORDER_DETAILS:
-        return Model1Package.ORDER_ADDRESS__ORDER_DETAILS;
-      default:
-        return -1;
-      }
-    }
-    if (baseClass == OrderDetail.class)
-    {
-      switch (baseFeatureID)
-      {
-      case Model1Package.ORDER_DETAIL__ORDER:
-        return Model1Package.ORDER_ADDRESS__ORDER;
-      case Model1Package.ORDER_DETAIL__PRODUCT:
-        return Model1Package.ORDER_ADDRESS__PRODUCT;
-      case Model1Package.ORDER_DETAIL__PRICE:
-        return Model1Package.ORDER_ADDRESS__PRICE;
-      default:
-        return -1;
-      }
-    }
-    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
   /**
@@ -551,10 +382,8 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (price: ");
     result.append(price);
-    result.append(", testAttribute: ");
-    result.append(testAttribute);
     result.append(')');
     return result.toString();
   }
 
-} // OrderAddressImpl
+} // OrderDetailImpl

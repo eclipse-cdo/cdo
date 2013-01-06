@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -29,6 +29,8 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 
 import java.util.Map;
+
+//import org.eclipse.emf.cdo.tests.model1.*;
 
 /**
  * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>
@@ -248,7 +250,7 @@ public class Model1AdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Product To Order</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see java.util.Map.Entry
    * @generated
@@ -314,7 +316,7 @@ public class Model1AdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model1.Order <em>Order</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model1.Order
    * @generated

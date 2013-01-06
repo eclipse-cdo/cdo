@@ -8,15 +8,15 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model1.impl;
+package org.eclipse.emf.cdo.tests.model1.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
+import org.eclipse.emf.cdo.tests.model1.legacy.Model1Package;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -32,11 +32,11 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CompanyImpl#getCategories <em>Categories</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CompanyImpl#getSuppliers <em>Suppliers</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CompanyImpl#getCustomers <em>Customers</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CompanyImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CompanyImpl#getSalesOrders <em>Sales Orders</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.CompanyImpl#getCategories <em>Categories</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.CompanyImpl#getSuppliers <em>Suppliers</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.CompanyImpl#getCustomers <em>Customers</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.CompanyImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.CompanyImpl#getSalesOrders <em>Sales Orders</em>}</li>
  * </ul>
  * </p>
  *

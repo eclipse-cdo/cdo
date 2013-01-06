@@ -26,12 +26,19 @@ import org.eclipse.emf.common.util.EList;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany()
+ * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getCompany()
  * @model
  * @generated
  */
 public interface Company extends Address
 {
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+
   /**
    * Returns the value of the '<em><b>Categories</b></em>' containment reference list.
    * The list contents are of type {@link org.eclipse.emf.cdo.tests.model1.Category}.
@@ -42,7 +49,7 @@ public interface Company extends Address
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Categories</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_Categories()
+   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getCompany_Categories()
    * @model containment="true"
    * @generated
    */
@@ -58,7 +65,7 @@ public interface Company extends Address
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Suppliers</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_Suppliers()
+   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getCompany_Suppliers()
    * @model containment="true"
    * @generated
    */
@@ -74,7 +81,7 @@ public interface Company extends Address
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Purchase Orders</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_PurchaseOrders()
+   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getCompany_PurchaseOrders()
    * @model containment="true"
    * @generated
    */
@@ -90,7 +97,7 @@ public interface Company extends Address
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Customers</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_Customers()
+   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getCompany_Customers()
    * @model containment="true"
    * @generated
    */
@@ -106,7 +113,7 @@ public interface Company extends Address
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Sales Orders</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_SalesOrders()
+   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getCompany_SalesOrders()
    * @model containment="true"
    * @generated
    */

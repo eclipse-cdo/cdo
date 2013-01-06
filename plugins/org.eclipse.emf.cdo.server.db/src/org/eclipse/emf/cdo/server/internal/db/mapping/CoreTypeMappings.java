@@ -592,6 +592,12 @@ public class CoreTypeMappings
         return getFeature().isUnsettable() ? CDORevisionData.NIL : null;
       }
 
+      if (str.length() == 0)
+      {
+        // Bug 397318: Work around a bug in H2 that trims a space from CHAR(1)
+        return ' ';
+      }
+
       return str.charAt(0);
     }
 

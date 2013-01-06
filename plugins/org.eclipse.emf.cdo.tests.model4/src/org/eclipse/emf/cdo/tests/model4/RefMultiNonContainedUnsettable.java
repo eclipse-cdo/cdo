@@ -16,14 +16,15 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Ref Multi Non Contained Unsettable</b></em>'.
  * <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable#getElements <em>Elements</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- * 
- * @see org.eclipse.emf.cdo.tests.model4.model4Package#getRefMultiNonContainedUnsettable()
+ *
+ * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getRefMultiNonContainedUnsettable()
  * @model
  * @generated
  */
@@ -51,9 +52,8 @@ public interface RefMultiNonContainedUnsettable extends EObject
   EList<MultiNonContainedUnsettableElement> getElements();
 
   /**
-   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable#getElements
-   * <em>Elements</em>}' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable#getElements <em>Elements</em>}' reference list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isSetElements()
    * @see #getElements()
    * @generated
@@ -61,10 +61,8 @@ public interface RefMultiNonContainedUnsettable extends EObject
   void unsetElements();
 
   /**
-   * Returns whether the value of the '
-   * {@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable#getElements <em>Elements</em>}' reference
-   * list is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable#getElements <em>Elements</em>}' reference list is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>Elements</em>' reference list is set.
    * @see #unsetElements()
    * @see #getElements()

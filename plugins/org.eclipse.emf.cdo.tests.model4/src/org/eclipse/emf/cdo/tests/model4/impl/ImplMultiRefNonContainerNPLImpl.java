@@ -26,17 +26,16 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.ImplMultiRefNonContainerNPLImpl#getElements <em>Elements</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.ImplMultiRefNonContainerNPLImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ImplMultiRefNonContainerNPLImpl extends CDOObjectImpl implements ImplMultiRefNonContainerNPL
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ImplMultiRefNonContainerNPLImpl()
@@ -46,7 +45,6 @@ public class ImplMultiRefNonContainerNPLImpl extends CDOObjectImpl implements Im
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -57,7 +55,6 @@ public class ImplMultiRefNonContainerNPLImpl extends CDOObjectImpl implements Im
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -68,7 +65,6 @@ public class ImplMultiRefNonContainerNPLImpl extends CDOObjectImpl implements Im
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

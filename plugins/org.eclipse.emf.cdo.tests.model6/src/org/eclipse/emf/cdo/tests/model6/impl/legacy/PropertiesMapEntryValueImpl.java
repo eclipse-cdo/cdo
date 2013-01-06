@@ -8,51 +8,57 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model6.impl;
+package org.eclipse.emf.cdo.tests.model6.impl.legacy;
 
 import org.eclipse.emf.cdo.tests.legacy.model6.Model6Package;
-import org.eclipse.emf.cdo.tests.model6.MyEnum;
-import org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable;
+import org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue;
 
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-
-import java.util.Collection;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>My Enum List Unsettable</b></em>'.
+ * An implementation of the model object '<em><b>Properties Map Entry Value</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.MyEnumListUnsettableImpl#getMyEnum <em>My Enum</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.PropertiesMapEntryValueImpl#getLabel <em>Label</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class MyEnumListUnsettableImpl extends EObjectImpl implements MyEnumListUnsettable
+public class PropertiesMapEntryValueImpl extends EObjectImpl implements PropertiesMapEntryValue
 {
   /**
-   * The cached value of the '{@link #getMyEnum() <em>My Enum</em>}' attribute list.
+   * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getMyEnum()
+   * @see #getLabel()
    * @generated
    * @ordered
    */
-  protected EList<MyEnum> myEnum;
+  protected static final String LABEL_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLabel()
+   * @generated
+   * @ordered
+   */
+  protected String label = LABEL_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected MyEnumListUnsettableImpl()
+  protected PropertiesMapEntryValueImpl()
   {
     super();
   }
@@ -65,7 +71,7 @@ public class MyEnumListUnsettableImpl extends EObjectImpl implements MyEnumListU
   @Override
   protected EClass eStaticClass()
   {
-    return Model6Package.eINSTANCE.getMyEnumListUnsettable();
+    return Model6Package.eINSTANCE.getPropertiesMapEntryValue();
   }
 
   /**
@@ -73,14 +79,9 @@ public class MyEnumListUnsettableImpl extends EObjectImpl implements MyEnumListU
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<MyEnum> getMyEnum()
+  public String getLabel()
   {
-    if (myEnum == null)
-    {
-      myEnum = new EDataTypeUniqueEList.Unsettable<MyEnum>(MyEnum.class, this,
-          Model6Package.MY_ENUM_LIST_UNSETTABLE__MY_ENUM);
-    }
-    return myEnum;
+    return label;
   }
 
   /**
@@ -88,20 +89,13 @@ public class MyEnumListUnsettableImpl extends EObjectImpl implements MyEnumListU
    * <!-- end-user-doc -->
    * @generated
    */
-  public void unsetMyEnum()
+  public void setLabel(String newLabel)
   {
-    if (myEnum != null)
-      ((InternalEList.Unsettable<?>)myEnum).unset();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public boolean isSetMyEnum()
-  {
-    return myEnum != null && ((InternalEList.Unsettable<?>)myEnum).isSet();
+    String oldLabel = label;
+    label = newLabel;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.PROPERTIES_MAP_ENTRY_VALUE__LABEL, oldLabel,
+          label));
   }
 
   /**
@@ -114,8 +108,8 @@ public class MyEnumListUnsettableImpl extends EObjectImpl implements MyEnumListU
   {
     switch (featureID)
     {
-    case Model6Package.MY_ENUM_LIST_UNSETTABLE__MY_ENUM:
-      return getMyEnum();
+    case Model6Package.PROPERTIES_MAP_ENTRY_VALUE__LABEL:
+      return getLabel();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -125,15 +119,13 @@ public class MyEnumListUnsettableImpl extends EObjectImpl implements MyEnumListU
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-    case Model6Package.MY_ENUM_LIST_UNSETTABLE__MY_ENUM:
-      getMyEnum().clear();
-      getMyEnum().addAll((Collection<? extends MyEnum>)newValue);
+    case Model6Package.PROPERTIES_MAP_ENTRY_VALUE__LABEL:
+      setLabel((String)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -149,8 +141,8 @@ public class MyEnumListUnsettableImpl extends EObjectImpl implements MyEnumListU
   {
     switch (featureID)
     {
-    case Model6Package.MY_ENUM_LIST_UNSETTABLE__MY_ENUM:
-      unsetMyEnum();
+    case Model6Package.PROPERTIES_MAP_ENTRY_VALUE__LABEL:
+      setLabel(LABEL_EDEFAULT);
       return;
     }
     super.eUnset(featureID);
@@ -166,8 +158,8 @@ public class MyEnumListUnsettableImpl extends EObjectImpl implements MyEnumListU
   {
     switch (featureID)
     {
-    case Model6Package.MY_ENUM_LIST_UNSETTABLE__MY_ENUM:
-      return isSetMyEnum();
+    case Model6Package.PROPERTIES_MAP_ENTRY_VALUE__LABEL:
+      return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
     }
     return super.eIsSet(featureID);
   }
@@ -184,10 +176,10 @@ public class MyEnumListUnsettableImpl extends EObjectImpl implements MyEnumListU
       return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (myEnum: ");
-    result.append(myEnum);
+    result.append(" (label: ");
+    result.append(label);
     result.append(')');
     return result.toString();
   }
 
-} // MyEnumListUnsettableImpl
+} // PropertiesMapEntryValueImpl

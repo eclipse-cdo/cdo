@@ -8,11 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model6.impl;
+package org.eclipse.emf.cdo.tests.model6.impl.legacy;
 
 import org.eclipse.emf.cdo.tests.legacy.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.A;
-import org.eclipse.emf.cdo.tests.model6.E;
+import org.eclipse.emf.cdo.tests.model6.B;
+import org.eclipse.emf.cdo.tests.model6.D;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -25,33 +26,44 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>E</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>A</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.EImpl#getOwnedAs <em>Owned As</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.AImpl#getOwnedDs <em>Owned Ds</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.AImpl#getOwnedBs <em>Owned Bs</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class EImpl extends EObjectImpl implements E
+public class AImpl extends EObjectImpl implements A
 {
   /**
-   * The cached value of the '{@link #getOwnedAs() <em>Owned As</em>}' containment reference list.
+   * The cached value of the '{@link #getOwnedDs() <em>Owned Ds</em>}' containment reference list.
    * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * @see #getOwnedAs()
+   * @see #getOwnedDs()
    * @generated
    * @ordered
    */
-  protected EList<A> ownedAs;
+  protected EList<D> ownedDs;
+
+  /**
+   * The cached value of the '{@link #getOwnedBs() <em>Owned Bs</em>}' containment reference list.
+   * <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
+   * @see #getOwnedBs()
+   * @generated
+   * @ordered
+   */
+  protected EList<B> ownedBs;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected EImpl()
+  protected AImpl()
   {
     super();
   }
@@ -63,20 +75,33 @@ public class EImpl extends EObjectImpl implements E
   @Override
   protected EClass eStaticClass()
   {
-    return Model6Package.eINSTANCE.getE();
+    return Model6Package.eINSTANCE.getA();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public EList<A> getOwnedAs()
+  public EList<D> getOwnedDs()
   {
-    if (ownedAs == null)
+    if (ownedDs == null)
     {
-      ownedAs = new EObjectContainmentEList.Resolving<A>(A.class, this, Model6Package.E__OWNED_AS);
+      ownedDs = new EObjectContainmentEList.Resolving<D>(D.class, this, Model6Package.A__OWNED_DS);
     }
-    return ownedAs;
+    return ownedDs;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<B> getOwnedBs()
+  {
+    if (ownedBs == null)
+    {
+      ownedBs = new EObjectContainmentEList.Resolving<B>(B.class, this, Model6Package.A__OWNED_BS);
+    }
+    return ownedBs;
   }
 
   /**
@@ -88,8 +113,10 @@ public class EImpl extends EObjectImpl implements E
   {
     switch (featureID)
     {
-    case Model6Package.E__OWNED_AS:
-      return ((InternalEList<?>)getOwnedAs()).basicRemove(otherEnd, msgs);
+    case Model6Package.A__OWNED_DS:
+      return ((InternalEList<?>)getOwnedDs()).basicRemove(otherEnd, msgs);
+    case Model6Package.A__OWNED_BS:
+      return ((InternalEList<?>)getOwnedBs()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -103,8 +130,10 @@ public class EImpl extends EObjectImpl implements E
   {
     switch (featureID)
     {
-    case Model6Package.E__OWNED_AS:
-      return getOwnedAs();
+    case Model6Package.A__OWNED_DS:
+      return getOwnedDs();
+    case Model6Package.A__OWNED_BS:
+      return getOwnedBs();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -119,9 +148,13 @@ public class EImpl extends EObjectImpl implements E
   {
     switch (featureID)
     {
-    case Model6Package.E__OWNED_AS:
-      getOwnedAs().clear();
-      getOwnedAs().addAll((Collection<? extends A>)newValue);
+    case Model6Package.A__OWNED_DS:
+      getOwnedDs().clear();
+      getOwnedDs().addAll((Collection<? extends D>)newValue);
+      return;
+    case Model6Package.A__OWNED_BS:
+      getOwnedBs().clear();
+      getOwnedBs().addAll((Collection<? extends B>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -136,8 +169,11 @@ public class EImpl extends EObjectImpl implements E
   {
     switch (featureID)
     {
-    case Model6Package.E__OWNED_AS:
-      getOwnedAs().clear();
+    case Model6Package.A__OWNED_DS:
+      getOwnedDs().clear();
+      return;
+    case Model6Package.A__OWNED_BS:
+      getOwnedBs().clear();
       return;
     }
     super.eUnset(featureID);
@@ -152,10 +188,12 @@ public class EImpl extends EObjectImpl implements E
   {
     switch (featureID)
     {
-    case Model6Package.E__OWNED_AS:
-      return ownedAs != null && !ownedAs.isEmpty();
+    case Model6Package.A__OWNED_DS:
+      return ownedDs != null && !ownedDs.isEmpty();
+    case Model6Package.A__OWNED_BS:
+      return ownedBs != null && !ownedBs.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
-} // EImpl
+} // AImpl

@@ -6,9 +6,9 @@
     containmentProxies="true" complianceLevel="5.0" providerRootExtendsClass="" runtimeVersion="2.6">
   <foreignModel>model6.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
-  <genPackages prefix="Model6" basePackage="org.eclipse.emf.cdo.tests.legacy" disposableProviderFactory="true"
-      literalsInterface="false" extensibleProviderFactory="true" childCreationExtenders="true"
-      ecorePackage="model6.ecore#/">
+  <genPackages prefix="Model6" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"
+      classPackageSuffix="impl.legacy" literalsInterface="false" extensibleProviderFactory="true"
+      childCreationExtenders="true" ecorePackage="model6.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="model6.ecore#//MyEnum">
       <genEnumLiterals ecoreEnumLiteral="model6.ecore#//MyEnum/ZERO"/>
       <genEnumLiterals ecoreEnumLiteral="model6.ecore#//MyEnum/ONE"/>

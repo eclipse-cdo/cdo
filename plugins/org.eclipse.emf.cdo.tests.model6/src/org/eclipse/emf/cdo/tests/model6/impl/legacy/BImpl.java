@@ -8,47 +8,47 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model6.impl;
+package org.eclipse.emf.cdo.tests.model6.impl.legacy;
 
 import org.eclipse.emf.cdo.tests.legacy.model6.Model6Package;
-import org.eclipse.emf.cdo.tests.model6.D;
+import org.eclipse.emf.cdo.tests.model6.B;
+import org.eclipse.emf.cdo.tests.model6.C;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>D</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>B</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.DImpl#getData <em>Data</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BImpl#getOwnedC <em>Owned C</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class DImpl extends EObjectImpl implements D
+public class BImpl extends EObjectImpl implements B
 {
   /**
-   * The cached value of the '{@link #getData() <em>Data</em>}' containment reference.
+   * The cached value of the '{@link #getOwnedC() <em>Owned C</em>}' containment reference.
    * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * @see #getData()
+   * @see #getOwnedC()
    * @generated
    * @ordered
    */
-  protected EObject data;
+  protected C ownedC;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected DImpl()
+  protected BImpl()
   {
     super();
   }
@@ -60,30 +60,59 @@ public class DImpl extends EObjectImpl implements D
   @Override
   protected EClass eStaticClass()
   {
-    return Model6Package.eINSTANCE.getD();
+    return Model6Package.eINSTANCE.getB();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public EObject getData()
+  public C getOwnedC()
   {
-    return data;
+    if (ownedC != null && ownedC.eIsProxy())
+    {
+      InternalEObject oldOwnedC = (InternalEObject)ownedC;
+      ownedC = (C)eResolveProxy(oldOwnedC);
+      if (ownedC != oldOwnedC)
+      {
+        InternalEObject newOwnedC = (InternalEObject)ownedC;
+        NotificationChain msgs = oldOwnedC.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model6Package.B__OWNED_C,
+            null, null);
+        if (newOwnedC.eInternalContainer() == null)
+        {
+          msgs = newOwnedC.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model6Package.B__OWNED_C, null, msgs);
+        }
+        if (msgs != null)
+          msgs.dispatch();
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model6Package.B__OWNED_C, oldOwnedC, ownedC));
+      }
+    }
+    return ownedC;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public C basicGetOwnedC()
+  {
+    return ownedC;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetData(EObject newData, NotificationChain msgs)
+  public NotificationChain basicSetOwnedC(C newOwnedC, NotificationChain msgs)
   {
-    EObject oldData = data;
-    data = newData;
+    C oldOwnedC = ownedC;
+    ownedC = newOwnedC;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model6Package.D__DATA, oldData,
-          newData);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model6Package.B__OWNED_C,
+          oldOwnedC, newOwnedC);
       if (msgs == null)
         msgs = notification;
       else
@@ -96,21 +125,23 @@ public class DImpl extends EObjectImpl implements D
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public void setData(EObject newData)
+  public void setOwnedC(C newOwnedC)
   {
-    if (newData != data)
+    if (newOwnedC != ownedC)
     {
       NotificationChain msgs = null;
-      if (data != null)
-        msgs = ((InternalEObject)data).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model6Package.D__DATA, null, msgs);
-      if (newData != null)
-        msgs = ((InternalEObject)newData).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model6Package.D__DATA, null, msgs);
-      msgs = basicSetData(newData, msgs);
+      if (ownedC != null)
+        msgs = ((InternalEObject)ownedC).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model6Package.B__OWNED_C, null,
+            msgs);
+      if (newOwnedC != null)
+        msgs = ((InternalEObject)newOwnedC).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model6Package.B__OWNED_C, null,
+            msgs);
+      msgs = basicSetOwnedC(newOwnedC, msgs);
       if (msgs != null)
         msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.D__DATA, newData, newData));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.B__OWNED_C, newOwnedC, newOwnedC));
   }
 
   /**
@@ -122,8 +153,8 @@ public class DImpl extends EObjectImpl implements D
   {
     switch (featureID)
     {
-    case Model6Package.D__DATA:
-      return basicSetData(null, msgs);
+    case Model6Package.B__OWNED_C:
+      return basicSetOwnedC(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -137,8 +168,10 @@ public class DImpl extends EObjectImpl implements D
   {
     switch (featureID)
     {
-    case Model6Package.D__DATA:
-      return getData();
+    case Model6Package.B__OWNED_C:
+      if (resolve)
+        return getOwnedC();
+      return basicGetOwnedC();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -152,8 +185,8 @@ public class DImpl extends EObjectImpl implements D
   {
     switch (featureID)
     {
-    case Model6Package.D__DATA:
-      setData((EObject)newValue);
+    case Model6Package.B__OWNED_C:
+      setOwnedC((C)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -168,8 +201,8 @@ public class DImpl extends EObjectImpl implements D
   {
     switch (featureID)
     {
-    case Model6Package.D__DATA:
-      setData((EObject)null);
+    case Model6Package.B__OWNED_C:
+      setOwnedC((C)null);
       return;
     }
     super.eUnset(featureID);
@@ -184,10 +217,10 @@ public class DImpl extends EObjectImpl implements D
   {
     switch (featureID)
     {
-    case Model6Package.D__DATA:
-      return data != null;
+    case Model6Package.B__OWNED_C:
+      return ownedC != null;
     }
     return super.eIsSet(featureID);
   }
 
-} // DImpl
+} // BImpl

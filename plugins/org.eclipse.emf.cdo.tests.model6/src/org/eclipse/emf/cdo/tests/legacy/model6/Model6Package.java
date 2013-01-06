@@ -37,7 +37,7 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  Model6Package eINSTANCE = org.eclipse.emf.cdo.tests.legacy.model6.impl.Model6PackageImpl.init();
+  Model6Package eINSTANCE = org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl.init();
 
   /**
    * Returns the factory that creates the instances of the model.

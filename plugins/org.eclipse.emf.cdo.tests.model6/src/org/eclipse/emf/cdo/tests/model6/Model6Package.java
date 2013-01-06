@@ -58,7 +58,7 @@ public interface Model6Package extends EPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  Model6Package eINSTANCE = org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl.init();
+  Model6Package eINSTANCE = org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl.init();
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.RootImpl <em>Root</em>}' class. <!--
@@ -115,10 +115,10 @@ public interface Model6Package extends EPackage
   int ROOT_FEATURE_COUNT = 4;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.BaseObjectImpl <em>Base Object</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.legacy.BaseObjectImpl <em>Base Object</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.model6.impl.BaseObjectImpl
-   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getBaseObject()
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.BaseObjectImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl#getBaseObject()
    * @generated
    */
   int BASE_OBJECT = 1;
@@ -160,10 +160,10 @@ public interface Model6Package extends EPackage
   int BASE_OBJECT_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.ReferenceObjectImpl <em>Reference Object</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.legacy.ReferenceObjectImpl <em>Reference Object</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.model6.impl.ReferenceObjectImpl
-   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getReferenceObject()
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.ReferenceObjectImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl#getReferenceObject()
    * @generated
    */
   int REFERENCE_OBJECT = 2;
@@ -223,10 +223,10 @@ public interface Model6Package extends EPackage
   int REFERENCE_OBJECT_FEATURE_COUNT = BASE_OBJECT_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.ContainmentObjectImpl <em>Containment Object</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.legacy.ContainmentObjectImpl <em>Containment Object</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.model6.impl.ContainmentObjectImpl
-   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getContainmentObject()
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.ContainmentObjectImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl#getContainmentObject()
    * @generated
    */
   int CONTAINMENT_OBJECT = 3;
@@ -286,10 +286,10 @@ public interface Model6Package extends EPackage
   int CONTAINMENT_OBJECT_FEATURE_COUNT = BASE_OBJECT_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.UnorderedListImpl <em>Unordered List</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.legacy.UnorderedListImpl <em>Unordered List</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.model6.impl.UnorderedListImpl
-   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getUnorderedList()
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.UnorderedListImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl#getUnorderedList()
    * @generated
    */
   int UNORDERED_LIST = 4;
@@ -321,11 +321,11 @@ public interface Model6Package extends EPackage
   int UNORDERED_LIST_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapImpl <em>Properties Map</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.legacy.PropertiesMapImpl <em>Properties Map</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapImpl
-   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getPropertiesMap()
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.PropertiesMapImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl#getPropertiesMap()
    * @generated
    */
   int PROPERTIES_MAP = 5;
@@ -367,11 +367,11 @@ public interface Model6Package extends EPackage
   int PROPERTIES_MAP_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryImpl <em>Properties Map Entry</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.legacy.PropertiesMapEntryImpl <em>Properties Map Entry</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryImpl
-   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getPropertiesMapEntry()
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.PropertiesMapEntryImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl#getPropertiesMapEntry()
    * @generated
    */
   int PROPERTIES_MAP_ENTRY = 6;
@@ -404,11 +404,11 @@ public interface Model6Package extends EPackage
   int PROPERTIES_MAP_ENTRY_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryValueImpl <em>Properties Map Entry Value</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.legacy.PropertiesMapEntryValueImpl <em>Properties Map Entry Value</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryValueImpl
-   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getPropertiesMapEntryValue()
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.PropertiesMapEntryValueImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl#getPropertiesMapEntryValue()
    * @generated
    */
   int PROPERTIES_MAP_ENTRY_VALUE = 7;
@@ -593,11 +593,11 @@ public interface Model6Package extends EPackage
   int F_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.GImpl <em>G</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.legacy.GImpl <em>G</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.model6.impl.GImpl
-   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getG()
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.GImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl#getG()
    * @generated
    */
   int G = 14;
@@ -639,11 +639,11 @@ public interface Model6Package extends EPackage
   int G_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.MyEnumListImpl <em>My Enum List</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.legacy.MyEnumListImpl <em>My Enum List</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.model6.impl.MyEnumListImpl
-   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnumList()
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.MyEnumListImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl#getMyEnumList()
    * @generated
    */
   int MY_ENUM_LIST = 15;
@@ -667,11 +667,11 @@ public interface Model6Package extends EPackage
   int MY_ENUM_LIST_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.MyEnumListUnsettableImpl <em>My Enum List Unsettable</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.legacy.MyEnumListUnsettableImpl <em>My Enum List Unsettable</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.model6.impl.MyEnumListUnsettableImpl
-   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnumListUnsettable()
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.MyEnumListUnsettableImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl#getMyEnumListUnsettable()
    * @generated
    */
   int MY_ENUM_LIST_UNSETTABLE = 16;
@@ -695,11 +695,11 @@ public interface Model6Package extends EPackage
   int MY_ENUM_LIST_UNSETTABLE_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.HoldableImpl <em>Holdable</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.legacy.HoldableImpl <em>Holdable</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.model6.impl.HoldableImpl
-   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getHoldable()
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.HoldableImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl#getHoldable()
    * @generated
    */
   int HOLDABLE = 19;
@@ -723,11 +723,11 @@ public interface Model6Package extends EPackage
   int HOLDABLE_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.HolderImpl <em>Holder</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.legacy.HolderImpl <em>Holder</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.model6.impl.HolderImpl
-   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getHolder()
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.HolderImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl#getHolder()
    * @generated
    */
   int HOLDER = 17;
@@ -769,11 +769,11 @@ public interface Model6Package extends EPackage
   int HOLDER_FEATURE_COUNT = HOLDABLE_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.ThingImpl <em>Thing</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.legacy.ThingImpl <em>Thing</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.model6.impl.ThingImpl
-   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getThing()
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.ThingImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl#getThing()
    * @generated
    */
   int THING = 18;
@@ -797,11 +797,11 @@ public interface Model6Package extends EPackage
   int THING_FEATURE_COUNT = HOLDABLE_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.HasNillableAttributeImpl <em>Has Nillable Attribute</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.legacy.HasNillableAttributeImpl <em>Has Nillable Attribute</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.model6.impl.HasNillableAttributeImpl
-   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getHasNillableAttribute()
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.HasNillableAttributeImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl#getHasNillableAttribute()
    * @generated
    */
   int HAS_NILLABLE_ATTRIBUTE = 20;
@@ -829,7 +829,7 @@ public interface Model6Package extends EPackage
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.model6.MyEnum
-   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnum()
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl#getMyEnum()
    * @generated
    */
   int MY_ENUM = 21;
@@ -839,7 +839,7 @@ public interface Model6Package extends EPackage
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see java.lang.String
-   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyString()
+   * @see org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6PackageImpl#getMyString()
    * @generated
    */
   int MY_STRING = 22;
@@ -1445,517 +1445,5 @@ public interface Model6Package extends EPackage
    * @generated
    */
   Model6Factory getModel6Factory();
-
-  /**
-   * <!-- begin-user-doc --> Defines literals for the meta objects that represent
-   * <ul>
-   * <li>each class,</li>
-   * <li>each feature of each class,</li>
-   * <li>each enum,</li>
-   * <li>and each data type</li>
-   * </ul>
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  interface Literals
-  {
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.RootImpl <em>Root</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.tests.model6.impl.RootImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getRoot()
-     * @generated
-     */
-    EClass ROOT = eINSTANCE.getRoot();
-
-    /**
-     * The meta object literal for the '<em><b>List A</b></em>' containment reference list feature.
-     * <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ROOT__LIST_A = eINSTANCE.getRoot_ListA();
-
-    /**
-     * The meta object literal for the '<em><b>List B</b></em>' containment reference list feature.
-     * <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ROOT__LIST_B = eINSTANCE.getRoot_ListB();
-
-    /**
-     * The meta object literal for the '<em><b>List C</b></em>' containment reference list feature.
-     * <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ROOT__LIST_C = eINSTANCE.getRoot_ListC();
-
-    /**
-     * The meta object literal for the '<em><b>List D</b></em>' containment reference list feature.
-     * <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ROOT__LIST_D = eINSTANCE.getRoot_ListD();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.BaseObjectImpl <em>Base Object</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.tests.model6.impl.BaseObjectImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getBaseObject()
-     * @generated
-     */
-    EClass BASE_OBJECT = eINSTANCE.getBaseObject();
-
-    /**
-     * The meta object literal for the '<em><b>Attribute Optional</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute BASE_OBJECT__ATTRIBUTE_OPTIONAL = eINSTANCE.getBaseObject_AttributeOptional();
-
-    /**
-     * The meta object literal for the '<em><b>Attribute Required</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute BASE_OBJECT__ATTRIBUTE_REQUIRED = eINSTANCE.getBaseObject_AttributeRequired();
-
-    /**
-     * The meta object literal for the '<em><b>Attribute List</b></em>' attribute list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute BASE_OBJECT__ATTRIBUTE_LIST = eINSTANCE.getBaseObject_AttributeList();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.ReferenceObjectImpl <em>Reference Object</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.tests.model6.impl.ReferenceObjectImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getReferenceObject()
-     * @generated
-     */
-    EClass REFERENCE_OBJECT = eINSTANCE.getReferenceObject();
-
-    /**
-     * The meta object literal for the '<em><b>Reference Optional</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference REFERENCE_OBJECT__REFERENCE_OPTIONAL = eINSTANCE.getReferenceObject_ReferenceOptional();
-
-    /**
-     * The meta object literal for the '<em><b>Reference List</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference REFERENCE_OBJECT__REFERENCE_LIST = eINSTANCE.getReferenceObject_ReferenceList();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.ContainmentObjectImpl <em>Containment Object</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.tests.model6.impl.ContainmentObjectImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getContainmentObject()
-     * @generated
-     */
-    EClass CONTAINMENT_OBJECT = eINSTANCE.getContainmentObject();
-
-    /**
-     * The meta object literal for the '<em><b>Containment Optional</b></em>' containment reference feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    EReference CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL = eINSTANCE.getContainmentObject_ContainmentOptional();
-
-    /**
-     * The meta object literal for the '<em><b>Containment List</b></em>' containment reference list feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    EReference CONTAINMENT_OBJECT__CONTAINMENT_LIST = eINSTANCE.getContainmentObject_ContainmentList();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.UnorderedListImpl <em>Unordered List</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.tests.model6.impl.UnorderedListImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getUnorderedList()
-     * @generated
-     */
-    EClass UNORDERED_LIST = eINSTANCE.getUnorderedList();
-
-    /**
-     * The meta object literal for the '<em><b>Contained</b></em>' containment reference list feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    EReference UNORDERED_LIST__CONTAINED = eINSTANCE.getUnorderedList_Contained();
-
-    /**
-     * The meta object literal for the '<em><b>Referenced</b></em>' reference list feature.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * @generated
-     */
-    EReference UNORDERED_LIST__REFERENCED = eINSTANCE.getUnorderedList_Referenced();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapImpl <em>Properties Map</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getPropertiesMap()
-     * @generated
-     */
-    EClass PROPERTIES_MAP = eINSTANCE.getPropertiesMap();
-
-    /**
-     * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PROPERTIES_MAP__LABEL = eINSTANCE.getPropertiesMap_Label();
-
-    /**
-     * The meta object literal for the '<em><b>Persistent Map</b></em>' map feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PROPERTIES_MAP__PERSISTENT_MAP = eINSTANCE.getPropertiesMap_PersistentMap();
-
-    /**
-     * The meta object literal for the '<em><b>Transient Map</b></em>' map feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PROPERTIES_MAP__TRANSIENT_MAP = eINSTANCE.getPropertiesMap_TransientMap();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryImpl <em>Properties Map Entry</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getPropertiesMapEntry()
-     * @generated
-     */
-    EClass PROPERTIES_MAP_ENTRY = eINSTANCE.getPropertiesMapEntry();
-
-    /**
-     * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PROPERTIES_MAP_ENTRY__KEY = eINSTANCE.getPropertiesMapEntry_Key();
-
-    /**
-     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PROPERTIES_MAP_ENTRY__VALUE = eINSTANCE.getPropertiesMapEntry_Value();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryValueImpl <em>Properties Map Entry Value</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapEntryValueImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getPropertiesMapEntryValue()
-     * @generated
-     */
-    EClass PROPERTIES_MAP_ENTRY_VALUE = eINSTANCE.getPropertiesMapEntryValue();
-
-    /**
-     * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PROPERTIES_MAP_ENTRY_VALUE__LABEL = eINSTANCE.getPropertiesMapEntryValue_Label();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.AImpl <em>A</em>}' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see org.eclipse.emf.cdo.tests.model6.impl.AImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getA()
-     * @generated
-     */
-    EClass A = eINSTANCE.getA();
-
-    /**
-     * The meta object literal for the '<em><b>Owned Ds</b></em>' containment reference list feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    EReference A__OWNED_DS = eINSTANCE.getA_OwnedDs();
-
-    /**
-     * The meta object literal for the '<em><b>Owned Bs</b></em>' containment reference list feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    EReference A__OWNED_BS = eINSTANCE.getA_OwnedBs();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.BImpl <em>B</em>}' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see org.eclipse.emf.cdo.tests.model6.impl.BImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getB()
-     * @generated
-     */
-    EClass B = eINSTANCE.getB();
-
-    /**
-     * The meta object literal for the '<em><b>Owned C</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference B__OWNED_C = eINSTANCE.getB_OwnedC();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.CImpl <em>C</em>}' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see org.eclipse.emf.cdo.tests.model6.impl.CImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getC()
-     * @generated
-     */
-    EClass C = eINSTANCE.getC();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.DImpl <em>D</em>}' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see org.eclipse.emf.cdo.tests.model6.impl.DImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getD()
-     * @generated
-     */
-    EClass D = eINSTANCE.getD();
-
-    /**
-     * The meta object literal for the '<em><b>Data</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference D__DATA = eINSTANCE.getD_Data();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.EImpl <em>E</em>}' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see org.eclipse.emf.cdo.tests.model6.impl.EImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getE()
-     * @generated
-     */
-    EClass E = eINSTANCE.getE();
-
-    /**
-     * The meta object literal for the '<em><b>Owned As</b></em>' containment reference list feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    EReference E__OWNED_AS = eINSTANCE.getE_OwnedAs();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.FImpl <em>F</em>}' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see org.eclipse.emf.cdo.tests.model6.impl.FImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getF()
-     * @generated
-     */
-    EClass F = eINSTANCE.getF();
-
-    /**
-     * The meta object literal for the '<em><b>Owned Es</b></em>' containment reference list feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    EReference F__OWNED_ES = eINSTANCE.getF_OwnedEs();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.GImpl <em>G</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.tests.model6.impl.GImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getG()
-     * @generated
-     */
-    EClass G = eINSTANCE.getG();
-
-    /**
-     * The meta object literal for the '<em><b>Dummy</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute G__DUMMY = eINSTANCE.getG_Dummy();
-
-    /**
-     * The meta object literal for the '<em><b>Reference</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference G__REFERENCE = eINSTANCE.getG_Reference();
-
-    /**
-     * The meta object literal for the '<em><b>List</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference G__LIST = eINSTANCE.getG_List();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.MyEnumListImpl <em>My Enum List</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.tests.model6.impl.MyEnumListImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnumList()
-     * @generated
-     */
-    EClass MY_ENUM_LIST = eINSTANCE.getMyEnumList();
-
-    /**
-     * The meta object literal for the '<em><b>My Enum</b></em>' attribute list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute MY_ENUM_LIST__MY_ENUM = eINSTANCE.getMyEnumList_MyEnum();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.MyEnumListUnsettableImpl <em>My Enum List Unsettable</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.tests.model6.impl.MyEnumListUnsettableImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnumListUnsettable()
-     * @generated
-     */
-    EClass MY_ENUM_LIST_UNSETTABLE = eINSTANCE.getMyEnumListUnsettable();
-
-    /**
-     * The meta object literal for the '<em><b>My Enum</b></em>' attribute list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute MY_ENUM_LIST_UNSETTABLE__MY_ENUM = eINSTANCE.getMyEnumListUnsettable_MyEnum();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.HolderImpl <em>Holder</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.tests.model6.impl.HolderImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getHolder()
-     * @generated
-     */
-    EClass HOLDER = eINSTANCE.getHolder();
-
-    /**
-     * The meta object literal for the '<em><b>Held</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference HOLDER__HELD = eINSTANCE.getHolder_Held();
-
-    /**
-     * The meta object literal for the '<em><b>Owned</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference HOLDER__OWNED = eINSTANCE.getHolder_Owned();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.ThingImpl <em>Thing</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.tests.model6.impl.ThingImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getThing()
-     * @generated
-     */
-    EClass THING = eINSTANCE.getThing();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.HoldableImpl <em>Holdable</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.tests.model6.impl.HoldableImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getHoldable()
-     * @generated
-     */
-    EClass HOLDABLE = eINSTANCE.getHoldable();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute HOLDABLE__NAME = eINSTANCE.getHoldable_Name();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.HasNillableAttributeImpl <em>Has Nillable Attribute</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.tests.model6.impl.HasNillableAttributeImpl
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getHasNillableAttribute()
-     * @generated
-     */
-    EClass HAS_NILLABLE_ATTRIBUTE = eINSTANCE.getHasNillableAttribute();
-
-    /**
-     * The meta object literal for the '<em><b>Nillable</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute HAS_NILLABLE_ATTRIBUTE__NILLABLE = eINSTANCE.getHasNillableAttribute_Nillable();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}' enum.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.tests.model6.MyEnum
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnum()
-     * @generated
-     */
-    EEnum MY_ENUM = eINSTANCE.getMyEnum();
-
-    /**
-     * The meta object literal for the '<em>My String</em>' data type.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see java.lang.String
-     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyString()
-     * @generated
-     */
-    EDataType MY_STRING = eINSTANCE.getMyString();
-
-  }
 
 } // Model6Package

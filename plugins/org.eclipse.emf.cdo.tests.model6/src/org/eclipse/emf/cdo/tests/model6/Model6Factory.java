@@ -25,7 +25,7 @@ public interface Model6Factory extends EFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  Model6Factory eINSTANCE = org.eclipse.emf.cdo.tests.model6.impl.Model6FactoryImpl.init();
+  Model6Factory eINSTANCE = org.eclipse.emf.cdo.tests.model6.impl.legacy.Model6FactoryImpl.init();
 
   /**
    * Returns a new object of class '<em>Root</em>'.

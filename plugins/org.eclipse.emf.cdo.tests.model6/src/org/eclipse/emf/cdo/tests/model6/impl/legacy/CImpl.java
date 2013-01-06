@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model6.impl;
+package org.eclipse.emf.cdo.tests.model6.impl.legacy;
 
 import org.eclipse.emf.cdo.tests.legacy.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.C;

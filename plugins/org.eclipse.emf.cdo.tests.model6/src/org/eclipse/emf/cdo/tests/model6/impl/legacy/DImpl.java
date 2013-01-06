@@ -8,50 +8,47 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model6.impl;
+package org.eclipse.emf.cdo.tests.model6.impl.legacy;
 
 import org.eclipse.emf.cdo.tests.legacy.model6.Model6Package;
-import org.eclipse.emf.cdo.tests.model6.E;
-import org.eclipse.emf.cdo.tests.model6.F;
+import org.eclipse.emf.cdo.tests.model6.D;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-
-import java.util.Collection;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>F</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>D</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.FImpl#getOwnedEs <em>Owned Es</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.DImpl#getData <em>Data</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class FImpl extends EObjectImpl implements F
+public class DImpl extends EObjectImpl implements D
 {
   /**
-   * The cached value of the '{@link #getOwnedEs() <em>Owned Es</em>}' containment reference list.
-   * <!-- begin-user-doc
-   * --> <!-- end-user-doc -->
-   * @see #getOwnedEs()
+   * The cached value of the '{@link #getData() <em>Data</em>}' containment reference.
+   * <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * @see #getData()
    * @generated
    * @ordered
    */
-  protected EList<E> ownedEs;
+  protected EObject data;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected FImpl()
+  protected DImpl()
   {
     super();
   }
@@ -63,20 +60,57 @@ public class FImpl extends EObjectImpl implements F
   @Override
   protected EClass eStaticClass()
   {
-    return Model6Package.eINSTANCE.getF();
+    return Model6Package.eINSTANCE.getD();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public EList<E> getOwnedEs()
+  public EObject getData()
   {
-    if (ownedEs == null)
+    return data;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetData(EObject newData, NotificationChain msgs)
+  {
+    EObject oldData = data;
+    data = newData;
+    if (eNotificationRequired())
     {
-      ownedEs = new EObjectContainmentEList.Resolving<E>(E.class, this, Model6Package.F__OWNED_ES);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model6Package.D__DATA, oldData,
+          newData);
+      if (msgs == null)
+        msgs = notification;
+      else
+        msgs.add(notification);
     }
-    return ownedEs;
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  public void setData(EObject newData)
+  {
+    if (newData != data)
+    {
+      NotificationChain msgs = null;
+      if (data != null)
+        msgs = ((InternalEObject)data).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model6Package.D__DATA, null, msgs);
+      if (newData != null)
+        msgs = ((InternalEObject)newData).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model6Package.D__DATA, null, msgs);
+      msgs = basicSetData(newData, msgs);
+      if (msgs != null)
+        msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.D__DATA, newData, newData));
   }
 
   /**
@@ -88,8 +122,8 @@ public class FImpl extends EObjectImpl implements F
   {
     switch (featureID)
     {
-    case Model6Package.F__OWNED_ES:
-      return ((InternalEList<?>)getOwnedEs()).basicRemove(otherEnd, msgs);
+    case Model6Package.D__DATA:
+      return basicSetData(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -103,8 +137,8 @@ public class FImpl extends EObjectImpl implements F
   {
     switch (featureID)
     {
-    case Model6Package.F__OWNED_ES:
-      return getOwnedEs();
+    case Model6Package.D__DATA:
+      return getData();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -113,15 +147,13 @@ public class FImpl extends EObjectImpl implements F
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-    case Model6Package.F__OWNED_ES:
-      getOwnedEs().clear();
-      getOwnedEs().addAll((Collection<? extends E>)newValue);
+    case Model6Package.D__DATA:
+      setData((EObject)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -136,8 +168,8 @@ public class FImpl extends EObjectImpl implements F
   {
     switch (featureID)
     {
-    case Model6Package.F__OWNED_ES:
-      getOwnedEs().clear();
+    case Model6Package.D__DATA:
+      setData((EObject)null);
       return;
     }
     super.eUnset(featureID);
@@ -152,10 +184,10 @@ public class FImpl extends EObjectImpl implements F
   {
     switch (featureID)
     {
-    case Model6Package.F__OWNED_ES:
-      return ownedEs != null && !ownedEs.isEmpty();
+    case Model6Package.D__DATA:
+      return data != null;
     }
     return super.eIsSet(featureID);
   }
 
-} // FImpl
+} // DImpl

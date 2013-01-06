@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.model3.subpackage.legacy;
 
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
+
 import org.eclipse.emf.ecore.EFactory;
 
 /**

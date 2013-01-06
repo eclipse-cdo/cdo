@@ -421,4 +421,4 @@ public class model4interfacesAdapterFactory extends AdapterFactoryImpl
     return null;
   }
 
-} //model4interfacesAdapterFactory
+} // model4interfacesAdapterFactory

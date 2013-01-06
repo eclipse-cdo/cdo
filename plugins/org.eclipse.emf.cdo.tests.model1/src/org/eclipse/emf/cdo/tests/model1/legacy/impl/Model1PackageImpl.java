@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import java.util.Map;
+
 //import org.eclipse.emf.cdo.tests.model1.VAT;
 
 /**

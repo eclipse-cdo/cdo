@@ -2,14 +2,13 @@
  */
 package org.eclipse.emf.cdo.tests.model3.subpackage.legacy.util;
 
-import java.util.List;
-
-import org.eclipse.emf.cdo.tests.model3.subpackage.*;
-
+import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 import org.eclipse.emf.cdo.tests.model3.subpackage.legacy.SubpackagePackage;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+
+import java.util.List;
 
 /**
  * <!-- begin-user-doc -->
@@ -136,4 +135,4 @@ public class SubpackageSwitch<T>
     return null;
   }
 
-} //SubpackageSwitch
+} // SubpackageSwitch

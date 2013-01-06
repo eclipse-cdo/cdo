@@ -10,14 +10,15 @@
  */
 package org.eclipse.emf.cdo.tests.mango.legacy.util;
 
-import java.util.List;
-
-import org.eclipse.emf.cdo.tests.mango.*;
-
+import org.eclipse.emf.cdo.tests.mango.MangoParameter;
+import org.eclipse.emf.cdo.tests.mango.MangoValue;
+import org.eclipse.emf.cdo.tests.mango.MangoValueList;
 import org.eclipse.emf.cdo.tests.mango.legacy.MangoPackage;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+
+import java.util.List;
 
 /**
  * <!-- begin-user-doc -->
@@ -192,4 +193,4 @@ public class MangoSwitch<T>
     return null;
   }
 
-} //MangoSwitch
+} // MangoSwitch

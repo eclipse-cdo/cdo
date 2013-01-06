@@ -2,15 +2,24 @@
  */
 package org.eclipse.emf.cdo.tests.model3.legacy.util;
 
-import org.eclipse.emf.cdo.tests.model3.*;
-
+import org.eclipse.emf.cdo.tests.model3.Class1;
+import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
+import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;
+import org.eclipse.emf.cdo.tests.model3.ClassWithJavaObjectAttribute;
+import org.eclipse.emf.cdo.tests.model3.File;
+import org.eclipse.emf.cdo.tests.model3.Image;
+import org.eclipse.emf.cdo.tests.model3.MetaRef;
+import org.eclipse.emf.cdo.tests.model3.NodeA;
+import org.eclipse.emf.cdo.tests.model3.NodeB;
+import org.eclipse.emf.cdo.tests.model3.NodeC;
+import org.eclipse.emf.cdo.tests.model3.NodeD;
+import org.eclipse.emf.cdo.tests.model3.Polygon;
+import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 import org.eclipse.emf.cdo.tests.model3.legacy.Model3Package;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -382,4 +391,4 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
     return null;
   }
 
-} //Model3AdapterFactory
+} // Model3AdapterFactory

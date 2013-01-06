@@ -592,4 +592,4 @@ public class Model2AdapterFactory extends AdapterFactoryImpl
     return null;
   }
 
-} //Model2AdapterFactory
+} // Model2AdapterFactory

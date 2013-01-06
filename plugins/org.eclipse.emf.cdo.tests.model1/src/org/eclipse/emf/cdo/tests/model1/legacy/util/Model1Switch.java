@@ -10,15 +10,24 @@
  */
 package org.eclipse.emf.cdo.tests.model1.legacy.util;
 
-import java.util.List;
-import java.util.Map;
-
-import org.eclipse.emf.cdo.tests.model1.*;
-
+import org.eclipse.emf.cdo.tests.model1.Address;
+import org.eclipse.emf.cdo.tests.model1.Category;
+import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Customer;
+import org.eclipse.emf.cdo.tests.model1.Order;
+import org.eclipse.emf.cdo.tests.model1.OrderAddress;
+import org.eclipse.emf.cdo.tests.model1.OrderDetail;
+import org.eclipse.emf.cdo.tests.model1.Product1;
+import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+import org.eclipse.emf.cdo.tests.model1.SalesOrder;
+import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.model1.legacy.Model1Package;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc -->
@@ -433,4 +442,4 @@ public class Model1Switch<T>
     return null;
   }
 
-} //Model1Switch
+} // Model1Switch

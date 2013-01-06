@@ -174,4 +174,4 @@ public class ClassWithJavaObjectAttributeImpl extends EObjectImpl implements Cla
     return result.toString();
   }
 
-} //ClassWithJavaObjectAttributeImpl
+} // ClassWithJavaObjectAttributeImpl

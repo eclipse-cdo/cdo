@@ -214,4 +214,4 @@ public class HasNillableAttributeImpl extends EObjectImpl implements HasNillable
     return result.toString();
   }
 
-} //HasNillableAttributeImpl
+} // HasNillableAttributeImpl

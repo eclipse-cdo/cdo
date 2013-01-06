@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Parent;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
+
 import org.eclipse.emf.ecore.EFactory;
 
 /**

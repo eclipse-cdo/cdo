@@ -2,15 +2,33 @@
  */
 package org.eclipse.emf.cdo.tests.model6.legacy.util;
 
-import java.util.List;
-import java.util.Map;
-
-import org.eclipse.emf.cdo.tests.model6.*;
-
+import org.eclipse.emf.cdo.tests.model6.A;
+import org.eclipse.emf.cdo.tests.model6.B;
+import org.eclipse.emf.cdo.tests.model6.BaseObject;
+import org.eclipse.emf.cdo.tests.model6.C;
+import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
+import org.eclipse.emf.cdo.tests.model6.D;
+import org.eclipse.emf.cdo.tests.model6.E;
+import org.eclipse.emf.cdo.tests.model6.F;
+import org.eclipse.emf.cdo.tests.model6.G;
+import org.eclipse.emf.cdo.tests.model6.HasNillableAttribute;
+import org.eclipse.emf.cdo.tests.model6.Holdable;
+import org.eclipse.emf.cdo.tests.model6.Holder;
+import org.eclipse.emf.cdo.tests.model6.MyEnumList;
+import org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable;
+import org.eclipse.emf.cdo.tests.model6.PropertiesMap;
+import org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue;
+import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
+import org.eclipse.emf.cdo.tests.model6.Root;
+import org.eclipse.emf.cdo.tests.model6.Thing;
+import org.eclipse.emf.cdo.tests.model6.UnorderedList;
 import org.eclipse.emf.cdo.tests.model6.legacy.Model6Package;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc -->
@@ -626,4 +644,4 @@ public class Model6Switch<T>
     return null;
   }
 
-} //Model6Switch
+} // Model6Switch

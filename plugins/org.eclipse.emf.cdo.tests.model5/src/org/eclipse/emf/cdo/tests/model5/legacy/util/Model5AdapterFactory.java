@@ -10,15 +10,27 @@
  */
 package org.eclipse.emf.cdo.tests.model5.legacy.util;
 
-import org.eclipse.emf.cdo.tests.model5.*;
-
+import org.eclipse.emf.cdo.tests.model5.Child;
+import org.eclipse.emf.cdo.tests.model5.Doctor;
+import org.eclipse.emf.cdo.tests.model5.GenListOfBoolean;
+import org.eclipse.emf.cdo.tests.model5.GenListOfChar;
+import org.eclipse.emf.cdo.tests.model5.GenListOfDate;
+import org.eclipse.emf.cdo.tests.model5.GenListOfDouble;
+import org.eclipse.emf.cdo.tests.model5.GenListOfFloat;
+import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
+import org.eclipse.emf.cdo.tests.model5.GenListOfIntArray;
+import org.eclipse.emf.cdo.tests.model5.GenListOfInteger;
+import org.eclipse.emf.cdo.tests.model5.GenListOfLong;
+import org.eclipse.emf.cdo.tests.model5.GenListOfShort;
+import org.eclipse.emf.cdo.tests.model5.GenListOfString;
+import org.eclipse.emf.cdo.tests.model5.Manager;
+import org.eclipse.emf.cdo.tests.model5.Parent;
+import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 import org.eclipse.emf.cdo.tests.model5.legacy.Model5Package;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -460,4 +472,4 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
     return null;
   }
 
-} //Model5AdapterFactory
+} // Model5AdapterFactory

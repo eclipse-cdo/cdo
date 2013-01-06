@@ -44,6 +44,7 @@ import org.eclipse.emf.cdo.tests.model4.RefSingleNonContained;
 import org.eclipse.emf.cdo.tests.model4.RefSingleNonContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.SingleContainedElement;
 import org.eclipse.emf.cdo.tests.model4.SingleNonContainedElement;
+
 import org.eclipse.emf.ecore.EFactory;
 
 /**

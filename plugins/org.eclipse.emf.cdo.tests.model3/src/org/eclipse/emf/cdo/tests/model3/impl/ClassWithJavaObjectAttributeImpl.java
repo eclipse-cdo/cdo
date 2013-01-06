@@ -76,4 +76,4 @@ public class ClassWithJavaObjectAttributeImpl extends CDOObjectImpl implements C
     eSet(Model3Package.eINSTANCE.getClassWithJavaObjectAttribute_JavaObject(), newJavaObject);
   }
 
-} //ClassWithJavaObjectAttributeImpl
+} // ClassWithJavaObjectAttributeImpl

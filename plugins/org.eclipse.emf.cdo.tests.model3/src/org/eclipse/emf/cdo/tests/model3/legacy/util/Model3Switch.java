@@ -2,14 +2,25 @@
  */
 package org.eclipse.emf.cdo.tests.model3.legacy.util;
 
-import java.util.List;
-
-import org.eclipse.emf.cdo.tests.model3.*;
-
+import org.eclipse.emf.cdo.tests.model3.Class1;
+import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
+import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;
+import org.eclipse.emf.cdo.tests.model3.ClassWithJavaObjectAttribute;
+import org.eclipse.emf.cdo.tests.model3.File;
+import org.eclipse.emf.cdo.tests.model3.Image;
+import org.eclipse.emf.cdo.tests.model3.MetaRef;
+import org.eclipse.emf.cdo.tests.model3.NodeA;
+import org.eclipse.emf.cdo.tests.model3.NodeB;
+import org.eclipse.emf.cdo.tests.model3.NodeC;
+import org.eclipse.emf.cdo.tests.model3.NodeD;
+import org.eclipse.emf.cdo.tests.model3.Polygon;
+import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 import org.eclipse.emf.cdo.tests.model3.legacy.Model3Package;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+
+import java.util.List;
 
 /**
  * <!-- begin-user-doc -->
@@ -424,4 +435,4 @@ public class Model3Switch<T>
     return null;
   }
 
-} //Model3Switch
+} // Model3Switch

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.mango.legacy;
 import org.eclipse.emf.cdo.tests.mango.MangoParameter;
 import org.eclipse.emf.cdo.tests.mango.MangoValue;
 import org.eclipse.emf.cdo.tests.mango.MangoValueList;
+
 import org.eclipse.emf.ecore.EFactory;
 
 /**

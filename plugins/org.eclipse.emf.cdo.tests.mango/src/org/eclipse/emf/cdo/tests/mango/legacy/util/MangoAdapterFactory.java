@@ -10,15 +10,14 @@
  */
 package org.eclipse.emf.cdo.tests.mango.legacy.util;
 
-import org.eclipse.emf.cdo.tests.mango.*;
-
+import org.eclipse.emf.cdo.tests.mango.MangoParameter;
+import org.eclipse.emf.cdo.tests.mango.MangoValue;
+import org.eclipse.emf.cdo.tests.mango.MangoValueList;
 import org.eclipse.emf.cdo.tests.mango.legacy.MangoPackage;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -180,4 +179,4 @@ public class MangoAdapterFactory extends AdapterFactoryImpl
     return null;
   }
 
-} //MangoAdapterFactory
+} // MangoAdapterFactory

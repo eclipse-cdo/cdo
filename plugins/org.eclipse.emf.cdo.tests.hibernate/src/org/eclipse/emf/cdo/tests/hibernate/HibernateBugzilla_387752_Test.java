@@ -38,7 +38,7 @@ public class HibernateBugzilla_387752_Test extends AbstractCDOTest
     final HibernateConfig hbConfig = (HibernateConfig)repConfig;
     hbConfig.getAdditionalProperties().put(PersistenceOptions.HANDLE_UNSET_AS_NULL, "false");
     org.eclipse.emf.cdo.tests.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(1);
-    org.eclipse.emf.cdo.tests.legacy.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(1);
+    org.eclipse.emf.cdo.tests.model1.legacy.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(1);
     super.doSetUp();
   }
 
@@ -48,7 +48,7 @@ public class HibernateBugzilla_387752_Test extends AbstractCDOTest
     final IRepositoryConfig repConfig = getRepositoryConfig();
     final HibernateConfig hbConfig = (HibernateConfig)repConfig;
     org.eclipse.emf.cdo.tests.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(0);
-    org.eclipse.emf.cdo.tests.legacy.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(0);
+    org.eclipse.emf.cdo.tests.model1.legacy.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(0);
     hbConfig.getAdditionalProperties().clear();
     super.doTearDown();
   }

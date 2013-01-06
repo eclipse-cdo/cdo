@@ -173,67 +173,67 @@ public abstract class ModelConfig extends Config implements IModelConfig
 
     public MangoFactory getMangoFactory()
     {
-      return org.eclipse.emf.cdo.tests.legacy.mango.impl.MangoFactoryImpl.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.mango.legacy.impl.MangoFactoryImpl.eINSTANCE;
     }
 
     public MangoPackage getMangoPackage()
     {
-      return org.eclipse.emf.cdo.tests.legacy.mango.impl.MangoPackageImpl.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.mango.legacy.impl.MangoPackageImpl.eINSTANCE;
     }
 
     public Model1Factory getModel1Factory()
     {
-      return org.eclipse.emf.cdo.tests.legacy.model1.Model1Factory.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.model1.legacy.Model1Factory.eINSTANCE;
     }
 
     public Model1Package getModel1Package()
     {
-      return org.eclipse.emf.cdo.tests.legacy.model1.Model1Package.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.model1.legacy.Model1Package.eINSTANCE;
     }
 
     public Model2Factory getModel2Factory()
     {
-      return org.eclipse.emf.cdo.tests.legacy.model2.Model2Factory.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.model2.legacy.Model2Factory.eINSTANCE;
     }
 
     public Model2Package getModel2Package()
     {
-      return org.eclipse.emf.cdo.tests.legacy.model2.Model2Package.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.model2.legacy.Model2Package.eINSTANCE;
     }
 
     public Model3Factory getModel3Factory()
     {
-      return org.eclipse.emf.cdo.tests.legacy.model3.Model3Factory.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.model3.legacy.Model3Factory.eINSTANCE;
     }
 
     public Model3Package getModel3Package()
     {
-      return org.eclipse.emf.cdo.tests.legacy.model3.Model3Package.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.model3.legacy.Model3Package.eINSTANCE;
     }
 
     public SubpackageFactory getModel3SubPackageFactory()
     {
-      return org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackageFactory.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.model3.subpackage.legacy.SubpackageFactory.eINSTANCE;
     }
 
     public SubpackagePackage getModel3SubPackagePackage()
     {
-      return org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackagePackage.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.model3.subpackage.legacy.SubpackagePackage.eINSTANCE;
     }
 
     public model4Factory getModel4Factory()
     {
-      return org.eclipse.emf.cdo.tests.legacy.model4.model4Factory.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.model4.legacy.model4Factory.eINSTANCE;
     }
 
     public model4Package getModel4Package()
     {
-      return org.eclipse.emf.cdo.tests.legacy.model4.model4Package.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.model4.legacy.model4Package.eINSTANCE;
     }
 
     public model4interfacesPackage getModel4InterfacesPackage()
     {
-      return org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesPackage.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.model4interfaces.legacy.model4interfacesPackage.eINSTANCE;
     }
 
     public Model5Factory getModel5Factory()

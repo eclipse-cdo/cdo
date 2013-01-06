@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
+import org.eclipse.emf.cdo.tests.model6.HasNillableAttribute;
 import org.eclipse.emf.cdo.tests.model6.Holder;
 import org.eclipse.emf.cdo.tests.model6.Model6Factory;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
@@ -129,6 +130,8 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
       return createHolder();
     case Model6Package.THING:
       return createThing();
+    case Model6Package.HAS_NILLABLE_ATTRIBUTE:
+      return createHasNillableAttribute();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -146,6 +149,8 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
     {
     case Model6Package.MY_ENUM:
       return createMyEnumFromString(eDataType, initialValue);
+    case Model6Package.MY_STRING:
+      return createMyStringFromString(eDataType, initialValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -163,6 +168,8 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
     {
     case Model6Package.MY_ENUM:
       return convertMyEnumToString(eDataType, instanceValue);
+    case Model6Package.MY_STRING:
+      return convertMyStringToString(eDataType, instanceValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -371,14 +378,23 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  public HasNillableAttribute createHasNillableAttribute()
+  {
+    HasNillableAttributeImpl hasNillableAttribute = new HasNillableAttributeImpl();
+    return hasNillableAttribute;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public MyEnum createMyEnumFromString(EDataType eDataType, String initialValue)
   {
     MyEnum result = MyEnum.get(initialValue);
     if (result == null)
-    {
       throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
           + eDataType.getName() + "'");
-    }
     return result;
   }
 
@@ -390,6 +406,26 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
   public String convertMyEnumToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String createMyStringFromString(EDataType eDataType, String initialValue)
+  {
+    return (String)super.createFromString(eDataType, initialValue);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertMyStringToString(EDataType eDataType, Object instanceValue)
+  {
+    return super.convertToString(eDataType, instanceValue);
   }
 
   /**

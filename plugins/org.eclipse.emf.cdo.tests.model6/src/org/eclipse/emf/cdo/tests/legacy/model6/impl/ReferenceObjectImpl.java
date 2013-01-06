@@ -94,10 +94,8 @@ public class ReferenceObjectImpl extends BaseObjectImpl implements ReferenceObje
       if (referenceOptional != oldReferenceOptional)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model6Package.REFERENCE_OBJECT__REFERENCE_OPTIONAL,
               oldReferenceOptional, referenceOptional));
-        }
       }
     }
     return referenceOptional;
@@ -121,10 +119,8 @@ public class ReferenceObjectImpl extends BaseObjectImpl implements ReferenceObje
     BaseObject oldReferenceOptional = referenceOptional;
     referenceOptional = newReferenceOptional;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.REFERENCE_OBJECT__REFERENCE_OPTIONAL,
           oldReferenceOptional, referenceOptional));
-    }
   }
 
   /**
@@ -152,9 +148,7 @@ public class ReferenceObjectImpl extends BaseObjectImpl implements ReferenceObje
     {
     case Model6Package.REFERENCE_OBJECT__REFERENCE_OPTIONAL:
       if (resolve)
-      {
         return getReferenceOptional();
-      }
       return basicGetReferenceOptional();
     case Model6Package.REFERENCE_OBJECT__REFERENCE_LIST:
       return getReferenceList();

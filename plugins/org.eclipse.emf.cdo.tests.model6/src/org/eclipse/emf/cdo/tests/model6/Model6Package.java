@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.model6;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -796,6 +797,34 @@ public interface Model6Package extends EPackage
   int THING_FEATURE_COUNT = HOLDABLE_FEATURE_COUNT + 0;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.HasNillableAttributeImpl <em>Has Nillable Attribute</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model6.impl.HasNillableAttributeImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getHasNillableAttribute()
+   * @generated
+   */
+  int HAS_NILLABLE_ATTRIBUTE = 20;
+
+  /**
+   * The feature id for the '<em><b>Nillable</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HAS_NILLABLE_ATTRIBUTE__NILLABLE = 0;
+
+  /**
+   * The number of structural features of the '<em>Has Nillable Attribute</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HAS_NILLABLE_ATTRIBUTE_FEATURE_COUNT = 1;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}' enum.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -803,7 +832,17 @@ public interface Model6Package extends EPackage
    * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnum()
    * @generated
    */
-  int MY_ENUM = 20;
+  int MY_ENUM = 21;
+
+  /**
+   * The meta object id for the '<em>My String</em>' data type.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see java.lang.String
+   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyString()
+   * @generated
+   */
+  int MY_STRING = 22;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.Root <em>Root</em>}'. <!--
@@ -1358,6 +1397,27 @@ public interface Model6Package extends EPackage
   EAttribute getHoldable_Name();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.HasNillableAttribute <em>Has Nillable Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Has Nillable Attribute</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.HasNillableAttribute
+   * @generated
+   */
+  EClass getHasNillableAttribute();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.HasNillableAttribute#getNillable <em>Nillable</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Nillable</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.HasNillableAttribute#getNillable()
+   * @see #getHasNillableAttribute()
+   * @generated
+   */
+  EAttribute getHasNillableAttribute_Nillable();
+
+  /**
    * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1366,6 +1426,17 @@ public interface Model6Package extends EPackage
    * @generated
    */
   EEnum getMyEnum();
+
+  /**
+   * Returns the meta object for data type '{@link java.lang.String <em>My String</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for data type '<em>My String</em>'.
+   * @see java.lang.String
+   * @model instanceClass="java.lang.String"
+   * @generated
+   */
+  EDataType getMyString();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -1848,6 +1919,24 @@ public interface Model6Package extends EPackage
     EAttribute HOLDABLE__NAME = eINSTANCE.getHoldable_Name();
 
     /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.HasNillableAttributeImpl <em>Has Nillable Attribute</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.tests.model6.impl.HasNillableAttributeImpl
+     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getHasNillableAttribute()
+     * @generated
+     */
+    EClass HAS_NILLABLE_ATTRIBUTE = eINSTANCE.getHasNillableAttribute();
+
+    /**
+     * The meta object literal for the '<em><b>Nillable</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute HAS_NILLABLE_ATTRIBUTE__NILLABLE = eINSTANCE.getHasNillableAttribute_Nillable();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1856,6 +1945,16 @@ public interface Model6Package extends EPackage
      * @generated
      */
     EEnum MY_ENUM = eINSTANCE.getMyEnum();
+
+    /**
+     * The meta object literal for the '<em>My String</em>' data type.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see java.lang.String
+     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyString()
+     * @generated
+     */
+    EDataType MY_STRING = eINSTANCE.getMyString();
 
   }
 

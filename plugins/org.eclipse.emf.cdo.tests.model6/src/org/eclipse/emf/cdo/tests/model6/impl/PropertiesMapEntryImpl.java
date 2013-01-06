@@ -125,7 +125,7 @@ public class PropertiesMapEntryImpl extends CDOObjectImpl implements BasicEMap.E
     if (hash == -1)
     {
       Object theKey = getKey();
-      hash = theKey == null ? 0 : theKey.hashCode();
+      hash = (theKey == null ? 0 : theKey.hashCode());
     }
     return hash;
   }

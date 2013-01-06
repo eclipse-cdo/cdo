@@ -179,6 +179,15 @@ public interface Model6Factory extends EFactory
   Thing createThing();
 
   /**
+   * Returns a new object of class '<em>Has Nillable Attribute</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Has Nillable Attribute</em>'.
+   * @generated
+   */
+  HasNillableAttribute createHasNillableAttribute();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the package supported by this factory.

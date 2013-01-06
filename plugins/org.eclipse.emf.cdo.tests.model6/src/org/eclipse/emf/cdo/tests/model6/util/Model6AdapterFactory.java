@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
+import org.eclipse.emf.cdo.tests.model6.HasNillableAttribute;
 import org.eclipse.emf.cdo.tests.model6.Holdable;
 import org.eclipse.emf.cdo.tests.model6.Holder;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
@@ -215,6 +216,12 @@ public class Model6AdapterFactory extends AdapterFactoryImpl
     public Adapter caseHoldable(Holdable object)
     {
       return createHoldableAdapter();
+    }
+
+    @Override
+    public Adapter caseHasNillableAttribute(HasNillableAttribute object)
+    {
+      return createHasNillableAttributeAdapter();
     }
 
     @Override
@@ -519,6 +526,21 @@ public class Model6AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createHoldableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model6.HasNillableAttribute <em>Has Nillable Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model6.HasNillableAttribute
+   * @generated
+   */
+  public Adapter createHasNillableAttributeAdapter()
   {
     return null;
   }

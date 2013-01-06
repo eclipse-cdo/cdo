@@ -15,6 +15,7 @@
       <genEnumLiterals ecoreEnumLiteral="model6.ecore#//MyEnum/TWO"/>
       <genEnumLiterals ecoreEnumLiteral="model6.ecore#//MyEnum/THREE"/>
     </genEnums>
+    <genDataTypes ecoreDataType="model6.ecore#//MyString"/>
     <genClasses ecoreClass="model6.ecore#//Root">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//Root/listA"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//Root/listB"/>
@@ -88,6 +89,9 @@
     <genClasses ecoreClass="model6.ecore#//Thing"/>
     <genClasses image="false" ecoreClass="model6.ecore#//Holdable">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//Holdable/name"/>
+    </genClasses>
+    <genClasses ecoreClass="model6.ecore#//HasNillableAttribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//HasNillableAttribute/nillable"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

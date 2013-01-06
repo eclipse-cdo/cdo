@@ -94,10 +94,8 @@ public class PropertiesMapEntryValueImpl extends EObjectImpl implements Properti
     String oldLabel = label;
     label = newLabel;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.PROPERTIES_MAP_ENTRY_VALUE__LABEL, oldLabel,
           label));
-    }
   }
 
   /**
@@ -175,9 +173,7 @@ public class PropertiesMapEntryValueImpl extends EObjectImpl implements Properti
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (label: ");

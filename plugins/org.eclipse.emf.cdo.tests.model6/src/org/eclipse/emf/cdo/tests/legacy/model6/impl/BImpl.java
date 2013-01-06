@@ -83,13 +83,9 @@ public class BImpl extends EObjectImpl implements B
           msgs = newOwnedC.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model6Package.B__OWNED_C, null, msgs);
         }
         if (msgs != null)
-        {
           msgs.dispatch();
-        }
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model6Package.B__OWNED_C, oldOwnedC, ownedC));
-        }
       }
     }
     return ownedC;
@@ -118,13 +114,9 @@ public class BImpl extends EObjectImpl implements B
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model6Package.B__OWNED_C,
           oldOwnedC, newOwnedC);
       if (msgs == null)
-      {
         msgs = notification;
-      }
       else
-      {
         msgs.add(notification);
-      }
     }
     return msgs;
   }
@@ -139,25 +131,17 @@ public class BImpl extends EObjectImpl implements B
     {
       NotificationChain msgs = null;
       if (ownedC != null)
-      {
         msgs = ((InternalEObject)ownedC).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model6Package.B__OWNED_C, null,
             msgs);
-      }
       if (newOwnedC != null)
-      {
         msgs = ((InternalEObject)newOwnedC).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model6Package.B__OWNED_C, null,
             msgs);
-      }
       msgs = basicSetOwnedC(newOwnedC, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.B__OWNED_C, newOwnedC, newOwnedC));
-    }
   }
 
   /**
@@ -186,9 +170,7 @@ public class BImpl extends EObjectImpl implements B
     {
     case Model6Package.B__OWNED_C:
       if (resolve)
-      {
         return getOwnedC();
-      }
       return basicGetOwnedC();
     }
     return super.eGet(featureID, resolve, coreType);

@@ -110,9 +110,7 @@ public class PropertiesMapEntryImpl extends EObjectImpl implements BasicEMap.Ent
     String oldKey = key;
     key = newKey;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.PROPERTIES_MAP_ENTRY__KEY, oldKey, key));
-    }
   }
 
   /**
@@ -137,14 +135,10 @@ public class PropertiesMapEntryImpl extends EObjectImpl implements BasicEMap.Ent
               msgs);
         }
         if (msgs != null)
-        {
           msgs.dispatch();
-        }
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model6Package.PROPERTIES_MAP_ENTRY__VALUE,
               oldValue, value));
-        }
       }
     }
     return value;
@@ -174,13 +168,9 @@ public class PropertiesMapEntryImpl extends EObjectImpl implements BasicEMap.Ent
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           Model6Package.PROPERTIES_MAP_ENTRY__VALUE, oldValue, newValue);
       if (msgs == null)
-      {
         msgs = notification;
-      }
       else
-      {
         msgs.add(notification);
-      }
     }
     return msgs;
   }
@@ -196,26 +186,18 @@ public class PropertiesMapEntryImpl extends EObjectImpl implements BasicEMap.Ent
     {
       NotificationChain msgs = null;
       if (value != null)
-      {
         msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
             - Model6Package.PROPERTIES_MAP_ENTRY__VALUE, null, msgs);
-      }
       if (newValue != null)
-      {
         msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
             - Model6Package.PROPERTIES_MAP_ENTRY__VALUE, null, msgs);
-      }
       msgs = basicSetTypedValue(newValue, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.PROPERTIES_MAP_ENTRY__VALUE, newValue,
           newValue));
-    }
   }
 
   /**
@@ -248,9 +230,7 @@ public class PropertiesMapEntryImpl extends EObjectImpl implements BasicEMap.Ent
       return getTypedKey();
     case Model6Package.PROPERTIES_MAP_ENTRY__VALUE:
       if (resolve)
-      {
         return getTypedValue();
-      }
       return basicGetTypedValue();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -323,9 +303,7 @@ public class PropertiesMapEntryImpl extends EObjectImpl implements BasicEMap.Ent
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (key: ");
@@ -351,7 +329,7 @@ public class PropertiesMapEntryImpl extends EObjectImpl implements BasicEMap.Ent
     if (hash == -1)
     {
       Object theKey = getKey();
-      hash = theKey == null ? 0 : theKey.hashCode();
+      hash = (theKey == null ? 0 : theKey.hashCode());
     }
     return hash;
   }

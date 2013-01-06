@@ -115,4 +115,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="Holdable" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="HasNillableAttribute">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nillable" eType="#//MyString"
+        unsettable="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="MyString" instanceClassName="java.lang.String"/>
 </ecore:EPackage>

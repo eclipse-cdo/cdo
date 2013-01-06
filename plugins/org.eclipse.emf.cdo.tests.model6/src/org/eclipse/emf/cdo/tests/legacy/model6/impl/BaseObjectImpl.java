@@ -124,10 +124,8 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
     String oldAttributeOptional = attributeOptional;
     attributeOptional = newAttributeOptional;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.BASE_OBJECT__ATTRIBUTE_OPTIONAL,
           oldAttributeOptional, attributeOptional));
-    }
   }
 
   /**
@@ -148,10 +146,8 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
     String oldAttributeRequired = attributeRequired;
     attributeRequired = newAttributeRequired;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.BASE_OBJECT__ATTRIBUTE_REQUIRED,
           oldAttributeRequired, attributeRequired));
-    }
   }
 
   /**
@@ -261,9 +257,7 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (attributeOptional: ");

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
+import org.eclipse.emf.cdo.tests.model6.HasNillableAttribute;
 import org.eclipse.emf.cdo.tests.model6.Holder;
 import org.eclipse.emf.cdo.tests.model6.MyEnum;
 import org.eclipse.emf.cdo.tests.model6.MyEnumList;
@@ -50,14 +51,14 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
   /**
    * Creates the default factory implementation.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public static Model6Factory init()
   {
     try
     {
       Model6Factory theModel6Factory = (Model6Factory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/tests/model6/1.0.0");
+          .getEFactory("http://www.eclipse.org/emf/CDO/tests/legacy/model6/1.0.0");
       if (theModel6Factory != null)
       {
         return theModel6Factory;
@@ -127,6 +128,8 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
       return createHolder();
     case Model6Package.THING:
       return createThing();
+    case Model6Package.HAS_NILLABLE_ATTRIBUTE:
+      return createHasNillableAttribute();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -144,6 +147,8 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
     {
     case Model6Package.MY_ENUM:
       return createMyEnumFromString(eDataType, initialValue);
+    case Model6Package.MY_STRING:
+      return createMyStringFromString(eDataType, initialValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -161,6 +166,8 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
     {
     case Model6Package.MY_ENUM:
       return convertMyEnumToString(eDataType, instanceValue);
+    case Model6Package.MY_STRING:
+      return convertMyStringToString(eDataType, instanceValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -369,6 +376,17 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  public HasNillableAttribute createHasNillableAttribute()
+  {
+    HasNillableAttributeImpl hasNillableAttribute = new HasNillableAttributeImpl();
+    return hasNillableAttribute;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public MyEnum createMyEnumFromString(EDataType eDataType, String initialValue)
   {
     MyEnum result = MyEnum.get(initialValue);
@@ -388,6 +406,26 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
   public String convertMyEnumToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String createMyStringFromString(EDataType eDataType, String initialValue)
+  {
+    return (String)super.createFromString(eDataType, initialValue);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertMyStringToString(EDataType eDataType, Object instanceValue)
+  {
+    return super.convertToString(eDataType, instanceValue);
   }
 
   /**

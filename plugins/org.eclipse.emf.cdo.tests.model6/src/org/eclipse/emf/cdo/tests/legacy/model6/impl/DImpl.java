@@ -85,13 +85,9 @@ public class DImpl extends EObjectImpl implements D
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model6Package.D__DATA, oldData,
           newData);
       if (msgs == null)
-      {
         msgs = notification;
-      }
       else
-      {
         msgs.add(notification);
-      }
     }
     return msgs;
   }
@@ -106,23 +102,15 @@ public class DImpl extends EObjectImpl implements D
     {
       NotificationChain msgs = null;
       if (data != null)
-      {
         msgs = ((InternalEObject)data).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model6Package.D__DATA, null, msgs);
-      }
       if (newData != null)
-      {
         msgs = ((InternalEObject)newData).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model6Package.D__DATA, null, msgs);
-      }
       msgs = basicSetData(newData, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.D__DATA, newData, newData));
-    }
   }
 
   /**

@@ -123,9 +123,7 @@ public class PropertiesMapImpl extends EObjectImpl implements PropertiesMap
     String oldLabel = label;
     label = newLabel;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.PROPERTIES_MAP__LABEL, oldLabel, label));
-    }
   }
 
   /**
@@ -190,22 +188,14 @@ public class PropertiesMapImpl extends EObjectImpl implements PropertiesMap
       return getLabel();
     case Model6Package.PROPERTIES_MAP__PERSISTENT_MAP:
       if (coreType)
-      {
         return getPersistentMap();
-      }
       else
-      {
         return getPersistentMap().map();
-      }
     case Model6Package.PROPERTIES_MAP__TRANSIENT_MAP:
       if (coreType)
-      {
         return getTransientMap();
-      }
       else
-      {
         return getTransientMap().map();
-      }
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -285,9 +275,7 @@ public class PropertiesMapImpl extends EObjectImpl implements PropertiesMap
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (label: ");

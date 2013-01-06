@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
+import org.eclipse.emf.cdo.tests.model6.HasNillableAttribute;
 import org.eclipse.emf.cdo.tests.model6.Holdable;
 import org.eclipse.emf.cdo.tests.model6.Holder;
 import org.eclipse.emf.cdo.tests.model6.MyEnum;
@@ -35,6 +36,7 @@ import org.eclipse.emf.cdo.tests.model6.UnorderedList;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -182,7 +184,21 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass hasNillableAttributeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EEnum myEnumEEnum = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EDataType myStringEDataType = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -752,9 +768,39 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getHasNillableAttribute()
+  {
+    return hasNillableAttributeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getHasNillableAttribute_Nillable()
+  {
+    return (EAttribute)hasNillableAttributeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EEnum getMyEnum()
   {
     return myEnumEEnum;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EDataType getMyString()
+  {
+    return myStringEDataType;
   }
 
   /**
@@ -860,8 +906,14 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     holdableEClass = createEClass(HOLDABLE);
     createEAttribute(holdableEClass, HOLDABLE__NAME);
 
+    hasNillableAttributeEClass = createEClass(HAS_NILLABLE_ATTRIBUTE);
+    createEAttribute(hasNillableAttributeEClass, HAS_NILLABLE_ATTRIBUTE__NILLABLE);
+
     // Create enums
     myEnumEEnum = createEEnum(MY_ENUM);
+
+    // Create data types
+    myStringEDataType = createEDataType(MY_STRING);
   }
 
   /**
@@ -1042,12 +1094,21 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     initEAttribute(getHoldable_Name(), ecorePackage.getEString(), "name", null, 1, 1, Holdable.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(hasNillableAttributeEClass, HasNillableAttribute.class, "HasNillableAttribute", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getHasNillableAttribute_Nillable(), getMyString(), "nillable", null, 0, 1,
+        HasNillableAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
     // Initialize enums and add enum literals
     initEEnum(myEnumEEnum, MyEnum.class, "MyEnum");
     addEEnumLiteral(myEnumEEnum, MyEnum.ZERO);
     addEEnumLiteral(myEnumEEnum, MyEnum.ONE);
     addEEnumLiteral(myEnumEEnum, MyEnum.TWO);
     addEEnumLiteral(myEnumEEnum, MyEnum.THREE);
+
+    // Initialize data types
+    initEDataType(myStringEDataType, String.class, "MyString", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);

@@ -24,18 +24,17 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.mango.impl.MangoValueListImpl#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.mango.impl.MangoValueListImpl#getValues <em>Values</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.impl.MangoValueListImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.impl.MangoValueListImpl#getValues <em>Values</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class MangoValueListImpl extends CDOObjectImpl implements MangoValueList
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected MangoValueListImpl()
@@ -45,7 +44,6 @@ public class MangoValueListImpl extends CDOObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -56,7 +54,6 @@ public class MangoValueListImpl extends CDOObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -67,7 +64,6 @@ public class MangoValueListImpl extends CDOObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -77,7 +73,6 @@ public class MangoValueListImpl extends CDOObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)
@@ -87,7 +82,6 @@ public class MangoValueListImpl extends CDOObjectImpl implements MangoValueList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

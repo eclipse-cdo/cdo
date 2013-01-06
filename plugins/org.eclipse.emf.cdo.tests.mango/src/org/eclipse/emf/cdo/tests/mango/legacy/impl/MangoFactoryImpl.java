@@ -8,14 +8,15 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.mango.impl;
+package org.eclipse.emf.cdo.tests.mango.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.mango.MangoFactory;
-import org.eclipse.emf.cdo.tests.legacy.mango.MangoPackage;
+//import org.eclipse.emf.cdo.tests.mango.*;
 import org.eclipse.emf.cdo.tests.mango.MangoParameter;
 import org.eclipse.emf.cdo.tests.mango.MangoValue;
 import org.eclipse.emf.cdo.tests.mango.MangoValueList;
 import org.eclipse.emf.cdo.tests.mango.ParameterPassing;
+import org.eclipse.emf.cdo.tests.mango.legacy.MangoFactory;
+import org.eclipse.emf.cdo.tests.mango.legacy.MangoPackage;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -26,7 +27,6 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- *
  * @generated
  */
 public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
@@ -34,7 +34,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   /**
    * @ADDED
    */
-  public static final MangoFactory eINSTANCE = org.eclipse.emf.cdo.tests.legacy.mango.impl.MangoFactoryImpl.init();
+  public static final MangoFactory eINSTANCE = org.eclipse.emf.cdo.tests.mango.legacy.impl.MangoFactoryImpl.init();
 
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -64,8 +64,8 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public MangoFactoryImpl()
@@ -75,7 +75,6 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   @Override
@@ -96,7 +95,6 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   @Override
@@ -113,7 +111,6 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   @Override
@@ -130,7 +127,6 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public MangoValueList createMangoValueList()
@@ -141,7 +137,6 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public MangoValue createMangoValue()
@@ -152,7 +147,6 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public MangoParameter createMangoParameter()
@@ -163,7 +157,6 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public ParameterPassing createParameterPassingFromString(EDataType eDataType, String initialValue)
@@ -179,7 +172,6 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public String convertParameterPassingToString(EDataType eDataType, Object instanceValue)
@@ -189,7 +181,6 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public MangoPackage getMangoPackage()
@@ -199,7 +190,6 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @deprecated
    * @generated
    */

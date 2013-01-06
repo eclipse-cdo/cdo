@@ -15,30 +15,31 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Value List</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.mango.MangoValueList#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.mango.MangoValueList#getValues <em>Values</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.MangoValueList#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.MangoValueList#getValues <em>Values</em>}</li>
  * </ul>
  * </p>
- * 
- * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getMangoValueList()
+ *
+ * @see org.eclipse.emf.cdo.tests.mango.legacy.MangoPackage#getMangoValueList()
  * @model
  * @generated
  */
 public interface MangoValueList extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getMangoValueList_Name()
+   * @see org.eclipse.emf.cdo.tests.mango.legacy.MangoPackage#getMangoValueList_Name()
    * @model
    * @generated
    */
@@ -47,25 +48,23 @@ public interface MangoValueList extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.tests.mango.MangoValueList#getName <em>Name</em>}' attribute.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Name</em>' attribute.
+   * @param value the new value of the '<em>Name</em>' attribute.
    * @see #getName()
    * @generated
    */
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Values</b></em>' reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.tests.mango.MangoValue}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Values</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.tests.mango.MangoValue}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Values</em>' reference list isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Values</em>' reference list.
-   * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getMangoValueList_Values()
+   * @see org.eclipse.emf.cdo.tests.mango.legacy.MangoPackage#getMangoValueList_Values()
    * @model
    * @generated
    */

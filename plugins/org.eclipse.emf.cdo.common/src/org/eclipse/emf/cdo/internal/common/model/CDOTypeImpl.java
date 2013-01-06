@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - Bug 299194: unsettable features inconsistent between revisions
  *    Erdal Karaca - added support for HASHMAP CDO Type
+ *    Christian W. Damus (CEA) - 378620 support unsettable features of custom data type
  */
 package org.eclipse.emf.cdo.internal.common.model;
 
@@ -34,6 +35,7 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Internal.DynamicValueHolder;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMap;
@@ -569,13 +571,14 @@ public abstract class CDOTypeImpl implements CDOType
     @Override
     public Object convertToEMF(EClassifier eType, Object value)
     {
-      return EcoreUtil.createFromString((EDataType)eType, (String)value);
+      return value == CDORevisionData.NIL ? DynamicValueHolder.NIL : EcoreUtil.createFromString((EDataType)eType,
+          (String)value);
     }
 
     @Override
     public Object convertToCDO(EClassifier eType, Object value)
     {
-      return EcoreUtil.convertToString((EDataType)eType, value);
+      return value == DynamicValueHolder.NIL ? CDORevisionData.NIL : EcoreUtil.convertToString((EDataType)eType, value);
     }
   };
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
+ *    Christian W. Damus (CEA) - 378620 support unsettable features of custom data type
  */
 package org.eclipse.emf.cdo.tests;
 
@@ -22,6 +23,7 @@ import org.eclipse.emf.cdo.tests.model3.ClassWithJavaObjectAttribute;
 import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
+import org.eclipse.emf.cdo.tests.model6.HasNillableAttribute;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -913,5 +915,43 @@ public class AttributeTest extends AbstractCDOTest
     ClassWithJavaObjectAttribute object = getModel3Factory().createClassWithJavaObjectAttribute();
     object.setJavaObject(javaObject);
     return object;
+  }
+
+  /**
+   * Bug 378620.
+   */
+  public void testNillableAttributeOfCustomType() throws Exception
+  {
+    HasNillableAttribute hasNonNull = getModel6Factory().createHasNillableAttribute();
+    hasNonNull.setNillable("not nil");
+    HasNillableAttribute hasImplicitNull = getModel6Factory().createHasNillableAttribute();
+    hasImplicitNull.unsetNillable(); // implicit null
+    HasNillableAttribute hasExplicitNull = getModel6Factory().createHasNillableAttribute();
+    hasExplicitNull.setNillable(null); // explicit null
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/my/nillable"));
+    resource.getContents().add(hasNonNull);
+    resource.getContents().add(hasImplicitNull);
+    resource.getContents().add(hasExplicitNull);
+    transaction.commit();
+    session.close();
+
+    session = openSession();
+    transaction = session.openTransaction();
+    resource = transaction.getResource(getResourcePath("/my/nillable"));
+    EList<EObject> contents = resource.getContents();
+    assertEquals(3, contents.size());
+
+    HasNillableAttribute hasNillable = (HasNillableAttribute)contents.get(0);
+    assertEquals("not nil", hasNillable.getNillable());
+    assertEquals(true, hasNillable.isSetNillable());
+    hasNillable = (HasNillableAttribute)contents.get(1);
+    assertNull(hasNillable.getNillable());
+    assertEquals(false, hasNillable.isSetNillable());
+    hasNillable = (HasNillableAttribute)contents.get(2);
+    assertNull(hasNillable.getNillable());
+    assertEquals(true, hasNillable.isSetNillable());
   }
 }

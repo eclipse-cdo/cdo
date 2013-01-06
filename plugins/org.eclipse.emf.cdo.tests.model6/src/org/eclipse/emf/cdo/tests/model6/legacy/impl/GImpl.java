@@ -8,11 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.model6.impl.legacy;
+package org.eclipse.emf.cdo.tests.model6.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.BaseObject;
 import org.eclipse.emf.cdo.tests.model6.G;
+import org.eclipse.emf.cdo.tests.model6.legacy.Model6Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -35,9 +35,9 @@ import java.util.List;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.GImpl#getDummy <em>Dummy</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.GImpl#getReference <em>Reference</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.GImpl#getList <em>List</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.GImpl#getDummy <em>Dummy</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.GImpl#getReference <em>Reference</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.GImpl#getList <em>List</em>}</li>
  * </ul>
  * </p>
  *

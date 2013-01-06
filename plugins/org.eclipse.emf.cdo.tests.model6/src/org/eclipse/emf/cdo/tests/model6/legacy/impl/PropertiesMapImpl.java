@@ -8,11 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.model6.impl.legacy;
+package org.eclipse.emf.cdo.tests.model6.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.PropertiesMap;
 import org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue;
+import org.eclipse.emf.cdo.tests.model6.legacy.Model6Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -32,9 +32,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.PropertiesMapImpl#getLabel <em>Label</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.PropertiesMapImpl#getPersistentMap <em>Persistent Map</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.PropertiesMapImpl#getTransientMap <em>Transient Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.PropertiesMapImpl#getLabel <em>Label</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.PropertiesMapImpl#getPersistentMap <em>Persistent Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.PropertiesMapImpl#getTransientMap <em>Transient Map</em>}</li>
  * </ul>
  * </p>
  *

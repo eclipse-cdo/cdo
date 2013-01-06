@@ -8,10 +8,8 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.model6.impl.legacy;
+package org.eclipse.emf.cdo.tests.model6.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model6.Model6Factory;
-import org.eclipse.emf.cdo.tests.legacy.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.A;
 import org.eclipse.emf.cdo.tests.model6.B;
 import org.eclipse.emf.cdo.tests.model6.BaseObject;
@@ -32,6 +30,8 @@ import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
 import org.eclipse.emf.cdo.tests.model6.Thing;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
+import org.eclipse.emf.cdo.tests.model6.legacy.Model6Factory;
+import org.eclipse.emf.cdo.tests.model6.legacy.Model6Package;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -41,6 +41,8 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 import java.util.Map;
+
+//import org.eclipse.emf.cdo.tests.model6.*;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
@@ -391,10 +393,8 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
   {
     MyEnum result = MyEnum.get(initialValue);
     if (result == null)
-    {
       throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
           + eDataType.getName() + "'");
-    }
     return result;
   }
 

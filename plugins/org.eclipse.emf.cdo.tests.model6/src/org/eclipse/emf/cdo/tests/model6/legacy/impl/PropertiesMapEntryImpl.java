@@ -8,10 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.model6.impl.legacy;
+package org.eclipse.emf.cdo.tests.model6.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue;
+import org.eclipse.emf.cdo.tests.model6.legacy.Model6Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -30,8 +30,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.PropertiesMapEntryImpl#getTypedKey <em>Key</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.PropertiesMapEntryImpl#getTypedValue <em>Value</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.PropertiesMapEntryImpl#getTypedKey <em>Key</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.PropertiesMapEntryImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *

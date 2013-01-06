@@ -8,11 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.model6.impl.legacy;
+package org.eclipse.emf.cdo.tests.model6.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.A;
 import org.eclipse.emf.cdo.tests.model6.E;
+import org.eclipse.emf.cdo.tests.model6.legacy.Model6Package;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -29,7 +29,7 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.EImpl#getOwnedAs <em>Owned As</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.EImpl#getOwnedAs <em>Owned As</em>}</li>
  * </ul>
  * </p>
  *

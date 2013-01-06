@@ -39,7 +39,7 @@ public interface ReferenceObject extends BaseObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Reference Optional</em>' reference.
    * @see #setReferenceOptional(BaseObject)
-   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getReferenceObject_ReferenceOptional()
+   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getReferenceObject_ReferenceOptional()
    * @model
    * @generated
    */
@@ -64,7 +64,7 @@ public interface ReferenceObject extends BaseObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Reference List</em>' reference list.
-   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getReferenceObject_ReferenceList()
+   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getReferenceObject_ReferenceList()
    * @model
    * @generated
    */

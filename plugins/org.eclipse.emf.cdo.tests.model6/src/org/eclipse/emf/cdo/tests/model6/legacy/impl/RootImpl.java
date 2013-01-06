@@ -8,11 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.model6.impl.legacy;
+package org.eclipse.emf.cdo.tests.model6.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.BaseObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
+import org.eclipse.emf.cdo.tests.model6.legacy.Model6Package;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -29,10 +29,10 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListA <em>List A</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListB <em>List B</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListC <em>List C</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListD <em>List D</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.RootImpl#getListA <em>List A</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.RootImpl#getListB <em>List B</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.RootImpl#getListC <em>List C</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.RootImpl#getListD <em>List D</em>}</li>
  * </ul>
  * </p>
  *

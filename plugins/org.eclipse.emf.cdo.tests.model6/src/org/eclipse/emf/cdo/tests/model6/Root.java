@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getRoot()
+ * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getRoot()
  * @model
  * @generated
  */
@@ -42,7 +42,7 @@ public interface Root extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>List A</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getRoot_ListA()
+   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getRoot_ListA()
    * @model containment="true" resolveProxies="true"
    * @generated
    */
@@ -58,7 +58,7 @@ public interface Root extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>List B</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getRoot_ListB()
+   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getRoot_ListB()
    * @model containment="true" resolveProxies="true"
    * @generated
    */
@@ -74,7 +74,7 @@ public interface Root extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>List C</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getRoot_ListC()
+   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getRoot_ListC()
    * @model containment="true" resolveProxies="true"
    * @generated
    */
@@ -90,7 +90,7 @@ public interface Root extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>List D</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getRoot_ListD()
+   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getRoot_ListD()
    * @model containment="true" resolveProxies="true"
    * @generated
    */

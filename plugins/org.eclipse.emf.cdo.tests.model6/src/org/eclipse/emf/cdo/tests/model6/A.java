@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getA()
+ * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getA()
  * @model
  * @generated
  */
@@ -40,7 +40,7 @@ public interface A extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Owned Ds</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getA_OwnedDs()
+   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getA_OwnedDs()
    * @model containment="true" resolveProxies="true"
    * @generated
    */
@@ -56,7 +56,7 @@ public interface A extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Owned Bs</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getA_OwnedBs()
+   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getA_OwnedBs()
    * @model containment="true" resolveProxies="true"
    * @generated
    */

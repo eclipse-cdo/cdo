@@ -8,10 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.model6.impl.legacy;
+package org.eclipse.emf.cdo.tests.model6.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.BaseObject;
+import org.eclipse.emf.cdo.tests.model6.legacy.Model6Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
@@ -27,9 +27,9 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl#getAttributeOptional <em>Attribute Optional</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl#getAttributeRequired <em>Attribute Required</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl#getAttributeList <em>Attribute List</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.BaseObjectImpl#getAttributeOptional <em>Attribute Optional</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.BaseObjectImpl#getAttributeRequired <em>Attribute Required</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.BaseObjectImpl#getAttributeList <em>Attribute List</em>}</li>
  * </ul>
  * </p>
  *

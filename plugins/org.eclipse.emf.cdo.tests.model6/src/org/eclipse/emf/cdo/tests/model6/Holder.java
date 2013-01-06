@@ -17,7 +17,7 @@ import org.eclipse.emf.common.util.EList;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getHolder()
+ * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getHolder()
  * @model
  * @generated
  */
@@ -33,7 +33,7 @@ public interface Holder extends Holdable
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Held</em>' reference list.
-   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getHolder_Held()
+   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getHolder_Held()
    * @model transient="true" derived="true"
    *        annotation="http://www.eclipse.org/emf/CDO persistent='true' filter='owned'"
    * @generated
@@ -50,7 +50,7 @@ public interface Holder extends Holdable
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Owned</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getHolder_Owned()
+   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getHolder_Owned()
    * @model containment="true" resolveProxies="true"
    * @generated
    */

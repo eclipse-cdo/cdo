@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getHoldable()
+ * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getHoldable()
  * @model abstract="true"
  * @generated
  */
@@ -32,7 +32,7 @@ public interface Holdable extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getHoldable_Name()
+   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getHoldable_Name()
    * @model required="true"
    * @generated
    */

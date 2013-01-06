@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getD()
+ * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getD()
  * @model
  * @generated
  */
@@ -38,7 +38,7 @@ public interface D extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Data</em>' containment reference.
    * @see #setData(EObject)
-   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getD_Data()
+   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getD_Data()
    * @model containment="true"
    * @generated
    */

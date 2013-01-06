@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getPropertiesMapEntryValue()
+ * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getPropertiesMapEntryValue()
  * @model
  * @generated
  */
@@ -40,7 +40,7 @@ public interface PropertiesMapEntryValue extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Label</em>' attribute.
    * @see #setLabel(String)
-   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getPropertiesMapEntryValue_Label()
+   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getPropertiesMapEntryValue_Label()
    * @model
    * @generated
    */

@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getB()
+ * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getB()
  * @model
  * @generated
  */

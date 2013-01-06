@@ -8,47 +8,53 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model3.impl;
+package org.eclipse.emf.cdo.tests.model3.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
-import org.eclipse.emf.cdo.tests.model3.Point;
-import org.eclipse.emf.cdo.tests.model3.Polygon;
+import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
+import org.eclipse.emf.cdo.tests.model3.legacy.Model3Package;
 
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-
-import java.util.Collection;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Polygon</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Class With ID Attribute</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonImpl#getPoints <em>Points</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.ClassWithIDAttributeImpl#getId <em>Id</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class PolygonImpl extends EObjectImpl implements Polygon
+public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithIDAttribute
 {
   /**
-   * The cached value of the '{@link #getPoints() <em>Points</em>}' attribute list.
-   * <!-- begin-user-doc --> <!--
-   * end-user-doc -->
-   * @see #getPoints()
+   * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getId()
    * @generated
    * @ordered
    */
-  protected EList<Point> points;
+  protected static final String ID_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getId()
+   * @generated
+   * @ordered
+   */
+  protected String id = ID_EDEFAULT;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected PolygonImpl()
+  protected ClassWithIDAttributeImpl()
   {
     super();
   }
@@ -60,20 +66,28 @@ public class PolygonImpl extends EObjectImpl implements Polygon
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.eINSTANCE.getPolygon();
+    return Model3Package.eINSTANCE.getClassWithIDAttribute();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public EList<Point> getPoints()
+  public String getId()
   {
-    if (points == null)
-    {
-      points = new EDataTypeUniqueEList<Point>(Point.class, this, Model3Package.POLYGON__POINTS);
-    }
-    return points;
+    return id;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  public void setId(String newId)
+  {
+    String oldId = id;
+    id = newId;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.CLASS_WITH_ID_ATTRIBUTE__ID, oldId, id));
   }
 
   /**
@@ -85,8 +99,8 @@ public class PolygonImpl extends EObjectImpl implements Polygon
   {
     switch (featureID)
     {
-    case Model3Package.POLYGON__POINTS:
-      return getPoints();
+    case Model3Package.CLASS_WITH_ID_ATTRIBUTE__ID:
+      return getId();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -95,15 +109,13 @@ public class PolygonImpl extends EObjectImpl implements Polygon
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-    case Model3Package.POLYGON__POINTS:
-      getPoints().clear();
-      getPoints().addAll((Collection<? extends Point>)newValue);
+    case Model3Package.CLASS_WITH_ID_ATTRIBUTE__ID:
+      setId((String)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -118,8 +130,8 @@ public class PolygonImpl extends EObjectImpl implements Polygon
   {
     switch (featureID)
     {
-    case Model3Package.POLYGON__POINTS:
-      getPoints().clear();
+    case Model3Package.CLASS_WITH_ID_ATTRIBUTE__ID:
+      setId(ID_EDEFAULT);
       return;
     }
     super.eUnset(featureID);
@@ -134,8 +146,8 @@ public class PolygonImpl extends EObjectImpl implements Polygon
   {
     switch (featureID)
     {
-    case Model3Package.POLYGON__POINTS:
-      return points != null && !points.isEmpty();
+    case Model3Package.CLASS_WITH_ID_ATTRIBUTE__ID:
+      return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
     }
     return super.eIsSet(featureID);
   }
@@ -151,10 +163,10 @@ public class PolygonImpl extends EObjectImpl implements Polygon
       return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (points: ");
-    result.append(points);
+    result.append(" (id: ");
+    result.append(id);
     result.append(')');
     return result.toString();
   }
 
-} // PolygonImpl
+} // ClassWithIDAttributeImpl

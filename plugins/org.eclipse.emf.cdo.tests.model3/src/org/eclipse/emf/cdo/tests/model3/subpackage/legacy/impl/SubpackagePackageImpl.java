@@ -8,14 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl;
+package org.eclipse.emf.cdo.tests.model3.subpackage.legacy.impl;
 
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
-import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
-import org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3PackageImpl;
-import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackageFactory;
-import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackagePackage;
+import org.eclipse.emf.cdo.tests.model3.legacy.Model3Package;
+import org.eclipse.emf.cdo.tests.model3.legacy.impl.Model3PackageImpl;
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
+import org.eclipse.emf.cdo.tests.model3.subpackage.legacy.SubpackageFactory;
+import org.eclipse.emf.cdo.tests.model3.subpackage.legacy.SubpackagePackage;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;

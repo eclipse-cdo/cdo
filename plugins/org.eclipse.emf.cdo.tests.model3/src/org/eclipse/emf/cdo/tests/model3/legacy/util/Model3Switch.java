@@ -1,57 +1,43 @@
-/*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+/**
  */
-package org.eclipse.emf.cdo.tests.model3.util;
+package org.eclipse.emf.cdo.tests.model3.legacy.util;
 
-import org.eclipse.emf.cdo.tests.model3.Class1;
-import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
-import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;
-import org.eclipse.emf.cdo.tests.model3.ClassWithJavaObjectAttribute;
-import org.eclipse.emf.cdo.tests.model3.File;
-import org.eclipse.emf.cdo.tests.model3.Image;
-import org.eclipse.emf.cdo.tests.model3.MetaRef;
-import org.eclipse.emf.cdo.tests.model3.Model3Package;
-import org.eclipse.emf.cdo.tests.model3.NodeA;
-import org.eclipse.emf.cdo.tests.model3.NodeB;
-import org.eclipse.emf.cdo.tests.model3.NodeC;
-import org.eclipse.emf.cdo.tests.model3.NodeD;
-import org.eclipse.emf.cdo.tests.model3.Polygon;
-import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
+import java.util.List;
+
+import org.eclipse.emf.cdo.tests.model3.*;
+
+import org.eclipse.emf.cdo.tests.model3.legacy.Model3Package;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
-import java.util.List;
-
-//import org.eclipse.emf.cdo.tests.model3.*;
-
 /**
- * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call
- * {@link #doSwitch(EObject) doSwitch(object)} to invoke the <code>caseXXX</code> method for each class of the model,
- * starting with the actual class of the object and proceeding up the inheritance hierarchy until a non-null result is
- * returned, which is the result of the switch. <!-- end-user-doc -->
- * @see org.eclipse.emf.cdo.tests.model3.Model3Package
+ * <!-- begin-user-doc -->
+ * The <b>Switch</b> for the model's inheritance hierarchy.
+ * It supports the call {@link #doSwitch(EObject) doSwitch(object)}
+ * to invoke the <code>caseXXX</code> method for each class of the model,
+ * starting with the actual class of the object
+ * and proceeding up the inheritance hierarchy
+ * until a non-null result is returned,
+ * which is the result of the switch.
+ * <!-- end-user-doc -->
+ * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package
  * @generated
  */
 public class Model3Switch<T>
 {
   /**
    * The cached model package
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected static Model3Package modelPackage;
 
   /**
    * Creates an instance of the switch.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public Model3Switch()
@@ -64,7 +50,8 @@ public class Model3Switch<T>
 
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -75,7 +62,8 @@ public class Model3Switch<T>
 
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -94,7 +82,8 @@ public class Model3Switch<T>
 
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -213,8 +202,10 @@ public class Model3Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Class1</em>'.
-   * <!-- begin-user-doc --> This
-   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Class1</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -227,8 +218,10 @@ public class Model3Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Meta Ref</em>'.
-   * <!-- begin-user-doc --> This
-   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Meta Ref</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -241,8 +234,10 @@ public class Model3Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Polygon</em>'.
-   * <!-- begin-user-doc --> This
-   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Polygon</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -254,12 +249,12 @@ public class Model3Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Polygon With Duplicates</em>'. <!--
-   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
-   * end-user-doc -->
-   *
-   * @param object
-   *          the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>Polygon With Duplicates</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Polygon With Duplicates</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -271,8 +266,10 @@ public class Model3Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Node A</em>'.
-   * <!-- begin-user-doc --> This
-   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Node A</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -285,8 +282,10 @@ public class Model3Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Node B</em>'.
-   * <!-- begin-user-doc --> This
-   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Node B</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -299,8 +298,10 @@ public class Model3Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Node C</em>'.
-   * <!-- begin-user-doc --> This
-   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Node C</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -313,8 +314,10 @@ public class Model3Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Node D</em>'.
-   * <!-- begin-user-doc --> This
-   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Node D</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -327,8 +330,10 @@ public class Model3Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Image</em>'.
-   * <!-- begin-user-doc --> This
-   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Image</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -341,8 +346,10 @@ public class Model3Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>File</em>'.
-   * <!-- begin-user-doc --> This
-   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>File</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -354,12 +361,12 @@ public class Model3Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Class With ID Attribute</em>'. <!--
-   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
-   * end-user-doc -->
-   *
-   * @param object
-   *          the target of the switch.
+   * Returns the result of interpreting the object as an instance of '<em>Class With ID Attribute</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Class With ID Attribute</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -403,9 +410,10 @@ public class Model3Switch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
-   * <!-- begin-user-doc --> This
-   * implementation returns null; returning a non-null result will terminate the switch, but this is the last case
-   * anyway. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch, but this is the last case anyway.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
@@ -416,4 +424,4 @@ public class Model3Switch<T>
     return null;
   }
 
-} // Model3Switch
+} //Model3Switch

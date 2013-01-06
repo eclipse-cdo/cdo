@@ -8,11 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl;
+package org.eclipse.emf.cdo.tests.model3.subpackage.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackageFactory;
-import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackagePackage;
+//import org.eclipse.emf.cdo.tests.model3.subpackage.*;
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
+import org.eclipse.emf.cdo.tests.model3.subpackage.legacy.SubpackageFactory;
+import org.eclipse.emf.cdo.tests.model3.subpackage.legacy.SubpackagePackage;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -28,7 +29,7 @@ public class SubpackageFactoryImpl extends EFactoryImpl implements SubpackageFac
 {
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public static SubpackageFactory init()

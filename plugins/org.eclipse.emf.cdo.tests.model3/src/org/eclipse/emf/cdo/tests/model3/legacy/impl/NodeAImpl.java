@@ -8,10 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model3.impl;
+package org.eclipse.emf.cdo.tests.model3.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.NodeA;
+import org.eclipse.emf.cdo.tests.model3.legacy.Model3Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -31,9 +31,9 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeAImpl#getChildren <em>Children</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeAImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeAImpl#getOtherNodes <em>Other Nodes</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeAImpl#getChildren <em>Children</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeAImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeAImpl#getOtherNodes <em>Other Nodes</em>}</li>
  * </ul>
  * </p>
  *

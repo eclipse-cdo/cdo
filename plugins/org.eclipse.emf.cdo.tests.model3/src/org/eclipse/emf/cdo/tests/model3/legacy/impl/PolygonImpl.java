@@ -8,32 +8,31 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model3.impl;
+package org.eclipse.emf.cdo.tests.model3.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.Point;
-import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
+import org.eclipse.emf.cdo.tests.model3.Polygon;
+import org.eclipse.emf.cdo.tests.model3.legacy.Model3Package;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeEList;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Polygon With Duplicates</b></em>'. <!--
- * end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Polygon</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonWithDuplicatesImpl#getPoints <em>Points</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.PolygonImpl#getPoints <em>Points</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWithDuplicates
+public class PolygonImpl extends EObjectImpl implements Polygon
 {
   /**
    * The cached value of the '{@link #getPoints() <em>Points</em>}' attribute list.
@@ -49,7 +48,7 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected PolygonWithDuplicatesImpl()
+  protected PolygonImpl()
   {
     super();
   }
@@ -61,7 +60,7 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.eINSTANCE.getPolygonWithDuplicates();
+    return Model3Package.eINSTANCE.getPolygon();
   }
 
   /**
@@ -72,7 +71,7 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
   {
     if (points == null)
     {
-      points = new EDataTypeEList<Point>(Point.class, this, Model3Package.POLYGON_WITH_DUPLICATES__POINTS);
+      points = new EDataTypeUniqueEList<Point>(Point.class, this, Model3Package.POLYGON__POINTS);
     }
     return points;
   }
@@ -86,7 +85,7 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
   {
     switch (featureID)
     {
-    case Model3Package.POLYGON_WITH_DUPLICATES__POINTS:
+    case Model3Package.POLYGON__POINTS:
       return getPoints();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -102,7 +101,7 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
   {
     switch (featureID)
     {
-    case Model3Package.POLYGON_WITH_DUPLICATES__POINTS:
+    case Model3Package.POLYGON__POINTS:
       getPoints().clear();
       getPoints().addAll((Collection<? extends Point>)newValue);
       return;
@@ -119,7 +118,7 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
   {
     switch (featureID)
     {
-    case Model3Package.POLYGON_WITH_DUPLICATES__POINTS:
+    case Model3Package.POLYGON__POINTS:
       getPoints().clear();
       return;
     }
@@ -135,7 +134,7 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
   {
     switch (featureID)
     {
-    case Model3Package.POLYGON_WITH_DUPLICATES__POINTS:
+    case Model3Package.POLYGON__POINTS:
       return points != null && !points.isEmpty();
     }
     return super.eIsSet(featureID);
@@ -158,4 +157,4 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
     return result.toString();
   }
 
-} // PolygonWithDuplicatesImpl
+} // PolygonImpl

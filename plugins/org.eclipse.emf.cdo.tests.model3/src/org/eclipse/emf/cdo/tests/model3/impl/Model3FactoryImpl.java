@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.model3.impl;
 
+//import org.eclipse.emf.cdo.tests.model3.*;
 import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;
@@ -279,7 +280,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public Point createPointFromString(EDataType eDataType, String initialValue)
@@ -289,7 +290,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public String convertPointToString(EDataType eDataType, Object instanceValue)

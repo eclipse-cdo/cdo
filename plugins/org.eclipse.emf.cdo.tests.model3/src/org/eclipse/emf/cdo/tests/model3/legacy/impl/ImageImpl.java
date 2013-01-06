@@ -8,11 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model3.impl;
+package org.eclipse.emf.cdo.tests.model3.legacy.impl;
 
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
-import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.Image;
+import org.eclipse.emf.cdo.tests.model3.legacy.Model3Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -24,9 +24,9 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.ImageImpl#getWidth <em>Width</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.ImageImpl#getHeight <em>Height</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.ImageImpl#getData <em>Data</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.ImageImpl#getWidth <em>Width</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.ImageImpl#getHeight <em>Height</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.ImageImpl#getData <em>Data</em>}</li>
  * </ul>
  * </p>
  *

@@ -8,24 +8,27 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model3.subpackage;
+package org.eclipse.emf.cdo.tests.model3.subpackage.legacy;
 
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
+import org.eclipse.emf.ecore.EFactory;
 
 /**
- * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
- * the model. <!-- end-user-doc -->
- * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackagePackage
+ * <!-- begin-user-doc -->
+ * The <b>Factory</b> for the model. It provides a create method for each non-abstract class of the model.
+ * @extends org.eclipse.emf.cdo.tests.model3.subpackage.SubpackageFactory
+ * <!-- end-user-doc -->
+ * @see org.eclipse.emf.cdo.tests.model3.subpackage.legacy.SubpackagePackage
  * @generated
  */
-public interface SubpackageFactory extends org.eclipse.emf.cdo.tests.model3.subpackage.SubpackageFactory
+public interface SubpackageFactory extends EFactory, org.eclipse.emf.cdo.tests.model3.subpackage.SubpackageFactory
 {
   /**
    * The singleton instance of the factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  SubpackageFactory eINSTANCE = org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.SubpackageFactoryImpl.init();
+  SubpackageFactory eINSTANCE = org.eclipse.emf.cdo.tests.model3.subpackage.legacy.impl.SubpackageFactoryImpl.init();
 
   /**
    * Returns a new object of class '<em>Class2</em>'.

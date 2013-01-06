@@ -8,9 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model3.subpackage;
+package org.eclipse.emf.cdo.tests.model3.subpackage.legacy;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 /**
@@ -21,12 +22,13 @@ import org.eclipse.emf.ecore.EReference;
  * <li>each enum,</li>
  * <li>and each data type</li>
  * </ul>
+ * @extends org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage
  * <!-- end-user-doc -->
- * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackageFactory
+ * @see org.eclipse.emf.cdo.tests.model3.subpackage.legacy.SubpackageFactory
  * @model kind="package"
  * @generated
  */
-public interface SubpackagePackage extends org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage
+public interface SubpackagePackage extends EPackage, org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage
 {
   /**
    * The package name.
@@ -37,7 +39,7 @@ public interface SubpackagePackage extends org.eclipse.emf.cdo.tests.model3.subp
 
   /**
    * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/legacy/subpackage/1.0.0";
@@ -54,13 +56,13 @@ public interface SubpackagePackage extends org.eclipse.emf.cdo.tests.model3.subp
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  SubpackagePackage eINSTANCE = org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.SubpackagePackageImpl.init();
+  SubpackagePackage eINSTANCE = org.eclipse.emf.cdo.tests.model3.subpackage.legacy.impl.SubpackagePackageImpl.init();
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.Class2Impl <em>Class2</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.subpackage.legacy.impl.Class2Impl <em>Class2</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.Class2Impl
-   * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.SubpackagePackageImpl#getClass2()
+   * @see org.eclipse.emf.cdo.tests.model3.subpackage.legacy.impl.Class2Impl
+   * @see org.eclipse.emf.cdo.tests.model3.subpackage.legacy.impl.SubpackagePackageImpl#getClass2()
    * @generated
    */
   int CLASS2 = 0;
@@ -82,20 +84,20 @@ public interface SubpackagePackage extends org.eclipse.emf.cdo.tests.model3.subp
   int CLASS2_FEATURE_COUNT = 1;
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.subpackage.Class2 <em>Class2</em>}'.
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.subpackage.Class2 <em>Class2</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Class2</em>'.
-   * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.Class2
+   * @see org.eclipse.emf.cdo.tests.model3.subpackage.Class2
    * @generated
    */
   EClass getClass2();
 
   /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.legacy.model3.subpackage.Class2#getClass1 <em>Class1</em>}'.
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model3.subpackage.Class2#getClass1 <em>Class1</em>}'.
    * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
    * @return the meta object for the reference list '<em>Class1</em>'.
-   * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.Class2#getClass1()
+   * @see org.eclipse.emf.cdo.tests.model3.subpackage.Class2#getClass1()
    * @see #getClass2()
    * @generated
    */
@@ -123,10 +125,10 @@ public interface SubpackagePackage extends org.eclipse.emf.cdo.tests.model3.subp
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.Class2Impl <em>Class2</em>}' class.
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model3.subpackage.legacy.impl.Class2Impl <em>Class2</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.Class2Impl
-     * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.SubpackagePackageImpl#getClass2()
+     * @see org.eclipse.emf.cdo.tests.model3.subpackage.legacy.impl.Class2Impl
+     * @see org.eclipse.emf.cdo.tests.model3.subpackage.legacy.impl.SubpackagePackageImpl#getClass2()
      * @generated
      */
     EClass CLASS2 = eINSTANCE.getClass2();

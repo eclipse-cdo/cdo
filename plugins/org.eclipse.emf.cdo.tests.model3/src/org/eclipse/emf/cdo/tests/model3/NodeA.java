@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeA()
+ * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getNodeA()
  * @model
  * @generated
  */
@@ -41,7 +41,7 @@ public interface NodeA extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Children</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeA_Children()
+   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getNodeA_Children()
    * @model containment="true"
    * @generated
    */
@@ -56,7 +56,7 @@ public interface NodeA extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeA_Name()
+   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getNodeA_Name()
    * @model
    * @generated
    */
@@ -83,7 +83,7 @@ public interface NodeA extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Other Nodes</em>' reference list.
-   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeA_OtherNodes()
+   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getNodeA_OtherNodes()
    * @model
    * @generated
    */

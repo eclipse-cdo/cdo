@@ -8,53 +8,48 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model3.impl;
+package org.eclipse.emf.cdo.tests.model3.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
-import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
+import org.eclipse.emf.cdo.tests.model3.Point;
+import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
+import org.eclipse.emf.cdo.tests.model3.legacy.Model3Package;
 
-import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EDataTypeEList;
+
+import java.util.Collection;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Class With ID Attribute</b></em>'. <!--
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Polygon With Duplicates</b></em>'. <!--
  * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.ClassWithIDAttributeImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.PolygonWithDuplicatesImpl#getPoints <em>Points</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithIDAttribute
+public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWithDuplicates
 {
   /**
-   * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @see #getId()
+   * The cached value of the '{@link #getPoints() <em>Points</em>}' attribute list.
+   * <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * @see #getPoints()
    * @generated
    * @ordered
    */
-  protected static final String ID_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @see #getId()
-   * @generated
-   * @ordered
-   */
-  protected String id = ID_EDEFAULT;
+  protected EList<Point> points;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected ClassWithIDAttributeImpl()
+  protected PolygonWithDuplicatesImpl()
   {
     super();
   }
@@ -66,28 +61,20 @@ public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithID
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.eINSTANCE.getClassWithIDAttribute();
+    return Model3Package.eINSTANCE.getPolygonWithDuplicates();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public String getId()
+  public EList<Point> getPoints()
   {
-    return id;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  public void setId(String newId)
-  {
-    String oldId = id;
-    id = newId;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.CLASS_WITH_ID_ATTRIBUTE__ID, oldId, id));
+    if (points == null)
+    {
+      points = new EDataTypeEList<Point>(Point.class, this, Model3Package.POLYGON_WITH_DUPLICATES__POINTS);
+    }
+    return points;
   }
 
   /**
@@ -99,8 +86,8 @@ public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithID
   {
     switch (featureID)
     {
-    case Model3Package.CLASS_WITH_ID_ATTRIBUTE__ID:
-      return getId();
+    case Model3Package.POLYGON_WITH_DUPLICATES__POINTS:
+      return getPoints();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -109,13 +96,15 @@ public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithID
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-    case Model3Package.CLASS_WITH_ID_ATTRIBUTE__ID:
-      setId((String)newValue);
+    case Model3Package.POLYGON_WITH_DUPLICATES__POINTS:
+      getPoints().clear();
+      getPoints().addAll((Collection<? extends Point>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -130,8 +119,8 @@ public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithID
   {
     switch (featureID)
     {
-    case Model3Package.CLASS_WITH_ID_ATTRIBUTE__ID:
-      setId(ID_EDEFAULT);
+    case Model3Package.POLYGON_WITH_DUPLICATES__POINTS:
+      getPoints().clear();
       return;
     }
     super.eUnset(featureID);
@@ -146,8 +135,8 @@ public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithID
   {
     switch (featureID)
     {
-    case Model3Package.CLASS_WITH_ID_ATTRIBUTE__ID:
-      return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+    case Model3Package.POLYGON_WITH_DUPLICATES__POINTS:
+      return points != null && !points.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -163,10 +152,10 @@ public class ClassWithIDAttributeImpl extends EObjectImpl implements ClassWithID
       return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (id: ");
-    result.append(id);
+    result.append(" (points: ");
+    result.append(points);
     result.append(')');
     return result.toString();
   }
 
-} // ClassWithIDAttributeImpl
+} // PolygonWithDuplicatesImpl

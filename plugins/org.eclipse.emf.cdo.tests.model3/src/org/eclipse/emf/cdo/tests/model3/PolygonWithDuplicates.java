@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getPolygonWithDuplicates()
+ * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getPolygonWithDuplicates()
  * @model
  * @generated
  */
@@ -40,7 +40,7 @@ public interface PolygonWithDuplicates extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Points</em>' attribute list.
-   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getPolygonWithDuplicates_Points()
+   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getPolygonWithDuplicates_Points()
    * @model unique="false" dataType="org.eclipse.emf.cdo.tests.model3.Point" required="true"
    * @generated
    */

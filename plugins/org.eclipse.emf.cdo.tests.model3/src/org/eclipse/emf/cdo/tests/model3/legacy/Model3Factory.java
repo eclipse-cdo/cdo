@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model3;
+package org.eclipse.emf.cdo.tests.model3.legacy;
 
 import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
@@ -23,21 +23,24 @@ import org.eclipse.emf.cdo.tests.model3.NodeC;
 import org.eclipse.emf.cdo.tests.model3.NodeD;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
+import org.eclipse.emf.ecore.EFactory;
 
 /**
- * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
- * the model. <!-- end-user-doc -->
- * @see org.eclipse.emf.cdo.tests.legacy.model3.Model3Package
+ * <!-- begin-user-doc -->
+ * The <b>Factory</b> for the model. It provides a create method for each non-abstract class of the model.
+ * @extends org.eclipse.emf.cdo.tests.model3.Model3Factory
+ * <!-- end-user-doc -->
+ * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package
  * @generated
  */
-public interface Model3Factory extends org.eclipse.emf.cdo.tests.model3.Model3Factory
+public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model3.Model3Factory
 {
   /**
    * The singleton instance of the factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  Model3Factory eINSTANCE = org.eclipse.emf.cdo.tests.legacy.model3.impl.Model3FactoryImpl.init();
+  Model3Factory eINSTANCE = org.eclipse.emf.cdo.tests.model3.legacy.impl.Model3FactoryImpl.init();
 
   /**
    * Returns a new object of class '<em>Class1</em>'.

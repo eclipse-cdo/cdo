@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getImage()
+ * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getImage()
  * @model
  * @generated
  */
@@ -41,7 +41,7 @@ public interface Image extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Width</em>' attribute.
    * @see #setWidth(int)
-   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getImage_Width()
+   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getImage_Width()
    * @model
    * @generated
    */
@@ -67,7 +67,7 @@ public interface Image extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Height</em>' attribute.
    * @see #setHeight(int)
-   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getImage_Height()
+   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getImage_Height()
    * @model
    * @generated
    */
@@ -93,7 +93,7 @@ public interface Image extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Data</em>' attribute.
    * @see #setData(CDOBlob)
-   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getImage_Data()
+   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getImage_Data()
    * @model dataType="org.eclipse.emf.cdo.etypes.Blob"
    * @generated
    */

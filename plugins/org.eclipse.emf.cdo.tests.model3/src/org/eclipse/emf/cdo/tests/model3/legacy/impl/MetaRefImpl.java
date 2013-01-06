@@ -8,10 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model3.impl;
+package org.eclipse.emf.cdo.tests.model3.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
+import org.eclipse.emf.cdo.tests.model3.legacy.Model3Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -26,9 +26,9 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl#getEPackageRef <em>EPackage Ref</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl#getEClassRef <em>EClass Ref</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl#getEReferenceRef <em>EReference Ref</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.MetaRefImpl#getEPackageRef <em>EPackage Ref</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.MetaRefImpl#getEClassRef <em>EClass Ref</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.MetaRefImpl#getEReferenceRef <em>EReference Ref</em>}</li>
  * </ul>
  * </p>
  *

@@ -8,12 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl;
+package org.eclipse.emf.cdo.tests.model3.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
-import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackagePackage;
 import org.eclipse.emf.cdo.tests.model3.Class1;
+import org.eclipse.emf.cdo.tests.model3.legacy.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
+import org.eclipse.emf.cdo.tests.model3.subpackage.legacy.SubpackagePackage;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -26,33 +26,33 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Class2</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Class1</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.Class2Impl#getClass1 <em>Class1</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.Class1Impl#getClass2 <em>Class2</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class Class2Impl extends EObjectImpl implements Class2
+public class Class1Impl extends EObjectImpl implements Class1
 {
   /**
-   * The cached value of the '{@link #getClass1() <em>Class1</em>}' reference list.
+   * The cached value of the '{@link #getClass2() <em>Class2</em>}' reference list.
    * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * @see #getClass1()
+   * @see #getClass2()
    * @generated
    * @ordered
    */
-  protected EList<Class1> class1;
+  protected EList<Class2> class2;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected Class2Impl()
+  protected Class1Impl()
   {
     super();
   }
@@ -64,21 +64,40 @@ public class Class2Impl extends EObjectImpl implements Class2
   @Override
   protected EClass eStaticClass()
   {
-    return SubpackagePackage.Literals.CLASS2;
+    return Model3Package.eINSTANCE.getClass1();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public EList<Class1> getClass1()
+  public EList<Class2> getClass2()
   {
-    if (class1 == null)
+    if (class2 == null)
     {
-      class1 = new EObjectWithInverseResolvingEList.ManyInverse<Class1>(Class1.class, this,
-          SubpackagePackage.CLASS2__CLASS1, Model3Package.CLASS1__CLASS2);
+      class2 = new EObjectWithInverseResolvingEList.Unsettable.ManyInverse<Class2>(Class2.class, this,
+          Model3Package.CLASS1__CLASS2, SubpackagePackage.CLASS2__CLASS1);
     }
-    return class1;
+    return class2;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  public void unsetClass2()
+  {
+    if (class2 != null)
+      ((InternalEList.Unsettable<?>)class2).unset();
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isSetClass2()
+  {
+    return class2 != null && ((InternalEList.Unsettable<?>)class2).isSet();
   }
 
   /**
@@ -91,8 +110,8 @@ public class Class2Impl extends EObjectImpl implements Class2
   {
     switch (featureID)
     {
-    case SubpackagePackage.CLASS2__CLASS1:
-      return ((InternalEList<InternalEObject>)(InternalEList<?>)getClass1()).basicAdd(otherEnd, msgs);
+    case Model3Package.CLASS1__CLASS2:
+      return ((InternalEList<InternalEObject>)(InternalEList<?>)getClass2()).basicAdd(otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -106,8 +125,8 @@ public class Class2Impl extends EObjectImpl implements Class2
   {
     switch (featureID)
     {
-    case SubpackagePackage.CLASS2__CLASS1:
-      return ((InternalEList<?>)getClass1()).basicRemove(otherEnd, msgs);
+    case Model3Package.CLASS1__CLASS2:
+      return ((InternalEList<?>)getClass2()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -121,8 +140,8 @@ public class Class2Impl extends EObjectImpl implements Class2
   {
     switch (featureID)
     {
-    case SubpackagePackage.CLASS2__CLASS1:
-      return getClass1();
+    case Model3Package.CLASS1__CLASS2:
+      return getClass2();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -137,9 +156,9 @@ public class Class2Impl extends EObjectImpl implements Class2
   {
     switch (featureID)
     {
-    case SubpackagePackage.CLASS2__CLASS1:
-      getClass1().clear();
-      getClass1().addAll((Collection<? extends Class1>)newValue);
+    case Model3Package.CLASS1__CLASS2:
+      getClass2().clear();
+      getClass2().addAll((Collection<? extends Class2>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -154,8 +173,8 @@ public class Class2Impl extends EObjectImpl implements Class2
   {
     switch (featureID)
     {
-    case SubpackagePackage.CLASS2__CLASS1:
-      getClass1().clear();
+    case Model3Package.CLASS1__CLASS2:
+      unsetClass2();
       return;
     }
     super.eUnset(featureID);
@@ -170,10 +189,10 @@ public class Class2Impl extends EObjectImpl implements Class2
   {
     switch (featureID)
     {
-    case SubpackagePackage.CLASS2__CLASS1:
-      return class1 != null && !class1.isEmpty();
+    case Model3Package.CLASS1__CLASS2:
+      return isSetClass2();
     }
     return super.eIsSet(featureID);
   }
 
-} // Class2Impl
+} // Class1Impl

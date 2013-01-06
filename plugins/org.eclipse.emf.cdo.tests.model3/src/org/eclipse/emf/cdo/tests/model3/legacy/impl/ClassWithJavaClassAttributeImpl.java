@@ -1,9 +1,9 @@
 /**
  */
-package org.eclipse.emf.cdo.tests.legacy.model3.impl;
+package org.eclipse.emf.cdo.tests.model3.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;
+import org.eclipse.emf.cdo.tests.model3.legacy.Model3Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.ClassWithJavaClassAttributeImpl#getJavaClass <em>Java Class</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.ClassWithJavaClassAttributeImpl#getJavaClass <em>Java Class</em>}</li>
  * </ul>
  * </p>
  *

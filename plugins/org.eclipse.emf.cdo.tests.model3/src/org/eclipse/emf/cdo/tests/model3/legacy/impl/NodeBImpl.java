@@ -8,10 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model3.impl;
+package org.eclipse.emf.cdo.tests.model3.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
-import org.eclipse.emf.cdo.tests.model3.NodeC;
+import org.eclipse.emf.cdo.tests.model3.NodeB;
+import org.eclipse.emf.cdo.tests.model3.legacy.Model3Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -21,28 +21,25 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Node C</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Node B</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeCImpl#getChildren <em>Children</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeCImpl#getParent <em>Parent</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeCImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeCImpl#getOtherNodes <em>Other Nodes</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.NodeCImpl#getOppositeNodes <em>Opposite Nodes</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeBImpl#getChildren <em>Children</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeBImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeBImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class NodeCImpl extends EObjectImpl implements NodeC
+public class NodeBImpl extends EObjectImpl implements NodeB
 {
   /**
    * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
@@ -52,7 +49,7 @@ public class NodeCImpl extends EObjectImpl implements NodeC
    * @generated
    * @ordered
    */
-  protected EList<NodeC> children;
+  protected EList<NodeB> children;
 
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
@@ -74,30 +71,10 @@ public class NodeCImpl extends EObjectImpl implements NodeC
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getOtherNodes() <em>Other Nodes</em>}' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOtherNodes()
-   * @generated
-   * @ordered
-   */
-  protected EList<NodeC> otherNodes;
-
-  /**
-   * The cached value of the '{@link #getOppositeNodes() <em>Opposite Nodes</em>}' reference list.
-   * <!-- begin-user-doc
-   * --> <!-- end-user-doc -->
-   * @see #getOppositeNodes()
-   * @generated
-   * @ordered
-   */
-  protected EList<NodeC> oppositeNodes;
-
-  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected NodeCImpl()
+  protected NodeBImpl()
   {
     super();
   }
@@ -109,19 +86,19 @@ public class NodeCImpl extends EObjectImpl implements NodeC
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.eINSTANCE.getNodeC();
+    return Model3Package.eINSTANCE.getNodeB();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public EList<NodeC> getChildren()
+  public EList<NodeB> getChildren()
   {
     if (children == null)
     {
-      children = new EObjectContainmentWithInverseEList<NodeC>(NodeC.class, this, Model3Package.NODE_C__CHILDREN,
-          Model3Package.NODE_C__PARENT);
+      children = new EObjectContainmentWithInverseEList<NodeB>(NodeB.class, this, Model3Package.NODE_B__CHILDREN,
+          Model3Package.NODE_B__PARENT);
     }
     return children;
   }
@@ -130,20 +107,20 @@ public class NodeCImpl extends EObjectImpl implements NodeC
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public NodeC getParent()
+  public NodeB getParent()
   {
-    if (eContainerFeatureID() != Model3Package.NODE_C__PARENT)
+    if (eContainerFeatureID() != Model3Package.NODE_B__PARENT)
       return null;
-    return (NodeC)eContainer();
+    return (NodeB)eContainer();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetParent(NodeC newParent, NotificationChain msgs)
+  public NotificationChain basicSetParent(NodeB newParent, NotificationChain msgs)
   {
-    msgs = eBasicSetContainer((InternalEObject)newParent, Model3Package.NODE_C__PARENT, msgs);
+    msgs = eBasicSetContainer((InternalEObject)newParent, Model3Package.NODE_B__PARENT, msgs);
     return msgs;
   }
 
@@ -151,10 +128,10 @@ public class NodeCImpl extends EObjectImpl implements NodeC
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public void setParent(NodeC newParent)
+  public void setParent(NodeB newParent)
   {
     if (newParent != eInternalContainer()
-        || (eContainerFeatureID() != Model3Package.NODE_C__PARENT && newParent != null))
+        || (eContainerFeatureID() != Model3Package.NODE_B__PARENT && newParent != null))
     {
       if (EcoreUtil.isAncestor(this, newParent))
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
@@ -162,13 +139,13 @@ public class NodeCImpl extends EObjectImpl implements NodeC
       if (eInternalContainer() != null)
         msgs = eBasicRemoveFromContainer(msgs);
       if (newParent != null)
-        msgs = ((InternalEObject)newParent).eInverseAdd(this, Model3Package.NODE_C__CHILDREN, NodeC.class, msgs);
+        msgs = ((InternalEObject)newParent).eInverseAdd(this, Model3Package.NODE_B__CHILDREN, NodeB.class, msgs);
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
         msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.NODE_C__PARENT, newParent, newParent));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.NODE_B__PARENT, newParent, newParent));
   }
 
   /**
@@ -189,35 +166,7 @@ public class NodeCImpl extends EObjectImpl implements NodeC
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.NODE_C__NAME, oldName, name));
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<NodeC> getOtherNodes()
-  {
-    if (otherNodes == null)
-    {
-      otherNodes = new EObjectWithInverseResolvingEList.ManyInverse<NodeC>(NodeC.class, this,
-          Model3Package.NODE_C__OTHER_NODES, Model3Package.NODE_C__OPPOSITE_NODES);
-    }
-    return otherNodes;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<NodeC> getOppositeNodes()
-  {
-    if (oppositeNodes == null)
-    {
-      oppositeNodes = new EObjectWithInverseResolvingEList.ManyInverse<NodeC>(NodeC.class, this,
-          Model3Package.NODE_C__OPPOSITE_NODES, Model3Package.NODE_C__OTHER_NODES);
-    }
-    return oppositeNodes;
+      eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.NODE_B__NAME, oldName, name));
   }
 
   /**
@@ -230,16 +179,12 @@ public class NodeCImpl extends EObjectImpl implements NodeC
   {
     switch (featureID)
     {
-    case Model3Package.NODE_C__CHILDREN:
+    case Model3Package.NODE_B__CHILDREN:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getChildren()).basicAdd(otherEnd, msgs);
-    case Model3Package.NODE_C__PARENT:
+    case Model3Package.NODE_B__PARENT:
       if (eInternalContainer() != null)
         msgs = eBasicRemoveFromContainer(msgs);
-      return basicSetParent((NodeC)otherEnd, msgs);
-    case Model3Package.NODE_C__OTHER_NODES:
-      return ((InternalEList<InternalEObject>)(InternalEList<?>)getOtherNodes()).basicAdd(otherEnd, msgs);
-    case Model3Package.NODE_C__OPPOSITE_NODES:
-      return ((InternalEList<InternalEObject>)(InternalEList<?>)getOppositeNodes()).basicAdd(otherEnd, msgs);
+      return basicSetParent((NodeB)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -253,14 +198,10 @@ public class NodeCImpl extends EObjectImpl implements NodeC
   {
     switch (featureID)
     {
-    case Model3Package.NODE_C__CHILDREN:
+    case Model3Package.NODE_B__CHILDREN:
       return ((InternalEList<?>)getChildren()).basicRemove(otherEnd, msgs);
-    case Model3Package.NODE_C__PARENT:
+    case Model3Package.NODE_B__PARENT:
       return basicSetParent(null, msgs);
-    case Model3Package.NODE_C__OTHER_NODES:
-      return ((InternalEList<?>)getOtherNodes()).basicRemove(otherEnd, msgs);
-    case Model3Package.NODE_C__OPPOSITE_NODES:
-      return ((InternalEList<?>)getOppositeNodes()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -274,8 +215,8 @@ public class NodeCImpl extends EObjectImpl implements NodeC
   {
     switch (eContainerFeatureID())
     {
-    case Model3Package.NODE_C__PARENT:
-      return eInternalContainer().eInverseRemove(this, Model3Package.NODE_C__CHILDREN, NodeC.class, msgs);
+    case Model3Package.NODE_B__PARENT:
+      return eInternalContainer().eInverseRemove(this, Model3Package.NODE_B__CHILDREN, NodeB.class, msgs);
     }
     return super.eBasicRemoveFromContainerFeature(msgs);
   }
@@ -289,16 +230,12 @@ public class NodeCImpl extends EObjectImpl implements NodeC
   {
     switch (featureID)
     {
-    case Model3Package.NODE_C__CHILDREN:
+    case Model3Package.NODE_B__CHILDREN:
       return getChildren();
-    case Model3Package.NODE_C__PARENT:
+    case Model3Package.NODE_B__PARENT:
       return getParent();
-    case Model3Package.NODE_C__NAME:
+    case Model3Package.NODE_B__NAME:
       return getName();
-    case Model3Package.NODE_C__OTHER_NODES:
-      return getOtherNodes();
-    case Model3Package.NODE_C__OPPOSITE_NODES:
-      return getOppositeNodes();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -313,23 +250,15 @@ public class NodeCImpl extends EObjectImpl implements NodeC
   {
     switch (featureID)
     {
-    case Model3Package.NODE_C__CHILDREN:
+    case Model3Package.NODE_B__CHILDREN:
       getChildren().clear();
-      getChildren().addAll((Collection<? extends NodeC>)newValue);
+      getChildren().addAll((Collection<? extends NodeB>)newValue);
       return;
-    case Model3Package.NODE_C__PARENT:
-      setParent((NodeC)newValue);
+    case Model3Package.NODE_B__PARENT:
+      setParent((NodeB)newValue);
       return;
-    case Model3Package.NODE_C__NAME:
+    case Model3Package.NODE_B__NAME:
       setName((String)newValue);
-      return;
-    case Model3Package.NODE_C__OTHER_NODES:
-      getOtherNodes().clear();
-      getOtherNodes().addAll((Collection<? extends NodeC>)newValue);
-      return;
-    case Model3Package.NODE_C__OPPOSITE_NODES:
-      getOppositeNodes().clear();
-      getOppositeNodes().addAll((Collection<? extends NodeC>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -344,20 +273,14 @@ public class NodeCImpl extends EObjectImpl implements NodeC
   {
     switch (featureID)
     {
-    case Model3Package.NODE_C__CHILDREN:
+    case Model3Package.NODE_B__CHILDREN:
       getChildren().clear();
       return;
-    case Model3Package.NODE_C__PARENT:
-      setParent((NodeC)null);
+    case Model3Package.NODE_B__PARENT:
+      setParent((NodeB)null);
       return;
-    case Model3Package.NODE_C__NAME:
+    case Model3Package.NODE_B__NAME:
       setName(NAME_EDEFAULT);
-      return;
-    case Model3Package.NODE_C__OTHER_NODES:
-      getOtherNodes().clear();
-      return;
-    case Model3Package.NODE_C__OPPOSITE_NODES:
-      getOppositeNodes().clear();
       return;
     }
     super.eUnset(featureID);
@@ -372,16 +295,12 @@ public class NodeCImpl extends EObjectImpl implements NodeC
   {
     switch (featureID)
     {
-    case Model3Package.NODE_C__CHILDREN:
+    case Model3Package.NODE_B__CHILDREN:
       return children != null && !children.isEmpty();
-    case Model3Package.NODE_C__PARENT:
+    case Model3Package.NODE_B__PARENT:
       return getParent() != null;
-    case Model3Package.NODE_C__NAME:
+    case Model3Package.NODE_B__NAME:
       return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-    case Model3Package.NODE_C__OTHER_NODES:
-      return otherNodes != null && !otherNodes.isEmpty();
-    case Model3Package.NODE_C__OPPOSITE_NODES:
-      return oppositeNodes != null && !oppositeNodes.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -403,4 +322,4 @@ public class NodeCImpl extends EObjectImpl implements NodeC
     return result.toString();
   }
 
-} // NodeCImpl
+} // NodeBImpl

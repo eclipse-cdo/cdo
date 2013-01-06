@@ -8,13 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model3.impl;
+package org.eclipse.emf.cdo.tests.model3.legacy.impl;
 
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
-import org.eclipse.emf.cdo.tests.legacy.model3.Model3Factory;
-import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
-import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackagePackage;
-import org.eclipse.emf.cdo.tests.legacy.model3.subpackage.impl.SubpackagePackageImpl;
 import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;
@@ -29,6 +25,10 @@ import org.eclipse.emf.cdo.tests.model3.NodeD;
 import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
+import org.eclipse.emf.cdo.tests.model3.legacy.Model3Factory;
+import org.eclipse.emf.cdo.tests.model3.legacy.Model3Package;
+import org.eclipse.emf.cdo.tests.model3.subpackage.legacy.SubpackagePackage;
+import org.eclipse.emf.cdo.tests.model3.subpackage.legacy.impl.SubpackagePackageImpl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -847,6 +847,22 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
     // Create resource
     createResource(eNS_URI);
+
+    // Create annotations
+    // teneo.jpa
+    createTeneoAnnotations();
+  }
+
+  /**
+   * Initializes the annotations for <b>teneo.jpa</b>.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void createTeneoAnnotations()
+  {
+    String source = "teneo.jpa";
+    addAnnotation(pointEDataType, source, new String[] { "value", "@NoAuditing" });
   }
 
 } // Model3PackageImpl

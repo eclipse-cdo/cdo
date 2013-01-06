@@ -8,10 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model3.impl;
+package org.eclipse.emf.cdo.tests.model3.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model3.Model3Factory;
-import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
+//import org.eclipse.emf.cdo.tests.model3.*;
 import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;
@@ -26,6 +25,8 @@ import org.eclipse.emf.cdo.tests.model3.NodeD;
 import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
+import org.eclipse.emf.cdo.tests.model3.legacy.Model3Factory;
+import org.eclipse.emf.cdo.tests.model3.legacy.Model3Package;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -42,7 +43,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 {
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public static Model3Factory init()
@@ -279,7 +280,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public Point createPointFromString(EDataType eDataType, String initialValue)
@@ -289,7 +290,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public String convertPointToString(EDataType eDataType, Object instanceValue)

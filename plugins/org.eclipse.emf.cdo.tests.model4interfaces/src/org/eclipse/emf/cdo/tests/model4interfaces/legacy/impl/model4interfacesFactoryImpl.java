@@ -4,14 +4,15 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model4interfaces.impl;
+package org.eclipse.emf.cdo.tests.model4interfaces.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesFactory;
-import org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesPackage;
+//import org.eclipse.emf.cdo.tests.model4interfaces.*;
+import org.eclipse.emf.cdo.tests.model4interfaces.legacy.model4interfacesFactory;
+import org.eclipse.emf.cdo.tests.model4interfaces.legacy.model4interfacesPackage;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -21,14 +22,13 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class model4interfacesFactoryImpl extends EFactoryImpl implements model4interfacesFactory
 {
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public static model4interfacesFactory init()
@@ -50,8 +50,8 @@ public class model4interfacesFactoryImpl extends EFactoryImpl implements model4i
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public model4interfacesFactoryImpl()
@@ -61,7 +61,6 @@ public class model4interfacesFactoryImpl extends EFactoryImpl implements model4i
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -76,7 +75,6 @@ public class model4interfacesFactoryImpl extends EFactoryImpl implements model4i
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public model4interfacesPackage getmodel4interfacesPackage()
@@ -86,7 +84,6 @@ public class model4interfacesFactoryImpl extends EFactoryImpl implements model4i
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

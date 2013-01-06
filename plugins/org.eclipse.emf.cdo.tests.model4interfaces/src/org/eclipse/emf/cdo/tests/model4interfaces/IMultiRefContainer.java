@@ -16,14 +16,15 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>IMulti Ref Container</b></em>'. <!--
  * end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer#getElements <em>Elements</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- * 
- * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getIMultiRefContainer()
+ *
+ * @see org.eclipse.emf.cdo.tests.model4interfaces.legacy.model4interfacesPackage#getIMultiRefContainer()
  * @model interface="true" abstract="true"
  * @generated
  */

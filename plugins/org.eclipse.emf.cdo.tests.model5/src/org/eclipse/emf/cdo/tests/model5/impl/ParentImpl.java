@@ -101,20 +101,20 @@ public class ParentImpl extends CDOObjectImpl implements Parent
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public String getName()
   {
     return (String)eGet(Model5Package.eINSTANCE.getParent_Name(), true);
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public void setNameGen(String newName)
   {
     eSet(Model5Package.eINSTANCE.getParent_Name(), newName);

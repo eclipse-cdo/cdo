@@ -8,10 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model5.impl;
+package org.eclipse.emf.cdo.tests.model5.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model5.Model5Package;
-import org.eclipse.emf.cdo.tests.model5.GenListOfDouble;
+import org.eclipse.emf.cdo.tests.model5.GenListOfInteger;
+import org.eclipse.emf.cdo.tests.model5.legacy.Model5Package;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -21,18 +21,18 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Gen List Of Double</b></em>'. <!-- end-user-doc
- * -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Gen List Of Integer</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfDoubleImpl#getElements <em>Elements</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model5.legacy.impl.GenListOfIntegerImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
-public class GenListOfDoubleImpl extends EObjectImpl implements GenListOfDouble
+public class GenListOfIntegerImpl extends EObjectImpl implements GenListOfInteger
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -48,13 +48,13 @@ public class GenListOfDoubleImpl extends EObjectImpl implements GenListOfDouble
    * @generated
    * @ordered
    */
-  protected EList<Double> elements;
+  protected EList<Integer> elements;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected GenListOfDoubleImpl()
+  protected GenListOfIntegerImpl()
   {
     super();
   }
@@ -66,18 +66,18 @@ public class GenListOfDoubleImpl extends EObjectImpl implements GenListOfDouble
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.eINSTANCE.getGenListOfDouble();
+    return Model5Package.eINSTANCE.getGenListOfInteger();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public EList<Double> getElements()
+  public EList<Integer> getElements()
   {
     if (elements == null)
     {
-      elements = new EDataTypeUniqueEList<Double>(Double.class, this, Model5Package.GEN_LIST_OF_DOUBLE__ELEMENTS);
+      elements = new EDataTypeUniqueEList<Integer>(Integer.class, this, Model5Package.GEN_LIST_OF_INTEGER__ELEMENTS);
     }
     return elements;
   }
@@ -91,7 +91,7 @@ public class GenListOfDoubleImpl extends EObjectImpl implements GenListOfDouble
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_DOUBLE__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_INTEGER__ELEMENTS:
       return getElements();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -107,9 +107,9 @@ public class GenListOfDoubleImpl extends EObjectImpl implements GenListOfDouble
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_DOUBLE__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_INTEGER__ELEMENTS:
       getElements().clear();
-      getElements().addAll((Collection<? extends Double>)newValue);
+      getElements().addAll((Collection<? extends Integer>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -124,7 +124,7 @@ public class GenListOfDoubleImpl extends EObjectImpl implements GenListOfDouble
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_DOUBLE__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_INTEGER__ELEMENTS:
       getElements().clear();
       return;
     }
@@ -140,7 +140,7 @@ public class GenListOfDoubleImpl extends EObjectImpl implements GenListOfDouble
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_DOUBLE__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_INTEGER__ELEMENTS:
       return elements != null && !elements.isEmpty();
     }
     return super.eIsSet(featureID);
@@ -163,4 +163,4 @@ public class GenListOfDoubleImpl extends EObjectImpl implements GenListOfDouble
     return result.toString();
   }
 
-} // GenListOfDoubleImpl
+} // GenListOfIntegerImpl

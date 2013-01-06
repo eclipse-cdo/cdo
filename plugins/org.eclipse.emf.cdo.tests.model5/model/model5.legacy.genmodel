@@ -8,7 +8,8 @@
   <foreignModel>model5.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <modelPluginVariables>JUNIT=org.junit</modelPluginVariables>
-  <genPackages prefix="Model5" basePackage="org.eclipse.emf.cdo.tests.legacy" disposableProviderFactory="true"
+  <genPackages prefix="Model5" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"
+      metaDataPackageSuffix="legacy" classPackageSuffix="legacy.impl" utilityPackageSuffix="legacy.util"
       literalsInterface="false" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="model5.ecore#/">
     <genDataTypes ecoreDataType="model5.ecore#//IntArray"/>

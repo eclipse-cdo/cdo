@@ -8,31 +8,31 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model5.impl;
+package org.eclipse.emf.cdo.tests.model5.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model5.Model5Package;
-import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
+import org.eclipse.emf.cdo.tests.model5.GenListOfBoolean;
+import org.eclipse.emf.cdo.tests.model5.legacy.Model5Package;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Gen List Of Int</b></em>'. <!-- end-user-doc
- * -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Gen List Of Boolean</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfIntImpl#getElements <em>Elements</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model5.legacy.impl.GenListOfBooleanImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
-public class GenListOfIntImpl extends EObjectImpl implements GenListOfInt
+public class GenListOfBooleanImpl extends EObjectImpl implements GenListOfBoolean
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -48,13 +48,13 @@ public class GenListOfIntImpl extends EObjectImpl implements GenListOfInt
    * @generated
    * @ordered
    */
-  protected EList<Integer> elements;
+  protected EList<Boolean> elements;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected GenListOfIntImpl()
+  protected GenListOfBooleanImpl()
   {
     super();
   }
@@ -66,18 +66,18 @@ public class GenListOfIntImpl extends EObjectImpl implements GenListOfInt
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.eINSTANCE.getGenListOfInt();
+    return Model5Package.eINSTANCE.getGenListOfBoolean();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public EList<Integer> getElements()
+  public EList<Boolean> getElements()
   {
     if (elements == null)
     {
-      elements = new EDataTypeUniqueEList<Integer>(Integer.class, this, Model5Package.GEN_LIST_OF_INT__ELEMENTS);
+      elements = new EDataTypeEList<Boolean>(Boolean.class, this, Model5Package.GEN_LIST_OF_BOOLEAN__ELEMENTS);
     }
     return elements;
   }
@@ -91,7 +91,7 @@ public class GenListOfIntImpl extends EObjectImpl implements GenListOfInt
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_INT__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_BOOLEAN__ELEMENTS:
       return getElements();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -107,9 +107,9 @@ public class GenListOfIntImpl extends EObjectImpl implements GenListOfInt
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_INT__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_BOOLEAN__ELEMENTS:
       getElements().clear();
-      getElements().addAll((Collection<? extends Integer>)newValue);
+      getElements().addAll((Collection<? extends Boolean>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -124,7 +124,7 @@ public class GenListOfIntImpl extends EObjectImpl implements GenListOfInt
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_INT__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_BOOLEAN__ELEMENTS:
       getElements().clear();
       return;
     }
@@ -140,7 +140,7 @@ public class GenListOfIntImpl extends EObjectImpl implements GenListOfInt
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_INT__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_BOOLEAN__ELEMENTS:
       return elements != null && !elements.isEmpty();
     }
     return super.eIsSet(featureID);
@@ -163,4 +163,4 @@ public class GenListOfIntImpl extends EObjectImpl implements GenListOfInt
     return result.toString();
   }
 
-} // GenListOfIntImpl
+} // GenListOfBooleanImpl

@@ -8,10 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model5.impl;
+package org.eclipse.emf.cdo.tests.model5.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model5.Model5Package;
 import org.eclipse.emf.cdo.tests.model5.Manager;
+import org.eclipse.emf.cdo.tests.model5.legacy.Model5Package;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.EObjectImpl;

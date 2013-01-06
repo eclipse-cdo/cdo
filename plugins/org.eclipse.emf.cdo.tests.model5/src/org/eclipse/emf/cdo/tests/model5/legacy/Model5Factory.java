@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model5;
+package org.eclipse.emf.cdo.tests.model5.legacy;
 
 import org.eclipse.emf.cdo.tests.model5.Child;
 import org.eclipse.emf.cdo.tests.model5.Doctor;
@@ -26,14 +26,17 @@ import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Parent;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
+import org.eclipse.emf.ecore.EFactory;
 
 /**
- * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
- * the model. <!-- end-user-doc -->
- * @see org.eclipse.emf.cdo.tests.legacy.model5.Model5Package
- * @generated NOT
+ * <!-- begin-user-doc -->
+ * The <b>Factory</b> for the model. It provides a create method for each non-abstract class of the model.
+ * @extends org.eclipse.emf.cdo.tests.model5.Model5Factory
+ * <!-- end-user-doc -->
+ * @see org.eclipse.emf.cdo.tests.model5.legacy.Model5Package
+ * @generated
  */
-public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Factory
+public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model5.Model5Factory
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -46,7 +49,7 @@ public interface Model5Factory extends org.eclipse.emf.cdo.tests.model5.Model5Fa
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  Model5Factory eINSTANCE = org.eclipse.emf.cdo.tests.legacy.model5.impl.Model5FactoryImpl.init();
+  Model5Factory eINSTANCE = org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5FactoryImpl.init();
 
   /**
    * Returns a new object of class '<em>Test Feature Map</em>'.

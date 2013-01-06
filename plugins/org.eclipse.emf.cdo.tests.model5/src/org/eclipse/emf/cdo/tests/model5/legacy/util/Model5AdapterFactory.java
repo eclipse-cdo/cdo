@@ -1,57 +1,55 @@
-/*
+/**
  * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.model5.util;
+package org.eclipse.emf.cdo.tests.model5.legacy.util;
 
-//import org.eclipse.emf.cdo.tests.model5.*;
-import org.eclipse.emf.cdo.tests.model5.Child;
-import org.eclipse.emf.cdo.tests.model5.Doctor;
-import org.eclipse.emf.cdo.tests.model5.GenListOfBoolean;
-import org.eclipse.emf.cdo.tests.model5.GenListOfChar;
-import org.eclipse.emf.cdo.tests.model5.GenListOfDate;
-import org.eclipse.emf.cdo.tests.model5.GenListOfDouble;
-import org.eclipse.emf.cdo.tests.model5.GenListOfFloat;
-import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
-import org.eclipse.emf.cdo.tests.model5.GenListOfIntArray;
-import org.eclipse.emf.cdo.tests.model5.GenListOfInteger;
-import org.eclipse.emf.cdo.tests.model5.GenListOfLong;
-import org.eclipse.emf.cdo.tests.model5.GenListOfShort;
-import org.eclipse.emf.cdo.tests.model5.GenListOfString;
-import org.eclipse.emf.cdo.tests.model5.Manager;
-import org.eclipse.emf.cdo.tests.model5.Model5Package;
-import org.eclipse.emf.cdo.tests.model5.Parent;
-import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
+import org.eclipse.emf.cdo.tests.model5.*;
+
+import org.eclipse.emf.cdo.tests.model5.legacy.Model5Package;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>
- * method for each class of the model. <!-- end-user-doc -->
- * @see org.eclipse.emf.cdo.tests.model5.Model5Package
+ * <!-- begin-user-doc -->
+ * The <b>Adapter Factory</b> for the model.
+ * It provides an adapter <code>createXXX</code> method for each class of the model.
+ * <!-- end-user-doc -->
+ * @see org.eclipse.emf.cdo.tests.model5.legacy.Model5Package
  * @generated
  */
 public class Model5AdapterFactory extends AdapterFactoryImpl
 {
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+
+  /**
    * The cached model package.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected static Model5Package modelPackage;
 
   /**
    * Creates an instance of the adapter factory.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public Model5AdapterFactory()
@@ -64,9 +62,9 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
 
   /**
    * Returns whether this factory is applicable for the type of the object.
-   * <!-- begin-user-doc --> This implementation
-   * returns <code>true</code> if the object is either the model's package or is an instance object of the model. <!--
-   * end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This implementation returns <code>true</code> if the object is either the model's package or is an instance object of the model.
+   * <!-- end-user-doc -->
    * @return whether this factory is applicable for the type of the object.
    * @generated
    */
@@ -86,7 +84,8 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
 
   /**
    * The switch that delegates to the <code>createXXX</code> methods.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected Model5Switch<Adapter> modelSwitch = new Model5Switch<Adapter>()
@@ -196,7 +195,8 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
 
   /**
    * Creates an adapter for the <code>target</code>.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @param target the object to adapt.
    * @return the adapter for the <code>target</code>.
    * @generated
@@ -209,8 +209,10 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
 
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.TestFeatureMap <em>Test Feature Map</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can easily
-   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model5.TestFeatureMap
    * @generated
@@ -222,8 +224,10 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
 
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.Manager <em>Manager</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
-   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model5.Manager
    * @generated
@@ -235,8 +239,10 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
 
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.Doctor <em>Doctor</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
-   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model5.Doctor
    * @generated
@@ -247,9 +253,26 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfString <em>Gen List Of String</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfString
+   * @generated
+   */
+  public Adapter createGenListOfStringAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfInt <em>Gen List Of Int</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can easily
-   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model5.GenListOfInt
    * @generated
@@ -261,9 +284,10 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
 
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfInteger <em>Gen List Of Integer</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can
-   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
-   * end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model5.GenListOfInteger
    * @generated
@@ -275,8 +299,10 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
 
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfLong <em>Gen List Of Long</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can easily
-   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model5.GenListOfLong
    * @generated
@@ -288,9 +314,10 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
 
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfBoolean <em>Gen List Of Boolean</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can
-   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
-   * end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model5.GenListOfBoolean
    * @generated
@@ -302,9 +329,10 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
 
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfShort <em>Gen List Of Short</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can
-   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
-   * end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model5.GenListOfShort
    * @generated
@@ -316,9 +344,10 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
 
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfFloat <em>Gen List Of Float</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can
-   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
-   * end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model5.GenListOfFloat
    * @generated
@@ -330,9 +359,10 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
 
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfDouble <em>Gen List Of Double</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can
-   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
-   * end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model5.GenListOfDouble
    * @generated
@@ -344,8 +374,10 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
 
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfDate <em>Gen List Of Date</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can easily
-   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model5.GenListOfDate
    * @generated
@@ -357,8 +389,10 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
 
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfChar <em>Gen List Of Char</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can easily
-   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model5.GenListOfChar
    * @generated
@@ -370,9 +404,10 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
 
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfIntArray <em>Gen List Of Int Array</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can
-   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
-   * end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model5.GenListOfIntArray
    * @generated
@@ -400,9 +435,9 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.Child <em>Child</em>}'.
    * <!-- begin-user-doc -->
-  	 * This default implementation returns null so that we can easily ignore cases;
-  	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-  	 * <!-- end-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model5.Child
    * @generated
@@ -413,23 +448,10 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfString <em>Gen List Of String</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can
-     * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
-     * end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.emf.cdo.tests.model5.GenListOfString
-   * @generated
-   */
-  public Adapter createGenListOfStringAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for the default case.
-   * <!-- begin-user-doc --> This default implementation returns null. <!--
-   * end-user-doc -->
+   * <!-- begin-user-doc -->
+   * This default implementation returns null.
+   * <!-- end-user-doc -->
    * @return the new adapter.
    * @generated
    */
@@ -438,4 +460,4 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
     return null;
   }
 
-} // Model5AdapterFactory
+} //Model5AdapterFactory

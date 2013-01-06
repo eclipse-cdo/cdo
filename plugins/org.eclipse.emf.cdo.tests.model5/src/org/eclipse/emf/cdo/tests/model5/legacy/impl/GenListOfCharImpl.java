@@ -8,10 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model5.impl;
+package org.eclipse.emf.cdo.tests.model5.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model5.Model5Package;
-import org.eclipse.emf.cdo.tests.model5.GenListOfFloat;
+import org.eclipse.emf.cdo.tests.model5.GenListOfChar;
+import org.eclipse.emf.cdo.tests.model5.legacy.Model5Package;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -21,18 +21,18 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Gen List Of Float</b></em>'. <!-- end-user-doc
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Gen List Of Char</b></em>'. <!-- end-user-doc
  * -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfFloatImpl#getElements <em>Elements</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfCharImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
  * 
  * @generated
  */
-public class GenListOfFloatImpl extends EObjectImpl implements GenListOfFloat
+public class GenListOfCharImpl extends EObjectImpl implements GenListOfChar
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -48,13 +48,13 @@ public class GenListOfFloatImpl extends EObjectImpl implements GenListOfFloat
    * @generated
    * @ordered
    */
-  protected EList<Float> elements;
+  protected EList<Character> elements;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected GenListOfFloatImpl()
+  protected GenListOfCharImpl()
   {
     super();
   }
@@ -66,18 +66,18 @@ public class GenListOfFloatImpl extends EObjectImpl implements GenListOfFloat
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.eINSTANCE.getGenListOfFloat();
+    return Model5Package.eINSTANCE.getGenListOfChar();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public EList<Float> getElements()
+  public EList<Character> getElements()
   {
     if (elements == null)
     {
-      elements = new EDataTypeUniqueEList<Float>(Float.class, this, Model5Package.GEN_LIST_OF_FLOAT__ELEMENTS);
+      elements = new EDataTypeUniqueEList<Character>(Character.class, this, Model5Package.GEN_LIST_OF_CHAR__ELEMENTS);
     }
     return elements;
   }
@@ -91,7 +91,7 @@ public class GenListOfFloatImpl extends EObjectImpl implements GenListOfFloat
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_FLOAT__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_CHAR__ELEMENTS:
       return getElements();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -107,9 +107,9 @@ public class GenListOfFloatImpl extends EObjectImpl implements GenListOfFloat
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_FLOAT__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_CHAR__ELEMENTS:
       getElements().clear();
-      getElements().addAll((Collection<? extends Float>)newValue);
+      getElements().addAll((Collection<? extends Character>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -124,7 +124,7 @@ public class GenListOfFloatImpl extends EObjectImpl implements GenListOfFloat
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_FLOAT__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_CHAR__ELEMENTS:
       getElements().clear();
       return;
     }
@@ -140,7 +140,7 @@ public class GenListOfFloatImpl extends EObjectImpl implements GenListOfFloat
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_FLOAT__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_CHAR__ELEMENTS:
       return elements != null && !elements.isEmpty();
     }
     return super.eIsSet(featureID);
@@ -163,4 +163,4 @@ public class GenListOfFloatImpl extends EObjectImpl implements GenListOfFloat
     return result.toString();
   }
 
-} // GenListOfFloatImpl
+} // GenListOfCharImpl

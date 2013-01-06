@@ -8,10 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model5.impl;
+package org.eclipse.emf.cdo.tests.model5.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model5.Model5Package;
-import org.eclipse.emf.cdo.tests.model5.GenListOfString;
+import org.eclipse.emf.cdo.tests.model5.GenListOfDouble;
+import org.eclipse.emf.cdo.tests.model5.legacy.Model5Package;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -21,18 +21,18 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Gen List Of String</b></em>'. <!-- end-user-doc
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Gen List Of Double</b></em>'. <!-- end-user-doc
  * -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfStringImpl#getElements <em>Elements</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfDoubleImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
  * 
  * @generated
  */
-public class GenListOfStringImpl extends EObjectImpl implements GenListOfString
+public class GenListOfDoubleImpl extends EObjectImpl implements GenListOfDouble
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -48,13 +48,13 @@ public class GenListOfStringImpl extends EObjectImpl implements GenListOfString
    * @generated
    * @ordered
    */
-  protected EList<String> elements;
+  protected EList<Double> elements;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected GenListOfStringImpl()
+  protected GenListOfDoubleImpl()
   {
     super();
   }
@@ -66,18 +66,18 @@ public class GenListOfStringImpl extends EObjectImpl implements GenListOfString
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.eINSTANCE.getGenListOfString();
+    return Model5Package.eINSTANCE.getGenListOfDouble();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public EList<String> getElements()
+  public EList<Double> getElements()
   {
     if (elements == null)
     {
-      elements = new EDataTypeUniqueEList<String>(String.class, this, Model5Package.GEN_LIST_OF_STRING__ELEMENTS);
+      elements = new EDataTypeUniqueEList<Double>(Double.class, this, Model5Package.GEN_LIST_OF_DOUBLE__ELEMENTS);
     }
     return elements;
   }
@@ -91,7 +91,7 @@ public class GenListOfStringImpl extends EObjectImpl implements GenListOfString
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_STRING__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_DOUBLE__ELEMENTS:
       return getElements();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -107,9 +107,9 @@ public class GenListOfStringImpl extends EObjectImpl implements GenListOfString
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_STRING__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_DOUBLE__ELEMENTS:
       getElements().clear();
-      getElements().addAll((Collection<? extends String>)newValue);
+      getElements().addAll((Collection<? extends Double>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -124,7 +124,7 @@ public class GenListOfStringImpl extends EObjectImpl implements GenListOfString
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_STRING__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_DOUBLE__ELEMENTS:
       getElements().clear();
       return;
     }
@@ -140,7 +140,7 @@ public class GenListOfStringImpl extends EObjectImpl implements GenListOfString
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_STRING__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_DOUBLE__ELEMENTS:
       return elements != null && !elements.isEmpty();
     }
     return super.eIsSet(featureID);
@@ -163,4 +163,4 @@ public class GenListOfStringImpl extends EObjectImpl implements GenListOfString
     return result.toString();
   }
 
-} // GenListOfStringImpl
+} // GenListOfDoubleImpl

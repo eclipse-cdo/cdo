@@ -482,10 +482,10 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EClass getChild()
   {
     return childEClass;
@@ -522,9 +522,9 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   }
 
   /**
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public EDataType getIntArray()
   {
     return intArrayEDataType;

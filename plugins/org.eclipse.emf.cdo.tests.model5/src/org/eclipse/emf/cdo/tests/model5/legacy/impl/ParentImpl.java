@@ -8,11 +8,11 @@
  * Contributors:
  *    Christian W. Damus (CEA) - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model5.impl;
+package org.eclipse.emf.cdo.tests.model5.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model5.Model5Package;
 import org.eclipse.emf.cdo.tests.model5.Child;
 import org.eclipse.emf.cdo.tests.model5.Parent;
+import org.eclipse.emf.cdo.tests.model5.legacy.Model5Package;
 import org.eclipse.emf.cdo.tests.model5.util.IsLoadingTestFixture;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -34,9 +34,9 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.ParentImpl#getChildren <em>Children</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.ParentImpl#getFavourite <em>Favourite</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.ParentImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model5.legacy.impl.ParentImpl#getChildren <em>Children</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model5.legacy.impl.ParentImpl#getFavourite <em>Favourite</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model5.legacy.impl.ParentImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -82,20 +82,20 @@ public class ParentImpl extends EObjectImpl implements Parent
   protected static final String NAME_EDEFAULT = null;
 
   /**
-  	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @see #getName()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #getName()
+   * @generated
+   * @ordered
+   */
   protected String name = NAME_EDEFAULT;
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected ParentImpl()
   {
     super();
@@ -141,10 +141,8 @@ public class ParentImpl extends EObjectImpl implements Parent
       if (favourite != oldFavourite)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model5Package.PARENT__FAVOURITE, oldFavourite,
               favourite));
-        }
       }
     }
     return favourite;
@@ -174,13 +172,9 @@ public class ParentImpl extends EObjectImpl implements Parent
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model5Package.PARENT__FAVOURITE,
           oldFavourite, newFavourite);
       if (msgs == null)
-      {
         msgs = notification;
-      }
       else
-      {
         msgs.add(notification);
-      }
     }
     return msgs;
   }
@@ -196,23 +190,15 @@ public class ParentImpl extends EObjectImpl implements Parent
     {
       NotificationChain msgs = null;
       if (favourite != null)
-      {
         msgs = ((InternalEObject)favourite).eInverseRemove(this, Model5Package.CHILD__PREFERRED_BY, Child.class, msgs);
-      }
       if (newFavourite != null)
-      {
         msgs = ((InternalEObject)newFavourite).eInverseAdd(this, Model5Package.CHILD__PREFERRED_BY, Child.class, msgs);
-      }
       msgs = basicSetFavourite(newFavourite, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model5Package.PARENT__FAVOURITE, newFavourite, newFavourite));
-    }
   }
 
   /**
@@ -226,18 +212,16 @@ public class ParentImpl extends EObjectImpl implements Parent
   }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public void setNameGen(String newName)
   {
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model5Package.PARENT__NAME, oldName, name));
-    }
   }
 
   public void setName(String newName)
@@ -247,10 +231,10 @@ public class ParentImpl extends EObjectImpl implements Parent
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
@@ -261,9 +245,7 @@ public class ParentImpl extends EObjectImpl implements Parent
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getChildren()).basicAdd(otherEnd, msgs);
     case Model5Package.PARENT__FAVOURITE:
       if (favourite != null)
-      {
         msgs = ((InternalEObject)favourite).eInverseRemove(this, Model5Package.CHILD__PREFERRED_BY, Child.class, msgs);
-      }
       return basicSetFavourite((Child)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -301,9 +283,7 @@ public class ParentImpl extends EObjectImpl implements Parent
       return getChildren();
     case Model5Package.PARENT__FAVOURITE:
       if (resolve)
-      {
         return getFavourite();
-      }
       return basicGetFavourite();
     case Model5Package.PARENT__NAME:
       return getName();
@@ -380,17 +360,15 @@ public class ParentImpl extends EObjectImpl implements Parent
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

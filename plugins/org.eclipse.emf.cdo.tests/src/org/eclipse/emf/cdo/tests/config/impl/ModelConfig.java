@@ -238,12 +238,12 @@ public abstract class ModelConfig extends Config implements IModelConfig
 
     public Model5Factory getModel5Factory()
     {
-      return org.eclipse.emf.cdo.tests.legacy.model5.Model5Factory.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.model5.legacy.Model5Factory.eINSTANCE;
     }
 
     public Model5Package getModel5Package()
     {
-      return org.eclipse.emf.cdo.tests.legacy.model5.Model5Package.eINSTANCE;
+      return org.eclipse.emf.cdo.tests.model5.legacy.Model5Package.eINSTANCE;
     }
 
     public Model6Factory getModel6Factory()

@@ -33,6 +33,13 @@ import org.eclipse.emf.ecore.util.FeatureMap;
 public interface TestFeatureMap extends EObject
 {
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+
+  /**
    * Returns the value of the '<em><b>Managers</b></em>' reference list.
    * The list contents are of type {@link org.eclipse.emf.cdo.tests.model5.Manager}.
    * <!-- begin-user-doc -->
@@ -42,7 +49,7 @@ public interface TestFeatureMap extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Managers</em>' reference list.
-   * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getTestFeatureMap_Managers()
+   * @see org.eclipse.emf.cdo.tests.model5.legacy.Model5Package#getTestFeatureMap_Managers()
    * @model transient="true"
    *        extendedMetaData="group='#people'"
    * @generated
@@ -59,7 +66,7 @@ public interface TestFeatureMap extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Doctors</em>' reference list.
-   * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getTestFeatureMap_Doctors()
+   * @see org.eclipse.emf.cdo.tests.model5.legacy.Model5Package#getTestFeatureMap_Doctors()
    * @model transient="true"
    *        extendedMetaData="group='#people'"
    * @generated
@@ -76,7 +83,7 @@ public interface TestFeatureMap extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>People</em>' attribute list.
-   * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getTestFeatureMap_People()
+   * @see org.eclipse.emf.cdo.tests.model5.legacy.Model5Package#getTestFeatureMap_People()
    * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
    *        extendedMetaData="kind='group'"
    * @generated

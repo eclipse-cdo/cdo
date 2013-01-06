@@ -8,11 +8,11 @@
  * Contributors:
  *    Christian W. Damus (CEA) - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model5.impl;
+package org.eclipse.emf.cdo.tests.model5.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model5.Model5Package;
 import org.eclipse.emf.cdo.tests.model5.Child;
 import org.eclipse.emf.cdo.tests.model5.Parent;
+import org.eclipse.emf.cdo.tests.model5.legacy.Model5Package;
 import org.eclipse.emf.cdo.tests.model5.util.IsLoadingTestFixture;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -30,9 +30,9 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.ChildImpl#getParent <em>Parent</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.ChildImpl#getPreferredBy <em>Preferred By</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.ChildImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model5.legacy.impl.ChildImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model5.legacy.impl.ChildImpl#getPreferredBy <em>Preferred By</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model5.legacy.impl.ChildImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -68,20 +68,20 @@ public class ChildImpl extends EObjectImpl implements Child
   protected static final String NAME_EDEFAULT = null;
 
   /**
-  	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-  	 * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @see #getName()
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @see #getName()
+   * @generated
+   * @ordered
+   */
   protected String name = NAME_EDEFAULT;
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected ChildImpl()
   {
     super();
@@ -106,9 +106,7 @@ public class ChildImpl extends EObjectImpl implements Child
   public Parent getParent()
   {
     if (eContainerFeatureID() != Model5Package.CHILD__PARENT)
-    {
       return null;
-    }
     return (Parent)eContainer();
   }
 
@@ -130,31 +128,22 @@ public class ChildImpl extends EObjectImpl implements Child
    */
   public void setParent(Parent newParent)
   {
-    if (newParent != eInternalContainer() || eContainerFeatureID() != Model5Package.CHILD__PARENT && newParent != null)
+    if (newParent != eInternalContainer()
+        || (eContainerFeatureID() != Model5Package.CHILD__PARENT && newParent != null))
     {
       if (EcoreUtil.isAncestor(this, newParent))
-      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       if (newParent != null)
-      {
         msgs = ((InternalEObject)newParent).eInverseAdd(this, Model5Package.PARENT__CHILDREN, Parent.class, msgs);
-      }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model5Package.CHILD__PARENT, newParent, newParent));
-    }
   }
 
   /**
@@ -171,10 +160,8 @@ public class ChildImpl extends EObjectImpl implements Child
       if (preferredBy != oldPreferredBy)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model5Package.CHILD__PREFERRED_BY, oldPreferredBy,
               preferredBy));
-        }
       }
     }
     return preferredBy;
@@ -204,13 +191,9 @@ public class ChildImpl extends EObjectImpl implements Child
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model5Package.CHILD__PREFERRED_BY,
           oldPreferredBy, newPreferredBy);
       if (msgs == null)
-      {
         msgs = notification;
-      }
       else
-      {
         msgs.add(notification);
-      }
     }
     return msgs;
   }
@@ -226,24 +209,16 @@ public class ChildImpl extends EObjectImpl implements Child
     {
       NotificationChain msgs = null;
       if (preferredBy != null)
-      {
         msgs = ((InternalEObject)preferredBy).eInverseRemove(this, Model5Package.PARENT__FAVOURITE, Parent.class, msgs);
-      }
       if (newPreferredBy != null)
-      {
         msgs = ((InternalEObject)newPreferredBy).eInverseAdd(this, Model5Package.PARENT__FAVOURITE, Parent.class, msgs);
-      }
       msgs = basicSetPreferredBy(newPreferredBy, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model5Package.CHILD__PREFERRED_BY, newPreferredBy,
           newPreferredBy));
-    }
   }
 
   /**
@@ -257,18 +232,16 @@ public class ChildImpl extends EObjectImpl implements Child
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public void setNameGen(String newName)
   {
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model5Package.CHILD__NAME, oldName, name));
-    }
   }
 
   public void setName(String newName)
@@ -278,10 +251,10 @@ public class ChildImpl extends EObjectImpl implements Child
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -289,15 +262,11 @@ public class ChildImpl extends EObjectImpl implements Child
     {
     case Model5Package.CHILD__PARENT:
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       return basicSetParent((Parent)otherEnd, msgs);
     case Model5Package.CHILD__PREFERRED_BY:
       if (preferredBy != null)
-      {
         msgs = ((InternalEObject)preferredBy).eInverseRemove(this, Model5Package.PARENT__FAVOURITE, Parent.class, msgs);
-      }
       return basicSetPreferredBy((Parent)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -351,9 +320,7 @@ public class ChildImpl extends EObjectImpl implements Child
       return getParent();
     case Model5Package.CHILD__PREFERRED_BY:
       if (resolve)
-      {
         return getPreferredBy();
-      }
       return basicGetPreferredBy();
     case Model5Package.CHILD__NAME:
       return getName();
@@ -428,17 +395,15 @@ public class ChildImpl extends EObjectImpl implements Child
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

@@ -4,14 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model5.impl;
+package org.eclipse.emf.cdo.tests.model5.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model5.Model5Package;
-import org.eclipse.emf.cdo.tests.model5.GenListOfIntArray;
+import org.eclipse.emf.cdo.tests.model5.GenListOfLong;
+import org.eclipse.emf.cdo.tests.model5.legacy.Model5Package;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -21,18 +21,18 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Gen List Of Int Array</b></em>'. <!--
- * end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Gen List Of Long</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfIntArrayImpl#getElements <em>Elements</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfLongImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
-public class GenListOfIntArrayImpl extends EObjectImpl implements GenListOfIntArray
+public class GenListOfLongImpl extends EObjectImpl implements GenListOfLong
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -48,13 +48,13 @@ public class GenListOfIntArrayImpl extends EObjectImpl implements GenListOfIntAr
    * @generated
    * @ordered
    */
-  protected EList<int[]> elements;
+  protected EList<Long> elements;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected GenListOfIntArrayImpl()
+  protected GenListOfLongImpl()
   {
     super();
   }
@@ -66,18 +66,18 @@ public class GenListOfIntArrayImpl extends EObjectImpl implements GenListOfIntAr
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.eINSTANCE.getGenListOfIntArray();
+    return Model5Package.eINSTANCE.getGenListOfLong();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public EList<int[]> getElements()
+  public EList<Long> getElements()
   {
     if (elements == null)
     {
-      elements = new EDataTypeUniqueEList<int[]>(int[].class, this, Model5Package.GEN_LIST_OF_INT_ARRAY__ELEMENTS);
+      elements = new EDataTypeUniqueEList<Long>(Long.class, this, Model5Package.GEN_LIST_OF_LONG__ELEMENTS);
     }
     return elements;
   }
@@ -91,7 +91,7 @@ public class GenListOfIntArrayImpl extends EObjectImpl implements GenListOfIntAr
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_INT_ARRAY__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_LONG__ELEMENTS:
       return getElements();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -107,9 +107,9 @@ public class GenListOfIntArrayImpl extends EObjectImpl implements GenListOfIntAr
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_INT_ARRAY__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_LONG__ELEMENTS:
       getElements().clear();
-      getElements().addAll((Collection<? extends int[]>)newValue);
+      getElements().addAll((Collection<? extends Long>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -124,7 +124,7 @@ public class GenListOfIntArrayImpl extends EObjectImpl implements GenListOfIntAr
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_INT_ARRAY__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_LONG__ELEMENTS:
       getElements().clear();
       return;
     }
@@ -140,7 +140,7 @@ public class GenListOfIntArrayImpl extends EObjectImpl implements GenListOfIntAr
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_INT_ARRAY__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_LONG__ELEMENTS:
       return elements != null && !elements.isEmpty();
     }
     return super.eIsSet(featureID);
@@ -163,4 +163,4 @@ public class GenListOfIntArrayImpl extends EObjectImpl implements GenListOfIntAr
     return result.toString();
   }
 
-} // GenListOfIntArrayImpl
+} // GenListOfLongImpl

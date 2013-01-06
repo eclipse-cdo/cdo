@@ -8,10 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model5.impl;
+package org.eclipse.emf.cdo.tests.model5.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model5.Model5Factory;
-import org.eclipse.emf.cdo.tests.legacy.model5.Model5Package;
+//import org.eclipse.emf.cdo.tests.model5.*;
 import org.eclipse.emf.cdo.tests.model5.Child;
 import org.eclipse.emf.cdo.tests.model5.Doctor;
 import org.eclipse.emf.cdo.tests.model5.GenListOfBoolean;
@@ -28,6 +27,8 @@ import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Parent;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
+import org.eclipse.emf.cdo.tests.model5.legacy.Model5Factory;
+import org.eclipse.emf.cdo.tests.model5.legacy.Model5Package;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -50,7 +51,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public static Model5Factory init()

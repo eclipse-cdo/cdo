@@ -8,31 +8,31 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.legacy.model5.impl;
+package org.eclipse.emf.cdo.tests.model5.legacy.impl;
 
-import org.eclipse.emf.cdo.tests.legacy.model5.Model5Package;
-import org.eclipse.emf.cdo.tests.model5.GenListOfBoolean;
+import org.eclipse.emf.cdo.tests.model5.GenListOfShort;
+import org.eclipse.emf.cdo.tests.model5.legacy.Model5Package;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeEList;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Gen List Of Boolean</b></em>'. <!--
- * end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Gen List Of Short</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfBooleanImpl#getElements <em>Elements</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.GenListOfShortImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
-public class GenListOfBooleanImpl extends EObjectImpl implements GenListOfBoolean
+public class GenListOfShortImpl extends EObjectImpl implements GenListOfShort
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -48,13 +48,13 @@ public class GenListOfBooleanImpl extends EObjectImpl implements GenListOfBoolea
    * @generated
    * @ordered
    */
-  protected EList<Boolean> elements;
+  protected EList<Short> elements;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected GenListOfBooleanImpl()
+  protected GenListOfShortImpl()
   {
     super();
   }
@@ -66,18 +66,18 @@ public class GenListOfBooleanImpl extends EObjectImpl implements GenListOfBoolea
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.eINSTANCE.getGenListOfBoolean();
+    return Model5Package.eINSTANCE.getGenListOfShort();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public EList<Boolean> getElements()
+  public EList<Short> getElements()
   {
     if (elements == null)
     {
-      elements = new EDataTypeEList<Boolean>(Boolean.class, this, Model5Package.GEN_LIST_OF_BOOLEAN__ELEMENTS);
+      elements = new EDataTypeUniqueEList<Short>(Short.class, this, Model5Package.GEN_LIST_OF_SHORT__ELEMENTS);
     }
     return elements;
   }
@@ -91,7 +91,7 @@ public class GenListOfBooleanImpl extends EObjectImpl implements GenListOfBoolea
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_BOOLEAN__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_SHORT__ELEMENTS:
       return getElements();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -107,9 +107,9 @@ public class GenListOfBooleanImpl extends EObjectImpl implements GenListOfBoolea
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_BOOLEAN__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_SHORT__ELEMENTS:
       getElements().clear();
-      getElements().addAll((Collection<? extends Boolean>)newValue);
+      getElements().addAll((Collection<? extends Short>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -124,7 +124,7 @@ public class GenListOfBooleanImpl extends EObjectImpl implements GenListOfBoolea
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_BOOLEAN__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_SHORT__ELEMENTS:
       getElements().clear();
       return;
     }
@@ -140,7 +140,7 @@ public class GenListOfBooleanImpl extends EObjectImpl implements GenListOfBoolea
   {
     switch (featureID)
     {
-    case Model5Package.GEN_LIST_OF_BOOLEAN__ELEMENTS:
+    case Model5Package.GEN_LIST_OF_SHORT__ELEMENTS:
       return elements != null && !elements.isEmpty();
     }
     return super.eIsSet(featureID);
@@ -163,4 +163,4 @@ public class GenListOfBooleanImpl extends EObjectImpl implements GenListOfBoolea
     return result.toString();
   }
 
-} // GenListOfBooleanImpl
+} // GenListOfShortImpl

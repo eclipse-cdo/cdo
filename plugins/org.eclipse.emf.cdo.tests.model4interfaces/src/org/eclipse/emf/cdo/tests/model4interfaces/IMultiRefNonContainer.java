@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4interfaces.legacy.model4interfacesPackage#getIMultiRefNonContainer()
+ * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getIMultiRefNonContainer()
  * @model interface="true" abstract="true"
  * @generated
  */
@@ -41,7 +41,7 @@ public interface IMultiRefNonContainer extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Elements</em>' reference list.
-   * @see org.eclipse.emf.cdo.tests.model4interfaces.legacy.model4interfacesPackage#getIMultiRefNonContainer_Elements()
+   * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getIMultiRefNonContainer_Elements()
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement#getParent
    * @model opposite="parent"
    * @generated

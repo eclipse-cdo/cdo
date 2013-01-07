@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getRefSingleNonContained()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getRefSingleNonContained()
  * @model
  * @generated
  */
@@ -41,7 +41,7 @@ public interface RefSingleNonContained extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Element</em>' reference.
    * @see #setElement(SingleNonContainedElement)
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getRefSingleNonContained_Element()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getRefSingleNonContained_Element()
    * @see org.eclipse.emf.cdo.tests.model4.SingleNonContainedElement#getParent
    * @model opposite="parent"
    * @generated

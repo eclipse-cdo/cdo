@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getNodeB()
+ * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeB()
  * @model
  * @generated
  */
@@ -42,7 +42,7 @@ public interface NodeB extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Children</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getNodeB_Children()
+   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeB_Children()
    * @see org.eclipse.emf.cdo.tests.model3.NodeB#getParent
    * @model opposite="parent" containment="true"
    * @generated
@@ -60,7 +60,7 @@ public interface NodeB extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Parent</em>' container reference.
    * @see #setParent(NodeB)
-   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getNodeB_Parent()
+   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeB_Parent()
    * @see org.eclipse.emf.cdo.tests.model3.NodeB#getChildren
    * @model opposite="children" transient="false"
    * @generated
@@ -85,7 +85,7 @@ public interface NodeB extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getNodeB_Name()
+   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeB_Name()
    * @model
    * @generated
    */

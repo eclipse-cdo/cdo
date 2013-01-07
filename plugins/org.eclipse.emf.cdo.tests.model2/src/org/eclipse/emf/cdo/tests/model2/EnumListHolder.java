@@ -43,7 +43,7 @@ public interface EnumListHolder extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Enum List</em>' attribute list.
    * @see org.eclipse.emf.cdo.tests.model1.VAT
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getEnumListHolder_EnumList()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getEnumListHolder_EnumList()
    * @model
    * @generated
    */

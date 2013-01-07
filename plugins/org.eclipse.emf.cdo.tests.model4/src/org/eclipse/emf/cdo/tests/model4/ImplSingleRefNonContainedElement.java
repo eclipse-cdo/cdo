@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getImplSingleRefNonContainedElement()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getImplSingleRefNonContainedElement()
  * @model
  * @generated
  */
@@ -38,7 +38,7 @@ public interface ImplSingleRefNonContainedElement extends ISingleRefNonContained
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getImplSingleRefNonContainedElement_Name()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getImplSingleRefNonContainedElement_Name()
    * @model
    * @generated
    */

@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getBaseObject()
+ * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getBaseObject()
  * @model
  * @generated
  */
@@ -41,7 +41,7 @@ public interface BaseObject extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Attribute Optional</em>' attribute.
    * @see #setAttributeOptional(String)
-   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getBaseObject_AttributeOptional()
+   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getBaseObject_AttributeOptional()
    * @model
    * @generated
    */
@@ -66,7 +66,7 @@ public interface BaseObject extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Attribute Required</em>' attribute.
    * @see #setAttributeRequired(String)
-   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getBaseObject_AttributeRequired()
+   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getBaseObject_AttributeRequired()
    * @model required="true"
    * @generated
    */
@@ -91,7 +91,7 @@ public interface BaseObject extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Attribute List</em>' attribute list.
-   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getBaseObject_AttributeList()
+   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getBaseObject_AttributeList()
    * @model
    * @generated
    */

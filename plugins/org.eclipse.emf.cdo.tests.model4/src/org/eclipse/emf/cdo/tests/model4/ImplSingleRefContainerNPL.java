@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainerNPL;
  * end-user-doc -->
  *
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getImplSingleRefContainerNPL()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getImplSingleRefContainerNPL()
  * @model
  * @generated
  */

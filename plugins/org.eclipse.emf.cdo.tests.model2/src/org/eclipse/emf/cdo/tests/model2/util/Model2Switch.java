@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -32,6 +32,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 
 import java.util.Map;
+
+//import org.eclipse.emf.cdo.tests.model2.*;
 
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call
@@ -270,7 +272,7 @@ public class Model2Switch<T> extends Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Special Purchase Order</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Special Purchase Order</em>'.
@@ -328,7 +330,7 @@ public class Model2Switch<T> extends Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Unsettable2 With Default</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Unsettable2 With Default</em>'.
@@ -344,7 +346,7 @@ public class Model2Switch<T> extends Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Persistent Containment</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Persistent Containment</em>'.
@@ -388,7 +390,7 @@ public class Model2Switch<T> extends Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Not Unsettable With Default</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Not Unsettable With Default</em>'.
@@ -418,7 +420,7 @@ public class Model2Switch<T> extends Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>String To String Map</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>String To String Map</em>'.
@@ -434,7 +436,7 @@ public class Model2Switch<T> extends Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Integer To String Map</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Integer To String Map</em>'.
@@ -464,7 +466,7 @@ public class Model2Switch<T> extends Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>String To Address Containment Map</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>String To Address Containment Map</em>'.
@@ -480,7 +482,7 @@ public class Model2Switch<T> extends Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>String To Address Reference Map</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>String To Address Reference Map</em>'.
@@ -496,7 +498,7 @@ public class Model2Switch<T> extends Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>EObject To EObject Map</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject To EObject Map</em>'.

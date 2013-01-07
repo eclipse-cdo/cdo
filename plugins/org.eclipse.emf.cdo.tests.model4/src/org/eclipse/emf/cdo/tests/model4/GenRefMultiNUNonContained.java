@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getGenRefMultiNUNonContained()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getGenRefMultiNUNonContained()
  * @model
  * @generated
  */
@@ -40,7 +40,7 @@ public interface GenRefMultiNUNonContained extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Elements</em>' reference list.
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getGenRefMultiNUNonContained_Elements()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getGenRefMultiNUNonContained_Elements()
    * @model resolveProxies="false"
    * @generated
    */

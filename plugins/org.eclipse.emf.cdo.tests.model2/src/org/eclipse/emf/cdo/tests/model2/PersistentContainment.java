@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getPersistentContainment()
+ * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getPersistentContainment()
  * @model
  * @generated
  */
@@ -42,7 +42,7 @@ public interface PersistentContainment extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Attr Before</em>' attribute.
    * @see #setAttrBefore(String)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getPersistentContainment_AttrBefore()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getPersistentContainment_AttrBefore()
    * @model
    * @generated
    */
@@ -68,7 +68,7 @@ public interface PersistentContainment extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Children</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getPersistentContainment_Children()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getPersistentContainment_Children()
    * @see org.eclipse.emf.cdo.tests.model2.TransientContainer#getParent
    * @model opposite="parent" containment="true" ordered="false"
    * @generated
@@ -85,7 +85,7 @@ public interface PersistentContainment extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Attr After</em>' attribute.
    * @see #setAttrAfter(String)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getPersistentContainment_AttrAfter()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getPersistentContainment_AttrAfter()
    * @model
    * @generated
    */

@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getMyEnumListUnsettable()
+ * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getMyEnumListUnsettable()
  * @model
  * @generated
  */
@@ -45,7 +45,7 @@ public interface MyEnumListUnsettable extends EObject
    * @see org.eclipse.emf.cdo.tests.model6.MyEnum
    * @see #isSetMyEnum()
    * @see #unsetMyEnum()
-   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getMyEnumListUnsettable_MyEnum()
+   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getMyEnumListUnsettable_MyEnum()
    * @model unsettable="true"
    * @generated
    */

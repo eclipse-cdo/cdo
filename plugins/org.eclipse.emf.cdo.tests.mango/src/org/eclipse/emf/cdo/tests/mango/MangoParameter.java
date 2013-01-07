@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.mango.legacy.MangoPackage#getMangoParameter()
+ * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getMangoParameter()
  * @model
  * @generated
  */
@@ -38,7 +38,7 @@ public interface MangoParameter extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.mango.legacy.MangoPackage#getMangoParameter_Name()
+   * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getMangoParameter_Name()
    * @model
    * @generated
    */
@@ -65,7 +65,7 @@ public interface MangoParameter extends EObject
    * @return the value of the '<em>Passing</em>' attribute.
    * @see org.eclipse.emf.cdo.tests.mango.ParameterPassing
    * @see #setPassing(ParameterPassing)
-   * @see org.eclipse.emf.cdo.tests.mango.legacy.MangoPackage#getMangoParameter_Passing()
+   * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getMangoParameter_Passing()
    * @model
    * @generated
    */

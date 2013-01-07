@@ -30,7 +30,7 @@ import java.util.List;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getG()
+ * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getG()
  * @model
  * @generated
  */
@@ -46,7 +46,7 @@ public interface G extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Dummy</em>' attribute.
    * @see #setDummy(String)
-   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getG_Dummy()
+   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getG_Dummy()
    * @model required="true"
    * @generated
    */
@@ -72,7 +72,7 @@ public interface G extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Reference</em>' reference.
    * @see #setReference(BaseObject)
-   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getG_Reference()
+   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getG_Reference()
    * @model required="true"
    * @generated
    */
@@ -98,7 +98,7 @@ public interface G extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>List</em>' reference list.
-   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getG_List()
+   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getG_List()
    * @model
    * @generated
    */

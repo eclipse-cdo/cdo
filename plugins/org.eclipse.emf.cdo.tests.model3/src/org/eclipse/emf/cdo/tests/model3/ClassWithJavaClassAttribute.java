@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getClassWithJavaClassAttribute()
+ * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getClassWithJavaClassAttribute()
  * @model
  * @generated
  */
@@ -32,7 +32,7 @@ public interface ClassWithJavaClassAttribute extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Java Class</em>' attribute.
    * @see #setJavaClass(Class)
-   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getClassWithJavaClassAttribute_JavaClass()
+   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getClassWithJavaClassAttribute_JavaClass()
    * @model id="true"
    * @generated
    */

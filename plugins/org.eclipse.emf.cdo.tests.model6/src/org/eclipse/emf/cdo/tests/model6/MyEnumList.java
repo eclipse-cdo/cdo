@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getMyEnumList()
+ * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getMyEnumList()
  * @model
  * @generated
  */
@@ -43,7 +43,7 @@ public interface MyEnumList extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>My Enum</em>' attribute list.
    * @see org.eclipse.emf.cdo.tests.model6.MyEnum
-   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getMyEnumList_MyEnum()
+   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getMyEnumList_MyEnum()
    * @model
    * @generated
    */

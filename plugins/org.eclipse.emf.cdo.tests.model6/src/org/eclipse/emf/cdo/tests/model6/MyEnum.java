@@ -21,7 +21,7 @@ import java.util.List;
  * A representation of the literals of the enumeration '<em><b>My Enum</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
- * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getMyEnum()
+ * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getMyEnum()
  * @model
  * @generated
  */

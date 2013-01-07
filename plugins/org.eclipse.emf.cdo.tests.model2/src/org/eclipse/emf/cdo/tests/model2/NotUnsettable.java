@@ -38,7 +38,7 @@ import java.util.Date;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getNotUnsettable()
+ * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getNotUnsettable()
  * @model
  * @generated
  */
@@ -54,7 +54,7 @@ public interface NotUnsettable extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Not Unsettable Boolean</em>' attribute.
    * @see #setNotUnsettableBoolean(boolean)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getNotUnsettable_NotUnsettableBoolean()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getNotUnsettable_NotUnsettableBoolean()
    * @model
    * @generated
    */
@@ -79,7 +79,7 @@ public interface NotUnsettable extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Not Unsettable Byte</em>' attribute.
    * @see #setNotUnsettableByte(byte)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getNotUnsettable_NotUnsettableByte()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getNotUnsettable_NotUnsettableByte()
    * @model
    * @generated
    */
@@ -104,7 +104,7 @@ public interface NotUnsettable extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Not Unsettable Char</em>' attribute.
    * @see #setNotUnsettableChar(char)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getNotUnsettable_NotUnsettableChar()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getNotUnsettable_NotUnsettableChar()
    * @model
    * @generated
    */
@@ -129,7 +129,7 @@ public interface NotUnsettable extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Not Unsettable Date</em>' attribute.
    * @see #setNotUnsettableDate(Date)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getNotUnsettable_NotUnsettableDate()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getNotUnsettable_NotUnsettableDate()
    * @model
    * @generated
    */
@@ -154,7 +154,7 @@ public interface NotUnsettable extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Not Unsettable Double</em>' attribute.
    * @see #setNotUnsettableDouble(double)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getNotUnsettable_NotUnsettableDouble()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getNotUnsettable_NotUnsettableDouble()
    * @model
    * @generated
    */
@@ -179,7 +179,7 @@ public interface NotUnsettable extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Not Unsettable Float</em>' attribute.
    * @see #setNotUnsettableFloat(float)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getNotUnsettable_NotUnsettableFloat()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getNotUnsettable_NotUnsettableFloat()
    * @model
    * @generated
    */
@@ -204,7 +204,7 @@ public interface NotUnsettable extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Not Unsettable Int</em>' attribute.
    * @see #setNotUnsettableInt(int)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getNotUnsettable_NotUnsettableInt()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getNotUnsettable_NotUnsettableInt()
    * @model
    * @generated
    */
@@ -229,7 +229,7 @@ public interface NotUnsettable extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Not Unsettable Long</em>' attribute.
    * @see #setNotUnsettableLong(long)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getNotUnsettable_NotUnsettableLong()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getNotUnsettable_NotUnsettableLong()
    * @model
    * @generated
    */
@@ -254,7 +254,7 @@ public interface NotUnsettable extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Not Unsettable Short</em>' attribute.
    * @see #setNotUnsettableShort(short)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getNotUnsettable_NotUnsettableShort()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getNotUnsettable_NotUnsettableShort()
    * @model
    * @generated
    */
@@ -279,7 +279,7 @@ public interface NotUnsettable extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Not Unsettable String</em>' attribute.
    * @see #setNotUnsettableString(String)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getNotUnsettable_NotUnsettableString()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getNotUnsettable_NotUnsettableString()
    * @model
    * @generated
    */
@@ -306,7 +306,7 @@ public interface NotUnsettable extends EObject
    * @return the value of the '<em>Not Unsettable VAT</em>' attribute.
    * @see org.eclipse.emf.cdo.tests.model1.VAT
    * @see #setNotUnsettableVAT(VAT)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getNotUnsettable_NotUnsettableVAT()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getNotUnsettable_NotUnsettableVAT()
    * @model
    * @generated
    */

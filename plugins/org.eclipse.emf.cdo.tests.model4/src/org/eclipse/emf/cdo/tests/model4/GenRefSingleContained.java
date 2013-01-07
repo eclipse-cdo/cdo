@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getGenRefSingleContained()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getGenRefSingleContained()
  * @model
  * @generated
  */
@@ -39,7 +39,7 @@ public interface GenRefSingleContained extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Element</em>' containment reference.
    * @see #setElement(EObject)
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getGenRefSingleContained_Element()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getGenRefSingleContained_Element()
    * @model containment="true"
    * @generated
    */

@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4interfaces.legacy.model4interfacesPackage#getINamedElement()
+ * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getINamedElement()
  * @model interface="true" abstract="true"
  * @generated
  */
@@ -37,7 +37,7 @@ public interface INamedElement extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.model4interfaces.legacy.model4interfacesPackage#getINamedElement_Name()
+   * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getINamedElement_Name()
    * @model
    * @generated
    */

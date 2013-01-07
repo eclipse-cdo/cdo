@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getContainedElementNoOpposite()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getContainedElementNoOpposite()
  * @model
  * @generated
  */
@@ -38,7 +38,7 @@ public interface ContainedElementNoOpposite extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getContainedElementNoOpposite_Name()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getContainedElementNoOpposite_Name()
    * @model
    * @generated
    */

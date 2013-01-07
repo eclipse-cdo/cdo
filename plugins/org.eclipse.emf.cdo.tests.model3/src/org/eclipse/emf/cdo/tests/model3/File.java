@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getFile()
+ * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getFile()
  * @model
  * @generated
  */
@@ -40,7 +40,7 @@ public interface File extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getFile_Name()
+   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getFile_Name()
    * @model
    * @generated
    */
@@ -66,7 +66,7 @@ public interface File extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Data</em>' attribute.
    * @see #setData(CDOClob)
-   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getFile_Data()
+   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getFile_Data()
    * @model dataType="org.eclipse.emf.cdo.etypes.Clob"
    * @generated
    */

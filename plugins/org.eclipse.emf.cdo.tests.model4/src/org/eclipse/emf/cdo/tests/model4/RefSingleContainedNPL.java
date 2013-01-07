@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getRefSingleContainedNPL()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getRefSingleContainedNPL()
  * @model
  * @generated
  */
@@ -39,7 +39,7 @@ public interface RefSingleContainedNPL extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Element</em>' containment reference.
    * @see #setElement(ContainedElementNoOpposite)
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getRefSingleContainedNPL_Element()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getRefSingleContainedNPL_Element()
    * @model containment="true"
    * @generated
    */

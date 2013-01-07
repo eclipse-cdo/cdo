@@ -36,7 +36,7 @@ import java.util.Date;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable1()
+ * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable1()
  * @model
  * @generated
  */
@@ -54,7 +54,7 @@ public interface Unsettable1 extends EObject
    * @see #isSetUnsettableBoolean()
    * @see #unsetUnsettableBoolean()
    * @see #setUnsettableBoolean(boolean)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable1_UnsettableBoolean()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable1_UnsettableBoolean()
    * @model unsettable="true"
    * @generated
    */
@@ -104,7 +104,7 @@ public interface Unsettable1 extends EObject
    * @see #isSetUnsettableByte()
    * @see #unsetUnsettableByte()
    * @see #setUnsettableByte(byte)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable1_UnsettableByte()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable1_UnsettableByte()
    * @model unsettable="true"
    * @generated
    */
@@ -154,7 +154,7 @@ public interface Unsettable1 extends EObject
    * @see #isSetUnsettableChar()
    * @see #unsetUnsettableChar()
    * @see #setUnsettableChar(char)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable1_UnsettableChar()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable1_UnsettableChar()
    * @model unsettable="true"
    * @generated
    */
@@ -204,7 +204,7 @@ public interface Unsettable1 extends EObject
    * @see #isSetUnsettableDate()
    * @see #unsetUnsettableDate()
    * @see #setUnsettableDate(Date)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable1_UnsettableDate()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable1_UnsettableDate()
    * @model unsettable="true"
    * @generated
    */
@@ -254,7 +254,7 @@ public interface Unsettable1 extends EObject
    * @see #isSetUnsettableDouble()
    * @see #unsetUnsettableDouble()
    * @see #setUnsettableDouble(double)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable1_UnsettableDouble()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable1_UnsettableDouble()
    * @model unsettable="true"
    * @generated
    */
@@ -304,7 +304,7 @@ public interface Unsettable1 extends EObject
    * @see #isSetUnsettableFloat()
    * @see #unsetUnsettableFloat()
    * @see #setUnsettableFloat(float)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable1_UnsettableFloat()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable1_UnsettableFloat()
    * @model unsettable="true"
    * @generated
    */
@@ -354,7 +354,7 @@ public interface Unsettable1 extends EObject
    * @see #isSetUnsettableInt()
    * @see #unsetUnsettableInt()
    * @see #setUnsettableInt(int)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable1_UnsettableInt()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable1_UnsettableInt()
    * @model unsettable="true"
    * @generated
    */
@@ -404,7 +404,7 @@ public interface Unsettable1 extends EObject
    * @see #isSetUnsettableLong()
    * @see #unsetUnsettableLong()
    * @see #setUnsettableLong(long)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable1_UnsettableLong()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable1_UnsettableLong()
    * @model unsettable="true"
    * @generated
    */
@@ -454,7 +454,7 @@ public interface Unsettable1 extends EObject
    * @see #isSetUnsettableShort()
    * @see #unsetUnsettableShort()
    * @see #setUnsettableShort(short)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable1_UnsettableShort()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable1_UnsettableShort()
    * @model unsettable="true"
    * @generated
    */
@@ -504,7 +504,7 @@ public interface Unsettable1 extends EObject
    * @see #isSetUnsettableString()
    * @see #unsetUnsettableString()
    * @see #setUnsettableString(String)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable1_UnsettableString()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable1_UnsettableString()
    * @model unsettable="true"
    * @generated
    */
@@ -556,7 +556,7 @@ public interface Unsettable1 extends EObject
    * @see #isSetUnsettableVAT()
    * @see #unsetUnsettableVAT()
    * @see #setUnsettableVAT(VAT)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable1_UnsettableVAT()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable1_UnsettableVAT()
    * @model unsettable="true"
    * @generated
    */

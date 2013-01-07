@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getImplMultiRefNonContainedElement()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getImplMultiRefNonContainedElement()
  * @model
  * @generated
  */
@@ -38,7 +38,7 @@ public interface ImplMultiRefNonContainedElement extends IMultiRefNonContainedEl
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getImplMultiRefNonContainedElement_Name()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getImplMultiRefNonContainedElement_Name()
    * @model
    * @generated
    */

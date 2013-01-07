@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getRefMultiNonContainedUnsettable()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getRefMultiNonContainedUnsettable()
  * @model
  * @generated
  */

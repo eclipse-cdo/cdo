@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getRefSingleNonContainedNPL()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getRefSingleNonContainedNPL()
  * @model
  * @generated
  */
@@ -39,7 +39,7 @@ public interface RefSingleNonContainedNPL extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Element</em>' reference.
    * @see #setElement(ContainedElementNoOpposite)
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getRefSingleNonContainedNPL_Element()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getRefSingleNonContainedNPL_Element()
    * @model
    * @generated
    */

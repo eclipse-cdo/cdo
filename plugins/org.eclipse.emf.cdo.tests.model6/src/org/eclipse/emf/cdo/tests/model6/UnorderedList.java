@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getUnorderedList()
+ * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getUnorderedList()
  * @model
  * @generated
  */
@@ -40,7 +40,7 @@ public interface UnorderedList extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Contained</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getUnorderedList_Contained()
+   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getUnorderedList_Contained()
    * @model containment="true" resolveProxies="true" ordered="false"
    * @generated
    */
@@ -56,7 +56,7 @@ public interface UnorderedList extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Referenced</em>' reference list.
-   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getUnorderedList_Referenced()
+   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getUnorderedList_Referenced()
    * @model ordered="false"
    * @generated
    */

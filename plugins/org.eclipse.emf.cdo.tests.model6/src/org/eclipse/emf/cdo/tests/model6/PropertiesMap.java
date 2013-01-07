@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getPropertiesMap()
+ * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getPropertiesMap()
  * @model
  * @generated
  */
@@ -43,7 +43,7 @@ public interface PropertiesMap extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Label</em>' attribute.
    * @see #setLabel(String)
-   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getPropertiesMap_Label()
+   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getPropertiesMap_Label()
    * @model
    * @generated
    */
@@ -70,7 +70,7 @@ public interface PropertiesMap extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Persistent Map</em>' map.
-   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getPropertiesMap_PersistentMap()
+   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getPropertiesMap_PersistentMap()
    * @model mapType="org.eclipse.emf.cdo.tests.model6.PropertiesMapEntry<org.eclipse.emf.ecore.EString, org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue>"
    * @generated
    */
@@ -87,7 +87,7 @@ public interface PropertiesMap extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Transient Map</em>' map.
-   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getPropertiesMap_TransientMap()
+   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getPropertiesMap_TransientMap()
    * @model mapType="org.eclipse.emf.cdo.tests.model6.PropertiesMapEntry<org.eclipse.emf.ecore.EString, org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue>" transient="true"
    * @generated
    */

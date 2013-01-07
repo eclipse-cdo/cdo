@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getNodeC()
+ * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeC()
  * @model
  * @generated
  */
@@ -44,7 +44,7 @@ public interface NodeC extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Children</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getNodeC_Children()
+   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeC_Children()
    * @see org.eclipse.emf.cdo.tests.model3.NodeC#getParent
    * @model opposite="parent" containment="true"
    * @generated
@@ -62,7 +62,7 @@ public interface NodeC extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Parent</em>' container reference.
    * @see #setParent(NodeC)
-   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getNodeC_Parent()
+   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeC_Parent()
    * @see org.eclipse.emf.cdo.tests.model3.NodeC#getChildren
    * @model opposite="children" transient="false"
    * @generated
@@ -87,7 +87,7 @@ public interface NodeC extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getNodeC_Name()
+   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeC_Name()
    * @model
    * @generated
    */
@@ -115,7 +115,7 @@ public interface NodeC extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Other Nodes</em>' reference list.
-   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getNodeC_OtherNodes()
+   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeC_OtherNodes()
    * @see org.eclipse.emf.cdo.tests.model3.NodeC#getOppositeNodes
    * @model opposite="oppositeNodes"
    * @generated
@@ -133,7 +133,7 @@ public interface NodeC extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Opposite Nodes</em>' reference list.
-   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getNodeC_OppositeNodes()
+   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeC_OppositeNodes()
    * @see org.eclipse.emf.cdo.tests.model3.NodeC#getOtherNodes
    * @model opposite="otherNodes"
    * @generated

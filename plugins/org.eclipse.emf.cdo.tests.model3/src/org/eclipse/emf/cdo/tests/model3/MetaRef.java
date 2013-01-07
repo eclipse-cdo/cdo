@@ -62,7 +62,7 @@ public interface MetaRef extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>EClass Ref</em>' reference.
    * @see #setEClassRef(EClass)
-   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getMetaRef_EClassRef()
+   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getMetaRef_EClassRef()
    * @model
    * @generated
    */
@@ -87,7 +87,7 @@ public interface MetaRef extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>EReference Ref</em>' reference.
    * @see #setEReferenceRef(EReference)
-   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getMetaRef_EReferenceRef()
+   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getMetaRef_EReferenceRef()
    * @model
    * @generated
    */

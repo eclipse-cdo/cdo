@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getImplSingleRefContainedElement()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getImplSingleRefContainedElement()
  * @model
  * @generated
  */
@@ -38,7 +38,7 @@ public interface ImplSingleRefContainedElement extends ISingleRefContainedElemen
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getImplSingleRefContainedElement_Name()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getImplSingleRefContainedElement_Name()
    * @model
    * @generated
    */

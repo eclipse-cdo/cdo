@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4interfaces.legacy.model4interfacesPackage#getISingleRefContainedElement()
+ * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getISingleRefContainedElement()
  * @model interface="true" abstract="true"
  * @generated
  */

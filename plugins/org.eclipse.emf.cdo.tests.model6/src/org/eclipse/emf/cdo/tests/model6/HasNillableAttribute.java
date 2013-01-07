@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getHasNillableAttribute()
+ * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getHasNillableAttribute()
  * @model
  * @generated
  */
@@ -34,7 +34,7 @@ public interface HasNillableAttribute extends EObject
    * @see #isSetNillable()
    * @see #unsetNillable()
    * @see #setNillable(String)
-   * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getHasNillableAttribute_Nillable()
+   * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getHasNillableAttribute_Nillable()
    * @model unsettable="true" dataType="org.eclipse.emf.cdo.tests.model6.MyString"
    * @generated
    */

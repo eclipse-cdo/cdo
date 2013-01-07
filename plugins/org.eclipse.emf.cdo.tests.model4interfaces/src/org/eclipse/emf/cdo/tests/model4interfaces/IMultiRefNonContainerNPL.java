@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4interfaces.legacy.model4interfacesPackage#getIMultiRefNonContainerNPL()
+ * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getIMultiRefNonContainerNPL()
  * @model interface="true" abstract="true"
  * @generated
  */
@@ -40,7 +40,7 @@ public interface IMultiRefNonContainerNPL extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Elements</em>' reference list.
-   * @see org.eclipse.emf.cdo.tests.model4interfaces.legacy.model4interfacesPackage#getIMultiRefNonContainerNPL_Elements()
+   * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getIMultiRefNonContainerNPL_Elements()
    * @model
    * @generated
    */

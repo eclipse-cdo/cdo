@@ -23,19 +23,12 @@ import java.util.Date;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getPurchaseOrder()
+ * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getPurchaseOrder()
  * @model
  * @generated
  */
 public interface PurchaseOrder extends Order
 {
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
   /**
    * Returns the value of the '<em><b>Date</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -45,7 +38,7 @@ public interface PurchaseOrder extends Order
    * <!-- end-user-doc -->
    * @return the value of the '<em>Date</em>' attribute.
    * @see #setDate(Date)
-   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getPurchaseOrder_Date()
+   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getPurchaseOrder_Date()
    * @model
    * @generated
    */
@@ -72,7 +65,7 @@ public interface PurchaseOrder extends Order
    * <!-- end-user-doc -->
    * @return the value of the '<em>Supplier</em>' reference.
    * @see #setSupplier(Supplier)
-   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getPurchaseOrder_Supplier()
+   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getPurchaseOrder_Supplier()
    * @see org.eclipse.emf.cdo.tests.model1.Supplier#getPurchaseOrders
    * @model opposite="purchaseOrders" required="true"
    * @generated

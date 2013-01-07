@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer;
  * end-user-doc -->
  *
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getImplMultiRefContainer()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getImplMultiRefContainer()
  * @model
  * @generated
  */

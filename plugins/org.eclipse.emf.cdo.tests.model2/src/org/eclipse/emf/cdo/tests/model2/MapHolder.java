@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getMapHolder()
+ * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder()
  * @model
  * @generated
  */
@@ -53,7 +53,7 @@ public interface MapHolder extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Integer To String Map</em>' map.
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getMapHolder_IntegerToStringMap()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_IntegerToStringMap()
    * @model mapType="org.eclipse.emf.cdo.tests.model2.IntegerToStringMap<org.eclipse.emf.ecore.EIntegerObject, org.eclipse.emf.ecore.EString>"
    * @generated
    */
@@ -70,7 +70,7 @@ public interface MapHolder extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>String To String Map</em>' map.
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getMapHolder_StringToStringMap()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_StringToStringMap()
    * @model mapType="org.eclipse.emf.cdo.tests.model2.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
    * @generated
    */
@@ -87,7 +87,7 @@ public interface MapHolder extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>String To VAT Map</em>' map.
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getMapHolder_StringToVATMap()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_StringToVATMap()
    * @model mapType="org.eclipse.emf.cdo.tests.model2.StringToVATMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.cdo.tests.model1.VAT>"
    * @generated
    */

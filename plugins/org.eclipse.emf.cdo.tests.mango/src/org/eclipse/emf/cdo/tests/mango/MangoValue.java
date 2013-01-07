@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.mango.legacy.MangoPackage#getMangoValue()
+ * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getMangoValue()
  * @model
  * @generated
  */
@@ -37,7 +37,7 @@ public interface MangoValue extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.mango.legacy.MangoPackage#getMangoValue_Name()
+   * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getMangoValue_Name()
    * @model
    * @generated
    */

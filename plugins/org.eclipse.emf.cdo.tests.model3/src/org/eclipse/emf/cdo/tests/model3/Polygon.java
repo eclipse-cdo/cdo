@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getPolygon()
+ * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getPolygon()
  * @model
  * @generated
  */
@@ -39,7 +39,7 @@ public interface Polygon extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Points</em>' attribute list.
-   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getPolygon_Points()
+   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getPolygon_Points()
    * @model dataType="org.eclipse.emf.cdo.tests.model3.Point" required="true"
    * @generated
    */

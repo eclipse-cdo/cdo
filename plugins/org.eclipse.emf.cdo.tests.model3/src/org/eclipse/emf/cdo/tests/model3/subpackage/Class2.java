@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model3.subpackage.legacy.SubpackagePackage#getClass2()
+ * @see org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage#getClass2()
  * @model
  * @generated
  */
@@ -42,7 +42,7 @@ public interface Class2 extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Class1</em>' reference list.
-   * @see org.eclipse.emf.cdo.tests.model3.subpackage.legacy.SubpackagePackage#getClass2_Class1()
+   * @see org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage#getClass2_Class1()
    * @see org.eclipse.emf.cdo.tests.model3.Class1#getClass2
    * @model opposite="class2"
    * @generated

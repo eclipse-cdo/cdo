@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getRefSingleContained()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getRefSingleContained()
  * @model
  * @generated
  */
@@ -40,7 +40,7 @@ public interface RefSingleContained extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Element</em>' containment reference.
    * @see #setElement(SingleContainedElement)
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getRefSingleContained_Element()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getRefSingleContained_Element()
    * @see org.eclipse.emf.cdo.tests.model4.SingleContainedElement#getParent
    * @model opposite="parent" containment="true"
    * @generated

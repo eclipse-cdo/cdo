@@ -31,6 +31,8 @@ import org.eclipse.emf.ecore.EObject;
 
 import java.util.Map;
 
+//import org.eclipse.emf.cdo.tests.model6.*;
+
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.

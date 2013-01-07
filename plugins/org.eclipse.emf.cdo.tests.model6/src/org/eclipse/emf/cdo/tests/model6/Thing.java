@@ -8,7 +8,7 @@ package org.eclipse.emf.cdo.tests.model6;
  * <!-- end-user-doc -->
  *
  *
- * @see org.eclipse.emf.cdo.tests.model6.legacy.Model6Package#getThing()
+ * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getThing()
  * @model
  * @generated
  */

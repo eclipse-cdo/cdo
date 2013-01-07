@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getClassWithIDAttribute()
+ * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getClassWithIDAttribute()
  * @model
  * @generated
  */
@@ -38,7 +38,7 @@ public interface ClassWithIDAttribute extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Id</em>' attribute.
    * @see #setId(String)
-   * @see org.eclipse.emf.cdo.tests.model3.legacy.Model3Package#getClassWithIDAttribute_Id()
+   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getClassWithIDAttribute_Id()
    * @model id="true"
    * @generated
    */

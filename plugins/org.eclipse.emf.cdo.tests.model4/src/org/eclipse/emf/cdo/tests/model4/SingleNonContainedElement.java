@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getSingleNonContainedElement()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getSingleNonContainedElement()
  * @model
  * @generated
  */
@@ -39,7 +39,7 @@ public interface SingleNonContainedElement extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getSingleNonContainedElement_Name()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getSingleNonContainedElement_Name()
    * @model
    * @generated
    */
@@ -65,7 +65,7 @@ public interface SingleNonContainedElement extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Parent</em>' reference.
    * @see #setParent(RefSingleNonContained)
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getSingleNonContainedElement_Parent()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getSingleNonContainedElement_Parent()
    * @see org.eclipse.emf.cdo.tests.model4.RefSingleNonContained#getElement
    * @model opposite="element"
    * @generated

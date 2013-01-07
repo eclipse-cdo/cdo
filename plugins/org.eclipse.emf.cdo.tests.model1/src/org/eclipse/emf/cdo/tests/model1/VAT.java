@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * <!-- begin-user-doc --> A representation of the literals of the enumeration '<em><b>VAT</b></em>', and utility
  * methods for working with them. <!-- end-user-doc -->
- * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getVAT()
+ * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getVAT()
  * @model
  * @generated
  */
@@ -51,13 +51,6 @@ public enum VAT implements Enumerator
    * @ordered
    */
   VAT15(15, "vat15", "vat15");
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * The '<em><b>Vat0</b></em>' literal value.

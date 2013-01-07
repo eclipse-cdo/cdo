@@ -37,7 +37,7 @@ import java.util.Date;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable2WithDefault()
+ * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable2WithDefault()
  * @model
  * @generated
  */
@@ -56,7 +56,7 @@ public interface Unsettable2WithDefault extends EObject
    * @see #isSetUnsettableBoolean()
    * @see #unsetUnsettableBoolean()
    * @see #setUnsettableBoolean(boolean)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable2WithDefault_UnsettableBoolean()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable2WithDefault_UnsettableBoolean()
    * @model default="true" unsettable="true"
    * @generated
    */
@@ -158,7 +158,7 @@ public interface Unsettable2WithDefault extends EObject
    * @see #isSetUnsettableChar()
    * @see #unsetUnsettableChar()
    * @see #setUnsettableChar(char)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable2WithDefault_UnsettableChar()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable2WithDefault_UnsettableChar()
    * @model default="\'x\'" unsettable="true"
    * @generated
    */
@@ -209,7 +209,7 @@ public interface Unsettable2WithDefault extends EObject
    * @see #isSetUnsettableDate()
    * @see #unsetUnsettableDate()
    * @see #setUnsettableDate(Date)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable2WithDefault_UnsettableDate()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable2WithDefault_UnsettableDate()
    * @model default="2009-12-21T15:12:59" unsettable="true"
    * @generated
    */
@@ -260,7 +260,7 @@ public interface Unsettable2WithDefault extends EObject
    * @see #isSetUnsettableDouble()
    * @see #unsetUnsettableDouble()
    * @see #setUnsettableDouble(double)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable2WithDefault_UnsettableDouble()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable2WithDefault_UnsettableDouble()
    * @model default="3.3" unsettable="true"
    * @generated
    */
@@ -311,7 +311,7 @@ public interface Unsettable2WithDefault extends EObject
    * @see #isSetUnsettableFloat()
    * @see #unsetUnsettableFloat()
    * @see #setUnsettableFloat(float)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable2WithDefault_UnsettableFloat()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable2WithDefault_UnsettableFloat()
    * @model default="4.4" unsettable="true"
    * @generated
    */
@@ -515,7 +515,7 @@ public interface Unsettable2WithDefault extends EObject
    * @see #isSetUnsettableString()
    * @see #unsetUnsettableString()
    * @see #setUnsettableString(String)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable2WithDefault_UnsettableString()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable2WithDefault_UnsettableString()
    * @model default="\"eike\"" unsettable="true"
    * @generated
    */
@@ -568,7 +568,7 @@ public interface Unsettable2WithDefault extends EObject
    * @see #isSetUnsettableVAT()
    * @see #unsetUnsettableVAT()
    * @see #setUnsettableVAT(VAT)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getUnsettable2WithDefault_UnsettableVAT()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable2WithDefault_UnsettableVAT()
    * @model default="vat15" unsettable="true"
    * @generated
    */

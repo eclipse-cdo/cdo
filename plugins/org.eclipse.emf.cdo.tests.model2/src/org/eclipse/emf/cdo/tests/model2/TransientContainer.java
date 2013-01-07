@@ -38,7 +38,7 @@ public interface TransientContainer extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Attr Before</em>' attribute.
    * @see #setAttrBefore(String)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getTransientContainer_AttrBefore()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getTransientContainer_AttrBefore()
    * @model
    * @generated
    */
@@ -65,7 +65,7 @@ public interface TransientContainer extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Parent</em>' container reference.
    * @see #setParent(PersistentContainment)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getTransientContainer_Parent()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getTransientContainer_Parent()
    * @see org.eclipse.emf.cdo.tests.model2.PersistentContainment#getChildren
    * @model opposite="children"
    * @generated
@@ -91,7 +91,7 @@ public interface TransientContainer extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Attr After</em>' attribute.
    * @see #setAttrAfter(String)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getTransientContainer_AttrAfter()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getTransientContainer_AttrAfter()
    * @model
    * @generated
    */

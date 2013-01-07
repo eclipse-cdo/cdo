@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4interfaces.legacy.model4interfacesPackage#getISingleRefNonContainerNPL()
+ * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getISingleRefNonContainerNPL()
  * @model interface="true" abstract="true"
  * @generated
  */
@@ -39,7 +39,7 @@ public interface ISingleRefNonContainerNPL extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Element</em>' reference.
    * @see #setElement(IContainedElementNoParentLink)
-   * @see org.eclipse.emf.cdo.tests.model4interfaces.legacy.model4interfacesPackage#getISingleRefNonContainerNPL_Element()
+   * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getISingleRefNonContainerNPL_Element()
    * @model
    * @generated
    */

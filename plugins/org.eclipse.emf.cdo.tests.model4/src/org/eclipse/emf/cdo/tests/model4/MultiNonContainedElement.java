@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getMultiNonContainedElement()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getMultiNonContainedElement()
  * @model
  * @generated
  */
@@ -39,7 +39,7 @@ public interface MultiNonContainedElement extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getMultiNonContainedElement_Name()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getMultiNonContainedElement_Name()
    * @model
    * @generated
    */
@@ -66,7 +66,7 @@ public interface MultiNonContainedElement extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Parent</em>' reference.
    * @see #setParent(RefMultiNonContained)
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getMultiNonContainedElement_Parent()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getMultiNonContainedElement_Parent()
    * @see org.eclipse.emf.cdo.tests.model4.RefMultiNonContained#getElements
    * @model opposite="elements"
    * @generated

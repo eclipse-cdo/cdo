@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getGenRefMapNonContained()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getGenRefMapNonContained()
  * @model
  * @generated
  */
@@ -41,7 +41,7 @@ public interface GenRefMapNonContained extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Elements</em>' map.
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getGenRefMapNonContained_Elements()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getGenRefMapNonContained_Elements()
    * @model mapType="org.eclipse.emf.cdo.tests.model4.StringToEObject<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EObject>"
    * @generated
    */

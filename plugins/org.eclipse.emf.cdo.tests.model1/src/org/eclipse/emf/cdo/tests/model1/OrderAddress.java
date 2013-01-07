@@ -20,19 +20,12 @@ package org.eclipse.emf.cdo.tests.model1;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getOrderAddress()
+ * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getOrderAddress()
  * @model annotation="teneo.jpa value='@AssociationOverride(name=\"orderDetails\", joinColumns=@JoinColumn(name=\"orderdetails_orderaddressid\"))'"
  * @generated
  */
 public interface OrderAddress extends Address, Order, OrderDetail
 {
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
   /**
    * Returns the value of the '<em><b>Test Attribute</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -43,7 +36,7 @@ public interface OrderAddress extends Address, Order, OrderDetail
    * <!-- end-user-doc -->
    * @return the value of the '<em>Test Attribute</em>' attribute.
    * @see #setTestAttribute(boolean)
-   * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Package#getOrderAddress_TestAttribute()
+   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getOrderAddress_TestAttribute()
    * @model
    * @generated
    */

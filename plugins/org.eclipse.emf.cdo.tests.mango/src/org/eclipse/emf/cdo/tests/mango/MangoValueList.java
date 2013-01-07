@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.mango.legacy.MangoPackage#getMangoValueList()
+ * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getMangoValueList()
  * @model
  * @generated
  */
@@ -39,7 +39,7 @@ public interface MangoValueList extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.tests.mango.legacy.MangoPackage#getMangoValueList_Name()
+   * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getMangoValueList_Name()
    * @model
    * @generated
    */
@@ -64,7 +64,7 @@ public interface MangoValueList extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Values</em>' reference list.
-   * @see org.eclipse.emf.cdo.tests.mango.legacy.MangoPackage#getMangoValueList_Values()
+   * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getMangoValueList_Values()
    * @model
    * @generated
    */

@@ -34,6 +34,8 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 import java.util.Map;
 
+//import org.eclipse.emf.cdo.tests.model2.*;
+
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
  * @generated
@@ -42,7 +44,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 {
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public static Model2Factory init()

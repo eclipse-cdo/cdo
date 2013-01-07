@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getTask()
+ * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getTask()
  * @model
  * @generated
  */
@@ -41,7 +41,7 @@ public interface Task extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Task Container</em>' container reference.
    * @see #setTaskContainer(TaskContainer)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getTask_TaskContainer()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getTask_TaskContainer()
    * @see org.eclipse.emf.cdo.tests.model2.TaskContainer#getTasks
    * @model opposite="tasks" transient="false"
    * @generated
@@ -67,7 +67,7 @@ public interface Task extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Description</em>' attribute.
    * @see #setDescription(String)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getTask_Description()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getTask_Description()
    * @model
    * @generated
    */
@@ -91,7 +91,7 @@ public interface Task extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Done</em>' attribute.
    * @see #setDone(boolean)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getTask_Done()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getTask_Done()
    * @model
    * @generated
    */

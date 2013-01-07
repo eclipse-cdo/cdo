@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4interfaces.legacy.model4interfacesPackage#getIMultiRefContainerNPL()
+ * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getIMultiRefContainerNPL()
  * @model interface="true" abstract="true"
  * @generated
  */
@@ -40,7 +40,7 @@ public interface IMultiRefContainerNPL extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Elements</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model4interfaces.legacy.model4interfacesPackage#getIMultiRefContainerNPL_Elements()
+   * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getIMultiRefContainerNPL_Elements()
    * @model containment="true"
    * @generated
    */

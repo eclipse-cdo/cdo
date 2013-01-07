@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getGenRefMultiContained()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getGenRefMultiContained()
  * @model
  * @generated
  */
@@ -40,7 +40,7 @@ public interface GenRefMultiContained extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Elements</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getGenRefMultiContained_Elements()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getGenRefMultiContained_Elements()
    * @model containment="true"
    * @generated
    */

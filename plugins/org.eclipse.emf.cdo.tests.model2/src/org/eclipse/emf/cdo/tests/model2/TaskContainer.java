@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getTaskContainer()
+ * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getTaskContainer()
  * @model
  * @generated
  */
@@ -40,7 +40,7 @@ public interface TaskContainer extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Tasks</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getTaskContainer_Tasks()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getTaskContainer_Tasks()
    * @see org.eclipse.emf.cdo.tests.model2.Task#getTaskContainer
    * @model opposite="taskContainer" containment="true"
    * @generated

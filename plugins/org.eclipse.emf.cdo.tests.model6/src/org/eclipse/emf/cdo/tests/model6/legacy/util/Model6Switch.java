@@ -30,6 +30,8 @@ import org.eclipse.emf.ecore.EObject;
 import java.util.List;
 import java.util.Map;
 
+//import org.eclipse.emf.cdo.tests.model6.*;
+
 /**
  * <!-- begin-user-doc -->
  * The <b>Switch</b> for the model's inheritance hierarchy.

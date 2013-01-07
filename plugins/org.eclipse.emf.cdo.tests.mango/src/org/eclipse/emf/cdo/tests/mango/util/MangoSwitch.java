@@ -97,9 +97,7 @@ public class MangoSwitch<T>
       MangoValueList mangoValueList = (MangoValueList)theEObject;
       T result = caseMangoValueList(mangoValueList);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case MangoPackage.MANGO_VALUE:
@@ -107,9 +105,7 @@ public class MangoSwitch<T>
       MangoValue mangoValue = (MangoValue)theEObject;
       T result = caseMangoValue(mangoValue);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case MangoPackage.MANGO_PARAMETER:
@@ -117,9 +113,7 @@ public class MangoSwitch<T>
       MangoParameter mangoParameter = (MangoParameter)theEObject;
       T result = caseMangoParameter(mangoParameter);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     default:

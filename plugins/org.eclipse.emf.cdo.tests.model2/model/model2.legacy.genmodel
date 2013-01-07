@@ -3,7 +3,7 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;   Eike Stepper - initial API and implementation"
     modelDirectory="/org.eclipse.emf.cdo.tests.model2/src" editDirectory="" editorDirectory=""
     modelPluginID="org.eclipse.emf.cdo.tests.model2" modelName="Model2" updateClasspath="false"
-    codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.cdo"
+    codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="5.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.cdo.tests.model1/model/model1.legacy.genmodel#//model1">
   <foreignModel>model2.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>

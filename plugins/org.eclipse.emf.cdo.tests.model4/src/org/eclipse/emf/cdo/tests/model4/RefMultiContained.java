@@ -40,7 +40,7 @@ public interface RefMultiContained extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Elements</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getRefMultiContained_Elements()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getRefMultiContained_Elements()
    * @see org.eclipse.emf.cdo.tests.model4.MultiContainedElement#getParent
    * @model opposite="parent" containment="true"
    * @generated

@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getSpecialPurchaseOrder()
+ * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getSpecialPurchaseOrder()
  * @model
  * @generated
  */
@@ -41,7 +41,7 @@ public interface SpecialPurchaseOrder extends PurchaseOrder
    * <!-- end-user-doc -->
    * @return the value of the '<em>Discount Code</em>' attribute.
    * @see #setDiscountCode(String)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getSpecialPurchaseOrder_DiscountCode()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getSpecialPurchaseOrder_DiscountCode()
    * @model
    * @generated
    */
@@ -66,7 +66,7 @@ public interface SpecialPurchaseOrder extends PurchaseOrder
    * <!-- end-user-doc -->
    * @return the value of the '<em>Shipping Address</em>' containment reference.
    * @see #setShippingAddress(Address)
-   * @see org.eclipse.emf.cdo.tests.model2.legacy.Model2Package#getSpecialPurchaseOrder_ShippingAddress()
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getSpecialPurchaseOrder_ShippingAddress()
    * @model containment="true"
    * @generated
    */

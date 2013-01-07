@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model4"
-    nsURI="http://www.eclipse.org/emf/CDO/tests/model4/1.0.0" nsPrefix="model4">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model4" nsURI="http://www.eclipse.org/emf/CDO/tests/model4/1.0.0"
+    nsPrefix="model4">
   <eClassifiers xsi:type="ecore:EClass" name="RefSingleContained">
     <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="#//SingleContainedElement"
         containment="true" eOpposite="#//SingleContainedElement/parent"/>
@@ -81,27 +80,27 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ImplSingleRefContainer" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//ISingleRefContainer"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ImplSingleRefContainedElement" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//ISingleRefContainedElement">
+  <eClassifiers xsi:type="ecore:EClass" name="ImplSingleRefContainer" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/model4interfaces.ecore#//ISingleRefContainer"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ImplSingleRefContainedElement" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/model4interfaces.ecore#//ISingleRefContainedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ImplSingleRefNonContainer" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//ISingleRefNonContainer"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ImplSingleRefNonContainedElement" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//ISingleRefNonContainedElement">
+  <eClassifiers xsi:type="ecore:EClass" name="ImplSingleRefNonContainer" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/model4interfaces.ecore#//ISingleRefNonContainer"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ImplSingleRefNonContainedElement" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/model4interfaces.ecore#//ISingleRefNonContainedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ImplMultiRefNonContainer" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//IMultiRefNonContainer"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ImplMultiRefNonContainedElement" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//IMultiRefNonContainedElement">
+  <eClassifiers xsi:type="ecore:EClass" name="ImplMultiRefNonContainer" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/model4interfaces.ecore#//IMultiRefNonContainer"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ImplMultiRefNonContainedElement" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/model4interfaces.ecore#//IMultiRefNonContainedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ImplMultiRefContainer" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//IMultiRefContainer"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ImplMultiRefContainedElement" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//IMultiRefContainedElement">
+  <eClassifiers xsi:type="ecore:EClass" name="ImplMultiRefContainer" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/model4interfaces.ecore#//IMultiRefContainer"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ImplMultiRefContainedElement" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/model4interfaces.ecore#//IMultiRefContainedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ImplSingleRefContainerNPL" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//ISingleRefContainerNPL"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ImplSingleRefNonContainerNPL" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//ISingleRefNonContainerNPL"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ImplMultiRefContainerNPL" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//IMultiRefContainerNPL"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ImplMultiRefNonContainerNPL" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//IMultiRefNonContainerNPL"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ImplContainedElementNPL" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//IContainedElementNoParentLink ../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//INamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ImplSingleRefContainerNPL" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/model4interfaces.ecore#//ISingleRefContainerNPL"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ImplSingleRefNonContainerNPL" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/model4interfaces.ecore#//ISingleRefNonContainerNPL"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ImplMultiRefContainerNPL" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/model4interfaces.ecore#//IMultiRefContainerNPL"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ImplMultiRefNonContainerNPL" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/model4interfaces.ecore#//IMultiRefNonContainerNPL"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ImplContainedElementNPL" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/model4interfaces.ecore#//IContainedElementNoParentLink ../../org.eclipse.emf.cdo.tests.model4interfaces/model/model4interfaces.ecore#//INamedElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="GenRefMultiNUNonContained">
     <eStructuralFeatures xsi:type="ecore:EReference" name="elements" unique="false"
         upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"

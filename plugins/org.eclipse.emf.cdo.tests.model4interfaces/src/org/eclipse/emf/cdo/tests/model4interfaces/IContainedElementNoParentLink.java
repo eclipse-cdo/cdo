@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- end-user-doc -->
  *
  *
- * @see org.eclipse.emf.cdo.tests.model4interfaces.legacy.model4interfacesPackage#getIContainedElementNoParentLink()
+ * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getIContainedElementNoParentLink()
  * @model interface="true" abstract="true"
  * @generated
  */

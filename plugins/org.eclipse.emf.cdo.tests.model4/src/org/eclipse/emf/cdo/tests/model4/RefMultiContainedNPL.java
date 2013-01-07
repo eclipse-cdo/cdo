@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getRefMultiContainedNPL()
+ * @see org.eclipse.emf.cdo.tests.model4.model4Package#getRefMultiContainedNPL()
  * @model
  * @generated
  */
@@ -40,7 +40,7 @@ public interface RefMultiContainedNPL extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Elements</em>' containment reference list.
-   * @see org.eclipse.emf.cdo.tests.model4.legacy.model4Package#getRefMultiContainedNPL_Elements()
+   * @see org.eclipse.emf.cdo.tests.model4.model4Package#getRefMultiContainedNPL_Elements()
    * @model containment="true"
    * @generated
    */

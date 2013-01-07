@@ -30,7 +30,6 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
-import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -227,12 +226,12 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
     super.doActivate();
 
     IDBStore store = getMappingStrategy().getStore();
-    IDBSchema schema = store.getDBSchema();
-    DBType dbType = store.getIDHandler().getDBType();
+    DBType idType = store.getIDHandler().getDBType();
+    int idLength = store.getIDColumnLength();
 
-    table = schema.addTable(CDODBSchema.CDO_OBJECTS);
-    idField = table.addField(CDODBSchema.ATTRIBUTES_ID, dbType);
-    typeField = table.addField(CDODBSchema.ATTRIBUTES_CLASS, dbType);
+    table = store.getDBSchema().addTable(CDODBSchema.CDO_OBJECTS);
+    idField = table.addField(CDODBSchema.ATTRIBUTES_ID, idType, idLength);
+    typeField = table.addField(CDODBSchema.ATTRIBUTES_CLASS, idType, idLength);
     timeField = table.addField(CDODBSchema.ATTRIBUTES_CREATED, DBType.BIGINT);
     table.addIndex(IDBIndex.Type.UNIQUE, idField);
 

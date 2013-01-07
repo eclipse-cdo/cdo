@@ -111,19 +111,20 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
   {
     IDBStore store = getMappingStrategy().getStore();
     DBType idType = store.getIDHandler().getDBType();
+    int idLength = store.getIDColumnLength();
 
     String name = getMappingStrategy().getTableName(eClass);
     table = store.getDBSchema().addTable(name);
 
-    IDBField idField = table.addField(CDODBSchema.ATTRIBUTES_ID, idType, true);
+    IDBField idField = table.addField(CDODBSchema.ATTRIBUTES_ID, idType, idLength, true);
     IDBField versionField = table.addField(CDODBSchema.ATTRIBUTES_VERSION, DBType.INTEGER, true);
 
     IDBField branchField = addBranchingField(table);
 
     table.addField(CDODBSchema.ATTRIBUTES_CREATED, DBType.BIGINT, true);
     IDBField revisedField = table.addField(CDODBSchema.ATTRIBUTES_REVISED, DBType.BIGINT, true);
-    table.addField(CDODBSchema.ATTRIBUTES_RESOURCE, idType, true);
-    table.addField(CDODBSchema.ATTRIBUTES_CONTAINER, idType, true);
+    table.addField(CDODBSchema.ATTRIBUTES_RESOURCE, idType, idLength, true);
+    table.addField(CDODBSchema.ATTRIBUTES_CONTAINER, idType, idLength, true);
     table.addField(CDODBSchema.ATTRIBUTES_FEATURE, DBType.INTEGER, true);
 
     if (branchField != null)

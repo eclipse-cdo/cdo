@@ -401,7 +401,7 @@ public class DurableLockingManager extends Lifecycle
     // Locks
     locks = schema.addTable("cdo_locks");
     locksArea = locks.addField("area_id", DBType.VARCHAR);
-    locksObject = locks.addField("object_id", idHandler.getDBType());
+    locksObject = locks.addField("object_id", idHandler.getDBType(), store.getIDColumnLength());
     locksGrade = locks.addField("lock_grade", DBType.INTEGER);
 
     locks.addIndex(IDBIndex.Type.PRIMARY_KEY, locksArea, locksObject);

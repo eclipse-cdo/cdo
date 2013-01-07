@@ -37,6 +37,10 @@
 
     <store type="db">
 
+      <!-- Example http://bugs.eclipse.org/396379 (if idGenerationLocation == CLIENT)
+	      <property name="idColumnLength" value="34"/>
+			-->
+
       <!-- Period at which to execute an SQL statement to keep DB connection alive, in minutes -->
       <property name="connectionKeepAlivePeriod" value="60"/>
 

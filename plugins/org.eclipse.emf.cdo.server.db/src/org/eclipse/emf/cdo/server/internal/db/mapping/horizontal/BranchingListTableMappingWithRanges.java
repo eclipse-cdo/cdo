@@ -131,12 +131,14 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
   private void initTable()
   {
     IDBStore store = getMappingStrategy().getStore();
+    DBType idType = store.getIDHandler().getDBType();
+    int idLength = store.getIDColumnLength();
+
     String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
     table = store.getDBSchema().addTable(tableName);
 
     IDBField[] dbFields = new IDBField[5];
-
-    dbFields[0] = table.addField(CDODBSchema.LIST_REVISION_ID, store.getIDHandler().getDBType());
+    dbFields[0] = table.addField(CDODBSchema.LIST_REVISION_ID, idType, idLength);
     dbFields[1] = table.addField(CDODBSchema.LIST_REVISION_BRANCH, DBType.INTEGER);
     dbFields[2] = table.addField(CDODBSchema.LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
     dbFields[3] = table.addField(CDODBSchema.LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
@@ -374,8 +376,8 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
           toReadFromBase = new ArrayList<Pair<Integer, Integer>>();
         }
         toReadFromBase.add(new Pair<Integer, Integer>(currentIndex, currentIndex + valuesToRead));
-        }
       }
+    }
     catch (SQLException ex)
     {
       throw new DBException(ex);

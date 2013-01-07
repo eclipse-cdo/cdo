@@ -42,6 +42,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.spi.db.DBSchema;
@@ -103,6 +104,8 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   private boolean firstTime;
 
   private Map<String, String> properties;
+
+  private int idColumnLength = IDBField.DEFAULT;
 
   private IIDHandler idHandler;
 
@@ -179,6 +182,11 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   public Map<String, String> getProperties()
   {
     return properties;
+  }
+
+  public int getIDColumnLength()
+  {
+    return idColumnLength;
   }
 
   public IIDHandler getIDHandler()
@@ -572,6 +580,15 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
     if (properties != null)
     {
+      if (getRepository().getIDGenerationLocation() == IDGenerationLocation.CLIENT)
+      {
+        String prop = properties.get(IDBStore.Props.ID_COLUMN_LENGTH);
+        if (prop != null)
+        {
+          idColumnLength = Integer.parseInt(prop);
+        }
+      }
+
       configureAccessorPool(readerPool, IDBStore.Props.READER_POOL_CAPACITY);
       configureAccessorPool(writerPool, IDBStore.Props.WRITER_POOL_CAPACITY);
     }

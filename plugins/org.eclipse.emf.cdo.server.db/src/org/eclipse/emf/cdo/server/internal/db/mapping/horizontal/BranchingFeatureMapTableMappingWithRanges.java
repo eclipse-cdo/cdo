@@ -154,11 +154,14 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
   private void initTable()
   {
     IDBStore store = getMappingStrategy().getStore();
+    DBType idType = store.getIDHandler().getDBType();
+    int idLength = store.getIDColumnLength();
+
     String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
     table = store.getDBSchema().addTable(tableName);
 
     // add fields for CDOID
-    IDBField idField = table.addField(CDODBSchema.FEATUREMAP_REVISION_ID, store.getIDHandler().getDBType());
+    IDBField idField = table.addField(CDODBSchema.FEATUREMAP_REVISION_ID, idType, idLength);
 
     IDBField branchField = table.addField(CDODBSchema.LIST_REVISION_BRANCH, DBType.INTEGER);
 
@@ -170,7 +173,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
     IDBField idxField = table.addField(CDODBSchema.FEATUREMAP_IDX, DBType.INTEGER);
 
     // add field for FeatureMap tag (MetaID for Feature in CDO registry)
-    IDBField tagField = table.addField(CDODBSchema.FEATUREMAP_TAG, store.getIDHandler().getDBType());
+    IDBField tagField = table.addField(CDODBSchema.FEATUREMAP_TAG, idType, idLength);
 
     tagMap = new HashMap<CDOID, String>();
     typeMappings = new HashMap<CDOID, ITypeMapping>();

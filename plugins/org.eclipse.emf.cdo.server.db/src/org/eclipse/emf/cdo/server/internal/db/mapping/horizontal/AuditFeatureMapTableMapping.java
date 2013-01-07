@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
@@ -68,8 +69,10 @@ public class AuditFeatureMapTableMapping extends AbstractFeatureMapTableMapping
   {
     if (keyFields == null)
     {
+      IDBStore store = getMappingStrategy().getStore();
+
       keyFields = new FieldInfo[] {
-          new FieldInfo(CDODBSchema.FEATUREMAP_REVISION_ID, getMappingStrategy().getStore().getIDHandler().getDBType()),
+          new FieldInfo(CDODBSchema.FEATUREMAP_REVISION_ID, store.getIDHandler().getDBType(), store.getIDColumnLength()),
           new FieldInfo(CDODBSchema.FEATUREMAP_VERSION, DBType.INTEGER) };
     }
 

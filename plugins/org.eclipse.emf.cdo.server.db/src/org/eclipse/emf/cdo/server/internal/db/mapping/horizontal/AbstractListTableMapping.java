@@ -96,7 +96,7 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
 
     for (int i = 0; i < fields.length; i++)
     {
-      dbFields[i] = table.addField(fields[i].getName(), fields[i].getDbType());
+      dbFields[i] = table.addField(fields[i].getName(), fields[i].getDbType(), fields[i].getPrecision());
     }
 
     // add field for list index
@@ -452,34 +452,6 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
     {
       DBUtil.close(resultSet);
       DBUtil.close(stmt);
-    }
-  }
-
-  /**
-   * Used by subclasses to indicate which fields should be in the table. I.e. just a pair of name and DBType ...
-   *
-   * @author Stefan Winkler
-   */
-  protected static class FieldInfo
-  {
-    private String name;
-
-    private DBType dbType;
-
-    public FieldInfo(String name, DBType dbType)
-    {
-      this.name = name;
-      this.dbType = dbType;
-    }
-
-    public String getName()
-    {
-      return name;
-    }
-
-    public DBType getDbType()
-    {
-      return dbType;
     }
   }
 }

@@ -52,6 +52,11 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
   /**
    * @since 4.2
    */
+  public int getIDColumnLength();
+
+  /**
+   * @since 4.2
+   */
   public void visitAllTables(Connection connection, TableVisitor visitor);
 
   /**
@@ -93,6 +98,11 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
   public interface Props
   {
     public static final String CONNECTION_KEEPALIVE_PERIOD = "connectionKeepAlivePeriod"; //$NON-NLS-1$
+
+    /**
+     * @since 4.2
+     */
+    public static final String ID_COLUMN_LENGTH = "idColumnLength"; //$NON-NLS-1$
 
     /**
      * @since 4.2

@@ -126,12 +126,14 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
   private void initTable()
   {
     IDBStore store = getMappingStrategy().getStore();
+    DBType idType = store.getIDHandler().getDBType();
+    int idLength = store.getIDColumnLength();
+
     String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
     table = store.getDBSchema().addTable(tableName);
 
     IDBField[] dbFields = new IDBField[4];
-
-    dbFields[0] = table.addField(CDODBSchema.LIST_REVISION_ID, store.getIDHandler().getDBType());
+    dbFields[0] = table.addField(CDODBSchema.LIST_REVISION_ID, idType, idLength);
     dbFields[1] = table.addField(CDODBSchema.LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
     dbFields[2] = table.addField(CDODBSchema.LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
     dbFields[3] = table.addField(CDODBSchema.LIST_IDX, DBType.INTEGER);

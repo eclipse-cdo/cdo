@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
@@ -37,7 +38,6 @@ import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
-import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -204,8 +204,10 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   {
     if (keyFields == null)
     {
-      DBType dbType = getMappingStrategy().getStore().getIDHandler().getDBType();
-      keyFields = new FieldInfo[] { new FieldInfo(CDODBSchema.LIST_REVISION_ID, dbType) };
+      IDBStore store = getMappingStrategy().getStore();
+
+      keyFields = new FieldInfo[] { new FieldInfo(CDODBSchema.LIST_REVISION_ID, store.getIDHandler().getDBType(),
+          store.getIDColumnLength()) };
     }
 
     return keyFields;

@@ -121,6 +121,9 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
   private void initTable()
   {
     IDBStore store = getMappingStrategy().getStore();
+    DBType idType = store.getIDHandler().getDBType();
+    int idLength = store.getIDColumnLength();
+
     String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
     table = store.getDBSchema().addTable(tableName);
 
@@ -130,14 +133,14 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
 
     for (int i = 0; i < fields.length; i++)
     {
-      dbFields[i] = table.addField(fields[i].getName(), fields[i].getDbType());
+      dbFields[i] = table.addField(fields[i].getName(), fields[i].getDbType(), fields[i].getPrecision());
     }
 
     // add field for list index
     IDBField idxField = table.addField(CDODBSchema.FEATUREMAP_IDX, DBType.INTEGER);
 
     // add field for FeatureMap tag (MetaID for Feature in CDO registry)
-    IDBField tagField = table.addField(CDODBSchema.FEATUREMAP_TAG, store.getIDHandler().getDBType());
+    IDBField tagField = table.addField(CDODBSchema.FEATUREMAP_TAG, idType, idLength);
 
     tagMap = new HashMap<CDOID, String>();
     typeMappings = new HashMap<CDOID, ITypeMapping>();
@@ -548,34 +551,6 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
   {
     IMetaDataManager metaDataManager = getMappingStrategy().getStore().getMetaDataManager();
     return metaDataManager.getMetaID(feature, timeStamp);
-  }
-
-  /**
-   * Used by subclasses to indicate which fields should be in the table. I.e. just a pair of name and DBType ...
-   *
-   * @author Stefan Winkler
-   */
-  protected static class FieldInfo
-  {
-    private String name;
-
-    private DBType dbType;
-
-    public FieldInfo(String name, DBType dbType)
-    {
-      this.name = name;
-      this.dbType = dbType;
-    }
-
-    public String getName()
-    {
-      return name;
-    }
-
-    public DBType getDbType()
-    {
-      return dbType;
-    }
   }
 
   public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere,

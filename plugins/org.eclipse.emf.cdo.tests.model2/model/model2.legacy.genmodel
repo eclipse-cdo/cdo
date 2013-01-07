@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;   Eike Stepper - initial API and implementation"
+    modelDirectory="/org.eclipse.emf.cdo.tests.model2/src" editDirectory="" editorDirectory=""
+    modelPluginID="org.eclipse.emf.cdo.tests.model2" modelName="Model2" updateClasspath="false"
+    codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.cdo.tests.model1/model/model1.legacy.genmodel#//model1">
+  <foreignModel>model2.ecore</foreignModel>
+  <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
+  <genPackages prefix="Model2" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"
+      metaDataPackageSuffix="legacy" classPackageSuffix="legacy.impl" utilityPackageSuffix="legacy.util"
+      literalsInterface="false" extensibleProviderFactory="true" childCreationExtenders="true"
+      ecorePackage="model2.ecore#/">
+    <genClasses ecoreClass="model2.ecore#//SpecialPurchaseOrder">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//SpecialPurchaseOrder/discountCode"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model2.ecore#//SpecialPurchaseOrder/shippingAddress"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//TaskContainer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model2.ecore#//TaskContainer/tasks"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//Task">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference model2.ecore#//Task/taskContainer"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Task/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Task/done"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//Unsettable1">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable1/unsettableBoolean"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable1/unsettableByte"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable1/unsettableChar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable1/unsettableDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable1/unsettableDouble"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable1/unsettableFloat"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable1/unsettableInt"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable1/unsettableLong"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable1/unsettableShort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable1/unsettableString"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable1/unsettableVAT"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//Unsettable2WithDefault">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable2WithDefault/unsettableBoolean"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable2WithDefault/unsettableByte"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable2WithDefault/unsettableChar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable2WithDefault/unsettableDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable2WithDefault/unsettableDouble"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable2WithDefault/unsettableFloat"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable2WithDefault/unsettableInt"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable2WithDefault/unsettableLong"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable2WithDefault/unsettableShort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable2WithDefault/unsettableString"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//Unsettable2WithDefault/unsettableVAT"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//PersistentContainment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//PersistentContainment/attrBefore"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model2.ecore#//PersistentContainment/children"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//PersistentContainment/attrAfter"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//TransientContainer">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//TransientContainer/attrBefore"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference model2.ecore#//TransientContainer/parent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//TransientContainer/attrAfter"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//NotUnsettable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettable/notUnsettableBoolean"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettable/notUnsettableByte"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettable/notUnsettableChar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettable/notUnsettableDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettable/notUnsettableDouble"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettable/notUnsettableFloat"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettable/notUnsettableInt"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettable/notUnsettableLong"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettable/notUnsettableShort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettable/notUnsettableString"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettable/notUnsettableVAT"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//NotUnsettableWithDefault">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettableWithDefault/notUnsettableBoolean"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettableWithDefault/notUnsettableByte"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettableWithDefault/notUnsettableChar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettableWithDefault/notUnsettableDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettableWithDefault/notUnsettableDouble"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettableWithDefault/notUnsettableFloat"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettableWithDefault/notUnsettableInt"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettableWithDefault/notUnsettableLong"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettableWithDefault/notUnsettableShort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettableWithDefault/notUnsettableString"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//NotUnsettableWithDefault/notUnsettableVAT"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//MapHolder">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model2.ecore#//MapHolder/integerToStringMap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model2.ecore#//MapHolder/stringToStringMap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model2.ecore#//MapHolder/stringToVATMap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model2.ecore#//MapHolder/stringToAddressContainmentMap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model2.ecore#//MapHolder/stringToAddressReferenceMap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model2.ecore#//MapHolder/eObjectToEObjectMap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model2.ecore#//MapHolder/eObjectToEObjectKeyContainedMap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model2.ecore#//MapHolder/eObjectToEObjectBothContainedMap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model2.ecore#//MapHolder/eObjectToEObjectValueContainedMap"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//StringToStringMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//StringToStringMap/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//StringToStringMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//IntegerToStringMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//IntegerToStringMap/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//IntegerToStringMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//StringToVATMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//StringToVATMap/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//StringToVATMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//StringToAddressContainmentMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//StringToAddressContainmentMap/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model2.ecore#//StringToAddressContainmentMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//StringToAddressReferenceMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//StringToAddressReferenceMap/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model2.ecore#//StringToAddressReferenceMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//EObjectToEObjectMap">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model2.ecore#//EObjectToEObjectMap/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model2.ecore#//EObjectToEObjectMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//EObjectToEObjectKeyContainedMap">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model2.ecore#//EObjectToEObjectKeyContainedMap/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model2.ecore#//EObjectToEObjectKeyContainedMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//EObjectToEObjectBothContainedMap">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model2.ecore#//EObjectToEObjectBothContainedMap/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model2.ecore#//EObjectToEObjectBothContainedMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//EObjectToEObjectValueContainedMap">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model2.ecore#//EObjectToEObjectValueContainedMap/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model2.ecore#//EObjectToEObjectValueContainedMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="model2.ecore#//EnumListHolder">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model2.ecore#//EnumListHolder/enumList"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

@@ -96,4 +96,4 @@ public class HasNillableAttributeImpl extends CDOObjectImpl implements HasNillab
     return eIsSet(Model6Package.Literals.HAS_NILLABLE_ATTRIBUTE__NILLABLE);
   }
 
-} //HasNillableAttributeImpl
+} // HasNillableAttributeImpl

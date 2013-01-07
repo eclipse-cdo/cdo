@@ -1447,12 +1447,13 @@ public interface Model6Package extends EPackage
   Model6Factory getModel6Factory();
 
   /**
-   * <!-- begin-user-doc --> Defines literals for the meta objects that represent
+   * <!-- begin-user-doc -->
+   * Defines literals for the meta objects that represent
    * <ul>
-   * <li>each class,</li>
-   * <li>each feature of each class,</li>
-   * <li>each enum,</li>
-   * <li>and each data type</li>
+   *   <li>each class,</li>
+   *   <li>each feature of each class,</li>
+   *   <li>each enum,</li>
+   *   <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
    * @generated
@@ -1461,7 +1462,8 @@ public interface Model6Package extends EPackage
   {
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.RootImpl <em>Root</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.tests.model6.impl.RootImpl
      * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getRoot()
      * @generated
@@ -1470,39 +1472,40 @@ public interface Model6Package extends EPackage
 
     /**
      * The meta object literal for the '<em><b>List A</b></em>' containment reference list feature.
-     * <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference ROOT__LIST_A = eINSTANCE.getRoot_ListA();
 
     /**
      * The meta object literal for the '<em><b>List B</b></em>' containment reference list feature.
-     * <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference ROOT__LIST_B = eINSTANCE.getRoot_ListB();
 
     /**
      * The meta object literal for the '<em><b>List C</b></em>' containment reference list feature.
-     * <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference ROOT__LIST_C = eINSTANCE.getRoot_ListC();
 
     /**
      * The meta object literal for the '<em><b>List D</b></em>' containment reference list feature.
-     * <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference ROOT__LIST_D = eINSTANCE.getRoot_ListD();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.BaseObjectImpl <em>Base Object</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.tests.model6.impl.BaseObjectImpl
      * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getBaseObject()
      * @generated
@@ -1535,7 +1538,8 @@ public interface Model6Package extends EPackage
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.ReferenceObjectImpl <em>Reference Object</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.tests.model6.impl.ReferenceObjectImpl
      * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getReferenceObject()
      * @generated
@@ -1560,7 +1564,8 @@ public interface Model6Package extends EPackage
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.ContainmentObjectImpl <em>Containment Object</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.tests.model6.impl.ContainmentObjectImpl
      * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getContainmentObject()
      * @generated
@@ -1568,24 +1573,25 @@ public interface Model6Package extends EPackage
     EClass CONTAINMENT_OBJECT = eINSTANCE.getContainmentObject();
 
     /**
-     * The meta object literal for the '<em><b>Containment Optional</b></em>' containment reference feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '<em><b>Containment Optional</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL = eINSTANCE.getContainmentObject_ContainmentOptional();
 
     /**
-     * The meta object literal for the '<em><b>Containment List</b></em>' containment reference list feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '<em><b>Containment List</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference CONTAINMENT_OBJECT__CONTAINMENT_LIST = eINSTANCE.getContainmentObject_ContainmentList();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.UnorderedListImpl <em>Unordered List</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.tests.model6.impl.UnorderedListImpl
      * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getUnorderedList()
      * @generated
@@ -1593,17 +1599,17 @@ public interface Model6Package extends EPackage
     EClass UNORDERED_LIST = eINSTANCE.getUnorderedList();
 
     /**
-     * The meta object literal for the '<em><b>Contained</b></em>' containment reference list feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '<em><b>Contained</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference UNORDERED_LIST__CONTAINED = eINSTANCE.getUnorderedList_Contained();
 
     /**
      * The meta object literal for the '<em><b>Referenced</b></em>' reference list feature.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference UNORDERED_LIST__REFERENCED = eINSTANCE.getUnorderedList_Referenced();
@@ -1687,9 +1693,9 @@ public interface Model6Package extends EPackage
     EAttribute PROPERTIES_MAP_ENTRY_VALUE__LABEL = eINSTANCE.getPropertiesMapEntryValue_Label();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.AImpl <em>A</em>}' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.AImpl <em>A</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.tests.model6.impl.AImpl
      * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getA()
      * @generated
@@ -1697,25 +1703,25 @@ public interface Model6Package extends EPackage
     EClass A = eINSTANCE.getA();
 
     /**
-     * The meta object literal for the '<em><b>Owned Ds</b></em>' containment reference list feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '<em><b>Owned Ds</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference A__OWNED_DS = eINSTANCE.getA_OwnedDs();
 
     /**
-     * The meta object literal for the '<em><b>Owned Bs</b></em>' containment reference list feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '<em><b>Owned Bs</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference A__OWNED_BS = eINSTANCE.getA_OwnedBs();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.BImpl <em>B</em>}' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.BImpl <em>B</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.tests.model6.impl.BImpl
      * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getB()
      * @generated
@@ -1731,9 +1737,9 @@ public interface Model6Package extends EPackage
     EReference B__OWNED_C = eINSTANCE.getB_OwnedC();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.CImpl <em>C</em>}' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.CImpl <em>C</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.tests.model6.impl.CImpl
      * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getC()
      * @generated
@@ -1741,9 +1747,9 @@ public interface Model6Package extends EPackage
     EClass C = eINSTANCE.getC();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.DImpl <em>D</em>}' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.DImpl <em>D</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.tests.model6.impl.DImpl
      * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getD()
      * @generated
@@ -1759,9 +1765,9 @@ public interface Model6Package extends EPackage
     EReference D__DATA = eINSTANCE.getD_Data();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.EImpl <em>E</em>}' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.EImpl <em>E</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.tests.model6.impl.EImpl
      * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getE()
      * @generated
@@ -1769,17 +1775,17 @@ public interface Model6Package extends EPackage
     EClass E = eINSTANCE.getE();
 
     /**
-     * The meta object literal for the '<em><b>Owned As</b></em>' containment reference list feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '<em><b>Owned As</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference E__OWNED_AS = eINSTANCE.getE_OwnedAs();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.FImpl <em>F</em>}' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.FImpl <em>F</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.tests.model6.impl.FImpl
      * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getF()
      * @generated
@@ -1787,9 +1793,9 @@ public interface Model6Package extends EPackage
     EClass F = eINSTANCE.getF();
 
     /**
-     * The meta object literal for the '<em><b>Owned Es</b></em>' containment reference list feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '<em><b>Owned Es</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference F__OWNED_ES = eINSTANCE.getF_OwnedEs();

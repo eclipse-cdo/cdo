@@ -27,18 +27,17 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.IntegerToStringMapImpl#getTypedKey <em>Key</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.IntegerToStringMapImpl#getTypedValue <em>Value</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.IntegerToStringMapImpl#getTypedKey <em>Key</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.IntegerToStringMapImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.Entry<Integer, String>
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected IntegerToStringMapImpl()
@@ -48,7 +47,6 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -59,7 +57,6 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -70,7 +67,6 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Integer getTypedKey()
@@ -80,7 +76,6 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTypedKey(Integer newKey)
@@ -90,7 +85,6 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getTypedValue()
@@ -100,7 +94,6 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTypedValue(String newValue)
@@ -110,14 +103,12 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected int hash = -1;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public int getHash()
@@ -132,7 +123,6 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setHash(int hash)
@@ -142,7 +132,6 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Integer getKey()
@@ -152,7 +141,6 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setKey(Integer key)
@@ -162,7 +150,6 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getValue()
@@ -172,7 +159,6 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String setValue(String value)
@@ -184,7 +170,6 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

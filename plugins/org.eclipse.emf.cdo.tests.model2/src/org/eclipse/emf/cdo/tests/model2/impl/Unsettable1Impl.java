@@ -25,27 +25,26 @@ import java.util.Date;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#isUnsettableBoolean <em>Unsettable Boolean</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableByte <em>Unsettable Byte</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableChar <em>Unsettable Char</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableDate <em>Unsettable Date</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableDouble <em>Unsettable Double</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableFloat <em>Unsettable Float</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableInt <em>Unsettable Int</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableLong <em>Unsettable Long</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableShort <em>Unsettable Short</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableString <em>Unsettable String</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableVAT <em>Unsettable VAT</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#isUnsettableBoolean <em>Unsettable Boolean</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableByte <em>Unsettable Byte</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableChar <em>Unsettable Char</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableDate <em>Unsettable Date</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableDouble <em>Unsettable Double</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableFloat <em>Unsettable Float</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableInt <em>Unsettable Int</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableLong <em>Unsettable Long</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableShort <em>Unsettable Short</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableString <em>Unsettable String</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableVAT <em>Unsettable VAT</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected Unsettable1Impl()
@@ -55,7 +54,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -66,7 +64,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -77,7 +74,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isUnsettableBoolean()
@@ -87,7 +83,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setUnsettableBoolean(boolean newUnsettableBoolean)
@@ -97,7 +92,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetUnsettableBoolean()
@@ -107,7 +101,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetUnsettableBoolean()
@@ -117,7 +110,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public byte getUnsettableByte()
@@ -127,7 +119,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setUnsettableByte(byte newUnsettableByte)
@@ -137,7 +128,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetUnsettableByte()
@@ -147,7 +137,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetUnsettableByte()
@@ -157,7 +146,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public char getUnsettableChar()
@@ -167,7 +155,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setUnsettableChar(char newUnsettableChar)
@@ -177,7 +164,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetUnsettableChar()
@@ -187,7 +173,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetUnsettableChar()
@@ -197,7 +182,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Date getUnsettableDate()
@@ -207,7 +191,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setUnsettableDate(Date newUnsettableDate)
@@ -217,7 +200,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetUnsettableDate()
@@ -227,7 +209,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetUnsettableDate()
@@ -237,7 +218,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public double getUnsettableDouble()
@@ -247,7 +227,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setUnsettableDouble(double newUnsettableDouble)
@@ -257,7 +236,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetUnsettableDouble()
@@ -267,7 +245,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetUnsettableDouble()
@@ -277,7 +254,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public float getUnsettableFloat()
@@ -287,7 +263,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setUnsettableFloat(float newUnsettableFloat)
@@ -297,7 +272,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetUnsettableFloat()
@@ -307,7 +281,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetUnsettableFloat()
@@ -317,7 +290,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public int getUnsettableInt()
@@ -327,7 +299,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setUnsettableInt(int newUnsettableInt)
@@ -337,7 +308,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetUnsettableInt()
@@ -347,7 +317,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetUnsettableInt()
@@ -357,7 +326,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public long getUnsettableLong()
@@ -367,7 +335,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setUnsettableLong(long newUnsettableLong)
@@ -377,7 +344,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetUnsettableLong()
@@ -387,7 +353,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetUnsettableLong()
@@ -397,7 +362,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public short getUnsettableShort()
@@ -407,7 +371,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setUnsettableShort(short newUnsettableShort)
@@ -417,7 +380,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetUnsettableShort()
@@ -427,7 +389,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetUnsettableShort()
@@ -437,7 +398,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getUnsettableString()
@@ -447,7 +407,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setUnsettableString(String newUnsettableString)
@@ -457,7 +416,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetUnsettableString()
@@ -467,7 +425,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetUnsettableString()
@@ -477,7 +434,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public VAT getUnsettableVAT()
@@ -487,7 +443,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setUnsettableVAT(VAT newUnsettableVAT)
@@ -497,7 +452,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetUnsettableVAT()
@@ -507,7 +461,6 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetUnsettableVAT()

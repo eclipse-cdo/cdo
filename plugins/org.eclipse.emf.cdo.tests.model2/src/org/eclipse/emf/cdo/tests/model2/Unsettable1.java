@@ -18,23 +18,24 @@ import java.util.Date;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Unsettable1</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#isUnsettableBoolean <em>Unsettable Boolean</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableByte <em>Unsettable Byte</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableChar <em>Unsettable Char</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDate <em>Unsettable Date</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDouble <em>Unsettable Double</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableFloat <em>Unsettable Float</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableInt <em>Unsettable Int</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableLong <em>Unsettable Long</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableShort <em>Unsettable Short</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableString <em>Unsettable String</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableVAT <em>Unsettable VAT</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#isUnsettableBoolean <em>Unsettable Boolean</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableByte <em>Unsettable Byte</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableChar <em>Unsettable Char</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDate <em>Unsettable Date</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDouble <em>Unsettable Double</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableFloat <em>Unsettable Float</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableInt <em>Unsettable Int</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableLong <em>Unsettable Long</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableShort <em>Unsettable Short</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableString <em>Unsettable String</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableVAT <em>Unsettable VAT</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable1()
  * @model
  * @generated
@@ -42,13 +43,13 @@ import java.util.Date;
 public interface Unsettable1 extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Unsettable Boolean</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Unsettable Boolean</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Unsettable Boolean</em>' attribute isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Unsettable Boolean</em>' attribute.
    * @see #isSetUnsettableBoolean()
    * @see #unsetUnsettableBoolean()
@@ -60,11 +61,9 @@ public interface Unsettable1 extends EObject
   boolean isUnsettableBoolean();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#isUnsettableBoolean
-   * <em>Unsettable Boolean</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Unsettable Boolean</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#isUnsettableBoolean <em>Unsettable Boolean</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Unsettable Boolean</em>' attribute.
    * @see #isSetUnsettableBoolean()
    * @see #unsetUnsettableBoolean()
    * @see #isUnsettableBoolean()
@@ -73,9 +72,8 @@ public interface Unsettable1 extends EObject
   void setUnsettableBoolean(boolean value);
 
   /**
-   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#isUnsettableBoolean
-   * <em>Unsettable Boolean</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#isUnsettableBoolean <em>Unsettable Boolean</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isSetUnsettableBoolean()
    * @see #isUnsettableBoolean()
    * @see #setUnsettableBoolean(boolean)
@@ -84,9 +82,8 @@ public interface Unsettable1 extends EObject
   void unsetUnsettableBoolean();
 
   /**
-   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#isUnsettableBoolean
-   * <em>Unsettable Boolean</em>}' attribute is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#isUnsettableBoolean <em>Unsettable Boolean</em>}' attribute is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>Unsettable Boolean</em>' attribute is set.
    * @see #unsetUnsettableBoolean()
    * @see #isUnsettableBoolean()
@@ -96,13 +93,13 @@ public interface Unsettable1 extends EObject
   boolean isSetUnsettableBoolean();
 
   /**
-   * Returns the value of the '<em><b>Unsettable Byte</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Unsettable Byte</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Unsettable Byte</em>' attribute isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Unsettable Byte</em>' attribute.
    * @see #isSetUnsettableByte()
    * @see #unsetUnsettableByte()
@@ -114,11 +111,9 @@ public interface Unsettable1 extends EObject
   byte getUnsettableByte();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableByte
-   * <em>Unsettable Byte</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Unsettable Byte</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableByte <em>Unsettable Byte</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Unsettable Byte</em>' attribute.
    * @see #isSetUnsettableByte()
    * @see #unsetUnsettableByte()
    * @see #getUnsettableByte()
@@ -127,9 +122,8 @@ public interface Unsettable1 extends EObject
   void setUnsettableByte(byte value);
 
   /**
-   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableByte
-   * <em>Unsettable Byte</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableByte <em>Unsettable Byte</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isSetUnsettableByte()
    * @see #getUnsettableByte()
    * @see #setUnsettableByte(byte)
@@ -138,9 +132,8 @@ public interface Unsettable1 extends EObject
   void unsetUnsettableByte();
 
   /**
-   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableByte
-   * <em>Unsettable Byte</em>}' attribute is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableByte <em>Unsettable Byte</em>}' attribute is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>Unsettable Byte</em>' attribute is set.
    * @see #unsetUnsettableByte()
    * @see #getUnsettableByte()
@@ -150,13 +143,13 @@ public interface Unsettable1 extends EObject
   boolean isSetUnsettableByte();
 
   /**
-   * Returns the value of the '<em><b>Unsettable Char</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Unsettable Char</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Unsettable Char</em>' attribute isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Unsettable Char</em>' attribute.
    * @see #isSetUnsettableChar()
    * @see #unsetUnsettableChar()
@@ -168,11 +161,9 @@ public interface Unsettable1 extends EObject
   char getUnsettableChar();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableChar
-   * <em>Unsettable Char</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Unsettable Char</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableChar <em>Unsettable Char</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Unsettable Char</em>' attribute.
    * @see #isSetUnsettableChar()
    * @see #unsetUnsettableChar()
    * @see #getUnsettableChar()
@@ -181,9 +172,8 @@ public interface Unsettable1 extends EObject
   void setUnsettableChar(char value);
 
   /**
-   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableChar
-   * <em>Unsettable Char</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableChar <em>Unsettable Char</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isSetUnsettableChar()
    * @see #getUnsettableChar()
    * @see #setUnsettableChar(char)
@@ -192,9 +182,8 @@ public interface Unsettable1 extends EObject
   void unsetUnsettableChar();
 
   /**
-   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableChar
-   * <em>Unsettable Char</em>}' attribute is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableChar <em>Unsettable Char</em>}' attribute is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>Unsettable Char</em>' attribute is set.
    * @see #unsetUnsettableChar()
    * @see #getUnsettableChar()
@@ -204,13 +193,13 @@ public interface Unsettable1 extends EObject
   boolean isSetUnsettableChar();
 
   /**
-   * Returns the value of the '<em><b>Unsettable Date</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Unsettable Date</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Unsettable Date</em>' attribute isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Unsettable Date</em>' attribute.
    * @see #isSetUnsettableDate()
    * @see #unsetUnsettableDate()
@@ -222,11 +211,9 @@ public interface Unsettable1 extends EObject
   Date getUnsettableDate();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDate
-   * <em>Unsettable Date</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Unsettable Date</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDate <em>Unsettable Date</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Unsettable Date</em>' attribute.
    * @see #isSetUnsettableDate()
    * @see #unsetUnsettableDate()
    * @see #getUnsettableDate()
@@ -235,9 +222,8 @@ public interface Unsettable1 extends EObject
   void setUnsettableDate(Date value);
 
   /**
-   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDate
-   * <em>Unsettable Date</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDate <em>Unsettable Date</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isSetUnsettableDate()
    * @see #getUnsettableDate()
    * @see #setUnsettableDate(Date)
@@ -246,9 +232,8 @@ public interface Unsettable1 extends EObject
   void unsetUnsettableDate();
 
   /**
-   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDate
-   * <em>Unsettable Date</em>}' attribute is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDate <em>Unsettable Date</em>}' attribute is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>Unsettable Date</em>' attribute is set.
    * @see #unsetUnsettableDate()
    * @see #getUnsettableDate()
@@ -258,13 +243,13 @@ public interface Unsettable1 extends EObject
   boolean isSetUnsettableDate();
 
   /**
-   * Returns the value of the '<em><b>Unsettable Double</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Unsettable Double</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Unsettable Double</em>' attribute isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Unsettable Double</em>' attribute.
    * @see #isSetUnsettableDouble()
    * @see #unsetUnsettableDouble()
@@ -276,11 +261,9 @@ public interface Unsettable1 extends EObject
   double getUnsettableDouble();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDouble
-   * <em>Unsettable Double</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Unsettable Double</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDouble <em>Unsettable Double</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Unsettable Double</em>' attribute.
    * @see #isSetUnsettableDouble()
    * @see #unsetUnsettableDouble()
    * @see #getUnsettableDouble()
@@ -289,9 +272,8 @@ public interface Unsettable1 extends EObject
   void setUnsettableDouble(double value);
 
   /**
-   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDouble
-   * <em>Unsettable Double</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDouble <em>Unsettable Double</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isSetUnsettableDouble()
    * @see #getUnsettableDouble()
    * @see #setUnsettableDouble(double)
@@ -300,9 +282,8 @@ public interface Unsettable1 extends EObject
   void unsetUnsettableDouble();
 
   /**
-   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDouble
-   * <em>Unsettable Double</em>}' attribute is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableDouble <em>Unsettable Double</em>}' attribute is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>Unsettable Double</em>' attribute is set.
    * @see #unsetUnsettableDouble()
    * @see #getUnsettableDouble()
@@ -312,13 +293,13 @@ public interface Unsettable1 extends EObject
   boolean isSetUnsettableDouble();
 
   /**
-   * Returns the value of the '<em><b>Unsettable Float</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Unsettable Float</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Unsettable Float</em>' attribute isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Unsettable Float</em>' attribute.
    * @see #isSetUnsettableFloat()
    * @see #unsetUnsettableFloat()
@@ -330,11 +311,9 @@ public interface Unsettable1 extends EObject
   float getUnsettableFloat();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableFloat
-   * <em>Unsettable Float</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Unsettable Float</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableFloat <em>Unsettable Float</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Unsettable Float</em>' attribute.
    * @see #isSetUnsettableFloat()
    * @see #unsetUnsettableFloat()
    * @see #getUnsettableFloat()
@@ -343,9 +322,8 @@ public interface Unsettable1 extends EObject
   void setUnsettableFloat(float value);
 
   /**
-   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableFloat
-   * <em>Unsettable Float</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableFloat <em>Unsettable Float</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isSetUnsettableFloat()
    * @see #getUnsettableFloat()
    * @see #setUnsettableFloat(float)
@@ -354,9 +332,8 @@ public interface Unsettable1 extends EObject
   void unsetUnsettableFloat();
 
   /**
-   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableFloat
-   * <em>Unsettable Float</em>}' attribute is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableFloat <em>Unsettable Float</em>}' attribute is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>Unsettable Float</em>' attribute is set.
    * @see #unsetUnsettableFloat()
    * @see #getUnsettableFloat()
@@ -366,13 +343,13 @@ public interface Unsettable1 extends EObject
   boolean isSetUnsettableFloat();
 
   /**
-   * Returns the value of the '<em><b>Unsettable Int</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Unsettable Int</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Unsettable Int</em>' attribute isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Unsettable Int</em>' attribute.
    * @see #isSetUnsettableInt()
    * @see #unsetUnsettableInt()
@@ -384,11 +361,9 @@ public interface Unsettable1 extends EObject
   int getUnsettableInt();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableInt
-   * <em>Unsettable Int</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Unsettable Int</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableInt <em>Unsettable Int</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Unsettable Int</em>' attribute.
    * @see #isSetUnsettableInt()
    * @see #unsetUnsettableInt()
    * @see #getUnsettableInt()
@@ -397,9 +372,8 @@ public interface Unsettable1 extends EObject
   void setUnsettableInt(int value);
 
   /**
-   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableInt
-   * <em>Unsettable Int</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableInt <em>Unsettable Int</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isSetUnsettableInt()
    * @see #getUnsettableInt()
    * @see #setUnsettableInt(int)
@@ -408,9 +382,8 @@ public interface Unsettable1 extends EObject
   void unsetUnsettableInt();
 
   /**
-   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableInt
-   * <em>Unsettable Int</em>}' attribute is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableInt <em>Unsettable Int</em>}' attribute is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>Unsettable Int</em>' attribute is set.
    * @see #unsetUnsettableInt()
    * @see #getUnsettableInt()
@@ -420,13 +393,13 @@ public interface Unsettable1 extends EObject
   boolean isSetUnsettableInt();
 
   /**
-   * Returns the value of the '<em><b>Unsettable Long</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Unsettable Long</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Unsettable Long</em>' attribute isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Unsettable Long</em>' attribute.
    * @see #isSetUnsettableLong()
    * @see #unsetUnsettableLong()
@@ -438,11 +411,9 @@ public interface Unsettable1 extends EObject
   long getUnsettableLong();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableLong
-   * <em>Unsettable Long</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Unsettable Long</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableLong <em>Unsettable Long</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Unsettable Long</em>' attribute.
    * @see #isSetUnsettableLong()
    * @see #unsetUnsettableLong()
    * @see #getUnsettableLong()
@@ -451,9 +422,8 @@ public interface Unsettable1 extends EObject
   void setUnsettableLong(long value);
 
   /**
-   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableLong
-   * <em>Unsettable Long</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableLong <em>Unsettable Long</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isSetUnsettableLong()
    * @see #getUnsettableLong()
    * @see #setUnsettableLong(long)
@@ -462,9 +432,8 @@ public interface Unsettable1 extends EObject
   void unsetUnsettableLong();
 
   /**
-   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableLong
-   * <em>Unsettable Long</em>}' attribute is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableLong <em>Unsettable Long</em>}' attribute is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>Unsettable Long</em>' attribute is set.
    * @see #unsetUnsettableLong()
    * @see #getUnsettableLong()
@@ -474,13 +443,13 @@ public interface Unsettable1 extends EObject
   boolean isSetUnsettableLong();
 
   /**
-   * Returns the value of the '<em><b>Unsettable Short</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Unsettable Short</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Unsettable Short</em>' attribute isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Unsettable Short</em>' attribute.
    * @see #isSetUnsettableShort()
    * @see #unsetUnsettableShort()
@@ -492,11 +461,9 @@ public interface Unsettable1 extends EObject
   short getUnsettableShort();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableShort
-   * <em>Unsettable Short</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Unsettable Short</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableShort <em>Unsettable Short</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Unsettable Short</em>' attribute.
    * @see #isSetUnsettableShort()
    * @see #unsetUnsettableShort()
    * @see #getUnsettableShort()
@@ -505,9 +472,8 @@ public interface Unsettable1 extends EObject
   void setUnsettableShort(short value);
 
   /**
-   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableShort
-   * <em>Unsettable Short</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableShort <em>Unsettable Short</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isSetUnsettableShort()
    * @see #getUnsettableShort()
    * @see #setUnsettableShort(short)
@@ -516,9 +482,8 @@ public interface Unsettable1 extends EObject
   void unsetUnsettableShort();
 
   /**
-   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableShort
-   * <em>Unsettable Short</em>}' attribute is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableShort <em>Unsettable Short</em>}' attribute is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>Unsettable Short</em>' attribute is set.
    * @see #unsetUnsettableShort()
    * @see #getUnsettableShort()
@@ -528,13 +493,13 @@ public interface Unsettable1 extends EObject
   boolean isSetUnsettableShort();
 
   /**
-   * Returns the value of the '<em><b>Unsettable String</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Unsettable String</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Unsettable String</em>' attribute isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Unsettable String</em>' attribute.
    * @see #isSetUnsettableString()
    * @see #unsetUnsettableString()
@@ -546,11 +511,9 @@ public interface Unsettable1 extends EObject
   String getUnsettableString();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableString
-   * <em>Unsettable String</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Unsettable String</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableString <em>Unsettable String</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Unsettable String</em>' attribute.
    * @see #isSetUnsettableString()
    * @see #unsetUnsettableString()
    * @see #getUnsettableString()
@@ -559,9 +522,8 @@ public interface Unsettable1 extends EObject
   void setUnsettableString(String value);
 
   /**
-   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableString
-   * <em>Unsettable String</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableString <em>Unsettable String</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isSetUnsettableString()
    * @see #getUnsettableString()
    * @see #setUnsettableString(String)
@@ -570,9 +532,8 @@ public interface Unsettable1 extends EObject
   void unsetUnsettableString();
 
   /**
-   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableString
-   * <em>Unsettable String</em>}' attribute is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableString <em>Unsettable String</em>}' attribute is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>Unsettable String</em>' attribute is set.
    * @see #unsetUnsettableString()
    * @see #getUnsettableString()
@@ -582,14 +543,14 @@ public interface Unsettable1 extends EObject
   boolean isSetUnsettableString();
 
   /**
-   * Returns the value of the '<em><b>Unsettable VAT</b></em>' attribute. The literals are from the enumeration
-   * {@link org.eclipse.emf.cdo.tests.model1.VAT}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Unsettable VAT</b></em>' attribute.
+   * The literals are from the enumeration {@link org.eclipse.emf.cdo.tests.model1.VAT}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Unsettable VAT</em>' attribute isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Unsettable VAT</em>' attribute.
    * @see org.eclipse.emf.cdo.tests.model1.VAT
    * @see #isSetUnsettableVAT()
@@ -602,11 +563,9 @@ public interface Unsettable1 extends EObject
   VAT getUnsettableVAT();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableVAT
-   * <em>Unsettable VAT</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Unsettable VAT</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableVAT <em>Unsettable VAT</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Unsettable VAT</em>' attribute.
    * @see org.eclipse.emf.cdo.tests.model1.VAT
    * @see #isSetUnsettableVAT()
    * @see #unsetUnsettableVAT()
@@ -616,9 +575,8 @@ public interface Unsettable1 extends EObject
   void setUnsettableVAT(VAT value);
 
   /**
-   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableVAT
-   * <em>Unsettable VAT</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableVAT <em>Unsettable VAT</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isSetUnsettableVAT()
    * @see #getUnsettableVAT()
    * @see #setUnsettableVAT(VAT)
@@ -627,9 +585,8 @@ public interface Unsettable1 extends EObject
   void unsetUnsettableVAT();
 
   /**
-   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableVAT
-   * <em>Unsettable VAT</em>}' attribute is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableVAT <em>Unsettable VAT</em>}' attribute is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>Unsettable VAT</em>' attribute is set.
    * @see #unsetUnsettableVAT()
    * @see #getUnsettableVAT()

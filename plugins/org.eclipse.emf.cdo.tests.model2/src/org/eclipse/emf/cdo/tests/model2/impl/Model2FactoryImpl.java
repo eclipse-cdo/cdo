@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -34,16 +34,17 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 import java.util.Map;
 
+//import org.eclipse.emf.cdo.tests.model2.*;
+
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static Model2Factory init()
@@ -65,8 +66,8 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public Model2FactoryImpl()
@@ -76,7 +77,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -131,7 +131,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public SpecialPurchaseOrder createSpecialPurchaseOrder()
@@ -142,7 +141,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public TaskContainer createTaskContainer()
@@ -153,7 +151,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Task createTask()
@@ -164,7 +161,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Unsettable1 createUnsettable1()
@@ -175,7 +171,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Unsettable2WithDefault createUnsettable2WithDefault()
@@ -186,7 +181,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public PersistentContainment createPersistentContainment()
@@ -197,7 +191,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public TransientContainer createTransientContainer()
@@ -208,7 +201,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public NotUnsettable createNotUnsettable()
@@ -219,7 +211,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public NotUnsettableWithDefault createNotUnsettableWithDefault()
@@ -230,7 +221,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public MapHolder createMapHolder()
@@ -241,7 +231,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Map.Entry<String, String> createStringToStringMap()
@@ -252,7 +241,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Map.Entry<Integer, String> createIntegerToStringMap()
@@ -263,7 +251,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Map.Entry<String, VAT> createStringToVATMap()
@@ -274,7 +261,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Map.Entry<String, Address> createStringToAddressContainmentMap()
@@ -285,7 +271,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Map.Entry<String, Address> createStringToAddressReferenceMap()
@@ -296,7 +281,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Map.Entry<EObject, EObject> createEObjectToEObjectMap()
@@ -307,7 +291,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Map.Entry<EObject, EObject> createEObjectToEObjectKeyContainedMap()
@@ -318,7 +301,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Map.Entry<EObject, EObject> createEObjectToEObjectBothContainedMap()
@@ -329,7 +311,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Map.Entry<EObject, EObject> createEObjectToEObjectValueContainedMap()
@@ -340,7 +321,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EnumListHolder createEnumListHolder()
@@ -351,7 +331,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Model2Package getModel2Package()
@@ -361,7 +340,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

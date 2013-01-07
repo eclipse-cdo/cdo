@@ -27,36 +27,26 @@ import java.util.Date;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#isNotUnsettableBoolean <em>Not Unsettable Boolean
- * </em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableByte <em>Not Unsettable Byte</em>}
- * </li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableChar <em>Not Unsettable Char</em>}
- * </li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableDate <em>Not Unsettable Date</em>}
- * </li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableDouble <em>Not Unsettable Double
- * </em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableFloat <em>Not Unsettable Float
- * </em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableInt <em>Not Unsettable Int</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableLong <em>Not Unsettable Long</em>}
- * </li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableShort <em>Not Unsettable Short
- * </em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableString <em>Not Unsettable String
- * </em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableVAT <em>Not Unsettable VAT</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#isNotUnsettableBoolean <em>Not Unsettable Boolean</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableByte <em>Not Unsettable Byte</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableChar <em>Not Unsettable Char</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableDate <em>Not Unsettable Date</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableDouble <em>Not Unsettable Double</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableFloat <em>Not Unsettable Float</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableInt <em>Not Unsettable Int</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableLong <em>Not Unsettable Long</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableShort <em>Not Unsettable Short</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableString <em>Not Unsettable String</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableVAT <em>Not Unsettable VAT</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected NotUnsettableImpl()
@@ -66,7 +56,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -77,7 +66,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -88,7 +76,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isNotUnsettableBoolean()
@@ -98,7 +85,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setNotUnsettableBoolean(boolean newNotUnsettableBoolean)
@@ -108,7 +94,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public byte getNotUnsettableByte()
@@ -118,7 +103,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setNotUnsettableByte(byte newNotUnsettableByte)
@@ -128,7 +112,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public char getNotUnsettableChar()
@@ -138,7 +121,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setNotUnsettableChar(char newNotUnsettableChar)
@@ -148,7 +130,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Date getNotUnsettableDate()
@@ -158,7 +139,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setNotUnsettableDate(Date newNotUnsettableDate)
@@ -168,7 +148,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public double getNotUnsettableDouble()
@@ -178,7 +157,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setNotUnsettableDouble(double newNotUnsettableDouble)
@@ -188,7 +166,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public float getNotUnsettableFloat()
@@ -198,7 +175,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setNotUnsettableFloat(float newNotUnsettableFloat)
@@ -208,7 +184,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public int getNotUnsettableInt()
@@ -218,7 +193,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setNotUnsettableInt(int newNotUnsettableInt)
@@ -228,7 +202,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public long getNotUnsettableLong()
@@ -238,7 +211,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setNotUnsettableLong(long newNotUnsettableLong)
@@ -248,7 +220,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public short getNotUnsettableShort()
@@ -258,7 +229,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setNotUnsettableShort(short newNotUnsettableShort)
@@ -268,7 +238,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getNotUnsettableString()
@@ -278,7 +247,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setNotUnsettableString(String newNotUnsettableString)
@@ -288,7 +256,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public VAT getNotUnsettableVAT()
@@ -298,7 +265,6 @@ public class NotUnsettableImpl extends CDOObjectImpl implements NotUnsettable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setNotUnsettableVAT(VAT newNotUnsettableVAT)

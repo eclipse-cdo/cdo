@@ -25,17 +25,16 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.RefMultiContainedNPLImpl#getElements <em>Elements</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.RefMultiContainedNPLImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class RefMultiContainedNPLImpl extends CDOObjectImpl implements RefMultiContainedNPL
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected RefMultiContainedNPLImpl()
@@ -45,7 +44,6 @@ public class RefMultiContainedNPLImpl extends CDOObjectImpl implements RefMultiC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -56,7 +54,6 @@ public class RefMultiContainedNPLImpl extends CDOObjectImpl implements RefMultiC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -67,7 +64,6 @@ public class RefMultiContainedNPLImpl extends CDOObjectImpl implements RefMultiC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

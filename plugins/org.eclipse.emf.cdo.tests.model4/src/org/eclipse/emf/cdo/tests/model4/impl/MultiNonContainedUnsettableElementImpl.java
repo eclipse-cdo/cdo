@@ -24,18 +24,17 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.MultiNonContainedUnsettableElementImpl#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.MultiNonContainedUnsettableElementImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.MultiNonContainedUnsettableElementImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.MultiNonContainedUnsettableElementImpl#getParent <em>Parent</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implements MultiNonContainedUnsettableElement
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected MultiNonContainedUnsettableElementImpl()
@@ -45,7 +44,6 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -56,7 +54,6 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -67,7 +64,6 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -77,7 +73,6 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)
@@ -87,7 +82,6 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public RefMultiNonContainedUnsettable getParent()
@@ -98,7 +92,6 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setParent(RefMultiNonContainedUnsettable newParent)
@@ -108,7 +101,6 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetParent()
@@ -118,7 +110,6 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetParent()

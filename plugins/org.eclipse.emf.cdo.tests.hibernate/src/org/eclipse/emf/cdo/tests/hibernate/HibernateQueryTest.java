@@ -56,7 +56,7 @@ public class HibernateQueryTest extends AbstractCDOTest
   public void doSetUp() throws Exception
   {
     org.eclipse.emf.cdo.tests.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(1);
-    org.eclipse.emf.cdo.tests.legacy.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(1);
+    org.eclipse.emf.cdo.tests.model1.legacy.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(1);
     super.doSetUp();
   }
 
@@ -64,7 +64,7 @@ public class HibernateQueryTest extends AbstractCDOTest
   public void doTearDown() throws Exception
   {
     org.eclipse.emf.cdo.tests.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(0);
-    org.eclipse.emf.cdo.tests.legacy.model1.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(0);
+    org.eclipse.emf.cdo.tests.model1.legacy.Model1Package.eINSTANCE.getSupplier_Preferred().setLowerBound(0);
     super.doTearDown();
   }
 

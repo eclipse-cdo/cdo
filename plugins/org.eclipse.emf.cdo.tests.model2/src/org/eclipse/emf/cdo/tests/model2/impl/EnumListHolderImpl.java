@@ -35,7 +35,6 @@ public class EnumListHolderImpl extends CDOObjectImpl implements EnumListHolder
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected EnumListHolderImpl()
@@ -45,7 +44,6 @@ public class EnumListHolderImpl extends CDOObjectImpl implements EnumListHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -56,7 +54,6 @@ public class EnumListHolderImpl extends CDOObjectImpl implements EnumListHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -67,7 +64,6 @@ public class EnumListHolderImpl extends CDOObjectImpl implements EnumListHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

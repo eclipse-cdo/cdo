@@ -461,12 +461,12 @@ public interface Model5Package extends EPackage
   int PARENT__NAME = 2;
 
   /**
-  	 * The number of structural features of the '<em>Parent</em>' class.
-  	 * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>Parent</em>' class.
+   * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int PARENT_FEATURE_COUNT = 3;
 
   /**
@@ -507,12 +507,12 @@ public interface Model5Package extends EPackage
   int CHILD__NAME = 2;
 
   /**
-  	 * The number of structural features of the '<em>Child</em>' class.
-  	 * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>Child</em>' class.
+   * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int CHILD_FEATURE_COUNT = 3;
 
   /**
@@ -820,13 +820,13 @@ public interface Model5Package extends EPackage
   EAttribute getParent_Name();
 
   /**
-  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.Child <em>Child</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.Child <em>Child</em>}'.
+   * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-  	 * @return the meta object for class '<em>Child</em>'.
-  	 * @see org.eclipse.emf.cdo.tests.model5.Child
-  	 * @generated
-  	 */
+   * @return the meta object for class '<em>Child</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.Child
+   * @generated
+   */
   EClass getChild();
 
   /**
@@ -863,12 +863,12 @@ public interface Model5Package extends EPackage
   EAttribute getChild_Name();
 
   /**
-  	 * Returns the meta object for data type '<em>Int Array</em>'.
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @return the meta object for data type '<em>Int Array</em>'.
-  	 * @model instanceClass="int[]"
-  	 * @generated
-  	 */
+   * Returns the meta object for data type '<em>Int Array</em>'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @return the meta object for data type '<em>Int Array</em>'.
+   * @model instanceClass="int[]"
+   * @generated
+   */
   EDataType getIntArray();
 
   /**

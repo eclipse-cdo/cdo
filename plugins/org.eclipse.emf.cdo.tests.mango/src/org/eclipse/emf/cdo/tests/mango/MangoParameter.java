@@ -14,14 +14,15 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Parameter</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.mango.MangoParameter#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.mango.MangoParameter#getPassing <em>Passing</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.MangoParameter#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.MangoParameter#getPassing <em>Passing</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getMangoParameter()
  * @model
  * @generated
@@ -29,12 +30,12 @@ import org.eclipse.emf.ecore.EObject;
 public interface MangoParameter extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getMangoParameter_Name()
@@ -46,23 +47,21 @@ public interface MangoParameter extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.tests.mango.MangoParameter#getName <em>Name</em>}' attribute.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Name</em>' attribute.
+   * @param value the new value of the '<em>Name</em>' attribute.
    * @see #getName()
    * @generated
    */
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Passing</b></em>' attribute. The literals are from the enumeration
-   * {@link org.eclipse.emf.cdo.tests.mango.ParameterPassing}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Passing</b></em>' attribute.
+   * The literals are from the enumeration {@link org.eclipse.emf.cdo.tests.mango.ParameterPassing}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Passing</em>' attribute isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Passing</em>' attribute.
    * @see org.eclipse.emf.cdo.tests.mango.ParameterPassing
    * @see #setPassing(ParameterPassing)
@@ -73,11 +72,9 @@ public interface MangoParameter extends EObject
   ParameterPassing getPassing();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.mango.MangoParameter#getPassing <em>Passing</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Passing</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.mango.MangoParameter#getPassing <em>Passing</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Passing</em>' attribute.
    * @see org.eclipse.emf.cdo.tests.mango.ParameterPassing
    * @see #getPassing()
    * @generated

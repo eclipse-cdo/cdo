@@ -854,11 +854,11 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   }
 
   /**
-  	 * Initializes the annotations for <b>teneo.jpa</b>.
-  	 * <!-- begin-user-doc -->
+   * Initializes the annotations for <b>teneo.jpa</b>.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   protected void createTeneoAnnotations()
   {
     String source = "teneo.jpa";

@@ -109,10 +109,10 @@ public class ChildImpl extends CDOObjectImpl implements Child
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public String getName()
   {
     return (String)eGet(Model5Package.eINSTANCE.getChild_Name(), true);

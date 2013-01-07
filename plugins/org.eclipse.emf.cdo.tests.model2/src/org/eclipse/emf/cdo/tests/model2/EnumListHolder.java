@@ -32,15 +32,15 @@ import org.eclipse.emf.ecore.EObject;
 public interface EnumListHolder extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Enum List</b></em>' attribute list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.tests.model1.VAT}. The literals are from the enumeration
-   * {@link org.eclipse.emf.cdo.tests.model1.VAT}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Enum List</b></em>' attribute list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.tests.model1.VAT}.
+   * The literals are from the enumeration {@link org.eclipse.emf.cdo.tests.model1.VAT}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Enum List</em>' attribute list isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Enum List</em>' attribute list.
    * @see org.eclipse.emf.cdo.tests.model1.VAT
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getEnumListHolder_EnumList()

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model4interfaces" nsURI="http://www.eclipse.org/emf/CDO/tests/model4interfaces/1.0.0"
+    nsPrefix="model4interfaces">
+  <eClassifiers xsi:type="ecore:EClass" name="ISingleRefContainer" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="#//ISingleRefContainedElement"
+        containment="true" eOpposite="#//ISingleRefContainedElement/parent"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ISingleRefContainedElement" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//ISingleRefContainer"
+        eOpposite="#//ISingleRefContainer/element"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ISingleRefNonContainer" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="#//ISingleRefNonContainedElement"
+        eOpposite="#//ISingleRefNonContainedElement/parent"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ISingleRefNonContainedElement" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//ISingleRefNonContainer"
+        eOpposite="#//ISingleRefNonContainer/element"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IMultiRefContainer" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//IMultiRefContainedElement" containment="true" eOpposite="#//IMultiRefContainedElement/parent"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IMultiRefContainedElement" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//IMultiRefContainer"
+        eOpposite="#//IMultiRefContainer/elements"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IMultiRefNonContainer" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//IMultiRefNonContainedElement" eOpposite="#//IMultiRefNonContainedElement/parent"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IMultiRefNonContainedElement" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//IMultiRefNonContainer"
+        eOpposite="#//IMultiRefNonContainer/elements"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="INamedElement" abstract="true" interface="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IContainedElementNoParentLink" abstract="true"
+      interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ISingleRefContainerNPL" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="#//IContainedElementNoParentLink"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ISingleRefNonContainerNPL" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="#//IContainedElementNoParentLink"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IMultiRefContainerNPL" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//IContainedElementNoParentLink" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IMultiRefNonContainerNPL" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//IContainedElementNoParentLink"/>
+  </eClassifiers>
+</ecore:EPackage>

@@ -23,18 +23,17 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.mango.impl.MangoParameterImpl#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.mango.impl.MangoParameterImpl#getPassing <em>Passing</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.impl.MangoParameterImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.impl.MangoParameterImpl#getPassing <em>Passing</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class MangoParameterImpl extends CDOObjectImpl implements MangoParameter
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected MangoParameterImpl()
@@ -44,7 +43,6 @@ public class MangoParameterImpl extends CDOObjectImpl implements MangoParameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -55,7 +53,6 @@ public class MangoParameterImpl extends CDOObjectImpl implements MangoParameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -66,7 +63,6 @@ public class MangoParameterImpl extends CDOObjectImpl implements MangoParameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -76,7 +72,6 @@ public class MangoParameterImpl extends CDOObjectImpl implements MangoParameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)
@@ -86,7 +81,6 @@ public class MangoParameterImpl extends CDOObjectImpl implements MangoParameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ParameterPassing getPassing()
@@ -96,7 +90,6 @@ public class MangoParameterImpl extends CDOObjectImpl implements MangoParameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setPassing(ParameterPassing newPassing)

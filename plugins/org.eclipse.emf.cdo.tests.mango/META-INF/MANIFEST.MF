@@ -10,9 +10,10 @@ Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.4.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
-Export-Package: org.eclipse.emf.cdo.tests.legacy.mango;version="3.0.200",
- org.eclipse.emf.cdo.tests.legacy.mango.impl;version="3.0.200",
- org.eclipse.emf.cdo.tests.mango;version="3.0.300",
+Export-Package: org.eclipse.emf.cdo.tests.mango;version="3.0.300",
  org.eclipse.emf.cdo.tests.mango.impl;version="3.0.300",
+ org.eclipse.emf.cdo.tests.mango.legacy;version="3.0.300",
+ org.eclipse.emf.cdo.tests.mango.legacy.impl;version="3.0.300",
+ org.eclipse.emf.cdo.tests.mango.legacy.util;version="3.0.300",
  org.eclipse.emf.cdo.tests.mango.util;version="3.0.300"
 

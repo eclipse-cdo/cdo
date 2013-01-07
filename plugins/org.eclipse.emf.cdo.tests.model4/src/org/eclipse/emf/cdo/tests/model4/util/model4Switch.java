@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -66,27 +66,28 @@ import org.eclipse.emf.ecore.EObject;
 import java.util.List;
 import java.util.Map;
 
+//import org.eclipse.emf.cdo.tests.model4.*;
+
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call
  * {@link #doSwitch(EObject) doSwitch(object)} to invoke the <code>caseXXX</code> method for each class of the model,
  * starting with the actual class of the object and proceeding up the inheritance hierarchy until a non-null result is
  * returned, which is the result of the switch. <!-- end-user-doc -->
- * 
  * @see org.eclipse.emf.cdo.tests.model4.model4Package
  * @generated
  */
 public class model4Switch<T>
 {
   /**
-   * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached model package
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected static model4Package modelPackage;
 
   /**
-   * Creates an instance of the switch. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the switch.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public model4Switch()
@@ -100,7 +101,6 @@ public class model4Switch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -112,7 +112,6 @@ public class model4Switch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -132,7 +131,6 @@ public class model4Switch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -458,7 +456,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Ref Single Contained</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Ref Single Contained</em>'.
@@ -474,7 +472,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Single Contained Element</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Single Contained Element</em>'.
@@ -490,7 +488,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Ref Single Non Contained</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Ref Single Non Contained</em>'.
@@ -506,7 +504,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Single Non Contained Element</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Single Non Contained Element</em>'.
@@ -519,11 +517,10 @@ public class model4Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Ref Multi Contained</em>'. <!-- begin-user-doc
+   * Returns the result of interpreting the object as an instance of '<em>Ref Multi Contained</em>'.
+   * <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Ref Multi Contained</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -537,7 +534,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Multi Contained Element</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Multi Contained Element</em>'.
@@ -553,7 +550,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Ref Multi Non Contained</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Ref Multi Non Contained</em>'.
@@ -569,7 +566,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Multi Non Contained Element</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Multi Non Contained Element</em>'.
@@ -585,7 +582,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Ref Multi Non Contained Unsettable</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Ref Multi Non Contained Unsettable</em>'.
@@ -601,9 +598,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Multi Non Contained Unsettable Element</em>'.
    * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Multi Non Contained Unsettable Element</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -617,7 +612,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Ref Single Contained NPL</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Ref Single Contained NPL</em>'.
@@ -633,7 +628,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Ref Single Non Contained NPL</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Ref Single Non Contained NPL</em>'.
@@ -649,7 +644,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Ref Multi Contained NPL</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Ref Multi Contained NPL</em>'.
@@ -665,7 +660,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Ref Multi Non Contained NPL</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Ref Multi Non Contained NPL</em>'.
@@ -681,7 +676,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Contained Element No Opposite</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Contained Element No Opposite</em>'.
@@ -697,7 +692,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Gen Ref Single Contained</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Gen Ref Single Contained</em>'.
@@ -713,7 +708,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Gen Ref Single Non Contained</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Gen Ref Single Non Contained</em>'.
@@ -729,7 +724,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Gen Ref Multi Contained</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Gen Ref Multi Contained</em>'.
@@ -745,7 +740,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Gen Ref Multi Non Contained</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Gen Ref Multi Non Contained</em>'.
@@ -761,7 +756,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Impl Single Ref Container</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Impl Single Ref Container</em>'.
@@ -777,7 +772,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Impl Single Ref Contained Element</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Impl Single Ref Contained Element</em>'.
@@ -793,7 +788,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Impl Single Ref Non Container</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Impl Single Ref Non Container</em>'.
@@ -809,9 +804,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Impl Single Ref Non Contained Element</em>'.
    * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Impl Single Ref Non Contained Element</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -825,7 +818,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Impl Multi Ref Non Container</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Impl Multi Ref Non Container</em>'.
@@ -841,9 +834,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Impl Multi Ref Non Contained Element</em>'.
    * <!-- begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Impl Multi Ref Non Contained Element</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -857,7 +848,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Impl Multi Ref Container</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Impl Multi Ref Container</em>'.
@@ -873,7 +864,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Impl Multi Ref Contained Element</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Impl Multi Ref Contained Element</em>'.
@@ -889,7 +880,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Impl Single Ref Container NPL</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Impl Single Ref Container NPL</em>'.
@@ -905,7 +896,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Impl Single Ref Non Container NPL</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Impl Single Ref Non Container NPL</em>'.
@@ -921,7 +912,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Impl Multi Ref Container NPL</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Impl Multi Ref Container NPL</em>'.
@@ -937,7 +928,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Impl Multi Ref Non Container NPL</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Impl Multi Ref Non Container NPL</em>'.
@@ -953,7 +944,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Impl Contained Element NPL</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Impl Contained Element NPL</em>'.
@@ -969,7 +960,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Gen Ref Multi NU Non Contained</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Gen Ref Multi NU Non Contained</em>'.
@@ -985,7 +976,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>Gen Ref Map Non Contained</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Gen Ref Map Non Contained</em>'.
@@ -998,11 +989,10 @@ public class model4Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>String To EObject</em>'. <!-- begin-user-doc
+   * Returns the result of interpreting the object as an instance of '<em>String To EObject</em>'.
+   * <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>String To EObject</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -1016,7 +1006,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>ISingle Ref Container</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>ISingle Ref Container</em>'.
@@ -1032,7 +1022,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>ISingle Ref Contained Element</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>ISingle Ref Contained Element</em>'.
@@ -1048,7 +1038,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>ISingle Ref Non Container</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>ISingle Ref Non Container</em>'.
@@ -1064,7 +1054,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>ISingle Ref Non Contained Element</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>ISingle Ref Non Contained Element</em>'.
@@ -1080,7 +1070,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>IMulti Ref Non Container</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>IMulti Ref Non Container</em>'.
@@ -1096,7 +1086,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>IMulti Ref Non Contained Element</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>IMulti Ref Non Contained Element</em>'.
@@ -1112,7 +1102,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>IMulti Ref Container</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>IMulti Ref Container</em>'.
@@ -1128,7 +1118,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>IMulti Ref Contained Element</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>IMulti Ref Contained Element</em>'.
@@ -1144,7 +1134,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>ISingle Ref Container NPL</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>ISingle Ref Container NPL</em>'.
@@ -1160,7 +1150,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>ISingle Ref Non Container NPL</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>ISingle Ref Non Container NPL</em>'.
@@ -1176,7 +1166,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>IMulti Ref Container NPL</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>IMulti Ref Container NPL</em>'.
@@ -1192,7 +1182,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>IMulti Ref Non Container NPL</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>IMulti Ref Non Container NPL</em>'.
@@ -1208,7 +1198,7 @@ public class model4Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>IContained Element No Parent Link</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>IContained Element No Parent Link</em>'.
@@ -1221,11 +1211,10 @@ public class model4Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>INamed Element</em>'. <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>INamed Element</em>'.
+   * <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>INamed Element</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -1236,12 +1225,11 @@ public class model4Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'. <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
+   * <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch, but this is the last case
    * anyway. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
    * @generated

@@ -15,14 +15,15 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Multi Non Contained Unsettable Element</b></em>
  * '. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement#getParent <em>Parent</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.tests.model4.model4Package#getMultiNonContainedUnsettableElement()
  * @model
  * @generated
@@ -30,12 +31,12 @@ import org.eclipse.emf.ecore.EObject;
 public interface MultiNonContainedUnsettableElement extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.tests.model4.model4Package#getMultiNonContainedUnsettableElement_Name()
@@ -45,11 +46,9 @@ public interface MultiNonContainedUnsettableElement extends EObject
   String getName();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement#getName
-   * <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Name</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement#getName <em>Name</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Name</em>' attribute.
    * @see #getName()
    * @generated
    */
@@ -76,11 +75,9 @@ public interface MultiNonContainedUnsettableElement extends EObject
   RefMultiNonContainedUnsettable getParent();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement#getParent
-   * <em>Parent</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Parent</em>' reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement#getParent <em>Parent</em>}' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Parent</em>' reference.
    * @see #isSetParent()
    * @see #unsetParent()
    * @see #getParent()
@@ -89,9 +86,8 @@ public interface MultiNonContainedUnsettableElement extends EObject
   void setParent(RefMultiNonContainedUnsettable value);
 
   /**
-   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement#getParent
-   * <em>Parent</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement#getParent <em>Parent</em>}' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isSetParent()
    * @see #getParent()
    * @see #setParent(RefMultiNonContainedUnsettable)
@@ -100,10 +96,8 @@ public interface MultiNonContainedUnsettableElement extends EObject
   void unsetParent();
 
   /**
-   * Returns whether the value of the '
-   * {@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement#getParent <em>Parent</em>}' reference is
-   * set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement#getParent <em>Parent</em>}' reference is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>Parent</em>' reference is set.
    * @see #unsetParent()
    * @see #getParent()

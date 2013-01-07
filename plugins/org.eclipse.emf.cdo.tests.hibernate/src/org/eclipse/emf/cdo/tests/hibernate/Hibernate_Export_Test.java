@@ -16,8 +16,8 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
-import org.eclipse.emf.cdo.tests.legacy.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Customer;
+import org.eclipse.emf.cdo.tests.model1.legacy.Model1Factory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import java.io.ByteArrayOutputStream;

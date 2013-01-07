@@ -28,31 +28,24 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getIntegerToStringMap <em>Integer To String Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getStringToStringMap <em>String To String Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getStringToVATMap <em>String To VAT Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getStringToAddressContainmentMap <em>String To Address
- * Containment Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getStringToAddressReferenceMap <em>String To Address
- * Reference Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getEObjectToEObjectMap <em>EObject To EObject Map
- * </em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getEObjectToEObjectKeyContainedMap <em>EObject To
- * EObject Key Contained Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getEObjectToEObjectBothContainedMap <em>EObject To
- * EObject Both Contained Map</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getEObjectToEObjectValueContainedMap <em>EObject To
- * EObject Value Contained Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getIntegerToStringMap <em>Integer To String Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getStringToStringMap <em>String To String Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getStringToVATMap <em>String To VAT Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getStringToAddressContainmentMap <em>String To Address Containment Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getStringToAddressReferenceMap <em>String To Address Reference Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getEObjectToEObjectMap <em>EObject To EObject Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getEObjectToEObjectKeyContainedMap <em>EObject To EObject Key Contained Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getEObjectToEObjectBothContainedMap <em>EObject To EObject Both Contained Map</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.MapHolderImpl#getEObjectToEObjectValueContainedMap <em>EObject To EObject Value Contained Map</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class MapHolderImpl extends CDOObjectImpl implements MapHolder
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected MapHolderImpl()
@@ -62,7 +55,6 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -73,7 +65,6 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -84,7 +75,6 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -95,7 +85,6 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -106,7 +95,6 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -117,7 +105,6 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -128,7 +115,6 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -139,7 +125,6 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -150,7 +135,6 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -161,7 +145,6 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -172,7 +155,6 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

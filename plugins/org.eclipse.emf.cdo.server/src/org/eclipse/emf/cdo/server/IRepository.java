@@ -77,6 +77,11 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
    */
   public CDORevisionManager getRevisionManager();
 
+  /**
+   * @since 4.2
+   */
+  public CDOCommitInfoManager getCommitInfoManager();
+
   public ISessionManager getSessionManager();
 
   /**

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -25,7 +26,7 @@ import java.util.Arrays;
  *
  * @author Eike Stepper
  */
-// @Skips("DB.ranges")
+@Skips("DB.ranges")
 public class Bugzilla_390283_Test extends AbstractCDOTest
 {
   public void testAddAfterRemove() throws Exception

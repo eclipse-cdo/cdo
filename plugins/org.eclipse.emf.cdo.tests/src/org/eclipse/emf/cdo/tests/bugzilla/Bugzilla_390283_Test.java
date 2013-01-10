@@ -66,16 +66,16 @@ public class Bugzilla_390283_Test extends AbstractCDOTest
     UnorderedList object = getModel6Factory().createUnorderedList();
     EList<UnorderedList> list = object.getContained();
 
+    UnorderedList elem0 = getModel6Factory().createUnorderedList();
     UnorderedList elem1 = getModel6Factory().createUnorderedList();
     UnorderedList elem2 = getModel6Factory().createUnorderedList();
-    UnorderedList elem3 = getModel6Factory().createUnorderedList();
-    list.addAll(Arrays.asList(elem1, elem2, elem3));
+    list.addAll(Arrays.asList(elem0, elem1, elem2));
 
     resource.getContents().add(object);
     transaction.commit();
 
     // Remove
-    list.remove(elem1); // Does not fail for "remove by index"!
+    list.remove(elem0); // Does not fail for "remove by index"!
 
     transaction.commit();
   }

@@ -878,7 +878,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
       int toIdx = delta.getNewPosition();
 
       // optimization: a move from the end of the list to an index that was just removed requires no shifting
-      boolean optimizeMove = lastRemovedIndex != -1 && fromIdx == lastIndex - 1 && toIdx == lastRemovedIndex;
+      boolean optimizeMove = lastRemovedIndex != -1 && fromIdx == lastIndex && toIdx == lastRemovedIndex;
 
       if (TRACER.isEnabled())
       {

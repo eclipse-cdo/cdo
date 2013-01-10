@@ -603,7 +603,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
       int toIdx = delta.getNewPosition();
 
       // optimization: a move from the end of the list to an index that was just removed requires no shifting
-      boolean optimizeMove = lastRemovedIndex != -1 && fromIdx == lastIndex && toIdx == lastRemovedIndex;
+      boolean optimizeMove = lastRemovedIndex != -1 && fromIdx == lastIndex - 1 && toIdx == lastRemovedIndex;
 
       if (TRACER.isEnabled())
       {
@@ -636,6 +636,12 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
         { // fromIdx > toIdx here
           moveOneDown(accessor, id, oldVersion, newVersion, toIdx, fromIdx - 1);
         }
+      }
+      else
+      {
+        // finish the optimized move by resetting lastRemovedIndex
+        lastRemovedIndex = -1;
+        --lastIndex;
       }
 
       // create the item

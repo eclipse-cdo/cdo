@@ -153,7 +153,17 @@ public final class CDOCommonUtil
       t2 = Long.MAX_VALUE;
     }
 
-    return t1 < t2 ? -1 : t1 == t2 ? 0 : 1;
+    if (t1 < t2)
+    {
+      return -1;
+    }
+
+    if (t1 > t2)
+    {
+      return 1;
+    }
+
+    return 0;
   }
 
   public static String formatTimeStamp()

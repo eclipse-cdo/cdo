@@ -511,6 +511,54 @@ public class MergingTest extends AbstractCDOTest
     session.close();
   }
 
+  @SuppressWarnings("unused")
+  public void _testRemergeAfterChangesInSource() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+    CDOTransaction transaction = session.openTransaction(mainBranch);
+
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
+    EList<EObject> contents = resource.getContents();
+    Company company0 = addCompany(contents);
+    Company company1 = addCompany(contents);
+    Company company2 = addCompany(contents);
+    Company company3 = addCompany(contents);
+    Company company4 = addCompany(contents);
+    long time = transaction.commit().getTimeStamp();
+    CDOBranch source = mainBranch.createBranch("source", time);
+
+    sleep(10);
+    CDOTransaction tx1 = session.openTransaction(source);
+    CDOResource res1 = tx1.getResource(getResourcePath("/res"));
+    EList<EObject> contents1 = res1.getContents();
+    ((Company)contents1.get(0)).setName("Company0");
+    ((Company)contents1.get(1)).setName("Company1");
+    ((Company)contents1.get(2)).setName("Company2");
+    CDOCommitInfo commit1 = commitAndSync(tx1, transaction);
+
+    long updateTime1 = session.getLastUpdateTime();
+
+    transaction.merge(commit1, new DefaultCDOMerger.PerFeature.ManyValued());
+    transaction.commit();
+    assertEquals(5, contents.size());
+
+    long updateTime2 = session.getLastUpdateTime();
+    assertEquals(false, updateTime1 == updateTime2);
+    assertEquals("Company0", ((Company)contents.get(0)).getName());
+    assertEquals("Company1", ((Company)contents.get(1)).getName());
+    assertEquals("Company2", ((Company)contents.get(2)).getName());
+
+    ((Company)contents1.get(0)).setName("CompanyX");
+    ((Company)contents1.get(1)).setName("CompanyY");
+    ((Company)contents1.get(2)).setName("CompanyZ");
+    CDOCommitInfo commit2 = commitAndSync(tx1, transaction);
+
+    CDOChangeSetData result = transaction.merge(commit2, commit1, new DefaultCDOMerger.PerFeature.ManyValued());
+    assertEquals(false, result.isEmpty());
+    assertEquals(true, transaction.isDirty());
+  }
+
   public void testFromBranchWithRemovalsInSource() throws Exception
   {
     CDOSession session = openSession();

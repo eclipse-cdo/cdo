@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Bug 390185.
@@ -35,7 +36,10 @@ public class Bugzilla_390185_Test extends AbstractCDOTest
       actors.add(actor);
     }
 
-    assertEquals(true, latch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
+    if (!latch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS))
+    {
+      throw new TimeoutException();
+    }
   }
 
   /**

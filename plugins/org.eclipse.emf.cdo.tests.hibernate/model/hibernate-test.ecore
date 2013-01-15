@@ -51,4 +51,33 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="places" upperBound="-1"
         eType="#//Bz380987_Place" eOpposite="#//Bz380987_Place/people"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bz398057A">
+    <eAnnotations source="teneo.jpa">
+      <details key="value" value="@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listOfB" upperBound="-1"
+        eType="#//Bz398057B" containment="true" eOpposite="#//Bz398057B/refToClassA"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="teneo.jpa">
+        <details key="value" value="@Id"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bz398057A1" eSuperTypes="#//Bz398057A"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Bz398057B">
+    <eAnnotations source="teneo.jpa">
+      <details key="value" value="@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="refToClassA" eType="#//Bz398057A"
+        eOpposite="#//Bz398057A/listOfB"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="teneo.jpa">
+        <details key="value" value="@Id"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bz398057B1" eSuperTypes="#//Bz398057B">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="valueStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

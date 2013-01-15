@@ -78,7 +78,6 @@ public class AllTestsHibernate extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // testClasses.clear();
-    // // testClasses.add(Hibernate_Missing_Version_Test.class);
     // if (true)
     // {
     // return;
@@ -117,6 +116,8 @@ public class AllTestsHibernate extends AllConfigs
     // the hb store throws an error on deadlocked transaction
     // and does not block
     testClasses.remove(Bugzilla_390185_Test.class);
+
+    testClasses.add(HibernateBugzilla_398057_Test.class);
 
     if (scenario.getCapabilities().contains(IRepositoryConfig.CAPABILITY_AUDITING))
     {

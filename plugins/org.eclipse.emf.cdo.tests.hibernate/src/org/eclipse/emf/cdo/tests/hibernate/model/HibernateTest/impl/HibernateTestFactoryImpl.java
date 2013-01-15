@@ -2,6 +2,7 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl;
 
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.*;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Main;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_NonTransient;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Transient;
@@ -71,6 +72,10 @@ public class HibernateTestFactoryImpl extends EFactoryImpl implements HibernateT
 			case HibernateTestPackage.BZ380987_GROUP: return createBz380987_Group();
 			case HibernateTestPackage.BZ380987_PLACE: return createBz380987_Place();
 			case HibernateTestPackage.BZ380987_PERSON: return createBz380987_Person();
+			case HibernateTestPackage.BZ398057_A: return createBz398057A();
+			case HibernateTestPackage.BZ398057_A1: return createBz398057A1();
+			case HibernateTestPackage.BZ398057_B: return createBz398057B();
+			case HibernateTestPackage.BZ398057_B1: return createBz398057B1();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -174,6 +179,46 @@ public class HibernateTestFactoryImpl extends EFactoryImpl implements HibernateT
 	public Bz380987_Person createBz380987_Person() {
 		Bz380987_PersonImpl bz380987_Person = new Bz380987_PersonImpl();
 		return bz380987_Person;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Bz398057A createBz398057A() {
+		Bz398057AImpl bz398057A = new Bz398057AImpl();
+		return bz398057A;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Bz398057A1 createBz398057A1() {
+		Bz398057A1Impl bz398057A1 = new Bz398057A1Impl();
+		return bz398057A1;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Bz398057B createBz398057B() {
+		Bz398057BImpl bz398057B = new Bz398057BImpl();
+		return bz398057B;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Bz398057B1 createBz398057B1() {
+		Bz398057B1Impl bz398057B1 = new Bz398057B1Impl();
+		return bz398057B1;
 	}
 
 	/**

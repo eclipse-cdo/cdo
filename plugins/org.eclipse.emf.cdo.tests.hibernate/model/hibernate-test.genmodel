@@ -38,5 +38,18 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference hibernate-test.ecore#//Bz380987_Person/group"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference hibernate-test.ecore#//Bz380987_Person/places"/>
     </genClasses>
+    <genClasses ecoreClass="hibernate-test.ecore#//Bz398057A">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference hibernate-test.ecore#//Bz398057A/listOfB"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hibernate-test.ecore#//Bz398057A/id"/>
+    </genClasses>
+    <genClasses ecoreClass="hibernate-test.ecore#//Bz398057A1"/>
+    <genClasses ecoreClass="hibernate-test.ecore#//Bz398057B">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference hibernate-test.ecore#//Bz398057B/refToClassA"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hibernate-test.ecore#//Bz398057B/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hibernate-test.ecore#//Bz398057B/id"/>
+    </genClasses>
+    <genClasses ecoreClass="hibernate-test.ecore#//Bz398057B1">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hibernate-test.ecore#//Bz398057B1/valueStr"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -2,6 +2,7 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.util;
 
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.*;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Main;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_NonTransient;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Transient;
@@ -99,6 +100,22 @@ public class HibernateTestAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseBz380987_Person(Bz380987_Person object) {
 				return createBz380987_PersonAdapter();
+			}
+			@Override
+			public Adapter caseBz398057A(Bz398057A object) {
+				return createBz398057AAdapter();
+			}
+			@Override
+			public Adapter caseBz398057A1(Bz398057A1 object) {
+				return createBz398057A1Adapter();
+			}
+			@Override
+			public Adapter caseBz398057B(Bz398057B object) {
+				return createBz398057BAdapter();
+			}
+			@Override
+			public Adapter caseBz398057B1(Bz398057B1 object) {
+				return createBz398057B1Adapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -215,6 +232,62 @@ public class HibernateTestAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createBz380987_PersonAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A <em>Bz398057 A</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A
+	 * @generated
+	 */
+	public Adapter createBz398057AAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A1 <em>Bz398057 A1</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A1
+	 * @generated
+	 */
+	public Adapter createBz398057A1Adapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057B <em>Bz398057 B</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057B
+	 * @generated
+	 */
+	public Adapter createBz398057BAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057B1 <em>Bz398057 B1</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057B1
+	 * @generated
+	 */
+	public Adapter createBz398057B1Adapter() {
 		return null;
 	}
 

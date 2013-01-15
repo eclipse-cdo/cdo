@@ -10,6 +10,10 @@ import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Place;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A1;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057B;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057B1;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestFactory;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestPackage;
 
@@ -75,6 +79,34 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 	 * @generated
 	 */
 	private EClass bz380987_PersonEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass bz398057AEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass bz398057A1EClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass bz398057BEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass bz398057B1EClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -347,6 +379,96 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getBz398057A() {
+		return bz398057AEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBz398057A_ListOfB() {
+		return (EReference)bz398057AEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBz398057A_Id() {
+		return (EAttribute)bz398057AEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getBz398057A1() {
+		return bz398057A1EClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getBz398057B() {
+		return bz398057BEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBz398057B_RefToClassA() {
+		return (EReference)bz398057BEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBz398057B_Value() {
+		return (EAttribute)bz398057BEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBz398057B_Id() {
+		return (EAttribute)bz398057BEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getBz398057B1() {
+		return bz398057B1EClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBz398057B1_ValueStr() {
+		return (EAttribute)bz398057B1EClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getBz387752_Enum() {
 		return bz387752_EnumEEnum;
 	}
@@ -408,6 +530,20 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 		createEReference(bz380987_PersonEClass, BZ380987_PERSON__GROUP);
 		createEReference(bz380987_PersonEClass, BZ380987_PERSON__PLACES);
 
+		bz398057AEClass = createEClass(BZ398057_A);
+		createEReference(bz398057AEClass, BZ398057_A__LIST_OF_B);
+		createEAttribute(bz398057AEClass, BZ398057_A__ID);
+
+		bz398057A1EClass = createEClass(BZ398057_A1);
+
+		bz398057BEClass = createEClass(BZ398057_B);
+		createEReference(bz398057BEClass, BZ398057_B__REF_TO_CLASS_A);
+		createEAttribute(bz398057BEClass, BZ398057_B__VALUE);
+		createEAttribute(bz398057BEClass, BZ398057_B__ID);
+
+		bz398057B1EClass = createEClass(BZ398057_B1);
+		createEAttribute(bz398057B1EClass, BZ398057_B1__VALUE_STR);
+
 		// Create enums
 		bz387752_EnumEEnum = createEEnum(BZ387752_ENUM);
 	}
@@ -440,6 +576,8 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		bz398057A1EClass.getESuperTypes().add(this.getBz398057A());
+		bz398057B1EClass.getESuperTypes().add(this.getBz398057B());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(bz356181_MainEClass, Bz356181_Main.class, "Bz356181_Main", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -470,6 +608,20 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 		initEAttribute(getBz380987_Person_Name(), ecorePackage.getEString(), "name", null, 0, 1, Bz380987_Person.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getBz380987_Person_Group(), this.getBz380987_Group(), this.getBz380987_Group_People(), "group", null, 0, -1, Bz380987_Person.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getBz380987_Person_Places(), this.getBz380987_Place(), this.getBz380987_Place_People(), "places", null, 0, -1, Bz380987_Person.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(bz398057AEClass, Bz398057A.class, "Bz398057A", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getBz398057A_ListOfB(), this.getBz398057B(), this.getBz398057B_RefToClassA(), "listOfB", null, 0, -1, Bz398057A.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBz398057A_Id(), ecorePackage.getEString(), "id", null, 1, 1, Bz398057A.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(bz398057A1EClass, Bz398057A1.class, "Bz398057A1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(bz398057BEClass, Bz398057B.class, "Bz398057B", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getBz398057B_RefToClassA(), this.getBz398057A(), this.getBz398057A_ListOfB(), "refToClassA", null, 0, 1, Bz398057B.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBz398057B_Value(), ecorePackage.getEDouble(), "value", null, 0, 1, Bz398057B.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBz398057B_Id(), ecorePackage.getEString(), "id", null, 1, 1, Bz398057B.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(bz398057B1EClass, Bz398057B1.class, "Bz398057B1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getBz398057B1_ValueStr(), ecorePackage.getEString(), "valueStr", null, 0, 1, Bz398057B1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(bz387752_EnumEEnum, Bz387752_Enum.class, "Bz387752_Enum");
@@ -503,6 +655,30 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 		   source, 
 		   new String[] {
 			 "value", "@Transient"
+		   });		
+		addAnnotation
+		  (bz398057AEClass, 
+		   source, 
+		   new String[] {
+			 "value", "@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)"
+		   });		
+		addAnnotation
+		  (getBz398057A_Id(), 
+		   source, 
+		   new String[] {
+			 "value", "@Id"
+		   });		
+		addAnnotation
+		  (bz398057BEClass, 
+		   source, 
+		   new String[] {
+			 "value", "@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)"
+		   });		
+		addAnnotation
+		  (getBz398057B_Id(), 
+		   source, 
+		   new String[] {
+			 "value", "@Id"
 		   });
 	}
 

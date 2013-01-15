@@ -40,8 +40,16 @@ public interface IDBAdapter
 
   public String getVersion();
 
+  /**
+   * @deprecated As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).
+   */
+  @Deprecated
   public Driver getJDBCDriver();
 
+  /**
+   * @deprecated As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).
+   */
+  @Deprecated
   public DataSource createJDBCDataSource();
 
   public Set<IDBTable> createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException;

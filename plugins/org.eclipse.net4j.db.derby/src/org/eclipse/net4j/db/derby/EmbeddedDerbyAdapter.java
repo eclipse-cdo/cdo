@@ -10,13 +10,6 @@
  */
 package org.eclipse.net4j.db.derby;
 
-import org.apache.derby.jdbc.EmbeddedDataSource;
-import org.apache.derby.jdbc.EmbeddedDriver;
-
-import javax.sql.DataSource;
-
-import java.sql.Driver;
-
 /**
  * A {@link DerbyAdapter Derby adapter} for <a href="http://db.apache.org/derby/papers/DerbyTut/embedded_intro.html">embedded</a> databases.
  *
@@ -30,15 +23,5 @@ public class EmbeddedDerbyAdapter extends DerbyAdapter
   public EmbeddedDerbyAdapter()
   {
     super(NAME);
-  }
-
-  public Driver getJDBCDriver()
-  {
-    return new EmbeddedDriver();
-  }
-
-  public DataSource createJDBCDataSource()
-  {
-    return new EmbeddedDataSource();
   }
 }

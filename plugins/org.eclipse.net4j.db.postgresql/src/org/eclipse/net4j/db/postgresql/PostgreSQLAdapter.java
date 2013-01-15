@@ -20,11 +20,6 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.internal.postgresql.bundle.OM;
 import org.eclipse.net4j.spi.db.DBAdapter;
 
-import org.postgresql.ds.PGSimpleDataSource;
-
-import javax.sql.DataSource;
-
-import java.sql.Driver;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
@@ -58,16 +53,6 @@ public class PostgreSQLAdapter extends DBAdapter
   public PostgreSQLAdapter()
   {
     super(NAME, VERSION);
-  }
-
-  public Driver getJDBCDriver()
-  {
-    return new org.postgresql.Driver();
-  }
-
-  public DataSource createJDBCDataSource()
-  {
-    return new PGSimpleDataSource();
   }
 
   /**

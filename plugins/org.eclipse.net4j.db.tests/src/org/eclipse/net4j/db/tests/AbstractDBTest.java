@@ -39,6 +39,8 @@ public abstract class AbstractDBTest<DATA_SOURCE extends DataSource> extends Abs
   protected void doSetUp() throws Exception
   {
     dbAdapter = createDBAdapter();
+
+    // TODO Clarify if these tests are still needed/wanted. The following deprecation now requires a different setup
     DATA_SOURCE dataSource = (DATA_SOURCE)dbAdapter.createJDBCDataSource();
     configureDataSource(dataSource);
     dbConnectionProvider = DBUtil.createConnectionProvider(dataSource);

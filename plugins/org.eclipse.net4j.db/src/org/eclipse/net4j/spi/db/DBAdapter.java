@@ -21,8 +21,11 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import javax.sql.DataSource;
+
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -99,6 +102,26 @@ public abstract class DBAdapter implements IDBAdapter
   public String getVersion()
   {
     return version;
+  }
+
+  /**
+   * @since 4.2
+   * @deprecated As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).
+   */
+  @Deprecated
+  public Driver getJDBCDriver()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.2
+   * @deprecated As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).
+   */
+  @Deprecated
+  public DataSource createJDBCDataSource()
+  {
+    throw new UnsupportedOperationException();
   }
 
   public Set<IDBTable> createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException

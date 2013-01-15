@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.net4j.db.derby;singleton:=true
-Bundle-Version: 4.0.200.qualifier
+Bundle-Version: 4.1.0.qualifier
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
@@ -11,7 +11,6 @@ Bundle-Activator: org.eclipse.net4j.db.internal.derby.bundle.OM$Activator
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.net4j.db;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
-Import-Package: org.apache.derby.jdbc;version="[10.0.0,11.0.0)"
-Export-Package: org.eclipse.net4j.db.derby;version="4.0.200",
- org.eclipse.net4j.db.internal.derby.bundle;version="4.0.200";x-internal:=true
+Export-Package: org.eclipse.net4j.db.derby;version="4.1.0",
+ org.eclipse.net4j.db.internal.derby.bundle;version="4.1.0";x-internal:=true
 Eclipse-RegisterBuddy: org.eclipse.net4j.db

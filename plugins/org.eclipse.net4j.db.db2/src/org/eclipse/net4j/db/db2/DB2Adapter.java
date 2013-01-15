@@ -84,16 +84,6 @@ public class DB2Adapter extends DBAdapter
     super(NAME, VERSION);
   }
 
-  public com.ibm.db2.jcc.DB2Driver getJDBCDriver()
-  {
-    return new com.ibm.db2.jcc.DB2Driver();
-  }
-
-  public com.ibm.db2.jcc.DB2SimpleDataSource createJDBCDataSource()
-  {
-    return new com.ibm.db2.jcc.DB2SimpleDataSource();
-  }
-
   @Override
   public int getMaxTableNameLength()
   {

@@ -15,12 +15,6 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.spi.db.DBAdapter;
 
-import org.hsqldb.jdbcDriver;
-
-import javax.sql.DataSource;
-
-import java.sql.Driver;
-
 /**
  * A {@link IDBAdapter DB adapter} for <a href="http://hsqldb.org/">HyperSQL</a> databases.
  *
@@ -36,16 +30,6 @@ public class HSQLDBAdapter extends DBAdapter
   public HSQLDBAdapter()
   {
     super(NAME, VERSION);
-  }
-
-  public Driver getJDBCDriver()
-  {
-    return new jdbcDriver();
-  }
-
-  public DataSource createJDBCDataSource()
-  {
-    return new HSQLDBDataSource();
   }
 
   @Override

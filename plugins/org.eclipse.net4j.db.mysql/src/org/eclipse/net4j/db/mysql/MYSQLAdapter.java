@@ -10,17 +10,11 @@
  */
 package org.eclipse.net4j.db.mysql;
 
-import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.spi.db.DBAdapter;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-
-import javax.sql.DataSource;
-
-import java.sql.Driver;
 import java.sql.SQLException;
 
 /**
@@ -72,23 +66,6 @@ public class MYSQLAdapter extends DBAdapter
   public MYSQLAdapter()
   {
     super(NAME, VERSION);
-  }
-
-  public Driver getJDBCDriver()
-  {
-    try
-    {
-      return new com.mysql.jdbc.Driver();
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-  }
-
-  public DataSource createJDBCDataSource()
-  {
-    return new MysqlDataSource();
   }
 
   /**

@@ -11,14 +11,10 @@
  */
 package org.eclipse.net4j.db.oracle;
 
-import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.spi.db.DBAdapter;
 
-import javax.sql.DataSource;
-
-import java.sql.Driver;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,23 +29,6 @@ public class OracleAdapter extends DBAdapter
   public OracleAdapter()
   {
     super(NAME, VERSION);
-  }
-
-  public Driver getJDBCDriver()
-  {
-    return new oracle.jdbc.driver.OracleDriver();
-  }
-
-  public DataSource createJDBCDataSource()
-  {
-    try
-    {
-      return new oracle.jdbc.pool.OracleDataSource();
-    }
-    catch (SQLException e)
-    {
-      throw new DBException(e);
-    }
   }
 
   public String[] getReservedWords()

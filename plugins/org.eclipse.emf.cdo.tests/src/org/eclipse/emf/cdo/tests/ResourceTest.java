@@ -1854,6 +1854,66 @@ public class ResourceTest extends AbstractCDOTest
   }
 
   /**
+   * Bug 397629: Test the {@link org.eclipse.emf.ecore.resource.Resource.Internal#isLoading()}
+   * behaviour in {@link CDOResource}s for legacy models when resolving cross-document references
+   * (bottom-up resource loading).
+   */
+  @Requires(ModelConfig.CAPABILITY_LEGACY)
+  public void testResourceIsLoading_crossResourceRef() throws Exception
+  {
+    final IsLoadingTestFixture fixture = IsLoadingTestFixture.newInstance();
+
+    try
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+
+      CDOResource resource1 = transaction.createResource(getResourcePath("/my/resource1"));
+      CDOResource resource2 = transaction.createResource(getResourcePath("/my/resource2"));
+
+      Parent parent = getModel5Factory().createParent();
+      resource1.getContents().add(parent);
+      parent.setName("parent");
+
+      Parent container = getModel5Factory().createParent();
+      resource2.getContents().add(container);
+      container.setName("Fake parent container");
+
+      Child child = getModel5Factory().createChild();
+      container.getChildren().add(child);
+      child.setName("child");
+
+      // cross-resource reference
+      parent.setFavourite(child);
+
+      fixture.assertNotReportedLoading(resource1, parent);
+      fixture.assertNotReportedLoading(resource2, child);
+
+      transaction.commit();
+      session.close();
+
+      session = openSession();
+      transaction = session.openTransaction();
+      resource1 = transaction.getResource(getResourcePath("/my/resource1"));
+      resource2 = transaction.getResource(getResourcePath("/my/resource2"));
+
+      // resolve all cross-references out of resource1
+      EcoreUtil.resolveAll((Resource)resource1);
+      for (Iterator<EObject> iter = resource2.getAllContents(); iter.hasNext();)
+      {
+        // every object in the resource detected that it was being loaded
+        fixture.assertReportedLoading(resource2, iter.next());
+      }
+
+      session.close();
+    }
+    finally
+    {
+      fixture.dispose();
+    }
+  }
+
+  /**
    * @author Eike Stepper
    */
   private static class TestAdapter extends AdapterImpl

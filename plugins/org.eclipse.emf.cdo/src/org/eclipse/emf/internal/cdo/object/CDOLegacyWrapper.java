@@ -379,14 +379,14 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       view.registerObject(this);
 
       revisionToInstanceResource();
+      revisionToInstanceContainer();
+
       Resource eResource = instance.eResource();
       if (eResource instanceof InternalCDOResource)
       {
         resource = (InternalCDOResource)eResource;
         resource.cdoInternalLoading(instance);
       }
-
-      revisionToInstanceContainer();
 
       EClass eClass = revision.getEClass();
       EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);

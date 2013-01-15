@@ -203,7 +203,7 @@ public class ChildImpl extends EObjectImpl implements Child
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setPreferredBy(Parent newPreferredBy)
+  public void setPreferredByGen(Parent newPreferredBy)
   {
     if (newPreferredBy != preferredBy)
     {
@@ -219,6 +219,12 @@ public class ChildImpl extends EObjectImpl implements Child
     else if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, Model5Package.CHILD__PREFERRED_BY, newPreferredBy,
           newPreferredBy));
+  }
+
+  public void setPreferredBy(Parent newPreferredBy)
+  {
+    IsLoadingTestFixture.reportLoading(eResource(), this);
+    setPreferredByGen(newPreferredBy);
   }
 
   /**

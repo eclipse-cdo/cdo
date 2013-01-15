@@ -184,7 +184,7 @@ public class ParentImpl extends EObjectImpl implements Parent
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setFavourite(Child newFavourite)
+  public void setFavouriteGen(Child newFavourite)
   {
     if (newFavourite != favourite)
     {
@@ -199,6 +199,12 @@ public class ParentImpl extends EObjectImpl implements Parent
     }
     else if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, Model5Package.PARENT__FAVOURITE, newFavourite, newFavourite));
+  }
+
+  public void setFavourite(Child newFavourite)
+  {
+    IsLoadingTestFixture.reportLoading(eResource(), this);
+    setFavouriteGen(newFavourite);
   }
 
   /**

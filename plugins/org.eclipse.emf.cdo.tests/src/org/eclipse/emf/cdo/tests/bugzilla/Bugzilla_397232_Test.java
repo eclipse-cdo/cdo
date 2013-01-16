@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
+import org.eclipse.emf.cdo.tests.model6.BaseObject;
 import org.eclipse.emf.cdo.tests.model6.G;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -37,7 +38,13 @@ public class Bugzilla_397232_Test extends AbstractCDOTest
     {
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource(getResourcePath("/test1"));
-      resource.getContents().add(getModel6Factory().createG());
+      G g = getModel6Factory().createG();
+      BaseObject bo = getModel6Factory().createBaseObject();
+      bo.setAttributeRequired("required");
+      g.setDummy("g");
+      g.setReference(bo);
+      resource.getContents().add(g);
+      resource.getContents().add(bo);
       transaction.commit();
       transaction.close();
     }
@@ -48,7 +55,7 @@ public class Bugzilla_397232_Test extends AbstractCDOTest
 
     // Load initially
     G g = (G)resource2.getContents().get(0);
-    assertEquals(1, g.getNotifications().size());
+    assertEquals(3, g.getNotifications().size());
 
     // Simulate GC
     InternalCDOObject cdoObject = (InternalCDOObject)CDOUtil.getCDOObject(g);
@@ -57,6 +64,6 @@ public class Bugzilla_397232_Test extends AbstractCDOTest
 
     // Re-load
     g.getDummy();
-    assertEquals(2, g.getNotifications().size());
+    assertEquals(6, g.getNotifications().size());
   }
 }

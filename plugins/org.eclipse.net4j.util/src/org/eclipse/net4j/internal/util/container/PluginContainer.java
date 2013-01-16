@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA) - private plug-in container instances
  */
 package org.eclipse.net4j.internal.util.container;
 
@@ -29,7 +30,7 @@ public class PluginContainer extends ManagedContainer implements IPluginContaine
 {
   private static PluginContainer instance;
 
-  private PluginContainer()
+  public PluginContainer()
   {
   }
 

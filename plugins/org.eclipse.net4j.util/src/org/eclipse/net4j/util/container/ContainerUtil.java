@@ -7,9 +7,11 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA) - private plug-in container instances
  */
 package org.eclipse.net4j.util.container;
 
+import org.eclipse.net4j.internal.util.container.PluginContainer;
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.concurrent.TimerLifecycle;
 import org.eclipse.net4j.util.event.EventUtil;
@@ -106,5 +108,16 @@ public final class ContainerUtil
     }
 
     return NO_ELEMENTS;
+  }
+
+  /**
+   * Creates a new managed container that discovers factory and element processor
+   * registrations in plug-in extensions.
+   * 
+   * @since 3.3
+   */
+  public static IManagedContainer createPluginContainer()
+  {
+    return new PluginContainer();
   }
 }

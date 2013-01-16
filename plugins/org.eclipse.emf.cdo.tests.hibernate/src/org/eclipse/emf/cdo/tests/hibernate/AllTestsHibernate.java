@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.tests.LockingManagerRestartTransactionTest;
 import org.eclipse.emf.cdo.tests.LockingManagerTest;
 import org.eclipse.emf.cdo.tests.LockingNotificationsTest;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
-import org.eclipse.emf.cdo.tests.MapTest;
 import org.eclipse.emf.cdo.tests.MultiValuedOfAttributeTest;
 import org.eclipse.emf.cdo.tests.PackageRegistryTest;
 import org.eclipse.emf.cdo.tests.SecurityManagerTest;
@@ -78,14 +77,12 @@ public class AllTestsHibernate extends AllConfigs
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
-    testClasses.clear();
-    testClasses.add(MapTest.class);
-    // testClasses.add(ComplexTest.class);
-    // testClasses.add(HibernateBugzilla_397682_Test.class);
-    if (true)
-    {
-      return;
-    }
+    // testClasses.clear();
+    // testClasses.add(HibernateBugzilla_380987_Test.class);
+    // if (true)
+    // {
+    // return;
+    // }
 
     testClasses.add(Hibernate_Failure_Test.class);
     testClasses.add(Hibernate_Export_Test.class);
@@ -122,6 +119,7 @@ public class AllTestsHibernate extends AllConfigs
     testClasses.remove(Bugzilla_390185_Test.class);
 
     testClasses.add(HibernateBugzilla_398057_Test.class);
+    testClasses.add(HibernateBugzilla_397682_Test.class);
 
     if (scenario.getCapabilities().contains(IRepositoryConfig.CAPABILITY_AUDITING))
     {

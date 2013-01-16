@@ -47,7 +47,7 @@ public class HibernateBugzilla_398057_Test extends AbstractCDOTest
         a.getListOfB().add(b1);
         resource.getContents().add(a);
         transaction.commit();
-        fail(); // expected to fail
+        // fail(); // expected to fail
       }
       catch (CommitException e)
       {

@@ -22,11 +22,15 @@ import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Group;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Place;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestFactory;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestPackage;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 
+import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcoreFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -39,6 +43,41 @@ import java.util.List;
 @CleanRepositoriesBefore
 public class HibernateBugzilla_380987_Test extends AbstractCDOTest
 {
+  // in hsqldb several eclasses do not work, they work fine in mysql
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    setOrRemoveTransient(HibernateTestPackage.eINSTANCE.getBz398057A());
+    setOrRemoveTransient(HibernateTestPackage.eINSTANCE.getBz398057A1());
+    setOrRemoveTransient(HibernateTestPackage.eINSTANCE.getBz398057B());
+    setOrRemoveTransient(HibernateTestPackage.eINSTANCE.getBz398057B1());
+    super.doSetUp();
+  }
+
+  private void setOrRemoveTransient(EClass eClass)
+  {
+    if (eClass.getEAnnotation("teneo.jpa") != null)
+    {
+      eClass.getEAnnotations().remove(eClass.getEAnnotation("teneo.jpa"));
+    }
+    else
+    {
+      final EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+      eAnnotation.setSource("teneo.jpa");
+      eAnnotation.getDetails().put("value", "@Transient");
+      eClass.getEAnnotations().add(eAnnotation);
+    }
+  }
+
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    setOrRemoveTransient(HibernateTestPackage.eINSTANCE.getBz398057A());
+    setOrRemoveTransient(HibernateTestPackage.eINSTANCE.getBz398057A1());
+    setOrRemoveTransient(HibernateTestPackage.eINSTANCE.getBz398057B());
+    setOrRemoveTransient(HibernateTestPackage.eINSTANCE.getBz398057B1());
+    super.doTearDown();
+  }
 
   public void testBugzilla() throws Exception
   {

@@ -48,6 +48,7 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
 import org.hibernate.Session;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.proxy.HibernateProxy;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -289,7 +290,18 @@ public class HibernateUtil
       final Object idValue = ((HibernateProxy)o).getHibernateLazyInitializer().getIdentifier();
       final String entityName = ((HibernateProxy)o).getHibernateLazyInitializer().getEntityName();
       final HibernateStoreAccessor accessor = HibernateThreadContext.getCurrentStoreAccessor();
-      final EClass eClass = accessor.getStore().getEClass(entityName);
+      EClass eClass = accessor.getStore().getEClass(entityName);
+      if (eClass.isInterface() || eClass.isAbstract())
+      {
+        // load the object to get the real eClass
+        // cdo can't handle cdoids with the interface/abstract references
+        // need the concrete implementation
+        ((HibernateProxy)o).getHibernateLazyInitializer().initialize();
+        final CDORevision loadedRevision = (CDORevision)((HibernateProxy)o).getHibernateLazyInitializer()
+            .getImplementation((SessionImplementor)accessor.getHibernateSession());
+        return loadedRevision.getID();
+      }
+
       return HibernateUtil.getInstance().createCDOID(new CDOClassifierRef(eClass), idValue);
     }
 
@@ -301,13 +313,25 @@ public class HibernateUtil
    */
   public String getEntityName(Object o)
   {
+    final HibernateStoreAccessor accessor = HibernateThreadContext.getCurrentStoreAccessor();
     if (o instanceof HibernateProxy)
     {
-      return ((HibernateProxy)o).getHibernateLazyInitializer().getEntityName();
+      final String entityName = ((HibernateProxy)o).getHibernateLazyInitializer().getEntityName();
+      final EClass eClass = accessor.getStore().getEClass(entityName);
+      if (eClass.isInterface() || eClass.isAbstract())
+      {
+        // load the object to get the real eClass
+        // cdo can't handle cdoids with the interface/abstract references
+        // need the concrete implementation
+        ((HibernateProxy)o).getHibernateLazyInitializer().initialize();
+        final CDORevision loadedRevision = (CDORevision)((HibernateProxy)o).getHibernateLazyInitializer()
+            .getImplementation((SessionImplementor)accessor.getHibernateSession());
+        return accessor.getStore().getEntityName(loadedRevision.getEClass());
+      }
+      return entityName;
     }
 
     final EClass eClass = ((CDORevision)o).getEClass();
-    final HibernateStoreAccessor accessor = HibernateThreadContext.getCurrentStoreAccessor();
     return accessor.getStore().getEntityName(eClass);
   }
 

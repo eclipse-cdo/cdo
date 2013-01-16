@@ -16,12 +16,14 @@ import org.eclipse.net4j.util.io.TMPUtil;
 
 import org.apache.derby.jdbc.EmbeddedDataSource;
 
+import javax.sql.DataSource;
+
 import java.io.File;
 
 /**
  * @author Eike Stepper
  */
-public class DerbyTest extends AbstractDBTest<EmbeddedDataSource>
+public class DerbyTest extends AbstractDBTest
 {
   private File dbFolder;
 
@@ -32,14 +34,16 @@ public class DerbyTest extends AbstractDBTest<EmbeddedDataSource>
   }
 
   @Override
-  protected void configureDataSource(EmbeddedDataSource dataSource)
+  protected DataSource createDataSource()
   {
     dbFolder = TMPUtil.createTempFolder("derby_"); //$NON-NLS-1$
     deleteDBFolder();
     msg("Using DB folder: " + dbFolder.getAbsolutePath()); //$NON-NLS-1$
 
+    EmbeddedDataSource dataSource = new EmbeddedDataSource();
     dataSource.setDatabaseName(dbFolder.getAbsolutePath());
     dataSource.setCreateDatabase("create"); //$NON-NLS-1$
+    return dataSource;
   }
 
   @Override

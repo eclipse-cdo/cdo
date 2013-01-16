@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -13,10 +13,12 @@ package org.eclipse.net4j.db.tests;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.hsqldb.HSQLDBDataSource;
 
+import javax.sql.DataSource;
+
 /**
  * @author Eike Stepper
  */
-public class HsqldbTest extends AbstractDBTest<HSQLDBDataSource>
+public class HsqldbTest extends AbstractDBTest
 {
   @Override
   protected IDBAdapter createDBAdapter()
@@ -25,9 +27,11 @@ public class HsqldbTest extends AbstractDBTest<HSQLDBDataSource>
   }
 
   @Override
-  protected void configureDataSource(HSQLDBDataSource dataSource)
+  protected DataSource createDataSource()
   {
+    HSQLDBDataSource dataSource = new HSQLDBDataSource();
     dataSource.setDatabase("jdbc:hsqldb:mem:dbtest"); //$NON-NLS-1$
     dataSource.setUser("sa"); //$NON-NLS-1$
+    return dataSource;
   }
 }

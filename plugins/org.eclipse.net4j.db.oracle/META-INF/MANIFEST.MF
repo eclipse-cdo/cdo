@@ -9,7 +9,10 @@ Bundle-Activator: org.eclipse.net4j.db.oracle.internal.bundle.OM$Activator
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.net4j.db;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
-Import-Package: org.osgi.framework;version="[1.0.0,2.0.0)"
+Import-Package: oracle.jdbc;resolution:=optional,
+ oracle.jdbc.driver;resolution:=optional,
+ oracle.jdbc.pool;resolution:=optional,
+ org.osgi.framework;version="[1.0.0,2.0.0)"
 Export-Package: org.eclipse.net4j.db.oracle;version="1.0.0",
  org.eclipse.net4j.db.oracle.internal.bundle;version="1.0.0";x-internal:=true
 Eclipse-RegisterBuddy: org.eclipse.net4j.db

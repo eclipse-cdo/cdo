@@ -10,6 +10,8 @@ import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Place;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682C;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682P;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A1;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057B;
@@ -107,6 +109,20 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 	 * @generated
 	 */
 	private EClass bz398057B1EClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass bz397682PEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass bz397682CEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -397,7 +413,7 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getBz398057A_Id() {
+	public EAttribute getBz398057A_DbId() {
 		return (EAttribute)bz398057AEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -442,7 +458,7 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getBz398057B_Id() {
+	public EAttribute getBz398057B_DbId() {
 		return (EAttribute)bz398057BEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -462,6 +478,69 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 	 */
 	public EAttribute getBz398057B1_ValueStr() {
 		return (EAttribute)bz398057B1EClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getBz397682P() {
+		return bz397682PEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBz397682P_DbId() {
+		return (EAttribute)bz397682PEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBz397682P_ListOfC() {
+		return (EReference)bz397682PEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getBz397682C() {
+		return bz397682CEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBz397682C_RefToP() {
+		return (EReference)bz397682CEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBz397682C_RefToC() {
+		return (EReference)bz397682CEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getBz397682C_DbId() {
+		return (EAttribute)bz397682CEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -532,17 +611,26 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 
 		bz398057AEClass = createEClass(BZ398057_A);
 		createEReference(bz398057AEClass, BZ398057_A__LIST_OF_B);
-		createEAttribute(bz398057AEClass, BZ398057_A__ID);
+		createEAttribute(bz398057AEClass, BZ398057_A__DB_ID);
 
 		bz398057A1EClass = createEClass(BZ398057_A1);
 
 		bz398057BEClass = createEClass(BZ398057_B);
 		createEReference(bz398057BEClass, BZ398057_B__REF_TO_CLASS_A);
 		createEAttribute(bz398057BEClass, BZ398057_B__VALUE);
-		createEAttribute(bz398057BEClass, BZ398057_B__ID);
+		createEAttribute(bz398057BEClass, BZ398057_B__DB_ID);
 
 		bz398057B1EClass = createEClass(BZ398057_B1);
 		createEAttribute(bz398057B1EClass, BZ398057_B1__VALUE_STR);
+
+		bz397682PEClass = createEClass(BZ397682_P);
+		createEAttribute(bz397682PEClass, BZ397682_P__DB_ID);
+		createEReference(bz397682PEClass, BZ397682_P__LIST_OF_C);
+
+		bz397682CEClass = createEClass(BZ397682_C);
+		createEReference(bz397682CEClass, BZ397682_C__REF_TO_P);
+		createEReference(bz397682CEClass, BZ397682_C__REF_TO_C);
+		createEAttribute(bz397682CEClass, BZ397682_C__DB_ID);
 
 		// Create enums
 		bz387752_EnumEEnum = createEEnum(BZ387752_ENUM);
@@ -611,17 +699,26 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 
 		initEClass(bz398057AEClass, Bz398057A.class, "Bz398057A", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getBz398057A_ListOfB(), this.getBz398057B(), this.getBz398057B_RefToClassA(), "listOfB", null, 0, -1, Bz398057A.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getBz398057A_Id(), ecorePackage.getEString(), "id", null, 1, 1, Bz398057A.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBz398057A_DbId(), ecorePackage.getEString(), "dbId", null, 1, 1, Bz398057A.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(bz398057A1EClass, Bz398057A1.class, "Bz398057A1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(bz398057BEClass, Bz398057B.class, "Bz398057B", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getBz398057B_RefToClassA(), this.getBz398057A(), this.getBz398057A_ListOfB(), "refToClassA", null, 0, 1, Bz398057B.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getBz398057B_Value(), ecorePackage.getEDouble(), "value", null, 0, 1, Bz398057B.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getBz398057B_Id(), ecorePackage.getEString(), "id", null, 1, 1, Bz398057B.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBz398057B_DbId(), ecorePackage.getEString(), "dbId", null, 1, 1, Bz398057B.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(bz398057B1EClass, Bz398057B1.class, "Bz398057B1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getBz398057B1_ValueStr(), ecorePackage.getEString(), "valueStr", null, 0, 1, Bz398057B1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(bz397682PEClass, Bz397682P.class, "Bz397682P", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getBz397682P_DbId(), ecorePackage.getEString(), "dbId", null, 1, 1, Bz397682P.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getBz397682P_ListOfC(), this.getBz397682C(), this.getBz397682C_RefToP(), "listOfC", null, 0, -1, Bz397682P.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(bz397682CEClass, Bz397682C.class, "Bz397682C", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getBz397682C_RefToP(), this.getBz397682P(), this.getBz397682P_ListOfC(), "refToP", null, 0, 1, Bz397682C.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getBz397682C_RefToC(), this.getBz397682C(), null, "refToC", null, 0, 1, Bz397682C.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBz397682C_DbId(), ecorePackage.getEString(), "dbId", null, 1, 1, Bz397682C.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(bz387752_EnumEEnum, Bz387752_Enum.class, "Bz387752_Enum");
@@ -663,7 +760,7 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 			 "value", "@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)"
 		   });		
 		addAnnotation
-		  (getBz398057A_Id(), 
+		  (getBz398057A_DbId(), 
 		   source, 
 		   new String[] {
 			 "value", "@Id"
@@ -675,7 +772,25 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
 			 "value", "@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)"
 		   });		
 		addAnnotation
-		  (getBz398057B_Id(), 
+		  (getBz398057B_DbId(), 
+		   source, 
+		   new String[] {
+			 "value", "@Id"
+		   });		
+		addAnnotation
+		  (bz397682PEClass, 
+		   source, 
+		   new String[] {
+			 "value", "@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)"
+		   });		
+		addAnnotation
+		  (getBz397682P_DbId(), 
+		   source, 
+		   new String[] {
+			 "value", "@Id"
+		   });		
+		addAnnotation
+		  (getBz397682C_DbId(), 
 		   source, 
 		   new String[] {
 			 "value", "@Id"

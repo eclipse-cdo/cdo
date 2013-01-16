@@ -4,8 +4,8 @@ package org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl;
 
 import java.util.Collection;
 
-import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A;
-import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057B;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682C;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682P;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -20,34 +20,23 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Bz398057 A</b></em>'.
+ * An implementation of the model object '<em><b>Bz397682 P</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz398057AImpl#getListOfB <em>List Of B</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz398057AImpl#getDbId <em>Db Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz397682PImpl#getDbId <em>Db Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz397682PImpl#getListOfC <em>List Of C</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class Bz398057AImpl extends EObjectImpl implements Bz398057A {
-	/**
-	 * The cached value of the '{@link #getListOfB() <em>List Of B</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getListOfB()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Bz398057B> listOfB;
-
+public class Bz397682PImpl extends EObjectImpl implements Bz397682P {
 	/**
 	 * The default value of the '{@link #getDbId() <em>Db Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -69,11 +58,21 @@ public class Bz398057AImpl extends EObjectImpl implements Bz398057A {
 	protected String dbId = DB_ID_EDEFAULT;
 
 	/**
+	 * The cached value of the '{@link #getListOfC() <em>List Of C</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getListOfC()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Bz397682C> listOfC;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected Bz398057AImpl() {
+	protected Bz397682PImpl() {
 		super();
 	}
 
@@ -84,19 +83,7 @@ public class Bz398057AImpl extends EObjectImpl implements Bz398057A {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return HibernateTestPackage.Literals.BZ398057_A;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Bz398057B> getListOfB() {
-		if (listOfB == null) {
-			listOfB = new EObjectContainmentWithInverseEList<Bz398057B>(Bz398057B.class, this, HibernateTestPackage.BZ398057_A__LIST_OF_B, HibernateTestPackage.BZ398057_B__REF_TO_CLASS_A);
-		}
-		return listOfB;
+		return HibernateTestPackage.Literals.BZ397682_P;
 	}
 
 	/**
@@ -117,7 +104,19 @@ public class Bz398057AImpl extends EObjectImpl implements Bz398057A {
 		String oldDbId = dbId;
 		dbId = newDbId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ398057_A__DB_ID, oldDbId, dbId));
+			eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ397682_P__DB_ID, oldDbId, dbId));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Bz397682C> getListOfC() {
+		if (listOfC == null) {
+			listOfC = new EObjectContainmentWithInverseEList<Bz397682C>(Bz397682C.class, this, HibernateTestPackage.BZ397682_P__LIST_OF_C, HibernateTestPackage.BZ397682_C__REF_TO_P);
+		}
+		return listOfC;
 	}
 
 	/**
@@ -129,8 +128,8 @@ public class Bz398057AImpl extends EObjectImpl implements Bz398057A {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case HibernateTestPackage.BZ398057_A__LIST_OF_B:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getListOfB()).basicAdd(otherEnd, msgs);
+			case HibernateTestPackage.BZ397682_P__LIST_OF_C:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getListOfC()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -143,8 +142,8 @@ public class Bz398057AImpl extends EObjectImpl implements Bz398057A {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case HibernateTestPackage.BZ398057_A__LIST_OF_B:
-				return ((InternalEList<?>)getListOfB()).basicRemove(otherEnd, msgs);
+			case HibernateTestPackage.BZ397682_P__LIST_OF_C:
+				return ((InternalEList<?>)getListOfC()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -157,10 +156,10 @@ public class Bz398057AImpl extends EObjectImpl implements Bz398057A {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case HibernateTestPackage.BZ398057_A__LIST_OF_B:
-				return getListOfB();
-			case HibernateTestPackage.BZ398057_A__DB_ID:
+			case HibernateTestPackage.BZ397682_P__DB_ID:
 				return getDbId();
+			case HibernateTestPackage.BZ397682_P__LIST_OF_C:
+				return getListOfC();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -174,12 +173,12 @@ public class Bz398057AImpl extends EObjectImpl implements Bz398057A {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case HibernateTestPackage.BZ398057_A__LIST_OF_B:
-				getListOfB().clear();
-				getListOfB().addAll((Collection<? extends Bz398057B>)newValue);
-				return;
-			case HibernateTestPackage.BZ398057_A__DB_ID:
+			case HibernateTestPackage.BZ397682_P__DB_ID:
 				setDbId((String)newValue);
+				return;
+			case HibernateTestPackage.BZ397682_P__LIST_OF_C:
+				getListOfC().clear();
+				getListOfC().addAll((Collection<? extends Bz397682C>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -193,11 +192,11 @@ public class Bz398057AImpl extends EObjectImpl implements Bz398057A {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case HibernateTestPackage.BZ398057_A__LIST_OF_B:
-				getListOfB().clear();
-				return;
-			case HibernateTestPackage.BZ398057_A__DB_ID:
+			case HibernateTestPackage.BZ397682_P__DB_ID:
 				setDbId(DB_ID_EDEFAULT);
+				return;
+			case HibernateTestPackage.BZ397682_P__LIST_OF_C:
+				getListOfC().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -211,10 +210,10 @@ public class Bz398057AImpl extends EObjectImpl implements Bz398057A {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case HibernateTestPackage.BZ398057_A__LIST_OF_B:
-				return listOfB != null && !listOfB.isEmpty();
-			case HibernateTestPackage.BZ398057_A__DB_ID:
+			case HibernateTestPackage.BZ397682_P__DB_ID:
 				return DB_ID_EDEFAULT == null ? dbId != null : !DB_ID_EDEFAULT.equals(dbId);
+			case HibernateTestPackage.BZ397682_P__LIST_OF_C:
+				return listOfC != null && !listOfC.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -235,4 +234,4 @@ public class Bz398057AImpl extends EObjectImpl implements Bz398057A {
 		return result.toString();
 	}
 
-} //Bz398057AImpl
+} //Bz397682PImpl

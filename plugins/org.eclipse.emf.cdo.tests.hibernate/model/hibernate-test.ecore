@@ -57,7 +57,7 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="listOfB" upperBound="-1"
         eType="#//Bz398057B" containment="true" eOpposite="#//Bz398057B/refToClassA"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dbId" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="teneo.jpa">
         <details key="value" value="@Id"/>
       </eAnnotations>
@@ -71,7 +71,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="refToClassA" eType="#//Bz398057A"
         eOpposite="#//Bz398057A/listOfB"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dbId" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="teneo.jpa">
         <details key="value" value="@Id"/>
       </eAnnotations>
@@ -79,5 +79,27 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Bz398057B1" eSuperTypes="#//Bz398057B">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="valueStr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bz397682P">
+    <eAnnotations source="teneo.jpa">
+      <details key="value" value="@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dbId" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="teneo.jpa">
+        <details key="value" value="@Id"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listOfC" upperBound="-1"
+        eType="#//Bz397682C" containment="true" eOpposite="#//Bz397682C/refToP"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bz397682C">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="refToP" eType="#//Bz397682P"
+        eOpposite="#//Bz397682P/listOfC"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="refToC" eType="#//Bz397682C"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dbId" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="teneo.jpa">
+        <details key="value" value="@Id"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
 </ecore:EPackage>

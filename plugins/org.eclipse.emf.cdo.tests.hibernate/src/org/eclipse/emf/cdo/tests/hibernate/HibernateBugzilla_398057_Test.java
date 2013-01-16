@@ -39,9 +39,9 @@ public class HibernateBugzilla_398057_Test extends AbstractCDOTest
         CDOTransaction transaction = session.openTransaction();
         CDOResource resource = transaction.createResource(getResourcePath("/res1"));
         Bz398057A a = HibernateTestFactory.eINSTANCE.createBz398057A();
-        a.setId("1");
+        a.setDbId("1");
         Bz398057B1 b1 = HibernateTestFactory.eINSTANCE.createBz398057B1();
-        b1.setId("1");
+        b1.setDbId("1");
         b1.setValueStr("str");
         b1.setValue(1.0);
         a.getListOfB().add(b1);

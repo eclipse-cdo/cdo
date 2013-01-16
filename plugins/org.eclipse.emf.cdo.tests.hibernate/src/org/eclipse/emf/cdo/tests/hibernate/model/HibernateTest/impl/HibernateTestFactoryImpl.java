@@ -76,6 +76,8 @@ public class HibernateTestFactoryImpl extends EFactoryImpl implements HibernateT
 			case HibernateTestPackage.BZ398057_A1: return createBz398057A1();
 			case HibernateTestPackage.BZ398057_B: return createBz398057B();
 			case HibernateTestPackage.BZ398057_B1: return createBz398057B1();
+			case HibernateTestPackage.BZ397682_P: return createBz397682P();
+			case HibernateTestPackage.BZ397682_C: return createBz397682C();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -219,6 +221,26 @@ public class HibernateTestFactoryImpl extends EFactoryImpl implements HibernateT
 	public Bz398057B1 createBz398057B1() {
 		Bz398057B1Impl bz398057B1 = new Bz398057B1Impl();
 		return bz398057B1;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Bz397682P createBz397682P() {
+		Bz397682PImpl bz397682P = new Bz397682PImpl();
+		return bz397682P;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Bz397682C createBz397682C() {
+		Bz397682CImpl bz397682C = new Bz397682CImpl();
+		return bz397682C;
 	}
 
 	/**

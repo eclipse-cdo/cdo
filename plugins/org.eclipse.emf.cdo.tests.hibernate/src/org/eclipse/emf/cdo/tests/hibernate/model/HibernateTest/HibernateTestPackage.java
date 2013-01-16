@@ -345,13 +345,13 @@ public interface HibernateTestPackage extends EPackage {
 	int BZ398057_A__LIST_OF_B = 0;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Db Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BZ398057_A__ID = 1;
+	int BZ398057_A__DB_ID = 1;
 
 	/**
 	 * The number of structural features of the '<em>Bz398057 A</em>' class.
@@ -382,13 +382,13 @@ public interface HibernateTestPackage extends EPackage {
 	int BZ398057_A1__LIST_OF_B = BZ398057_A__LIST_OF_B;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Db Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BZ398057_A1__ID = BZ398057_A__ID;
+	int BZ398057_A1__DB_ID = BZ398057_A__DB_ID;
 
 	/**
 	 * The number of structural features of the '<em>Bz398057 A1</em>' class.
@@ -428,13 +428,13 @@ public interface HibernateTestPackage extends EPackage {
 	int BZ398057_B__VALUE = 1;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Db Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BZ398057_B__ID = 2;
+	int BZ398057_B__DB_ID = 2;
 
 	/**
 	 * The number of structural features of the '<em>Bz398057 B</em>' class.
@@ -474,13 +474,13 @@ public interface HibernateTestPackage extends EPackage {
 	int BZ398057_B1__VALUE = BZ398057_B__VALUE;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Db Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BZ398057_B1__ID = BZ398057_B__ID;
+	int BZ398057_B1__DB_ID = BZ398057_B__DB_ID;
 
 	/**
 	 * The feature id for the '<em><b>Value Str</b></em>' attribute.
@@ -501,6 +501,89 @@ public interface HibernateTestPackage extends EPackage {
 	int BZ398057_B1_FEATURE_COUNT = BZ398057_B_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz397682PImpl <em>Bz397682 P</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz397682PImpl
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl#getBz397682P()
+	 * @generated
+	 */
+	int BZ397682_P = 11;
+
+	/**
+	 * The feature id for the '<em><b>Db Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ397682_P__DB_ID = 0;
+
+	/**
+	 * The feature id for the '<em><b>List Of C</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ397682_P__LIST_OF_C = 1;
+
+	/**
+	 * The number of structural features of the '<em>Bz397682 P</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ397682_P_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz397682CImpl <em>Bz397682 C</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz397682CImpl
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl#getBz397682C()
+	 * @generated
+	 */
+	int BZ397682_C = 12;
+
+	/**
+	 * The feature id for the '<em><b>Ref To P</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ397682_C__REF_TO_P = 0;
+
+	/**
+	 * The feature id for the '<em><b>Ref To C</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ397682_C__REF_TO_C = 1;
+
+	/**
+	 * The feature id for the '<em><b>Db Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ397682_C__DB_ID = 2;
+
+	/**
+	 * The number of structural features of the '<em>Bz397682 C</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BZ397682_C_FEATURE_COUNT = 3;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum <em>Bz387752 Enum</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -508,7 +591,7 @@ public interface HibernateTestPackage extends EPackage {
 	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl#getBz387752_Enum()
 	 * @generated
 	 */
-	int BZ387752_ENUM = 11;
+	int BZ387752_ENUM = 13;
 
 
 	/**
@@ -768,15 +851,15 @@ public interface HibernateTestPackage extends EPackage {
 	EReference getBz398057A_ListOfB();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A#getId <em>Id</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A#getDbId <em>Db Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A#getId()
+	 * @return the meta object for the attribute '<em>Db Id</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A#getDbId()
 	 * @see #getBz398057A()
 	 * @generated
 	 */
-	EAttribute getBz398057A_Id();
+	EAttribute getBz398057A_DbId();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A1 <em>Bz398057 A1</em>}'.
@@ -821,15 +904,15 @@ public interface HibernateTestPackage extends EPackage {
 	EAttribute getBz398057B_Value();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057B#getId <em>Id</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057B#getDbId <em>Db Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057B#getId()
+	 * @return the meta object for the attribute '<em>Db Id</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057B#getDbId()
 	 * @see #getBz398057B()
 	 * @generated
 	 */
-	EAttribute getBz398057B_Id();
+	EAttribute getBz398057B_DbId();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057B1 <em>Bz398057 B1</em>}'.
@@ -851,6 +934,81 @@ public interface HibernateTestPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getBz398057B1_ValueStr();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682P <em>Bz397682 P</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Bz397682 P</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682P
+	 * @generated
+	 */
+	EClass getBz397682P();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682P#getDbId <em>Db Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Db Id</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682P#getDbId()
+	 * @see #getBz397682P()
+	 * @generated
+	 */
+	EAttribute getBz397682P_DbId();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682P#getListOfC <em>List Of C</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>List Of C</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682P#getListOfC()
+	 * @see #getBz397682P()
+	 * @generated
+	 */
+	EReference getBz397682P_ListOfC();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682C <em>Bz397682 C</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Bz397682 C</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682C
+	 * @generated
+	 */
+	EClass getBz397682C();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682C#getRefToP <em>Ref To P</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Ref To P</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682C#getRefToP()
+	 * @see #getBz397682C()
+	 * @generated
+	 */
+	EReference getBz397682C_RefToP();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682C#getRefToC <em>Ref To C</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Ref To C</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682C#getRefToC()
+	 * @see #getBz397682C()
+	 * @generated
+	 */
+	EReference getBz397682C_RefToC();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682C#getDbId <em>Db Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Db Id</em>'.
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682C#getDbId()
+	 * @see #getBz397682C()
+	 * @generated
+	 */
+	EAttribute getBz397682C_DbId();
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum <em>Bz387752 Enum</em>}'.
@@ -1093,12 +1251,12 @@ public interface HibernateTestPackage extends EPackage {
 		EReference BZ398057_A__LIST_OF_B = eINSTANCE.getBz398057A_ListOfB();
 
 		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Db Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute BZ398057_A__ID = eINSTANCE.getBz398057A_Id();
+		EAttribute BZ398057_A__DB_ID = eINSTANCE.getBz398057A_DbId();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz398057A1Impl <em>Bz398057 A1</em>}' class.
@@ -1137,12 +1295,12 @@ public interface HibernateTestPackage extends EPackage {
 		EAttribute BZ398057_B__VALUE = eINSTANCE.getBz398057B_Value();
 
 		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Db Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute BZ398057_B__ID = eINSTANCE.getBz398057B_Id();
+		EAttribute BZ398057_B__DB_ID = eINSTANCE.getBz398057B_DbId();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz398057B1Impl <em>Bz398057 B1</em>}' class.
@@ -1161,6 +1319,66 @@ public interface HibernateTestPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute BZ398057_B1__VALUE_STR = eINSTANCE.getBz398057B1_ValueStr();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz397682PImpl <em>Bz397682 P</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz397682PImpl
+		 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl#getBz397682P()
+		 * @generated
+		 */
+		EClass BZ397682_P = eINSTANCE.getBz397682P();
+
+		/**
+		 * The meta object literal for the '<em><b>Db Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BZ397682_P__DB_ID = eINSTANCE.getBz397682P_DbId();
+
+		/**
+		 * The meta object literal for the '<em><b>List Of C</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference BZ397682_P__LIST_OF_C = eINSTANCE.getBz397682P_ListOfC();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz397682CImpl <em>Bz397682 C</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz397682CImpl
+		 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl#getBz397682C()
+		 * @generated
+		 */
+		EClass BZ397682_C = eINSTANCE.getBz397682C();
+
+		/**
+		 * The meta object literal for the '<em><b>Ref To P</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference BZ397682_C__REF_TO_P = eINSTANCE.getBz397682C_RefToP();
+
+		/**
+		 * The meta object literal for the '<em><b>Ref To C</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference BZ397682_C__REF_TO_C = eINSTANCE.getBz397682C_RefToC();
+
+		/**
+		 * The meta object literal for the '<em><b>Db Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BZ397682_C__DB_ID = eINSTANCE.getBz397682C_DbId();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum <em>Bz387752 Enum</em>}' enum.

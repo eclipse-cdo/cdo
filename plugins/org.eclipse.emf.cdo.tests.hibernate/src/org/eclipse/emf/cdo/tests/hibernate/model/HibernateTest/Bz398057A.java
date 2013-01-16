@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A#getListOfB <em>List Of B</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A#getDbId <em>Db Id</em>}</li>
  * </ul>
  * </p>
  *
@@ -43,30 +43,30 @@ public interface Bz398057A extends EObject {
 	EList<Bz398057B> getListOfB();
 
 	/**
-	 * Returns the value of the '<em><b>Id</b></em>' attribute.
+	 * Returns the value of the '<em><b>Db Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Db Id</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Id</em>' attribute.
-	 * @see #setId(String)
-	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestPackage#getBz398057A_Id()
+	 * @return the value of the '<em>Db Id</em>' attribute.
+	 * @see #setDbId(String)
+	 * @see org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestPackage#getBz398057A_DbId()
 	 * @model required="true"
 	 *        annotation="teneo.jpa value='@Id'"
 	 * @generated
 	 */
-	String getId();
+	String getDbId();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A#getId <em>Id</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A#getDbId <em>Db Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Id</em>' attribute.
-	 * @see #getId()
+	 * @param value the new value of the '<em>Db Id</em>' attribute.
+	 * @see #getDbId()
 	 * @generated
 	 */
-	void setId(String value);
+	void setDbId(String value);
 
 } // Bz398057A

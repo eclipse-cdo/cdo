@@ -141,6 +141,18 @@ public class HibernateTestSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case HibernateTestPackage.BZ397682_P: {
+				Bz397682P bz397682P = (Bz397682P)theEObject;
+				T result = caseBz397682P(bz397682P);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case HibernateTestPackage.BZ397682_C: {
+				Bz397682C bz397682C = (Bz397682C)theEObject;
+				T result = caseBz397682C(bz397682C);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -307,6 +319,36 @@ public class HibernateTestSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseBz398057B1(Bz398057B1 object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Bz397682 P</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Bz397682 P</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseBz397682P(Bz397682P object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Bz397682 C</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Bz397682 C</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseBz397682C(Bz397682C object) {
 		return null;
 	}
 

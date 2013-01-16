@@ -121,6 +121,24 @@ public interface HibernateTestFactory extends EFactory {
 	Bz398057B1 createBz398057B1();
 
 	/**
+	 * Returns a new object of class '<em>Bz397682 P</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Bz397682 P</em>'.
+	 * @generated
+	 */
+	Bz397682P createBz397682P();
+
+	/**
+	 * Returns a new object of class '<em>Bz397682 C</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Bz397682 C</em>'.
+	 * @generated
+	 */
+	Bz397682C createBz397682C();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

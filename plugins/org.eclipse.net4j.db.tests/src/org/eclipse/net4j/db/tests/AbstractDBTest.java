@@ -28,21 +28,18 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractDBTest<DATA_SOURCE extends DataSource> extends AbstractOMTest
+public abstract class AbstractDBTest extends AbstractOMTest
 {
   protected IDBAdapter dbAdapter;
 
   protected IDBConnectionProvider dbConnectionProvider;
 
-  @SuppressWarnings("unchecked")
   @Override
   protected void doSetUp() throws Exception
   {
     dbAdapter = createDBAdapter();
 
-    // TODO Clarify if these tests are still needed/wanted. The following deprecation now requires a different setup
-    DATA_SOURCE dataSource = (DATA_SOURCE)dbAdapter.createJDBCDataSource();
-    configureDataSource(dataSource);
+    DataSource dataSource = createDataSource();
     dbConnectionProvider = DBUtil.createConnectionProvider(dataSource);
   }
 
@@ -53,7 +50,7 @@ public abstract class AbstractDBTest<DATA_SOURCE extends DataSource> extends Abs
 
   protected abstract IDBAdapter createDBAdapter();
 
-  protected abstract void configureDataSource(DATA_SOURCE dataSource);
+  protected abstract DataSource createDataSource();
 
   protected Connection getConnection()
   {

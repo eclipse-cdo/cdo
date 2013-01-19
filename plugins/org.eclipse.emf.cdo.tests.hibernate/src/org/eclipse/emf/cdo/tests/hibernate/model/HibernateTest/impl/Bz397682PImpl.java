@@ -2,25 +2,21 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl;
 
-import java.util.Collection;
-
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682C;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682P;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import java.util.Collection;
 
 /**
  * <!-- begin-user-doc -->

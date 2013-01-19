@@ -2,7 +2,6 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl;
 
-import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.*;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Main;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_NonTransient;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz356181_Transient;
@@ -11,6 +10,12 @@ import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Person;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz380987_Place;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Enum;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz387752_Main;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682C;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz397682P;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057A1;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057B;
+import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.Bz398057B1;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestFactory;
 import org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.HibernateTestPackage;
 

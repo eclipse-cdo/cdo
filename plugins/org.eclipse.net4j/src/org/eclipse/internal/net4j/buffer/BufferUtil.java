@@ -52,8 +52,20 @@ public final class BufferUtil
       return new byte[0];
     }
 
-    byte[] bytes = str.getBytes(CHARSET);
-    String test = new String(bytes, CHARSET);
+    byte[] bytes;
+    String test;
+
+    try
+    {
+      bytes = str.getBytes(UTF8_CHAR_SET_NAME);
+      test = new String(bytes, UTF8_CHAR_SET_NAME);
+    }
+    catch (UnsupportedEncodingException ex)
+    {
+      // This should really not happen
+      throw WrappedException.wrap(ex);
+    }
+
     if (!test.equals(str))
     {
       throw new IllegalArgumentException("String not encodable: " + str); //$NON-NLS-1$
@@ -75,7 +87,7 @@ public final class BufferUtil
     catch (UnsupportedEncodingException ex)
     {
       // This should really not happen
-      throw new RuntimeException(ex);
+      throw WrappedException.wrap(ex);
     }
   }
 
@@ -217,6 +229,14 @@ public final class BufferUtil
     byte[] bytes = new byte[size];
     byteBuffer.get(bytes);
 
-    return new String(bytes, CHARSET);
+    try
+    {
+      return new String(bytes, UTF8_CHAR_SET_NAME);
+    }
+    catch (UnsupportedEncodingException ex)
+    {
+      // This should really not happen
+      throw WrappedException.wrap(ex);
+    }
   }
 }

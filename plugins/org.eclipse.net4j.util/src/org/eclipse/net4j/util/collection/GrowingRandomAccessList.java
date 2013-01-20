@@ -14,17 +14,17 @@ import java.lang.reflect.Array;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Queue;
 import java.util.RandomAccess;
 
 /**
  * @author Eike Stepper
  * @since 3.3
  */
-public class GrowingRandomAccessList<E> extends AbstractList<E> implements Deque<E>, RandomAccess
+public class GrowingRandomAccessList<E> extends AbstractList<E> implements Queue<E>, RandomAccess
 {
   private final Class<E> componentType;
 

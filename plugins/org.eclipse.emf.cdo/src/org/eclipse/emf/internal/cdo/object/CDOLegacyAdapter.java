@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Martin Fluegge - bug 247226: Transparently support legacy models
+ *    Christian W. Damus (CEA) - bug 397822: handling of REMOVE_MANY notifications
  */
 package org.eclipse.emf.internal.cdo.object;
 
@@ -122,7 +123,14 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
         break;
 
       case Notification.REMOVE_MANY:
-        notifyRemoveMany(feature, oldValue);
+        // newValue will be null if the entire list was cleared.
+        // Otherwise it is the array of indices that were removed
+        if (newValue != null && !(newValue instanceof int[]))
+        {
+          throw new IllegalArgumentException("New value of REMOVE_MANY notification is not an array of indices.");
+        }
+
+        notifyRemoveMany(feature, (int[])newValue);
         break;
       }
 
@@ -239,24 +247,47 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
     }
   }
 
-  protected void notifyRemoveMany(EStructuralFeature feature, Object oldValue)
+  protected void notifyRemoveMany(EStructuralFeature feature, int[] positions)
   {
     CDOStore store = view.getStore();
 
-    @SuppressWarnings("unchecked")
-    List<Object> list = (List<Object>)oldValue;
-    for (int i = list.size() - 1; i >= 0; --i)
+    if (positions == null)
     {
-      Object oldChild = store.remove(instance, feature, i);
-      if (oldChild instanceof InternalEObject)
+      // The list was cleared
+      Object[] oldChildren = store.toArray(instance, feature);
+      store.clear(instance, feature);
+      if (feature instanceof EReference)
       {
-        if (feature instanceof EReference)
+        EReference reference = (EReference)feature;
+        if (reference.isContainment())
         {
-          EReference reference = (EReference)feature;
-          if (reference.isContainment())
+          for (int i = 0; i < oldChildren.length; i++)
           {
-            InternalEObject oldChildEObject = (InternalEObject)oldChild;
-            setContainer(store, oldChildEObject, null, 0);
+            Object oldChild = oldChildren[i];
+            if (oldChild instanceof InternalEObject)
+            {
+              setContainer(store, (InternalEObject)oldChild, null, 0);
+            }
+          }
+        }
+      }
+    }
+    else
+    {
+      // Select indices were removed from the list
+      for (int i = positions.length - 1; i >= 0; --i)
+      {
+        Object oldChild = store.remove(instance, feature, positions[i]);
+        if (oldChild instanceof InternalEObject)
+        {
+          if (feature instanceof EReference)
+          {
+            EReference reference = (EReference)feature;
+            if (reference.isContainment())
+            {
+              InternalEObject oldChildEObject = (InternalEObject)oldChild;
+              setContainer(store, oldChildEObject, null, 0);
+            }
           }
         }
       }

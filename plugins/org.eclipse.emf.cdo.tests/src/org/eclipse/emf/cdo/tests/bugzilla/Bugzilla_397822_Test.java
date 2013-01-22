@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA) - additional tests for REMOVE_MANY notifications
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
@@ -16,16 +17,19 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOClearFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORemoveFeatureDeltaImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.IModelConfig;
+import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,8 +41,7 @@ import java.util.List;
  */
 public class Bugzilla_397822_Test extends AbstractCDOTest
 {
-  @Skips(IModelConfig.CAPABILITY_LEGACY)
-  public void testRemoveAll() throws Exception
+  public void testRemoveAll_containment() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
@@ -65,7 +68,7 @@ public class Bugzilla_397822_Test extends AbstractCDOTest
     CDORevisionDelta revisionDelta = transaction.getRevisionDeltas().get(id);
     EReference reference = getModel6Package().getUnorderedList_Contained();
 
-    assertRevisionDeltaContainsListChanges(revisionDelta //
+    assertRevisionDeltaContainsListChanges(revisionDelta, reference //
         // removal of elem4 at index 3
         , new CDORemoveFeatureDeltaImpl(reference, 3)
 
@@ -79,11 +82,69 @@ public class Bugzilla_397822_Test extends AbstractCDOTest
     );
   }
 
-  private void assertRevisionDeltaContainsListChanges(CDORevisionDelta revisionDelta,
+  public void testRemoveAll_attribute() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/resource1"));
+
+    GenListOfInt intHolder = getModel5Factory().createGenListOfInt();
+    CDOObject cdoObject = CDOUtil.getCDOObject(intHolder);
+
+    EList<Integer> list = intHolder.getElements();
+    list.addAll(Arrays.asList(1, 2, 3, 4, 5));
+
+    resource.getContents().add(intHolder);
+    transaction.commit();
+
+    list.removeAll(Arrays.asList(2, 4));
+
+    CDOID id = cdoObject.cdoID();
+    CDORevisionDelta revisionDelta = transaction.getRevisionDeltas().get(id);
+    EAttribute attribute = getModel5Package().getGenListOfInt_Elements();
+
+    assertRevisionDeltaContainsListChanges(revisionDelta, attribute //
+        // removal of '4' at index 3
+        , new CDORemoveFeatureDeltaImpl(attribute, 3)
+
+        // removal of '2' at index 1
+        , new CDORemoveFeatureDeltaImpl(attribute, 1)
+
+    );
+  }
+
+  public void testClear_attribute() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/resource1"));
+
+    GenListOfInt intHolder = getModel5Factory().createGenListOfInt();
+    CDOObject cdoObject = CDOUtil.getCDOObject(intHolder);
+
+    EList<Integer> list = intHolder.getElements();
+    list.addAll(Arrays.asList(1, 2, 3, 4, 5));
+
+    resource.getContents().add(intHolder);
+    transaction.commit();
+
+    list.clear();
+
+    CDOID id = cdoObject.cdoID();
+    CDORevisionDelta revisionDelta = transaction.getRevisionDeltas().get(id);
+    EAttribute attribute = getModel5Package().getGenListOfInt_Elements();
+
+    assertRevisionDeltaContainsListChanges(revisionDelta, attribute //
+        // entire list was cleared
+        , new CDOClearFeatureDeltaImpl(attribute)
+
+    );
+  }
+
+  private void assertRevisionDeltaContainsListChanges(CDORevisionDelta revisionDelta, EStructuralFeature feature,
       CDOFeatureDelta... expectedListChanges)
   {
-    EReference unorderedList_Contained = getModel6Package().getUnorderedList_Contained();
-    CDOFeatureDelta featureDelta = revisionDelta.getFeatureDelta(unorderedList_Contained);
+    CDOFeatureDelta featureDelta = revisionDelta.getFeatureDelta(feature);
 
     assertInstanceOf(CDOListFeatureDelta.class, featureDelta);
 

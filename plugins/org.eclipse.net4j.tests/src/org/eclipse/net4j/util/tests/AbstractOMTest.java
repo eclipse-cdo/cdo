@@ -524,6 +524,11 @@ public abstract class AbstractOMTest extends TestCase
         expected.isInstance(object));
   }
 
+  public static void assertNotInstanceOf(Class<?> expected, Object object)
+  {
+    assertEquals("An instance of " + expected + ": " + object.getClass().getName(), false, expected.isInstance(object));
+  }
+
   public static void assertActive(Object object) throws InterruptedException
   {
     final LatchTimeOuter timeOuter = new LatchTimeOuter();

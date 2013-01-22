@@ -14,16 +14,19 @@ package org.eclipse.emf.internal.cdo.object;
 import org.eclipse.emf.cdo.CDODeltaNotification;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
@@ -136,14 +139,28 @@ public class CDODeltaNotificationImpl extends ENotificationImpl implements CDODe
     {
       CDOID id = (CDOID)object;
 
-      try
+      if (id instanceof CDOIDExternal)
       {
-        InternalCDOView view = getCDOObject().cdoView();
-        object = view.getObject(id, true);
+        CDOIDExternal idExternal = (CDOIDExternal)id;
+        Resource resource = notifier.eResource();
+        if (resource != null)
+        {
+          String uriString = idExternal.getURI();
+          URI uri = URI.createURI(uriString);
+          object = resource.getResourceSet().getEObject(uri, false);
+        }
       }
-      catch (ObjectNotFoundException ex)
+      else
       {
-        object = null;
+        try
+        {
+          InternalCDOView view = getCDOObject().cdoView();
+          object = view.getObject(id, true);
+        }
+        catch (ObjectNotFoundException ex)
+        {
+          object = null;
+        }
       }
     }
 

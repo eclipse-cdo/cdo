@@ -53,7 +53,7 @@ import java.util.Set;
 
 /**
  * Various static helper methods for dealing with EMF meta models.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @apiviz.exclude
@@ -75,6 +75,9 @@ public final class EMFUtil
   private static final EReference ETYPED_ELEMENT_ETYPE = EcorePackage.eINSTANCE.getETypedElement_EType();
 
   private static final EReference ECLASS_ESUPER_TYPES = EcorePackage.eINSTANCE.getEClass_ESuperTypes();
+
+  private static final EAttribute ECLASSIFIER_INSTANCE_CLASS_NAME = EcorePackage.eINSTANCE
+      .getEClassifier_InstanceClassName();
 
   private EMFUtil()
   {
@@ -202,7 +205,8 @@ public final class EMFUtil
    */
   public static boolean isPersistent(EStructuralFeature feature)
   {
-    if (feature == ECLASS_ESUPER_TYPES || feature == ETYPED_ELEMENT_ETYPE || feature == EOPERATION_EEXCEPTIONS)
+    if (feature == ECLASS_ESUPER_TYPES || feature == ETYPED_ELEMENT_ETYPE || feature == EOPERATION_EEXCEPTIONS
+        || feature == ECLASSIFIER_INSTANCE_CLASS_NAME)
     {
       // http://www.eclipse.org/newsportal/article.php?id=26780&group=eclipse.tools.emf#26780
       return false;
@@ -454,7 +458,7 @@ public final class EMFUtil
   /**
    * An extension of {@link ResourceSetImpl} that allows demandLoading of resources and delegation of resource lookups,
    * to be switched on/off as desired.
-   * 
+   *
    * @since 4.0
    * @apiviz.exclude
    */

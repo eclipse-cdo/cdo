@@ -520,6 +520,27 @@ public class PushTransactionTest extends AbstractCDOTest
     assertNull(supplier.getName());
   }
 
+  public void testUnsetValueWithoutPushTX() throws Exception
+  {
+    {
+      msg("Open session & local transaction");
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
+      Supplier supplier = (Supplier)resource.getContents().get(0);
+      supplier.setName(null);
+      msg("Commit");
+      transaction.commit();
+      session.close();
+    }
+
+    CDOSession session = openSession();
+    CDOView view = session.openView();
+    CDOResource resource = view.getResource(getResourcePath(resourcePath));
+    Supplier supplier = (Supplier)resource.getContents().get(0);
+    assertNull(supplier.getName());
+  }
+
   public void testConflictWithRemovedObject() throws Exception
   {
     {

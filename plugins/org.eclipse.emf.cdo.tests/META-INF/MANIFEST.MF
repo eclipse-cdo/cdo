@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.tests;singleton:=true
-Bundle-Version: 4.0.101.qualifier
+Bundle-Version: 4.0.102.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -120,7 +120,7 @@ Export-Package: base;version="4.0.200";
    org.eclipse.emf.cdo.tests.objectivity,
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.tests.mongodb",
- org.eclipse.emf.cdo.tests;version="4.0.101";
+ org.eclipse.emf.cdo.tests;version="4.0.102";
   x-friends:="org.eclipse.emf.cdo.dawn.tests,
    org.eclipse.emf.cdo.tests.db,
    org.eclipse.emf.cdo.tests.db4o,
@@ -129,7 +129,7 @@ Export-Package: base;version="4.0.200";
    org.eclipse.emf.cdo.tests.mongodb,
    org.eclipse.emf.cdo.tests.objectivity,
    org.eclipse.emf.cdo.tests.ui",
- org.eclipse.emf.cdo.tests.bugzilla;version="4.0.101";
+ org.eclipse.emf.cdo.tests.bugzilla;version="4.0.102";
   x-friends:="org.eclipse.emf.cdo.dawn.tests,
    org.eclipse.emf.cdo.tests.db,
    org.eclipse.emf.cdo.tests.db4o,
@@ -138,8 +138,8 @@ Export-Package: base;version="4.0.200";
    org.eclipse.emf.cdo.tests.objectivity,
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.tests.mongodb",
- org.eclipse.emf.cdo.tests.bundle;version="4.0.101";x-internal:=true,
- org.eclipse.emf.cdo.tests.config;version="4.0.101";
+ org.eclipse.emf.cdo.tests.bundle;version="4.0.102";x-internal:=true,
+ org.eclipse.emf.cdo.tests.config;version="4.0.102";
   x-friends:="org.eclipse.emf.cdo.dawn.tests,
    org.eclipse.emf.cdo.tests.db,
    org.eclipse.emf.cdo.tests.db4o,
@@ -148,7 +148,7 @@ Export-Package: base;version="4.0.200";
    org.eclipse.emf.cdo.tests.objectivity,
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.tests.mongodb",
- org.eclipse.emf.cdo.tests.config.impl;version="4.0.101";
+ org.eclipse.emf.cdo.tests.config.impl;version="4.0.102";
   x-friends:="org.eclipse.emf.cdo.dawn.tests,
    org.eclipse.emf.cdo.tests.db,
    org.eclipse.emf.cdo.tests.db4o,
@@ -157,7 +157,7 @@ Export-Package: base;version="4.0.200";
    org.eclipse.emf.cdo.tests.objectivity,
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.tests.mongodb",
- org.eclipse.emf.cdo.tests.defs;version="4.0.101";
+ org.eclipse.emf.cdo.tests.defs;version="4.0.102";
   x-friends:="org.eclipse.emf.cdo.dawn.tests,
    org.eclipse.emf.cdo.tests.db,
    org.eclipse.emf.cdo.tests.db4o,
@@ -166,7 +166,7 @@ Export-Package: base;version="4.0.200";
    org.eclipse.emf.cdo.tests.objectivity,
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.tests.mongodb",
- org.eclipse.emf.cdo.tests.offline;version="4.0.101";
+ org.eclipse.emf.cdo.tests.offline;version="4.0.102";
   x-friends:="org.eclipse.emf.cdo.dawn.tests,
    org.eclipse.emf.cdo.tests.db,
    org.eclipse.emf.cdo.tests.db4o,
@@ -175,9 +175,9 @@ Export-Package: base;version="4.0.200";
    org.eclipse.emf.cdo.tests.objectivity,
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.tests.mongodb",
- org.eclipse.emf.cdo.tests.performance;version="4.0.101",
- org.eclipse.emf.cdo.tests.performance.framework;version="4.0.101",
- org.eclipse.emf.cdo.tests.revisioncache;version="4.0.101";
+ org.eclipse.emf.cdo.tests.performance;version="4.0.102",
+ org.eclipse.emf.cdo.tests.performance.framework;version="4.0.102",
+ org.eclipse.emf.cdo.tests.revisioncache;version="4.0.102";
   x-friends:="org.eclipse.emf.cdo.dawn.tests,
    org.eclipse.emf.cdo.tests.db,
    org.eclipse.emf.cdo.tests.db4o,
@@ -186,7 +186,7 @@ Export-Package: base;version="4.0.200";
    org.eclipse.emf.cdo.tests.objectivity,
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.tests.mongodb",
- org.eclipse.emf.cdo.tests.util;version="4.0.101";
+ org.eclipse.emf.cdo.tests.util;version="4.0.102";
   x-friends:="org.eclipse.emf.cdo.dawn.tests,
    org.eclipse.emf.cdo.tests.db,
    org.eclipse.emf.cdo.tests.db4o,

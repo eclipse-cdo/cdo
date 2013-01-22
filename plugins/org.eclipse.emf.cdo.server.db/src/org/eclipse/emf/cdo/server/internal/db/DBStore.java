@@ -176,6 +176,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
   public void setProperties(Map<String, String> properties)
   {
+    checkInactive();
     this.properties = properties;
   }
 

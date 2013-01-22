@@ -111,7 +111,10 @@ public abstract class DBConfig extends RepositoryConfig
     DataSource dataSource = createDataSource(repoName);
     IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
 
-    return CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider);
+    Map<String, String> props = new HashMap<String, String>();
+    // props.put(IDBStore.Props.ID_COLUMN_LENGTH, "66");
+
+    return CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider, props);
   }
 
   protected Map<String, String> createMappingStrategyProperties()

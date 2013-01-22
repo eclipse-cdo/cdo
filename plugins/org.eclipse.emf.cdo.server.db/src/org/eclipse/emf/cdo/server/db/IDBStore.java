@@ -25,6 +25,7 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Map;
 
 /**
  * The main entry point to the API of CDO's proprietary object/relational mapper.
@@ -53,6 +54,11 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
    * @since 4.2
    */
   public int getIDColumnLength();
+
+  /**
+   * @since 4.2
+   */
+  public Map<String, String> getProperties();
 
   /**
    * @since 4.2

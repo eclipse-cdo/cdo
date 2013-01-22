@@ -292,6 +292,12 @@ public class CoreTypeMappings
   public static class TMObject extends AbstractTypeMapping
   {
     @Override
+    protected int getDBLength(DBType type)
+    {
+      return getMappingStrategy().getStore().getIDColumnLength();
+    }
+
+    @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();

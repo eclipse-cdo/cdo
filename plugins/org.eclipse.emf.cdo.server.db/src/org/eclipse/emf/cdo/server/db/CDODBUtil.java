@@ -35,6 +35,8 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
+import java.util.Map;
+
 /**
  * Various static methods that may help in setting up and dealing with {@link IDBStore DB stores}.
  *
@@ -85,10 +87,20 @@ public final class CDODBUtil
   public static IDBStore createStore(IMappingStrategy mappingStrategy, IDBAdapter dbAdapter,
       IDBConnectionProvider dbConnectionProvider)
   {
+    return createStore(mappingStrategy, dbAdapter, dbConnectionProvider, null);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static IDBStore createStore(IMappingStrategy mappingStrategy, IDBAdapter dbAdapter,
+      IDBConnectionProvider dbConnectionProvider, Map<String, String> properties)
+  {
     DBStore store = new DBStore();
     store.setMappingStrategy(mappingStrategy);
     store.setDBAdapter(dbAdapter);
     store.setDbConnectionProvider(dbConnectionProvider);
+    store.setProperties(properties);
     return store;
   }
 

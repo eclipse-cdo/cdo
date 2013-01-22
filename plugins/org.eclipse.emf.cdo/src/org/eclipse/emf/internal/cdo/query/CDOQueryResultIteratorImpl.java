@@ -22,12 +22,9 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 
-import java.lang.reflect.Array;
+import java.util.AbstractList;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 /**
@@ -140,7 +137,7 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
   /**
    * @author Simon McDuff
    */
-  private class QueryResultList implements EList<T>
+  private class QueryResultList extends AbstractList<T> implements EList<T>
   {
     private List<Object> objects;
 
@@ -149,29 +146,22 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
       this.objects = objects;
     }
 
-    public boolean add(T o)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void add(int index, T element)
-    {
-      throw new UnsupportedOperationException();
-    }
-
+    @Override
     public T get(int index)
     {
       return adapt(objects.get(index));
     }
 
-    public boolean isEmpty()
+    @Override
+    public int size()
     {
-      return objects.isEmpty();
+      return objects.size();
     }
 
-    public Iterator<T> iterator()
+    @Override
+    public String toString()
     {
-      return new ECDOIDIterator(this.objects.iterator());
+      return "QueryResultList" + objects.toString();
     }
 
     public void move(int newPosition, T object)
@@ -182,149 +172,6 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
     public T move(int newPosition, int oldPosition)
     {
       throw new UnsupportedOperationException();
-    }
-
-    public boolean addAll(Collection<? extends T> arg0)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public boolean addAll(int arg0, Collection<? extends T> arg1)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void clear()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public boolean contains(Object arg0)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public boolean containsAll(Collection<?> arg0)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public int indexOf(Object arg0)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public int lastIndexOf(Object arg0)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public ListIterator<T> listIterator()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public ListIterator<T> listIterator(int arg0)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public boolean remove(Object arg0)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public T remove(int arg0)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public boolean removeAll(Collection<?> arg0)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public boolean retainAll(Collection<?> arg0)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public T set(int arg0, T arg1)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public int size()
-    {
-      return objects.size();
-    }
-
-    public List<T> subList(int arg0, int arg1)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public Object[] toArray()
-    {
-      Object array[] = new Object[size()];
-      return toArray(array);
-    }
-
-    @SuppressWarnings("unchecked")
-    public <E> E[] toArray(E[] input)
-    {
-      int size = size();
-      if (input.length < size)
-      {
-        input = (E[])Array.newInstance(input.getClass(), size);
-      }
-
-      // TODO It will be more efficient to load all objects at once.
-      for (int i = 0; i < size; i++)
-      {
-        input[i] = (E)get(i);
-      }
-
-      if (input.length > size)
-      {
-        input[size] = null;
-      }
-
-      return input;
-    }
-
-    @Override
-    public String toString()
-    {
-      return objects.toString();
-    }
-
-    /**
-     * @author Simon McDuff
-     */
-    private class ECDOIDIterator implements Iterator<T>
-    {
-      private Iterator<Object> iterator;
-
-      public ECDOIDIterator(Iterator<Object> iterator)
-      {
-        this.iterator = iterator;
-      }
-
-      public boolean hasNext()
-      {
-        return iterator.hasNext();
-      }
-
-      public T next()
-      {
-        return adapt(iterator.next());
-      }
-
-      public void remove()
-      {
-        throw new UnsupportedOperationException();
-      }
     }
   }
 }

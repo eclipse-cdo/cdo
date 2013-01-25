@@ -238,7 +238,7 @@ public class AllTestsHibernate extends AllConfigs
     testClasses.remove(Bugzilla_258933_Test.class);
 
     // replace as unsettable has to be re-visited for the hb store
-    // see bugzilla 298579, it does not work for object types
+    // see Bug 298579, it does not work for object types
     testClasses.add(HibernateUnsetTest.class);
     testClasses.remove(UnsetTest.class);
   }

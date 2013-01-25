@@ -74,7 +74,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * This abstract base class implements those methods which are most likely common to most mapping strategies. It can be
  * used to derive custom mapping strategy implementation.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  */
@@ -488,7 +488,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
         if (!unmap)
         {
-          // TODO Bugzilla 296087: Before we go ahead with creation, we should check if it's already there
+          // TODO Bug 296087: Before we go ahead with creation, we should check if it's already there
           IClassMapping mapping = createClassMapping(eClass);
           getStore().getDBAdapter().createTables(mapping.getDBTables(), connection);
         }

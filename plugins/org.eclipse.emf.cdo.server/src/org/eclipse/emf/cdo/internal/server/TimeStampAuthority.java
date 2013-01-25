@@ -24,7 +24,7 @@ import java.util.TreeSet;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Bugzilla 297940, 290032
+ * Bug 297940, 290032
  *
  * @author Caspar De Groot
  */

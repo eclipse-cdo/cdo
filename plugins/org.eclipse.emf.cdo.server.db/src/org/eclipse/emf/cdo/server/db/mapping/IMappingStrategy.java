@@ -46,7 +46,7 @@ import java.util.Set;
  * named as such) and to get properties and informations about the mappings used. The mapping classes (e.g., instances
  * of IClassMapping and IListMapping) also use this class as a central point of information and as a resource of common
  * functionalities.
- * 
+ *
  * @author Eike Stepper
  * @author Stefan Winkler
  * @since 2.0
@@ -91,7 +91,7 @@ public interface IMappingStrategy
    * </ul>
    * Default is a memory cache size of 10,000,000.
    * <p>
-   * 
+   *
    * @since 4.0
    */
   public static final String PROP_OBJECT_TYPE_CACHE_SIZE = "objectTypeCacheSize"; //$NON-NLS-1$
@@ -104,7 +104,7 @@ public interface IMappingStrategy
   /**
    * Set the store to which this MappingStrategy instance belongs. Should only be called by the {@link DBStore}, and
    * only once to initialize the connection between {@link DBStore} and mapping strategy.
-   * 
+   *
    * @param dbStore
    *          the DBStore instance to which this MappingStrategy instance belongs.
    */
@@ -112,7 +112,7 @@ public interface IMappingStrategy
 
   /**
    * Factory for value mappings of single-valued attributes.
-   * 
+   *
    * @param feature
    *          the feature for which a mapping should be created. It must hold <code>feature.isMany() == false</code>.
    * @return the mapping created.
@@ -121,7 +121,7 @@ public interface IMappingStrategy
 
   /**
    * Factory for value mappings of multi-valued-attributes.
-   * 
+   *
    * @param containingClass
    *          the class containing the feature.
    * @param feature
@@ -131,7 +131,7 @@ public interface IMappingStrategy
 
   /**
    * Create a suitable table name which can be used to map the given element. Should only be called by mapping classes.
-   * 
+   *
    * @param element
    *          the element for which the name should be created. It must hold:
    *          <code>element instanceof EClass || element instanceof EPackage</code>.
@@ -142,7 +142,7 @@ public interface IMappingStrategy
   /**
    * Create a suitable table name which can be used to map the given element. Should only be called by mapping classes.
    * Should only be called by mapping classes.
-   * 
+   *
    * @param containingClass
    *          the class containeng the feature.
    * @param feature
@@ -153,7 +153,7 @@ public interface IMappingStrategy
 
   /**
    * Create a suitable column name which can be used to map the given element. Should only be called by mapping classes.
-   * 
+   *
    * @param feature
    *          the feature for which the column name should be created.
    * @return the created column name. It is guaranteed that the name is compatible with the chosen database.
@@ -163,7 +163,7 @@ public interface IMappingStrategy
   /**
    * Create and initialize the mapping infrastructure for the given packages. Should be called from the DBStore or the
    * DBStoreAccessor.
-   * 
+   *
    * @param connection
    *          the connection to use.
    * @param packageUnits
@@ -175,21 +175,21 @@ public interface IMappingStrategy
 
   /**
    * Remove the mapping infrastructure for the given packages. Should be called from the DBStore or the DBStoreAccessor.
-   * 
+   *
    * @param connection
    *          the connection to use.
    * @param packageUnits
    *          the packages for which the mappings should be removed
    * @since 4.0
    */
-  // Bugzilla 298632
+  // Bug 298632
   public void removeMapping(Connection connection, InternalCDOPackageUnit[] packageUnits);
 
   /**
    * Look up an existing class mapping for the given class. Before this method is called, the class mapping must have
    * been initialized by calling {@link #createMapping(Connection, InternalCDOPackageUnit[], OMMonitor)} on its
    * containing package.
-   * 
+   *
    * @param eClass
    *          the class to look up.
    * @return the class mapping.
@@ -198,14 +198,14 @@ public interface IMappingStrategy
 
   /**
    * Returns all class mappings of this strategy.
-   * 
+   *
    * @since 4.0
    */
   public Map<EClass, IClassMapping> getClassMappings();
 
   /**
    * Returns all class mappings of this strategy.
-   * 
+   *
    * @since 4.0
    */
   public Map<EClass, IClassMapping> getClassMappings(boolean createOnDemand);
@@ -214,7 +214,7 @@ public interface IMappingStrategy
    * Query if this mapping supports revision deltas. <br>
    * If this method returns <code>true</code>, it is guaranteed that all class mappings returned by
    * {@link #getClassMapping(EClass)} implement {@link IClassMappingDeltaSupport}.
-   * 
+   *
    * @return <code>true</code> if revision deltas are supported, <code>false</code> else.
    */
   public boolean hasDeltaSupport();
@@ -223,14 +223,14 @@ public interface IMappingStrategy
    * Query if this mapping supports audits. <br>
    * If this method returns <code>true</code>, it is guaranteed that all class mappings returned by
    * {@link #getClassMapping(EClass)} implement {@link IClassMappingAuditSupport}.
-   * 
+   *
    * @return <code>true</code> if audits are supported, <code>false</code> else.
    */
   public boolean hasAuditSupport();
 
   /**
    * Query if this mapping supports branches. <br>
-   * 
+   *
    * @return <code>true</code> if branches are supported, <code>false</code> else.
    * @since 3.0
    */
@@ -238,7 +238,7 @@ public interface IMappingStrategy
 
   /**
    * Executes a resource query.
-   * 
+   *
    * @param accessor
    *          the accessor to use.
    * @param context
@@ -248,7 +248,7 @@ public interface IMappingStrategy
 
   /**
    * Executes a cross reference query.
-   * 
+   *
    * @param accessor
    *          the accessor to use.
    * @param context
@@ -259,7 +259,7 @@ public interface IMappingStrategy
 
   /**
    * Read the type (i.e. class) of the object referred to by a given ID.
-   * 
+   *
    * @param accessor
    *          the accessor to use to look up the type.
    * @param id
@@ -270,7 +270,7 @@ public interface IMappingStrategy
 
   /**
    * Get an iterator over all instances of objects in the store.
-   * 
+   *
    * @param accessor
    *          the accessor to use.
    * @return the iterator.
@@ -280,7 +280,7 @@ public interface IMappingStrategy
   /**
    * Return the maximum object id used in the store. This is used by the DBStore if a previous crash is discovered
    * during the startup process. Should only be called by the DBStore and only during startup.
-   * 
+   *
    * @param dbAdapter
    *          the dbAdapter to use to access the database
    * @param connection
@@ -291,7 +291,7 @@ public interface IMappingStrategy
 
   /**
    * Returns the configuration properties of this mapping strategy.
-   * 
+   *
    * @since 4.0
    */
   public Map<String, String> getProperties();
@@ -299,7 +299,7 @@ public interface IMappingStrategy
   /**
    * Set configuration properties for this mapping strategy. Should only be called by the factory creating the mapping
    * strategy instance.
-   * 
+   *
    * @param properties
    *          the configuration properties to set.
    */
@@ -314,7 +314,7 @@ public interface IMappingStrategy
    * <li>The <code>timeStamp</code> parameter is {@link CDOBranchPoint#UNSPECIFIED_DATE} or equal to
    * <code>revision.getTimeStamp()</code>.
    * </ul>
-   * 
+   *
    * @since 4.0
    */
   public void handleRevisions(IDBStoreAccessor accessor, EClass eClass, CDOBranch branch, long timeStamp,
@@ -323,7 +323,7 @@ public interface IMappingStrategy
   /**
    * Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.
    * DetachedCDORevisions must also be considered!
-   * 
+   *
    * @see IStoreAccessor#readChangeSet(OMMonitor, CDOChangeSetSegment...)
    * @since 4.0
    */

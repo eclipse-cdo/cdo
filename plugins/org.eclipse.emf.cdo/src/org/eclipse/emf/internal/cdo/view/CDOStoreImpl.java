@@ -479,7 +479,7 @@ public final class CDOStoreImpl implements CDOStore
 
       Object oldValue = null;
 
-      // Bugzilla 293283 / 314387
+      // Bug 293283 / Bug 314387
       if (feature.isMany())
       {
         InternalCDORevision readLockedRevision = getRevisionForReading(cdoObject);

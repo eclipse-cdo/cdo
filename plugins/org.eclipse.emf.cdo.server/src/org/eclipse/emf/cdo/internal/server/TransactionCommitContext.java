@@ -559,7 +559,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
       if (hasChanges)
       {
-        // Bugzilla 297940
+        // Bug 297940
         repository.endCommit(timeStamp);
       }
     }

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Caspar De Groot - initial API and implementation
  */
@@ -25,9 +25,9 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import java.util.Date;
 
 /**
- * Bugzilla 318876 - Mechanism for avoiding dangling refs can introduce spurious conflicts</p>
+ * Bug 318876 - Mechanism for avoiding dangling refs can introduce spurious conflicts</p>
  * http://bugs.eclipse.org/318876</p>
- * 
+ *
  * @author Caspar De Groot
  */
 public class Bugzilla_318876_Test extends AbstractCDOTest

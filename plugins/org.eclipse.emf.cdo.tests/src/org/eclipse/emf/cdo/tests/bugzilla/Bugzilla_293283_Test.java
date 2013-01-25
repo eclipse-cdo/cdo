@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
- * Bugzilla 293283/314387 - Failed writes on CDOObjects leave bad featureDeltas in transaction
+ * Bug 293283 / Bug 314387 - Failed writes on CDOObjects leave bad featureDeltas in transaction
  *
  * @author Caspar De Groot
  */

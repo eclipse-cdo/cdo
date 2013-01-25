@@ -191,7 +191,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private EPackage[] initialPackages;
 
-  // Bugzilla 297940
+  // Bug 297940
   private TimeStampAuthority timeStampAuthority = new TimeStampAuthority(this);
 
   @ExcludeFromDump

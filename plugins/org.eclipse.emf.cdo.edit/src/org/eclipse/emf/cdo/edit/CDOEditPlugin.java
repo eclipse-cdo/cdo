@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 /**
  * This is the central singleton for the Eresource edit plugin.
  * <!-- begin-user-doc -->
- * 
+ *
  * @since 4.0 <!-- end-user-doc -->
  * @generated
  */
@@ -40,11 +40,11 @@ public final class CDOEditPlugin extends EMFPlugin
   /**
    * Create the instance.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public CDOEditPlugin()
   {
-    super(new ResourceLocator[] { EcoreEditPlugin.INSTANCE, CDOEditPlugin.INSTANCE, });
+    super(new ResourceLocator[] { EcoreEditPlugin.INSTANCE, });
   }
 
   /**

@@ -106,12 +106,10 @@ public class CredentialsDialog extends BaseDialog<Viewer>
     new Label(composite, SWT.NONE).setText(Messages.getString("CredentialsDialog_2")); //$NON-NLS-1$
     userIDControl = new Text(composite, SWT.BORDER);
     userIDControl.setLayoutData(UIUtil.createGridData(true, false));
-    userIDControl.setText("Administrator"); // XXX Remove me!
 
     new Label(composite, SWT.NONE).setText(Messages.getString("CredentialsDialog_3")); //$NON-NLS-1$
     passwordControl = new Text(composite, SWT.BORDER | SWT.PASSWORD);
     passwordControl.setLayoutData(UIUtil.createGridData(true, false));
-    passwordControl.setText("0000"); // XXX Remove me!
   }
 
   @Override

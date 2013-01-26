@@ -412,7 +412,7 @@ public final class UIUtil
           ModalContext.run(runnable, true, monitor, PlatformUI.getWorkbench().getDisplay());
         }
       };
-  
+
       PlatformUI.getWorkbench().getProgressService().run(false, true, op);
     }
     catch (InvocationTargetException ex)
@@ -493,6 +493,19 @@ public final class UIUtil
     preserveViewerState(viewer, new Runnable()
     {
       public void run()
+      {
+        try
+        {
+          doRefresh(viewer, element, updateLabels);
+        }
+        catch (RuntimeException ex)
+        {
+          // An element may have been deactivated - refresh the entire tree
+          doRefresh(viewer, null, updateLabels);
+        }
+      }
+
+      private void doRefresh(final StructuredViewer viewer, final Object element, final boolean updateLabels)
       {
         if (element != null && element != viewer.getInput())
         {

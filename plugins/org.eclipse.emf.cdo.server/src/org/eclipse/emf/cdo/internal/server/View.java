@@ -57,6 +57,8 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
 
   private boolean lockNotificationsEnabled;
 
+  private boolean closed;
+
   /**
    * @since 2.0
    */
@@ -115,7 +117,6 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
    */
   public InternalRepository getRepository()
   {
-    checkOpen();
     return repository;
   }
 
@@ -265,9 +266,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   public void doClose()
   {
     clearChangeSubscription();
-    changeSubscriptionIDs = null;
-    session = null;
-    repository = null;
+    closed = true;
   }
 
   /**
@@ -275,10 +274,10 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
    */
   public boolean isClosed()
   {
-    return repository == null;
+    return closed;
   }
 
-  private void checkOpen()
+  protected void checkOpen()
   {
     if (isClosed())
     {

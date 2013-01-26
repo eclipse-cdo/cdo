@@ -79,7 +79,7 @@ public abstract class TransactionalBackgroundActionDelegate extends LongRunningA
       if (transactionalObject != null)
       {
         CDOView view = transactionalObject.cdoView();
-        if (!(view instanceof CDOTransaction))
+        if (view.isReadOnly())
         {
           throw new IllegalStateException(MessageFormat.format(
               Messages.getString("TransactionalBackgroundAction_0"), transactionalObject)); //$NON-NLS-1$

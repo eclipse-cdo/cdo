@@ -77,6 +77,7 @@ import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -1280,6 +1281,10 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         resource.setRoot(true);
         rootResource = resource;
       }
+    }
+    catch (LifecycleException ex)
+    {
+      throw ex;
     }
     catch (Exception ex)
     {

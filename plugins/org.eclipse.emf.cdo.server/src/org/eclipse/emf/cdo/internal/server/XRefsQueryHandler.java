@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.server.StoreThreadLocal.NoSessionRegisteredException;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.QueryHandlerFactory;
@@ -61,19 +62,26 @@ public class XRefsQueryHandler implements IQueryHandler
 
   public void executeQuery(CDOQueryInfo info, IQueryContext context)
   {
-    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-    QueryContext xrefsContext = new QueryContext(info, context);
-    accessor.queryXRefs(xrefsContext);
-
-    CDOBranchPoint branchPoint = context;
-    CDOBranch branch = branchPoint.getBranch();
-    while (!branch.isMainBranch() && context.getResultCount() < info.getMaxResults())
+    try
     {
-      branchPoint = branch.getBase();
-      branch = branchPoint.getBranch();
-
-      xrefsContext.setBranchPoint(branchPoint);
+      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+      QueryContext xrefsContext = new QueryContext(info, context);
       accessor.queryXRefs(xrefsContext);
+
+      CDOBranchPoint branchPoint = context;
+      CDOBranch branch = branchPoint.getBranch();
+      while (!branch.isMainBranch() && context.getResultCount() < info.getMaxResults())
+      {
+        branchPoint = branch.getBase();
+        branch = branchPoint.getBranch();
+
+        xrefsContext.setBranchPoint(branchPoint);
+        accessor.queryXRefs(xrefsContext);
+      }
+    }
+    catch (NoSessionRegisteredException ex)
+    {
+      // View has been closed - do nothing
     }
   }
 

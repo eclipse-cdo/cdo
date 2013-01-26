@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.server.StoreThreadLocal.NoSessionRegisteredException;
 import org.eclipse.emf.cdo.spi.server.QueryHandlerFactory;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
@@ -38,19 +39,26 @@ public class ResourcesQueryHandler implements IQueryHandler
 
   public void executeQuery(CDOQueryInfo info, IQueryContext context)
   {
-    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-    QueryContext resourcesContext = new QueryContext(info, context);
-    accessor.queryResources(resourcesContext);
-
-    CDOBranchPoint branchPoint = context;
-    CDOBranch branch = branchPoint.getBranch();
-    while (!branch.isMainBranch() && resourcesContext.getResourceIDs().size() < info.getMaxResults())
+    try
     {
-      branchPoint = branch.getBase();
-      branch = branchPoint.getBranch();
-
-      resourcesContext.setBranchPoint(branchPoint);
+      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+      QueryContext resourcesContext = new QueryContext(info, context);
       accessor.queryResources(resourcesContext);
+
+      CDOBranchPoint branchPoint = context;
+      CDOBranch branch = branchPoint.getBranch();
+      while (!branch.isMainBranch() && resourcesContext.getResourceIDs().size() < info.getMaxResults())
+      {
+        branchPoint = branch.getBase();
+        branch = branchPoint.getBranch();
+
+        resourcesContext.setBranchPoint(branchPoint);
+        accessor.queryResources(resourcesContext);
+      }
+    }
+    catch (NoSessionRegisteredException ex)
+    {
+      // View has been closed - do nothing
     }
   }
 

@@ -1504,8 +1504,21 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
         Pair<CDOView, CDOViewProvider> pair = CDOViewProviderRegistry.INSTANCE.provideViewWithInfo(uri, resourceSet);
         if (pair != null)
         {
-          view = (InternalCDOView)pair.getElement1();
-          view.attachResource(this);
+          try
+          {
+            view = (InternalCDOView)pair.getElement1();
+            view.attachResource(this);
+          }
+          catch (RuntimeException ex)
+          {
+            resourceSet.getResources().remove(this);
+            throw ex;
+          }
+          catch (Error ex)
+          {
+            resourceSet.getResources().remove(this);
+            throw ex;
+          }
 
           viewProvider = pair.getElement2();
         }

@@ -53,7 +53,7 @@ public class Transaction extends View implements InternalTransaction
 
   /**
    * For tests only.
-   * 
+   *
    * @since 2.0
    */
   public InternalCommitContext testCreateCommitContext(final long timeStamp)
@@ -75,14 +75,6 @@ public class Transaction extends View implements InternalTransaction
     if (timeStamp != UNSPECIFIED_DATE)
     {
       throw new IllegalArgumentException("Changing the target time is not supported by transactions");
-    }
-  }
-
-  private void checkOpen()
-  {
-    if (isClosed())
-    {
-      throw new IllegalStateException("View closed"); //$NON-NLS-1$
     }
   }
 }

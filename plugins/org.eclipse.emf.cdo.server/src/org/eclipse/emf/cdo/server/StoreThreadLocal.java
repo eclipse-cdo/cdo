@@ -54,12 +54,12 @@ public final class StoreThreadLocal
    *           if no session is associated with the current thread.
    * @since 3.0
    */
-  public static InternalSession getSession()
+  public static InternalSession getSession() throws NoSessionRegisteredException
   {
     InternalSession session = SESSION.get();
     if (session == null)
     {
-      throw new IllegalStateException("session == null"); //$NON-NLS-1$
+      throw new NoSessionRegisteredException();
     }
 
     return session;
@@ -79,7 +79,7 @@ public final class StoreThreadLocal
     ACCESSOR.set(accessor);
   }
 
-  public static IStoreAccessor getAccessor()
+  public static IStoreAccessor getAccessor() throws NoSessionRegisteredException
   {
     IStoreAccessor accessor = ACCESSOR.get();
     if (accessor == null)
@@ -124,6 +124,20 @@ public final class StoreThreadLocal
       ACCESSOR.remove();
       SESSION.remove();
       COMMIT_CONTEXT.remove();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.2
+   */
+  public static final class NoSessionRegisteredException extends IllegalStateException
+  {
+    private static final long serialVersionUID = 1L;
+
+    public NoSessionRegisteredException()
+    {
+      super("session == null");
     }
   }
 }

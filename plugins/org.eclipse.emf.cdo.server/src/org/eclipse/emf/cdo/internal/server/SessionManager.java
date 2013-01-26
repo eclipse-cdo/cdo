@@ -439,7 +439,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     {
       if (authenticationServer == null)
       {
-        authenticationServer = new DiffieHellman.Server();
+        authenticationServer = new DiffieHellman.Server(repository.getUUID());
       }
 
       LifecycleUtil.activate(authenticationServer);

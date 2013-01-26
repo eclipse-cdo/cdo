@@ -11,7 +11,7 @@
 package org.eclipse.net4j.util.ui.security;
 
 import org.eclipse.net4j.util.security.IPasswordCredentials;
-import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider2;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.swt.widgets.Display;
@@ -22,7 +22,7 @@ import org.eclipse.ui.IWorkbenchWindow;
  * @author Eike Stepper
  * @since 2.0
  */
-public class InteractiveCredentialsProvider implements IPasswordCredentialsProvider
+public class InteractiveCredentialsProvider implements IPasswordCredentialsProvider2
 {
   public InteractiveCredentialsProvider()
   {
@@ -34,6 +34,14 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
   }
 
   public IPasswordCredentials getCredentials()
+  {
+    return getCredentials(null);
+  }
+
+  /**
+   * @since 3.3
+   */
+  public IPasswordCredentials getCredentials(final String realm)
   {
     final IPasswordCredentials[] credentials = new IPasswordCredentials[1];
     final Display display = UIUtil.getDisplay();
@@ -53,7 +61,7 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
           shell = new Shell(display);
         }
 
-        CredentialsDialog dialog = new CredentialsDialog(shell);
+        CredentialsDialog dialog = new CredentialsDialog(shell, realm);
         if (dialog.open() == CredentialsDialog.OK)
         {
           credentials[0] = dialog.getCredentials();

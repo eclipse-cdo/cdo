@@ -30,7 +30,6 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PublicKey;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.Arrays;
 
 /**
  * Executes the Diffie-Hellman key agreement protocol between 2 parties: {@link Server} and {@link Client}.
@@ -40,26 +39,6 @@ import java.util.Arrays;
  */
 public class DiffieHellman
 {
-  public static void main(String argv[]) throws Exception
-  {
-    byte[] clearText = "This is just an example".getBytes();
-
-    // Server server = new Server(SkipParameterSpec.INSTANCE, "DES", "DES/ECB/PKCS5Padding");
-    Server server = new Server(SkipParameterSpec.INSTANCE, "DES", "DES/CBC/PKCS5Padding");
-    Client client = new Client();
-
-    Server.Challenge challenge = server.getChallenge();
-    Client.Response result = client.handleChallenge(challenge, clearText);
-    byte[] recovered = server.handleResponse(result);
-
-    if (!Arrays.equals(clearText, recovered))
-    {
-      throw new Exception("Recovered text is different from cleartext");
-    }
-
-    System.out.println("Recovered text is same as cleartext");
-  }
-
   /**
    * Executes the server-side of the Diffie-Hellman key agreement protocol.
    *
@@ -71,12 +50,16 @@ public class DiffieHellman
 
     public static final String DEFAULT_CYPHER_TRANSFORMATION = "DES/CBC/PKCS5Padding";
 
+    private final String realm;
+
     private final KeyAgreement keyAgree;
 
     private final Challenge challenge;
 
-    public Server(DHParameterSpec dhParamSpec, String secretAlgorithm, String cypherTransformation)
+    public Server(String realm, DHParameterSpec dhParamSpec, String secretAlgorithm, String cypherTransformation)
     {
+      this.realm = realm;
+
       try
       {
         // Create DH key pair, using the passed DH parameters
@@ -92,7 +75,7 @@ public class DiffieHellman
         byte[] pubKeyEnc = keyPair.getPublic().getEncoded();
 
         // Create and remember Challenge object
-        challenge = new Challenge(secretAlgorithm, cypherTransformation, pubKeyEnc);
+        challenge = new Challenge(realm, secretAlgorithm, cypherTransformation, pubKeyEnc);
       }
       catch (GeneralSecurityException ex)
       {
@@ -100,14 +83,19 @@ public class DiffieHellman
       }
     }
 
-    public Server(DHParameterSpec dhParamSpec)
+    public Server(String realm, DHParameterSpec dhParamSpec)
     {
-      this(dhParamSpec, DEFAULT_SECRET_ALGORITHM, DEFAULT_CYPHER_TRANSFORMATION);
+      this(realm, dhParamSpec, DEFAULT_SECRET_ALGORITHM, DEFAULT_CYPHER_TRANSFORMATION);
     }
 
-    public Server()
+    public Server(String realm)
     {
-      this(SkipParameterSpec.INSTANCE);
+      this(realm, SkipParameterSpec.INSTANCE);
+    }
+
+    public final String getRealm()
+    {
+      return realm;
     }
 
     public final Challenge getChallenge()
@@ -163,14 +151,17 @@ public class DiffieHellman
      */
     public static final class Challenge
     {
+      private final String serverRealm;
+
       private final String secretAlgorithm;
 
       private final String cypherTransformation;
 
       private final byte[] serverPubKeyEnc;
 
-      public Challenge(String secretAlgorithm, String cypherTransformation, byte[] serverPubKeyEnc)
+      public Challenge(String serverRealm, String secretAlgorithm, String cypherTransformation, byte[] serverPubKeyEnc)
       {
+        this.serverRealm = serverRealm;
         this.secretAlgorithm = secretAlgorithm;
         this.cypherTransformation = cypherTransformation;
         this.serverPubKeyEnc = serverPubKeyEnc;
@@ -178,6 +169,7 @@ public class DiffieHellman
 
       public Challenge(ExtendedDataInput in) throws IOException
       {
+        serverRealm = in.readString();
         secretAlgorithm = in.readString();
         cypherTransformation = in.readString();
         serverPubKeyEnc = in.readByteArray();
@@ -185,9 +177,15 @@ public class DiffieHellman
 
       public void write(ExtendedDataOutput out) throws IOException
       {
+        out.writeString(serverRealm);
         out.writeString(secretAlgorithm);
         out.writeString(cypherTransformation);
         out.writeByteArray(serverPubKeyEnc);
+      }
+
+      public String getServerRealm()
+      {
+        return serverRealm;
       }
 
       public String getSecretAlgorithm()

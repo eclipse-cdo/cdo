@@ -40,6 +40,8 @@ public class CredentialsDialog extends BaseDialog<Viewer>
 
   private static final int HEIGHT = 225;
 
+  private final String realm;
+
   private Text userIDControl;
 
   private Text passwordControl;
@@ -48,7 +50,24 @@ public class CredentialsDialog extends BaseDialog<Viewer>
 
   public CredentialsDialog(Shell shell)
   {
+    this(shell, null);
+  }
+
+  /**
+   * @since 3.3
+   */
+  public CredentialsDialog(Shell shell, String realm)
+  {
     super(shell, DEFAULT_SHELL_STYLE | SWT.APPLICATION_MODAL, TITLE, MESSAGE, OM.Activator.INSTANCE.getDialogSettings());
+    this.realm = realm;
+  }
+
+  /**
+   * @since 3.3
+   */
+  public final String getRealm()
+  {
+    return realm;
   }
 
   @Override
@@ -87,10 +106,12 @@ public class CredentialsDialog extends BaseDialog<Viewer>
     new Label(composite, SWT.NONE).setText(Messages.getString("CredentialsDialog_2")); //$NON-NLS-1$
     userIDControl = new Text(composite, SWT.BORDER);
     userIDControl.setLayoutData(UIUtil.createGridData(true, false));
+    userIDControl.setText("Administrator"); // XXX Remove me!
 
     new Label(composite, SWT.NONE).setText(Messages.getString("CredentialsDialog_3")); //$NON-NLS-1$
     passwordControl = new Text(composite, SWT.BORDER | SWT.PASSWORD);
     passwordControl.setLayoutData(UIUtil.createGridData(true, false));
+    passwordControl.setText("0000"); // XXX Remove me!
   }
 
   @Override

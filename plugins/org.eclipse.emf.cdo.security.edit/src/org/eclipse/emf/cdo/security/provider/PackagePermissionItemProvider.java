@@ -2,12 +2,15 @@
  */
 package org.eclipse.emf.cdo.security.provider;
 
-import org.eclipse.emf.cdo.security.PackagePermission;
+import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.security.Access;
+import org.eclipse.emf.cdo.security.PackagePermission;
 import org.eclipse.emf.cdo.security.SecurityPackage;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
@@ -20,8 +23,12 @@ import org.eclipse.emf.edit.provider.ITableItemColorProvider;
 import org.eclipse.emf.edit.provider.ITableItemFontProvider;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -67,17 +74,46 @@ public class PackagePermissionItemProvider extends PermissionItemProvider implem
    * This adds a property descriptor for the Applicable Package feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected void addApplicablePackagePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(),
-            getString("_UI_PackagePermission_applicablePackage_feature"), //$NON-NLS-1$
-            getString(
-                "_UI_PropertyDescriptor_description", "_UI_PackagePermission_applicablePackage_feature", "_UI_PackagePermission_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.PACKAGE_PERMISSION__APPLICABLE_PACKAGE, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
+        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_PackagePermission_applicablePackage_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_PackagePermission_applicablePackage_feature",
+            "_UI_PackagePermission_type"), SecurityPackage.Literals.PACKAGE_PERMISSION__APPLICABLE_PACKAGE, true,
+        false, true, null, null, null)
+    {
+      @Override
+      public Collection<?> getChoiceOfValues(Object object)
+      {
+        if (object instanceof PackagePermission)
+        {
+          PackagePermission packagePermission = (PackagePermission)object;
+          CDOView view = packagePermission.cdoView();
+          if (view != null)
+          {
+            List<EPackage> result = new ArrayList<EPackage>();
+            for (CDOPackageInfo packageInfo : view.getSession().getPackageRegistry().getPackageInfos())
+            {
+              result.add(packageInfo.getEPackage());
+            }
+
+            Collections.sort(result, new Comparator<EPackage>()
+            {
+              public int compare(EPackage p1, EPackage p2)
+              {
+                return p1.getNsURI().compareTo(p2.getNsURI());
+              }
+            });
+
+            return result;
+          }
+        }
+
+        return super.getChoiceOfValues(object);
+      }
+    });
   }
 
   /**
@@ -107,15 +143,21 @@ public class PackagePermissionItemProvider extends PermissionItemProvider implem
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
     Access labelValue = ((PackagePermission)object).getAccess();
-    String label = labelValue == null ? null : labelValue.toString();
-    return label == null || label.length() == 0 ? getString("_UI_PackagePermission_type") : //$NON-NLS-1$
-        getString("_UI_PackagePermission_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+    EPackage applicablePackage = ((PackagePermission)object).getApplicablePackage();
+    String label = labelValue == null ? "?" : labelValue.toString(); //$NON-NLS-1$
+
+    if (applicablePackage != null)
+    {
+      label += " " + applicablePackage.getName(); //$NON-NLS-1$
+    }
+
+    return label == null || label.length() == 0 ? getString("_UI_PackagePermission_type") : label; //$NON-NLS-1$
   }
 
   /**

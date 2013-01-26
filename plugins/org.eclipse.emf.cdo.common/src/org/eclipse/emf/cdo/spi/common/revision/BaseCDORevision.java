@@ -79,6 +79,11 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   private static final byte SET_NOT_NULL_OPCODE = 2;
 
+  /**
+   * private static final byte READ_PERMISSION_FLAG = 0x01;
+   *
+   * private static final byte WRITE_PERMISSION_FLAG = 0x02;
+   */
   private static final byte FROZEN_FLAG = 0x04;
 
   private static final byte UNCHUNKED_FLAG = 0x08;

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.security;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
@@ -44,6 +45,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
@@ -58,10 +60,12 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.IAuthenticator;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,7 +102,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   private final IManagedContainer container;
 
-  private final Map<String, User> users = new HashMap<String, User>();
+  private final Map<String, User> users = Collections.synchronizedMap(new HashMap<String, User>());
 
   private InternalRepository repository;
 
@@ -108,7 +112,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   private CDONet4jSession session;
 
-  private CDOTransaction transaction;
+  private CDOView view;
 
   private Realm realm;
 
@@ -171,22 +175,19 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   public User getUser(String id)
   {
-    synchronized (users)
+    User item = users.get(id);
+    if (item == null)
     {
-      User item = users.get(id);
+      item = realm.getUser(id);
       if (item == null)
       {
-        item = realm.getUser(id);
-        if (item == null)
-        {
-          throw new SecurityException("User " + id + " not found");
-        }
-
-        users.put(id, item);
+        throw new SecurityException("User " + id + " not found");
       }
 
-      return item;
+      users.put(id, item);
     }
+
+    return item;
   }
 
   public Role addRole(final String id)
@@ -291,7 +292,18 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     return result[0];
   }
 
+  public void read(RealmOperation operation)
+  {
+    checkActive();
+    operation.execute(realm);
+  }
+
   public void modify(RealmOperation operation)
+  {
+    modify(operation, false);
+  }
+
+  public void modify(RealmOperation operation, boolean waitUntilReadable)
   {
     checkActive();
     CDOTransaction transaction = session.openTransaction();
@@ -300,7 +312,12 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     {
       Realm transactionRealm = transaction.getObject(realm);
       operation.execute(transactionRealm);
-      transaction.commit();
+      CDOCommitInfo commit = transaction.commit();
+
+      if (waitUntilReadable)
+      {
+        view.waitForUpdate(commit.getTimeStamp());
+      }
     }
     catch (CommitException ex)
     {
@@ -401,9 +418,10 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     CDONet4jSessionConfiguration config = CDONet4jUtil.createNet4jSessionConfiguration();
     config.setConnector(connector);
     config.setRepositoryName(repositoryName);
+    config.setUserID(SYSTEM_USER_ID);
 
     session = config.openNet4jSession();
-    transaction = session.openTransaction();
+    CDOTransaction transaction = session.openTransaction();
 
     boolean firstTime = !transaction.hasResource(realmPath);
     if (firstTime)
@@ -428,6 +446,13 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     {
       throw WrappedException.wrap(ex);
     }
+    finally
+    {
+      transaction.close();
+    }
+
+    view = session.openView();
+    realm = view.getObject(realm);
 
     InternalSessionManager sessionManager = repository.getSessionManager();
     sessionManager.setAuthenticator(authenticator);
@@ -518,7 +543,8 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       return result;
     }
 
-    for (Permission permission : user.getAllPermissions())
+    EList<Permission> allPermissions = user.getAllPermissions();
+    for (Permission permission : allPermissions)
     {
       CDOPermission p = convertPermission(permission.getAccess());
       if (p.ordinal() <= result.ordinal())
@@ -555,7 +581,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
     session.close();
     session = null;
-    transaction = null;
+    view = null;
 
     connector.close();
     connector = null;
@@ -591,6 +617,12 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   {
     public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID)
     {
+      if (SYSTEM_USER_ID.equals(userID))
+      {
+        // TODO Should we also check for access to the /security resource (the realm)?
+        return CDOPermission.WRITE;
+      }
+
       User user = getUser(userID);
 
       InternalCDORevisionManager revisionManager = repository.getRevisionManager();

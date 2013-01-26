@@ -24,11 +24,26 @@ import org.eclipse.emf.cdo.server.IRepository;
  */
 public interface ISecurityManager extends SecurityItemContainer
 {
+  /**
+   * @since 4.2
+   */
+  public static final String SYSTEM_USER_ID = IRepository.SYSTEM_USER_ID;
+
   public IRepository getRepository();
 
   public Realm getRealm();
 
+  /**
+   * @since 4.2
+   */
+  public void read(RealmOperation operation);
+
   public void modify(RealmOperation operation);
+
+  /**
+   * @since 4.2
+   */
+  public void modify(RealmOperation operation, boolean waitUntilReadable);
 
   /**
    * Modifies a security {@link Realm realm} in a safe transaction.

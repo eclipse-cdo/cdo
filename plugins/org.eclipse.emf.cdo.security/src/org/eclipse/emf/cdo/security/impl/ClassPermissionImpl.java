@@ -74,6 +74,9 @@ public class ClassPermissionImpl extends PermissionImpl implements ClassPermissi
     eSet(SecurityPackage.Literals.CLASS_PERMISSION__APPLICABLE_CLASS, newApplicableClass);
   }
 
+  /**
+   * @ADDED
+   */
   public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
     EClass actualClass = revision.getEClass();

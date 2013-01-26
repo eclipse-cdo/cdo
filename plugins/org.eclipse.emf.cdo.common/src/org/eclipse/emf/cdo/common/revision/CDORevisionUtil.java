@@ -53,7 +53,7 @@ import java.util.StringTokenizer;
 
 /**
  * Various static helper methods for dealing with {@link CDORevision revisions}.
- * 
+ *
  * @author Eike Stepper
  * @apiviz.exclude
  */
@@ -61,13 +61,15 @@ public final class CDORevisionUtil
 {
   public static final Object UNINITIALIZED = new Uninitialized();
 
+  private static EAttribute resourceNodeNameAttribute;
+
   private CDORevisionUtil()
   {
   }
 
   /**
    * Creates and returns a new memory sensitive revision cache.
-   * 
+   *
    * @since 4.0
    */
   public static CDORevisionCache createRevisionCache(boolean supportingAudits, boolean supportingBranches)
@@ -304,35 +306,72 @@ public final class CDORevisionUtil
    */
   public static String getResourceNodePath(CDORevision revision, CDORevisionProvider provider)
   {
-    EAttribute nameFeature = (EAttribute)revision.getEClass().getEStructuralFeature("name");
-
     StringBuilder builder = new StringBuilder();
-    getResourceNodePath((InternalCDORevision)revision, provider, nameFeature, builder);
-
-    builder.insert(0, "/");
-    return builder.toString();
+    getResourceNodePath((InternalCDORevision)revision, provider, builder);
+    String string = builder.toString();
+    System.out.println("Path: " + revision + " --> " + string);
+    return string;
   }
 
   private static void getResourceNodePath(InternalCDORevision revision, CDORevisionProvider provider,
-      EAttribute nameFeature, StringBuilder result)
+      StringBuilder result)
   {
-    String name = (String)revision.get(nameFeature, 0);
-    if (name != null)
+    InternalCDORevision container = getParentRevision(revision, provider);
+    if (container != null)
     {
-      if (result.length() != 0)
+      getResourceNodePath(container, provider, result);
+    }
+
+    EAttribute attribute = getResourceNodeNameAttribute(revision);
+    if (attribute != null)
+    {
+      int length = result.length();
+      if (length == 0 || result.charAt(length - 1) != '/')
       {
-        result.insert(0, "/");
+        result.append("/");
       }
 
-      result.insert(0, name);
+      String name = (String)revision.get(attribute, 0);
+      if (name != null) // Exclude root resource
+      {
+        result.append(name);
+      }
+    }
+  }
+
+  private static InternalCDORevision getParentRevision(InternalCDORevision revision, CDORevisionProvider provider)
+  {
+    CDOID parentID = (CDOID)revision.getContainerID();
+    if (CDOIDUtil.isNull(parentID))
+    {
+      parentID = revision.getResourceID();
+      if (CDOIDUtil.isNull(parentID))
+      {
+        return null;
+      }
+      else if (parentID.equals(revision.getID()))
+      {
+        // This must be the root resource!
+        return null;
+      }
     }
 
-    CDOID folder = (CDOID)revision.getContainerID();
-    if (!CDOIDUtil.isNull(folder))
+    return (InternalCDORevision)provider.getRevision(parentID);
+  }
+
+  private static EAttribute getResourceNodeNameAttribute(CDORevision revision)
+  {
+    if (revision.isResourceNode())
     {
-      InternalCDORevision container = (InternalCDORevision)provider.getRevision(folder);
-      getResourceNodePath(container, provider, nameFeature, result);
+      if (CDORevisionUtil.resourceNodeNameAttribute == null)
+      {
+        CDORevisionUtil.resourceNodeNameAttribute = (EAttribute)revision.getEClass().getEStructuralFeature("name");
+      }
+
+      return CDORevisionUtil.resourceNodeNameAttribute;
     }
+
+    return null;
   }
 
   /**
@@ -357,7 +396,7 @@ public final class CDORevisionUtil
   /**
    * Dumps {@link CDORevision revisions}, sorted and grouped by {@link CDOBranch branch}, to various output formats and
    * targets. Concrete output formats and targets are implemented by subclasses.
-   * 
+   *
    * @since 4.0
    * @apiviz.exclude
    */
@@ -412,7 +451,7 @@ public final class CDORevisionUtil
     /**
      * A {@link AllRevisionsDumper revision dumper} that directs all output to a stream. The concrete output format is
      * implemented by subclasses.
-     * 
+     *
      * @author Eike Stepper
      * @apiviz.exclude
      */
@@ -433,7 +472,7 @@ public final class CDORevisionUtil
 
       /**
        * A {@link Stream revision dumper} that directs all output as plain text to a stream.
-       * 
+       *
        * @author Eike Stepper
        * @apiviz.exclude
        */
@@ -483,7 +522,7 @@ public final class CDORevisionUtil
 
       /**
        * A {@link Stream revision dumper} that directs all output as HTML text to a stream.
-       * 
+       *
        * @author Eike Stepper
        * @apiviz.exclude
        */
@@ -554,7 +593,7 @@ public final class CDORevisionUtil
   /**
    * Compares {@link CDORevisionKey revision keys} by {@link CDORevision#getID() ID} and
    * {@link CDORevision#getVersion() version}.
-   * 
+   *
    * @author Eike Stepper
    * @since 4.0
    * @apiviz.exclude

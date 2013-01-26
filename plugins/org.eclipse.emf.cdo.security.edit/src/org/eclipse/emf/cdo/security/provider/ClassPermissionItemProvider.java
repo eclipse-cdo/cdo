@@ -2,13 +2,16 @@
  */
 package org.eclipse.emf.cdo.security.provider;
 
+import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.ClassPermission;
 import org.eclipse.emf.cdo.security.SecurityPackage;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
@@ -21,8 +24,12 @@ import org.eclipse.emf.edit.provider.ITableItemColorProvider;
 import org.eclipse.emf.edit.provider.ITableItemFontProvider;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -68,17 +75,59 @@ public class ClassPermissionItemProvider extends PermissionItemProvider implemen
    * This adds a property descriptor for the Applicable Class feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected void addApplicableClassPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(),
-            getString("_UI_ClassPermission_applicableClass_feature"), //$NON-NLS-1$
-            getString(
-                "_UI_PropertyDescriptor_description", "_UI_ClassPermission_applicableClass_feature", "_UI_ClassPermission_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.CLASS_PERMISSION__APPLICABLE_CLASS, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
+        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_ClassPermission_applicableClass_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_ClassPermission_applicableClass_feature",
+            "_UI_ClassPermission_type"), SecurityPackage.Literals.CLASS_PERMISSION__APPLICABLE_CLASS, true, false,
+        true, null, null, null)
+    {
+      @Override
+      public Collection<?> getChoiceOfValues(Object object)
+      {
+        if (object instanceof ClassPermission)
+        {
+          ClassPermission classPermission = (ClassPermission)object;
+          CDOView view = classPermission.cdoView();
+          if (view != null)
+          {
+            List<EClass> result = new ArrayList<EClass>();
+            for (CDOPackageInfo packageInfo : view.getSession().getPackageRegistry().getPackageInfos())
+            {
+              for (EClassifier classifier : packageInfo.getEPackage().getEClassifiers())
+              {
+                if (classifier instanceof EClass)
+                {
+                  result.add((EClass)classifier);
+
+                }
+              }
+            }
+
+            Collections.sort(result, new Comparator<EClass>()
+            {
+              public int compare(EClass c1, EClass c2)
+              {
+                int comparison = c1.getName().compareTo(c2.getName());
+                if (comparison == 0)
+                {
+                  comparison = c1.getEPackage().getNsURI().compareTo(c2.getEPackage().getNsURI());
+                }
+
+                return comparison;
+              }
+            });
+
+            return result;
+          }
+        }
+
+        return super.getChoiceOfValues(object);
+      }
+    });
   }
 
   /**

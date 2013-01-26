@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.security.ResourcePermission;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,6 +38,14 @@ import java.util.regex.PatternSyntaxException;
  */
 public class ResourcePermissionImpl extends PermissionImpl implements ResourcePermission
 {
+  /**
+   * @ADDED
+   */
+  private static final Pattern OMNI_PATTERN = Pattern.compile(".*");
+
+  /**
+   * @ADDED
+   */
   private Pattern pattern;
 
   /**
@@ -82,39 +89,25 @@ public class ResourcePermissionImpl extends PermissionImpl implements ResourcePe
     eSet(SecurityPackage.Literals.RESOURCE_PERMISSION__PATTERN, newPattern);
   }
 
-  @Override
-  public void eSet(EStructuralFeature eFeature, Object newValue)
-  {
-    super.eSet(eFeature, newValue);
-    if (eFeature == SecurityPackage.Literals.RESOURCE_PERMISSION__PATTERN)
-    {
-      String value = (String)newValue;
-      pattern = compilePattern(value);
-    }
-  }
-
-  private Pattern compilePattern(String value)
-  {
-    if (value == null)
-    {
-      return null;
-    }
-
-    try
-    {
-      return Pattern.compile(value);
-    }
-    catch (PatternSyntaxException ex)
-    {
-      return null;
-    }
-  }
-
+  /**
+   * @ADDED
+   */
   public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
     if (pattern == null)
     {
-      return false;
+      String str = getPattern();
+      pattern = compilePattern(str);
+
+      if (pattern == null)
+      {
+        return false;
+      }
+    }
+
+    if (pattern == OMNI_PATTERN)
+    {
+      return true;
     }
 
     if (revisionProvider == null)
@@ -126,6 +119,31 @@ public class ResourcePermissionImpl extends PermissionImpl implements ResourcePe
 
     Matcher matcher = pattern.matcher(path);
     return matcher.matches();
+  }
+
+  /**
+   * @ADDED
+   */
+  private Pattern compilePattern(String value)
+  {
+    if (value == null)
+    {
+      return null;
+    }
+
+    if (value.equals(OMNI_PATTERN.pattern()))
+    {
+      return OMNI_PATTERN;
+    }
+
+    try
+    {
+      return Pattern.compile(value);
+    }
+    catch (PatternSyntaxException ex)
+    {
+      return null;
+    }
   }
 
 } // ResourcePermissionImpl

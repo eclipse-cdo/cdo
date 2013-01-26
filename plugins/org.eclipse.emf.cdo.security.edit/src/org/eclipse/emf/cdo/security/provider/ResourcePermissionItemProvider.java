@@ -111,15 +111,21 @@ public class ResourcePermissionItemProvider extends PermissionItemProvider imple
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
     Access labelValue = ((ResourcePermission)object).getAccess();
-    String label = labelValue == null ? null : labelValue.toString();
-    return label == null || label.length() == 0 ? getString("_UI_ResourcePermission_type") : //$NON-NLS-1$
-        getString("_UI_ResourcePermission_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+    String pattern = ((ResourcePermission)object).getPattern();
+    String label = labelValue == null ? "?" : labelValue.toString(); //$NON-NLS-1$
+
+    if (pattern != null)
+    {
+      label += " " + pattern; //$NON-NLS-1$
+    }
+
+    return label == null || label.length() == 0 ? getString("_UI_ResourcePermission_type") : label; //$NON-NLS-1$
   }
 
   /**

@@ -7,8 +7,11 @@
  * 
  * Contributors:
  *     Martin Fluegge - initial API and implementation
+ *     Christian W. Damus (CEA) - bug 399285 support IDawnEditor adapters
  */
 package org.eclipse.emf.cdo.dawn.gmf.notifications.impl;
+
+import static org.eclipse.emf.cdo.dawn.gmf.editors.impl.DawnGMFEditorSupport.getDiagramEditor;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -36,7 +39,6 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.View;
@@ -99,7 +101,7 @@ public class DawnGMFHandler extends BasicDawnTransactionHandler
 
     if (DawnConflictHelper.isConflicted(cdoObject))
     {
-      DawnConflictHelper.handleConflictedView(cdoObject, view, (DiagramDocumentEditor)editor);
+      DawnConflictHelper.handleConflictedView(cdoObject, view, getDiagramEditor(editor));
       return;
     }
   }
@@ -122,8 +124,8 @@ public class DawnGMFHandler extends BasicDawnTransactionHandler
 
       public void notifyChanged(Notification notification)
       {
-        DawnDiagramUpdater.refreshEditPart(((DiagramDocumentEditor)editor).getDiagramEditPart(),
-            (DiagramDocumentEditor)editor);
+        DiagramDocumentEditor diagramEditor = getDiagramEditor(editor);
+        DawnDiagramUpdater.refreshEditPart(diagramEditor.getDiagramEditPart(), diagramEditor);
         object.eAdapters().remove(this);
       }
 
@@ -203,7 +205,7 @@ public class DawnGMFHandler extends BasicDawnTransactionHandler
     {
       EObject element = CDOUtil.getEObject(obj);
       View view = DawnDiagramUpdater.findViewByContainer(element);
-      DawnConflictHelper.handleConflictedView(CDOUtil.getCDOObject(element), view, (DiagramDocumentEditor)editor);
+      DawnConflictHelper.handleConflictedView(CDOUtil.getCDOObject(element), view, getDiagramEditor(editor));
     }
   }
 
@@ -223,40 +225,40 @@ public class DawnGMFHandler extends BasicDawnTransactionHandler
       return;
     }
 
-    EditPart relatedEditPart = DawnDiagramUpdater.findEditPart(view, ((DiagramEditor)editor).getDiagramEditPart()
-        .getViewer());
+    DiagramDocumentEditor diagramEditor = getDiagramEditor(editor);
+    EditPart relatedEditPart = DawnDiagramUpdater.findEditPart(view, diagramEditor.getDiagramEditPart().getViewer());
     if (relatedEditPart != null)
     {
       if (TRACER.isEnabled())
       {
         TRACER.format("Updating EditPart {0} ", relatedEditPart); //$NON-NLS-1$
       }
-      DawnDiagramUpdater.refreshEditPart(relatedEditPart.getParent(), (DiagramDocumentEditor)editor);
+      DawnDiagramUpdater.refreshEditPart(relatedEditPart.getParent(), diagramEditor);
     }
     else
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Updating DiagramEditPart {0} ", ((DiagramEditor)editor).getDiagramEditPart()); //$NON-NLS-1$
+        TRACER.format("Updating DiagramEditPart {0} ", diagramEditor.getDiagramEditPart()); //$NON-NLS-1$
       }
-      DawnDiagramUpdater.refreshEditPart(((DiagramEditor)editor).getDiagramEditPart(), (DiagramDocumentEditor)editor);
+      DawnDiagramUpdater.refreshEditPart(diagramEditor.getDiagramEditPart(), diagramEditor);
     }
   }
 
   protected void refresh(CDOObject object)
   {
+    DiagramDocumentEditor diagramEditor = getDiagramEditor(editor);
     View view = DawnDiagramUpdater.findViewByContainer(object);
     if (view == null)
     {
-      view = DawnDiagramUpdater.findViewForModel(object, (DiagramDocumentEditor)editor);
+      view = DawnDiagramUpdater.findViewForModel(object, diagramEditor);
     }
     if (view == null)
     {
       DawnDiagramUpdater.findViewFromCrossReferences(object);
     }
 
-    EditPart relatedEditPart = DawnDiagramUpdater.findEditPart(view, ((DiagramDocumentEditor)editor)
-        .getDiagramEditPart().getViewer());
+    EditPart relatedEditPart = DawnDiagramUpdater.findEditPart(view, diagramEditor.getDiagramEditPart().getViewer());
 
     if (relatedEditPart != null)
     {
@@ -271,17 +273,17 @@ public class DawnGMFHandler extends BasicDawnTransactionHandler
       }
       else
       {
-        DawnDiagramUpdater.refreshEditPart(parent, (DiagramDocumentEditor)editor);
+        DawnDiagramUpdater.refreshEditPart(parent, diagramEditor);
       }
     }
     else
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Updating DiagramEditPart {0} ", ((DiagramDocumentEditor)editor).getDiagramEditPart()); //$NON-NLS-1$
+        TRACER.format("Updating DiagramEditPart {0} ", getDiagramEditor(editor).getDiagramEditPart()); //$NON-NLS-1$
       }
 
-      DawnDiagramUpdater.refresh(((DiagramDocumentEditor)editor).getDiagramEditPart());
+      DawnDiagramUpdater.refresh(diagramEditor.getDiagramEditPart());
     }
   }
 }

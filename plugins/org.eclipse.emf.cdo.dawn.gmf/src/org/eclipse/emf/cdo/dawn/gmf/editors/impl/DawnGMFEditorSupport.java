@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Martin Fluegge - initial API and implementation
+ *    Christian W. Damus (CEA) - bug 399285 support IDawnEditor adapters
  */
 package org.eclipse.emf.cdo.dawn.gmf.editors.impl;
 
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.gmf.runtime.notation.View;
@@ -46,7 +48,7 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
   public DawnGMFEditorSupport(IDawnEditor editor)
   {
     super(editor);
-    dawnGMFHandler = new DawnGMFHandler(editor);
+    dawnGMFHandler = createDawnGMFHandler(editor);
   }
 
   public void close()
@@ -62,6 +64,19 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
   protected BasicDawnListener getBasicHandler()
   {
     return dawnGMFHandler;
+  }
+
+  /**
+   * Creates a GMF-specific handler for the specified {@code editor}.
+   * <p>
+   * <strong>Note</strong> that this method is called in the constructor, so subclasses must
+   * be aware that {@code this} has not been fully initialized.
+   * 
+   * @since 2.1
+   */
+  protected DawnGMFHandler createDawnGMFHandler(IDawnEditor editor)
+  {
+    return new DawnGMFHandler(editor);
   }
 
   @Override
@@ -83,7 +98,7 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
   public void rollback()
   {
     super.rollback();
-    final DiagramDocumentEditor diagramDocumentEditor = (DiagramDocumentEditor)getEditor();
+    final DiagramDocumentEditor diagramDocumentEditor = getDiagramEditor(getEditor());
     TransactionalEditingDomain editingDomain = diagramDocumentEditor.getEditingDomain();
     editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain)
     {
@@ -96,9 +111,27 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
     });
   }
 
+  /**
+   * Obtains the GMF diagram editor from the given Dawn {@code editor}.  If the
+   * {@code editor} is a {@link DiagramDocumentEditor}, then that is returned as
+   * is.  Otherwise, try to get an {@code DiagramDocumentEditor}
+   * {@linkplain IAdaptable#getAdapter(Class) adapter} from the {@code editor}.
+   * 
+   * @param editor the Dawn editor from which to get the GMF editor
+   * @since 2.1
+   */
+  public static DiagramDocumentEditor getDiagramEditor(IDawnEditor editor)
+  {
+    if (editor instanceof DiagramDocumentEditor)
+    {
+      return (DiagramDocumentEditor)editor;
+    }
+    return (DiagramDocumentEditor)editor.getAdapter(DiagramDocumentEditor.class);
+  }
+
   public void refresh()
   {
-    final DiagramDocumentEditor diagramDocumentEditor = (DiagramDocumentEditor)getEditor();
+    final DiagramDocumentEditor diagramDocumentEditor = getDiagramEditor(getEditor());
     TransactionalEditingDomain editingDomain = diagramDocumentEditor.getEditingDomain();
     editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain)
     {
@@ -177,7 +210,7 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
     if (view != null)
     {
       // if there is no view, the semantic object is not displayed.
-      EditPart editPart = DawnDiagramUpdater.createOrFindEditPartIfViewExists(view, (DiagramDocumentEditor)getEditor());
+      EditPart editPart = DawnDiagramUpdater.createOrFindEditPartIfViewExists(view, getDiagramEditor(getEditor()));
 
       if (object.cdoWriteLock().isLocked())
       {

@@ -46,7 +46,7 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
       if (getTransaction() == transaction)
       {
         adapter.reset();
-        aggregator.reset();
+        remoteInvalidationEvents.reset();
       }
     }
 
@@ -57,14 +57,14 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
       if (getTransaction() == transaction && transaction.getLastSavepoint().getPreviousSavepoint() == null)
       {
         adapter.reset();
-        aggregator.reset();
+        remoteInvalidationEvents.reset();
       }
     }
   };
 
   private CDOChangeSubscriptionAdapter adapter;
 
-  private RemoteAggregator aggregator;
+  private RemoteInvalidationEventQueue remoteInvalidationEvents;
 
   public AbstractChangeSetsConflictResolver()
   {
@@ -77,19 +77,19 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
 
   public CDOChangeSet getLocalChangeSet()
   {
-    CDOTransaction transaction = getTransaction();
-    return CDORevisionUtil.createChangeSet(transaction, transaction, getLocalChangeSetData());
+    CDOChangeSetData changeSetData = getLocalChangeSetData();
+    return createChangeSet(changeSetData);
   }
 
   public CDOChangeSetData getRemoteChangeSetData()
   {
-    return aggregator.getChangeSetData();
+    return remoteInvalidationEvents.getChangeSetData();
   }
 
   public CDOChangeSet getRemoteChangeSet()
   {
-    CDOTransaction transaction = getTransaction();
-    return CDORevisionUtil.createChangeSet(transaction, transaction, getRemoteChangeSetData());
+    CDOChangeSetData changeSetData = remoteInvalidationEvents.getChangeSetData();
+    return createChangeSet(changeSetData);
   }
 
   @Override
@@ -97,14 +97,14 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
   {
     transaction.addTransactionHandler(handler);
     adapter = new CDOChangeSubscriptionAdapter(getTransaction());
-    aggregator = new RemoteAggregator();
+    remoteInvalidationEvents = new RemoteInvalidationEventQueue();
   }
 
   @Override
   protected void unhookTransaction(CDOTransaction transaction)
   {
-    aggregator.dispose();
-    aggregator = null;
+    remoteInvalidationEvents.dispose();
+    remoteInvalidationEvents = null;
 
     adapter.dispose();
     adapter = null;
@@ -112,12 +112,18 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
     transaction.removeTransactionHandler(handler);
   }
 
+  private CDOChangeSet createChangeSet(CDOChangeSetData changeSetData)
+  {
+    CDOTransaction transaction = getTransaction();
+    return CDORevisionUtil.createChangeSet(transaction, transaction, changeSetData);
+  }
+
   /**
    * @author Eike Stepper
    */
-  private final class RemoteAggregator extends CDOSessionInvalidationAggregator
+  private final class RemoteInvalidationEventQueue extends CDOSessionInvalidationEventQueue
   {
-    public RemoteAggregator()
+    public RemoteInvalidationEventQueue()
     {
       super(getTransaction().getSession());
     }
@@ -125,10 +131,20 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
     @Override
     protected void handleEvent(CDOSessionInvalidationEvent event) throws Exception
     {
-      if (event.getBranch() == getTransaction().getBranch())
+      CDOTransaction transaction = getTransaction();
+      if (event.getLocalTransaction() == transaction)
       {
-        super.handleEvent(event);
+        // Don't handle own changes
+        return;
       }
+
+      if (event.getBranch() != transaction.getBranch())
+      {
+        // Don't handle changes in other branches
+        return;
+      }
+
+      super.handleEvent(event);
     }
   }
 }

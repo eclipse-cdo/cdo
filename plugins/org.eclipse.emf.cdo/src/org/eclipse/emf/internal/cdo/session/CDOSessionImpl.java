@@ -91,7 +91,6 @@ import org.eclipse.emf.internal.cdo.util.DefaultLocksChangedEvent;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
@@ -909,7 +908,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     Map<CDOID, InternalCDORevision> oldRevisions = null;
     CDOBranch newBranch = commitInfo.getBranch();
     long timeStamp = commitInfo.getTimeStamp();
-    InternalCDORevisionManager revisionManager = getRevisionManager();
 
     // Cache new revisions
     for (CDOIDAndVersion key : commitInfo.getNewObjects())
@@ -924,96 +922,37 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     // Apply deltas and cache the resulting new revisions, if possible...
     for (CDORevisionKey key : commitInfo.getChangedObjects())
     {
-      // Add old values to revision deltas.
+      CDOID id = key.getID();
       if (key instanceof CDORevisionDelta)
       {
-        final CDORevisionDelta revisionDelta = (CDORevisionDelta)key;
-        final CDORevision oldRevision = revisionManager.getRevisionByVersion(revisionDelta.getID(), revisionDelta,
-            CDORevision.UNCHUNKED, false);
+        CDORevisionDelta revisionDelta = (CDORevisionDelta)key;
 
+        InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, revisionDelta,
+            CDORevision.UNCHUNKED, false);
         if (oldRevision != null)
         {
-          CDOFeatureDeltaVisitor visitor = new CDOFeatureDeltaVisitorImpl()
+          addOldValuesToDelta(oldRevision, revisionDelta);
+
+          InternalCDORevision newRevision = oldRevision.copy();
+          newRevision.adjustForCommit(commitInfo.getBranch(), commitInfo.getTimeStamp());
+
+          CDORevisable target = revisionDelta.getTarget();
+          if (target != null)
           {
-            private List<Object> workList;
-
-            @Override
-            public void visit(CDOAddFeatureDelta delta)
-            {
-              workList.add(delta.getIndex(), delta.getValue());
-            }
-
-            @Override
-            public void visit(CDOClearFeatureDelta delta)
-            {
-              workList.clear();
-            }
-
-            @Override
-            public void visit(CDOListFeatureDelta deltas)
-            {
-              @SuppressWarnings("unchecked")
-              List<Object> list = (List<Object>)((InternalCDORevision)oldRevision).getValue(deltas.getFeature());
-              if (list != null)
-              {
-                workList = new ArrayList<Object>(list);
-                super.visit(deltas);
-              }
-            }
-
-            @Override
-            public void visit(CDOMoveFeatureDelta delta)
-            {
-              Object value = workList.get(delta.getOldPosition());
-              ((CDOMoveFeatureDeltaImpl)delta).setValue(value);
-              ECollections.move(workList, delta.getNewPosition(), delta.getOldPosition());
-            }
-
-            @Override
-            public void visit(CDORemoveFeatureDelta delta)
-            {
-              Object oldValue = workList.remove(delta.getIndex());
-              ((CDOSingleValueFeatureDeltaImpl)delta).setValue(oldValue);
-            }
-
-            @Override
-            public void visit(CDOSetFeatureDelta delta)
-            {
-              EStructuralFeature feature = delta.getFeature();
-              Object value = null;
-              if (feature.isMany())
-              {
-                value = workList.set(delta.getIndex(), delta.getValue());
-              }
-              else
-              {
-                value = ((InternalCDORevision)oldRevision).getValue(feature);
-              }
-
-              ((CDOSetFeatureDeltaImpl)delta).setOldValue(value);
-            }
-          };
-
-          for (CDOFeatureDelta featureDelta : revisionDelta.getFeatureDeltas())
-          {
-            featureDelta.accept(visitor);
+            newRevision.setVersion(target.getVersion());
           }
-        }
-      }
 
-      CDOID id = key.getID();
-      Pair<InternalCDORevision, InternalCDORevision> pair = createNewRevision(key, commitInfo);
-      if (pair != null)
-      {
-        InternalCDORevision newRevision = pair.getElement2();
-        revisionManager.addRevision(newRevision);
-        if (oldRevisions == null)
-        {
-          oldRevisions = new HashMap<CDOID, InternalCDORevision>();
-        }
+          revisionDelta.apply(newRevision);
+          newRevision.freeze();
 
-        InternalCDORevision oldRevision = pair.getElement1();
-        oldRevisions.put(id, oldRevision);
+          revisionManager.addRevision(newRevision);
+          if (oldRevisions == null)
+          {
+            oldRevisions = new HashMap<CDOID, InternalCDORevision>();
+          }
+
+          oldRevisions.put(id, oldRevision);
+        }
       }
       else
       {
@@ -1035,35 +974,78 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return oldRevisions;
   }
 
-  private Pair<InternalCDORevision, InternalCDORevision> createNewRevision(CDORevisionKey potentialDelta,
-      CDOCommitInfo commitInfo)
+  /**
+   * Computes/adjusts CDOMoveFeatureDelta.value, CDORemoveFeatureDelta.value and CDOSetFeatureDelta.oldValue.
+   * <p>
+   * Implicitely adjusts the underlying CDORevisionDelta.
+   */
+  private void addOldValuesToDelta(final CDORevision oldRevision, CDORevisionDelta revisionDelta)
   {
-    if (potentialDelta instanceof CDORevisionDelta)
+    CDOFeatureDeltaVisitor visitor = new CDOFeatureDeltaVisitorImpl()
     {
-      CDORevisionDelta delta = (CDORevisionDelta)potentialDelta;
-      CDOID id = delta.getID();
+      private List<Object> workList;
 
-      InternalCDORevisionManager revisionManager = getRevisionManager();
-      InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, potentialDelta, CDORevision.UNCHUNKED,
-          false);
-      if (oldRevision != null)
+      @Override
+      public void visit(CDOAddFeatureDelta delta)
       {
-        InternalCDORevision newRevision = oldRevision.copy();
-        newRevision.adjustForCommit(commitInfo.getBranch(), commitInfo.getTimeStamp());
+        workList.add(delta.getIndex(), delta.getValue());
+      }
 
-        CDORevisable target = delta.getTarget();
-        if (target != null)
+      @Override
+      public void visit(CDOClearFeatureDelta delta)
+      {
+        workList.clear();
+      }
+
+      @Override
+      public void visit(CDOListFeatureDelta deltas)
+      {
+        @SuppressWarnings("unchecked")
+        List<Object> list = (List<Object>)((InternalCDORevision)oldRevision).getValue(deltas.getFeature());
+        if (list != null)
         {
-          newRevision.setVersion(target.getVersion());
+          workList = new ArrayList<Object>(list);
+          super.visit(deltas);
+        }
+      }
+
+      @Override
+      public void visit(CDOMoveFeatureDelta delta)
+      {
+        Object value = workList.get(delta.getOldPosition());
+        ((CDOMoveFeatureDeltaImpl)delta).setValue(value); // Adjust delta
+        ECollections.move(workList, delta.getNewPosition(), delta.getOldPosition());
+      }
+
+      @Override
+      public void visit(CDORemoveFeatureDelta delta)
+      {
+        Object oldValue = workList.remove(delta.getIndex());
+        ((CDOSingleValueFeatureDeltaImpl)delta).setValue(oldValue); // Adjust delta
+      }
+
+      @Override
+      public void visit(CDOSetFeatureDelta delta)
+      {
+        EStructuralFeature feature = delta.getFeature();
+        Object value = null;
+        if (feature.isMany())
+        {
+          value = workList.set(delta.getIndex(), delta.getValue());
+        }
+        else
+        {
+          value = ((InternalCDORevision)oldRevision).getValue(feature);
         }
 
-        delta.apply(newRevision);
-        newRevision.freeze();
-        return new Pair<InternalCDORevision, InternalCDORevision>(oldRevision, newRevision);
+        ((CDOSetFeatureDeltaImpl)delta).setOldValue(value); // Adjust delta
       }
-    }
+    };
 
-    return null;
+    for (CDOFeatureDelta featureDelta : revisionDelta.getFeatureDeltas())
+    {
+      featureDelta.accept(visitor);
+    }
   }
 
   @Deprecated

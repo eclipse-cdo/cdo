@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
 /**
  * @author Simon McDuff
@@ -102,40 +103,47 @@ public class ConflictResolverMergingTest extends ConflictResolverTest
     msg("Opening session");
     CDOSession session = openSession();
 
+    // CLIENT-1 creates sales order
     CDOTransaction transaction1 = session.openTransaction();
     transaction1.options().addConflictResolver(createConflictResolver());
     EList<EObject> contents1 = transaction1.getOrCreateResource(getResourcePath("/res1")).getContents();
 
-    SalesOrder c1 = getModel1Factory().createSalesOrder();
-    contents1.add(c1);
+    SalesOrder salesOrder1 = getModel1Factory().createSalesOrder();
+    EList<OrderDetail> orderDetails1 = salesOrder1.getOrderDetails();
+
+    contents1.add(salesOrder1);
     transaction1.commit();
 
+    // CLIENT-2 loads sales order
     CDOTransaction transaction2 = session.openTransaction();
     transaction2.options().addConflictResolver(createConflictResolver());
     EList<EObject> contents2 = transaction2.getOrCreateResource(getResourcePath("/res1")).getContents();
 
-    SalesOrder c2 = (SalesOrder)contents2.get(0);
+    SalesOrder salesOrder2 = (SalesOrder)contents2.get(0);
+    EList<OrderDetail> orderDetails2 = salesOrder2.getOrderDetails();
 
-    OrderDetail s1 = getModel1Factory().createOrderDetail();
-    c1.getOrderDetails().add(s1);
+    // CLIENT-1 adds order detail
+    OrderDetail orderDetail1 = getModel1Factory().createOrderDetail();
+    orderDetails1.add(orderDetail1);
 
-    OrderDetail s2 = getModel1Factory().createOrderDetail();
-    c2.getOrderDetails().add(s2);
+    // CLIENT-2 adds order detail
+    OrderDetail orderDetail2 = getModel1Factory().createOrderDetail();
+    orderDetails2.add(orderDetail2);
 
+    // CLIENT-1 commits and waits for CLIENT-2's conflict resolver
     commitAndSync(transaction1, transaction2);
+
+    // CLIENT-2 commits and waits for CLIENT-1's conflict resolver (nothing to do there)
     commitAndSync(transaction2, transaction1);
 
-    EList<OrderDetail> list = c1.getOrderDetails();
-    System.out.println(list);
-    assertEquals(2, list.size());
-    assertEquals(CDOUtil.getCDOObject(s2).cdoID(), CDOUtil.getCDOObject(list.get(0)).cdoID());
-    assertEquals(CDOUtil.getCDOObject(s1).cdoID(), CDOUtil.getCDOObject(list.get(1)).cdoID());
+    assertEquals(2, orderDetails1.size());
+    assertEquals(CDOUtil.getCDOObject(orderDetail2).cdoID(), CDOUtil.getCDOObject(orderDetails1.get(0)).cdoID());
+    assertEquals(CDOUtil.getCDOObject(orderDetail1).cdoID(), CDOUtil.getCDOObject(orderDetails1.get(1)).cdoID());
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   protected CDOConflictResolver createConflictResolver()
   {
-    return new org.eclipse.emf.spi.cdo.CDOMergingConflictResolver();
+    return new CDOMergingConflictResolver();
   }
 }

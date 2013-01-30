@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
 import java.util.List;
 
@@ -35,8 +36,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 {
   private static final String TEST_RESOURCE_NAME = "/test1";
 
-  @SuppressWarnings("deprecation")
-  private CDOConflictResolver conflictResolver = new org.eclipse.emf.spi.cdo.CDOMergingConflictResolver();
+  private CDOConflictResolver conflictResolver = new CDOMergingConflictResolver();
 
   // --- initialize model ----------------------------------------------------
 

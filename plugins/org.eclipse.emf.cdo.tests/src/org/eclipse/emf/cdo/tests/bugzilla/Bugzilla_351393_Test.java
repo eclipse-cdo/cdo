@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -24,10 +25,14 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 /**
+ * Bug 351393: [DB] Make the URI column in the table "cdo_ext_refs" larger
+ *
  * @author Stefan Winkler
  */
 public class Bugzilla_351393_Test extends AbstractCDOTest
 {
+  // Ext-Refs with client-side UUIDs are stored "in sito", where the tests use even less chars.
+  @Skips(IRepositoryConfig.CAPABILITY_UUIDS)
   public void testExtRef() throws Exception
   {
     skipStoreWithoutExternalReferences();

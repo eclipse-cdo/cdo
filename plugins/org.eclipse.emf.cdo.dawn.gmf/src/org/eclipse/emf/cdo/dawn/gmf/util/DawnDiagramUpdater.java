@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *     Martin Fluegge - initial API and implementation
+ *     Christian W. Damus (CEA) - bug 399733: tolerate UML CacheAdapter
  */
 package org.eclipse.emf.cdo.dawn.gmf.util;
 
@@ -15,6 +16,7 @@ import org.eclipse.emf.cdo.dawn.internal.util.bundle.OM;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.ECrossReferenceAdapter;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
@@ -28,7 +30,6 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.gmf.runtime.diagram.ui.services.editpart.EditPartService;
-import org.eclipse.gmf.runtime.emf.core.util.CrossReferenceAdapter;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
@@ -366,18 +367,17 @@ public class DawnDiagramUpdater
 
   public static View findViewFromCrossReferences(EObject element)
   {
-    CrossReferenceAdapter crossreferenceAdapter = (CrossReferenceAdapter)ECrossReferenceAdapter
-        .getCrossReferenceAdapter(element);// getCrossReferenceAdapter(element);
+    ECrossReferenceAdapter crossreferenceAdapter = ECrossReferenceAdapter.getCrossReferenceAdapter(element);
     if (crossreferenceAdapter != null)
     {
-      Collection<?> iinverseReferences = crossreferenceAdapter.getInverseReferencers(element,
-          NotationPackage.eINSTANCE.getView_Element(), null);
+      Collection<EStructuralFeature.Setting> iinverseReferences = crossreferenceAdapter
+          .getNonNavigableInverseReferences(element);
 
-      for (Object f : iinverseReferences)
+      for (EStructuralFeature.Setting f : iinverseReferences)
       {
-        if (f instanceof View)
+        if (f.getEStructuralFeature() == NotationPackage.Literals.VIEW__ELEMENT)
         {
-          return (View)f;
+          return (View)f.getEObject();
         }
       }
     }

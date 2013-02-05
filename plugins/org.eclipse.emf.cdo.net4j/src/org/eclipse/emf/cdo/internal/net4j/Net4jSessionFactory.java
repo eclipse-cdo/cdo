@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA) - bug 399641: container-aware factories
  */
 package org.eclipse.emf.cdo.internal.net4j;
 
@@ -17,6 +18,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerFactory;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.security.CredentialsProviderFactory;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
@@ -29,9 +31,11 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class Net4jSessionFactory extends CDOSessionFactory
+public class Net4jSessionFactory extends CDOSessionFactory implements IManagedContainerFactory
 {
   public static final String TYPE = "cdo"; //$NON-NLS-1$
+
+  private IManagedContainer managedContainer = IPluginContainer.INSTANCE;
 
   public Net4jSessionFactory()
   {
@@ -72,9 +76,14 @@ public class Net4jSessionFactory extends CDOSessionFactory
     }
   }
 
-  protected IManagedContainer getManagedContainer()
+  public IManagedContainer getManagedContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return managedContainer;
+  }
+
+  public void setManagedContainer(IManagedContainer managedContainer)
+  {
+    this.managedContainer = managedContainer;
   }
 
   protected String getCredentialsProviderType()

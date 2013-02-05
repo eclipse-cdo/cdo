@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA) - bug 399641: container-aware factories
  */
 package org.eclipse.net4j.util.container;
 
@@ -40,6 +41,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -88,6 +90,32 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     if (factoryRegistry == null)
     {
       factoryRegistry = createFactoryRegistry();
+      factoryRegistry.addListener(new ContainerEventAdapter<Map.Entry<IFactoryKey, IFactory>>()
+      {
+        @Override
+        protected void onAdded(IContainer<Map.Entry<IFactoryKey, IFactory>> container,
+            Map.Entry<IFactoryKey, IFactory> entry)
+        {
+          updateFactory(entry, ManagedContainer.this);
+        }
+
+        @Override
+        protected void onRemoved(IContainer<Map.Entry<IFactoryKey, IFactory>> container,
+            Map.Entry<IFactoryKey, IFactory> entry)
+        {
+          updateFactory(entry, null);
+        }
+
+        private void updateFactory(Map.Entry<IFactoryKey, IFactory> entry, IManagedContainer container)
+        {
+          IFactory factory = entry.getValue();
+          if (factory instanceof IManagedContainerFactory)
+          {
+            IManagedContainerFactory f = (IManagedContainerFactory)factory;
+            f.setManagedContainer(container);
+          }
+        }
+      });
     }
 
     return factoryRegistry;

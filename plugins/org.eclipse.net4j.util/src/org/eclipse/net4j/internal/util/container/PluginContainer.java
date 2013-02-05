@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Christian W. Damus (CEA) - private plug-in container instances
+ *    Christian W. Damus (CEA) - bug 399641: container-aware factories
  */
 package org.eclipse.net4j.internal.util.container;
 
@@ -37,7 +38,7 @@ public class PluginContainer extends ManagedContainer implements IPluginContaine
   @Override
   protected IRegistry<IFactoryKey, IFactory> createFactoryRegistry()
   {
-    return new PluginFactoryRegistry();
+    return new PluginFactoryRegistry(this);
   }
 
   @Override

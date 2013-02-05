@@ -9,6 +9,7 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  *    Victor Roldan Betancort - bug 338921
+ *    Christian W. Damus (CEA) - bug 399279: support removal from resource set adapters
  */
 package org.eclipse.emf.internal.cdo.view;
 
@@ -195,24 +196,58 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
   public void setTarget(Notifier newTarget)
   {
-    if (!isAdapterForType(newTarget))
+    if (newTarget == resourceSet)
     {
-      throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOViewSetImpl.3"), newTarget)); //$NON-NLS-1$
+      return;
     }
 
-    if (resourceSet != null)
+    if (newTarget == null && resourceSet != null)
     {
-      throw new IllegalStateException(Messages.getString("CDOViewSetImpl.4")); //$NON-NLS-1$
+      if (!resourceSet.getResources().isEmpty())
+      {
+        if (!resourceSet.eAdapters().contains(this))
+        {
+          resourceSet.eAdapters().add(this); // add me back to the resource set's adapters
+        }
+
+        throw new IllegalArgumentException(Messages.getString("CDOViewSetImpl.5")); //$NON-NLS-1$
+      }
+
+      if (getViews().length > 0)
+      {
+        if (!resourceSet.eAdapters().contains(this))
+        {
+          resourceSet.eAdapters().add(this); // add me back to the resource set's adapters
+        }
+
+        throw new IllegalArgumentException(Messages.getString("CDOViewSetImpl.6")); //$NON-NLS-1$
+      }
+    }
+    else
+    {
+      if (!isAdapterForType(newTarget))
+      {
+        throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOViewSetImpl.3"), newTarget)); //$NON-NLS-1$
+      }
+
+      if (resourceSet != null)
+      {
+        throw new IllegalStateException(Messages.getString("CDOViewSetImpl.4")); //$NON-NLS-1$
+      }
     }
 
     resourceSet = (ResourceSet)newTarget;
-    EPackage.Registry oldPackageRegistry = resourceSet.getPackageRegistry();
-    packageRegistry = new CDOViewSetPackageRegistryImpl(this, oldPackageRegistry);
-    resourceSet.setPackageRegistry(packageRegistry);
 
-    Registry registry = resourceSet.getResourceFactoryRegistry();
-    Map<String, Object> map = registry.getProtocolToFactoryMap();
-    map.put(CDOProtocolConstants.PROTOCOL_NAME, getResourceFactory());
+    if (resourceSet != null)
+    {
+      EPackage.Registry oldPackageRegistry = resourceSet.getPackageRegistry();
+      packageRegistry = new CDOViewSetPackageRegistryImpl(this, oldPackageRegistry);
+      resourceSet.setPackageRegistry(packageRegistry);
+
+      Registry registry = resourceSet.getResourceFactoryRegistry();
+      Map<String, Object> map = registry.getProtocolToFactoryMap();
+      map.put(CDOProtocolConstants.PROTOCOL_NAME, getResourceFactory());
+    }
   }
 
   public boolean isAdapterForType(Object type)

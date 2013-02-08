@@ -441,7 +441,8 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
             {
               for (CDOFeatureDelta delta : revisionDelta.getFeatureDeltas())
               {
-                oldRevisionDelta.addFeatureDelta(((InternalCDOFeatureDelta)delta).copy());
+                CDOFeatureDelta copy = ((InternalCDOFeatureDelta)delta).copy();
+                oldRevisionDelta.addFeatureDelta(copy, null);
               }
             }
           }

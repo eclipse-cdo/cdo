@@ -377,7 +377,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
         for (CDOFeatureDelta remoteFeatureDelta : remoteDelta.getFeatureDeltas())
         {
           // TODO Add public API for this:
-          ((InternalCDORevisionDelta)localDelta).addFeatureDelta(remoteFeatureDelta);
+          ((InternalCDORevisionDelta)localDelta).addFeatureDelta(remoteFeatureDelta, null);
         }
       }
 

@@ -22,10 +22,13 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
+import org.eclipse.emf.spi.cdo.DefaultCDOMerger.ResolutionPreference;
 
 import java.util.List;
 
@@ -35,8 +38,6 @@ import java.util.List;
 public class ConflictResolverExtendedTest extends AbstractCDOTest
 {
   private static final String TEST_RESOURCE_NAME = "/test1";
-
-  private CDOConflictResolver conflictResolver = new CDOMergingConflictResolver();
 
   // --- initialize model ----------------------------------------------------
 
@@ -49,16 +50,16 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     Root testRoot = getModel6Factory().createRoot();
     resource.getContents().add(testRoot);
 
-    BaseObject bObject1 = createBaseObject("BaseObject 1"); //$NON-NLS-1$
-    BaseObject bObject2 = createBaseObject("BaseObject 2"); //$NON-NLS-1$
-    BaseObject bObject3 = createBaseObject("BaseObject 3"); //$NON-NLS-1$
+    BaseObject bObject1 = createBaseObject("BaseObject 1");
+    BaseObject bObject2 = createBaseObject("BaseObject 2");
+    BaseObject bObject3 = createBaseObject("BaseObject 3");
 
     testRoot.getListA().add(bObject1);
     testRoot.getListA().add(bObject2);
     testRoot.getListA().add(bObject3);
 
-    ContainmentObject cObject1L1 = createContainmentObject("ContainmentObject 1 - Level 1"); //$NON-NLS-1$
-    ContainmentObject cObject1L2 = createContainmentObject("ContainmentObject 1 - Level 2"); //$NON-NLS-1$
+    ContainmentObject cObject1L1 = createContainmentObject("ContainmentObject 1 - Level 1");
+    ContainmentObject cObject1L2 = createContainmentObject("ContainmentObject 1 - Level 2");
     cObject1L1.getContainmentList().add(cObject1L2);
 
     testRoot.getListB().add(cObject1L1);
@@ -76,11 +77,11 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     resource.getContents().add(root);
 
     // setup base objects.
-    BaseObject bObject0 = createBaseObject("BaseObject 0"); //$NON-NLS-1$
-    BaseObject bObject1 = createBaseObject("BaseObject 1"); //$NON-NLS-1$
-    BaseObject bObject2 = createBaseObject("BaseObject 2"); //$NON-NLS-1$
-    BaseObject bObject3 = createBaseObject("BaseObject 3"); //$NON-NLS-1$
-    BaseObject bObject4 = createBaseObject("BaseObject 4"); //$NON-NLS-1$
+    BaseObject bObject0 = createBaseObject("BaseObject 0");
+    BaseObject bObject1 = createBaseObject("BaseObject 1");
+    BaseObject bObject2 = createBaseObject("BaseObject 2");
+    BaseObject bObject3 = createBaseObject("BaseObject 3");
+    BaseObject bObject4 = createBaseObject("BaseObject 4");
 
     root.getListA().add(bObject0);
     root.getListA().add(bObject1);
@@ -89,14 +90,14 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     root.getListA().add(bObject4);
 
     // containment objects.
-    ContainmentObject cObject0 = createContainmentObject("ContainmentObject 0"); //$NON-NLS-1$
-    ContainmentObject cObject00 = createContainmentObject("ContainmentObject 00"); //$NON-NLS-1$
-    BaseObject bcObject01 = createBaseObject("BaseContainmentObject 01"); //$NON-NLS-1$
+    ContainmentObject cObject0 = createContainmentObject("ContainmentObject 0");
+    ContainmentObject cObject00 = createContainmentObject("ContainmentObject 00");
+    BaseObject bcObject01 = createBaseObject("BaseContainmentObject 01");
 
     cObject00.getContainmentList().add(bcObject01);
     cObject0.getContainmentList().add(cObject00);
 
-    ContainmentObject cObject1 = createContainmentObject("ContainmentObject 1"); //$NON-NLS-1$
+    ContainmentObject cObject1 = createContainmentObject("ContainmentObject 1");
 
     root.getListB().add(cObject0);
     root.getListB().add(cObject1);
@@ -120,8 +121,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertNotNull(thisObject);
     BaseObject thatObject = thatTransaction.getObject(thisObject);
 
-    thisObject.setAttributeOptional("this"); //$NON-NLS-1$
-    thatObject.setAttributeOptional("that"); //$NON-NLS-1$
+    thisObject.setAttributeOptional("this");
+    thatObject.setAttributeOptional("that");
 
     thisTransaction.commit();
 
@@ -148,8 +149,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertNotNull(thisObject);
     BaseObject thatObject = thatTransaction.getObject(thisObject);
 
-    thisObject.setAttributeOptional("this"); //$NON-NLS-1$
-    thatObject.setAttributeOptional("that"); //$NON-NLS-1$
+    thisObject.setAttributeOptional("this");
+    thatObject.setAttributeOptional("that");
 
     commitAndSync(thisTransaction, thatTransaction);
 
@@ -175,10 +176,10 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     addConflictResolver(thatTransaction);
 
     BaseObject thisObject = getTestModelRoot(thisTransaction).getListA().get(0);
-    thisObject.setAttributeOptional("this"); //$NON-NLS-1$
+    thisObject.setAttributeOptional("this");
 
     BaseObject thatObject = thatTransaction.getObject(thisObject);
-    thatObject.setAttributeOptional("that"); //$NON-NLS-1$
+    thatObject.setAttributeOptional("that");
 
     commitAndSync(thisTransaction, thatTransaction);
     assertEquals(false, thisTransaction.isDirty());
@@ -200,20 +201,15 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
     BaseObject thatObject = thatTransaction.getObject(thisObject);
     assertNotNull(thatObject);
-    int objects = getTestModelRoot(thisTransaction).getListA().size();
 
     // remove object.
     getTestModelRoot(thisTransaction).getListA().remove(0);
 
     // change object.
-    thatObject.setAttributeOptional("that"); //$NON-NLS-1$
+    thatObject.setAttributeOptional("that");
 
     commitAndSync(thisTransaction, thatTransaction);
-    commitAndSync(thatTransaction, thisTransaction);
-
-    assertEquals(false, thisTransaction.isDirty());
-    assertEquals(false, thatTransaction.isDirty());
-    assertEquals(objects - 1, getTestModelRoot(thisTransaction).getListA().size());
+    assertEquals(true, thatTransaction.hasConflict());
   }
 
   public void testChangeRemoveTest() throws Exception
@@ -233,7 +229,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int objects = getTestModelRoot(thisTransaction).getListA().size();
 
     // change object.
-    thisObject.setAttributeOptional("this"); //$NON-NLS-1$
+    thisObject.setAttributeOptional("this");
 
     // remove object.
     Root thatRoot = thatTransaction.getObject(getTestModelRoot(thisTransaction));
@@ -261,24 +257,19 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertNotNull(thisObject);
     ContainmentObject thatObject = thatTransaction.getObject(thisObject);
     assertNotNull(thatObject);
-    int objects = getTestModelRoot(thisTransaction).getListB().size();
 
     // remove object.
     getTestModelRoot(thisTransaction).getListB().remove(0);
 
     // add object.
-    BaseObject addObject = createBaseObject("AddObject"); //$NON-NLS-1$
+    BaseObject addObject = createBaseObject("AddObject");
 
     ContainmentObject thatChild = (ContainmentObject)thatObject.getContainmentList().get(0);
     assertNotNull(thatChild);
     thatChild.getContainmentList().add(addObject);
 
     commitAndSync(thisTransaction, thatTransaction);
-    commitAndSync(thatTransaction, thisTransaction);
-
-    assertEquals(objects - 1, getTestModelRoot(thisTransaction).getListB().size());
-    assertEquals(false, thisTransaction.isDirty());
-    assertEquals(false, thatTransaction.isDirty());
+    assertEquals(true, thatTransaction.hasConflict());
   }
 
   public void testAddRemoveTest() throws Exception
@@ -298,7 +289,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int objects = getTestModelRoot(thisTransaction).getListB().size();
 
     // add object.
-    BaseObject addObject = createBaseObject("AddObject"); //$NON-NLS-1$
+    BaseObject addObject = createBaseObject("AddObject");
 
     ContainmentObject thisChild = (ContainmentObject)thisObject.getContainmentList().get(0);
     assertNotNull(thisChild);
@@ -326,25 +317,24 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     // add conflict resolver.
     addConflictResolver(thatTransaction);
 
-    ContainmentObject thisObject = (ContainmentObject)getTestModelRoot(thisTransaction).getListB().get(0);
+    Root thisRoot = getTestModelRoot(thisTransaction);
+    Root thatRoot = thatTransaction.getObject(thisRoot);
+
+    ContainmentObject thisObject = (ContainmentObject)thisRoot.getListB().get(0);
     assertNotNull(thisObject);
+
     ContainmentObject thatObject = thatTransaction.getObject(thisObject);
     assertNotNull(thatObject);
-    int objects = getTestModelRoot(thisTransaction).getListB().size();
 
     // remove object.
-    getTestModelRoot(thisTransaction).getListB().remove(0);
+    thisRoot.getListB().remove(0);
 
     // remove object.
-    Root thatRoot = thatTransaction.getObject(getTestModelRoot(thisTransaction));
     thatRoot.getListB().remove(0);
 
     commitAndSync(thisTransaction, thatTransaction);
-    commitAndSync(thatTransaction, thisTransaction);
-
-    assertEquals(objects - 1, getTestModelRoot(thisTransaction).getListB().size());
-    assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
+    assertEquals(false, thatTransaction.hasConflict());
   }
 
   // --- resolve many valued changes -------------------------------------
@@ -357,24 +347,21 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     initTestModelSimple();
     addConflictResolver(thatTransaction);
 
-    int objects = getTestModelRoot(thisTransaction).getListA().size();
-
-    // create new objects.
-    BaseObject thisObject = createBaseObject("ThisObject"); //$NON-NLS-1$
-    BaseObject thatObject = createBaseObject("ThatObject"); //$NON-NLS-1$
-
-    // add elements.
     Root thisRoot = getTestModelRoot(thisTransaction);
-    thisRoot.getListA().add(thisObject);
+    EList<BaseObject> thisList = thisRoot.getListA();
+    int objects = thisList.size();
 
     Root thatRoot = thatTransaction.getObject(thisRoot);
-    assertNotNull(thatRoot);
-    thatRoot.getListA().add(thatObject);
+    EList<BaseObject> thatList = thatRoot.getListA();
+
+    // Add elements
+    thisList.add(createBaseObject("ThisObject"));
+    thatList.add(createBaseObject("ThatObject"));
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
-    assertEquals(objects + 2, getTestModelRoot(thisTransaction).getListA().size());
+    assertEquals(objects + 2, thisList.size());
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
   }
@@ -390,7 +377,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int objects = getTestModelRoot(thisTransaction).getListA().size();
 
     // create new objects.
-    BaseObject thisObject = createBaseObject("ThisObject"); //$NON-NLS-1$
+    BaseObject thisObject = createBaseObject("ThisObject");
 
     // add elements.
     Root thisRoot = getTestModelRoot(thisTransaction);
@@ -426,7 +413,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     containmentList.move(2, containmentList.get(0));
 
     // create new objects.
-    BaseObject thatObject = createBaseObject("ThatObject"); //$NON-NLS-1$
+    BaseObject thatObject = createBaseObject("ThatObject");
 
     // add elements.
     Root thatRoot = thatTransaction.getObject(thisRoot);
@@ -452,7 +439,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int objects = getTestModelRoot(thisTransaction).getListA().size();
 
     // create new objects.
-    BaseObject thisObject = createBaseObject("ThisObject"); //$NON-NLS-1$
+    BaseObject thisObject = createBaseObject("ThisObject");
 
     // add elements.
     Root thisRoot = getTestModelRoot(thisTransaction);
@@ -479,26 +466,25 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     initTestModelSimple();
     addConflictResolver(thatTransaction);
 
-    int objects = getTestModelRoot(thisTransaction).getListA().size();
-
-    // remove element.
     Root thisRoot = getTestModelRoot(thisTransaction);
-    thisRoot.getListA().remove(1);
+    EList<BaseObject> thisList = thisRoot.getListA();
+    int objects = thisList.size();
 
-    // create new objects.
-    BaseObject thatObject = createBaseObject("ThatObject"); //$NON-NLS-1$
-
-    // add elements.
     Root thatRoot = thatTransaction.getObject(thisRoot);
-    assertNotNull(thatRoot);
-    thatRoot.getListA().add(thatObject);
+    EList<BaseObject> thatList = thatRoot.getListA();
+
+    // Remove 1 element
+    thisList.remove(1);
+
+    // Add 1 element
+    thatList.add(createBaseObject("ThatObject"));
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(objects, getTestModelRoot(thisTransaction).getListA().size());
+    assertEquals(objects, thisList.size());
   }
 
   public void testManyValuedChangeRemoveTest() throws Exception
@@ -537,24 +523,26 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     initTestModelSimple();
     addConflictResolver(thatTransaction);
 
-    int objects = getTestModelRoot(thisTransaction).getListA().size();
-
-    // move element.
     Root thisRoot = getTestModelRoot(thisTransaction);
-    EList<BaseObject> containmentList = thisRoot.getListA();
-    containmentList.move(2, containmentList.get(0));
+    EList<BaseObject> thisList = thisRoot.getListA();
+    BaseObject this0 = thisList.get(0);
+    int objects = thisList.size();
 
-    // remove same element.
     Root thatRoot = thatTransaction.getObject(thisRoot);
-    assertNotNull(thatRoot);
-    thatRoot.getListA().remove(0);
+    EList<BaseObject> thatList = thatRoot.getListA();
+
+    // Move first element to end
+    thisList.move(2, this0);
+
+    // Remove first element
+    thatList.remove(0);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(objects - 1, getTestModelRoot(thisTransaction).getListA().size());
+    assertEquals(objects - 1, thisList.size());
   }
 
   public void testManyValuedRemoveChangeTest() throws Exception
@@ -593,24 +581,18 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     initTestModelSimple();
     addConflictResolver(thatTransaction);
 
-    int objects = getTestModelRoot(thisTransaction).getListA().size();
-
-    // remove same element.
+    // Remove element
     Root thisRoot = getTestModelRoot(thisTransaction);
     thisRoot.getListA().remove(0);
 
-    // move element.
+    // Move same element
     Root thatRoot = thatTransaction.getObject(thisRoot);
-    assertNotNull(thatRoot);
     EList<BaseObject> containmentList = thatRoot.getListA();
     containmentList.move(2, containmentList.get(0));
 
     commitAndSync(thisTransaction, thatTransaction);
-    commitAndSync(thatTransaction, thisTransaction);
-
-    assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(objects - 1, getTestModelRoot(thisTransaction).getListA().size());
+    assertEquals(false, thatTransaction.hasConflict());
   }
 
   public void testManyValuedChangeChangeTest() throws Exception
@@ -734,30 +716,27 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     initTestModelSimple();
     addConflictResolver(thatTransaction);
 
-    int objects = getTestModelRoot(thisTransaction).getListA().size();
-
-    // add some elements.
-    BaseObject thisObject = createBaseObject("ThisObject"); //$NON-NLS-1$
-    BaseObject thisObject2 = createBaseObject("ThisObject2"); //$NON-NLS-1$
     Root thisRoot = getTestModelRoot(thisTransaction);
-    thisRoot.getListA().add(0, thisObject);
-    thisRoot.getListA().add(0, thisObject2);
+    EList<BaseObject> thisList = thisRoot.getListA();
+    int objects = thisList.size();
 
-    // remove element.
-    thisRoot = getTestModelRoot(thisTransaction);
-    thisRoot.getListA().remove(4);
-
-    // remove element.
     Root thatRoot = thatTransaction.getObject(thisRoot);
-    assertNotNull(thatRoot);
-    thatRoot.getListA().remove(0);
+    EList<BaseObject> thatList = thatRoot.getListA();
+
+    // Add 2 elements and remove 1 element
+    thisList.add(0, createBaseObject("ThisObject1"));
+    thisList.add(0, createBaseObject("ThisObject2"));
+    thisList.remove(4);
+
+    // Remove 1 element
+    thatList.remove(0);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(objects, getTestModelRoot(thisTransaction).getListA().size());
+    assertEquals(objects, thisList.size());
   }
 
   public void testManyValuedAddAddRemoveRemove2Test() throws Exception
@@ -768,28 +747,27 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     initTestModelSimple();
     addConflictResolver(thatTransaction);
 
-    int objects = getTestModelRoot(thisTransaction).getListA().size();
-
-    // remove elements.
     Root thisRoot = getTestModelRoot(thisTransaction);
-    thisRoot.getListA().remove(0);
-    thisRoot.getListA().remove(0);
-
-    // add elements.
-    BaseObject thatObject = createBaseObject("ThatObject"); //$NON-NLS-1$
-    BaseObject thatObject2 = createBaseObject("ThatObject2"); //$NON-NLS-1$
+    EList<BaseObject> thisList = thisRoot.getListA();
+    int objects = thisList.size();
 
     Root thatRoot = thatTransaction.getObject(thisRoot);
-    assertNotNull(thatRoot);
-    thatRoot.getListA().add(thatObject);
-    thatRoot.getListA().add(thatObject2);
+    EList<BaseObject> thatList = thatRoot.getListA();
+
+    // Remove elements
+    thisList.remove(0);
+    thisList.remove(0);
+
+    // Add elements
+    thatList.add(createBaseObject("ThatObject1"));
+    thatList.add(createBaseObject("ThatObject2"));
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(objects, getTestModelRoot(thisTransaction).getListA().size());
+    assertEquals(objects, thisList.size());
 
   }
 
@@ -804,8 +782,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int objects = getTestModelRoot(thisTransaction).getListA().size();
 
     // add elements.
-    BaseObject thisObject = createBaseObject("ThisObject"); //$NON-NLS-1$
-    BaseObject thisObject2 = createBaseObject("ThisObject2"); //$NON-NLS-1$
+    BaseObject thisObject = createBaseObject("ThisObject");
+    BaseObject thisObject2 = createBaseObject("ThisObject2");
 
     Root thisRoot = getTestModelRoot(thisTransaction);
     thisRoot.getListA().add(thisObject);
@@ -847,26 +825,28 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // create objects.
-    BaseObject thisObject = createBaseObject("ThisBaseObject 0"); //$NON-NLS-1$
-    thisRoot.getListA().add(0, thisObject);
+    BaseObject thisObject = createBaseObject("ThisBaseObject 0");
+    EList<BaseObject> thisListA = thisRoot.getListA();
+    thisListA.add(0, thisObject);
 
-    BaseObject thatObject = createBaseObject("ThatBaseObject 0"); //$NON-NLS-1$
-    thatRoot.getListA().add(0, thatObject);
+    BaseObject thatObject = createBaseObject("ThatBaseObject 0");
+    EList<BaseObject> thatListA = thatRoot.getListA();
+    thatListA.add(0, thatObject);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisListA);
+    printList("That ", thatListA);
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisRoot.getListA().get(0), thisObject);
-    assertEquals(thisRoot.getListA().get(1), thisTransaction.getObject(thatObject));
-    assertEquals(thatRoot.getListA().get(0), thatTransaction.getObject(thisObject));
-    assertEquals(thatRoot.getListA().get(1), thatObject);
+    assertEquals(thisListA.get(1), thisObject);
+    assertEquals(thisListA.get(0), thisTransaction.getObject(thatObject));
+    assertEquals(thatListA.get(1), thatTransaction.getObject(thisObject));
+    assertEquals(thatListA.get(0), thatObject);
   }
 
   public void testAddHeadAddTailTest() throws Exception
@@ -877,38 +857,37 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     initTestModel();
     addConflictResolver(thatTransaction);
 
-    // access objects.
     Root thisRoot = getTestModelRoot(thisTransaction);
-    assertNotNull(thisRoot);
-    Root thatRoot = thatTransaction.getObject(thisRoot);
-    assertNotNull(thatRoot);
+    EList<BaseObject> thisList = thisRoot.getListA();
+    int objects = thisList.size();
 
-    // attach adapters.
+    Root thatRoot = thatTransaction.getObject(thisRoot);
+    EList<BaseObject> thatList = thatRoot.getListA();
+
+    // Attach adapters
     thisRoot.eAdapters().add(new ListPrintingAdapter("This root: "));
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
-    // create objects.
-    BaseObject thisObject = createBaseObject("ThisBaseObject 0"); //$NON-NLS-1$
-    thisRoot.getListA().add(0, thisObject);
+    // Add element to head
+    BaseObject thisObject = createBaseObject("ThisBaseObject 0");
+    thisList.add(0, thisObject);
 
-    BaseObject thatObject = createBaseObject("ThatBaseObject 0"); //$NON-NLS-1$
-    thatRoot.getListA().add(thatObject);
+    // Add element to tail
+    BaseObject thatObject = createBaseObject("ThatBaseObject 0");
+    thatList.add(thatObject);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
-    // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    // Print contents of lists
+    printList("This ", thisList);
+    printList("That ", thatList);
 
-    // -- check indices.
-    int size = thisRoot.getListA().size();
+    // Check indices
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisRoot.getListA().get(0), thisObject);
-    assertEquals(thisRoot.getListA().get(size - 1), thisTransaction.getObject(thatObject));
-    assertEquals(thatRoot.getListA().get(0), thatTransaction.getObject(thisObject));
-    assertEquals(thatRoot.getListA().get(size - 1), thatObject);
+    assertEquals(objects + 2, thisList.size());
+    assertEquals(objects + 2, thatList.size());
   }
 
   public void testAddTailAddTailTest() throws Exception
@@ -930,27 +909,27 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // create objects.
-    BaseObject thisObject = createBaseObject("ThisBaseObject 0"); //$NON-NLS-1$
+    BaseObject thisObject = createBaseObject("ThisBaseObject 0");
     thisRoot.getListA().add(thisObject);
 
-    BaseObject thatObject = createBaseObject("ThatBaseObject 0"); //$NON-NLS-1$
+    BaseObject thatObject = createBaseObject("ThatBaseObject 0");
     thatRoot.getListA().add(thatObject);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisRoot.getListA().get(size - 2), thisObject);
-    assertEquals(thisRoot.getListA().get(size - 1), thisTransaction.getObject(thatObject));
-    assertEquals(thatRoot.getListA().get(size - 2), thatTransaction.getObject(thisObject));
-    assertEquals(thatRoot.getListA().get(size - 1), thatObject);
+    assertEquals(thisRoot.getListA().get(size - 1), thisObject);
+    assertEquals(thisRoot.getListA().get(size - 2), thisTransaction.getObject(thatObject));
+    assertEquals(thatRoot.getListA().get(size - 1), thatTransaction.getObject(thisObject));
+    assertEquals(thatRoot.getListA().get(size - 2), thatObject);
   }
 
   public void testAddTailAddHeadTest() throws Exception
@@ -961,38 +940,39 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     initTestModel();
     addConflictResolver(thatTransaction);
 
-    // access objects.
     Root thisRoot = getTestModelRoot(thisTransaction);
-    assertNotNull(thisRoot);
-    Root thatRoot = thatTransaction.getObject(thisRoot);
-    assertNotNull(thatRoot);
+    EList<BaseObject> thisList = thisRoot.getListA();
 
-    // attach adapters.
+    Root thatRoot = thatTransaction.getObject(thisRoot);
+    EList<BaseObject> thatList = thatRoot.getListA();
+
+    // Attach adapters
     thisRoot.eAdapters().add(new ListPrintingAdapter("This root: "));
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
-    // create objects.
-    BaseObject thisObject = createBaseObject("ThisBaseObject 0"); //$NON-NLS-1$
-    thisRoot.getListA().add(thisObject);
+    // Add element to tail
+    BaseObject thisObject = createBaseObject("ThisBaseObject 0");
+    thisList.add(thisObject);
 
-    BaseObject thatObject = createBaseObject("ThatBaseObject 0"); //$NON-NLS-1$
-    thatRoot.getListA().add(0, thatObject);
+    // Add element to head
+    BaseObject thatObject = createBaseObject("ThatBaseObject 0");
+    thatList.add(0, thatObject);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
-    // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    // Print contents of lists
+    printList("This ", thisList);
+    printList("That ", thatList);
 
-    // -- check indices.
-    int size = thisRoot.getListA().size();
+    // Check indices
+    int size = thisList.size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisRoot.getListA().get(size - 1), thisObject);
-    assertEquals(thisRoot.getListA().get(0), thisTransaction.getObject(thatObject));
-    assertEquals(thatRoot.getListA().get(size - 1), thatTransaction.getObject(thisObject));
-    assertEquals(thatRoot.getListA().get(0), thatObject);
+    assertEquals(thisList.get(size - 1), thisObject);
+    assertEquals(thisList.get(0), thisTransaction.getObject(thatObject));
+    assertEquals(thatList.get(size - 1), thatTransaction.getObject(thisObject));
+    assertEquals(thatList.get(0), thatObject);
   }
 
   // add - remove
@@ -1016,7 +996,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // create object.
-    BaseObject thisObject = createBaseObject("ThisBaseObject 0"); //$NON-NLS-1$
+    BaseObject thisObject = createBaseObject("ThisBaseObject 0");
     thisRoot.getListA().add(0, thisObject);
 
     // remove object (get it before deletion).
@@ -1032,8 +1012,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -1065,7 +1045,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // create object.
-    BaseObject thisObject = createBaseObject("ThisBaseObject 0"); //$NON-NLS-1$
+    BaseObject thisObject = createBaseObject("ThisBaseObject 0");
     thisRoot.getListA().add(0, thisObject);
 
     // remove object (get it before deletion).
@@ -1082,8 +1062,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
@@ -1116,7 +1096,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // create object.
-    BaseObject thisObject = createBaseObject("ThisBaseObject 0"); //$NON-NLS-1$
+    BaseObject thisObject = createBaseObject("ThisBaseObject 0");
     thisRoot.getListA().add(thisObject);
 
     // remove object (get it before deletion).
@@ -1133,8 +1113,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
@@ -1167,7 +1147,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // create objects.
-    BaseObject thisObject = createBaseObject("ThisBaseObject 0"); //$NON-NLS-1$
+    BaseObject thisObject = createBaseObject("ThisBaseObject 0");
     thisRoot.getListA().add(thisObject);
 
     // remove object (get it before deletion).
@@ -1183,8 +1163,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
@@ -1210,16 +1190,14 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
     // access objects.
     Root thisRoot = getTestModelRoot(thisTransaction);
-    assertNotNull(thisRoot);
     Root thatRoot = thatTransaction.getObject(thisRoot);
-    assertNotNull(thatRoot);
 
     // attach adapters.
     thisRoot.eAdapters().add(new ListPrintingAdapter("This root: "));
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // create object.
-    BaseObject thisObject = createBaseObject("ThisBaseObject 0"); //$NON-NLS-1$
+    BaseObject thisObject = createBaseObject("ThisBaseObject 0");
     thisRoot.getListA().add(0, thisObject);
 
     // Move object.
@@ -1230,8 +1208,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
@@ -1251,38 +1229,35 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     initTestModel();
     addConflictResolver(thatTransaction);
 
-    // access objects.
     Root thisRoot = getTestModelRoot(thisTransaction);
-    assertNotNull(thisRoot);
-    Root thatRoot = thatTransaction.getObject(thisRoot);
-    assertNotNull(thatRoot);
+    EList<BaseObject> thisList = thisRoot.getListA();
+    int objects = thisList.size();
 
-    // attach adapters.
+    Root thatRoot = thatTransaction.getObject(thisRoot);
+    EList<BaseObject> thatList = thatRoot.getListA();
+
+    // Attach adapters
     thisRoot.eAdapters().add(new ListPrintingAdapter("This root: "));
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
-    // create object.
-    BaseObject thisObject = createBaseObject("ThisBaseObject 0"); //$NON-NLS-1$
-    thisRoot.getListA().add(0, thisObject);
+    // Add element to head
+    thisList.add(0, createBaseObject("ThisBaseObject 0"));
 
-    // Move object.
-    BaseObject thatMoveObject = thatRoot.getListA().get(thatRoot.getListA().size() - 1);
-    thatRoot.getListA().move(0, thatRoot.getListA().size() - 1);
+    // Move head element
+    thatList.move(0, thatList.size() - 1);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
-    // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    // Print contents of lists
+    printList("This ", thisList);
+    printList("That ", thatList);
 
-    // -- check indices.
+    // Check indices
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisRoot.getListA().get(0), thisObject);
-    assertEquals(thisRoot.getListA().get(1), thisTransaction.getObject(thatMoveObject));
-    assertEquals(thatRoot.getListA().get(0), thatTransaction.getObject(thisObject));
-    assertEquals(thatRoot.getListA().get(1), thatMoveObject);
+    assertEquals(objects + 1, thisList.size());
+    assertEquals(objects + 1, thatList.size());
   }
 
   public void testAddTailMoveTailTest() throws Exception
@@ -1304,7 +1279,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // create object.
-    BaseObject thisObject = createBaseObject("ThisBaseObject 0"); //$NON-NLS-1$
+    BaseObject thisObject = createBaseObject("ThisBaseObject 0");
     thisRoot.getListA().add(thisObject);
 
     // Move object.
@@ -1315,8 +1290,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
@@ -1347,7 +1322,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // create objects.
-    BaseObject thisObject = createBaseObject("ThisBaseObject 0"); //$NON-NLS-1$
+    BaseObject thisObject = createBaseObject("ThisBaseObject 0");
     thisRoot.getListA().add(thisObject);
 
     // remove object.
@@ -1358,8 +1333,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
@@ -1390,7 +1365,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // create objects.
-    BaseObject thisObject = createBaseObject("ThisBaseObject 0"); //$NON-NLS-1$
+    BaseObject thisObject = createBaseObject("ThisBaseObject 0");
     thisRoot.getListA().add(0, thisObject);
 
     // clear list.
@@ -1400,12 +1375,14 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
+    assertEquals(false, thisTransaction.hasConflict());
+    assertEquals(false, thatTransaction.hasConflict());
     assertEquals(0, thisRoot.getListA().size());
     assertEquals(0, thatRoot.getListA().size());
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thisObject).cdoState());
@@ -1430,7 +1407,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // create objects.
-    BaseObject thisObject = createBaseObject("ThisBaseObject 0"); //$NON-NLS-1$
+    BaseObject thisObject = createBaseObject("ThisBaseObject 0");
     thisRoot.getListA().add(thisObject);
 
     // clear list.
@@ -1440,12 +1417,14 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
+    assertEquals(false, thisTransaction.hasConflict());
+    assertEquals(false, thatTransaction.hasConflict());
     assertEquals(0, thisRoot.getListA().size());
     assertEquals(0, thatRoot.getListA().size());
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thisObject).cdoState());
@@ -1479,15 +1458,15 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     BaseObject thisAfterRemoveObject = thisRoot.getListA().get(0);
 
     // create object.
-    BaseObject thatObject = createBaseObject("ThatBaseObject 0"); //$NON-NLS-1$
+    BaseObject thatObject = createBaseObject("ThatBaseObject 0");
     thatRoot.getListA().add(0, thatObject);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -1528,15 +1507,15 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     BaseObject thisAfterRemoveObject = thisRoot.getListA().get(0);
 
     // create object.
-    BaseObject thatObject = createBaseObject("ThatBaseObject 0"); //$NON-NLS-1$
+    BaseObject thatObject = createBaseObject("ThatBaseObject 0");
     thatRoot.getListA().add(thatObject);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int listSize = thisRoot.getListA().size();
@@ -1578,15 +1557,15 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     BaseObject thisAfterRemoveObject = thisRoot.getListA().get(thisRoot.getListA().size() - 1);
 
     // create object.
-    BaseObject thatObject = createBaseObject("ThatBaseObject 0"); //$NON-NLS-1$
+    BaseObject thatObject = createBaseObject("ThatBaseObject 0");
     thatRoot.getListA().add(0, thatObject);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int listSize = thisRoot.getListA().size();
@@ -1628,15 +1607,15 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     BaseObject thisAfterRemoveObject = thisRoot.getListA().get(thisRoot.getListA().size() - 1);
 
     // create object.
-    BaseObject thatObject = createBaseObject("ThatBaseObject 0"); //$NON-NLS-1$
+    BaseObject thatObject = createBaseObject("ThatBaseObject 0");
     thatRoot.getListA().add(thatObject);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int listSize = thisRoot.getListA().size();
@@ -1690,8 +1669,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -1744,8 +1723,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int listSize = thisRoot.getListA().size();
@@ -1801,8 +1780,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int listSize = thisRoot.getListA().size();
@@ -1858,8 +1837,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int listSize = thisRoot.getListA().size();
@@ -1883,44 +1862,42 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     initTestModel();
     addConflictResolver(thatTransaction);
 
-    // access objects.
     Root thisRoot = getTestModelRoot(thisTransaction);
-    assertNotNull(thisRoot);
-    Root thatRoot = thatTransaction.getObject(thisRoot);
-    assertNotNull(thatRoot);
+    EList<BaseObject> thisList = thisRoot.getListA();
 
-    // attach adapters.
+    Root thatRoot = thatTransaction.getObject(thisRoot);
+    EList<BaseObject> thatList = thatRoot.getListA();
+
+    // Attach adapters
     thisRoot.eAdapters().add(new ListPrintingAdapter("This root: "));
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
-    // remove object (get it before deletion).
-    BaseObject thisRemoveObject = thisRoot.getListA().get(0);
-    assertNotNull(thisRemoveObject);
+    // Remove first element (get it before deletion)
+    BaseObject thisRemoveObject = thisList.get(0);
     BaseObject thatRemoveObject = thatTransaction.getObject(thisRemoveObject);
-    assertNotNull(thatRemoveObject);
 
-    thisRoot.getListA().remove(0);
-    BaseObject thisAfterRemoveObject = thisRoot.getListA().get(0);
+    thisList.remove(0);
+    BaseObject thisAfterRemoveObject = thisList.get(0);
 
-    // Move object.
-    BaseObject thatMoveObject = thatRoot.getListA().get(0);
-    thatRoot.getListA().move(thatRoot.getListA().size() - 1, 0);
-    BaseObject thatAfterMoveObject = thatRoot.getListA().get(0);
+    // Move first element
+    BaseObject thatMoveObject = thatList.get(0);
+    thatList.move(thatList.size() - 1, 0);
+    BaseObject thatAfterMoveObject = thatList.get(0);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
-    // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    // Print contents of lists
+    printList("This ", thisList);
+    printList("That ", thatList);
 
-    // -- check indices.
+    // Check indices
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisAfterRemoveObject, thisRoot.getListA().get(0));
-    assertEquals(thatTransaction.getObject(thisAfterRemoveObject), thatRoot.getListA().get(0));
-    assertEquals(thisTransaction.getObject(thatAfterMoveObject), thisRoot.getListA().get(0));
-    assertEquals(thatAfterMoveObject, thatRoot.getListA().get(0));
+    assertEquals(thisAfterRemoveObject, thisList.get(0));
+    assertEquals(thatTransaction.getObject(thisAfterRemoveObject), thatList.get(0));
+    assertEquals(thisTransaction.getObject(thatAfterMoveObject), thisList.get(0));
+    assertEquals(thatAfterMoveObject, thatList.get(0));
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thisRemoveObject).cdoState());
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatRemoveObject).cdoState());
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatMoveObject).cdoState());
@@ -1962,8 +1939,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int listSize = thisRoot.getListA().size();
@@ -2015,8 +1992,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int listSize = thisRoot.getListA().size();
@@ -2068,8 +2045,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int listSize = thisRoot.getListA().size();
@@ -2118,8 +2095,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -2165,8 +2142,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -2202,15 +2179,15 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     BaseObject thisAfterMoveObject = thisRoot.getListA().get(0);
 
     // create object.
-    BaseObject thatObject = createBaseObject("ThatBaseObject 0"); //$NON-NLS-1$
+    BaseObject thatObject = createBaseObject("ThatBaseObject 0");
     thatRoot.getListA().add(0, thatObject);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
@@ -2248,15 +2225,15 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     BaseObject thisAfterMoveObject = thisRoot.getListA().get(0);
 
     // create object.
-    BaseObject thatObject = createBaseObject("ThatBaseObject 0"); //$NON-NLS-1$
+    BaseObject thatObject = createBaseObject("ThatBaseObject 0");
     thatRoot.getListA().add(thatObject);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
@@ -2294,26 +2271,26 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     BaseObject thisAfterMoveObject = thisRoot.getListA().get(thisRoot.getListA().size() - 1);
 
     // create object.
-    BaseObject thatObject = createBaseObject("ThatBaseObject 0"); //$NON-NLS-1$);
+    BaseObject thatObject = createBaseObject("ThatBaseObject 0");
     thatRoot.getListA().add(0, thatObject);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisTransaction.getObject(thatObject), thisRoot.getListA().get(1));
-    assertEquals(thatObject, thatRoot.getListA().get(1));
+    assertEquals(thisTransaction.getObject(thatObject), thisRoot.getListA().get(0));
+    assertEquals(thatObject, thatRoot.getListA().get(0));
     assertEquals(thisAfterMoveObject, thisRoot.getListA().get(size - 1));
     assertEquals(thatTransaction.getObject(thisAfterMoveObject), thatRoot.getListA().get(size - 1));
-    assertEquals(thisMoveObject, thisRoot.getListA().get(0));
-    assertEquals(thatTransaction.getObject(thisMoveObject), thatRoot.getListA().get(0));
+    assertEquals(thisMoveObject, thisRoot.getListA().get(1));
+    assertEquals(thatTransaction.getObject(thisMoveObject), thatRoot.getListA().get(1));
   }
 
   public void testMoveTailAddTailTest() throws Exception
@@ -2340,15 +2317,15 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     BaseObject thisAfterMoveObject = thisRoot.getListA().get(thisRoot.getListA().size() - 1);
 
     // create object.
-    BaseObject thatObject = createBaseObject("ThatBaseObject 0"); //$NON-NLS-1$);
+    BaseObject thatObject = createBaseObject("ThatBaseObject 0");
     thatRoot.getListA().add(thatObject);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
@@ -2395,8 +2372,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -2443,8 +2420,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
@@ -2493,8 +2470,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
@@ -2543,8 +2520,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
@@ -2595,8 +2572,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
@@ -2648,8 +2625,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
@@ -2701,8 +2678,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
@@ -2754,8 +2731,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int size = thisRoot.getListA().size();
@@ -2803,8 +2780,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -2849,8 +2826,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -2885,15 +2862,15 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thisRoot.getListA().clear();
 
     // create objects.
-    BaseObject thatObject = createBaseObject("ThatBaseObject 0"); //$NON-NLS-1$
+    BaseObject thatObject = createBaseObject("ThatBaseObject 0");
     thatRoot.getListA().add(0, thatObject);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -2926,15 +2903,15 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thisRoot.getListA().clear();
 
     // create objects.
-    BaseObject thatObject = createBaseObject("ThatBaseObject 0"); //$NON-NLS-1$
+    BaseObject thatObject = createBaseObject("ThatBaseObject 0");
     thatRoot.getListA().add(thatObject);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -2976,8 +2953,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -3020,8 +2997,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -3065,8 +3042,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -3110,8 +3087,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -3152,8 +3129,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -3207,8 +3184,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -3262,8 +3239,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     int listSize = thisRoot.getListA().size();
@@ -3322,8 +3299,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListA()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListA()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListA());
+    printList("That ", thatRoot.getListA());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -3348,51 +3325,49 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     initTestModel();
     addConflictResolver(thatTransaction);
 
-    // access objects.
     Root thisRoot = getTestModelRoot(thisTransaction);
-    assertNotNull(thisRoot);
-    Root thatRoot = thatTransaction.getObject(thisRoot);
-    assertNotNull(thatRoot);
+    EList<BaseObject> thisList = thisRoot.getListB();
 
-    // attach adapters.
+    Root thatRoot = thatTransaction.getObject(thisRoot);
+    EList<BaseObject> thatList = thatRoot.getListB();
+
+    // Attach adapters
     thisRoot.eAdapters().add(new ListPrintingAdapter("This root: "));
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
-    // remove containment.
-    ContainmentObject thisToRemoveContainment = (ContainmentObject)thisRoot.getListB().get(0);
-    assertNotNull(thisToRemoveContainment);
-    ContainmentObject thisAfterRemoveContainment = (ContainmentObject)thisRoot.getListB().get(1);
-    thisRoot.getListB().remove(0);
+    // Remove containment
+    ContainmentObject thisToRemoveContainment = (ContainmentObject)thisList.get(0);
+    thisList.remove(0);
+    ContainmentObject thisAfterRemoveContainment = (ContainmentObject)thisList.get(0);
 
-    // add child to containment.
-    BaseObject bcObject0 = createBaseObject("AddBaseContainmentObject 0"); //$NON-NLS-1$
-    bcObject0.setAttributeRequired("AddBaseContainmentObject 0"); //$NON-NLS-1$
-    ContainmentObject thatAddContainment = createContainmentObject("AddContainmentObject 0"); //$NON-NLS-1$
-    thatAddContainment.setAttributeRequired("AddContainmentObject 0"); //$NON-NLS-1$
-    thatAddContainment.setContainmentOptional(bcObject0);
+    ContainmentObject thatAddContainment = createContainmentObject("AddContainmentObject 0");
+    thatAddContainment.setAttributeRequired("AddContainmentObject 0");
+    thatAddContainment.setContainmentOptional(createBaseObject("AddBaseContainmentObject 0"));
 
-    ContainmentObject thatParent = (ContainmentObject)thatRoot.getListB().get(0);
-    assertNotNull(thatParent);
-    // detach an object.
-    ContainmentObject thatReattachContainment = (ContainmentObject)thatParent.getContainmentList().remove(0);
-    // add a new object.
-    thatParent.getContainmentList().add(thatAddContainment);
-    // reattach containment.
-    thatParent.getContainmentList().add(thatReattachContainment);
+    ContainmentObject thatParent = (ContainmentObject)thatList.get(0);
+    EList<BaseObject> thatParentList = thatParent.getContainmentList();
+
+    // Detach an object
+    ContainmentObject thatReattachContainment = (ContainmentObject)thatParentList.remove(0);
+
+    // Add a new object
+    thatParentList.add(thatAddContainment);
+
+    // Reattach containment
+    thatParentList.add(thatReattachContainment);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
-    // print contents of lists
-    printList("This ", thisRoot.getListB()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListB()); //$NON-NLS-1$
+    // Print contents of lists
+    printList("This ", thisList);
+    printList("That ", thatList);
 
-    // -- check indices.
+    // Check indices
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisAfterRemoveContainment, thisRoot.getListB().get(0));
-    assertEquals(thatTransaction.getObject(thisAfterRemoveContainment), thatRoot.getListB().get(0));
-
+    assertEquals(thisAfterRemoveContainment, thisList.get(0));
+    assertEquals(thatTransaction.getObject(thisAfterRemoveContainment), thatList.get(0));
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thisToRemoveContainment).cdoState());
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatParent).cdoState());
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatReattachContainment).cdoState());
@@ -3424,9 +3399,9 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thisRoot.getListB().remove(0);
 
     // add child to containment.
-    BaseObject bcObject0 = createBaseObject("AddBaseContainmentObject 0"); //$NON-NLS-1$
-    ContainmentObject thatAddContainment = createContainmentObject("AddContainmentObject 0"); //$NON-NLS-1$
-    thatAddContainment.setAttributeRequired("AddContainmentObject 0"); //$NON-NLS-1$
+    BaseObject bcObject0 = createBaseObject("AddBaseContainmentObject 0");
+    ContainmentObject thatAddContainment = createContainmentObject("AddContainmentObject 0");
+    thatAddContainment.setAttributeRequired("AddContainmentObject 0");
     thatAddContainment.setContainmentOptional(bcObject0);
 
     ContainmentObject thatParent = (ContainmentObject)thatRoot.getListB().get(0);
@@ -3442,8 +3417,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListB()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListB()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListB());
+    printList("That ", thatRoot.getListB());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -3491,8 +3466,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListB()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListB()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListB());
+    printList("That ", thatRoot.getListB());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -3543,8 +3518,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListB()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListB()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListB());
+    printList("That ", thatRoot.getListB());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -3582,8 +3557,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thisRoot.getListB().remove(0);
 
     // add child to containment.
-    BaseObject bcObject0 = createBaseObject("AddBaseContainmentObject 0"); //$NON-NLS-1$
-    ContainmentObject thatAddContainment = createContainmentObject("AddContainmentObject 0"); //$NON-NLS-1$
+    BaseObject bcObject0 = createBaseObject("AddBaseContainmentObject 0");
+    ContainmentObject thatAddContainment = createContainmentObject("AddContainmentObject 0");
     thatAddContainment.setContainmentOptional(bcObject0);
 
     ContainmentObject thatParent = (ContainmentObject)thatRoot.getListB().get(0);
@@ -3599,8 +3574,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListB()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListB()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListB());
+    printList("That ", thatRoot.getListB());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -3647,8 +3622,8 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     commitAndSync(thatTransaction, thisTransaction);
 
     // print contents of lists
-    printList("This ", thisRoot.getListB()); //$NON-NLS-1$
-    printList("That ", thatRoot.getListB()); //$NON-NLS-1$
+    printList("This ", thisRoot.getListB());
+    printList("That ", thatRoot.getListB());
 
     // -- check indices.
     assertEquals(false, thisTransaction.isDirty());
@@ -3670,20 +3645,20 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
     // create initial model.
     Root root = getTestModelRoot(thisTransaction);
-    ContainmentObject group1 = createContainmentObject("Group 1"); //$NON-NLS-1$
-    group1.setAttributeRequired("Group 1"); //$NON-NLS-1$
+    ContainmentObject group1 = createContainmentObject("Group 1");
+    group1.setAttributeRequired("Group 1");
 
-    ContainmentObject group2 = createContainmentObject("Group 2"); //$NON-NLS-1$
-    group2.setAttributeRequired("Group 2"); //$NON-NLS-1$
+    ContainmentObject group2 = createContainmentObject("Group 2");
+    group2.setAttributeRequired("Group 2");
 
-    BaseObject element0 = createBaseObject("Element 0"); //$NON-NLS-1$
-    element0.setAttributeRequired("Element 0"); //$NON-NLS-1$
+    BaseObject element0 = createBaseObject("Element 0");
+    element0.setAttributeRequired("Element 0");
 
-    BaseObject element1 = createBaseObject("Element 1"); //$NON-NLS-1$
-    element1.setAttributeRequired("Element 1"); //$NON-NLS-1$
+    BaseObject element1 = createBaseObject("Element 1");
+    element1.setAttributeRequired("Element 1");
 
-    BaseObject element2 = createBaseObject("Element 2"); //$NON-NLS-1$
-    element2.setAttributeRequired("Element 2"); //$NON-NLS-1$
+    BaseObject element2 = createBaseObject("Element 2");
+    element2.setAttributeRequired("Element 2");
 
     root.getListC().add(group1);
     root.getListC().add(group2);
@@ -3769,31 +3744,28 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   private void printList(String identifier, List<BaseObject> list)
   {
-    System.out.println(identifier + "List:"); //$NON-NLS-1$
-    System.out.print("["); //$NON-NLS-1$
-    boolean first = true;
-
-    for (BaseObject bObj : list)
+    StringBuilder builder = new StringBuilder();
+    for (BaseObject element : list)
     {
-      if (first)
+      if (builder.length() != 0)
       {
-        first = false;
-      }
-      else
-      {
-        System.out.print(", "); //$NON-NLS-1$
+        builder.append(", ");
       }
 
-      System.out.print(bObj.getAttributeRequired() + " (" + CDOUtil.getCDOObject(bObj).cdoID() + ")"); //$NON-NLS-1$//$NON-NLS-2$
+      builder.append(element.getAttributeRequired() + " [" + CDOUtil.getCDOObject(element).cdoID() + "]");
     }
 
-    System.out.println("]"); //$NON-NLS-1$
-
+    IOUtil.OUT().println(identifier + "List: " + builder);
   }
 
   private void addConflictResolver(CDOTransaction transaction)
   {
-    transaction.options().addConflictResolver(conflictResolver);
+    transaction.options().addConflictResolver(createConflictResolver());
+  }
+
+  protected CDOConflictResolver createConflictResolver()
+  {
+    return new CDOMergingConflictResolver(ResolutionPreference.NONE);
   }
 
   /**

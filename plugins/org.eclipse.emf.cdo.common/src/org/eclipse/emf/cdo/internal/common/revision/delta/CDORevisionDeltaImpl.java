@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.PartialCollectionLoadingNotSupportedException;
@@ -37,6 +38,9 @@ import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+
+import org.eclipse.net4j.util.Predicate;
+import org.eclipse.net4j.util.Predicates;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
@@ -91,7 +95,8 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     {
       for (CDOFeatureDelta delta : revisionDelta.getFeatureDeltas())
       {
-        addFeatureDelta(((InternalCDOFeatureDelta)delta).copy());
+        CDOFeatureDelta copy = ((InternalCDOFeatureDelta)delta).copy();
+        addFeatureDelta(copy, null);
       }
     }
   }
@@ -120,12 +125,15 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
       dirtyContainerID = ((CDOWithID)dirtyContainerID).cdoID();
     }
 
+    CDOID dirtyResourceID = dirtyData.getResourceID();
+    int dirtyContainingFeatureID = dirtyData.getContainingFeatureID();
     if (!compare(originData.getContainerID(), dirtyContainerID)
-        || !compare(originData.getContainingFeatureID(), dirtyData.getContainingFeatureID())
-        || !compare(originData.getResourceID(), dirtyData.getResourceID()))
+        || !compare(originData.getContainingFeatureID(), dirtyContainingFeatureID)
+        || !compare(originData.getResourceID(), dirtyResourceID))
     {
-      addFeatureDelta(new CDOContainerFeatureDeltaImpl(dirtyData.getResourceID(), dirtyContainerID,
-          dirtyData.getContainingFeatureID()));
+      CDOFeatureDelta delta = new CDOContainerFeatureDeltaImpl(dirtyResourceID, dirtyContainerID,
+          dirtyContainingFeatureID);
+      addFeatureDelta(delta, null);
     }
   }
 
@@ -249,23 +257,29 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     }
   }
 
+  @Deprecated
   public void addFeatureDelta(CDOFeatureDelta delta)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void addFeatureDelta(CDOFeatureDelta delta, CDOOriginSizeProvider originSizeProvider)
   {
     if (delta instanceof CDOListFeatureDelta)
     {
       CDOListFeatureDelta listDelta = (CDOListFeatureDelta)delta;
       for (CDOFeatureDelta listChange : listDelta.getListChanges())
       {
-        addFeatureDelta(listChange);
+        addFeatureDelta(listChange, listDelta);
       }
     }
     else
     {
-      addSingleFeatureDelta(delta);
+      addSingleFeatureDelta(delta, originSizeProvider);
     }
   }
 
-  private void addSingleFeatureDelta(CDOFeatureDelta delta)
+  private void addSingleFeatureDelta(CDOFeatureDelta delta, CDOOriginSizeProvider originSizeProvider)
   {
     EStructuralFeature feature = delta.getFeature();
     if (feature.isMany())
@@ -273,7 +287,8 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
       CDOListFeatureDeltaImpl listDelta = (CDOListFeatureDeltaImpl)featureDeltas.get(feature);
       if (listDelta == null)
       {
-        listDelta = new CDOListFeatureDeltaImpl(feature);
+        int originSize = originSizeProvider.getOriginSize();
+        listDelta = new CDOListFeatureDeltaImpl(feature, originSize);
         featureDeltas.put(listDelta.getFeature(), listDelta);
       }
 
@@ -304,9 +319,18 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
 
   public void accept(CDOFeatureDeltaVisitor visitor)
   {
+    accept(visitor, Predicates.<EStructuralFeature> alwaysTrue());
+  }
+
+  public void accept(CDOFeatureDeltaVisitor visitor, Predicate<EStructuralFeature> filter)
+  {
     for (CDOFeatureDelta featureDelta : featureDeltas.values())
     {
-      ((CDOFeatureDeltaImpl)featureDelta).accept(visitor);
+      EStructuralFeature feature = featureDelta.getFeature();
+      if (filter.apply(feature))
+      {
+        ((CDOFeatureDeltaImpl)featureDelta).accept(visitor);
+      }
     }
   }
 
@@ -320,13 +344,20 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     {
       if (feature.isMany())
       {
-        if (originData.size(feature) > 0 && dirtyData.size(feature) == 0)
+        final int originSize = originData.size(feature);
+        if (originSize > 0 && dirtyData.size(feature) == 0)
         {
-          addFeatureDelta(new CDOClearFeatureDeltaImpl(feature));
+          addFeatureDelta(new CDOClearFeatureDeltaImpl(feature), new CDOOriginSizeProvider()
+          {
+            public int getOriginSize()
+            {
+              return originSize;
+            }
+          });
         }
         else
         {
-          CDOListFeatureDelta listFeatureDelta = new CDOListFeatureDeltaImpl(feature);
+          CDOListFeatureDelta listFeatureDelta = new CDOListFeatureDeltaImpl(feature, originSize);
           final List<CDOFeatureDelta> changes = listFeatureDelta.getListChanges();
 
           ListDifferenceAnalyzer analyzer = new ListDifferenceAnalyzer()
@@ -363,9 +394,10 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
             protected void createMoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object value,
                 int index, int toIndex)
             {
-              CDOMoveFeatureDeltaImpl delta = new CDOMoveFeatureDeltaImpl(feature, toIndex, index);
               // fix until ListDifferenceAnalyzer delivers the correct value (same problem as bug #308618).
-              delta.setValue(oldList.get(index));
+              value = oldList.get(index);
+
+              CDOMoveFeatureDeltaImpl delta = new CDOMoveFeatureDeltaImpl(feature, toIndex, index, value);
               changes.add(delta);
               oldList.move(toIndex, index);
             }
@@ -409,11 +441,13 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
         {
           if (dirtyValue == null)
           {
-            addFeatureDelta(new CDOUnsetFeatureDeltaImpl(feature));
+            CDOFeatureDelta delta = new CDOUnsetFeatureDeltaImpl(feature);
+            addFeatureDelta(delta, null);
           }
           else
           {
-            addFeatureDelta(new CDOSetFeatureDeltaImpl(feature, 0, dirtyValue, originValue));
+            CDOFeatureDelta delta = new CDOSetFeatureDeltaImpl(feature, 0, dirtyValue, originValue);
+            addFeatureDelta(delta, null);
           }
         }
       }

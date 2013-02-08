@@ -17,12 +17,17 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
+import org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.Predicate;
+import org.eclipse.net4j.util.Predicates;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -136,6 +141,41 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   public boolean isWritable()
   {
     return getPermission().isWritable();
+  }
+
+  /**
+   * @since 4.2
+   */
+  public void accept(CDORevisionValueVisitor visitor)
+  {
+    accept(visitor, Predicates.<EStructuralFeature> alwaysTrue());
+  }
+
+  /**
+   * @since 4.2
+   */
+  public void accept(CDORevisionValueVisitor visitor, Predicate<EStructuralFeature> filter)
+  {
+    for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
+    {
+      if (filter.apply(feature))
+      {
+        if (feature.isMany())
+        {
+          int index = 0;
+          CDOList list = getList(feature);
+          for (Object value : list)
+          {
+            visitor.visit(feature, value, index++);
+          }
+        }
+        else
+        {
+          Object value = getValue(feature);
+          visitor.visit(feature, value, CDOFeatureDelta.NO_INDEX);
+        }
+      }
+    }
   }
 
   /**

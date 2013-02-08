@@ -166,7 +166,7 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
         InternalCDORevisionDelta newDelta = (InternalCDORevisionDelta)oldDelta;
         for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
         {
-          newDelta.addFeatureDelta(featureDelta);
+          newDelta.addFeatureDelta(featureDelta, null);
         }
 
         return;

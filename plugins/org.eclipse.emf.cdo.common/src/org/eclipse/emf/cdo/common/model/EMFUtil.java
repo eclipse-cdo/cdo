@@ -16,6 +16,7 @@ package org.eclipse.emf.cdo.common.model;
 
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 
+import org.eclipse.net4j.util.Predicate;
 import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -116,6 +117,79 @@ public final class EMFUtil
    */
   public static final EAttribute ECLASSIFIER_INSTANCE_TYPE_NAME = EcorePackage.eINSTANCE
       .getEClassifier_InstanceTypeName();
+
+  /**
+   * @since 4.2
+   */
+  public static final Predicate<EStructuralFeature> ATTRIBUTES = new Predicate<EStructuralFeature>()
+  {
+    public boolean apply(EStructuralFeature feature)
+    {
+      return feature instanceof EAttribute;
+    }
+  };
+
+  /**
+   * @since 4.2
+   */
+  public static final Predicate<EStructuralFeature> REFERENCES = new Predicate<EStructuralFeature>()
+  {
+    public boolean apply(EStructuralFeature feature)
+    {
+      return feature instanceof EReference;
+    }
+  };
+
+  /**
+   * @since 4.2
+   */
+  public static final Predicate<EStructuralFeature> CONTAINER_REFERENCES = new Predicate<EStructuralFeature>()
+  {
+    public boolean apply(EStructuralFeature feature)
+    {
+      if (feature instanceof EReference)
+      {
+        EReference reference = (EReference)feature;
+        return reference.isContainer();
+      }
+  
+      return false;
+    }
+  };
+
+  /**
+   * @since 4.2
+   */
+  public static final Predicate<EStructuralFeature> CROSS_REFERENCES = new Predicate<EStructuralFeature>()
+  {
+    public boolean apply(EStructuralFeature feature)
+    {
+      if (feature instanceof EReference)
+      {
+        EReference reference = (EReference)feature;
+        return !(reference.isContainer() || reference.isContainment());
+      }
+  
+      return false;
+    }
+  };
+
+  /**
+   * @since 4.2
+   */
+  public static final Predicate<EStructuralFeature> CONTAINMENT_REFERENCES = new Predicate<EStructuralFeature>()
+  {
+    public boolean apply(EStructuralFeature feature)
+    {
+      if (feature instanceof EReference)
+      {
+        EReference reference = (EReference)feature;
+        return reference.isContainment();
+      }
+  
+      return false;
+    }
+  };
 
   private EMFUtil()
   {

@@ -55,12 +55,12 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.Predicate;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.AbstractFilteredIterator;
 import org.eclipse.net4j.util.collection.BidirectionalIterator;
 import org.eclipse.net4j.util.collection.LimitedIterator;
 import org.eclipse.net4j.util.collection.Pair;
-import org.eclipse.net4j.util.collection.Predicate;
 import org.eclipse.net4j.util.collection.PredicateIterator;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.IOUtil;

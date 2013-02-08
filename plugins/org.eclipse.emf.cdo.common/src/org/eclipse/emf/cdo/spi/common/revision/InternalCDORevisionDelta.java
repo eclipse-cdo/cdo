@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.spi.common.revision;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.revision.CDORevisable;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -34,7 +35,16 @@ public interface InternalCDORevisionDelta extends CDORevisionDelta, CDOReference
    */
   public Map<EStructuralFeature, CDOFeatureDelta> getFeatureDeltaMap();
 
+  /**
+   * @deprecated As of 4.2 use {@link #addFeatureDelta(CDOFeatureDelta, CDOOriginSizeProvider)}.
+   */
+  @Deprecated
   public void addFeatureDelta(CDOFeatureDelta delta);
+
+  /**
+   * @since 4.2
+   */
+  public void addFeatureDelta(CDOFeatureDelta delta, CDOOriginSizeProvider originSizeProvider);
 
   /**
    * @since 3.0

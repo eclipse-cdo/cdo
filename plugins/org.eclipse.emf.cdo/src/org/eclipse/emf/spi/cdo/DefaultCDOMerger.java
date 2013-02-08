@@ -20,24 +20,33 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta.Type;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOAddFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOListFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOMoveFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDORemoveFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.collection.Pair;
 
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -51,6 +60,18 @@ import java.util.Set;
  */
 public class DefaultCDOMerger implements CDOMerger
 {
+  /**
+   * @since 4.2
+   */
+  protected static final int SOURCE = 0;
+
+  /**
+   * @since 4.2
+   */
+  protected static final int TARGET = 1;
+
+  private final ResolutionPreference resolutionPreference;
+
   private CDOChangeSetData result;
 
   private Map<CDOID, Conflict> conflicts;
@@ -61,6 +82,24 @@ public class DefaultCDOMerger implements CDOMerger
 
   public DefaultCDOMerger()
   {
+    this(ResolutionPreference.NONE);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public DefaultCDOMerger(ResolutionPreference resolutionPreference)
+  {
+    CheckUtil.checkArg(resolutionPreference, "resolutionPreference");
+    this.resolutionPreference = resolutionPreference;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public final ResolutionPreference getResolutionPreference()
+  {
+    return resolutionPreference;
   }
 
   public CDOChangeSetData getResult()
@@ -212,17 +251,56 @@ public class DefaultCDOMerger implements CDOMerger
 
   protected Object changedInSourceAndTarget(CDORevisionDelta targetDelta, CDORevisionDelta sourceDelta)
   {
-    return new ChangedInSourceAndTargetConflict(targetDelta, sourceDelta);
+    switch (resolutionPreference)
+    {
+    case SOURCE_OVER_TARGET:
+      return sourceDelta;
+
+    case TARGET_OVER_SOURCE:
+      return targetDelta;
+
+    case NONE:
+      return new ChangedInSourceAndTargetConflict(targetDelta, sourceDelta);
+
+    default:
+      throw new IllegalStateException("Illegal resolution preference: " + resolutionPreference);
+    }
   }
 
   protected Object changedInSourceAndDetachedInTarget(CDORevisionDelta sourceDelta)
   {
-    return new ChangedInSourceAndDetachedInTargetConflict(sourceDelta);
+    switch (resolutionPreference)
+    {
+    case SOURCE_OVER_TARGET:
+      return sourceDelta; // TODO Do we need to "recreate" the source revision as NEW?
+
+    case TARGET_OVER_SOURCE:
+      return sourceDelta.getID(); // Indicate detachment
+
+    case NONE:
+      return new ChangedInSourceAndDetachedInTargetConflict(sourceDelta);
+
+    default:
+      throw new IllegalStateException("Illegal resolution preference: " + resolutionPreference);
+    }
   }
 
   protected Object changedInTargetAndDetachedInSource(CDORevisionDelta targetDelta)
   {
-    return new ChangedInTargetAndDetachedInSourceConflict(targetDelta);
+    switch (resolutionPreference)
+    {
+    case SOURCE_OVER_TARGET:
+      return targetDelta.getID();
+
+    case TARGET_OVER_SOURCE:
+      return targetDelta; // TODO Do we need to "recreate" the target revision as NEW?
+
+    case NONE:
+      return new ChangedInTargetAndDetachedInSourceConflict(targetDelta);
+
+    default:
+      throw new IllegalStateException("Illegal resolution preference: " + resolutionPreference);
+    }
   }
 
   protected Map<CDOID, Object> getTargetMap()
@@ -302,12 +380,47 @@ public class DefaultCDOMerger implements CDOMerger
   }
 
   /**
+   * @since 4.2
+   */
+  protected static int other(int side)
+  {
+    return TARGET - side;
+  }
+
+  /**
+   * Enumerates the possible resolution preferences that can be used with a {@link DefaultCDOMerger}.
+   *
+   * @since 4.2
+   * @author Eike Stepper
+   */
+  public static enum ResolutionPreference
+  {
+    NONE,
+
+    @Deprecated
+    SOURCE_OVER_TARGET,
+
+    @Deprecated
+    TARGET_OVER_SOURCE,
+
+    @Deprecated
+    DETACH_OVER_CHANGE,
+
+    @Deprecated
+    CHANGE_OVER_DETACH
+  }
+
+  /**
    * If the meaning of this type isn't clear, there really should be more of a description here...
    *
    * @author Eike Stepper
    */
   public static abstract class Conflict
   {
+    public Conflict()
+    {
+    }
+
     public abstract CDOID getID();
   }
 
@@ -426,6 +539,14 @@ public class DefaultCDOMerger implements CDOMerger
     {
     }
 
+    /**
+     * @since 4.2
+     */
+    public PerFeature(ResolutionPreference resolutionPreference)
+    {
+      super(resolutionPreference);
+    }
+
     @Override
     protected Object changedInSourceAndTarget(CDORevisionDelta targetDelta, CDORevisionDelta sourceDelta)
     {
@@ -445,7 +566,7 @@ public class DefaultCDOMerger implements CDOMerger
           CDOFeatureDelta featureDelta = changedInTarget(targetFeatureDelta);
           if (featureDelta != null)
           {
-            result.addFeatureDelta(featureDelta);
+            result.addFeatureDelta(featureDelta, null);
           }
         }
         else
@@ -453,18 +574,35 @@ public class DefaultCDOMerger implements CDOMerger
           CDOFeatureDelta featureDelta = changedInSourceAndTarget(targetFeatureDelta, sourceFeatureDelta);
           if (featureDelta != null)
           {
-            result.addFeatureDelta(featureDelta);
+            result.addFeatureDelta(featureDelta, null);
           }
           else
           {
             if (conflict == null)
             {
-              conflict = new ChangedInSourceAndTargetConflict(new CDORevisionDeltaImpl(targetDelta, false),
-                  new CDORevisionDeltaImpl(sourceDelta, false));
+              ResolutionPreference resolutionPreference = getResolutionPreference();
+              switch (resolutionPreference)
+              {
+              case SOURCE_OVER_TARGET:
+                // TODO: implement DefaultCDOMerger.PerFeature.changedInSourceAndTarget(targetDelta, sourceDelta)
+                throw new UnsupportedOperationException();
+
+              case TARGET_OVER_SOURCE:
+                // TODO: implement DefaultCDOMerger.PerFeature.changedInSourceAndTarget(targetDelta, sourceDelta)
+                throw new UnsupportedOperationException();
+
+              case NONE:
+                conflict = new ChangedInSourceAndTargetConflict(new CDORevisionDeltaImpl(targetDelta, false),
+                    new CDORevisionDeltaImpl(sourceDelta, false));
+                break;
+
+              default:
+                throw new IllegalStateException("Illegal resolution preference: " + resolutionPreference);
+              }
             }
 
-            ((InternalCDORevisionDelta)conflict.getTargetDelta()).addFeatureDelta(targetFeatureDelta);
-            ((InternalCDORevisionDelta)conflict.getSourceDelta()).addFeatureDelta(sourceFeatureDelta);
+            ((InternalCDORevisionDelta)conflict.getTargetDelta()).addFeatureDelta(targetFeatureDelta, null);
+            ((InternalCDORevisionDelta)conflict.getSourceDelta()).addFeatureDelta(sourceFeatureDelta, null);
           }
         }
       }
@@ -479,7 +617,7 @@ public class DefaultCDOMerger implements CDOMerger
           CDOFeatureDelta featureDelta = changedInSource(sourceFeatureDelta);
           if (featureDelta != null)
           {
-            result.addFeatureDelta(featureDelta);
+            result.addFeatureDelta(featureDelta, null);
           }
         }
       }
@@ -562,157 +700,369 @@ public class DefaultCDOMerger implements CDOMerger
       {
       }
 
+      /**
+       * @since 4.2
+       */
+      public ManyValued(ResolutionPreference resolutionPreference)
+      {
+        super(resolutionPreference);
+      }
+
+      /**
+       * @since 4.2
+       */
+      protected boolean treatAsUnique(EStructuralFeature feature)
+      {
+        return feature.isUnique();
+      }
+
       @Override
       protected CDOFeatureDelta changedInSourceAndTargetManyValued(EStructuralFeature feature,
           CDOFeatureDelta targetFeatureDelta, CDOFeatureDelta sourceFeatureDelta)
       {
         if (targetFeatureDelta instanceof CDOListFeatureDelta && sourceFeatureDelta instanceof CDOListFeatureDelta)
         {
-          CDOListFeatureDelta targetListDelta = (CDOListFeatureDelta)targetFeatureDelta.copy();
-          CDOListFeatureDelta sourceListDelta = (CDOListFeatureDelta)sourceFeatureDelta.copy();
+          // Initialize work lists with virtual elements
+          int originSize = ((CDOListFeatureDelta)sourceFeatureDelta.copy()).getOriginSize();
+          BasicEList<Element> ancestorList = new BasicEList<Element>(originSize);
+          PerSide<BasicEList<Element>> listPerSide = new PerSide<BasicEList<Element>>();
 
-          CDOListFeatureDelta result = createResult(feature);
+          initWorkLists(originSize, ancestorList, listPerSide);
+
+          // Apply list changes to source and target work lists
+          PerSide<List<CDOFeatureDelta>> changesPerSide = new PerSide<List<CDOFeatureDelta>>(
+              ((CDOListFeatureDelta)sourceFeatureDelta.copy()).getListChanges(),
+              ((CDOListFeatureDelta)targetFeatureDelta.copy()).getListChanges());
+          Map<Object, List<Element>> additions = new HashMap<Object, List<Element>>();
+          Map<CDOFeatureDelta, Element> allElements = new HashMap<CDOFeatureDelta, Element>();
+
+          for (int side = SOURCE; side <= TARGET; side++)
+          {
+            applyChangesToWorkList(side, listPerSide, changesPerSide, allElements, additions);
+          }
+
+          // Pick changes from source and target sides into the merge result
+          CDOListFeatureDelta result = new CDOListFeatureDeltaImpl(feature, originSize);
           List<CDOFeatureDelta> resultChanges = result.getListChanges();
 
-          List<CDOFeatureDelta> targetChanges = targetListDelta.getListChanges();
-          List<CDOFeatureDelta> sourceChanges = sourceListDelta.getListChanges();
+          for (int side = SOURCE; side <= TARGET; side++)
+          {
+            pickChangesIntoResult(side, feature, ancestorList, changesPerSide, allElements, additions, resultChanges);
+          }
 
-          handleListDelta(resultChanges, targetChanges, sourceChanges);
-          handleListDelta(resultChanges, sourceChanges, null);
+          // if (!targetChanges.isEmpty() && !sourceChanges.isEmpty())
+          // {
+          // CDOFeatureDelta targetDelta = targetChanges.get(0);
+          // if (targetDelta instanceof CDOClearFeatureDelta)
+          // {
+          // CDOClearFeatureDelta clearFeatureDelta = (CDOClearFeatureDelta)targetDelta;
+          // if (sourceChanges.get(0) instanceof CDOClearFeatureDelta)
+          // {
+          // resultChanges.add(clearFeatureDelta.copy());
+          // targetChanges.remove(0);
+          // sourceChanges.remove(0);
+          // }
+          // }
+          // }
+
           return result;
         }
 
         return super.changedInSourceAndTargetManyValued(feature, targetFeatureDelta, sourceFeatureDelta);
       }
 
-      protected CDOListFeatureDelta createResult(EStructuralFeature feature)
+      private void initWorkLists(int originSize, BasicEList<Element> ancestorList,
+          PerSide<BasicEList<Element>> listPerSide)
       {
-        return new CDOListFeatureDeltaImpl(feature);
+        BasicEList<Element> sourceList = new BasicEList<Element>(originSize);
+        BasicEList<Element> targetList = new BasicEList<Element>(originSize);
+
+        for (int i = 0; i < originSize; i++)
+        {
+          Element element = new Element(i);
+          ancestorList.add(element);
+          sourceList.add(element);
+          targetList.add(element);
+        }
+
+        listPerSide.set(SOURCE, sourceList);
+        listPerSide.set(TARGET, targetList);
       }
 
-      protected void handleListDelta(List<CDOFeatureDelta> resultList, List<CDOFeatureDelta> listToHandle,
-          List<CDOFeatureDelta> listToAdjust)
+      private void applyChangesToWorkList(int side, PerSide<BasicEList<Element>> listPerSide,
+          PerSide<List<CDOFeatureDelta>> changesPerSide, Map<CDOFeatureDelta, Element> allElements,
+          Map<Object, List<Element>> additions)
       {
-        for (CDOFeatureDelta deltaToHandle : listToHandle)
+        BasicEList<Element> list = listPerSide.get(side);
+        List<CDOFeatureDelta> changes = changesPerSide.get(side);
+        for (CDOFeatureDelta change : changes)
         {
-          if (deltaToHandle instanceof CDOAddFeatureDelta)
+          Type changeType = change.getType();
+          switch (changeType)
           {
-            if (!handleListDeltaAdd(resultList, (CDOAddFeatureDelta)deltaToHandle, listToAdjust))
+          case ADD:
+          {
+            CDOAddFeatureDelta addChange = (CDOAddFeatureDelta)change;
+
+            Element element = new Element(-1);
+            element.set(side, addChange);
+            allElements.put(addChange, element);
+
+            list.add(addChange.getIndex(), element);
+            rememberAddition(addChange.getValue(), element, additions);
+            break;
+          }
+
+          case REMOVE:
+          {
+            CDORemoveFeatureDelta removeChange = (CDORemoveFeatureDelta)change;
+
+            Element element = list.remove(removeChange.getIndex());
+            element.set(side, removeChange);
+            allElements.put(removeChange, element);
+            break;
+          }
+
+          case SET:
+          {
+            CDOSetFeatureDelta setChange = (CDOSetFeatureDelta)change;
+
+            Element newElement = new Element(-1);
+            newElement.set(side, setChange);
+            rememberAddition(setChange.getValue(), newElement, additions);
+
+            Element oldElement = list.set(setChange.getIndex(), newElement);
+            oldElement.set(side, setChange);
+            allElements.put(setChange, oldElement);
+            break;
+          }
+
+          case MOVE:
+          {
+            CDOMoveFeatureDelta moveChange = (CDOMoveFeatureDelta)change;
+
+            Element element = list.move(moveChange.getNewPosition(), moveChange.getOldPosition());
+            element.set(side, moveChange);
+            allElements.put(moveChange, element);
+            break;
+          }
+
+          case CLEAR:
+          case UNSET:
+
+          default:
+            throw new IllegalStateException("Illegal change type: " + changeType);
+          }
+        }
+      }
+
+      private void rememberAddition(Object value, Element element, Map<Object, List<Element>> additions)
+      {
+        List<Element> additionsList = additions.get(value);
+        if (additionsList == null)
+        {
+          additionsList = new ArrayList<Element>(1);
+          additions.put(value, additionsList);
+        }
+
+        additionsList.add(element);
+      }
+
+      private void pickChangesIntoResult(int side, EStructuralFeature feature, BasicEList<Element> ancestorList,
+          PerSide<List<CDOFeatureDelta>> changesPerSide, Map<CDOFeatureDelta, Element> allElements,
+          Map<Object, List<Element>> additions, List<CDOFeatureDelta> result)
+      {
+        List<CDOFeatureDelta> changes = changesPerSide.get(side);
+        for (CDOFeatureDelta change : changes)
+        {
+          Type changeType = change.getType();
+          switch (changeType)
+          {
+          case ADD:
+          {
+            CDOAddFeatureDeltaImpl addChange = (CDOAddFeatureDeltaImpl)change;
+            result.add(addChange);
+
+            int sideIndex = addChange.getIndex();
+            int ancestorIndex = sideIndex;
+
+            int ancestorEnd = ancestorList.size();
+            if (ancestorIndex > ancestorEnd)
             {
-              if (listToAdjust == null)
+              // TODO Better way to adjust ancestor indexes?
+              ancestorIndex = ancestorEnd;
+              addChange.setIndex(ancestorIndex);
+            }
+
+            Element newElement = allElements.get(addChange);
+            ancestorList.add(ancestorIndex, newElement);
+
+            if (treatAsUnique(feature))
+            {
+              // Detect and remove corresponding AddDeltas from the other side
+              Object value = addChange.getValue();
+              List<Element> elementsToAdd = additions.get(value);
+              if (elementsToAdd != null)
               {
-                // If the ADD delta was not taken into the result the remaining deltas must be adjusted
-                adjustAfterRemoval(listToHandle, 0);
+                for (Element element : elementsToAdd)
+                {
+                  CDOAddFeatureDelta otherAdd = (CDOAddFeatureDelta)element.get(other(side));
+                  if (otherAdd != null)
+                  {
+                    element.set(other(side), null);
+
+                    // Not taking an AddDelta has the same effect on indexes as a removal of the element
+                    List<CDOFeatureDelta> otherChanges = changesPerSide.get(other(side));
+                    int otherIndex = otherAdd.getIndex();
+                    adjustAfterRemoval(otherChanges, otherIndex, addChange);
+                  }
+                }
               }
             }
+
+            break;
           }
-          else if (deltaToHandle instanceof CDORemoveFeatureDelta)
+
+          case REMOVE:
           {
-            if (!handleListDeltaRemove(resultList, (CDORemoveFeatureDelta)deltaToHandle, listToAdjust))
+            CDORemoveFeatureDeltaImpl removeChange = (CDORemoveFeatureDeltaImpl)change;
+            result.add(removeChange);
+
+            Element removedElement = allElements.get(removeChange);
+            int ancestorIndex = ancestorList.indexOf(removedElement);
+            removeChange.setIndex(ancestorIndex);
+            ancestorList.remove(ancestorIndex);
+
+            // Detect and remove a potential duplicate RemoveDelta from the other side
+            CDOFeatureDelta otherChange = removedElement.get(other(side));
+            if (otherChange != null)
             {
-              if (listToAdjust == null)
+              Type otherChangeType = otherChange.getType();
+              switch (otherChangeType)
               {
-                // If the REMOVE delta was not taken into the result the remaining deltas must be adjusted
-                adjustAfterAddition(listToHandle, 0);
+              case REMOVE:
+              {
+                CDORemoveFeatureDelta otherRemove = (CDORemoveFeatureDelta)otherChange;
+                removedElement.set(other(side), null);
+
+                // Not taking a RemoveDelta has the same effect on indexes as an addition of the element
+                List<CDOFeatureDelta> otherChanges = changesPerSide.get(other(side));
+                int otherIndex = otherRemove.getIndex();
+                adjustAfterAddition(otherChanges, otherIndex, otherRemove);
+                break;
+              }
+
+              case MOVE:
+              {
+                CDOMoveFeatureDelta otherMove = (CDOMoveFeatureDelta)otherChange;
+                removedElement.set(other(side), null);
+
+                // Not taking a MoveDelta has the same effect on indexes as a reverse move of the element
+                List<CDOFeatureDelta> otherChanges = changesPerSide.get(other(side));
+                int otherOldPosition = otherMove.getOldPosition();
+                int otherNewPosition = otherMove.getNewPosition();
+                adjustAfterMove(otherChanges, otherOldPosition, otherNewPosition, otherMove);
+                break;
+              }
+
+              default:
+                throw new IllegalStateException("Unexpected change type: " + otherChangeType);
               }
             }
+
+            break;
           }
-          else if (deltaToHandle instanceof CDOMoveFeatureDelta)
+
+          case SET:
           {
-            handleListDeltaMove(resultList, (CDOMoveFeatureDelta)deltaToHandle, listToAdjust);
+            CDOSetFeatureDelta setChange = (CDOSetFeatureDelta)change;
+            throw new UnsupportedOperationException();
+            // break;
           }
-          else
+
+          case MOVE:
           {
-            throw new UnsupportedOperationException("Unable to handle list feature conflict: " + deltaToHandle);
+            CDOMoveFeatureDeltaImpl moveChange = (CDOMoveFeatureDeltaImpl)change;
+            int sideOldPosition = moveChange.getOldPosition();
+            int sideNewPosition = moveChange.getNewPosition();
+
+            Element movedElement = allElements.get(moveChange);
+            CDOFeatureDelta otherChange = movedElement.get(other(side));
+
+            if (otherChange != null)
+            {
+              Type otherChangeType = otherChange.getType();
+              switch (otherChangeType)
+              {
+              case REMOVE:
+              {
+                // Prioritize the RemoveDelta of the other side, delete the MoveDelta from this side
+                adjustAfterMove(changes, sideOldPosition, sideNewPosition, moveChange);
+                movedElement.set(side, null);
+                return;
+              }
+
+              case MOVE:
+              {
+                CDOMoveFeatureDelta otherMove = (CDOMoveFeatureDelta)otherChange;
+                movedElement.set(other(side), null);
+
+                // Not taking a MoveDelta has the same effect on indexes as a reverse move of the element
+                List<CDOFeatureDelta> otherChanges = changesPerSide.get(other(side));
+                int otherOldPosition = otherMove.getOldPosition();
+                int otherNewPosition = otherMove.getNewPosition();
+                adjustAfterMove(otherChanges, otherOldPosition, otherNewPosition, otherMove);
+                movedElement.set(other(side), null);
+                break;
+              }
+
+              default:
+                throw new IllegalStateException("Unexpected change type: " + otherChangeType);
+              }
+            }
+
+            int positionDelta = sideNewPosition - sideOldPosition;
+            int ancestorOldPosition = ancestorList.indexOf(movedElement);
+            int ancestorNewPosition = ancestorOldPosition + positionDelta;
+            if (ancestorNewPosition < 0)
+            {
+              ancestorNewPosition = 0;
+            }
+
+            int ancestorEnd = ancestorList.size() - 1;
+            if (ancestorNewPosition > ancestorEnd)
+            {
+              ancestorNewPosition = ancestorEnd;
+            }
+
+            moveChange.setOldPosition(ancestorOldPosition);
+            moveChange.setNewPosition(ancestorNewPosition);
+            result.add(moveChange);
+
+            ancestorList.move(ancestorNewPosition, ancestorOldPosition);
+            break;
+          }
+
+          case CLEAR:
+          case UNSET:
+
+          default:
+            throw new IllegalStateException("Illegal change type: " + changeType);
           }
         }
       }
 
-      /**
-       * Decides whether an ADD delta is to be taken (added to the result list) and returns <code>true</code> if it was
-       * taken, <code>false</code> otherwise. Note that the passed ADD delta has to be copied prior to adding it to the
-       * result list!
-       */
-      protected boolean handleListDeltaAdd(List<CDOFeatureDelta> resultList, CDOAddFeatureDelta addDelta,
-          List<CDOFeatureDelta> listToAdjust)
+      private static void adjustAfterAddition(List<CDOFeatureDelta> list, int index, CDOFeatureDelta deltaToRemove)
       {
-        int index = addDelta.getIndex();
-        if (listToAdjust == null)
+        for (Iterator<CDOFeatureDelta> it = list.iterator(); it.hasNext();)
         {
-          // listToAdjust is only null for the sourceFeatureDeltas.
-          // In this case ignore a potential duplicate ADD delta.
-          Object value = addDelta.getValue();
-          if (getTargetMap().get(value) instanceof CDORevision && getSourceMap().get(value) instanceof CDORevision)
+          CDOFeatureDelta delta = it.next();
+          if (delta == deltaToRemove)
           {
-            // Remove ADD deltas for objects that have been added to source and target.
-            // This can for example happen if a source is re-merged to target.
-            return false;
+            it.remove();
+            continue;
           }
-        }
 
-        resultList.add(addDelta.copy());
-        if (listToAdjust != null)
-        {
-          adjustAfterAddition(listToAdjust, index);
-        }
-
-        return true;
-      }
-
-      /**
-       * Decides whether a REMOVE delta is to be taken (added to the result list) and returns <code>true</code> if it
-       * was taken, <code>false</code> otherwise. Note that the passed REMOVE delta has to be copied prior to adding it
-       * to the result list!
-       */
-      protected boolean handleListDeltaRemove(List<CDOFeatureDelta> resultList, CDORemoveFeatureDelta removeDelta,
-          List<CDOFeatureDelta> listToAdjust)
-      {
-        int index = removeDelta.getIndex();
-        if (listToAdjust == null)
-        {
-          // listToAdjust is only null for the sourceFeatureDeltas.
-          // In this case ignore a potential duplicate REMOVE delta.
-          Object value = removeDelta.getValue();
-          if (!getTargetMap().containsKey(value) && !getSourceMap().containsKey(value))
-          {
-            // Remove REMOVE deltas for objects that have been removed from source and target.
-            // This can for example happen if a source is re-merged to target.
-            return false;
-          }
-        }
-
-        resultList.add(removeDelta.copy());
-        if (listToAdjust != null)
-        {
-          adjustAfterRemoval(listToAdjust, index);
-        }
-
-        return true;
-      }
-
-      /**
-       * Decides whether a MOVE delta is to be taken (added to the result list) and returns <code>true</code> if it was
-       * taken, <code>false</code> otherwise. Note that the passed MOVE delta has to be copied prior to adding it to the
-       * result list!
-       */
-      protected boolean handleListDeltaMove(List<CDOFeatureDelta> resultList, CDOMoveFeatureDelta moveDelta,
-          List<CDOFeatureDelta> listToAdjust)
-      {
-        resultList.add(moveDelta.copy());
-        if (listToAdjust != null)
-        {
-          int oldPosition = moveDelta.getOldPosition();
-          int newPosition = moveDelta.getNewPosition();
-          adjustAfterMove(listToAdjust, oldPosition, newPosition);
-        }
-
-        return true;
-      }
-
-      public static void adjustAfterAddition(List<CDOFeatureDelta> list, int index)
-      {
-        for (CDOFeatureDelta delta : list)
-        {
           if (delta instanceof InternalCDOFeatureDelta.WithIndex)
           {
             InternalCDOFeatureDelta.WithIndex withIndex = (InternalCDOFeatureDelta.WithIndex)delta;
@@ -721,10 +1071,17 @@ public class DefaultCDOMerger implements CDOMerger
         }
       }
 
-      public static void adjustAfterRemoval(List<CDOFeatureDelta> list, int index)
+      private static void adjustAfterRemoval(List<CDOFeatureDelta> list, int index, CDOFeatureDelta deltaToRemove)
       {
-        for (CDOFeatureDelta delta : list)
+        for (Iterator<CDOFeatureDelta> it = list.iterator(); it.hasNext();)
         {
+          CDOFeatureDelta delta = it.next();
+          if (delta == deltaToRemove)
+          {
+            it.remove();
+            continue;
+          }
+
           if (delta instanceof InternalCDOFeatureDelta.WithIndex)
           {
             InternalCDOFeatureDelta.WithIndex withIndex = (InternalCDOFeatureDelta.WithIndex)delta;
@@ -733,10 +1090,18 @@ public class DefaultCDOMerger implements CDOMerger
         }
       }
 
-      public static void adjustAfterMove(List<CDOFeatureDelta> list, int oldPosition, int newPosition)
+      private static void adjustAfterMove(List<CDOFeatureDelta> list, int oldPosition, int newPosition,
+          CDOFeatureDelta deltaToRemove)
       {
-        for (CDOFeatureDelta delta : list)
+        for (Iterator<CDOFeatureDelta> it = list.iterator(); it.hasNext();)
         {
+          CDOFeatureDelta delta = it.next();
+          if (delta == deltaToRemove)
+          {
+            it.remove();
+            continue;
+          }
+
           if (delta instanceof InternalCDOFeatureDelta.WithIndex)
           {
             InternalCDOFeatureDelta.WithIndex withIndex = (InternalCDOFeatureDelta.WithIndex)delta;
@@ -744,6 +1109,136 @@ public class DefaultCDOMerger implements CDOMerger
             withIndex.adjustAfterAddition(newPosition);
           }
         }
+      }
+
+      /**
+       * Holds data for the source and target sides.
+       *
+       * @author Eike Stepper
+       * @since 4.2
+       */
+      public static class PerSide<T>
+      {
+        private T source;
+
+        private T target;
+
+        public PerSide()
+        {
+        }
+
+        public PerSide(T source, T target)
+        {
+          this.source = source;
+          this.target = target;
+        }
+
+        public final T get(int side)
+        {
+          if (side == SOURCE)
+          {
+            return source;
+          }
+
+          return target;
+        }
+
+        public final void set(int side, T value)
+        {
+          if (side == SOURCE)
+          {
+            this.source = value;
+          }
+          else
+          {
+            this.target = value;
+          }
+        }
+
+        @Override
+        public String toString()
+        {
+          return "source: " + source + "\ntarget: " + target;
+        }
+      }
+
+      /**
+       * A virtual list element to establish unique relations between ancestor, source and target sides.
+       *
+       * @author Eike Stepper
+       * @since 4.2
+       */
+      public static final class Element extends PerSide<CDOFeatureDelta>
+      {
+        private final int ancestorIndex;
+
+        public Element(int ancestorIndex)
+        {
+          this.ancestorIndex = ancestorIndex;
+        }
+
+        public int getAncestorIndex()
+        {
+          return ancestorIndex;
+        }
+
+        @Override
+        public String toString()
+        {
+          return String.valueOf(ancestorIndex);
+        }
+      }
+
+      @Deprecated
+      protected CDOListFeatureDelta createResult(EStructuralFeature feature)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+      @Deprecated
+      protected void handleListDelta(List<CDOFeatureDelta> resultList, List<CDOFeatureDelta> listToHandle,
+          List<CDOFeatureDelta> listToAdjust)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+      @Deprecated
+      protected boolean handleListDeltaAdd(List<CDOFeatureDelta> resultList, CDOAddFeatureDelta addDelta,
+          List<CDOFeatureDelta> listToAdjust)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+      @Deprecated
+      protected boolean handleListDeltaRemove(List<CDOFeatureDelta> resultList, CDORemoveFeatureDelta removeDelta,
+          List<CDOFeatureDelta> listToAdjust)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+      @Deprecated
+      protected boolean handleListDeltaMove(List<CDOFeatureDelta> resultList, CDOMoveFeatureDelta moveDelta,
+          List<CDOFeatureDelta> listToAdjust)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+      @Deprecated
+      public static void adjustAfterAddition(List<CDOFeatureDelta> list, int index)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+      @Deprecated
+      public static void adjustAfterRemoval(List<CDOFeatureDelta> list, int index)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+      @Deprecated
+      public static void adjustAfterMove(List<CDOFeatureDelta> list, int oldPosition, int newPosition)
+      {
+        throw new UnsupportedOperationException();
       }
     }
   }

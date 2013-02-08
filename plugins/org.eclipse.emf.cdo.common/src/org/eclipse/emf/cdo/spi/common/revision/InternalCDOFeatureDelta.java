@@ -25,6 +25,8 @@ public interface InternalCDOFeatureDelta extends CDOFeatureDelta
    * If the meaning of this type isn't clear, there really should be more of a description here...
    *
    * @author Eike Stepper
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface WithIndex
   {
@@ -37,6 +39,8 @@ public interface InternalCDOFeatureDelta extends CDOFeatureDelta
    * If the meaning of this type isn't clear, there really should be more of a description here...
    *
    * @author Eike Stepper
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface ListIndexAffecting
   {
@@ -50,6 +54,8 @@ public interface InternalCDOFeatureDelta extends CDOFeatureDelta
    * If the meaning of this type isn't clear, there really should be more of a description here...
    *
    * @author Eike Stepper
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface ListTargetAdding
   {

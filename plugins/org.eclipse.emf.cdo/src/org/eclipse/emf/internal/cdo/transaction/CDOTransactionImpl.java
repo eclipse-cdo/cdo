@@ -54,6 +54,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
@@ -771,6 +772,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     conflict -= resolved;
+    if (conflict == 0)
+    {
+      setDirty(false);
+    }
+    else
+    {
+      Map<CDOID, CDOObject> dirtyObjects = getLastSavepoint().getDirtyObjects();
+      setDirty(!dirtyObjects.isEmpty());
+    }
   }
 
   /**
@@ -1704,7 +1714,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * Receives notification for new and dirty objects
    */
-  public synchronized void registerFeatureDelta(InternalCDOObject object, CDOFeatureDelta featureDelta)
+  public synchronized void registerFeatureDelta(final InternalCDOObject object, final CDOFeatureDelta featureDelta)
   {
     CDOID id = object.cdoID();
     boolean needToSaveFeatureDelta = true;
@@ -1726,14 +1736,31 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     if (needToSaveFeatureDelta)
     {
+      final InternalCDORevision revision = object.cdoRevision();
+
       CDORevisionDelta revisionDelta = lastSavepoint.getRevisionDeltas2().get(id);
       if (revisionDelta == null)
       {
-        revisionDelta = CDORevisionUtil.createDelta(object.cdoRevision());
+        revisionDelta = CDORevisionUtil.createDelta(revision);
         lastSavepoint.getRevisionDeltas2().put(id, revisionDelta);
       }
 
-      ((InternalCDORevisionDelta)revisionDelta).addFeatureDelta(featureDelta);
+      ((InternalCDORevisionDelta)revisionDelta).addFeatureDelta(featureDelta, new CDOOriginSizeProvider()
+      {
+        public int getOriginSize()
+        {
+          EStructuralFeature feature = featureDelta.getFeature();
+          InternalCDORevision cleanRevision = cleanRevisions.get(object);
+          if (cleanRevision == null)
+          {
+            // Clean revision has *not yet* been registered, in this case the object revision *is still clean*
+            cleanRevision = revision;
+          }
+
+          CDOList list = cleanRevision.getList(feature);
+          return list.size();
+        }
+      });
     }
 
     CDOTransactionHandler1[] handlers = getTransactionHandlers1();
@@ -2659,6 +2686,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     private void calculateCommitData()
     {
       List<CDOPackageUnit> newPackageUnits = analyzeNewPackages();
+
       newObjects = filterCommittables(transaction.getNewObjects());
       List<CDOIDAndVersion> revisions = new ArrayList<CDOIDAndVersion>(newObjects.size());
       for (CDOObject newObject : newObjects.values())
@@ -2679,8 +2707,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         CDOObject object = entry.getValue();
         InternalCDORevision cleanRevision = cleanRevisions.get(object);
-
-        if (cleanRevision.getBranch() == getBranch())
+        if (cleanRevision == null)
+        {
+          // Can happen after merged detachments
+          CDORevision revision = object.cdoRevision();
+          detached.add(CDOIDUtil.createIDAndVersion(revision));
+        }
+        else if (cleanRevision.getBranch() == getBranch())
         {
           detached.add(CDOIDUtil.createIDAndVersion(cleanRevision));
         }

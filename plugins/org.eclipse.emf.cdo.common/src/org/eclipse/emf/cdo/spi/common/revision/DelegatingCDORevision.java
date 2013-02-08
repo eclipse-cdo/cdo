@@ -21,8 +21,11 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
+import org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+
+import org.eclipse.net4j.util.Predicate;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -355,6 +358,22 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   public boolean isWritable()
   {
     return getDelegate().isWritable();
+  }
+
+  /**
+   * @since 4.2
+   */
+  public void accept(CDORevisionValueVisitor visitor)
+  {
+    getDelegate().accept(visitor);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public void accept(CDORevisionValueVisitor visitor, Predicate<EStructuralFeature> filter)
+  {
+    getDelegate().accept(visitor, filter);
   }
 
   /**

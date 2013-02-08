@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.collection;
 
+import org.eclipse.net4j.util.Predicate;
+
 import java.util.Iterator;
 
 /**

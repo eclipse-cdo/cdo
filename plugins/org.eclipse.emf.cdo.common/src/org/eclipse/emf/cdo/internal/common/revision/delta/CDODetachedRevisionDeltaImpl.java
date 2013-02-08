@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
+import org.eclipse.net4j.util.Predicate;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -93,6 +95,11 @@ public class CDODetachedRevisionDeltaImpl implements CDORevisionDelta
   }
 
   public void accept(CDOFeatureDeltaVisitor visitor)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void accept(CDOFeatureDeltaVisitor visitor, Predicate<EStructuralFeature> filter)
   {
     throw new UnsupportedOperationException();
   }

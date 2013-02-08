@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDODetachedRevisionDeltaImpl;
 
+import org.eclipse.net4j.util.Predicate;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -90,4 +92,9 @@ public interface CDORevisionDelta extends CDORevisionKey
   public void apply(CDORevision revision);
 
   public void accept(CDOFeatureDeltaVisitor visitor);
+
+  /**
+   * @since 4.2
+   */
+  public void accept(CDOFeatureDeltaVisitor visitor, Predicate<EStructuralFeature> filter);
 }

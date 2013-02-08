@@ -46,7 +46,9 @@ import java.util.Map;
  */
 public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOListFeatureDelta
 {
-  private List<CDOFeatureDelta> featureDeltas = new ArrayList<CDOFeatureDelta>();
+  private final int originSize;
+
+  private final List<CDOFeatureDelta> listChanges = new ArrayList<CDOFeatureDelta>();
 
   private transient int[] cachedIndices;
 
@@ -54,24 +56,26 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
 
   private transient List<CDOFeatureDelta> unprocessedFeatureDeltas;
 
-  public CDOListFeatureDeltaImpl(EStructuralFeature feature)
+  public CDOListFeatureDeltaImpl(EStructuralFeature feature, int originSize)
   {
     super(feature);
+    this.originSize = originSize;
   }
 
   public CDOListFeatureDeltaImpl(CDODataInput in, EClass eClass) throws IOException
   {
     super(in, eClass);
+    originSize = in.readInt();
     int size = in.readInt();
     for (int i = 0; i < size; i++)
     {
-      featureDeltas.add(in.readCDOFeatureDelta(eClass));
+      listChanges.add(in.readCDOFeatureDelta(eClass));
     }
   }
 
   public CDOListFeatureDelta copy()
   {
-    CDOListFeatureDeltaImpl result = new CDOListFeatureDeltaImpl(getFeature());
+    CDOListFeatureDeltaImpl result = new CDOListFeatureDeltaImpl(getFeature(), getOriginSize());
 
     Map<CDOFeatureDelta, CDOFeatureDelta> map = null;
     if (cachedSources != null || unprocessedFeatureDeltas != null)
@@ -79,10 +83,10 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
       map = new HashMap<CDOFeatureDelta, CDOFeatureDelta>();
     }
 
-    for (CDOFeatureDelta delta : featureDeltas)
+    for (CDOFeatureDelta delta : listChanges)
     {
       CDOFeatureDelta newDelta = delta.copy();
-      result.featureDeltas.add(newDelta);
+      result.listChanges.add(newDelta);
       if (map != null)
       {
         map.put(delta, newDelta);
@@ -130,8 +134,9 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   public void write(CDODataOutput out, EClass eClass) throws IOException
   {
     super.write(out, eClass);
-    out.writeInt(featureDeltas.size());
-    for (CDOFeatureDelta featureDelta : featureDeltas)
+    out.writeInt(originSize);
+    out.writeInt(listChanges.size());
+    for (CDOFeatureDelta featureDelta : listChanges)
     {
       out.writeCDOFeatureDelta(eClass, featureDelta);
     }
@@ -142,14 +147,19 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     return Type.LIST;
   }
 
+  public int getOriginSize()
+  {
+    return originSize;
+  }
+
   public List<CDOFeatureDelta> getListChanges()
   {
-    return featureDeltas;
+    return listChanges;
   }
 
   /**
    * Returns the number of indices as the first element of the array.
-   * 
+   *
    * @return never <code>null</code>.
    */
   public Pair<ListTargetAdding[], int[]> reconstructAddedIndices()
@@ -170,7 +180,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     {
       if (cachedIndices == null)
       {
-        int initialCapacity = featureDeltas.size() + 1;
+        int initialCapacity = listChanges.size() + 1;
         cachedIndices = new int[initialCapacity];
         cachedSources = new ListTargetAdding[initialCapacity];
       }
@@ -192,7 +202,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
         }
       }
 
-      List<CDOFeatureDelta> featureDeltasToBeProcessed = unprocessedFeatureDeltas == null ? featureDeltas
+      List<CDOFeatureDelta> featureDeltasToBeProcessed = unprocessedFeatureDeltas == null ? listChanges
           : unprocessedFeatureDeltas;
       for (CDOFeatureDelta featureDelta : featureDeltasToBeProcessed)
       {
@@ -244,7 +254,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
 
           // Then adjusts the remaining feature deltas.
           boolean skip = true;
-          ListIterator<CDOFeatureDelta> iterator = featureDeltas.listIterator();
+          ListIterator<CDOFeatureDelta> iterator = listChanges.listIterator();
 
           while (iterator.hasNext())
           {
@@ -393,13 +403,13 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     // Only adds the feature delta to the list if required.
     if (cleanupWithNewDelta(featureDelta))
     {
-      featureDeltas.add(featureDelta);
+      listChanges.add(featureDelta);
     }
   }
 
   public void apply(CDORevision revision)
   {
-    for (CDOFeatureDelta featureDelta : featureDeltas)
+    for (CDOFeatureDelta featureDelta : listChanges)
     {
       ((CDOFeatureDeltaImpl)featureDelta).apply(revision);
     }
@@ -409,7 +419,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   public boolean adjustReferences(CDOReferenceAdjuster adjuster)
   {
     boolean changed = false;
-    for (CDOFeatureDelta featureDelta : featureDeltas)
+    for (CDOFeatureDelta featureDelta : listChanges)
     {
       changed |= ((CDOFeatureDeltaImpl)featureDelta).adjustReferences(adjuster);
     }
@@ -431,13 +441,13 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     }
 
     CDOListFeatureDelta that = (CDOListFeatureDelta)obj;
-    return ObjectUtil.equals(featureDeltas, that.getListChanges());
+    return ObjectUtil.equals(listChanges, that.getListChanges());
   }
 
   @Override
   protected String toStringAdditional()
   {
-    return "list=" + featureDeltas; //$NON-NLS-1$
+    return "originSize=" + originSize + ", list=" + listChanges; //$NON-NLS-1$
   }
 
   /**

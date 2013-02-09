@@ -495,11 +495,10 @@ public final class CDOStoreImpl implements CDOStore
         throw new UnsupportedOperationException("REMOVE is not supported for single-valued features");
       }
 
-      CDORemoveFeatureDeltaImpl delta = new CDORemoveFeatureDeltaImpl(feature, index);
+      CDOFeatureDelta delta = new CDORemoveFeatureDeltaImpl(feature, index);
       InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
 
       oldValue = revision.get(feature, index);
-      delta.setValue(oldValue);
 
       try
       {
@@ -541,10 +540,9 @@ public final class CDOStoreImpl implements CDOStore
         TRACER.format("move({0}, {1}, {2}, {3})", cdoObject, feature, target, source); //$NON-NLS-1$
       }
 
-      CDOMoveFeatureDeltaImpl delta = new CDOMoveFeatureDeltaImpl(feature, target, source);
+      CDOFeatureDelta delta = new CDOMoveFeatureDeltaImpl(feature, target, source);
       InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
       Object result = revision.move(feature, target, source);
-      delta.setValue(result);
 
       result = convertToEMF(eObject, revision, feature, EStore.NO_INDEX, result);
       return result;

@@ -394,10 +394,9 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
             protected void createMoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object value,
                 int index, int toIndex)
             {
+              CDOMoveFeatureDeltaImpl delta = new CDOMoveFeatureDeltaImpl(feature, toIndex, index);
               // fix until ListDifferenceAnalyzer delivers the correct value (same problem as bug #308618).
-              value = oldList.get(index);
-
-              CDOMoveFeatureDeltaImpl delta = new CDOMoveFeatureDeltaImpl(feature, toIndex, index, value);
+              delta.setValue(oldList.get(index));
               changes.add(delta);
               oldList.move(toIndex, index);
             }

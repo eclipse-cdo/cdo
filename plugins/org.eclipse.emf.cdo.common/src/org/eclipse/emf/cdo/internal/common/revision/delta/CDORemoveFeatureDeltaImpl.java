@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
@@ -30,11 +31,6 @@ import java.io.IOException;
 public class CDORemoveFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl implements CDORemoveFeatureDelta,
     ListIndexAffecting
 {
-  public CDORemoveFeatureDeltaImpl(EStructuralFeature feature, int index, Object value)
-  {
-    super(feature, index, value);
-  }
-
   public CDORemoveFeatureDeltaImpl(EStructuralFeature feature, int index)
   {
     super(feature, index, UNKNOWN_VALUE);
@@ -45,6 +41,18 @@ public class CDORemoveFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl im
     super(in, eClass);
   }
 
+  @Override
+  protected void writeValue(CDODataOutput out, EClass eClass) throws IOException
+  {
+    // Do nothing
+  }
+
+  @Override
+  protected Object readValue(CDODataInput in, EClass eClass) throws IOException
+  {
+    return UNKNOWN_VALUE;
+  }
+
   public Type getType()
   {
     return Type.REMOVE;
@@ -52,7 +60,7 @@ public class CDORemoveFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl im
 
   public CDOFeatureDelta copy()
   {
-    CDORemoveFeatureDeltaImpl delta = new CDORemoveFeatureDeltaImpl(getFeature(), getIndex(), getValue());
+    CDORemoveFeatureDeltaImpl delta = new CDORemoveFeatureDeltaImpl(getFeature(), getIndex());
     delta.setValue(getValue());
     return delta;
   }

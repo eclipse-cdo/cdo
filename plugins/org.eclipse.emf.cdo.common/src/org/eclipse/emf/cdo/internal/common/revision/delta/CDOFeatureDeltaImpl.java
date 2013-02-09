@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
@@ -21,11 +20,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 import org.eclipse.net4j.util.CheckUtil;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.FeatureMap;
-import org.eclipse.emf.ecore.util.FeatureMap.Entry;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -54,56 +49,6 @@ public abstract class CDOFeatureDeltaImpl implements InternalCDOFeatureDelta
   {
     out.writeInt(getType().ordinal());
     out.writeInt(eClass.getFeatureID(feature));
-  }
-
-  protected void writeValue(CDODataOutput out, EClass eClass, Object value) throws IOException
-  {
-    Object valueToWrite = value;
-
-    EStructuralFeature feature = getFeature();
-    if (FeatureMapUtil.isFeatureMap(feature))
-    {
-      FeatureMap.Entry entry = (Entry)valueToWrite;
-      feature = entry.getEStructuralFeature();
-      valueToWrite = entry.getValue();
-
-      int featureID = eClass.getFeatureID(feature);
-      out.writeInt(featureID);
-    }
-
-    if (valueToWrite == UNKNOWN_VALUE)
-    {
-      out.writeBoolean(false);
-    }
-    else
-    {
-      out.writeBoolean(true);
-      if (valueToWrite != null && feature instanceof EReference)
-      {
-        valueToWrite = out.getIDProvider().provideCDOID(value);
-      }
-
-      out.writeCDOFeatureValue(feature, valueToWrite);
-    }
-  }
-
-  protected Object readValue(CDODataInput in, EClass eClass) throws IOException
-  {
-    EStructuralFeature feature = getFeature();
-    if (FeatureMapUtil.isFeatureMap(feature))
-    {
-      int featureID = in.readInt();
-      feature = eClass.getEStructuralFeature(featureID);
-      Object innerValue = in.readCDOFeatureValue(feature);
-      return CDORevisionUtil.createFeatureMapEntry(feature, innerValue);
-    }
-
-    if (in.readBoolean())
-    {
-      return in.readCDOFeatureValue(feature);
-    }
-
-    return UNKNOWN_VALUE;
   }
 
   public EStructuralFeature getFeature()

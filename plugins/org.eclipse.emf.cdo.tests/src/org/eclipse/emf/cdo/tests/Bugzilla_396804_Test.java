@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
-import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 
 /**
  * Test cases for CDOMergingConflictResolver. See bug 396804.
@@ -134,6 +133,6 @@ public class Bugzilla_396804_Test extends AbstractCDOTest
 
   private CDOMergingConflictResolver createConflictResolver()
   {
-    return new CDOMergingConflictResolver(new DefaultCDOMerger.PerFeature.ManyValued());
+    return new CDOMergingConflictResolver();
   }
 }

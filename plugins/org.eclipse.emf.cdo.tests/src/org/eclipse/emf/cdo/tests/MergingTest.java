@@ -81,11 +81,9 @@ public class MergingTest extends AbstractCDOTest
     assertEquals(true, result.isEmpty());
     assertEquals(false, transaction.isDirty());
 
-    result = transaction.merge(source3.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
-    assertEquals(true, result.isEmpty());
+    CDOChangeSetData check = transaction.merge(source3.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    assertEquals(true, check.isEmpty());
     assertEquals(false, transaction.isDirty());
-
-    session.close();
   }
 
   public void testFromBranchWithAdditions() throws Exception
@@ -142,11 +140,10 @@ public class MergingTest extends AbstractCDOTest
     assertEquals(mainBranch, ((CDORevision)commitInfo1.getNewObjects().get(1)).getBranch());
     assertEquals(1, ((CDORevision)commitInfo1.getNewObjects().get(0)).getVersion());
     assertEquals(1, ((CDORevision)commitInfo1.getNewObjects().get(1)).getVersion());
-
-    session.close();
   }
 
   @SuppressWarnings("unused")
+  @Deprecated
   public void testRemergeAfterAdditionsInSource() throws Exception
   {
     CDOSession session = openSession();
@@ -188,14 +185,13 @@ public class MergingTest extends AbstractCDOTest
     transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     transaction.commit();
 
-    CDOChangeSetData result = transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
-    assertEquals(true, result.isEmpty());
+    CDOChangeSetData check = transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    assertEquals(true, check.isEmpty());
     assertEquals(false, transaction.isDirty());
-
-    session.close();
   }
 
   @SuppressWarnings("unused")
+  @Deprecated
   public void testRemergeAfterAdditionsInSource2() throws Exception
   {
     CDOSession session = openSession();
@@ -264,13 +260,12 @@ public class MergingTest extends AbstractCDOTest
     assertEquals(mainBranch, ((CDORevision)commitInfo1.getNewObjects().get(0)).getBranch());
     assertEquals(1, ((CDORevision)commitInfo1.getNewObjects().get(0)).getVersion());
 
-    result = transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
-    assertEquals(true, result.isEmpty());
+    CDOChangeSetData check = transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    assertEquals(true, check.isEmpty());
     assertEquals(false, transaction.isDirty());
-
-    session.close();
   }
 
+  @Deprecated
   public void testAdditionsInSourceAndTarget() throws Exception
   {
     CDOSession session = openSession();
@@ -336,13 +331,12 @@ public class MergingTest extends AbstractCDOTest
     assertEquals(mainBranch, ((CDORevision)commitInfo2.getNewObjects().get(0)).getBranch());
     assertEquals(1, ((CDORevision)commitInfo2.getNewObjects().get(0)).getVersion());
 
-    result = transaction.merge(source2.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
-    assertEquals(true, result.isEmpty());
+    CDOChangeSetData check = transaction.merge(source2.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    assertEquals(true, check.isEmpty());
     assertEquals(false, transaction.isDirty());
-
-    session.close();
   }
 
+  @Deprecated
   public void testRemergeAfterAdditionsInSourceAndTarget() throws Exception
   {
     CDOSession session = openSession();
@@ -396,11 +390,9 @@ public class MergingTest extends AbstractCDOTest
     transaction.merge(source2.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     transaction.commit();
 
-    CDOChangeSetData result = transaction.merge(source2.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
-    assertEquals(true, result.isEmpty());
+    CDOChangeSetData check = transaction.merge(source2.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    assertEquals(true, check.isEmpty());
     assertEquals(false, transaction.isDirty());
-
-    session.close();
   }
 
   /**
@@ -461,8 +453,6 @@ public class MergingTest extends AbstractCDOTest
     assertEquals(3, commitInfo1.getChangedObjects().size());
     assertEquals(0, commitInfo1.getDetachedObjects().size());
     assertEquals(false, transaction.isDirty());
-
-    session.close();
   }
 
   @SuppressWarnings("unused")
@@ -504,11 +494,9 @@ public class MergingTest extends AbstractCDOTest
     assertEquals("Company1", ((Company)contents.get(1)).getName());
     assertEquals("Company2", ((Company)contents.get(2)).getName());
 
-    CDOChangeSetData result = transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
-    assertEquals(true, result.isEmpty());
+    CDOChangeSetData check = transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    assertEquals(true, check.isEmpty());
     assertEquals(false, transaction.isDirty());
-
-    session.close();
   }
 
   @SuppressWarnings("unused")
@@ -554,8 +542,8 @@ public class MergingTest extends AbstractCDOTest
     ((Company)contents1.get(2)).setName("CompanyZ");
     CDOCommitInfo commit2 = commitAndSync(tx1, transaction);
 
-    CDOChangeSetData result = transaction.merge(commit2, commit1, new DefaultCDOMerger.PerFeature.ManyValued());
-    assertEquals(false, result.isEmpty());
+    CDOChangeSetData check = transaction.merge(commit2, commit1, new DefaultCDOMerger.PerFeature.ManyValued());
+    assertEquals(false, check.isEmpty());
     assertEquals(true, transaction.isDirty());
   }
 
@@ -608,8 +596,6 @@ public class MergingTest extends AbstractCDOTest
     assertEquals(CDOState.CLEAN, resource.cdoState());
     assertEquals(CDOState.CLEAN, CDOUtil.getCDOObject(company0).cdoState());
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(company1).cdoState());
-
-    session.close();
   }
 
   public void _testRemergeAfterRemovalsInSource() throws Exception
@@ -640,11 +626,9 @@ public class MergingTest extends AbstractCDOTest
     transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     transaction.commit();
 
-    CDOChangeSetData result = transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
-    assertEquals(true, result.isEmpty());
+    CDOChangeSetData check = transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    assertEquals(true, check.isEmpty());
     assertEquals(false, transaction.isDirty());
-
-    session.close();
   }
 
   /**
@@ -686,11 +670,9 @@ public class MergingTest extends AbstractCDOTest
     assertEquals(true, transaction.isDirty());
     transaction.commit();
 
-    result = transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
-    assertEquals(true, result.isEmpty());
+    CDOChangeSetData check = transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    assertEquals(true, check.isEmpty());
     assertEquals(false, transaction.isDirty());
-
-    session.close();
   }
 
   /**
@@ -742,11 +724,9 @@ public class MergingTest extends AbstractCDOTest
     CDOBranch source1 = mainBranch.getBranch("source1");
 
     CDOTransaction transaction = session.openTransaction(mainBranch);
-    CDOChangeSetData result = transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
-    assertEquals(true, result.isEmpty());
+    CDOChangeSetData check = transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    assertEquals(true, check.isEmpty());
     assertEquals(false, transaction.isDirty());
-
-    session.close();
   }
 
   private Company addCompany(EList<EObject> contents)

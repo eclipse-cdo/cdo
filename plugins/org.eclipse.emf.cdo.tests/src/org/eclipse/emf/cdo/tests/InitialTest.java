@@ -489,54 +489,36 @@ public class InitialTest extends AbstractCDOTest
 
   public void testReadTransientValue() throws Exception
   {
-    msg("Opening session");
     CDOSession session = openSession();
 
     {
       disableConsole();
-      msg("Opening transaction");
       CDOTransaction transaction = session.openTransaction();
-
-      msg("Creating resource");
       CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-      msg("Creating supplier");
       Product1 product = getModel1Factory().createProduct1();
-
-      msg("Setting name");
       product.setDescription("DESCRIPTION");
       product.setName("McDuff");
 
-      msg("Adding supplier");
       resource.getContents().add(product);
 
       assertEquals("DESCRIPTION", product.getDescription());
 
-      msg("Committing");
       transaction.commit();
       enableConsole();
     }
 
-    msg("Opening transaction");
     CDOView view = session.openView();
-
-    msg("Getting resource");
     CDOResource resource = view.getResource(getResourcePath("/test1"));
 
-    msg("Getting contents");
     EList<EObject> contents = resource.getContents();
-
-    msg("Getting supplier");
     Product1 s = (Product1)contents.get(0);
     assertNotNull(s);
 
-    msg("Verifying name");
     assertEquals("McDuff", s.getName());
-
     assertNull(s.getDescription());
 
     s.setDescription("HELLO");
-
     assertEquals("HELLO", s.getDescription());
   }
 

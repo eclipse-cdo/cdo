@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +43,10 @@ public class CDOClassInfoImpl extends AdapterImpl implements InternalCDOClassInf
   private PersistenceFilter[] persistenceFilters = NO_FILTERS;
 
   private int[] featureIDMappings;
+
+  private int settingsFeatureCount;
+
+  private int[] settingsFeatureIndices;
 
   public CDOClassInfoImpl()
   {
@@ -102,6 +107,16 @@ public class CDOClassInfoImpl extends AdapterImpl implements InternalCDOClassInf
     return index;
   }
 
+  public int getSettingsFeatureCount()
+  {
+    return settingsFeatureCount;
+  }
+
+  public int getSettingsFeatureIndex(int featureID)
+  {
+    return settingsFeatureIndices[featureID];
+  }
+
   public PersistenceFilter getPersistenceFilter(EStructuralFeature feature)
   {
     if (persistenceFilters == NO_FILTERS)
@@ -113,15 +128,52 @@ public class CDOClassInfoImpl extends AdapterImpl implements InternalCDOClassInf
     return persistenceFilters[featureID];
   }
 
+  private PersistenceFilter initPersistenceFilter(EStructuralFeature feature)
+  {
+    CDOPersistenceFilterImpl result = null;
+    String filter = EcoreUtil.getAnnotation(feature, EMFUtil.CDO_ANNOTATION_SOURCE, "filter");
+
+    if (filter != null)
+    {
+      EStructuralFeature dependency = feature.getEContainingClass().getEStructuralFeature(filter);
+      if (dependency != null)
+      {
+        result = new CDOPersistenceFilterImpl(dependency);
+      }
+      else
+      {
+        OM.LOG.warn("Persistence filter '" + filter + "' not found for " + feature);
+      }
+    }
+
+    return result;
+  }
+
   private void init(EClass eClass)
   {
     List<EStructuralFeature> persistentFeatures = new ArrayList<EStructuralFeature>();
     EList<EStructuralFeature> allFeatures = eClass.getEAllStructuralFeatures();
-    for (EStructuralFeature feature : allFeatures)
+
+    int featureCount = eClass.getFeatureCount();
+    settingsFeatureIndices = new int[featureCount];
+    for (int i = 0; i < featureCount; i++)
     {
+      EStructuralFeature feature = eClass.getEStructuralFeature(i);
       if (EMFUtil.isPersistent(feature))
       {
         persistentFeatures.add(feature);
+        if (feature.isMany() || FeatureMapUtil.isFeatureMap(feature))
+        {
+          settingsFeatureIndices[i] = settingsFeatureCount++;
+        }
+        else
+        {
+          settingsFeatureIndices[i] = NO_SETTING;
+        }
+      }
+      else
+      {
+        settingsFeatureIndices[i] = settingsFeatureCount++;
       }
     }
 
@@ -146,27 +198,6 @@ public class CDOClassInfoImpl extends AdapterImpl implements InternalCDOClassInf
         persistenceFilters[featureID] = persistenceFilter;
       }
     }
-  }
-
-  private PersistenceFilter initPersistenceFilter(EStructuralFeature feature)
-  {
-    CDOPersistenceFilterImpl result = null;
-    String filter = EcoreUtil.getAnnotation(feature, EMFUtil.CDO_ANNOTATION_SOURCE, "filter");
-
-    if (filter != null)
-    {
-      EStructuralFeature dependency = feature.getEContainingClass().getEStructuralFeature(filter);
-      if (dependency != null)
-      {
-        result = new CDOPersistenceFilterImpl(dependency);
-      }
-      else
-      {
-        OM.LOG.warn("Persistence filter '" + filter + "' not found for " + feature);
-      }
-    }
-
-    return result;
   }
 
   @Override

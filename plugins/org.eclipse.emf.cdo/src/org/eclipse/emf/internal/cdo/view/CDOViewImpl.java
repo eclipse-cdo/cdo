@@ -89,6 +89,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
+import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 
@@ -1127,6 +1128,16 @@ public class CDOViewImpl extends AbstractCDOView
     }
 
     CDOViewRegistryImpl.INSTANCE.register(this);
+  }
+
+  @Override
+  protected void doBeforeDeactivate() throws Exception
+  {
+    // Detach viewset from the view
+    InternalCDOViewSet viewSet = getViewSet();
+    viewSet.remove(this);
+
+    super.doBeforeDeactivate();
   }
 
   /**

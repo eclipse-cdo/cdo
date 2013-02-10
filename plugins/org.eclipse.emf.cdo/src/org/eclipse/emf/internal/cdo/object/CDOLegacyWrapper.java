@@ -249,7 +249,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       if (!(adapter instanceof CDOObjectWrapper))
       {
         viewAndState.view.handleAddAdapter(this, adapter);
-        viewAndState.view.subscribe(this, adapter);
       }
     }
   }

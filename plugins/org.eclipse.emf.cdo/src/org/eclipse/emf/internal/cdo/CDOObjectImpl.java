@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.CDOObjectHistory;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -49,10 +50,12 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Internal.DynamicValueHolder;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
 import org.eclipse.emf.ecore.util.DelegatingFeatureMap;
@@ -79,9 +82,11 @@ import java.util.ListIterator;
  *
  * @author Eike Stepper
  */
-public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObject
+public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalCDOObject
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOObjectImpl.class);
+
+  private static final Object[] CDO_NO_SETTINGS = {};
 
   /**
    * Optimized storage of {@link CDOObject#cdoView()} and {@link CDOObject#cdoState()}.
@@ -107,11 +112,18 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    */
   private transient Object[] cdoSettings;
 
+  /**
+   * Don't use the optional slot in MinimalEObject because a CDOObject always needs eSettings to store:
+   * <ul>
+   *  <li>the values of all features of transient objects,
+   *  <li>the values of transient features of persistent objects and
+   *  <li>the list wrappers of all many-valued features of all objects.
+   * </ul>
+   */
   private Object[] eSettings;
 
   public CDOObjectImpl()
   {
-    eContainer = null; // Overwrite base class initialization
   }
 
   public final CDOState cdoState()
@@ -286,15 +298,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     {
       viewAndState = ViewAndState.TRANSIENT.getViewAndState(viewAndState.state);
     }
-
-    if (viewAndState.view != null)
-    {
-      eSetStore(viewAndState.view.getStore());
-    }
-    else
-    {
-      eSetStore(null);
-    }
   }
 
   public void cdoInternalSetID(CDOID id)
@@ -345,8 +348,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     super.eSetDirectResource(null);
-    eContainer = null;
-    eContainerFeatureID = 0;
+    eBasicSetContainer(null);
+    eBasicSetContainerFeatureID(0);
   }
 
   /**
@@ -360,19 +363,37 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   public void cdoInternalPostLoad()
   {
     // Reset EMAP objects
+    Object[] eSettings = eBasicSettings();
     if (eSettings != null)
     {
       // Make sure transient features are kept but persisted values are not cached.
+      CDOClassInfo classInfo = getClassInfo();
+
       EClass eClass = eClass();
       int featureCount = eClass.getFeatureCount();
       for (int i = 0; i < featureCount; i++)
       {
-        EStructuralFeature eFeature = eClass.getEStructuralFeature(i);
-
         // We need to keep the existing list if possible.
-        if (EMFUtil.isPersistent(eFeature) && eSettings[i] instanceof InternalCDOLoadable)
+        int index = classInfo.getSettingsFeatureIndex(i);
+        if (index != CDOClassInfo.NO_SETTING)
         {
-          ((InternalCDOLoadable)eSettings[i]).cdoInternalPostLoad();
+          EStructuralFeature eFeature = eClass.getEStructuralFeature(i);
+          if (EMFUtil.isPersistent(eFeature))
+          {
+            Object value = eSettings[index];
+            if (value instanceof InternalCDOLoadable)
+            {
+              ((InternalCDOLoadable)value).cdoInternalPostLoad();
+            }
+          }
+        }
+        else
+        {
+          EStructuralFeature eFeature = eClass.getEStructuralFeature(i);
+          if (EMFUtil.isPersistent(eFeature))
+          {
+            System.out.println(eFeature);
+          }
         }
       }
     }
@@ -392,6 +413,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     {
       TRACER.format("Populating revision for {0}", this); //$NON-NLS-1$
     }
+
+    InternalEObject eContainer = eBasicInternalContainer();
+    int eContainerFeatureID = eBasicContainerFeatureID();
 
     InternalCDORevision revision = cdoRevision();
     revision.setContainerID(eContainer == null ? CDOID.NULL : viewAndState.view.convertObjectToID(eContainer, true));
@@ -443,8 +467,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
     CDOStore store = cdoStore();
     super.eSetDirectResource((Resource.Internal)store.getResource(this));
-    eContainer = store.getContainer(this);
-    eContainerFeatureID = store.getContainingFeatureID(this);
+    eBasicSetContainer(store.getContainer(this));
+    eBasicSetContainerFeatureID(store.getContainingFeatureID(this));
 
     // Ensure that the internal cdoSettings array is initialized;
     cdoSettings = null;
@@ -488,47 +512,27 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   /**
-   * @since 2.0
+   * @since 4.2
    */
   @Override
-  public synchronized EList<Adapter> eAdapters()
+  protected void eAdapterAdded(Adapter newAdapter)
   {
-    if (eAdapters == null)
+    if (!FSMUtil.isTransient(CDOObjectImpl.this))
     {
-      // TODO Adjust for EObjectEAdapterList (see bug #247130)
-      eAdapters = new EAdapterList<Adapter>(this)
-      {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        protected void didAdd(int index, Adapter newObject)
-        {
-          if (viewAndState.view == null || viewAndState.view.isActive())
-          {
-            super.didAdd(index, newObject);
-            if (!FSMUtil.isTransient(CDOObjectImpl.this))
-            {
-              viewAndState.view.handleAddAdapter(CDOObjectImpl.this, newObject);
-            }
-          }
-        }
-
-        @Override
-        protected void didRemove(int index, Adapter oldObject)
-        {
-          if (viewAndState.view == null || viewAndState.view.isActive())
-          {
-            super.didRemove(index, oldObject);
-            if (!FSMUtil.isTransient(CDOObjectImpl.this))
-            {
-              viewAndState.view.handleRemoveAdapter(CDOObjectImpl.this, oldObject);
-            }
-          }
-        }
-      };
+      viewAndState.view.handleAddAdapter(CDOObjectImpl.this, newAdapter);
     }
+  }
 
-    return eAdapters;
+  /**
+   * @since 4.2
+   */
+  @Override
+  protected void eAdapterRemoved(Adapter oldAdapter)
+  {
+    if (!FSMUtil.isTransient(CDOObjectImpl.this))
+    {
+      viewAndState.view.handleRemoveAdapter(CDOObjectImpl.this, oldAdapter);
+    }
   }
 
   /**
@@ -541,7 +545,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       int size = eClass().getFeatureCount();
       if (size == 0)
       {
-        cdoSettings = ENO_SETTINGS;
+        cdoSettings = CDO_NO_SETTINGS;
       }
       else
       {
@@ -599,28 +603,29 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   @Override
   public Object dynamicGet(int dynamicFeatureID)
   {
-    Object result = eSettings[dynamicFeatureID];
+    EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
+
+    int index = getClassInfo().getSettingsFeatureIndex(dynamicFeatureID);
+    if (index == CDOClassInfo.NO_SETTING)
+    {
+      // The feature has no slot in eSettings, i.e., it's persistent or single-valued.
+      // Delegate to the store. TransientStore delegates back to eSettings.
+      EStore eStore = eStore();
+      return eStore.get(this, eStructuralFeature, EStore.NO_INDEX);
+    }
+
+    // Here we know that the feature is transient or many-valued, hence it has a slot in eSettings.
+    Object[] eSettings = eBasicSettings();
+    Object result = eSettings[index];
     if (result == null)
     {
-      EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-      if (EMFUtil.isPersistent(eStructuralFeature))
+      if (FeatureMapUtil.isFeatureMap(eStructuralFeature))
       {
-        if (FeatureMapUtil.isFeatureMap(eStructuralFeature))
-        {
-          eSettings[dynamicFeatureID] = result = createFeatureMap(eStructuralFeature);
-        }
-        else if (eStructuralFeature.isMany())
-        {
-          eSettings[dynamicFeatureID] = result = createList(eStructuralFeature);
-        }
-        else
-        {
-          result = eStore().get(this, eStructuralFeature, EStore.NO_INDEX);
-          if (eIsCaching())
-          {
-            eSettings[dynamicFeatureID] = result;
-          }
-        }
+        eSettings[index] = result = createFeatureMap(eStructuralFeature);
+      }
+      else if (eStructuralFeature.isMany())
+      {
+        eSettings[index] = result = createList(eStructuralFeature);
       }
     }
 
@@ -631,17 +636,19 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   public void dynamicSet(int dynamicFeatureID, Object value)
   {
     EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-    if (!EMFUtil.isPersistent(eStructuralFeature))
+
+    int index = getClassInfo().getSettingsFeatureIndex(dynamicFeatureID);
+    if (index == CDOClassInfo.NO_SETTING)
     {
-      eSettings[dynamicFeatureID] = value;
+      // The feature has no slot in eSettings, i.e., it's persistent or single-valued.
+      // Delegate to the store. TransientStore delegates back to eSettings.
+      EStore eStore = eStore();
+      eStore.set(this, eStructuralFeature, EStore.NO_INDEX, value);
     }
     else
     {
-      eStore().set(this, eStructuralFeature, EStore.NO_INDEX, value);
-      if (eIsCaching())
-      {
-        eSettings[dynamicFeatureID] = value;
-      }
+      Object[] eSettings = eBasicSettings();
+      eSettings[index] = value;
     }
   }
 
@@ -649,34 +656,33 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   public void dynamicUnset(int dynamicFeatureID)
   {
     EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-    if (!EMFUtil.isPersistent(eStructuralFeature))
+
+    int index = getClassInfo().getSettingsFeatureIndex(dynamicFeatureID);
+    if (index == CDOClassInfo.NO_SETTING)
     {
-      eSettings[dynamicFeatureID] = null;
+      // The feature has no slot in eSettings, i.e., it's persistent or single-valued.
+      // Delegate to the store. TransientStore delegates back to eSettings.
+      EStore eStore = eStore();
+      eStore.unset(this, eStructuralFeature);
     }
     else
     {
-      eStore().unset(this, eDynamicFeature(dynamicFeatureID));
-      if (eIsCaching())
-      {
-        eSettings[dynamicFeatureID] = null;
-      }
+      Object[] eSettings = eBasicSettings();
+      eSettings[index] = null;
+
+      // XXX Don't remove the list wrapper for many-valued features!!!
     }
   }
 
   @Override
   public InternalEObject eInternalContainer()
   {
-    InternalEObject container;
     if (FSMUtil.isTransient(this))
     {
-      container = eContainer;
-    }
-    else
-    {
-      container = cdoStore().getContainer(this);
+      return eBasicInternalContainer();
     }
 
-    return container;
+    return cdoStore().getContainer(this);
   }
 
   @Override
@@ -684,7 +690,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   {
     if (FSMUtil.isTransient(this))
     {
-      return eContainerFeatureID;
+      return eBasicContainerFeatureID();
     }
 
     return cdoStore().getContainingFeatureID(this);
@@ -903,7 +909,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
     else
     {
-      cdoStore().setContainer(this, cdoDirectResource(), newEContainer, newContainerFeatureID);
+      CDOStore cdoStore = cdoStore();
+      cdoStore.setContainer(this, cdoDirectResource(), newEContainer, newContainerFeatureID);
     }
   }
 
@@ -915,16 +922,50 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   @Override
-  protected void eInitializeContainer()
+  protected EStructuralFeature eDynamicFeature(int dynamicFeatureID)
   {
-    throw new UnsupportedOperationException();
+    // CDOObjectImpl has no static features, so don't add their count here:
+    return eClass().getEStructuralFeature(dynamicFeatureID);
+  }
+
+  @Override
+  protected DynamicValueHolder eSettings()
+  {
+    if (!eHasSettings())
+    {
+      int size = getClassInfo().getSettingsFeatureCount();
+      if (size != 0)
+      {
+        eBasicSetSettings(new Object[size]);
+      }
+    }
+
+    return this;
+  }
+
+  @Override
+  protected final boolean eHasSettings()
+  {
+    return eSettings != null;
+  }
+
+  @Override
+  protected final Object[] eBasicSettings()
+  {
+    return eSettings;
+  }
+
+  @Override
+  protected final void eBasicSetSettings(Object[] settings)
+  {
+    eSettings = settings;
   }
 
   /**
    * Don't cache non-transient features in this CDOObject's {@link #eSettings()}.
    */
   @Override
-  protected boolean eIsCaching()
+  protected final boolean eIsCaching()
   {
     return false;
   }
@@ -1002,6 +1043,11 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     // Answer from Christian Damus:
     // Java ensures that string constants are interned, so == is actually more efficient than equals() and it's correct
     return eStructuralFeature.getEType().getInstanceClassName() == "java.util.Map$Entry"; //$NON-NLS-1$
+  }
+
+  private CDOClassInfo getClassInfo()
+  {
+    return CDOModelUtil.getClassInfo(eClass());
   }
 
   /**
@@ -1396,7 +1442,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     public CDOStoreEcoreEMap(EStructuralFeature eStructuralFeature)
     {
       super((EClass)eStructuralFeature.getEType(), BasicEMap.Entry.class, null);
-      delegateEList = new BasicEStoreEList<BasicEMap.Entry<Object, Object>>(CDOObjectImpl.this, eStructuralFeature)
+      delegateEList = new EStoreEObjectImpl.BasicEStoreEList<BasicEMap.Entry<Object, Object>>(CDOObjectImpl.this,
+          eStructuralFeature)
       {
         private static final long serialVersionUID = 1L;
 
@@ -1520,7 +1567,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    * @author Andras Peteri
    * @since 4.1
    */
-  public class CDOStoreUnorderedEList<E> extends BasicEStoreEList<E>
+  public class CDOStoreUnorderedEList<E> extends EStoreEObjectImpl.BasicEStoreEList<E>
   {
     private static final long serialVersionUID = 1L;
 

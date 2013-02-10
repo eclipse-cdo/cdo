@@ -52,6 +52,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -1675,7 +1676,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    * @author Eike Stepper
    * @since 2.0
    */
-  protected class ContentsCDOList extends BasicEStoreEList<Object>
+  protected class ContentsCDOList extends EStoreEObjectImpl.BasicEStoreEList<Object>
   {
     private static final long serialVersionUID = 1L;
 

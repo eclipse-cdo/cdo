@@ -180,8 +180,6 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
    */
   public void viewDetached(InternalCDOView view)
   {
-    // Detach viewset from the view
-    view.getViewSet().remove(view);
     synchronized (views)
     {
       if (!views.remove(view))

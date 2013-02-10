@@ -97,12 +97,17 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   private Object idOrRevision;
 
   /**
-   * CDO uses this list instead of eSettings for transient objects. EMF uses eSettings as cache. CDO deactivates the
-   * cache but EMF still used eSettings to store list wrappers. CDO needs another place to store the real list with the
-   * actual data (transient mode) and accessible through EStore. This allows CDO to always use the same instance of the
-   * list wrapper.
+   * Used by CDO instead of eSettings for TRANSIENT objects.
+   * <p>
+   * EMF uses eSettings as a cache.
+   * CDO {@link #eIsCaching() deactivates} this caching but EMF still uses eSettings to store list wrappers.
+   * List wrappers are the lists returned from the getters of many-valued features. They need to be unique for an object during all CDOStates.
+   * CDO needs another place to store the real list with the actual data (transient mode) and accessible through EStore.
+   * This allows CDO to always use the same instance of the list wrapper.
    */
   private transient Object[] cdoSettings;
+
+  private Object[] eSettings;
 
   public CDOObjectImpl()
   {
@@ -442,7 +447,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     eContainerFeatureID = store.getContainingFeatureID(this);
 
     // Ensure that the internal cdoSettings array is initialized;
-    resetSettings();
+    cdoSettings = null;
+    cdoSettings();
 
     InternalCDORevision revision = cdoRevision();
     EClass eClass = eClass();
@@ -523,6 +529,46 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     return eAdapters;
+  }
+
+  /**
+   * @since 2.0
+   */
+  private Object[] cdoSettings()
+  {
+    if (cdoSettings == null)
+    {
+      int size = eClass().getFeatureCount();
+      if (size == 0)
+      {
+        cdoSettings = ENO_SETTINGS;
+      }
+      else
+      {
+        cdoSettings = new Object[size];
+      }
+    }
+
+    return cdoSettings;
+  }
+
+  private CDOStore cdoStore()
+  {
+    return viewAndState.view.getStore();
+  }
+
+  /**
+   * @since 2.0
+   */
+  @Override
+  public EStore eStore()
+  {
+    if (FSMUtil.isTransient(this))
+    {
+      return TransientStore.INSTANCE;
+    }
+
+    return cdoStore();
   }
 
   /**
@@ -617,39 +663,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
   }
 
-  /**
-   * @since 2.0
-   */
-  @Override
-  protected boolean eDynamicIsSet(int dynamicFeatureID, EStructuralFeature eFeature)
-  {
-    if (dynamicFeatureID < 0)
-    {
-      return eOpenIsSet(eFeature);
-    }
-
-    if (EMFUtil.isPersistent(eFeature))
-    {
-      return eStore().isSet(this, eFeature);
-    }
-
-    return eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(), dynamicFeatureID);
-  }
-
-  /**
-   * @since 2.0
-   */
-  @Override
-  public EStore eStore()
-  {
-    if (FSMUtil.isTransient(this))
-    {
-      return CDOStoreSettingsImpl.INSTANCE;
-    }
-
-    return cdoStore();
-  }
-
   @Override
   public InternalEObject eInternalContainer()
   {
@@ -660,7 +673,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
     else
     {
-      // Delegate to CDOStore
       container = cdoStore().getContainer(this);
     }
 
@@ -675,7 +687,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       return eContainerFeatureID;
     }
 
-    // Delegate to CDOStore
     return cdoStore().getContainingFeatureID(this);
   }
 
@@ -842,6 +853,82 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return notifications;
   }
 
+  @Override
+  protected void eSetDirectResource(Internal resource)
+  {
+    if (FSMUtil.isTransient(this))
+    {
+      super.eSetDirectResource(resource);
+    }
+    else if (resource instanceof CDOResourceImpl || resource == null)
+    {
+      cdoStore().setContainer(this, (CDOResourceImpl)resource, eInternalContainer(), eContainerFeatureID());
+    }
+    else
+    {
+      throw new IllegalArgumentException(Messages.getString("CDOObjectImpl.8")); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  @Override
+  protected boolean eDynamicIsSet(int dynamicFeatureID, EStructuralFeature eFeature)
+  {
+    if (dynamicFeatureID < 0)
+    {
+      return eOpenIsSet(eFeature);
+    }
+
+    if (EMFUtil.isPersistent(eFeature))
+    {
+      return eStore().isSet(this, eFeature);
+    }
+
+    return eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(), dynamicFeatureID);
+  }
+
+  @Override
+  protected void eBasicSetContainer(InternalEObject newEContainer, int newContainerFeatureID)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Setting container: {0}, featureID={1}", newEContainer, newContainerFeatureID); //$NON-NLS-1$
+    }
+
+    if (FSMUtil.isTransient(this))
+    {
+      super.eBasicSetContainer(newEContainer, newContainerFeatureID);
+    }
+    else
+    {
+      cdoStore().setContainer(this, cdoDirectResource(), newEContainer, newContainerFeatureID);
+    }
+  }
+
+  @Override
+  protected int eDynamicFeatureID(EStructuralFeature eStructuralFeature)
+  {
+    // CDOObjectImpl has no static features, so don't subract their count here:
+    return eClass().getFeatureID(eStructuralFeature);
+  }
+
+  @Override
+  protected void eInitializeContainer()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * Don't cache non-transient features in this CDOObject's {@link #eSettings()}.
+   */
+  @Override
+  protected boolean eIsCaching()
+  {
+    return false;
+  }
+
   /**
    * Specializing the behaviour of {@link #hashCode()} is not permitted as per {@link EObject} specification.
    */
@@ -870,35 +957,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     return eClass().getName() + "@" + id; //$NON-NLS-1$
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected Object[] cdoSettings()
-  {
-    if (cdoSettings == null)
-    {
-      int size = eClass().getFeatureCount() - eStaticFeatureCount();
-      if (size == 0)
-      {
-        cdoSettings = ENO_SETTINGS;
-      }
-      else
-      {
-        cdoSettings = new Object[size];
-      }
-    }
-
-    return cdoSettings;
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected Object[] cdoBasicSettings()
-  {
-    return cdoSettings;
   }
 
   @Override
@@ -942,70 +1000,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   private boolean isMap(EStructuralFeature eStructuralFeature)
   {
     // Answer from Christian Damus:
-    // Java ensures that string constants are interned, so this is actually
-    // more efficient than .equals() and it's correct
+    // Java ensures that string constants are interned, so == is actually more efficient than equals() and it's correct
     return eStructuralFeature.getEType().getInstanceClassName() == "java.util.Map$Entry"; //$NON-NLS-1$
-  }
-
-  @Override
-  protected void eInitializeContainer()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  protected void eSetDirectResource(Internal resource)
-  {
-    if (FSMUtil.isTransient(this))
-    {
-      super.eSetDirectResource(resource);
-    }
-    else if (resource instanceof CDOResourceImpl || resource == null)
-    {
-      cdoStore().setContainer(this, (CDOResourceImpl)resource, eInternalContainer(), eContainerFeatureID());
-    }
-    else
-    {
-      throw new IllegalArgumentException(Messages.getString("CDOObjectImpl.8")); //$NON-NLS-1$
-    }
-  }
-
-  /**
-   * Don't cache non-transient features in this CDOObject's {@link #eSettings()}.
-   */
-  @Override
-  protected boolean eIsCaching()
-  {
-    return false;
-  }
-
-  @Override
-  protected void eBasicSetContainer(InternalEObject newEContainer, int newContainerFeatureID)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Setting container: {0}, featureID={1}", newEContainer, newContainerFeatureID); //$NON-NLS-1$
-    }
-
-    if (FSMUtil.isTransient(this))
-    {
-      super.eBasicSetContainer(newEContainer, newContainerFeatureID);
-    }
-    else
-    {
-      cdoStore().setContainer(this, cdoDirectResource(), newEContainer, newContainerFeatureID);
-    }
-  }
-
-  private CDOStore cdoStore()
-  {
-    return viewAndState.view.getStore();
-  }
-
-  private void resetSettings()
-  {
-    cdoSettings = null;
-    cdoSettings();
   }
 
   /**
@@ -1179,47 +1175,51 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   /**
-   * For internal use only.
+   * Implements an internal EStore for TRANSIENT objects, where there is no view or {@link CDOStore}.
+   * <p>
+   * Feature values are actually stored in {@link CDOObjectImpl#cdoSettings}.
    *
    * @author Simon McDuff
    * @since 2.0
    */
-  public static class CDOStoreSettingsImpl implements InternalEObject.EStore
+  private static class TransientStore implements InternalEObject.EStore
   {
-    public static CDOStoreSettingsImpl INSTANCE = new CDOStoreSettingsImpl();
+    public static TransientStore INSTANCE = new TransientStore();
 
-    private CDOStoreSettingsImpl()
+    private TransientStore()
     {
     }
 
-    protected Object getValue(InternalEObject eObject, int dynamicFeatureID)
+    private Object getValue(InternalEObject eObject, int dynamicFeatureID)
     {
-      Object value = ((CDOObjectImpl)eObject).cdoSettings()[dynamicFeatureID];
-      return value;
+      Object settings[] = ((CDOObjectImpl)eObject).cdoSettings();
+      return settings[dynamicFeatureID];
     }
 
-    protected EList<Object> getValueAsList(InternalEObject eObject, int dynamicFeatureID)
+    private EList<Object> getValueAsList(InternalEObject eObject, int dynamicFeatureID)
     {
+      Object settings[] = ((CDOObjectImpl)eObject).cdoSettings();
+
       @SuppressWarnings("unchecked")
-      EList<Object> result = (EList<Object>)getValue(eObject, dynamicFeatureID);
+      EList<Object> result = (EList<Object>)settings[dynamicFeatureID];
       if (result == null)
       {
         result = new BasicEList<Object>();
-        ((CDOObjectImpl)eObject).cdoSettings()[dynamicFeatureID] = result;
+        settings[dynamicFeatureID] = result;
       }
 
       return result;
     }
 
-    protected Object setValue(InternalEObject eObject, int dynamicFeatureID, Object newValue)
+    private Object setValue(InternalEObject eObject, int dynamicFeatureID, Object newValue)
     {
       Object settings[] = ((CDOObjectImpl)eObject).cdoSettings();
-      Object oldSetting = settings[dynamicFeatureID];
+      Object oldValue = settings[dynamicFeatureID];
       settings[dynamicFeatureID] = newValue;
-      return oldSetting;
+      return oldValue;
     }
 
-    protected int eDynamicFeatureID(InternalEObject eObject, EStructuralFeature feature)
+    private int eDynamicFeatureID(InternalEObject eObject, EStructuralFeature feature)
     {
       return ((CDOObjectImpl)eObject).eDynamicFeatureID(feature);
     }
@@ -1335,7 +1335,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
     public EObject create(EClass eClass)
     {
-      return new EStoreEObjectImpl(eClass, this);
+      throw new UnsupportedOperationException("Should never be called");
     }
 
     public boolean isSet(InternalEObject eObject, EStructuralFeature feature)
@@ -1352,7 +1352,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         return !ObjectUtil.equals(eObject.eGet(feature), feature.getDefaultValue());
       }
 
-      Object[] settings = ((CDOObjectImpl)eObject).cdoBasicSettings();
+      Object[] settings = ((CDOObjectImpl)eObject).cdoSettings;
       if (settings == null)
       {
         return false;
@@ -1364,7 +1364,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
     public void unset(InternalEObject eObject, EStructuralFeature feature)
     {
-      Object[] settings = ((CDOObjectImpl)eObject).cdoBasicSettings();
+      Object[] settings = ((CDOObjectImpl)eObject).cdoSettings;
       if (settings == null)
       {
         // Is already unset

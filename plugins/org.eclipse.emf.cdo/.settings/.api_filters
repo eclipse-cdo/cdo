@@ -163,6 +163,24 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/CDOObjectImpl.java" type="org.eclipse.emf.internal.cdo.CDOObjectImpl">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoBasicSettings()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338886760">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl.CDOStoreSettingsImpl"/>
+                <message_argument value="org.eclipse.emf.cdo_4.2.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="421572723">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoSettings()"/>
+            </message_arguments>
+        </filter>
         <filter id="421654647">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>

@@ -66,6 +66,7 @@ import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOLoadable;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
+import org.eclipse.emf.spi.cdo.InternalCDOView.ViewAndState;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -82,13 +83,18 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOObjectImpl.class);
 
-  private CDOID id;
+  /**
+   * Optimized storage of {@link CDOObject#cdoView()} and {@link CDOObject#cdoState()}.
+   *
+   * @see ViewAndState
+   */
+  private ViewAndState viewAndState = ViewAndState.TRANSIENT;
 
-  private CDOState state;
-
-  private InternalCDOView view;
-
-  private InternalCDORevision revision;
+  /**
+   * Optimized storage of {@link CDOObject#cdoID()} and {@link CDOObject#cdoRevision()}.
+   * The idea is that, if a revision is set, the object's ID is equal to the {@link CDORevision revision's} ID.
+   */
+  private Object idOrRevision;
 
   /**
    * CDO uses this list instead of eSettings for transient objects. EMF uses eSettings as cache. CDO deactivates the
@@ -100,35 +106,48 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   public CDOObjectImpl()
   {
-    state = CDOState.TRANSIENT;
-    eContainer = null;
-    cdoSettings = null;
+    eContainer = null; // Overwrite base class initialization
   }
 
-  public CDOID cdoID()
+  public final CDOState cdoState()
   {
-    return id;
-  }
-
-  public CDOState cdoState()
-  {
-    return state;
+    return viewAndState.state;
   }
 
   /**
    * @since 2.0
    */
-  public InternalCDORevision cdoRevision()
+  public final InternalCDOView cdoView()
   {
-    return revision;
+    return viewAndState.view;
+  }
+
+  public final CDOID cdoID()
+  {
+    if (idOrRevision == null)
+    {
+      return null;
+    }
+
+    if (idOrRevision instanceof CDOID)
+    {
+      return (CDOID)idOrRevision;
+    }
+
+    return ((InternalCDORevision)idOrRevision).getID();
   }
 
   /**
    * @since 2.0
    */
-  public InternalCDOView cdoView()
+  public final InternalCDORevision cdoRevision()
   {
-    return view;
+    if (idOrRevision instanceof InternalCDORevision)
+    {
+      return (InternalCDORevision)idOrRevision;
+    }
+
+    return null;
   }
 
   public CDOResourceImpl cdoResource()
@@ -161,7 +180,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    */
   public void cdoPrefetch(int depth)
   {
-    view.prefetchRevisions(id, depth);
+    CDOID id = cdoID();
+    viewAndState.view.prefetchRevisions(id, depth);
   }
 
   public void cdoReload()
@@ -174,7 +194,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    */
   public CDOObjectHistory cdoHistory()
   {
-    return view.getHistory(this);
+    return viewAndState.view.getHistory(this);
   }
 
   /**
@@ -225,19 +245,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return getLockState(this);
   }
 
-  public void cdoInternalSetID(CDOID id)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Setting ID: {0}", id); //$NON-NLS-1$
-    }
-
-    this.id = id;
-  }
-
   public CDOState cdoInternalSetState(CDOState state)
   {
-    CDOState oldState = this.state;
+    CDOState oldState = viewAndState.state;
     if (oldState != state)
     {
       if (TRACER.isEnabled())
@@ -245,16 +255,54 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         TRACER.format("Setting state {0} for {1}", state, this); //$NON-NLS-1$
       }
 
-      this.state = state;
-      if (view != null)
+      viewAndState = viewAndState.getViewAndState(state);
+      if (viewAndState.view != null)
       {
-        view.handleObjectStateChanged(this, oldState, state);
+        viewAndState.view.handleObjectStateChanged(this, oldState, state);
       }
 
       return oldState;
     }
 
     return null;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void cdoInternalSetView(CDOView view)
+  {
+    InternalCDOView newView = (InternalCDOView)view;
+    if (newView != null)
+    {
+      viewAndState = newView.getViewAndState(viewAndState.state);
+    }
+    else
+    {
+      viewAndState = ViewAndState.TRANSIENT.getViewAndState(viewAndState.state);
+    }
+
+    if (viewAndState.view != null)
+    {
+      eSetStore(viewAndState.view.getStore());
+    }
+    else
+    {
+      eSetStore(null);
+    }
+  }
+
+  public void cdoInternalSetID(CDOID id)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Setting ID: {0}", id); //$NON-NLS-1$
+    }
+
+    if (idOrRevision == null || id == null)
+    {
+      idOrRevision = id;
+    }
   }
 
   /**
@@ -267,22 +315,13 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       TRACER.format("Setting revision: {0}", revision); //$NON-NLS-1$
     }
 
-    this.revision = (InternalCDORevision)revision;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void cdoInternalSetView(CDOView view)
-  {
-    this.view = (InternalCDOView)view;
-    if (this.view != null)
+    if (revision == null)
     {
-      eSetStore(this.view.getStore());
+      idOrRevision = cdoID();
     }
     else
     {
-      eSetStore(null);
+      idOrRevision = revision;
     }
   }
 
@@ -320,9 +359,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     {
       // Make sure transient features are kept but persisted values are not cached.
       EClass eClass = eClass();
-      for (int i = 0; i < eClass.getFeatureCount(); i++)
+      int featureCount = eClass.getFeatureCount();
+      for (int i = 0; i < featureCount; i++)
       {
-        EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
+        EStructuralFeature eFeature = eClass.getEStructuralFeature(i);
 
         // We need to keep the existing list if possible.
         if (EMFUtil.isPersistent(eFeature) && eSettings[i] instanceof InternalCDOLoadable)
@@ -348,7 +388,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       TRACER.format("Populating revision for {0}", this); //$NON-NLS-1$
     }
 
-    revision.setContainerID(eContainer == null ? CDOID.NULL : view.convertObjectToID(eContainer, true));
+    InternalCDORevision revision = cdoRevision();
+    revision.setContainerID(eContainer == null ? CDOID.NULL : viewAndState.view.convertObjectToID(eContainer, true));
     revision.setContainingFeatureID(eContainerFeatureID);
 
     Resource directResource = eDirectResource();
@@ -361,12 +402,13 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     if (cdoSettings != null)
     {
       EClass eClass = eClass();
-      for (int i = 0; i < eClass.getFeatureCount(); i++)
+      int featureCount = eClass.getFeatureCount();
+      for (int i = 0; i < featureCount; i++)
       {
-        EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
+        EStructuralFeature eFeature = eClass.getEStructuralFeature(i);
         if (EMFUtil.isPersistent(eFeature))
         {
-          instanceToRevisionFeature(view, this, eFeature, cdoSettings[i]);
+          instanceToRevisionFeature(viewAndState.view, this, eFeature, cdoSettings[i]);
         }
       }
 
@@ -399,13 +441,15 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     eContainer = store.getContainer(this);
     eContainerFeatureID = store.getContainingFeatureID(this);
 
-    // Ensure that the internal eSettings array is initialized;
+    // Ensure that the internal cdoSettings array is initialized;
     resetSettings();
 
+    InternalCDORevision revision = cdoRevision();
     EClass eClass = eClass();
-    for (int i = 0; i < eClass.getFeatureCount(); i++)
+    int featureCount = eClass.getFeatureCount();
+    for (int i = 0; i < featureCount; i++)
     {
-      EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
+      EStructuralFeature eFeature = eClass.getEStructuralFeature(i);
       if (EMFUtil.isPersistent(eFeature))
       {
         revisionToInstanceFeature(this, revision, eFeature);
@@ -431,9 +475,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return this;
   }
 
+  @Deprecated
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
   {
-    return eDynamicFeature(dynamicFeatureID);
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -452,12 +497,12 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         @Override
         protected void didAdd(int index, Adapter newObject)
         {
-          if (view == null || view.isActive())
+          if (viewAndState.view == null || viewAndState.view.isActive())
           {
             super.didAdd(index, newObject);
             if (!FSMUtil.isTransient(CDOObjectImpl.this))
             {
-              view.handleAddAdapter(CDOObjectImpl.this, newObject);
+              viewAndState.view.handleAddAdapter(CDOObjectImpl.this, newObject);
             }
           }
         }
@@ -465,12 +510,12 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         @Override
         protected void didRemove(int index, Adapter oldObject)
         {
-          if (view == null || view.isActive())
+          if (viewAndState.view == null || viewAndState.view.isActive())
           {
             super.didRemove(index, oldObject);
             if (!FSMUtil.isTransient(CDOObjectImpl.this))
             {
-              view.handleRemoveAdapter(CDOObjectImpl.this, oldObject);
+              viewAndState.view.handleRemoveAdapter(CDOObjectImpl.this, oldObject);
             }
           }
         }
@@ -676,7 +721,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       }
     }
 
-    CDOView oldView = view;
+    CDOView oldView = viewAndState.view;
     CDOView newView = newResource != null && newResource instanceof CDOResource ? ((CDOResource)newResource).cdoView()
         : null;
 
@@ -739,11 +784,11 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   {
     Resource.Internal oldResource = eDirectResource();
 
-    CDOView oldView = view;
+    CDOView oldView = viewAndState.view;
     CDOView newView = resource != null && resource instanceof CDOResource ? ((CDOResource)resource).cdoView() : null;
 
     boolean isSameView;
-    if (state == CDOState.NEW)
+    if (viewAndState.state == CDOState.NEW)
     {
       isSameView = false;
     }
@@ -818,6 +863,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   @Override
   public String toString()
   {
+    CDOID id = cdoID();
     if (id == null)
     {
       return eClass().getName() + "?"; //$NON-NLS-1$
@@ -953,7 +999,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   private CDOStore cdoStore()
   {
-    return view.getStore();
+    return viewAndState.view.getStore();
   }
 
   private void resetSettings()
@@ -1068,8 +1114,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       TRACER.format("Populating feature {0}", feature); //$NON-NLS-1$
     }
 
-    PersistenceFilter filter = ((InternalCDOClassInfo)CDOModelUtil.getClassInfo(feature
-        .getEContainingClass())).getPersistenceFilter(feature);
+    PersistenceFilter filter = ((InternalCDOClassInfo)CDOModelUtil.getClassInfo(feature.getEContainingClass()))
+        .getPersistenceFilter(feature);
     if (filter != null)
     {
       if (TRACER.isEnabled())

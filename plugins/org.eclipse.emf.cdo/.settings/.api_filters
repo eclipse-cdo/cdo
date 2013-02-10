@@ -162,6 +162,32 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOObjectImpl.java" type="org.eclipse.emf.internal.cdo.CDOObjectImpl">
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoID()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoRevision()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoState()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoView()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/object/CDOObjectReferenceImpl.java" type="org.eclipse.emf.internal.cdo.object.CDOObjectReferenceImpl">
         <filter id="574660632">
             <message_arguments>

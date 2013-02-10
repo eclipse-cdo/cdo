@@ -13,8 +13,10 @@ package org.eclipse.emf.internal.cdo.object;
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOObjectHistory;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -24,11 +26,30 @@ import org.eclipse.emf.spi.cdo.InternalCDOView;
  */
 public class CDOExternalObject extends CDOObjectWrapperBase
 {
+  private InternalCDOView view;
+
+  private CDOID id;
+
   public CDOExternalObject(InternalEObject instance, InternalCDOView view)
   {
     this.instance = instance;
     this.view = view;
     id = view.provideCDOID(instance);
+  }
+
+  public CDOID cdoID()
+  {
+    return id;
+  }
+
+  public CDOView cdoView()
+  {
+    return view;
+  }
+
+  @Override
+  public void cdoPrefetch(int depth)
+  {
   }
 
   public CDOState cdoState()

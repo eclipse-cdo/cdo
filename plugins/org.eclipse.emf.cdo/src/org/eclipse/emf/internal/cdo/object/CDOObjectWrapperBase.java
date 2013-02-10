@@ -11,15 +11,10 @@
 package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
-import org.eclipse.emf.cdo.view.CDOView;
-
-import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.ReflectUtil;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -49,26 +44,10 @@ import java.util.List;
  */
 public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOObjectWrapperBase.class);
-
-  protected CDOID id;
-
-  protected InternalCDOView view;
-
   protected InternalEObject instance;
 
   public CDOObjectWrapperBase()
   {
-  }
-
-  public CDOID cdoID()
-  {
-    return id;
-  }
-
-  public InternalCDOView cdoView()
-  {
-    return view;
   }
 
   public CDOResourceImpl cdoResource()
@@ -94,26 +73,6 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
     }
 
     return null;
-  }
-
-  public void cdoInternalSetID(CDOID id)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Setting ID: {0} for {1}", id, instance); //$NON-NLS-1$
-    }
-
-    this.id = id;
-  }
-
-  public void cdoInternalSetView(CDOView view)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Setting view: {0} for {1}", view, instance); //$NON-NLS-1$
-    }
-
-    this.view = (InternalCDOView)view;
   }
 
   public InternalEObject cdoInternalInstance()
@@ -142,7 +101,8 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
    */
   public void cdoPrefetch(int depth)
   {
-    view.prefetchRevisions(id, depth);
+    InternalCDOView view = (InternalCDOView)cdoView();
+    view.prefetchRevisions(cdoID(), depth);
   }
 
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
@@ -499,7 +459,6 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
   @Override
   public String toString()
   {
-    return getClass().getSimpleName() + "[" + instance.getClass().getSimpleName() + "@" + id + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    return getClass().getSimpleName() + "[" + instance.getClass().getSimpleName() + "@" + cdoID() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
-
 }

@@ -84,7 +84,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
     }
 
     EStructuralFeature feature = (EStructuralFeature)msg.getFeature();
-    if (view == null || feature == null || !(view instanceof CDOTransaction))
+    if (viewAndState.view == null || feature == null || !(viewAndState.view instanceof CDOTransaction))
     {
       return;
     }
@@ -141,7 +141,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
   protected void notifySet(EStructuralFeature feature, int position, Object oldValue, Object newValue)
   {
-    CDOStore store = view.getStore();
+    CDOStore store = viewAndState.view.getStore();
     store.set(instance, feature, position, newValue);
     if (feature instanceof EReference)
     {
@@ -165,7 +165,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
   protected void notifyUnset(EStructuralFeature feature, Object oldValue)
   {
-    CDOStore store = view.getStore();
+    CDOStore store = viewAndState.view.getStore();
     if (feature instanceof EReference)
     {
       EReference reference = (EReference)feature;
@@ -188,13 +188,13 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
   protected void notifyMove(EStructuralFeature feature, int position, Object oldValue)
   {
-    CDOStore store = view.getStore();
+    CDOStore store = viewAndState.view.getStore();
     store.move(instance, feature, position, (Integer)oldValue);
   }
 
   protected void notifyAdd(EStructuralFeature feature, int position, Object newValue)
   {
-    CDOStore store = view.getStore();
+    CDOStore store = viewAndState.view.getStore();
     store.add(instance, feature, position, newValue);
     if (newValue != null && feature instanceof EReference)
     {
@@ -209,7 +209,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
   protected void notifyAddMany(EStructuralFeature feature, int position, Object newValue)
   {
-    CDOStore store = view.getStore();
+    CDOStore store = viewAndState.view.getStore();
     int pos = position;
     @SuppressWarnings("unchecked")
     List<Object> list = (List<Object>)newValue;
@@ -230,7 +230,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
   protected void notifyRemove(EStructuralFeature feature, int position)
   {
-    CDOStore store = view.getStore();
+    CDOStore store = viewAndState.view.getStore();
 
     Object oldChild = store.remove(instance, feature, position);
     if (oldChild instanceof InternalEObject)
@@ -249,7 +249,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
   protected void notifyRemoveMany(EStructuralFeature feature, int[] positions)
   {
-    CDOStore store = view.getStore();
+    CDOStore store = viewAndState.view.getStore();
 
     if (positions == null)
     {

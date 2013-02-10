@@ -163,4 +163,64 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
    * @since 4.1
    */
   public CDOLockState[] getLockStates(Collection<CDOID> ids);
+
+  /**
+   * @since 4.2
+   */
+  public ViewAndState getViewAndState(CDOState state);
+
+  /**
+   * Optimizes the storage of {@link CDOObject#cdoView()} and {@link CDOObject#cdoState()}. All objects of a view
+   * share a small number of {@link CDOState} literals, so they are moved into a final AbstractCDOView.viewAndStates array.
+   * For the {@link CDOState#TRANSIENT TRANSIENT} state, where there is no view associated with a {@link CDOObject}, this class
+   * maintains a static {@link #VIEW_AND_STATES} array.
+   *
+   * @author Eike Stepper
+   * @since 4.2
+   */
+  public static final class ViewAndState
+  {
+    private static final CDOState[] STATE_VALUES = CDOState.values();
+
+    private static final ViewAndState[] VIEW_AND_STATES = create(null);
+
+    public static final ViewAndState TRANSIENT = VIEW_AND_STATES[CDOState.TRANSIENT.ordinal()];
+
+    public final InternalCDOView view;
+
+    public final CDOState state;
+
+    public ViewAndState(InternalCDOView view, CDOState state)
+    {
+      this.view = view;
+      this.state = state;
+    }
+
+    public ViewAndState getViewAndState(CDOState state)
+    {
+      if (view != null)
+      {
+        return view.getViewAndState(state);
+      }
+
+      return VIEW_AND_STATES[state.ordinal()];
+    }
+
+    @Override
+    public String toString()
+    {
+      return "ViewAndState[view=" + view + ", state=" + state + "]";
+    }
+
+    public static ViewAndState[] create(InternalCDOView view)
+    {
+      ViewAndState[] viewAndStates = new ViewAndState[STATE_VALUES.length];
+      for (CDOState state : STATE_VALUES)
+      {
+        viewAndStates[state.ordinal()] = new ViewAndState(view, state);
+      }
+
+      return viewAndStates;
+    }
+  }
 }

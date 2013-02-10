@@ -886,9 +886,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       CDOID newID = idMappings.get(oldID);
       if (newID != null)
       {
-        object.cdoInternalSetID(newID);
-        transaction.remapObject(oldID);
         revision.setID(newID);
+        transaction.remapObject(oldID);
       }
 
       // Adjust revision

@@ -59,5 +59,9 @@ public interface InternalCDOObject extends CDOObject, InternalEObject, InternalC
 
   public InternalEObject cdoInternalInstance();
 
+  /**
+   * @deprecated As of 4.2 no longer supported.
+   */
+  @Deprecated
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID);
 }

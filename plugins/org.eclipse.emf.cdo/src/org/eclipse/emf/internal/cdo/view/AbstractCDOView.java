@@ -120,6 +120,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, AbstractCDOView.class);
 
+  private final ViewAndState[] viewAndStates = ViewAndState.create(this);
+
   private final boolean legacyModeEnabled;
 
   private CDOBranchPoint branchPoint;
@@ -191,6 +193,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   protected synchronized final void setObjects(Map<CDOID, InternalCDOObject> objects)
   {
     this.objects = objects;
+  }
+
+  public ViewAndState getViewAndState(CDOState state)
+  {
+    return viewAndStates[state.ordinal()];
   }
 
   public CDOStore getStore()

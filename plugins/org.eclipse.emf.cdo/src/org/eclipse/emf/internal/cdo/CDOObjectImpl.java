@@ -377,22 +377,10 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         int index = classInfo.getSettingsFeatureIndex(i);
         if (index != CDOClassInfo.NO_SETTING)
         {
-          EStructuralFeature eFeature = eClass.getEStructuralFeature(i);
-          if (EMFUtil.isPersistent(eFeature))
+          Object value = eSettings[index];
+          if (value instanceof InternalCDOLoadable)
           {
-            Object value = eSettings[index];
-            if (value instanceof InternalCDOLoadable)
-            {
-              ((InternalCDOLoadable)value).cdoInternalPostLoad();
-            }
-          }
-        }
-        else
-        {
-          EStructuralFeature eFeature = eClass.getEStructuralFeature(i);
-          if (EMFUtil.isPersistent(eFeature))
-          {
-            System.out.println(eFeature);
+            ((InternalCDOLoadable)value).cdoInternalPostLoad();
           }
         }
       }
@@ -603,13 +591,12 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public Object dynamicGet(int dynamicFeatureID)
   {
-    EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-
     int index = getClassInfo().getSettingsFeatureIndex(dynamicFeatureID);
     if (index == CDOClassInfo.NO_SETTING)
     {
       // The feature has no slot in eSettings, i.e., it's persistent or single-valued.
       // Delegate to the store. TransientStore delegates back to eSettings.
+      EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
       EStore eStore = eStore();
       return eStore.get(this, eStructuralFeature, EStore.NO_INDEX);
     }
@@ -619,13 +606,17 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     Object result = eSettings[index];
     if (result == null)
     {
-      if (FeatureMapUtil.isFeatureMap(eStructuralFeature))
+      EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
+      if (EMFUtil.isPersistent(eStructuralFeature))
       {
-        eSettings[index] = result = createFeatureMap(eStructuralFeature);
-      }
-      else if (eStructuralFeature.isMany())
-      {
-        eSettings[index] = result = createList(eStructuralFeature);
+        if (FeatureMapUtil.isFeatureMap(eStructuralFeature))
+        {
+          eSettings[index] = result = createFeatureMap(eStructuralFeature);
+        }
+        else if (eStructuralFeature.isMany())
+        {
+          eSettings[index] = result = createList(eStructuralFeature);
+        }
       }
     }
 
@@ -635,13 +626,12 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public void dynamicSet(int dynamicFeatureID, Object value)
   {
-    EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-
     int index = getClassInfo().getSettingsFeatureIndex(dynamicFeatureID);
     if (index == CDOClassInfo.NO_SETTING)
     {
       // The feature has no slot in eSettings, i.e., it's persistent or single-valued.
       // Delegate to the store. TransientStore delegates back to eSettings.
+      EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
       EStore eStore = eStore();
       eStore.set(this, eStructuralFeature, EStore.NO_INDEX, value);
     }
@@ -655,13 +645,12 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public void dynamicUnset(int dynamicFeatureID)
   {
-    EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-
     int index = getClassInfo().getSettingsFeatureIndex(dynamicFeatureID);
     if (index == CDOClassInfo.NO_SETTING)
     {
       // The feature has no slot in eSettings, i.e., it's persistent or single-valued.
       // Delegate to the store. TransientStore delegates back to eSettings.
+      EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
       EStore eStore = eStore();
       eStore.unset(this, eStructuralFeature);
     }

@@ -13,7 +13,6 @@
 package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDONotification;
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -30,6 +29,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.CDOStore;
 import org.eclipse.emf.spi.cdo.FSMUtil;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.List;
 
@@ -89,7 +89,8 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
       return;
     }
 
-    if (EMFUtil.isPersistent(feature))
+    int featureID = eClass().getFeatureID(feature);
+    if (cdoClassInfo().isPersistent(featureID))
     {
       int eventType = msg.getEventType();
       int position = msg.getPosition();
@@ -334,7 +335,8 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
       if (!FSMUtil.isTransient(CDOLegacyAdapter.this))
       {
-        cdoView().handleAddAdapter(CDOLegacyAdapter.this, adapter);
+        InternalCDOView view = cdoView();
+        view.handleAddAdapter(CDOLegacyAdapter.this, adapter);
       }
     }
 
@@ -347,7 +349,8 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
       if (!FSMUtil.isTransient(CDOLegacyAdapter.this))
       {
-        cdoView().handleRemoveAdapter(CDOLegacyAdapter.this, adapter);
+        InternalCDOView view = cdoView();
+        view.handleRemoveAdapter(CDOLegacyAdapter.this, adapter);
       }
     }
   }

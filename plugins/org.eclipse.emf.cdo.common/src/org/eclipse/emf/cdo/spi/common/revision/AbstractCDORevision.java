@@ -15,12 +15,12 @@ package org.eclipse.emf.cdo.spi.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
@@ -37,7 +37,7 @@ import java.text.MessageFormat;
  */
 public abstract class AbstractCDORevision implements InternalCDORevision
 {
-  private CDOClassInfo classInfo;
+  private InternalCDOClassInfo classInfo;
 
   /**
    * @since 3.0
@@ -51,21 +51,20 @@ public abstract class AbstractCDORevision implements InternalCDORevision
         throw new IllegalArgumentException(MessageFormat.format(Messages.getString("AbstractCDORevision.0"), eClass)); //$NON-NLS-1$
       }
 
-      classInfo = CDOModelUtil.getClassInfo(eClass);
+      initClassInfo(eClass);
     }
   }
 
   /**
-   * @since 3.0
+   * @since 4.2
    */
-  public CDOClassInfo getClassInfo()
+  public final InternalCDOClassInfo getClassInfo()
   {
     return classInfo;
   }
 
-  public EClass getEClass()
+  public final EClass getEClass()
   {
-    CDOClassInfo classInfo = getClassInfo();
     if (classInfo != null)
     {
       return classInfo.getEClass();
@@ -76,17 +75,17 @@ public abstract class AbstractCDORevision implements InternalCDORevision
 
   public boolean isResourceNode()
   {
-    return getClassInfo().isResourceNode();
+    return classInfo.isResourceNode();
   }
 
   public boolean isResourceFolder()
   {
-    return getClassInfo().isResourceFolder();
+    return classInfo.isResourceFolder();
   }
 
   public boolean isResource()
   {
-    return getClassInfo().isResource();
+    return classInfo.isResource();
   }
 
   public CDORevisionData data()
@@ -197,11 +196,11 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   }
 
   /**
-   * @since 3.0
+   * @since 4.2
    */
-  protected void setClassInfo(CDOClassInfo classInfo)
+  protected void initClassInfo(EClass eClass)
   {
-    this.classInfo = classInfo;
+    classInfo = (InternalCDOClassInfo)CDOModelUtil.getClassInfo(eClass);
   }
 
   /**
@@ -217,6 +216,6 @@ public abstract class AbstractCDORevision implements InternalCDORevision
    */
   protected int getFeatureIndex(EStructuralFeature feature)
   {
-    return classInfo.getFeatureIndex(feature);
+    return classInfo.getPersistentFeatureIndex(feature);
   }
 }

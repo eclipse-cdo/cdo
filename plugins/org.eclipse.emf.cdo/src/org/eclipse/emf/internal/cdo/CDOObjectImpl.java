@@ -18,9 +18,7 @@ import org.eclipse.emf.cdo.CDOObjectHistory;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
-import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
@@ -42,9 +40,9 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
-import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -55,11 +53,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
+import org.eclipse.emf.ecore.impl.EStoreEObjectImpl.BasicEStoreFeatureMap;
 import org.eclipse.emf.ecore.impl.MinimalEStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
-import org.eclipse.emf.ecore.util.DelegatingFeatureMap;
-import org.eclipse.emf.ecore.util.EcoreEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
@@ -73,9 +70,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOView.ViewAndState;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 /**
  * The base class of all <em>native</em> {@link CDOObject objects}.
@@ -86,7 +80,20 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOObjectImpl.class);
 
-  private static final Object[] CDO_NO_SETTINGS = {};
+  private static final EObservableAdapterList.Listener ADAPTERS_LISTENER = new EObservableAdapterList.Listener()
+  {
+    public void added(Notifier notifier, Adapter adapter)
+    {
+      ((CDOObjectImpl)notifier).adapterAdded(adapter);
+    }
+
+    public void removed(Notifier notifier, Adapter adapter)
+    {
+      ((CDOObjectImpl)notifier).adapterRemoved(adapter);
+    }
+  };
+
+  private InternalCDOClassInfo classInfo;
 
   /**
    * Optimized storage of {@link CDOObject#cdoView()} and {@link CDOObject#cdoState()}.
@@ -102,17 +109,6 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   private Object idOrRevision;
 
   /**
-   * Used by CDO instead of eSettings for TRANSIENT objects.
-   * <p>
-   * EMF uses eSettings as a cache.
-   * CDO {@link #eIsCaching() deactivates} this caching but EMF still uses eSettings to store list wrappers.
-   * List wrappers are the lists returned from the getters of many-valued features. They need to be unique for an object during all CDOStates.
-   * CDO needs another place to store the real list with the actual data (transient mode) and accessible through EStore.
-   * This allows CDO to always use the same instance of the list wrapper.
-   */
-  private transient Object[] cdoSettings;
-
-  /**
    * Don't use the optional slot in MinimalEObject because a CDOObject always needs eSettings to store:
    * <ul>
    *  <li>the values of all features of transient objects,
@@ -124,6 +120,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
 
   public CDOObjectImpl()
   {
+    initClassInfo(eStaticClass());
+  }
+
+  /**
+   * @since 4.2
+   */
+  public InternalCDOClassInfo cdoClassInfo()
+  {
+    return classInfo;
   }
 
   public final CDOState cdoState()
@@ -339,8 +344,6 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     // Only intended to be called by CDOTransactionImpl.removeObject(CDOID, CDOObject).
     // See bug 383370.
 
-    // TODO Rename this method to cdoInternalDetach()
-
     if (resource != null)
     {
       throw new IllegalArgumentException(
@@ -367,15 +370,13 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     if (eSettings != null)
     {
       // Make sure transient features are kept but persisted values are not cached.
-      CDOClassInfo classInfo = getClassInfo();
-
       EClass eClass = eClass();
       int featureCount = eClass.getFeatureCount();
       for (int i = 0; i < featureCount; i++)
       {
         // We need to keep the existing list if possible.
         int index = classInfo.getSettingsFeatureIndex(i);
-        if (index != CDOClassInfo.NO_SETTING)
+        if (index != InternalCDOClassInfo.NO_SLOT)
         {
           Object value = eSettings[index];
           if (value instanceof InternalCDOLoadable)
@@ -416,21 +417,30 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       revision.setResourceID(cdoResource.cdoID());
     }
 
-    if (cdoSettings != null)
+    if (eSettings != null)
     {
       EClass eClass = eClass();
-      int featureCount = eClass.getFeatureCount();
-      for (int i = 0; i < featureCount; i++)
+      EStructuralFeature[] allPersistentFeatures = classInfo.getAllPersistentFeatures();
+      int length = allPersistentFeatures.length;
+      for (int i = 0; i < length; i++)
       {
-        EStructuralFeature eFeature = eClass.getEStructuralFeature(i);
-        if (EMFUtil.isPersistent(eFeature))
-        {
-          instanceToRevisionFeature(viewAndState.view, this, eFeature, cdoSettings[i]);
-        }
+        EStructuralFeature eFeature = allPersistentFeatures[i];
+        int featureID = eClass.getFeatureID(eFeature);
+        int transientIndex = classInfo.getTransientFeatureIndex(featureID);
+        Object setting = eSettings[transientIndex]; // Can be safely accessed directly because we come from TRANSIENT
+
+        instanceToRevisionFeature(viewAndState.view, this, eFeature, setting);
       }
 
       cdoRevision().setUnchunked();
-      cdoSettings = null;
+
+      int newSize = classInfo.getSettingsFeatureCount();
+      if (newSize != eSettings.length)
+      {
+        Object[] newSettings = new Object[newSize];
+        System.arraycopy(eSettings, 0, newSettings, 0, newSize);
+        eSettings = newSettings;
+      }
     }
   }
 
@@ -458,20 +468,22 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     eBasicSetContainer(store.getContainer(this));
     eBasicSetContainerFeatureID(store.getContainingFeatureID(this));
 
-    // Ensure that the internal cdoSettings array is initialized;
-    cdoSettings = null;
-    cdoSettings();
+    if (eSettings != null)
+    {
+      int newSize = classInfo.getSettingsFeatureCount() + classInfo.getTransientFeatureCount();
+      if (newSize != eSettings.length)
+      {
+        Object[] newSettings = new Object[newSize];
+        System.arraycopy(eSettings, 0, newSettings, 0, eSettings.length);
+        eSettings = newSettings;
+      }
+    }
 
     InternalCDORevision revision = cdoRevision();
-    EClass eClass = eClass();
-    int featureCount = eClass.getFeatureCount();
-    for (int i = 0; i < featureCount; i++)
+    EStructuralFeature[] allPersistentFeatures = classInfo.getAllPersistentFeatures();
+    for (EStructuralFeature eFeature : allPersistentFeatures)
     {
-      EStructuralFeature eFeature = eClass.getEStructuralFeature(i);
-      if (EMFUtil.isPersistent(eFeature))
-      {
-        revisionToInstanceFeature(this, revision, eFeature);
-      }
+      revisionToInstanceFeature(this, revision, eFeature);
     }
   }
 
@@ -499,51 +511,6 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     throw new UnsupportedOperationException();
   }
 
-  /**
-   * @since 4.2
-   */
-  @Override
-  protected void eAdapterAdded(Adapter newAdapter)
-  {
-    if (!FSMUtil.isTransient(CDOObjectImpl.this))
-    {
-      viewAndState.view.handleAddAdapter(CDOObjectImpl.this, newAdapter);
-    }
-  }
-
-  /**
-   * @since 4.2
-   */
-  @Override
-  protected void eAdapterRemoved(Adapter oldAdapter)
-  {
-    if (!FSMUtil.isTransient(CDOObjectImpl.this))
-    {
-      viewAndState.view.handleRemoveAdapter(CDOObjectImpl.this, oldAdapter);
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
-  private Object[] cdoSettings()
-  {
-    if (cdoSettings == null)
-    {
-      int size = eClass().getFeatureCount();
-      if (size == 0)
-      {
-        cdoSettings = CDO_NO_SETTINGS;
-      }
-      else
-      {
-        cdoSettings = new Object[size];
-      }
-    }
-
-    return cdoSettings;
-  }
-
   private CDOStore cdoStore()
   {
     return viewAndState.view.getStore();
@@ -561,6 +528,30 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     }
 
     return cdoStore();
+  }
+
+  @Override
+  protected EClass eDynamicClass()
+  {
+    EClass eClass = eClass();
+    if (eClass == eStaticClass())
+    {
+      return null;
+    }
+
+    return eClass;
+  }
+
+  @Override
+  public final EClass eClass()
+  {
+    return classInfo.getEClass();
+  }
+
+  @Override
+  public void eSetClass(EClass eClass)
+  {
+    initClassInfo(eClass);
   }
 
   /**
@@ -591,8 +582,8 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public Object dynamicGet(int dynamicFeatureID)
   {
-    int index = getClassInfo().getSettingsFeatureIndex(dynamicFeatureID);
-    if (index == CDOClassInfo.NO_SETTING)
+    int index = classInfo.getSettingsFeatureIndex(dynamicFeatureID);
+    if (index == InternalCDOClassInfo.NO_SLOT)
     {
       // The feature has no slot in eSettings, i.e., it's persistent or single-valued.
       // Delegate to the store. TransientStore delegates back to eSettings.
@@ -607,7 +598,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     if (result == null)
     {
       EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-      if (EMFUtil.isPersistent(eStructuralFeature))
+      if (classInfo.isPersistent(dynamicFeatureID))
       {
         if (FeatureMapUtil.isFeatureMap(eStructuralFeature))
         {
@@ -626,8 +617,8 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public void dynamicSet(int dynamicFeatureID, Object value)
   {
-    int index = getClassInfo().getSettingsFeatureIndex(dynamicFeatureID);
-    if (index == CDOClassInfo.NO_SETTING)
+    int index = classInfo.getSettingsFeatureIndex(dynamicFeatureID);
+    if (index == InternalCDOClassInfo.NO_SLOT)
     {
       // The feature has no slot in eSettings, i.e., it's persistent or single-valued.
       // Delegate to the store. TransientStore delegates back to eSettings.
@@ -645,8 +636,8 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public void dynamicUnset(int dynamicFeatureID)
   {
-    int index = getClassInfo().getSettingsFeatureIndex(dynamicFeatureID);
-    if (index == CDOClassInfo.NO_SETTING)
+    int index = classInfo.getSettingsFeatureIndex(dynamicFeatureID);
+    if (index == InternalCDOClassInfo.NO_SLOT)
     {
       // The feature has no slot in eSettings, i.e., it's persistent or single-valued.
       // Delegate to the store. TransientStore delegates back to eSettings.
@@ -657,9 +648,26 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     else
     {
       Object[] eSettings = eBasicSettings();
-      eSettings[index] = null;
-
-      // XXX Don't remove the list wrapper for many-valued features!!!
+      Object oldValue = eSettings[index];
+      if (oldValue != null)
+      {
+        if (oldValue instanceof InternalEList)
+        {
+          InternalEList<?> list = (InternalEList<?>)oldValue;
+          if (list instanceof InternalEList.Unsettable)
+          {
+            ((InternalEList.Unsettable<?>)list).unset();
+          }
+          else
+          {
+            list.clear();
+          }
+        }
+        else
+        {
+          eSettings[index] = null;
+        }
+      }
     }
   }
 
@@ -876,7 +884,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       return eOpenIsSet(eFeature);
     }
 
-    if (EMFUtil.isPersistent(eFeature))
+    if (classInfo.isPersistent(dynamicFeatureID))
     {
       return eStore().isSet(this, eFeature);
     }
@@ -907,14 +915,16 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   protected int eDynamicFeatureID(EStructuralFeature eStructuralFeature)
   {
     // CDOObjectImpl has no static features, so don't subract their count here:
-    return eClass().getFeatureID(eStructuralFeature);
+    EClass eClass = eClass();
+    return eClass.getFeatureID(eStructuralFeature);
   }
 
   @Override
   protected EStructuralFeature eDynamicFeature(int dynamicFeatureID)
   {
     // CDOObjectImpl has no static features, so don't add their count here:
-    return eClass().getEStructuralFeature(dynamicFeatureID);
+    EClass eClass = eClass();
+    return eClass.getEStructuralFeature(dynamicFeatureID);
   }
 
   @Override
@@ -922,7 +932,12 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   {
     if (!eHasSettings())
     {
-      int size = getClassInfo().getSettingsFeatureCount();
+      int size = classInfo.getSettingsFeatureCount();
+      if (FSMUtil.isTransient(this))
+      {
+        size += classInfo.getTransientFeatureCount();
+      }
+
       if (size != 0)
       {
         eBasicSetSettings(new Object[size]);
@@ -959,6 +974,45 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     return false;
   }
 
+  @Override
+  protected void eBasicSetAdapterArray(Adapter[] adapters)
+  {
+    Adapter[] oldAdapters = eBasicAdapterArray();
+    if (ObjectUtil.isEmpty(adapters))
+    {
+      adapters = null;// Optimize possibly empty array
+      if (oldAdapters != null) // Can't be empty array because of the optimization above
+      {
+        ((EObservableAdapterList)eAdapters()).removeListener(ADAPTERS_LISTENER);
+      }
+    }
+    else
+    {
+      if (oldAdapters == null) // Can't be empty array because of the optimization above
+      {
+        ((EObservableAdapterList)eAdapters()).addListener(ADAPTERS_LISTENER);
+      }
+    }
+
+    super.eBasicSetAdapterArray(adapters);
+  }
+
+  private void adapterAdded(Adapter newAdapter)
+  {
+    if (!FSMUtil.isTransient(CDOObjectImpl.this))
+    {
+      viewAndState.view.handleAddAdapter(CDOObjectImpl.this, newAdapter);
+    }
+  }
+
+  private void adapterRemoved(Adapter oldAdapter)
+  {
+    if (!FSMUtil.isTransient(CDOObjectImpl.this))
+    {
+      viewAndState.view.handleRemoveAdapter(CDOObjectImpl.this, oldAdapter);
+    }
+  }
+
   /**
    * Specializing the behaviour of {@link #hashCode()} is not permitted as per {@link EObject} specification.
    */
@@ -980,13 +1034,16 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public String toString()
   {
+    EClass eClass = eClass();
+    String name = eClass.getName();
+
     CDOID id = cdoID();
     if (id == null)
     {
-      return eClass().getName() + "?"; //$NON-NLS-1$
+      return name + "?"; //$NON-NLS-1$
     }
 
-    return eClass().getName() + "@" + id; //$NON-NLS-1$
+    return name + "@" + id; //$NON-NLS-1$
   }
 
   @Override
@@ -1034,9 +1091,9 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     return eStructuralFeature.getEType().getInstanceClassName() == "java.util.Map$Entry"; //$NON-NLS-1$
   }
 
-  private CDOClassInfo getClassInfo()
+  private void initClassInfo(EClass eClass)
   {
-    return CDOModelUtil.getClassInfo(eClass());
+    classInfo = (InternalCDOClassInfo)CDOModelUtil.getClassInfo(eClass);
   }
 
   /**
@@ -1052,18 +1109,18 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       {
         if (feature.isMany())
         {
-          int index = cdoObject.eStore().indexOf(cdoObject, feature, instance.cdoID());
+          EStore eStore = cdoObject.eStore();
+          int index = eStore.indexOf(cdoObject, feature, instance.cdoID());
 
-          // TODO Simon Log an error in the new view.getErrors() in the case we are not able to find the object.
-          // Cannot throw an exception, the detach process is too far.
           if (index != -1)
           {
-            cdoObject.eStore().set(cdoObject, feature, index, instance);
+            eStore.set(cdoObject, feature, index, instance);
           }
         }
         else
         {
-          cdoObject.eStore().set(cdoObject, feature, 0, instance);
+          EStore eStore = cdoObject.eStore();
+          eStore.set(cdoObject, feature, 0, instance);
         }
       }
       else
@@ -1086,50 +1143,6 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
             object.eSet(feature, instance);
           }
         }
-      }
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
-  public static void revisionToInstanceFeature(InternalCDOObject instance, InternalCDORevision revision,
-      EStructuralFeature eFeature)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Depopulating feature {0}", eFeature); //$NON-NLS-1$
-    }
-
-    EStructuralFeature.Internal internalFeature = (EStructuralFeature.Internal)eFeature;
-    InternalCDOView view = instance.cdoView();
-    EReference oppositeReference = view.isObjectNew(instance.cdoID()) ? null : internalFeature.getEOpposite();
-
-    CDOStore cdoStore = view.getStore();
-    EStore eStore = instance.eStore();
-
-    if (eFeature.isMany())
-    {
-      int size = cdoStore.size(instance, eFeature);
-      for (int index = 0; index < size; index++)
-      {
-        // Do not trigger events
-        // Do not trigger inverse updates
-        Object object = cdoStore.get(instance, eFeature, index);
-        eStore.add(instance, eFeature, index, object);
-        if (oppositeReference != null)
-        {
-          adjustOppositeReference(instance, (InternalEObject)object, oppositeReference);
-        }
-      }
-    }
-    else
-    {
-      Object object = cdoStore.get(instance, eFeature, EStore.NO_INDEX);
-      eStore.set(instance, eFeature, EStore.NO_INDEX, object);
-      if (oppositeReference != null)
-      {
-        adjustOppositeReference(instance, (InternalEObject)object, oppositeReference);
       }
     }
   }
@@ -1181,6 +1194,50 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   /**
+   * @since 2.0
+   */
+  public static void revisionToInstanceFeature(InternalCDOObject instance, InternalCDORevision revision,
+      EStructuralFeature eFeature)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Depopulating feature {0}", eFeature); //$NON-NLS-1$
+    }
+
+    EStructuralFeature.Internal internalFeature = (EStructuralFeature.Internal)eFeature;
+    InternalCDOView view = instance.cdoView();
+    EReference oppositeReference = view.isObjectNew(instance.cdoID()) ? null : internalFeature.getEOpposite();
+
+    CDOStore cdoStore = view.getStore();
+    EStore eStore = instance.eStore();
+
+    if (eFeature.isMany())
+    {
+      int size = cdoStore.size(instance, eFeature);
+      for (int index = 0; index < size; index++)
+      {
+        // Do not trigger events
+        // Do not trigger inverse updates
+        Object object = cdoStore.get(instance, eFeature, index);
+        eStore.add(instance, eFeature, index, object);
+        if (oppositeReference != null)
+        {
+          adjustOppositeReference(instance, (InternalEObject)object, oppositeReference);
+        }
+      }
+    }
+    else
+    {
+      Object object = cdoStore.get(instance, eFeature, EStore.NO_INDEX);
+      eStore.set(instance, eFeature, EStore.NO_INDEX, object);
+      if (oppositeReference != null)
+      {
+        adjustOppositeReference(instance, (InternalEObject)object, oppositeReference);
+      }
+    }
+  }
+
+  /**
    * @since 4.1
    */
   public static CDOLock createLock(InternalCDOObject object, LockType type)
@@ -1225,137 +1282,146 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
     }
 
-    private Object getValue(InternalEObject eObject, int dynamicFeatureID)
+    private Object getValue(InternalEObject eObject, int transientIndex)
     {
-      Object settings[] = ((CDOObjectImpl)eObject).cdoSettings();
-      return settings[dynamicFeatureID];
+      Object[] settings = getSettings(eObject);
+      return settings[transientIndex];
     }
 
-    private EList<Object> getValueAsList(InternalEObject eObject, int dynamicFeatureID)
+    private EList<Object> getValueAsList(InternalEObject eObject, int transientIndex)
     {
-      Object settings[] = ((CDOObjectImpl)eObject).cdoSettings();
+      Object[] settings = getSettings(eObject);
 
       @SuppressWarnings("unchecked")
-      EList<Object> result = (EList<Object>)settings[dynamicFeatureID];
+      EList<Object> result = (EList<Object>)settings[transientIndex];
       if (result == null)
       {
         result = new BasicEList<Object>();
-        settings[dynamicFeatureID] = result;
+        settings[transientIndex] = result;
       }
 
       return result;
     }
 
-    private Object setValue(InternalEObject eObject, int dynamicFeatureID, Object newValue)
+    private Object setValue(InternalEObject eObject, int transientIndex, Object newValue)
     {
-      Object settings[] = ((CDOObjectImpl)eObject).cdoSettings();
-      Object oldValue = settings[dynamicFeatureID];
-      settings[dynamicFeatureID] = newValue;
+      Object[] settings = getSettings(eObject);
+      Object oldValue = settings[transientIndex];
+      settings[transientIndex] = newValue;
       return oldValue;
     }
 
-    private int eDynamicFeatureID(InternalEObject eObject, EStructuralFeature feature)
+    private Object[] getSettings(InternalEObject eObject)
     {
-      return ((CDOObjectImpl)eObject).eDynamicFeatureID(feature);
+      CDOObjectImpl object = (CDOObjectImpl)eObject;
+      object.eSettings(); // Ensure that the array is created
+      return object.eSettings;
+    }
+
+    private int getTransientFeatureIndex(InternalEObject eObject, EStructuralFeature feature)
+    {
+      CDOObjectImpl object = (CDOObjectImpl)eObject;
+      int dynamicFeatureID = object.eDynamicFeatureID(feature);
+      return object.classInfo.getTransientFeatureIndex(dynamicFeatureID);
     }
 
     public Object get(InternalEObject eObject, EStructuralFeature feature, int index)
     {
-      int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
+      int transientIndex = getTransientFeatureIndex(eObject, feature);
       if (index != NO_INDEX)
       {
-        return getValueAsList(eObject, dynamicFeatureID).get(index);
+        return getValueAsList(eObject, transientIndex).get(index);
       }
 
-      return getValue(eObject, dynamicFeatureID);
+      return getValue(eObject, transientIndex);
     }
 
     public Object set(InternalEObject eObject, EStructuralFeature feature, int index, Object value)
     {
-      int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
+      int transientIndex = getTransientFeatureIndex(eObject, feature);
       if (index != NO_INDEX)
       {
-        return getValueAsList(eObject, dynamicFeatureID).set(index, value);
+        return getValueAsList(eObject, transientIndex).set(index, value);
       }
 
-      return setValue(eObject, dynamicFeatureID, value);
+      return setValue(eObject, transientIndex, value);
     }
 
     public void add(InternalEObject eObject, EStructuralFeature feature, int index, Object value)
     {
-      int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
-      getValueAsList(eObject, dynamicFeatureID).add(index, value);
+      int transientIndex = getTransientFeatureIndex(eObject, feature);
+      getValueAsList(eObject, transientIndex).add(index, value);
     }
 
     public Object remove(InternalEObject eObject, EStructuralFeature feature, int index)
     {
-      int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
-      return getValueAsList(eObject, dynamicFeatureID).remove(index);
+      int transientIndex = getTransientFeatureIndex(eObject, feature);
+      return getValueAsList(eObject, transientIndex).remove(index);
     }
 
     public Object move(InternalEObject eObject, EStructuralFeature feature, int targetIndex, int sourceIndex)
     {
-      int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
-      return getValueAsList(eObject, dynamicFeatureID).move(targetIndex, sourceIndex);
+      int transientIndex = getTransientFeatureIndex(eObject, feature);
+      return getValueAsList(eObject, transientIndex).move(targetIndex, sourceIndex);
     }
 
     public void clear(InternalEObject eObject, EStructuralFeature feature)
     {
-      int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
+      int transientIndex = getTransientFeatureIndex(eObject, feature);
       if (feature.isMany())
       {
-        getValueAsList(eObject, dynamicFeatureID).clear();
+        getValueAsList(eObject, transientIndex).clear();
       }
 
-      setValue(eObject, dynamicFeatureID, null);
+      setValue(eObject, transientIndex, null);
     }
 
     public int size(InternalEObject eObject, EStructuralFeature feature)
     {
-      int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
-      return getValueAsList(eObject, dynamicFeatureID).size();
+      int transientIndex = getTransientFeatureIndex(eObject, feature);
+      return getValueAsList(eObject, transientIndex).size();
     }
 
     public int indexOf(InternalEObject eObject, EStructuralFeature feature, Object value)
     {
-      int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
-      return getValueAsList(eObject, dynamicFeatureID).indexOf(value);
+      int transientIndex = getTransientFeatureIndex(eObject, feature);
+      return getValueAsList(eObject, transientIndex).indexOf(value);
     }
 
     public int lastIndexOf(InternalEObject eObject, EStructuralFeature feature, Object value)
     {
-      int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
-      return getValueAsList(eObject, dynamicFeatureID).lastIndexOf(value);
+      int transientIndex = getTransientFeatureIndex(eObject, feature);
+      return getValueAsList(eObject, transientIndex).lastIndexOf(value);
     }
 
     public Object[] toArray(InternalEObject eObject, EStructuralFeature feature)
     {
-      int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
-      return getValueAsList(eObject, dynamicFeatureID).toArray();
+      int transientIndex = getTransientFeatureIndex(eObject, feature);
+      return getValueAsList(eObject, transientIndex).toArray();
     }
 
     public <T> T[] toArray(InternalEObject eObject, EStructuralFeature feature, T[] array)
     {
-      int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
-      return getValueAsList(eObject, dynamicFeatureID).toArray(array);
+      int transientIndex = getTransientFeatureIndex(eObject, feature);
+      return getValueAsList(eObject, transientIndex).toArray(array);
     }
 
     public boolean isEmpty(InternalEObject eObject, EStructuralFeature feature)
     {
-      int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
-      return getValueAsList(eObject, dynamicFeatureID).isEmpty();
+      int transientIndex = getTransientFeatureIndex(eObject, feature);
+      return getValueAsList(eObject, transientIndex).isEmpty();
     }
 
     public boolean contains(InternalEObject eObject, EStructuralFeature feature, Object value)
     {
-      int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
-      return getValueAsList(eObject, dynamicFeatureID).contains(value);
+      int transientIndex = getTransientFeatureIndex(eObject, feature);
+      return getValueAsList(eObject, transientIndex).contains(value);
     }
 
     public int hashCode(InternalEObject eObject, EStructuralFeature feature)
     {
-      int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
-      return getValueAsList(eObject, dynamicFeatureID).hashCode();
+      int transientIndex = getTransientFeatureIndex(eObject, feature);
+      return getValueAsList(eObject, transientIndex).hashCode();
     }
 
     public InternalEObject getContainer(InternalEObject eObject)
@@ -1387,34 +1453,28 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         return !ObjectUtil.equals(eObject.eGet(feature), feature.getDefaultValue());
       }
 
-      Object[] settings = ((CDOObjectImpl)eObject).cdoSettings;
+      Object[] settings = ((CDOObjectImpl)eObject).eSettings;
       if (settings == null)
       {
         return false;
       }
 
-      int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
-      return settings[dynamicFeatureID] != null;
+      int transientIndex = getTransientFeatureIndex(eObject, feature);
+      return settings[transientIndex] != null;
     }
 
     public void unset(InternalEObject eObject, EStructuralFeature feature)
     {
-      Object[] settings = ((CDOObjectImpl)eObject).cdoSettings;
+      CDOObjectImpl object = (CDOObjectImpl)eObject;
+      Object[] settings = object.eSettings;
       if (settings == null)
       {
         // Is already unset
         return;
       }
 
-      int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
-      if (feature.isUnsettable())
-      {
-        settings[dynamicFeatureID] = null;
-      }
-      else
-      {
-        settings[dynamicFeatureID] = feature.getDefaultValue();
-      }
+      int transientIndex = getTransientFeatureIndex(eObject, feature);
+      settings[transientIndex] = null;
     }
   }
 
@@ -1424,7 +1484,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    * @author Eike Stepper
    * @since 4.1
    */
-  public class CDOStoreEcoreEMap extends EcoreEMap<Object, Object> implements InternalCDOLoadable
+  private final class CDOStoreEcoreEMap extends EcoreEMap<Object, Object> implements InternalCDOLoadable
   {
     private static final long serialVersionUID = 1L;
 
@@ -1539,14 +1599,14 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       return super.containsValue(value);
     }
 
+    public void cdoInternalPreLoad()
+    {
+    }
+
     public void cdoInternalPostLoad()
     {
       entryData = null;
       size = delegateEList.size();
-    }
-
-    public void cdoInternalPreLoad()
-    {
     }
   }
 
@@ -1556,7 +1616,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    * @author Andras Peteri
    * @since 4.1
    */
-  public class CDOStoreUnorderedEList<E> extends EStoreEObjectImpl.BasicEStoreEList<E>
+  private final class CDOStoreUnorderedEList<E> extends EStoreEObjectImpl.BasicEStoreEList<E>
   {
     private static final long serialVersionUID = 1L;
 
@@ -1581,177 +1641,17 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   /**
-   * TODO Remove this when EMF has fixed bug 197487
+   * For internal use only.
    *
    * @author Eike Stepper
    */
-  public class CDOStoreFeatureMap extends DelegatingFeatureMap
+  private final class CDOStoreFeatureMap extends BasicEStoreFeatureMap
   {
     private static final long serialVersionUID = 1L;
 
     public CDOStoreFeatureMap(EStructuralFeature eStructuralFeature)
     {
       super(CDOObjectImpl.this, eStructuralFeature);
-    }
-
-    @Override
-    protected List<FeatureMap.Entry> delegateList()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public EStructuralFeature getEStructuralFeature()
-    {
-      return eStructuralFeature;
-    }
-
-    @Override
-    protected void delegateAdd(int index, Entry object)
-    {
-      eStore().add(owner, eStructuralFeature, index, object);
-    }
-
-    @Override
-    protected void delegateAdd(Entry object)
-    {
-      delegateAdd(delegateSize(), object);
-    }
-
-    @Override
-    protected List<FeatureMap.Entry> delegateBasicList()
-    {
-      int size = delegateSize();
-      if (size == 0)
-      {
-        return ECollections.emptyEList();
-      }
-
-      Object[] data = cdoStore().toArray(owner, eStructuralFeature);
-      return new EcoreEList.UnmodifiableEList<FeatureMap.Entry>(owner, eStructuralFeature, data.length, data);
-    }
-
-    @Override
-    protected void delegateClear()
-    {
-      eStore().clear(owner, eStructuralFeature);
-    }
-
-    @Override
-    protected boolean delegateContains(Object object)
-    {
-      return eStore().contains(owner, eStructuralFeature, object);
-    }
-
-    @Override
-    protected boolean delegateContainsAll(Collection<?> collection)
-    {
-      for (Object o : collection)
-      {
-        if (!delegateContains(o))
-        {
-          return false;
-        }
-      }
-
-      return true;
-    }
-
-    @Override
-    protected Entry delegateGet(int index)
-    {
-      return (Entry)eStore().get(owner, eStructuralFeature, index);
-    }
-
-    @Override
-    protected int delegateHashCode()
-    {
-      return eStore().hashCode(owner, eStructuralFeature);
-    }
-
-    @Override
-    protected int delegateIndexOf(Object object)
-    {
-      return eStore().indexOf(owner, eStructuralFeature, object);
-    }
-
-    @Override
-    protected boolean delegateIsEmpty()
-    {
-      return eStore().isEmpty(owner, eStructuralFeature);
-    }
-
-    @Override
-    protected Iterator<FeatureMap.Entry> delegateIterator()
-    {
-      return iterator();
-    }
-
-    @Override
-    protected int delegateLastIndexOf(Object object)
-    {
-      return eStore().lastIndexOf(owner, eStructuralFeature, object);
-    }
-
-    @Override
-    protected ListIterator<FeatureMap.Entry> delegateListIterator()
-    {
-      return listIterator();
-    }
-
-    @Override
-    protected Entry delegateRemove(int index)
-    {
-      return (Entry)eStore().remove(owner, eStructuralFeature, index);
-    }
-
-    @Override
-    protected Entry delegateSet(int index, Entry object)
-    {
-      return (Entry)eStore().set(owner, eStructuralFeature, index, object);
-    }
-
-    @Override
-    protected int delegateSize()
-    {
-      return eStore().size(owner, eStructuralFeature);
-    }
-
-    @Override
-    protected Object[] delegateToArray()
-    {
-      return eStore().toArray(owner, eStructuralFeature);
-    }
-
-    @Override
-    protected <T> T[] delegateToArray(T[] array)
-    {
-      return eStore().toArray(owner, eStructuralFeature, array);
-    }
-
-    @Override
-    protected Entry delegateMove(int targetIndex, int sourceIndex)
-    {
-      return (Entry)eStore().move(owner, eStructuralFeature, targetIndex, sourceIndex);
-    }
-
-    @Override
-    protected String delegateToString()
-    {
-      StringBuffer stringBuffer = new StringBuffer();
-      stringBuffer.append("["); //$NON-NLS-1$
-      for (int i = 0, size = size(); i < size;)
-      {
-        Object value = delegateGet(i);
-        stringBuffer.append(String.valueOf(value));
-        if (++i < size)
-        {
-          stringBuffer.append(", "); //$NON-NLS-1$
-        }
-      }
-
-      stringBuffer.append("]"); //$NON-NLS-1$
-      return stringBuffer.toString();
     }
   }
 }

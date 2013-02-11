@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.ITypeMapper;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.ObjyMapper;
@@ -102,7 +101,7 @@ public class ObjyClassProposed
     ArrayList<EClass> toBeProcessed = new ArrayList<EClass>();
     for (EStructuralFeature feature : listFeatures)
     {
-      if (!(feature instanceof EAttribute || feature instanceof EReference) || !EMFUtil.isPersistent(feature))
+      if (!(feature instanceof EAttribute || feature instanceof EReference) || !ObjyObject.isPersistent(feature))
       {
         continue;
       }
@@ -171,7 +170,7 @@ public class ObjyClassProposed
     ArrayList<EClass> toBeEvolve = new ArrayList<EClass>();
     for (EStructuralFeature feature : listFeatures)
     {
-      if (!(feature instanceof EAttribute || feature instanceof EReference) || !EMFUtil.isPersistent(feature))
+      if (!(feature instanceof EAttribute || feature instanceof EReference) || !ObjyObject.isPersistent(feature))
       {
         continue;
       }

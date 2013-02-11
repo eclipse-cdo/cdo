@@ -39,17 +39,19 @@ public class CDORevisionImpl extends BaseCDORevision
   protected CDORevisionImpl(CDORevisionImpl source)
   {
     super(source);
-    EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(getEClass());
+    EStructuralFeature[] features = getClassInfo().getAllPersistentFeatures();
     initValues(features);
-    for (int i = 0; i < features.length; i++)
+
+    int length = features.length;
+    for (int i = 0; i < length; i++)
     {
       EStructuralFeature feature = features[i];
-      EClassifier classifier = feature.getEType();
       if (feature.isMany())
       {
         InternalCDOList sourceList = (InternalCDOList)source.values[i];
         if (sourceList != null)
         {
+          EClassifier classifier = feature.getEType();
           setValue(i, sourceList.clone(classifier));
         }
       }

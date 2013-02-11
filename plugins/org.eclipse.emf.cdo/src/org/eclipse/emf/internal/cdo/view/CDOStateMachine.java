@@ -459,7 +459,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
 
       process(object, CDOEvent.ROLLBACK, null);
-      object.cdoInternalPostRollback();
     }
   }
 
@@ -909,8 +908,19 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
+      InternalCDOTransaction transaction = object.cdoView().toTransaction();
+      if (transaction.getLastSavepoint().isNewObject(object.cdoID()))
+      {
+        changeState(object, CDOState.TRANSIENT);
+        object.cdoInternalPostDetach(false);
+      }
+      else
+      {
+        changeState(object, CDOState.PROXY);
+        object.cdoInternalPostRollback();
+      }
+
       object.cdoInternalSetRevision(null);
-      changeState(object, CDOState.PROXY);
     }
   }
 

@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -43,7 +44,6 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -73,6 +73,8 @@ import java.util.Map;
 public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOLegacyWrapper.class);
+
+  private final InternalCDOClassInfo classInfo;
 
   /**
    * This ThreadLocal map stores all pre-registered objects. This avoids a never-ending loop when setting the container
@@ -113,7 +115,13 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   public CDOLegacyWrapper(InternalEObject instance)
   {
     this.instance = instance;
+    classInfo = (InternalCDOClassInfo)CDOModelUtil.getClassInfo(instance.eClass());
     viewAndState = ViewAndState.TRANSIENT;
+  }
+
+  public InternalCDOClassInfo cdoClassInfo()
+  {
+    return classInfo;
   }
 
   public CDOID cdoID()
@@ -263,9 +271,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
     // This loop adjusts the opposite wrapper objects to support dangling references. See Bugzilla_251263_Test
     InternalCDORevision revision = cdoRevision();
-    EClass eClass = revision.getEClass();
-    EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
-    for (EStructuralFeature feature : allPersistentFeatures)
+    for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
     {
       EReference oppositeReference = ((EStructuralFeature.Internal)feature).getEOpposite();
       if (oppositeReference != null && !oppositeReference.isContainment() && EMFUtil.isPersistent(oppositeReference))
@@ -314,9 +320,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     instanceToRevisionContainment();
 
     InternalCDORevision revision = cdoRevision();
-    EClass eClass = revision.getEClass();
-    EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
-    for (EStructuralFeature feature : allPersistentFeatures)
+    for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
     {
       if (feature.isUnsettable())
       {
@@ -377,9 +381,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     instanceToRevisionContainment();
 
     // Handle values
-    EClass eClass = revision.getEClass();
-    EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
-    for (EStructuralFeature feature : allPersistentFeatures)
+    for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
     {
       instanceToRevisionFeature(feature);
     }
@@ -458,9 +460,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         resource.cdoInternalLoading(instance);
       }
 
-      EClass eClass = revision.getEClass();
-      EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
-      for (EStructuralFeature feature : allPersistentFeatures)
+      for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
       {
         revisionToInstanceFeature(feature);
       }
@@ -849,10 +849,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    */
   protected void resolveAllProxies()
   {
-    InternalCDORevision revision = cdoRevision();
-    EClass eClass = revision.getEClass();
-    EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
-    for (EStructuralFeature feature : allPersistentFeatures)
+    for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
     {
       if (feature instanceof EReference)
       {
@@ -965,11 +962,15 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   public synchronized EList<Adapter> eAdapters()
   {
     EList<Adapter> adapters = instance.eAdapters();
-    for (Adapter adapter : adapters)
+    if (!FSMUtil.isTransient(this))
     {
-      if (!FSMUtil.isTransient(this) && !(adapter instanceof CDOLegacyWrapper))
+      InternalCDOView view = cdoView();
+      for (Adapter adapter : adapters)
       {
-        cdoView().handleAddAdapter(this, adapter);
+        if (!(adapter instanceof CDOLegacyWrapper))
+        {
+          view.handleAddAdapter(this, adapter);
+        }
       }
     }
 

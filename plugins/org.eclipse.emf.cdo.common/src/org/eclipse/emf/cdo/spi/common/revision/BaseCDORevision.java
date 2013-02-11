@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
@@ -175,8 +174,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   protected void readSystemValues(CDODataInput in) throws IOException
   {
     EClassifier classifier = in.readCDOClassifierRefAndResolve();
-    CDOClassInfo classInfo = CDOModelUtil.getClassInfo((EClass)classifier);
-    setClassInfo(classInfo);
+    initClassInfo((EClass)classifier);
 
     id = in.readCDOID();
     branchPoint = in.readCDOBranchPoint();

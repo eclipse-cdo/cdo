@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.clustering.ObjyPlacementManager;
@@ -65,8 +64,8 @@ public class ObjyObjectManager
   }
 
   /**
-	 *
-	 */
+   *
+   */
   public ObjyObject newObject(EClass eClass, ooId nearObject)
   {
     if (nearObject == null)
@@ -128,7 +127,7 @@ public class ObjyObjectManager
     // Initialize the object
     for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
     {
-      if (!(feature instanceof EAttribute || feature instanceof EReference) || !EMFUtil.isPersistent(feature))
+      if (!(feature instanceof EAttribute || feature instanceof EReference) || !ObjyObject.isPersistent(feature))
       {
         continue;
       }
@@ -200,7 +199,7 @@ public class ObjyObjectManager
 
   /***
    * The following are utility function that get the base attributes from the object.
-   * 
+   *
    * @param objyObject
    * @return replaced by the ones in ObjyObject. public Object getEContainer(ObjyObject objyObject) { Class_Position
    *         position = objyObject.objyClass().resolve_position(ooBaseClass.ClassName_containerid); ooId oid = (ooId)
@@ -226,7 +225,7 @@ public class ObjyObjectManager
 
   /**
    * Construct an ObjyObject from an existing Class_Object and add it to the idToObjyObjectMap.
-   * 
+   *
    * @param classObject
    * @return
    */
@@ -239,7 +238,7 @@ public class ObjyObjectManager
 
   /***
    * TODO - Remove the eClass and just use the objyObject attributes to do the clean up.
-   * 
+   *
    * @param objyObject
    */
   public void remove(ObjyObject objyObject)

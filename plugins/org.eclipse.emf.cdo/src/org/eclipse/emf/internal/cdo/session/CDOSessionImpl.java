@@ -30,7 +30,6 @@ import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDOList;
@@ -812,31 +811,29 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
    */
   public void resolveAllElementProxies(CDORevision revision)
   {
-    if (!((InternalCDORevision)revision).isUnchunked())
+    InternalCDORevision internalRevision = (InternalCDORevision)revision;
+    if (!internalRevision.isUnchunked())
     {
       CDOCollectionLoadingPolicy policy = options().getCollectionLoadingPolicy();
-      for (EStructuralFeature feature : revision.getEClass().getEAllStructuralFeatures())
+
+      for (EReference reference : internalRevision.getClassInfo().getAllPersistentReferences())
       {
-        if (feature instanceof EReference)
+        if (reference.isMany())
         {
-          EReference reference = (EReference)feature;
-          if (reference.isMany() && EMFUtil.isPersistent(reference))
+          CDOList list = internalRevision.getList(reference);
+          for (Iterator<Object> it = list.iterator(); it.hasNext();)
           {
-            CDOList list = ((InternalCDORevision)revision).getList(reference);
-            for (Iterator<Object> it = list.iterator(); it.hasNext();)
+            Object element = it.next();
+            if (element instanceof CDOElementProxy)
             {
-              Object element = it.next();
-              if (element instanceof CDOElementProxy)
-              {
-                policy.resolveAllProxies(revision, reference);
-                break;
-              }
+              policy.resolveAllProxies(internalRevision, reference);
+              break;
             }
           }
         }
       }
 
-      ((InternalCDORevision)revision).setUnchunked();
+      internalRevision.setUnchunked();
     }
   }
 

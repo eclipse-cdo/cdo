@@ -308,9 +308,7 @@ public final class CDORevisionUtil
   {
     StringBuilder builder = new StringBuilder();
     getResourceNodePath((InternalCDORevision)revision, provider, builder);
-    String string = builder.toString();
-    System.out.println("Path: " + revision + " --> " + string);
-    return string;
+    return builder.toString();
   }
 
   private static void getResourceNodePath(InternalCDORevision revision, CDORevisionProvider provider,

@@ -66,7 +66,6 @@ import java.util.Map;
  */
 public class ObjyObject
 {
-
   private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjyObject.class);
 
   protected Class_Object classObject;
@@ -212,8 +211,8 @@ public class ObjyObject
   }
 
   /**
-		 *
-		 */
+  	 *
+  	 */
   public ooId ooId()
   {
     return objectId;
@@ -466,7 +465,7 @@ public class ObjyObject
       }
       for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
       {
-        if (!(feature instanceof EAttribute || feature instanceof EReference) || !EMFUtil.isPersistent(feature))
+        if (!(feature instanceof EAttribute || feature instanceof EReference) || !isPersistent(feature))
         {
           continue;
         }
@@ -528,7 +527,7 @@ public class ObjyObject
 
   /**
    * Use the revision info to update the object in the store.
-   * 
+   *
    * @param storeAccessor
    * @param revision
    */
@@ -561,7 +560,7 @@ public class ObjyObject
 
   /**
    * Use the revision info to update the object in the store.
-   * 
+   *
    * @param storeAccessor
    * @param revision
    */
@@ -588,7 +587,7 @@ public class ObjyObject
 
       for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
       {
-        if (!(feature instanceof EAttribute || feature instanceof EReference) || !EMFUtil.isPersistent(feature))
+        if (!(feature instanceof EAttribute || feature instanceof EReference) || !isPersistent(feature))
         {
           continue;
         }
@@ -829,7 +828,7 @@ public class ObjyObject
 
       for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
       {
-        if (!(feature instanceof EAttribute || feature instanceof EReference) || !EMFUtil.isPersistent(feature))
+        if (!(feature instanceof EAttribute || feature instanceof EReference) || !isPersistent(feature))
         {
           continue;
         }
@@ -1044,7 +1043,7 @@ public class ObjyObject
 
   /**
    * Get the size of the composite object using the store info.
-   * 
+   *
    * @param feature
    * @return
    */
@@ -1091,7 +1090,7 @@ public class ObjyObject
 
   /**
    * Get the value of an attribute at index (if many) from the persistent object.
-   * 
+   *
    * @param feature
    * @param index
    * @return
@@ -1136,7 +1135,7 @@ public class ObjyObject
   /**
    * Get all the values of an attribute, used for feature.isMany(). This function is also used by the
    * ObjectivityStoreChunkReader to read chunks of data from a feature.
-   * 
+   *
    * @param feature
    * @param size
    * @return
@@ -1357,7 +1356,7 @@ public class ObjyObject
     {
       for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
       {
-        if (!(feature instanceof EAttribute || feature instanceof EReference) || !EMFUtil.isPersistent(feature))
+        if (!(feature instanceof EAttribute || feature instanceof EReference) || !isPersistent(feature))
         {
           continue;
         }
@@ -1579,7 +1578,7 @@ public class ObjyObject
 
   /**
    * Return the revision that satisfies the timeStamp and branchId constrains.
-   * 
+   *
    * @param objyObjectManager
    */
   public ObjyObject getRevision(long timeStamp, int branchId, ObjyObjectManager objyObjectManager)
@@ -1687,6 +1686,11 @@ public class ObjyObject
     {
       ex.printStackTrace();
     }
+  }
+
+  public static boolean isPersistent(EStructuralFeature feature)
+  {
+    return EMFUtil.isPersistent(feature);
   }
 
 }

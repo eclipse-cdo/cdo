@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -52,7 +51,6 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -329,11 +327,8 @@ public class Session extends Container<IView> implements InternalSession
       Set<CDOID> revisions, List<CDORevision> additionalRevisions)
   {
     InternalCDORevisionManager revisionManager = getManager().getRepository().getRevisionManager();
-    EClass eClass = revision.getEClass();
-    EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
-    for (int i = 0; i < allPersistentFeatures.length; i++)
+    for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
     {
-      EStructuralFeature feature = allPersistentFeatures[i];
       // TODO Clarify feature maps
       if (feature instanceof EReference && !feature.isMany() && ((EReference)feature).isContainment())
       {

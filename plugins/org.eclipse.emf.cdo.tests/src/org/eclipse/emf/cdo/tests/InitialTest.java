@@ -147,17 +147,13 @@ public class InitialTest extends AbstractCDOTest
 
   public void testAttachResource() throws Exception
   {
-    msg("Opening session");
     CDOSession session = openSession();
-
-    msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Creating resource");
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     assertNew(resource, transaction);
     assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + getResourcePath("/test1")),
         resource.getURI());
+
     ResourceSet expected = transaction.getResourceSet();
     ResourceSet actual = resource.getResourceSet();
     assertEquals(expected, actual);
@@ -165,25 +161,14 @@ public class InitialTest extends AbstractCDOTest
 
   public void testAttachObject() throws Exception
   {
-    msg("Creating supplier");
     Supplier supplier = getModel1Factory().createSupplier();
-
-    msg("Setting name");
     supplier.setName("Stepper");
 
-    msg("Opening session");
     CDOSession session = openSession();
-
-    msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Creating resource");
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-    msg("Getting contents");
     EList<EObject> contents = resource.getContents();
-
-    msg("Adding supplier");
     contents.add(supplier);
     assertNew(supplier, transaction);
     assertEquals(transaction, CDOUtil.getCDOObject(supplier).cdoView());

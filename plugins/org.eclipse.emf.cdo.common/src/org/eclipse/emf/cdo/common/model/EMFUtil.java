@@ -310,7 +310,10 @@ public final class EMFUtil
 
   /**
    * @since 3.0
+   * @deprecated This method is expensive and will be removed in the future.
+   * @see #isPersistent(EStructuralFeature)
    */
+  @Deprecated
   public static List<EStructuralFeature> getPersistentFeatures(EList<EStructuralFeature> eFeatures)
   {
     List<EStructuralFeature> result = new ArrayList<EStructuralFeature>();
@@ -326,6 +329,15 @@ public final class EMFUtil
   }
 
   /**
+   * Returns <code>true</code> if CDO considers the given feature <i>persistent</i>, <code>false</code> otherwise.
+   * <p>
+   * Note that CDO <i>persistent</i> is not identical to {@link EStructuralFeature#isTransient() non-transient} because that can be
+   * overridden with {@link #CDO_ANNOTATION_KEY_PERSISTENT}. Another reason for possible deviations is that CDO considers transient
+   * {@link EReference references} <i>persistent</i> if they have a <i>persistent</i> {@link EReference#getEOpposite() opposite}.
+   * <p>
+   * Note also that the checks for the aforementioned deviations from {@link EStructuralFeature#isTransient()} make this method somewhat
+   * expensive. Whenever possible {@link CDOClassInfo#isPersistent(int) CDOClassInfo.isPersistent()} should be called instead.
+   *
    * @since 3.0
    */
   public static boolean isPersistent(EStructuralFeature feature)

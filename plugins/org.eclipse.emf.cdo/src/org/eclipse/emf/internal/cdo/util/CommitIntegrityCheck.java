@@ -387,25 +387,22 @@ public class CommitIntegrityCheck
 
   private void checkCurrentRefTargetsIncluded(CDOObject referencer, String msgFrag) throws CommitIntegrityException
   {
-    for (EReference eRef : referencer.eClass().getEAllReferences())
+    for (EReference eRef : ((InternalCDOObject)referencer).cdoClassInfo().getAllPersistentReferences())
     {
-      if (EMFUtil.isPersistent(eRef))
+      if (eRef.isMany())
       {
-        if (eRef.isMany())
+        EList<?> list = (EList<?>)referencer.eGet(eRef);
+        for (Object refTarget : list)
         {
-          EList<?> list = (EList<?>)referencer.eGet(eRef);
-          for (Object refTarget : list)
-          {
-            checkBidiRefTargetOrNewNonBidiTargetIncluded(referencer, eRef, refTarget, msgFrag);
-          }
+          checkBidiRefTargetOrNewNonBidiTargetIncluded(referencer, eRef, refTarget, msgFrag);
         }
-        else
+      }
+      else
+      {
+        Object refTarget = referencer.eGet(eRef);
+        if (refTarget != null)
         {
-          Object refTarget = referencer.eGet(eRef);
-          if (refTarget != null)
-          {
-            checkBidiRefTargetOrNewNonBidiTargetIncluded(referencer, eRef, refTarget, msgFrag);
-          }
+          checkBidiRefTargetOrNewNonBidiTargetIncluded(referencer, eRef, refTarget, msgFrag);
         }
       }
     }
@@ -435,9 +432,9 @@ public class CommitIntegrityCheck
     InternalCDORevision cleanRev = transaction.getCleanRevisions().get(referencer);
     CheckUtil.checkState(cleanRev, "cleanRev");
 
-    for (EReference eRef : referencer.eClass().getEAllReferences())
+    for (EReference eRef : ((InternalCDOObject)referencer).cdoClassInfo().getAllPersistentReferences())
     {
-      if (EMFUtil.isPersistent(eRef) && hasPersistentOpposite(eRef))
+      if (hasPersistentOpposite(eRef))
       {
         Object value = cleanRev.get(eRef, EStore.NO_INDEX);
         if (value != null)
@@ -498,7 +495,7 @@ public class CommitIntegrityCheck
 
   /**
    * Designates an exception style for a {@link CommitIntegrityCheck}
-   * 
+   *
    * @author Caspar De Groot
    */
   public static enum Style

@@ -21,32 +21,46 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.List;
 
 /**
  * @author Eike Stepper
  */
-public class CDOClassInfoImpl extends AdapterImpl implements InternalCDOClassInfo
+public final class CDOClassInfoImpl extends AdapterImpl implements InternalCDOClassInfo
 {
-  private static final int NOT_MAPPED = -1;
-
   private static final PersistenceFilter[] NO_FILTERS = {};
 
-  private EStructuralFeature[] allPersistentFeatures;
+  private final BitSet persistentBits = new BitSet();
 
   private PersistenceFilter[] persistenceFilters = NO_FILTERS;
 
-  private int[] featureIDMappings;
+  private EStructuralFeature[] allPersistentFeatures;
+
+  private EReference[] allPersistentReferences;
+
+  private int[] persistentFeatureIndices;
 
   private int settingsFeatureCount;
 
   private int[] settingsFeatureIndices;
+
+  /**
+   * The number of *extra* features on top of {@link #settingsFeatureCount} when the object is TRANSIENT.
+   */
+  private int transientFeatureCount;
+
+  /**
+   * This is not about transient features! But about indices of all features of TRANSIENT objects.
+   */
+  private int[] transientFeatureIndices;
 
   public CDOClassInfoImpl()
   {
@@ -85,21 +99,31 @@ public class CDOClassInfoImpl extends AdapterImpl implements InternalCDOClassInf
     return CDOModelUtil.isResourceNode(getEClass());
   }
 
+  public boolean isPersistent(int featureID)
+  {
+    return persistentBits.get(featureID);
+  }
+
   public EStructuralFeature[] getAllPersistentFeatures()
   {
     return allPersistentFeatures;
   }
 
-  public int getFeatureIndex(EStructuralFeature feature)
+  public EReference[] getAllPersistentReferences()
   {
-    int featureID = getEClass().getFeatureID(feature);
-    return getFeatureIndex(featureID);
+    return allPersistentReferences;
   }
 
-  public int getFeatureIndex(int featureID)
+  public int getPersistentFeatureIndex(EStructuralFeature feature) throws IllegalArgumentException
   {
-    int index = featureIDMappings[featureID];
-    if (index == NOT_MAPPED)
+    int featureID = getEClass().getFeatureID(feature);
+    return getPersistentFeatureIndex(featureID);
+  }
+
+  public int getPersistentFeatureIndex(int featureID) throws IllegalArgumentException
+  {
+    int index = persistentFeatureIndices[featureID];
+    if (index == NO_SLOT)
     {
       throw new IllegalArgumentException("Feature not mapped: " + getEClass().getEStructuralFeature(featureID)); //$NON-NLS-1$
     }
@@ -115,6 +139,16 @@ public class CDOClassInfoImpl extends AdapterImpl implements InternalCDOClassInf
   public int getSettingsFeatureIndex(int featureID)
   {
     return settingsFeatureIndices[featureID];
+  }
+
+  public int getTransientFeatureCount()
+  {
+    return transientFeatureCount;
+  }
+
+  public int getTransientFeatureIndex(int featureID)
+  {
+    return transientFeatureIndices[featureID];
   }
 
   public PersistenceFilter getPersistenceFilter(EStructuralFeature feature)
@@ -151,24 +185,34 @@ public class CDOClassInfoImpl extends AdapterImpl implements InternalCDOClassInf
 
   private void init(EClass eClass)
   {
-    List<EStructuralFeature> persistentFeatures = new ArrayList<EStructuralFeature>();
     EList<EStructuralFeature> allFeatures = eClass.getEAllStructuralFeatures();
-
     int featureCount = eClass.getFeatureCount();
+
+    List<EStructuralFeature> persistentFeatures = new ArrayList<EStructuralFeature>();
+    List<EReference> persistentReferences = new ArrayList<EReference>();
+    persistentBits.clear();
     settingsFeatureIndices = new int[featureCount];
     for (int i = 0; i < featureCount; i++)
     {
       EStructuralFeature feature = eClass.getEStructuralFeature(i);
-      if (EMFUtil.isPersistent(feature))
+      if (EMFUtil.isPersistent(feature)) // persistentBits is not initialized, yet
       {
+        int featureID = eClass.getFeatureID(feature);
+        persistentBits.set(featureID);
+
         persistentFeatures.add(feature);
+        if (feature instanceof EReference)
+        {
+          persistentReferences.add((EReference)feature);
+        }
+
         if (feature.isMany() || FeatureMapUtil.isFeatureMap(feature))
         {
           settingsFeatureIndices[i] = settingsFeatureCount++;
         }
         else
         {
-          settingsFeatureIndices[i] = NO_SETTING;
+          settingsFeatureIndices[i] = NO_SLOT;
         }
       }
       else
@@ -177,15 +221,31 @@ public class CDOClassInfoImpl extends AdapterImpl implements InternalCDOClassInf
       }
     }
 
+    transientFeatureIndices = new int[featureCount];
+    for (int featureID = 0; featureID < featureCount; featureID++)
+    {
+      if (isPersistent(featureID))
+      {
+        transientFeatureIndices[featureID] = settingsFeatureCount + transientFeatureCount++;
+      }
+      else
+      {
+        // Transient *features* are already allocated to a slot (see above)
+        transientFeatureIndices[featureID] = settingsFeatureIndices[featureID];
+      }
+    }
+
     allPersistentFeatures = persistentFeatures.toArray(new EStructuralFeature[persistentFeatures.size()]);
-    featureIDMappings = new int[allFeatures.size()];
-    Arrays.fill(featureIDMappings, NOT_MAPPED);
+    allPersistentReferences = persistentReferences.toArray(new EReference[persistentReferences.size()]);
+
+    persistentFeatureIndices = new int[allFeatures.size()];
+    Arrays.fill(persistentFeatureIndices, NO_SLOT);
 
     for (int i = 0; i < allPersistentFeatures.length; i++)
     {
       EStructuralFeature feature = allPersistentFeatures[i];
       int featureID = eClass.getFeatureID(feature);
-      featureIDMappings[featureID] = i;
+      persistentFeatureIndices[featureID] = i;
 
       PersistenceFilter persistenceFilter = initPersistenceFilter(feature);
       if (persistenceFilter != null)
@@ -198,6 +258,18 @@ public class CDOClassInfoImpl extends AdapterImpl implements InternalCDOClassInf
         persistenceFilters[featureID] = persistenceFilter;
       }
     }
+  }
+
+  @Deprecated
+  public int getFeatureIndex(EStructuralFeature feature)
+  {
+    return getPersistentFeatureIndex(feature);
+  }
+
+  @Deprecated
+  public int getFeatureIndex(int featureID)
+  {
+    return getPersistentFeatureIndex(featureID);
   }
 
   @Override

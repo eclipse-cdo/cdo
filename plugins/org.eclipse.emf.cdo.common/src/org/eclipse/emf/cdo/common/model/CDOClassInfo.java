@@ -10,8 +10,11 @@
  */
 package org.eclipse.emf.cdo.common.model;
 
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
@@ -26,11 +29,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  */
 public interface CDOClassInfo extends Adapter
 {
-  /**
-   * @since 4.2
-   */
-  public static final int NO_SETTING = -1;
-
   public EClass getEClass();
 
   public boolean isResourceNode();
@@ -39,19 +37,27 @@ public interface CDOClassInfo extends Adapter
 
   public boolean isResource();
 
+  /**
+   * @since 4.2
+   */
+  public boolean isPersistent(int featureID);
+
   public EStructuralFeature[] getAllPersistentFeatures();
 
+  /**
+   * @since 4.2
+   */
+  public EReference[] getAllPersistentReferences();
+
+  /**
+   * @deprecated As of 4.2 pushed down to {@link InternalCDOClassInfo#getFeatureIndex(EStructuralFeature)}.
+   */
+  @Deprecated
   public int getFeatureIndex(EStructuralFeature feature);
 
+  /**
+   * @deprecated As of 4.2 pushed down to {@link InternalCDOClassInfo#getFeatureIndex(int)}.
+   */
+  @Deprecated
   public int getFeatureIndex(int featureID);
-
-  /**
-   * @since 4.2
-   */
-  public int getSettingsFeatureCount();
-
-  /**
-   * @since 4.2
-   */
-  public int getSettingsFeatureIndex(int featureID);
 }

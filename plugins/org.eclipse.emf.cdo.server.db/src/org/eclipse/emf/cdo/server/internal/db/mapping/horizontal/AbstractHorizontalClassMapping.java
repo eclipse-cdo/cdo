@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -101,9 +102,12 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
   {
     this.mappingStrategy = mappingStrategy;
     this.eClass = eClass;
-
     initTable();
-    initFeatures();
+
+    CDOClassInfo classInfo = CDOModelUtil.getClassInfo(eClass);
+    EStructuralFeature[] allPersistentFeatures = classInfo.getAllPersistentFeatures();
+    initFeatures(allPersistentFeatures);
+
     initSQLStrings();
   }
 
@@ -144,19 +148,17 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     return null;
   }
 
-  private void initFeatures()
+  private void initFeatures(EStructuralFeature[] features)
   {
-    EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
-
-    if (allPersistentFeatures == null)
+    if (features == null)
     {
       valueMappings = Collections.emptyList();
       listMappings = Collections.emptyList();
     }
     else
     {
-      valueMappings = createValueMappings(allPersistentFeatures);
-      listMappings = createListMappings(allPersistentFeatures);
+      valueMappings = createValueMappings(features);
+      listMappings = createListMappings(features);
     }
   }
 
@@ -204,7 +206,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       }
     }
 
-    // add unsettable fields to end of table
+    // Add unsettable fields to end of table
     if (unsettableFields != null)
     {
       for (String fieldName : unsettableFields.values())
@@ -235,7 +237,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
         listMappings.add(mapping);
 
-        // add field for list sizes
+        // Add field for list sizes
         createListSizeField(feature);
       }
     }
@@ -799,7 +801,6 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
   public final boolean queryXRefs(IDBStoreAccessor accessor, QueryXRefsContext context, String idString)
   {
     String tableName = getTable().getName();
-    EClass eClass = getEClass();
     List<EReference> refs = context.getSourceCandidates().get(eClass);
     List<EReference> scalarRefs = new ArrayList<EReference>();
 

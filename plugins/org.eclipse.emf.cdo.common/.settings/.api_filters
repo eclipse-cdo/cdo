@@ -80,4 +80,18 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.java" type="org.eclipse.emf.cdo.spi.common.revision.AbstractCDORevision">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.common.revision.AbstractCDORevision"/>
+                <message_argument value="setClassInfo(CDOClassInfo)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.common.revision.AbstractCDORevision"/>
+                <message_argument value="getEClass()"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

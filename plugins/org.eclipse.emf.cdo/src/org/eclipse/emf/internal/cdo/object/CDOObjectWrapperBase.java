@@ -115,7 +115,8 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
    */
   protected EStructuralFeature eDynamicFeature(int dynamicFeatureID)
   {
-    return eClass().getEStructuralFeature(dynamicFeatureID + eStaticFeatureCount());
+    EClass eClass = eClass();
+    return eClass.getEStructuralFeature(dynamicFeatureID + eStaticFeatureCount());
   }
 
   /**

@@ -496,6 +496,11 @@ public final class CDOModelUtil implements CDOModelConstants
   }
 
   /**
+   * Returns additional CDO infos for an {@link EClass}.
+   * <p>
+   * This operation is somewhat expensive because it synchronizes on the EClass and iterates over all adapters.
+   * Whenever possible use {@link CDORevision#getClassInfo()} or <code>InternalCDOObject.getClassInfo()</code>.
+   *
    * @since 2.0
    */
   public static CDOClassInfo getClassInfo(EClass eClass)
@@ -507,7 +512,7 @@ public final class CDOModelUtil implements CDOModelConstants
       if (classInfo == null)
       {
         classInfo = new CDOClassInfoImpl();
-        adapters.add(classInfo);
+        adapters.add(0, classInfo);
       }
 
       return classInfo;
@@ -515,8 +520,15 @@ public final class CDOModelUtil implements CDOModelConstants
   }
 
   /**
+   * Returns all persistent {@link EStructuralFeature features} of an {@link EClass}.
+   * <p>
+   * This operation is somewhat expensive because it synchronizes on the EClass and iterates over all adapters.
+   *
    * @since 2.0
+   * @deprecated As of 4.2 use <code>CDOModelUtil.getClassInfo(eClass).getAllPersistentFeatures()</code>.
+   * @see #getClassInfo(EClass)
    */
+  @Deprecated
   public static EStructuralFeature[] getAllPersistentFeatures(EClass eClass)
   {
     CDOClassInfo classInfo = getClassInfo(eClass);

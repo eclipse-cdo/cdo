@@ -73,6 +73,7 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
@@ -138,11 +139,11 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.impl.EClassImpl.FeatureSubsetSupplier;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
+import org.eclipse.emf.ecore.util.EContentsEList;
 import org.eclipse.emf.ecore.util.EContentsEList.FeatureIterator;
 import org.eclipse.emf.ecore.util.ECrossReferenceEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -2344,6 +2345,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     List<Pair<Setting, EObject>> objectsToBeRemoved = new LinkedList<Pair<Setting, EObject>>();
     for (CDOObject referencer : referencers)
     {
+      InternalCDOObject internalReferencer = (InternalCDOObject)referencer;
+      InternalCDOClassInfo referencerClassInfo = internalReferencer.cdoClassInfo();
+
       FeatureIterator<EObject> it = getChangeableCrossReferences(referencer);
       while (it.hasNext())
       {
@@ -2359,7 +2363,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           // should we remove it. If this is not the case (i.e. it is dirty in a different
           // way), we skip it. (If the reference is not persistent, then this exception
           // doesn't apply: it must be removed for sure.)
-          if (referencer.cdoState() == CDOState.DIRTY && EMFUtil.isPersistent(reference))
+          if (referencer.cdoState() == CDOState.DIRTY && referencerClassInfo.isPersistent(reference))
           {
             InternalCDORevision cleanRevision = cleanRevisions.get(referencer);
 
@@ -2372,7 +2376,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             }
           }
 
-          Setting setting = ((InternalEObject)referencer).eSetting(reference);
+          Setting setting = internalReferencer.eSetting(reference);
           objectsToBeRemoved.add(new Pair<Setting, EObject>(setting, referencedObject));
         }
       }
@@ -2414,8 +2418,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         EStructuralFeature[] collectedStructuralFeatures = changeableReferences
             .toArray(new EStructuralFeature[changeableReferences.size()]);
-        return (FeatureIterator<EObject>)new ECrossReferenceEListDerived(object, collectedStructuralFeatures)
-            .iterator();
+        return new EContentsEList.ResolvingFeatureIteratorImpl<EObject>(object, collectedStructuralFeatures);
       }
     }
 
@@ -3291,19 +3294,4 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
   }
-
-  public static class ECrossReferenceEListDerived extends ECrossReferenceEList<EObject>
-  {
-
-    public ECrossReferenceEListDerived(EObject eObject)
-    {
-      super(eObject);
-    }
-
-    public ECrossReferenceEListDerived(EObject eObject, EStructuralFeature[] eStructuralFeatures)
-    {
-      super(eObject, eStructuralFeatures);
-    }
-  }
-
 }

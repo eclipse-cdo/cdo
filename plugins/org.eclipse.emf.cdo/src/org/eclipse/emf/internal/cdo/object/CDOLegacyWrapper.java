@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -271,25 +270,27 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
     // This loop adjusts the opposite wrapper objects to support dangling references. See Bugzilla_251263_Test
     InternalCDORevision revision = cdoRevision();
-    for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
+    for (EReference reference : classInfo.getAllPersistentReferences())
     {
-      EReference oppositeReference = ((EStructuralFeature.Internal)feature).getEOpposite();
-      if (oppositeReference != null && !oppositeReference.isContainment() && EMFUtil.isPersistent(oppositeReference))
+      if (!reference.isContainer() && classInfo.hasPersistentOpposite(reference))
       {
-        if (feature.isMany())
+        if (reference.isMany())
         {
-          int size = revision.size(feature);
+          EReference oppositeReference = reference.getEOpposite();
+
+          int size = revision.size(reference);
           for (int i = 0; i < size; i++)
           {
-            EObject object = (EObject)getValueFromRevision(feature, i);
+            EObject object = (EObject)getValueFromRevision(reference, i);
             adjustPersistentOppositeReference(this, object, oppositeReference);
           }
         }
         else
         {
-          EObject oppositeObject = (EObject)instance.eGet(feature);
+          EObject oppositeObject = (EObject)instance.eGet(reference);
           if (oppositeObject != null)
           {
+            EReference oppositeReference = reference.getEOpposite();
             adjustPersistentOppositeReference(this, oppositeObject, oppositeReference);
           }
         }
@@ -641,7 +642,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
               instance.eInverseAdd((InternalEObject)object, featureID, baseClass, null);
             }
 
-            if (!EMFUtil.isPersistent(oppositeReference))
+            if (!classInfo.hasPersistentOpposite(internalFeature))
             {
               adjustTransientOppositeReference(instance, (InternalEObject)object, oppositeReference);
             }
@@ -1077,7 +1078,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
             EList<Object> list = (EList<Object>)eObject.eGet(oppositeReference);
             int index = list.indexOf(instance);
 
-            if (!store.isEmpty(oppositeCDOObject, oppositeReference) && index != EStore.NO_INDEX)
+            if (index != EStore.NO_INDEX && !store.isEmpty(oppositeCDOObject, oppositeReference))
             {
               store.set(oppositeCDOObject, oppositeReference, index, cdoObject);
             }

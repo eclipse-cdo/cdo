@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
@@ -26,6 +25,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitIntegrityException;
@@ -147,13 +147,14 @@ public class CommitIntegrityCheck
     InternalCDORevision cleanRev = transaction.getCleanRevisions().get(dirtyObject);
     CheckUtil.checkNull(cleanRev, "Could not obtain clean revision for dirty object " + dirtyObject);
 
+    InternalCDOClassInfo classInfo = dirtyObject.cdoClassInfo();
     InternalCDORevision dirtyRev = dirtyObject.cdoRevision();
-    CDORevisionDelta rDelta = dirtyRev.compare(cleanRev);
+    CDORevisionDelta revisionDelta = dirtyRev.compare(cleanRev);
 
-    for (CDOFeatureDelta featureDelta : rDelta.getFeatureDeltas())
+    for (CDOFeatureDelta featureDelta : revisionDelta.getFeatureDeltas())
     {
-      EStructuralFeature feat = featureDelta.getFeature();
-      if (feat == CDOContainerFeatureDelta.CONTAINER_FEATURE)
+      EStructuralFeature feature = featureDelta.getFeature();
+      if (feature == CDOContainerFeatureDelta.CONTAINER_FEATURE)
       {
         // Three possibilities here:
         // 1. Object's container has changed
@@ -196,18 +197,20 @@ public class CommitIntegrityCheck
           }
         }
       }
-      else if (feat instanceof EReference)
+      else if (feature instanceof EReference)
       {
         if (featureDelta instanceof CDOListFeatureDelta)
         {
+          boolean hasPersistentOpposite = classInfo.hasPersistentOpposite(feature);
           for (CDOFeatureDelta innerFeatDelta : ((CDOListFeatureDelta)featureDelta).getListChanges())
           {
-            checkFeatureDelta(innerFeatDelta, dirtyObject);
+            checkFeatureDelta(innerFeatDelta, hasPersistentOpposite, dirtyObject);
           }
         }
         else
         {
-          checkFeatureDelta(featureDelta, dirtyObject);
+          boolean hasPersistentOpposite = classInfo.hasPersistentOpposite(feature);
+          checkFeatureDelta(featureDelta, hasPersistentOpposite, dirtyObject);
         }
       }
     }
@@ -228,10 +231,11 @@ public class CommitIntegrityCheck
     // else: Transient object -- ignore
   }
 
-  private void checkFeatureDelta(CDOFeatureDelta featureDelta, CDOObject dirtyObject) throws CommitIntegrityException
+  private void checkFeatureDelta(CDOFeatureDelta featureDelta, boolean hasPersistentOpposite, CDOObject dirtyObject)
+      throws CommitIntegrityException
   {
     EReference ref = (EReference)featureDelta.getFeature();
-    boolean containmentOrWithOpposite = ref.isContainment() || hasPersistentOpposite(ref);
+    boolean containmentOrWithOpposite = ref.isContainment() || hasPersistentOpposite;
 
     if (featureDelta instanceof CDOAddFeatureDelta)
     {
@@ -387,31 +391,39 @@ public class CommitIntegrityCheck
 
   private void checkCurrentRefTargetsIncluded(CDOObject referencer, String msgFrag) throws CommitIntegrityException
   {
-    for (EReference eRef : ((InternalCDOObject)referencer).cdoClassInfo().getAllPersistentReferences())
+    InternalCDOClassInfo classInfo = ((InternalCDOObject)referencer).cdoClassInfo();
+
+    for (EReference reference : classInfo.getAllPersistentReferences())
     {
-      if (eRef.isMany())
+      if (reference.isMany())
       {
-        EList<?> list = (EList<?>)referencer.eGet(eRef);
-        for (Object refTarget : list)
+        EList<?> list = (EList<?>)referencer.eGet(reference);
+        if (!list.isEmpty())
         {
-          checkBidiRefTargetOrNewNonBidiTargetIncluded(referencer, eRef, refTarget, msgFrag);
+          boolean hasPersistentOpposite = classInfo.hasPersistentOpposite(reference);
+          for (Object refTarget : list)
+          {
+            checkBidiRefTargetOrNewNonBidiTargetIncluded(referencer, reference, refTarget, hasPersistentOpposite,
+                msgFrag);
+          }
         }
       }
       else
       {
-        Object refTarget = referencer.eGet(eRef);
+        Object refTarget = referencer.eGet(reference);
         if (refTarget != null)
         {
-          checkBidiRefTargetOrNewNonBidiTargetIncluded(referencer, eRef, refTarget, msgFrag);
+          boolean hasPersistentOpposite = classInfo.hasPersistentOpposite(reference);
+          checkBidiRefTargetOrNewNonBidiTargetIncluded(referencer, reference, refTarget, hasPersistentOpposite, msgFrag);
         }
       }
     }
   }
 
   private void checkBidiRefTargetOrNewNonBidiTargetIncluded(CDOObject referencer, EReference eRef, Object refTarget,
-      String msgFrag) throws CommitIntegrityException
+      boolean hasPersistentOpposite, String msgFrag) throws CommitIntegrityException
   {
-    if (hasPersistentOpposite(eRef))
+    if (hasPersistentOpposite)
     {
       // It's a bi-di ref; the target must definitely be included
       checkBidiRefTargetIncluded(refTarget, referencer, eRef.getName(), msgFrag);
@@ -432,24 +444,25 @@ public class CommitIntegrityCheck
     InternalCDORevision cleanRev = transaction.getCleanRevisions().get(referencer);
     CheckUtil.checkState(cleanRev, "cleanRev");
 
-    for (EReference eRef : ((InternalCDOObject)referencer).cdoClassInfo().getAllPersistentReferences())
+    InternalCDOClassInfo referencerClassInfo = ((InternalCDOObject)referencer).cdoClassInfo();
+    for (EReference reference : referencerClassInfo.getAllPersistentReferences())
     {
-      if (hasPersistentOpposite(eRef))
+      if (referencerClassInfo.hasPersistentOpposite(reference))
       {
-        Object value = cleanRev.get(eRef, EStore.NO_INDEX);
+        Object value = cleanRev.get(reference, EStore.NO_INDEX);
         if (value != null)
         {
-          if (eRef.isMany())
+          if (reference.isMany())
           {
             EList<?> list = (EList<?>)value;
             for (Object element : list)
             {
-              checkBidiRefTargetIncluded(element, referencer, eRef.getName(), msgFrag);
+              checkBidiRefTargetIncluded(element, referencer, reference.getName(), msgFrag);
             }
           }
           else
           {
-            checkBidiRefTargetIncluded(value, referencer, eRef.getName(), msgFrag);
+            checkBidiRefTargetIncluded(value, referencer, reference.getName(), msgFrag);
           }
         }
       }
@@ -485,12 +498,6 @@ public class CommitIntegrityCheck
 
     CDOID id = getContainerOrResourceID(rev);
     checkIncluded(id, "former container (or resource) of detached", detachedObject);
-  }
-
-  private static boolean hasPersistentOpposite(EReference ref)
-  {
-    EReference eOpposite = ref.getEOpposite();
-    return eOpposite != null && EMFUtil.isPersistent(eOpposite);
   }
 
   /**

@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -36,6 +37,11 @@ import java.io.IOException;
  */
 public interface InternalCDORevision extends CDORevision, CDORevisionData, CDOReferenceAdjustable
 {
+  /**
+   * @since 4.2
+   */
+  public InternalCDOClassInfo getClassInfo();
+
   public void setID(CDOID id);
 
   public void setVersion(int version);

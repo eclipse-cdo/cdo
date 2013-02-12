@@ -42,6 +42,16 @@ public interface CDOClassInfo extends Adapter
    */
   public boolean isPersistent(int featureID);
 
+  /**
+   * @since 4.2
+   */
+  public boolean isPersistent(EStructuralFeature feature);
+
+  /**
+   * @since 4.2
+   */
+  public boolean hasPersistentOpposite(EStructuralFeature feature);
+
   public EStructuralFeature[] getAllPersistentFeatures();
 
   /**
@@ -50,13 +60,18 @@ public interface CDOClassInfo extends Adapter
   public EReference[] getAllPersistentReferences();
 
   /**
-   * @deprecated As of 4.2 pushed down to {@link InternalCDOClassInfo#getFeatureIndex(EStructuralFeature)}.
+   * @since 4.2
+   */
+  public EStructuralFeature[] getAllPersistentContainments();
+
+  /**
+   * @deprecated As of 4.2 pushed down to {@link InternalCDOClassInfo#getPersistentFeatureIndex(EStructuralFeature)}.
    */
   @Deprecated
   public int getFeatureIndex(EStructuralFeature feature);
 
   /**
-   * @deprecated As of 4.2 pushed down to {@link InternalCDOClassInfo#getFeatureIndex(int)}.
+   * @deprecated As of 4.2 pushed down to {@link InternalCDOClassInfo#getPersistentFeatureIndex(int)}.
    */
   @Deprecated
   public int getFeatureIndex(int featureID);

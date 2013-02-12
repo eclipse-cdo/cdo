@@ -14,7 +14,6 @@ package org.eclipse.emf.internal.cdo.view;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
@@ -52,6 +51,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EContentsEList;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -639,12 +639,25 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       transaction.registerAttached(object, !reattaching);
 
       // Prepare content tree
-      for (Iterator<InternalCDOObject> it = getProperContents(object, transaction); it.hasNext();)
+      for (Iterator<InternalEObject> it = getPersistentContents(object); it.hasNext();)
       {
-        InternalCDOObject content = it.next();
-        contents.add(content);
-        INSTANCE.process(content, CDOEvent.PREPARE, transactionAndContents);
+        InternalEObject content = it.next();
+        Resource.Internal directResource = content.eDirectResource();
+
+        boolean objectIsResource = directResource == object;
+        if (objectIsResource || directResource == null)
+        {
+          InternalCDOObject adapted = FSMUtil.adapt(content, transaction);
+          contents.add(adapted);
+          INSTANCE.process(adapted, CDOEvent.PREPARE, transactionAndContents);
+        }
       }
+    }
+
+    private Iterator<InternalEObject> getPersistentContents(InternalCDOObject object)
+    {
+      EStructuralFeature[] features = object.cdoClassInfo().getAllPersistentContainments();
+      return new EContentsEList.ResolvingFeatureIteratorImpl<InternalEObject>(object, features);
     }
 
     private void checkPackageRegistrationProblems(InternalCDOSession session, EClass eClass)
@@ -666,45 +679,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
               eClass));
         }
       }
-    }
-
-    private Iterator<InternalCDOObject> getProperContents(final InternalCDOObject object,
-        final CDOTransaction transaction)
-    {
-      final boolean isResource = object instanceof Resource;
-      final Iterator<EObject> delegate = object.eContents().iterator();
-
-      return new Iterator<InternalCDOObject>()
-      {
-        private Object next;
-
-        public boolean hasNext()
-        {
-          while (delegate.hasNext())
-          {
-            InternalEObject eObject = (InternalEObject)delegate.next();
-            EStructuralFeature eContainingFeature = eObject.eContainingFeature();
-            if (isResource || eObject.eDirectResource() == null
-                && (eContainingFeature == null || EMFUtil.isPersistent(eContainingFeature)))
-            {
-              next = FSMUtil.adapt(eObject, transaction);
-              return true;
-            }
-          }
-
-          return false;
-        }
-
-        public InternalCDOObject next()
-        {
-          return (InternalCDOObject)next;
-        }
-
-        public void remove()
-        {
-          throw new UnsupportedOperationException();
-        }
-      };
     }
   }
 

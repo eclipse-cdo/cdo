@@ -79,6 +79,11 @@ public interface InternalCDOClassInfo extends CDOClassInfo
   public int getTransientFeatureIndex(int featureID);
 
   /**
+   * @see #getTransientFeatureIndex(int)
+   */
+  public int getTransientFeatureIndex(EStructuralFeature feature);
+
+  /**
    * Obtains a rule that filters/transforms the persist values of the given
    * {@code feature}.
    *

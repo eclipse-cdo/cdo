@@ -419,14 +419,12 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
 
     if (eSettings != null)
     {
-      EClass eClass = eClass();
       EStructuralFeature[] allPersistentFeatures = classInfo.getAllPersistentFeatures();
       int length = allPersistentFeatures.length;
       for (int i = 0; i < length; i++)
       {
         EStructuralFeature eFeature = allPersistentFeatures[i];
-        int featureID = eClass.getFeatureID(eFeature);
-        int transientIndex = classInfo.getTransientFeatureIndex(featureID);
+        int transientIndex = classInfo.getTransientFeatureIndex(eFeature);
         Object setting = eSettings[transientIndex]; // Can be safely accessed directly because we come from TRANSIENT
 
         instanceToRevisionFeature(viewAndState.view, this, eFeature, setting);
@@ -1321,8 +1319,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     private int getTransientFeatureIndex(InternalEObject eObject, EStructuralFeature feature)
     {
       CDOObjectImpl object = (CDOObjectImpl)eObject;
-      int dynamicFeatureID = object.eDynamicFeatureID(feature);
-      return object.classInfo.getTransientFeatureIndex(dynamicFeatureID);
+      return object.classInfo.getTransientFeatureIndex(feature);
     }
 
     public Object get(InternalEObject eObject, EStructuralFeature feature, int index)

@@ -17,12 +17,14 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.EClassImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
@@ -34,17 +36,23 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public final class CDOClassInfoImpl extends AdapterImpl implements InternalCDOClassInfo
+public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Internal
 {
   private static final PersistenceFilter[] NO_FILTERS = {};
 
+  private EClass eClass;
+
   private final BitSet persistentBits = new BitSet();
+
+  private final BitSet persistentOppositeBits = new BitSet();
 
   private PersistenceFilter[] persistenceFilters = NO_FILTERS;
 
   private EStructuralFeature[] allPersistentFeatures;
 
   private EReference[] allPersistentReferences;
+
+  private EStructuralFeature[] allPersistentContainments;
 
   private int[] persistentFeatureIndices;
 
@@ -66,42 +74,65 @@ public final class CDOClassInfoImpl extends AdapterImpl implements InternalCDOCl
   {
   }
 
-  @Override
   public boolean isAdapterForType(Object type)
   {
     return type == CDOClassInfo.class;
   }
 
-  @Override
+  public void notifyChanged(Notification notification)
+  {
+  }
+
+  public EClass getTarget()
+  {
+    return eClass;
+  }
+
   public void setTarget(Notifier newTarget)
   {
     init((EClass)newTarget);
-    super.setTarget(newTarget);
+  }
+
+  public void unsetTarget(Notifier oldTarget)
+  {
+    eClass = null;
   }
 
   public EClass getEClass()
   {
-    return (EClass)getTarget();
+    return eClass;
   }
 
   public boolean isResource()
   {
-    return CDOModelUtil.isResource(getEClass());
+    return CDOModelUtil.isResource(eClass);
   }
 
   public boolean isResourceFolder()
   {
-    return CDOModelUtil.isResourceFolder(getEClass());
+    return CDOModelUtil.isResourceFolder(eClass);
   }
 
   public boolean isResourceNode()
   {
-    return CDOModelUtil.isResourceNode(getEClass());
+    return CDOModelUtil.isResourceNode(eClass);
   }
 
   public boolean isPersistent(int featureID)
   {
     return persistentBits.get(featureID);
+  }
+
+  public boolean isPersistent(EStructuralFeature feature)
+  {
+    int featureID = eClass.getFeatureID(feature);
+    return isPersistent(featureID);
+  }
+
+  public boolean hasPersistentOpposite(EStructuralFeature feature)
+  {
+    int featureID = eClass.getFeatureID(feature);
+    return persistentOppositeBits.get(featureID);
   }
 
   public EStructuralFeature[] getAllPersistentFeatures()
@@ -114,9 +145,14 @@ public final class CDOClassInfoImpl extends AdapterImpl implements InternalCDOCl
     return allPersistentReferences;
   }
 
+  public EStructuralFeature[] getAllPersistentContainments()
+  {
+    return allPersistentContainments;
+  }
+
   public int getPersistentFeatureIndex(EStructuralFeature feature) throws IllegalArgumentException
   {
-    int featureID = getEClass().getFeatureID(feature);
+    int featureID = eClass.getFeatureID(feature);
     return getPersistentFeatureIndex(featureID);
   }
 
@@ -125,7 +161,7 @@ public final class CDOClassInfoImpl extends AdapterImpl implements InternalCDOCl
     int index = persistentFeatureIndices[featureID];
     if (index == NO_SLOT)
     {
-      throw new IllegalArgumentException("Feature not mapped: " + getEClass().getEStructuralFeature(featureID)); //$NON-NLS-1$
+      throw new IllegalArgumentException("Feature not mapped: " + eClass.getEStructuralFeature(featureID)); //$NON-NLS-1$
     }
 
     return index;
@@ -151,6 +187,12 @@ public final class CDOClassInfoImpl extends AdapterImpl implements InternalCDOCl
     return transientFeatureIndices[featureID];
   }
 
+  public int getTransientFeatureIndex(EStructuralFeature feature)
+  {
+    int featureID = eClass.getFeatureID(feature);
+    return getTransientFeatureIndex(featureID);
+  }
+
   public PersistenceFilter getPersistenceFilter(EStructuralFeature feature)
   {
     if (persistenceFilters == NO_FILTERS)
@@ -158,7 +200,7 @@ public final class CDOClassInfoImpl extends AdapterImpl implements InternalCDOCl
       return null;
     }
 
-    int featureID = getEClass().getFeatureID(feature);
+    int featureID = eClass.getFeatureID(feature);
     return persistenceFilters[featureID];
   }
 
@@ -185,13 +227,22 @@ public final class CDOClassInfoImpl extends AdapterImpl implements InternalCDOCl
 
   private void init(EClass eClass)
   {
+    this.eClass = eClass;
     EList<EStructuralFeature> allFeatures = eClass.getEAllStructuralFeatures();
     int featureCount = eClass.getFeatureCount();
 
     List<EStructuralFeature> persistentFeatures = new ArrayList<EStructuralFeature>();
     List<EReference> persistentReferences = new ArrayList<EReference>();
+    List<EStructuralFeature> persistentContainments = new ArrayList<EStructuralFeature>();
+
+    // Used for tests for containment
+    EStructuralFeature[] containments = ((EClassImpl.FeatureSubsetSupplier)eClass.getEAllStructuralFeatures())
+        .containments();
+
     persistentBits.clear();
+    persistentOppositeBits.clear();
     settingsFeatureIndices = new int[featureCount];
+
     for (int i = 0; i < featureCount; i++)
     {
       EStructuralFeature feature = eClass.getEStructuralFeature(i);
@@ -201,9 +252,21 @@ public final class CDOClassInfoImpl extends AdapterImpl implements InternalCDOCl
         persistentBits.set(featureID);
 
         persistentFeatures.add(feature);
+        if (isContainment(containments, feature))
+        {
+          persistentContainments.add(feature);
+        }
+
         if (feature instanceof EReference)
         {
-          persistentReferences.add((EReference)feature);
+          EReference reference = (EReference)feature;
+          persistentReferences.add(reference);
+
+          EReference opposite = reference.getEOpposite();
+          if (opposite != null && EMFUtil.isPersistent(opposite))
+          {
+            persistentOppositeBits.set(featureID);
+          }
         }
 
         if (feature.isMany() || FeatureMapUtil.isFeatureMap(feature))
@@ -237,6 +300,7 @@ public final class CDOClassInfoImpl extends AdapterImpl implements InternalCDOCl
 
     allPersistentFeatures = persistentFeatures.toArray(new EStructuralFeature[persistentFeatures.size()]);
     allPersistentReferences = persistentReferences.toArray(new EReference[persistentReferences.size()]);
+    allPersistentContainments = persistentContainments.toArray(new EStructuralFeature[persistentContainments.size()]);
 
     persistentFeatureIndices = new int[allFeatures.size()];
     Arrays.fill(persistentFeatureIndices, NO_SLOT);
@@ -260,6 +324,22 @@ public final class CDOClassInfoImpl extends AdapterImpl implements InternalCDOCl
     }
   }
 
+  private boolean isContainment(EStructuralFeature[] containments, EStructuralFeature feature)
+  {
+    if (containments != null)
+    {
+      for (EStructuralFeature containment : containments)
+      {
+        if (containment == feature)
+        {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
   @Deprecated
   public int getFeatureIndex(EStructuralFeature feature)
   {
@@ -275,6 +355,6 @@ public final class CDOClassInfoImpl extends AdapterImpl implements InternalCDOCl
   @Override
   public String toString()
   {
-    return getEClass().toString();
+    return eClass.toString();
   }
 }

@@ -41,7 +41,7 @@
 
 		<!-- PLATFORM -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/eclipse/updates/{0}">
+			<rm:uri format="https://hudson.eclipse.org/hudson/job/emf-core-head/384/artifact/EMF.p2.repository">
 				<bc:propertyRef key="platform.version"/>
 			</rm:uri>
 		</rm:provider>

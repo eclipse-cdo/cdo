@@ -318,7 +318,6 @@ public abstract class MinimalEStoreEObjectImpl extends MinimalEObjectImpl
     throw new UnsupportedOperationException();
   }
 
-  @Override
   protected  void eBasicSetAdapterListeners(EObservableAdapterList.Listener[] eAdapterListeners)
   {
     throw new UnsupportedOperationException();

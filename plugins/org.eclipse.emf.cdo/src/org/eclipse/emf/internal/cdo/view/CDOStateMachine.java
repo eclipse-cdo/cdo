@@ -298,7 +298,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
         content.cdoInternalSetView(null);
         content.cdoInternalSetID(null);
-        content.cdoInternalSetRevision(null);
       }
     }
   }
@@ -526,7 +525,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       savepoint = savepoint.getNextSavepoint();
     }
 
-    object.cdoInternalSetID(id);
     object.cdoInternalSetView(transaction);
 
     // Construct a new revision
@@ -616,7 +614,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       {
         // Prepare object
         CDOID id = transaction.createIDForNewObject(object.cdoInternalInstance());
-        object.cdoInternalSetID(id);
         object.cdoInternalSetView(transaction);
         changeState(object, CDOState.PREPARED);
 

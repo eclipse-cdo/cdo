@@ -11,11 +11,16 @@
  */
 package org.eclipse.emf.cdo.internal.common.model;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.StubCDORevision;
+
+import org.eclipse.net4j.util.ImplementationError;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -39,6 +44,8 @@ import java.util.List;
 public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Internal
 {
   private static final PersistenceFilter[] NO_FILTERS = {};
+
+  private final InternalCDORevision revisionWithoutID = new RevisionWithoutID(this);
 
   private EClass eClass;
 
@@ -72,6 +79,16 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
 
   public CDOClassInfoImpl()
   {
+  }
+
+  public InternalCDORevision getRevisionForID(CDOID id)
+  {
+    if (id == null)
+    {
+      return revisionWithoutID;
+    }
+
+    return new RevisionWithID(this, id);
   }
 
   public boolean isAdapterForType(Object type)
@@ -356,5 +373,81 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
   public String toString()
   {
     return eClass.toString();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class RevisionWithoutID extends StubCDORevision
+  {
+    public RevisionWithoutID(InternalCDOClassInfo classInfo)
+    {
+      super(classInfo);
+    }
+
+    @Override
+    public CDOID getID()
+    {
+      return null;
+    }
+
+    @Override
+    public InternalCDORevision getRevisionForID(CDOID id)
+    {
+      if (id == null)
+      {
+        return this;
+      }
+
+      return new RevisionWithID(getClassInfo(), id);
+    }
+
+    @Override
+    public InternalCDORevision getProperRevision()
+    {
+      return null;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class RevisionWithID extends StubCDORevision
+  {
+    private final CDOID id;
+
+    public RevisionWithID(InternalCDOClassInfo classInfo, CDOID id)
+    {
+      super(classInfo);
+      this.id = id;
+    }
+
+    @Override
+    public CDOID getID()
+    {
+      return id;
+    }
+
+    @Override
+    public InternalCDORevision getRevisionForID(CDOID id)
+    {
+      if (id == null)
+      {
+        return getClassInfo().getRevisionForID(null);
+      }
+
+      if (id.equals(this.id))
+      {
+        throw new ImplementationError(); // XXX Remove me
+      }
+
+      return new RevisionWithID(getClassInfo(), id);
+    }
+
+    @Override
+    public InternalCDORevision getProperRevision()
+    {
+      return null;
+    }
   }
 }

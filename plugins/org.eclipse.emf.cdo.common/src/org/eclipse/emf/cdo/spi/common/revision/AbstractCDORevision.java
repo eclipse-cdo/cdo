@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.spi.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
@@ -22,6 +23,7 @@ import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 
+import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.ecore.EClass;
@@ -58,6 +60,14 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   /**
    * @since 4.2
    */
+  protected AbstractCDORevision(InternalCDOClassInfo classInfo)
+  {
+    this.classInfo = classInfo;
+  }
+
+  /**
+   * @since 4.2
+   */
   public final InternalCDOClassInfo getClassInfo()
   {
     return classInfo;
@@ -71,6 +81,27 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     }
 
     return null;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public InternalCDORevision getRevisionForID(CDOID id)
+  {
+    if (id != null && id.equals(getID()))
+    {
+      throw new ImplementationError(); // XXX Remove me!
+    }
+
+    return classInfo.getRevisionForID(id);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public InternalCDORevision getProperRevision()
+  {
+    return this;
   }
 
   public boolean isResourceNode()

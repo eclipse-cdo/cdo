@@ -1095,7 +1095,6 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   {
     object.cdoInternalSetView(this);
     object.cdoInternalSetRevision(revision);
-    object.cdoInternalSetID(revision.getID());
     object.cdoInternalSetState(CDOState.CLEAN);
     object.cdoInternalPostLoad();
   }

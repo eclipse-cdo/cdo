@@ -588,7 +588,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         InternalCDOObject object = newInstance(revision.getEClass());
         object.cdoInternalSetView(this);
         object.cdoInternalSetRevision(revision);
-        object.cdoInternalSetID(id);
         object.cdoInternalSetState(CDOState.NEW);
         object.cdoInternalPostLoad();
 
@@ -1239,9 +1238,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       });
     }
 
-    internal.cdoInternalSetID(null);
-    internal.cdoInternalSetRevision(null);
     internal.cdoInternalSetView(null);
+    internal.cdoInternalSetID(null);
   }
 
   private Set<CDOID> rollbackCompletely(CDOUserSavepoint savepoint)
@@ -1385,7 +1383,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         object.cdoInternalSetRevision(revision.copy());
         object.cdoInternalSetView(this);
-        object.cdoInternalSetID(revision.getID());
         object.cdoInternalSetState(CDOState.NEW);
 
         // Load the object from revision to EObject
@@ -2142,7 +2139,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private InternalCDOObject newInstance(InternalCDORevision revision)
   {
     InternalCDOObject object = newInstance(revision.getEClass());
-    object.cdoInternalSetID(revision.getID());
     object.cdoInternalSetRevision(revision);
     object.cdoInternalSetState(CDOState.NEW);
     object.cdoInternalSetView(this);

@@ -42,6 +42,16 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
    */
   public InternalCDOClassInfo getClassInfo();
 
+  /**
+   * @since 4.2
+   */
+  public InternalCDORevision getRevisionForID(CDOID id);
+
+  /**
+   * @since 4.2
+   */
+  public InternalCDORevision getProperRevision();
+
   public void setID(CDOID id);
 
   public void setVersion(int version);

@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo.PersistenceFilter;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -41,6 +40,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EObservableAdapterList.Listener;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
@@ -84,16 +84,18 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   {
     public void added(Notifier notifier, Adapter adapter)
     {
-      ((CDOObjectImpl)notifier).adapterAdded(adapter);
+      CDOObjectImpl object = (CDOObjectImpl)notifier;
+      object.eAdapterAdded(adapter);
     }
 
     public void removed(Notifier notifier, Adapter adapter)
     {
-      ((CDOObjectImpl)notifier).adapterRemoved(adapter);
+      CDOObjectImpl object = (CDOObjectImpl)notifier;
+      object.eAdapterRemoved(adapter);
     }
   };
 
-  private InternalCDOClassInfo classInfo;
+  private static final EObservableAdapterList.Listener[] ADAPTERS_LISTENERS = { ADAPTERS_LISTENER };
 
   /**
    * Optimized storage of {@link CDOObject#cdoView()} and {@link CDOObject#cdoState()}.
@@ -105,8 +107,9 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * Optimized storage of {@link CDOObject#cdoID()} and {@link CDOObject#cdoRevision()}.
    * The idea is that, if a revision is set, the object's ID is equal to the {@link CDORevision revision's} ID.
+   * The same is true for the classInfo field.
    */
-  private Object idOrRevision;
+  private InternalCDORevision revision;
 
   /**
    * Don't use the optional slot in MinimalEObject because a CDOObject always needs eSettings to store:
@@ -126,9 +129,9 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * @since 4.2
    */
-  public InternalCDOClassInfo cdoClassInfo()
+  public final InternalCDOClassInfo cdoClassInfo()
   {
-    return classInfo;
+    return revision.getClassInfo();
   }
 
   public final CDOState cdoState()
@@ -146,17 +149,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
 
   public final CDOID cdoID()
   {
-    if (idOrRevision == null)
-    {
-      return null;
-    }
-
-    if (idOrRevision instanceof CDOID)
-    {
-      return (CDOID)idOrRevision;
-    }
-
-    return ((InternalCDORevision)idOrRevision).getID();
+    return revision.getID();
   }
 
   /**
@@ -164,20 +157,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    */
   public final InternalCDORevision cdoRevision()
   {
-    if (idOrRevision instanceof InternalCDORevision)
-    {
-      return (InternalCDORevision)idOrRevision;
-    }
-
-    return null;
+    return revision.getProperRevision();
   }
 
-  public CDOResourceImpl cdoResource()
+  public final CDOResource cdoResource()
   {
     Resource resource = eResource();
-    if (resource instanceof CDOResourceImpl)
+    if (resource instanceof CDOResource)
     {
-      return (CDOResourceImpl)resource;
+      return (CDOResource)resource;
     }
 
     return null;
@@ -186,12 +174,12 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * @since 2.0
    */
-  public CDOResourceImpl cdoDirectResource()
+  public final CDOResource cdoDirectResource()
   {
     Resource.Internal resource = eDirectResource();
-    if (resource instanceof CDOResourceImpl)
+    if (resource instanceof CDOResource)
     {
-      return (CDOResourceImpl)resource;
+      return (CDOResource)resource;
     }
 
     return null;
@@ -200,13 +188,13 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * @since 3.0
    */
-  public void cdoPrefetch(int depth)
+  public final void cdoPrefetch(int depth)
   {
     CDOID id = cdoID();
     viewAndState.view.prefetchRevisions(id, depth);
   }
 
-  public void cdoReload()
+  public final void cdoReload()
   {
     CDOStateMachine.INSTANCE.reload(this);
   }
@@ -214,7 +202,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * @since 4.2
    */
-  public CDOObjectHistory cdoHistory()
+  public final CDOObjectHistory cdoHistory()
   {
     return viewAndState.view.getHistory(this);
   }
@@ -222,7 +210,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * @since 2.0
    */
-  public boolean cdoConflict()
+  public final boolean cdoConflict()
   {
     return FSMUtil.isConflict(this);
   }
@@ -230,7 +218,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * @since 2.0
    */
-  public boolean cdoInvalid()
+  public final boolean cdoInvalid()
   {
     return FSMUtil.isInvalid(this);
   }
@@ -238,7 +226,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * @since 2.0
    */
-  public CDOLock cdoReadLock()
+  public final CDOLock cdoReadLock()
   {
     return createLock(this, LockType.READ);
   }
@@ -246,7 +234,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * @since 2.0
    */
-  public CDOLock cdoWriteLock()
+  public final CDOLock cdoWriteLock()
   {
     return createLock(this, LockType.WRITE);
   }
@@ -254,7 +242,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * @since 4.1
    */
-  public CDOLock cdoWriteOption()
+  public final CDOLock cdoWriteOption()
   {
     return createLock(this, LockType.OPTION);
   }
@@ -262,12 +250,12 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * @since 4.1
    */
-  public CDOLockState cdoLockState()
+  public final CDOLockState cdoLockState()
   {
     return getLockState(this);
   }
 
-  public CDOState cdoInternalSetState(CDOState state)
+  public final CDOState cdoInternalSetState(CDOState state)
   {
     CDOState oldState = viewAndState.state;
     if (oldState != state)
@@ -292,7 +280,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * @since 2.0
    */
-  public void cdoInternalSetView(CDOView view)
+  public final void cdoInternalSetView(CDOView view)
   {
     InternalCDOView newView = (InternalCDOView)view;
     if (newView != null)
@@ -305,23 +293,27 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     }
   }
 
-  public void cdoInternalSetID(CDOID id)
+  public final void cdoInternalSetID(CDOID id)
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Setting ID: {0}", id); //$NON-NLS-1$
     }
 
-    if (idOrRevision == null || id == null)
+    if (id == null)
     {
-      idOrRevision = id;
+      revision = cdoClassInfo().getRevisionForID(null);
+    }
+    else
+    {
+      revision = revision.getRevisionForID(id);
     }
   }
 
   /**
    * @since 2.0
    */
-  public void cdoInternalSetRevision(CDORevision revision)
+  public final void cdoInternalSetRevision(CDORevision revision)
   {
     if (TRACER.isEnabled())
     {
@@ -330,15 +322,17 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
 
     if (revision == null)
     {
-      idOrRevision = cdoID();
+      InternalCDOClassInfo classInfo = cdoClassInfo();
+      CDOID id = this.revision.getID();
+      this.revision = classInfo.getRevisionForID(id);
     }
     else
     {
-      idOrRevision = revision;
+      this.revision = (InternalCDORevision)revision;
     }
   }
 
-  public void cdoInternalSetResource(CDOResource resource)
+  public final void cdoInternalSetResource(CDOResource resource)
   {
     // Unsets direct resource and/or eContainer.
     // Only intended to be called by CDOTransactionImpl.removeObject(CDOID, CDOObject).
@@ -363,15 +357,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     // Do nothing
   }
 
-  public void cdoInternalPostLoad()
+  public final void cdoInternalPostLoad()
   {
     // Reset EMAP objects
     Object[] eSettings = eBasicSettings();
     if (eSettings != null)
     {
       // Make sure transient features are kept but persisted values are not cached.
-      EClass eClass = eClass();
-      int featureCount = eClass.getFeatureCount();
+      InternalCDOClassInfo classInfo = cdoClassInfo();
+      int featureCount = classInfo.getEClass().getFeatureCount();
       for (int i = 0; i < featureCount; i++)
       {
         // We need to keep the existing list if possible.
@@ -391,12 +385,12 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * @since 2.0
    */
-  public void cdoInternalPostInvalidate()
+  public final void cdoInternalPostInvalidate()
   {
     // Do nothing
   }
 
-  public void cdoInternalPostAttach()
+  public final void cdoInternalPostAttach()
   {
     if (TRACER.isEnabled())
     {
@@ -419,6 +413,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
 
     if (eSettings != null)
     {
+      InternalCDOClassInfo classInfo = cdoClassInfo();
       EStructuralFeature[] allPersistentFeatures = classInfo.getAllPersistentFeatures();
       int length = allPersistentFeatures.length;
       for (int i = 0; i < length; i++)
@@ -461,6 +456,8 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       TRACER.format("Depopulating revision for {0}", this); //$NON-NLS-1$
     }
 
+    InternalCDOClassInfo classInfo = cdoClassInfo();
+
     CDOStore store = cdoStore();
     super.eSetDirectResource((Resource.Internal)store.getResource(this));
     eBasicSetContainer(store.getContainer(this));
@@ -488,23 +485,23 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * @since 3.0
    */
-  public void cdoInternalPostRollback()
+  public final void cdoInternalPostRollback()
   {
     // Do nothing
   }
 
-  public void cdoInternalPreCommit()
+  public final void cdoInternalPreCommit()
   {
     // Do nothing
   }
 
-  public InternalEObject cdoInternalInstance()
+  public final InternalEObject cdoInternalInstance()
   {
     return this;
   }
 
   @Deprecated
-  public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
+  public final EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
   {
     throw new UnsupportedOperationException();
   }
@@ -518,7 +515,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    * @since 2.0
    */
   @Override
-  public EStore eStore()
+  public final EStore eStore()
   {
     if (FSMUtil.isTransient(this))
     {
@@ -543,7 +540,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public final EClass eClass()
   {
-    return classInfo.getEClass();
+    return revision.getEClass();
   }
 
   @Override
@@ -567,7 +564,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   @Override
-  public Resource.Internal eInternalResource()
+  public final Resource.Internal eInternalResource()
   {
     if (FSMUtil.isInvalid(this))
     {
@@ -578,8 +575,9 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   @Override
-  public Object dynamicGet(int dynamicFeatureID)
+  public final Object dynamicGet(int dynamicFeatureID)
   {
+    InternalCDOClassInfo classInfo = cdoClassInfo();
     int index = classInfo.getSettingsFeatureIndex(dynamicFeatureID);
     if (index == InternalCDOClassInfo.NO_SLOT)
     {
@@ -613,8 +611,9 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   @Override
-  public void dynamicSet(int dynamicFeatureID, Object value)
+  public final void dynamicSet(int dynamicFeatureID, Object value)
   {
+    InternalCDOClassInfo classInfo = cdoClassInfo();
     int index = classInfo.getSettingsFeatureIndex(dynamicFeatureID);
     if (index == InternalCDOClassInfo.NO_SLOT)
     {
@@ -632,8 +631,9 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   @Override
-  public void dynamicUnset(int dynamicFeatureID)
+  public final void dynamicUnset(int dynamicFeatureID)
   {
+    InternalCDOClassInfo classInfo = cdoClassInfo();
     int index = classInfo.getSettingsFeatureIndex(dynamicFeatureID);
     if (index == InternalCDOClassInfo.NO_SLOT)
     {
@@ -669,8 +669,28 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     }
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
-  public InternalEObject eInternalContainer()
+  protected final boolean eDynamicIsSet(int dynamicFeatureID, EStructuralFeature eFeature)
+  {
+    if (dynamicFeatureID < 0)
+    {
+      return eOpenIsSet(eFeature);
+    }
+
+    InternalCDOClassInfo classInfo = cdoClassInfo();
+    if (classInfo.isPersistent(dynamicFeatureID))
+    {
+      return eStore().isSet(this, eFeature);
+    }
+
+    return eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(), dynamicFeatureID);
+  }
+
+  @Override
+  public final InternalEObject eInternalContainer()
   {
     if (FSMUtil.isTransient(this))
     {
@@ -681,7 +701,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   @Override
-  public int eContainerFeatureID()
+  public final int eContainerFeatureID()
   {
     if (FSMUtil.isTransient(this))
     {
@@ -699,7 +719,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    * @since 2.0
    */
   @Override
-  public NotificationChain eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID,
+  public final NotificationChain eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID,
       NotificationChain msgs)
   {
     boolean isResourceRoot = this instanceof CDOResource && ((CDOResource)this).isRoot();
@@ -792,7 +812,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    * @since 2.0
    */
   @Override
-  public NotificationChain eSetResource(Resource.Internal resource, NotificationChain notifications)
+  public final NotificationChain eSetResource(Resource.Internal resource, NotificationChain notifications)
   {
     Resource.Internal oldResource = eDirectResource();
 
@@ -855,15 +875,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   @Override
-  protected void eSetDirectResource(Internal resource)
+  protected final void eSetDirectResource(Internal resource)
   {
     if (FSMUtil.isTransient(this))
     {
       super.eSetDirectResource(resource);
     }
-    else if (resource instanceof CDOResourceImpl || resource == null)
+    else if (resource == null || resource instanceof CDOResource)
     {
-      cdoStore().setContainer(this, (CDOResourceImpl)resource, eInternalContainer(), eContainerFeatureID());
+      cdoStore().setContainer(this, (CDOResource)resource, eInternalContainer(), eContainerFeatureID());
     }
     else
     {
@@ -871,27 +891,8 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     }
   }
 
-  /**
-   * @since 2.0
-   */
   @Override
-  protected boolean eDynamicIsSet(int dynamicFeatureID, EStructuralFeature eFeature)
-  {
-    if (dynamicFeatureID < 0)
-    {
-      return eOpenIsSet(eFeature);
-    }
-
-    if (classInfo.isPersistent(dynamicFeatureID))
-    {
-      return eStore().isSet(this, eFeature);
-    }
-
-    return eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(), dynamicFeatureID);
-  }
-
-  @Override
-  protected void eBasicSetContainer(InternalEObject newEContainer, int newContainerFeatureID)
+  protected final void eBasicSetContainer(InternalEObject newEContainer, int newContainerFeatureID)
   {
     if (TRACER.isEnabled())
     {
@@ -910,7 +911,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   @Override
-  protected int eDynamicFeatureID(EStructuralFeature eStructuralFeature)
+  protected final int eDynamicFeatureID(EStructuralFeature eStructuralFeature)
   {
     // CDOObjectImpl has no static features, so don't subract their count here:
     EClass eClass = eClass();
@@ -918,7 +919,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   @Override
-  protected EStructuralFeature eDynamicFeature(int dynamicFeatureID)
+  protected final EStructuralFeature eDynamicFeature(int dynamicFeatureID)
   {
     // CDOObjectImpl has no static features, so don't add their count here:
     EClass eClass = eClass();
@@ -926,10 +927,11 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   @Override
-  protected DynamicValueHolder eSettings()
+  protected final DynamicValueHolder eSettings()
   {
     if (!eHasSettings())
     {
+      InternalCDOClassInfo classInfo = cdoClassInfo();
       int size = classInfo.getSettingsFeatureCount();
       if (FSMUtil.isTransient(this))
       {
@@ -972,42 +974,70 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     return false;
   }
 
+  /**
+   * This method is not called by the MinimalEStoreEObjectImpl in CDO's ecore.minimal (retrofitting) fragment
+   * but it is called by the normal MinimalEObjectImpl as of EMF 2.9.
+   *
+   * @since 4.2
+   */
   @Override
-  protected void eBasicSetAdapterArray(Adapter[] adapters)
+  protected final Listener[] eBasicAdapterListeners()
   {
-    Adapter[] oldAdapters = eBasicAdapterArray();
-    if (ObjectUtil.isEmpty(adapters))
+    Listener[] listeners = super.eBasicAdapterListeners();
+    if (listeners == null)
     {
-      adapters = null;// Optimize possibly empty array
-      if (oldAdapters != null) // Can't be empty array because of the optimization above
-      {
-        ((EObservableAdapterList)eAdapters()).removeListener(ADAPTERS_LISTENER);
-      }
-    }
-    else
-    {
-      if (oldAdapters == null) // Can't be empty array because of the optimization above
-      {
-        ((EObservableAdapterList)eAdapters()).addListener(ADAPTERS_LISTENER);
-      }
+      return ADAPTERS_LISTENERS;
     }
 
-    super.eBasicSetAdapterArray(adapters);
+    return listeners;
   }
 
-  private void adapterAdded(Adapter newAdapter)
+  /**
+   * This method is not called by the MinimalEStoreEObjectImpl in CDO's ecore.minimal (retrofitting) fragment
+   * but it is called by the normal MinimalEObjectImpl as of EMF 2.9.
+   *
+   * @since 4.2
+   */
+  @Override
+  protected final void eBasicSetAdapterListeners(Listener[] eAdapterListeners)
   {
-    if (!FSMUtil.isTransient(CDOObjectImpl.this))
+    if (eAdapterListeners != null)
     {
-      viewAndState.view.handleAddAdapter(CDOObjectImpl.this, newAdapter);
+      if (eAdapterListeners.length == 1)
+      {
+        // Because noone else can remove ADAPTERS_LISTENER this must be it
+        eAdapterListeners = null;
+      }
+    }
+
+    super.eBasicSetAdapterListeners(eAdapterListeners);
+  }
+
+  /**
+   * This method must not be private because the MinimalEStoreEObjectImpl in CDO's ecore.minimal (retrofitting) fragment
+   * introduces it as a protected method and calls it.
+   *
+   * @since 4.2
+   */
+  protected final void eAdapterAdded(Adapter adapter)
+  {
+    if (!FSMUtil.isTransient(this))
+    {
+      viewAndState.view.handleAddAdapter(this, adapter);
     }
   }
 
-  private void adapterRemoved(Adapter oldAdapter)
+  /**
+   * This method must not be private because the MinimalEStoreEObjectImpl in CDO's ecore.minimal (retrofitting) fragment
+   * introduces it as a protected method and calls it.
+   *
+   * @since 4.2
+   */
+  protected final void eAdapterRemoved(Adapter adapter)
   {
-    if (!FSMUtil.isTransient(CDOObjectImpl.this))
+    if (!FSMUtil.isTransient(this))
     {
-      viewAndState.view.handleRemoveAdapter(CDOObjectImpl.this, oldAdapter);
+      viewAndState.view.handleRemoveAdapter(this, adapter);
     }
   }
 
@@ -1045,7 +1075,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   @Override
-  protected FeatureMap createFeatureMap(EStructuralFeature eStructuralFeature)
+  protected final FeatureMap createFeatureMap(EStructuralFeature eStructuralFeature)
   {
     return new CDOStoreFeatureMap(eStructuralFeature);
   }
@@ -1053,7 +1083,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * @since 4.1
    */
-  protected CDOStoreEcoreEMap createMap(EStructuralFeature eStructuralFeature)
+  protected final CDOStoreEcoreEMap createMap(EStructuralFeature eStructuralFeature)
   {
     return new CDOStoreEcoreEMap(eStructuralFeature);
   }
@@ -1061,7 +1091,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * @since 4.1
    */
-  protected CDOStoreUnorderedEList<Object> createUnorderedList(EStructuralFeature eStructuralFeature)
+  protected final CDOStoreUnorderedEList<Object> createUnorderedList(EStructuralFeature eStructuralFeature)
   {
     return new CDOStoreUnorderedEList<Object>(eStructuralFeature);
   }
@@ -1091,7 +1121,8 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
 
   private void initClassInfo(EClass eClass)
   {
-    classInfo = (InternalCDOClassInfo)CDOModelUtil.getClassInfo(eClass);
+    InternalCDOClassInfo classInfo = (InternalCDOClassInfo)CDOModelUtil.getClassInfo(eClass);
+    revision = classInfo.getRevisionForID(null);
   }
 
   /**
@@ -1272,7 +1303,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    * @author Simon McDuff
    * @since 2.0
    */
-  private static class TransientStore implements InternalEObject.EStore
+  private static final class TransientStore implements InternalEObject.EStore
   {
     public static TransientStore INSTANCE = new TransientStore();
 
@@ -1319,7 +1350,8 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     private int getTransientFeatureIndex(InternalEObject eObject, EStructuralFeature feature)
     {
       CDOObjectImpl object = (CDOObjectImpl)eObject;
-      return object.classInfo.getTransientFeatureIndex(feature);
+      InternalCDOClassInfo classInfo = object.cdoClassInfo();
+      return classInfo.getTransientFeatureIndex(feature);
     }
 
     public Object get(InternalEObject eObject, EStructuralFeature feature, int index)

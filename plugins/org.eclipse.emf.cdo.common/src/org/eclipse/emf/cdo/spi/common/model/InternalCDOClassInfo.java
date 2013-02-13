@@ -10,9 +10,11 @@
  */
 package org.eclipse.emf.cdo.spi.common.model;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -25,6 +27,8 @@ import org.eclipse.emf.ecore.InternalEObject.EStore;
 public interface InternalCDOClassInfo extends CDOClassInfo
 {
   public static final int NO_SLOT = EStore.NO_INDEX;
+
+  public InternalCDORevision getRevisionForID(CDOID id);
 
   /**
    * Returns the index of the specified {@link EStructuralFeature feature} in the {@link CDORevisionImpl#values} array, never {@link #NO_SLOT}.

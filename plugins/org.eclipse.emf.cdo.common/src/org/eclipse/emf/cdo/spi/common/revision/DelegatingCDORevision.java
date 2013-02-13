@@ -44,6 +44,22 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   public abstract InternalCDORevision getDelegate();
 
   /**
+   * @since 4.2
+   */
+  public InternalCDORevision getRevisionForID(CDOID id)
+  {
+    return getDelegate().getRevisionForID(id);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public InternalCDORevision getProperRevision()
+  {
+    return getDelegate().getProperRevision();
+  }
+
+  /**
    * @since 4.0
    */
   public boolean adjustReferences(CDOReferenceAdjuster referenceAdjuster)

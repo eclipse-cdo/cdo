@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -37,6 +38,14 @@ public class StubCDORevision extends AbstractCDORevision
   public StubCDORevision(EClass eClass)
   {
     super(eClass);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected StubCDORevision(InternalCDOClassInfo classInfo)
+  {
+    super(classInfo);
   }
 
   public int compareTo(CDOBranchPoint o)

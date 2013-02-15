@@ -974,6 +974,53 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     return false;
   }
 
+  @Override
+  protected final Adapter[] eContainerAdapterArray()
+  {
+    if (FSMUtil.isTransient(this))
+    {
+      return super.eContainerAdapterArray();
+    }
+
+    InternalCDOView view = cdoView();
+    if (view.isClosed())
+    {
+      return null;
+    }
+
+    CDOObject container;
+
+    InternalCDORevision revision = cdoRevision();
+    if (revision != null)
+    {
+      Object containerID = revision.getContainerID();
+
+      if (containerID instanceof CDOID)
+      {
+        container = view.getObject((CDOID)containerID, false);
+      }
+      else
+      {
+        container = (CDOObject)containerID;
+      }
+
+      if (container != null)
+      {
+        if (container instanceof CDOObjectImpl)
+        {
+          return ((CDOObjectImpl)container).eBasicAdapterArray();
+        }
+
+        if (container instanceof BasicEObjectImpl)
+        {
+          return super.eContainerAdapterArray();
+        }
+      }
+    }
+
+    return null;
+  }
+
   /**
    * This method is not called by the MinimalEStoreEObjectImpl in CDO's ecore.minimal (retrofitting) fragment
    * but it is called by the normal MinimalEObjectImpl as of EMF 2.9.

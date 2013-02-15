@@ -27,13 +27,6 @@ public class DynamicCDOObjectImpl extends CDOObjectImpl
     eSetClass(eClass);
   }
 
-  @Override
-  protected EClass eDynamicClass()
-  {
-    // Bypass the eStaticClass() check in super.eDynamicClass()
-    return eClass();
-  }
-
   /**
    * @author Martin Fluegge
    * @since 3.0

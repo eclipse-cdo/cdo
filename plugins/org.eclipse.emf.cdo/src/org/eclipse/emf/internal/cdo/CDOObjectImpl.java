@@ -526,7 +526,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   @Override
-  protected EClass eDynamicClass()
+  protected final EClass eDynamicClass()
   {
     EClass eClass = eClass();
     if (eClass == eStaticClass())

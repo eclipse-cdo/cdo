@@ -35,6 +35,34 @@ public class Interner<E>
   {
   }
 
+  public Interner(int minimumCapacity)
+  {
+    grow(minimumCapacity);
+  }
+
+  /**
+   * Ensures that the set has at least the specifies capacity.
+   * Higher capacity ensures fewer collisions hence faster lookup.
+   * Does nothing if the specified capacity is smaller than the current capacity.
+   */
+  public void grow(int minimumCapacity)
+  {
+    int currentCapacity = PRIME_CAPACITIES[capacityIndex];
+    if (currentCapacity < minimumCapacity)
+    {
+      for (int i = 0, length = PRIME_CAPACITIES.length; i < length; ++i)
+      {
+        int capacity = PRIME_CAPACITIES[i];
+        if (capacity > minimumCapacity)
+        {
+          capacityIndex = i;
+          rehash(newEntries(capacity));
+          break;
+        }
+      }
+    }
+  }
+
   public E intern(E object)
   {
     cleanup();

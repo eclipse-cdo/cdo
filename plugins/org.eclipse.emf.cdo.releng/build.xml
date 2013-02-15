@@ -54,7 +54,6 @@
 		<sequential>
 			<eclipse.launch app="buckminster">
 				<properties>
-					<sysproperty key="bugfix.288796" value="true" />
 					<sysproperties />
 				</properties>
 				<args>

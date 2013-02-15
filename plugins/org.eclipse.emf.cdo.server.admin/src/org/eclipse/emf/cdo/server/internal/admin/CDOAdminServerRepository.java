@@ -14,12 +14,12 @@ import org.eclipse.emf.cdo.common.admin.CDOAdmin;
 import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositorySynchronizer;
 import org.eclipse.emf.cdo.server.ISynchronizableRepository;
+import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -220,7 +220,7 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     }
 
     out.writeLong(getCreationTime());
-    CDOIDUtil.write(out, getRootResourceID());
+    new CDODataOutputImpl(out).writeCDOID(getRootResourceID());
     out.writeBoolean(isSupportingAudits());
     out.writeBoolean(isSupportingBranches());
     out.writeBoolean(isSupportingEcore());

@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.internal.lissome.LissomeStore;
-import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDByteArray;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
@@ -126,7 +125,7 @@ public class Index extends DBSchema implements IDBConnectionProvider
   {
     if (getIDGenerationLocation() == IDGenerationLocation.CLIENT)
     {
-      byte[] value = ((AbstractCDOIDByteArray)id).getByteArrayValue();
+      byte[] value = CDOIDUtil.getByteArray(id);
       statement.setBytes(column, value);
     }
     else

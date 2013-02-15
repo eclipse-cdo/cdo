@@ -77,7 +77,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 4.2
  */
-public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements CDODataOutput
+public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements CDODataOutput
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CDODataOutputImpl.class);
 

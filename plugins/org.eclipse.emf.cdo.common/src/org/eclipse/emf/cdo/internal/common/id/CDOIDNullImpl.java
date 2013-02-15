@@ -15,24 +15,44 @@ package org.eclipse.emf.cdo.internal.common.id;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
-
 import java.io.IOException;
+import java.io.ObjectStreamException;
 
 /**
  * @author Eike Stepper
  */
 public final class CDOIDNullImpl extends AbstractCDOID implements CDOIDTemp, CDOIDObject
 {
-  public static final CDOIDNullImpl INSTANCE = new CDOIDNullImpl();
-
   private static final long serialVersionUID = 1L;
+
+  public static final CDOIDNullImpl INSTANCE = new CDOIDNullImpl();
 
   private CDOIDNullImpl()
   {
+  }
+
+  public int getIntValue()
+  {
+    return 0;
+  }
+
+  public long getLongValue()
+  {
+    return 0L;
+  }
+
+  @Override
+  public void write(CDODataOutput out) throws IOException
+  {
+    // Do nothing
+  }
+
+  public String toURIFragment()
+  {
+    return "NULL"; //$NON-NLS-1$
   }
 
   public Type getType()
@@ -40,16 +60,12 @@ public final class CDOIDNullImpl extends AbstractCDOID implements CDOIDTemp, CDO
     return Type.NULL;
   }
 
-  public boolean isDangling()
-  {
-    return false;
-  }
-
   public boolean isExternal()
   {
     return false;
   }
 
+  @Override
   public boolean isNull()
   {
     return true;
@@ -63,45 +79,6 @@ public final class CDOIDNullImpl extends AbstractCDOID implements CDOIDTemp, CDO
   public boolean isTemporary()
   {
     return false;
-  }
-
-  public int getIntValue()
-  {
-    return 0;
-  }
-
-  public long getLongValue()
-  {
-    return 0L;
-  }
-
-  public String toURIFragment()
-  {
-    return "NULL"; //$NON-NLS-1$
-  }
-
-  @Override
-  public void read(String fragmentPart)
-  {
-    // Do nothing
-  }
-
-  @Override
-  public void read(ExtendedDataInput in) throws IOException
-  {
-    // Do nothing
-  }
-
-  @Override
-  public void write(ExtendedDataOutput out) throws IOException
-  {
-    // Do nothing
-  }
-
-  @Override
-  public boolean equals(Object obj)
-  {
-    return obj == INSTANCE;
   }
 
   @Override
@@ -119,7 +96,11 @@ public final class CDOIDNullImpl extends AbstractCDOID implements CDOIDTemp, CDO
   @Override
   protected int doCompareTo(CDOID o) throws ClassCastException
   {
-    ((CDOIDNullImpl)o).getIntValue(); // Possibly throw ClassCastException
     return 0; // NULL == NULL
+  }
+
+  private Object readResolve() throws ObjectStreamException
+  {
+    return INSTANCE;
   }
 }

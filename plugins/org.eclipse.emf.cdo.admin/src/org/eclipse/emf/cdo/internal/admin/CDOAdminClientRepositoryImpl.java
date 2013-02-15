@@ -14,13 +14,13 @@ import org.eclipse.emf.cdo.admin.CDOAdminClient;
 import org.eclipse.emf.cdo.admin.CDOAdminClientRepository;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.event.Notifier;
@@ -87,7 +87,7 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
     }
 
     creationTime = in.readLong();
-    rootResourceID = CDOIDUtil.read(in);
+    rootResourceID = new CDODataInputImpl.Default(in).readCDOID();
     supportingAudits = in.readBoolean();
     supportingBranches = in.readBoolean();
     supportingEcore = in.readBoolean();

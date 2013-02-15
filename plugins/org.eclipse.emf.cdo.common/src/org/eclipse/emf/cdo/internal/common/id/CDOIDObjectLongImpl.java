@@ -11,24 +11,50 @@
 package org.eclipse.emf.cdo.internal.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 import org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject;
+
+import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.ref.Interner;
+
+import java.io.IOException;
+import java.io.ObjectStreamException;
 
 /**
  * @author Eike Stepper
  * @since 2.0
  */
-public class CDOIDObjectLongImpl extends AbstractCDOIDLong implements InternalCDOIDObject
+public final class CDOIDObjectLongImpl extends AbstractCDOID implements InternalCDOIDObject
 {
   private static final long serialVersionUID = 1L;
 
-  public CDOIDObjectLongImpl()
+  private static final LongInterner INTERNER = new LongInterner();
+
+  private final long value;
+
+  private CDOIDObjectLongImpl(long value)
   {
+    CheckUtil.checkArg(value != 0L, "Zero not allowed");
+    this.value = value;
   }
 
-  public CDOIDObjectLongImpl(long value)
+  public long getLongValue()
   {
-    super(value);
+    return value;
+  }
+
+  @Override
+  public void write(CDODataOutput out) throws IOException
+  {
+    out.writeLong(value);
+  }
+
+  public String toURIFragment()
+  {
+    return String.valueOf(value);
   }
 
   public Type getType()
@@ -36,17 +62,7 @@ public class CDOIDObjectLongImpl extends AbstractCDOIDLong implements InternalCD
     return Type.OBJECT;
   }
 
-  public boolean isDangling()
-  {
-    return false;
-  }
-
   public boolean isExternal()
-  {
-    return false;
-  }
-
-  public boolean isNull()
   {
     return false;
   }
@@ -70,14 +86,76 @@ public class CDOIDObjectLongImpl extends AbstractCDOIDLong implements InternalCD
   }
 
   @Override
+  public int hashCode()
+  {
+    return ObjectUtil.hashCode(value);
+  }
+
+  @Override
   public String toString()
   {
-    return "OID" + getLongValue(); //$NON-NLS-1$
+    return "OID" + value; //$NON-NLS-1$
   }
 
   @Override
   protected int doCompareTo(CDOID o) throws ClassCastException
   {
-    return new Long(getLongValue()).compareTo(((CDOIDObjectLongImpl)o).getLongValue());
+    return new Long(value).compareTo(((CDOIDObjectLongImpl)o).value);
+  }
+
+  private Object readResolve() throws ObjectStreamException
+  {
+    return create(value);
+  }
+
+  private static int getHashCode(long value)
+  {
+    return ObjectUtil.hashCode(value);
+  }
+
+  public static CDOIDObjectLongImpl create(long value)
+  {
+    return INTERNER.intern(value);
+  }
+
+  public static CDOIDObjectLongImpl create(CDODataInput in) throws IOException
+  {
+    long value = in.readLong();
+    return create(value);
+  }
+
+  public static CDOIDObjectLongImpl create(String fragmentPart)
+  {
+    long value = Long.parseLong(fragmentPart);
+    return create(value);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class LongInterner extends Interner<CDOIDObjectLongImpl>
+  {
+    public synchronized CDOIDObjectLongImpl intern(long value)
+    {
+      int hashCode = getHashCode(value);
+      for (Entry<CDOIDObjectLongImpl> entry = getEntry(hashCode); entry != null; entry = entry.getNextEntry())
+      {
+        CDOIDObjectLongImpl id = entry.get();
+        if (id != null && id.value == value)
+        {
+          return id;
+        }
+      }
+
+      CDOIDObjectLongImpl id = new CDOIDObjectLongImpl(value);
+      addEntry(createEntry(id, hashCode));
+      return id;
+    }
+
+    @Override
+    protected int hashCode(CDOIDObjectLongImpl id)
+    {
+      return getHashCode(id.value);
+    }
   }
 }

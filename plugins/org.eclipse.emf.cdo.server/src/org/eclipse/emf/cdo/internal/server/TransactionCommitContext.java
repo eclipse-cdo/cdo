@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -76,9 +77,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
-import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -1451,14 +1450,20 @@ public class TransactionCommitContext implements InternalCommitContext
 
     public abstract CDOID getID();
 
+    @Override
+    public void write(CDODataOutput out) throws IOException
+    {
+      ((AbstractCDOID)getID()).write(out);
+    }
+
+    public String toURIFragment()
+    {
+      return getID().toURIFragment();
+    }
+
     public Type getType()
     {
       return getID().getType();
-    }
-
-    public boolean isNull()
-    {
-      return getID().isNull();
     }
 
     public boolean isObject()
@@ -1471,45 +1476,15 @@ public class TransactionCommitContext implements InternalCommitContext
       return getID().isTemporary();
     }
 
-    public boolean isDangling()
-    {
-      return getID().isDangling();
-    }
-
     public boolean isExternal()
     {
       return getID().isExternal();
-    }
-
-    public String toURIFragment()
-    {
-      return getID().toURIFragment();
     }
 
     @Override
     protected int doCompareTo(CDOID o) throws ClassCastException
     {
       return getID().compareTo(o);
-    }
-
-    @Override
-    public void write(ExtendedDataOutput out) throws IOException
-    {
-      ((AbstractCDOID)getID()).write(out);
-    }
-
-    @Override
-    public void read(ExtendedDataInput in) throws IOException
-    {
-      // Not called on the server-side
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void read(String fragmentPart)
-    {
-      // Not called on the server-side
-      throw new UnsupportedOperationException();
     }
 
     @Override
@@ -1541,6 +1516,7 @@ public class TransactionCommitContext implements InternalCommitContext
      */
     private static final class ForID extends DeltaLockWrapper
     {
+
       private static final long serialVersionUID = 1L;
 
       public ForID(CDOID key, InternalCDORevisionDelta delta)

@@ -10,12 +10,9 @@
  */
 package org.eclipse.emf.cdo.examples.hibernate.client;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.examples.company.CompanyFactory;
 import org.eclipse.emf.cdo.examples.company.Customer;
@@ -25,19 +22,23 @@ import org.eclipse.emf.cdo.examples.company.Product;
 import org.eclipse.emf.cdo.examples.company.SalesOrder;
 import org.eclipse.emf.cdo.examples.company.VAT;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
-import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDString;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOQuery;
+
 import org.eclipse.net4j.util.collection.CloseableIterator;
+
 import org.junit.Before;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Test different aspects of HQL querying using the CDO query api.
  * <p/>
  * The queries are done on a test set which is created automatically. The size of the testdata is controlled by the
  * static final int's in the top of this class.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateQueryTest extends BaseTest
@@ -118,7 +119,7 @@ public class HibernateQueryTest extends BaseTest
 
     {
       CDOQuery cdoQuery = transaction.createQuery("hql", "from Product where vat=:vat"); //$NON-NLS-1$  //$NON-NLS-2$
-      cdoQuery.setParameter("vat", VAT.VAT15); //$NON-NLS-1$ 
+      cdoQuery.setParameter("vat", VAT.VAT15); //$NON-NLS-1$
       final List<Product> products = cdoQuery.getResult(Product.class);
       // MT: re-enable after https://bugs.eclipse.org/bugs/show_bug.cgi?id=309920
       // gets resolved
@@ -440,17 +441,6 @@ public class HibernateQueryTest extends BaseTest
 
   public Serializable getIdValue(CDOID id)
   {
-    if (id instanceof AbstractCDOIDString)
-    {
-      return ((AbstractCDOIDString)id).getStringValue();
-    }
-
-    if (id instanceof AbstractCDOIDLong)
-    {
-      return ((AbstractCDOIDLong)id).getLongValue();
-    }
-
-    throw new IllegalArgumentException("This CDOID type " + id + " is not supported by this store."); //$NON-NLS-1$//$NON-NLS-2$
+    return CDOIDUtil.getString(id);
   }
-
 }

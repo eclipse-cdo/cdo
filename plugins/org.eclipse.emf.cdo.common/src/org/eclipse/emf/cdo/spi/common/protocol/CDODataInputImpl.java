@@ -632,4 +632,51 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   protected abstract CDOListFactory getListFactory();
 
   protected abstract CDOLobStore getLobStore();
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class Default extends CDODataInputImpl
+  {
+    public Default(ExtendedDataInput delegate)
+    {
+      super(delegate);
+    }
+
+    @Override
+    protected CDORevisionFactory getRevisionFactory()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected CDOPackageRegistry getPackageRegistry()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected CDOLobStore getLobStore()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected CDOListFactory getListFactory()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected CDOCommitInfoManager getCommitInfoManager()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected CDOBranchManager getBranchManager()
+    {
+      throw new UnsupportedOperationException();
+    }
+  }
 }

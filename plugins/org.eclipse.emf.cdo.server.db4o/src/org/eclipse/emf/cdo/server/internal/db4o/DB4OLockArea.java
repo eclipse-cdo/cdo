@@ -74,7 +74,7 @@ public class DB4OLockArea
 
     // Reconstruct the lockMap
     //
-    Map<CDOID, LockGrade> lockMap = new HashMap<CDOID, LockGrade>();
+    Map<CDOID, LockGrade> lockMap = CDOIDUtil.createMap();
     for (DB4OLockEntry entry : primitive.getLockEntries())
     {
       CDOID cdoid = CDOIDUtil.createLong(entry.getCdoID());

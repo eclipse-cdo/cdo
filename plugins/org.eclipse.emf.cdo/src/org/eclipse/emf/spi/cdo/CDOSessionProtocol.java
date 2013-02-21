@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
@@ -685,7 +686,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private long previousTimeStamp;
 
-    private Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
+    private Map<CDOID, CDOID> idMappings = CDOIDUtil.createMap();
 
     private CDOReferenceAdjuster referenceAdjuster;
 

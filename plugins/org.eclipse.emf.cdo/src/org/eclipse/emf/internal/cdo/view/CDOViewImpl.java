@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
@@ -74,8 +75,10 @@ import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.OptionsEvent;
+import org.eclipse.net4j.util.ref.KeyedReference;
 import org.eclipse.net4j.util.ref.ReferenceType;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
+import org.eclipse.net4j.util.ref.ReferenceValueMap2;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -219,7 +222,7 @@ public class CDOViewImpl extends AbstractCDOView
       TRACER.format("Changing view target to {0}", branchPoint); //$NON-NLS-1$
     }
 
-    Map<CDOID, InternalCDORevision> oldRevisions = new HashMap<CDOID, InternalCDORevision>();
+    Map<CDOID, InternalCDORevision> oldRevisions = CDOIDUtil.createMap();
     List<CDORevisionKey> allChangedObjects = new ArrayList<CDORevisionKey>();
     List<CDOIDAndVersion> allDetachedObjects = new ArrayList<CDOIDAndVersion>();
 
@@ -433,7 +436,7 @@ public class CDOViewImpl extends AbstractCDOView
         }
 
         // If lockChangeInfo pertains to a different view, do nothing.
-        if (!lockChangeInfo.getBranch().equals(getBranch()))
+        if (lockChangeInfo.getBranch() != getBranch())
         {
           return;
         }
@@ -828,7 +831,7 @@ public class CDOViewImpl extends AbstractCDOView
   {
     try
     {
-      if (ObjectUtil.equals(branch, getBranch()))
+      if (branch == getBranch())
       {
         if (clearResourcePathCache)
         {
@@ -1323,7 +1326,7 @@ public class CDOViewImpl extends AbstractCDOView
    */
   protected final class ChangeSubscriptionManager
   {
-    private Map<CDOID, SubscribeEntry> subscriptions = new HashMap<CDOID, SubscribeEntry>();
+    private Map<CDOID, SubscribeEntry> subscriptions = CDOIDUtil.createMap();
 
     public ChangeSubscriptionManager()
     {
@@ -2037,36 +2040,45 @@ public class CDOViewImpl extends AbstractCDOView
       synchronized (CDOViewImpl.this)
       {
         Map<CDOID, InternalCDOObject> objects = getModifiableObjects();
-        ReferenceValueMap<CDOID, InternalCDOObject> newObjects;
+        ReferenceValueMap2<CDOID, InternalCDOObject> newObjects;
 
         switch (referenceType)
         {
         case STRONG:
-          if (objects instanceof ReferenceValueMap.Strong<?, ?>)
+        {
+          if (objects instanceof ReferenceValueMap2.Strong<?, ?>)
           {
             return false;
           }
 
-          newObjects = new ReferenceValueMap.Strong<CDOID, InternalCDOObject>();
+          Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
+          newObjects = new ReferenceValueMap2.Strong<CDOID, InternalCDOObject>(map);
           break;
+        }
 
         case SOFT:
-          if (objects instanceof ReferenceValueMap.Soft<?, ?>)
+        {
+          if (objects instanceof ReferenceValueMap2.Soft<?, ?>)
           {
             return false;
           }
 
-          newObjects = new ReferenceValueMap.Soft<CDOID, InternalCDOObject>();
+          Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
+          newObjects = new ReferenceValueMap2.Soft<CDOID, InternalCDOObject>(map);
           break;
+        }
 
         case WEAK:
-          if (objects instanceof ReferenceValueMap.Weak<?, ?>)
+        {
+          if (objects instanceof ReferenceValueMap2.Weak<?, ?>)
           {
             return false;
           }
 
-          newObjects = new ReferenceValueMap.Weak<CDOID, InternalCDOObject>();
+          Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
+          newObjects = new ReferenceValueMap2.Weak<CDOID, InternalCDOObject>(map);
           break;
+        }
 
         default:
           throw new IllegalArgumentException(Messages.getString("CDOViewImpl.29")); //$NON-NLS-1$

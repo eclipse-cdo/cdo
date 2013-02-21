@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectHistory;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -61,7 +62,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -84,7 +84,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     @Override
     protected Map<CDOID, CDOLegacyWrapper> initialValue()
     {
-      return new HashMap<CDOID, CDOLegacyWrapper>();
+      return CDOIDUtil.createMap();
     }
   };
 

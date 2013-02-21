@@ -36,7 +36,6 @@ import org.eclipse.emf.cdo.internal.common.revision.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 import org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject;
 
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.UUIDGenerator;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
@@ -44,6 +43,8 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Various static methods that may help with CDO {@link CDOID IDs}.
@@ -57,6 +58,11 @@ public final class CDOIDUtil
 
   private CDOIDUtil()
   {
+  }
+
+  public static <V> Map<CDOID, V> createMap()
+  {
+    return new HashMap<CDOID, V>();
   }
 
   /**
@@ -519,17 +525,22 @@ public final class CDOIDUtil
    */
   public static boolean equals(CDOID id1, CDOID id2)
   {
+    if (id1 == id2)
+    {
+      return true;
+    }
+
     if (id1 == null)
     {
-      id1 = CDOID.NULL;
+      return id2 == CDOID.NULL;
     }
 
     if (id2 == null)
     {
-      id2 = CDOID.NULL;
+      return id1 == CDOID.NULL;
     }
 
-    return ObjectUtil.equals(id1, id2);
+    return false;
   }
 
   /**

@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 
 import org.eclipse.emf.ecore.EClass;
@@ -72,7 +73,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
     return getDelegate().getTimeStamp();
   }
 
-  public CDOBranch getBranch()
+  public InternalCDOBranch getBranch()
   {
     return getDelegate().getBranch();
   }

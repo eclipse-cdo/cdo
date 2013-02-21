@@ -482,8 +482,7 @@ public abstract class AbstractOMTest extends TestCase
 
   public static void assertEquals(Object expected, Object actual)
   {
-    // IMPORTANT: Give possible CDOLegacyWrapper a chance for actual, too
-    if (actual != null && actual.equals(expected))
+    if (actual == expected)
     {
       return;
     }

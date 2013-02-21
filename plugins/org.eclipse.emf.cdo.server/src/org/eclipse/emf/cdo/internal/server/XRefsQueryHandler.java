@@ -238,7 +238,7 @@ public class XRefsQueryHandler implements IQueryHandler
         IStore store = repository.getStore();
         CDOPackageRegistry packageRegistry = repository.getPackageRegistry();
 
-        targetObjects = new HashMap<CDOID, EClass>();
+        targetObjects = CDOIDUtil.createMap();
         StringTokenizer tokenizer = new StringTokenizer(info.getQueryString(), "|");
         while (tokenizer.hasMoreTokens())
         {

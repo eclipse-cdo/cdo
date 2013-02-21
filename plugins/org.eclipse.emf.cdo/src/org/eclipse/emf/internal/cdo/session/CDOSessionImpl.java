@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
@@ -87,7 +88,6 @@ import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.session.remote.CDORemoteSessionManagerImpl;
 import org.eclipse.emf.internal.cdo.util.DefaultLocksChangedEvent;
 
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
@@ -203,7 +203,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
    * A map to track for every object that was committed since this session's last refresh, onto what CDOBranchPoint it
    * was committed. (Used only for sticky transactions, see bug 290032 - Sticky views.)
    */
-  private Map<CDOID, CDOBranchPoint> committedSinceLastRefresh = new HashMap<CDOID, CDOBranchPoint>();
+  private Map<CDOID, CDOBranchPoint> committedSinceLastRefresh = CDOIDUtil.createMap();
 
   static
   {
@@ -673,7 +673,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         boolean needNewMap = revisions == null;
         if (needNewMap)
         {
-          revisions = new HashMap<CDOID, InternalCDORevision>();
+          revisions = CDOIDUtil.createMap();
         }
 
         view.collectViewedRevisions(revisions);
@@ -945,7 +945,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           revisionManager.addRevision(newRevision);
           if (oldRevisions == null)
           {
-            oldRevisions = new HashMap<CDOID, InternalCDORevision>();
+            oldRevisions = CDOIDUtil.createMap();
           }
 
           oldRevisions.put(id, oldRevision);
@@ -954,7 +954,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       else
       {
         // ... otherwise try to revise old revision if it is in the same branch
-        if (ObjectUtil.equals(key.getBranch(), newBranch))
+        if (key.getBranch() == newBranch)
         {
           revisionManager.reviseVersion(id, key, timeStamp);
         }
@@ -1349,7 +1349,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       CDORevision revision = (CDORevision)key;
       revisionManager.addRevision(revision);
 
-      if (!ObjectUtil.equals(revision.getBranch(), branch))
+      if (revision.getBranch() != branch)
       {
         CDOID id = revision.getID();
         CDORevision firstRevision = revisionManager.getCache().getRevisionByVersion(id,

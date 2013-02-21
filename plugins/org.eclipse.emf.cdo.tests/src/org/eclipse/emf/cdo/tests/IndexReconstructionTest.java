@@ -520,7 +520,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
       if (obj instanceof ReconstructedIndex)
       {
         ReconstructedIndex that = (ReconstructedIndex)obj;
-        return id.equals(that.id) && feature.equals(that.feature) && index == that.index;
+        return id == that.id && index == that.index && feature.equals(that.feature);
       }
 
       return false;

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.common.commit;
 import org.eclipse.emf.cdo.common.commit.CDOChangeKind;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -24,7 +25,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -115,18 +115,18 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
 
   public void merge(CDOChangeSetData changeSetData)
   {
-    Map<CDOID, CDOIDAndVersion> newMap = new HashMap<CDOID, CDOIDAndVersion>();
+    Map<CDOID, CDOIDAndVersion> newMap = CDOIDUtil.createMap();
     fillMap(newMap, newObjects);
     fillMap(newMap, changeSetData.getNewObjects());
 
-    Map<CDOID, CDORevisionKey> changedMap = new HashMap<CDOID, CDORevisionKey>();
+    Map<CDOID, CDORevisionKey> changedMap = CDOIDUtil.createMap();
     fillMap(changedMap, changedObjects);
     for (CDORevisionKey key : changeSetData.getChangedObjects())
     {
       mergeChangedObject(key, newMap, changedMap);
     }
 
-    Map<CDOID, CDOIDAndVersion> detachedMap = new HashMap<CDOID, CDOIDAndVersion>();
+    Map<CDOID, CDOIDAndVersion> detachedMap = CDOIDUtil.createMap();
     fillMap(detachedMap, detachedObjects);
     for (CDOIDAndVersion key : changeSetData.getDetachedObjects())
     {

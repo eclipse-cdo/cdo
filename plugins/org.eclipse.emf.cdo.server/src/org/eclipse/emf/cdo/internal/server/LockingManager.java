@@ -155,7 +155,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
 
   public synchronized Map<CDOID, LockGrade> getLocks(final IView view)
   {
-    final Map<CDOID, LockGrade> result = new HashMap<CDOID, LockGrade>();
+    final Map<CDOID, LockGrade> result = CDOIDUtil.createMap();
 
     for (LockState<Object, IView> lockState : getObjectToLocksMap().values())
     {
@@ -271,6 +271,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
         {
           child = childID;
         }
+
         contents.add(child);
       }
     }

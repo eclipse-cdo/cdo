@@ -35,18 +35,17 @@ import org.eclipse.emf.ecore.EClass;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Used during raw import.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateRawCommitContext implements InternalCommitContext
 {
-  private Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
+  private Map<CDOID, CDOID> idMappings = CDOIDUtil.createMap();
 
   private List<InternalCDORevision> dirtyObjects = new ArrayList<InternalCDORevision>();
 

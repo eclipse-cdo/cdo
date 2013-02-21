@@ -25,13 +25,13 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import java.lang.reflect.Field;
-import java.util.concurrent.ConcurrentMap;
+import java.util.Map;
 
 /**
  * Problems with savepoints and detached elements on complete rollback
  * <p>
  * See https://bugs.eclipse.org/296561
- * 
+ *
  * @author Victor Roldan Betancort
  */
 public class Bugzilla_296561_Test extends AbstractCDOTest
@@ -83,7 +83,7 @@ public class Bugzilla_296561_Test extends AbstractCDOTest
       Object value = ReflectUtil.getValue(field, transaction);
 
       @SuppressWarnings("unchecked")
-      ConcurrentMap<CDOID, InternalCDOObject> objects = (ConcurrentMap<CDOID, InternalCDOObject>)value;
+      Map<CDOID, InternalCDOObject> objects = (Map<CDOID, InternalCDOObject>)value;
       assertEquals(false, objects.containsKey(id));
     }
   }

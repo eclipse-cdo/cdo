@@ -485,4 +485,13 @@ public class WrappedHibernateList implements InternalCDOList
   {
     getDelegate().set(i, value);
   }
+
+  public boolean useEquals()
+  {
+    return true;
+  }
+
+  public void setUseEquals(boolean useEquals)
+  {
+  }
 }

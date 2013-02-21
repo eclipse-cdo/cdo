@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
@@ -354,8 +353,9 @@ public class LockingNotificationsTest extends AbstractLockingTest
   {
     if (lockedObject instanceof CDOIDAndBranch)
     {
-      CDOIDAndBranch idAndBranch = CDOIDUtil.createIDAndBranch(obj.cdoID(), obj.cdoView().getBranch());
-      assertEquals(idAndBranch, lockedObject);
+      CDOIDAndBranch idAndBranch = (CDOIDAndBranch)lockedObject;
+      assertEquals(obj.cdoID(), idAndBranch.getID());
+      assertEquals(obj.cdoView().getBranch().getID(), idAndBranch.getBranch().getID());
     }
     else if (lockedObject instanceof CDOID)
     {

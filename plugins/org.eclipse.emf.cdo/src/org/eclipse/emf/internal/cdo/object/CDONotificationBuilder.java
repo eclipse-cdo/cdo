@@ -262,7 +262,7 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
     {
       for (CDOObject object : detachedObjects)
       {
-        if (id.equals(object.cdoID()))
+        if (id == object.cdoID())
         {
           return object;
         }

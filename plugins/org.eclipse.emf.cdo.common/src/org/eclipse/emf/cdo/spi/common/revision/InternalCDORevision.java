@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -41,6 +42,11 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
    * @since 4.2
    */
   public InternalCDOClassInfo getClassInfo();
+
+  /**
+   * @since 4.2
+   */
+  public InternalCDOBranch getBranch();
 
   /**
    * @since 4.2

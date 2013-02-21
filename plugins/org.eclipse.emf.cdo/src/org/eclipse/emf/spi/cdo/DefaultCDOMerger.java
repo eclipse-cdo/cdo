@@ -36,7 +36,6 @@ import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +75,7 @@ public class DefaultCDOMerger implements CDOMerger
   public synchronized CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source) throws ConflictException
   {
     result = new CDOChangeSetDataImpl();
-    conflicts = new HashMap<CDOID, Conflict>();
+    conflicts = CDOIDUtil.createMap();
 
     targetMap = createMap(target);
     sourceMap = createMap(source);
@@ -237,7 +236,7 @@ public class DefaultCDOMerger implements CDOMerger
 
   private Map<CDOID, Object> createMap(CDOChangeSetData changeSetData)
   {
-    Map<CDOID, Object> map = new HashMap<CDOID, Object>();
+    Map<CDOID, Object> map = CDOIDUtil.createMap();
     for (CDOIDAndVersion data : changeSetData.getNewObjects())
     {
       map.put(data.getID(), data);

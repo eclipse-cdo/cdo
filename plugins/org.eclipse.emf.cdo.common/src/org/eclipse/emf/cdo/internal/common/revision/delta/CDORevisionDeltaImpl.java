@@ -433,7 +433,17 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
       return false;
     }
 
-    return origin == dirty || origin.equals(dirty);
+    if (origin == dirty)
+    {
+      return true;
+    }
+
+    if (origin instanceof CDOID)
+    {
+      return false;
+    }
+
+    return origin.equals(dirty);
   }
 
   private Object convertEObject(Object value)

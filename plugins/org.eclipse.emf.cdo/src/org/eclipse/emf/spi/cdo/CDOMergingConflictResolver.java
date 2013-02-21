@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -22,7 +23,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOMerger.ConflictException;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -109,7 +109,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
 
   private Map<CDOID, CDORevisionDelta> getRemoteDeltas(CDOChangeSet remoteChangeSet)
   {
-    Map<CDOID, CDORevisionDelta> remoteDeltas = new HashMap<CDOID, CDORevisionDelta>();
+    Map<CDOID, CDORevisionDelta> remoteDeltas = CDOIDUtil.createMap();
     for (CDORevisionKey key : remoteChangeSet.getChangedObjects())
     {
       remoteDeltas.put(key.getID(), (CDORevisionDelta)key);

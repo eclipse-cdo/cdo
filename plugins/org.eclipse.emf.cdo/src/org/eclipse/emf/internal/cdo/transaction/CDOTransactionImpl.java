@@ -622,7 +622,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDORevisionProvider ancestorProvider, CDORevisionProvider targetProvider, boolean keepVersions,
       List<CDORevisionKey> result) throws ChangeSetOutdatedException
   {
-    Map<CDOID, InternalCDORevision> oldRevisions = new HashMap<CDOID, InternalCDORevision>();
+    Map<CDOID, InternalCDORevision> oldRevisions = CDOIDUtil.createMap();
 
     Map<CDOID, CDOObject> detachedObjects = lastSavepoint.getDetachedObjects();
     Map<CDOID, CDOObject> dirtyObjects = lastSavepoint.getDirtyObjects();
@@ -2032,7 +2032,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         createIDForNewObject(null);
       }
 
-      Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
+      Map<CDOID, CDOID> idMappings = CDOIDUtil.createMap();
       while (in.readBoolean())
       {
         if (reconstructSavepoints)
@@ -2705,7 +2705,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         return map;
       }
 
-      Map<CDOID, T> newMap = new HashMap<CDOID, T>();
+      Map<CDOID, T> newMap = CDOIDUtil.createMap();
       for (Entry<CDOID, T> entry : map.entrySet())
       {
         CDOID id = entry.getKey();
@@ -2891,7 +2891,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
         CDOBranch oldBranch = getBranch();
         CDOBranch branch = result.getBranch();
-        boolean branchChanged = !ObjectUtil.equals(branch, getBranch());
+        boolean branchChanged = branch != getBranch();
         if (branchChanged)
         {
           basicSetBranchPoint(branch.getHead());

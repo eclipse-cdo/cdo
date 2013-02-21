@@ -64,20 +64,20 @@ public class MapTest extends AbstractCDOTest
   {
     PropertiesMapEntryValue value1 = getModel6Factory().createPropertiesMapEntryValue();
     value1.setLabel("value1");
-  
+
     PropertiesMapEntryValue value2 = getModel6Factory().createPropertiesMapEntryValue();
     value2.setLabel("value2");
-  
+
     PropertiesMap propertiesMap = getModel6Factory().createPropertiesMap();
     propertiesMap.setLabel("TransientMap");
     propertiesMap.getTransientMap().put("key1", value1);
     propertiesMap.getTransientMap().put("key2", value2);
-  
+
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().add(propertiesMap);
-  
+
     transaction.commit();
     assertEquals(false, EMFUtil.isPersistent(getModel6Package().getPropertiesMap_TransientMap()));
   }
@@ -422,7 +422,7 @@ public class MapTest extends AbstractCDOTest
           CDOID valueID = CDOUtil.getCDOObject((EObject)key).cdoID();
           CDOID valueMapID = CDOUtil.getCDOObject((EObject)keyMap).cdoID();
 
-          if (valueID.equals(valueMapID))
+          if (valueID == valueMapID)
           {
             foundObjectWithSameID = true;
           }
@@ -446,7 +446,7 @@ public class MapTest extends AbstractCDOTest
           CDOID valueID = CDOUtil.getCDOObject((EObject)map.get(key)).cdoID();
           CDOID valueMapID = CDOUtil.getCDOObject((EObject)valueMap).cdoID();
 
-          if (valueID.equals(valueMapID))
+          if (valueID == valueMapID)
           {
             foundObjectWithSameID = true;
           }

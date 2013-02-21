@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
@@ -946,7 +947,7 @@ public class CDOServerBrowser extends Worker
 
     private Map<CDOID, List<CDORevision>> getAllIDs(Map<CDOBranch, List<CDORevision>> allRevisions)
     {
-      Map<CDOID, List<CDORevision>> ids = new HashMap<CDOID, List<CDORevision>>();
+      Map<CDOID, List<CDORevision>> ids = CDOIDUtil.createMap();
       for (List<CDORevision> list : allRevisions.values())
       {
         for (CDORevision revision : list)

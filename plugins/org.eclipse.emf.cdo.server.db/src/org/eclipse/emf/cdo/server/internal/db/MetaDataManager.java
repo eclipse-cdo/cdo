@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelConstants;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -70,7 +71,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
   private Map<EModelElement, CDOID> modelElementToMetaID = new HashMap<EModelElement, CDOID>();
 
-  private Map<CDOID, EModelElement> metaIDToModelElement = new HashMap<CDOID, EModelElement>();
+  private Map<CDOID, EModelElement> metaIDToModelElement = CDOIDUtil.createMap();
 
   public MetaDataManager(IDBStore store)
   {

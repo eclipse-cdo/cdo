@@ -347,7 +347,7 @@ public final class CDORevisionUtil
       {
         return null;
       }
-      else if (parentID.equals(revision.getID()))
+      else if (parentID == revision.getID())
       {
         // This must be the root resource!
         return null;

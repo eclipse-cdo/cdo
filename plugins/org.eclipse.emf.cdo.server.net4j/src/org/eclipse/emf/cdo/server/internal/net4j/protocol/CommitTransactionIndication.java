@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
@@ -47,7 +48,6 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -204,7 +204,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       Map<CDOID, EClass> detachedObjectTypes = null;
       if (auditing || ensuringReferentialIntegrity)
       {
-        detachedObjectTypes = new HashMap<CDOID, EClass>();
+        detachedObjectTypes = CDOIDUtil.createMap();
       }
 
       CDOBranchVersion[] detachedObjectVersions = null;

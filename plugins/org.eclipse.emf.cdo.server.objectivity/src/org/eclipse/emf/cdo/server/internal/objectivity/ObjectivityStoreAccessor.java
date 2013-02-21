@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea.Handler;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
@@ -92,7 +93,6 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -120,7 +120,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
   boolean zipped = true; // TODO - might make this configurable...
 
-  private HashMap<CDOID, ObjyObject> newObjyObjectsMap = new HashMap<CDOID, ObjyObject>();
+  private Map<CDOID, ObjyObject> newObjyObjectsMap = CDOIDUtil.createMap();
 
   private long readRevisionTime = 0;
 
@@ -476,7 +476,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
   /**
    * Called for each revision delta.
-   * 
+   *
    * @param delta
    * @param created
    * @param branch
@@ -583,7 +583,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
   /**
    * Called for each revision delta.
-   * 
+   *
    * @param delta
    * @param created
    * @param branch
@@ -1344,8 +1344,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   }
 
   /**
-	 *
-	 */
+   *
+   */
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
       CDORevisionCacheAdder cache)
   {

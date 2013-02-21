@@ -55,7 +55,7 @@ public class CDOIDAndVersionImpl implements CDOIDAndVersion
     if (obj instanceof CDOIDAndVersion)
     {
       CDOIDAndVersion that = (CDOIDAndVersion)obj;
-      return id.equals(that.getID()) && version == that.getVersion();
+      return id == that.getID() && version == that.getVersion();
     }
 
     return false;

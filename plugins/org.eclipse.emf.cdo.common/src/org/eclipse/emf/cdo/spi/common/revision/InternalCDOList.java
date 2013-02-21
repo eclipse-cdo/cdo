@@ -48,4 +48,14 @@ public interface InternalCDOList extends CDOList
    * @since 4.0
    */
   public void setWithoutFrozenCheck(int i, Object value);
+
+  /**
+   * @since 4.2
+   */
+  public boolean useEquals();
+
+  /**
+   * @since 4.2
+   */
+  public void setUseEquals(boolean useEquals);
 }

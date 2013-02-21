@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -33,7 +34,7 @@ import org.eclipse.emf.ecore.EClass;
  * Instances of this marker revision are not supposed to be exposed outside of a revision {@link CDORevisionManager
  * manager}. They are mainly used in the communication between a revision manager and its associated revision
  * {@link InternalCDORevisionManager.RevisionLoader loader}.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  */
@@ -41,13 +42,13 @@ public abstract class SyntheticCDORevision extends StubCDORevision
 {
   private CDOID id;
 
-  private CDOBranch branch;
+  private InternalCDOBranch branch;
 
   public SyntheticCDORevision(EClass eClass, CDOID id, CDOBranch branch)
   {
     super(eClass);
     this.id = id;
-    this.branch = branch;
+    this.branch = (InternalCDOBranch)branch;
   }
 
   @Override
@@ -57,7 +58,7 @@ public abstract class SyntheticCDORevision extends StubCDORevision
   }
 
   @Override
-  public CDOBranch getBranch()
+  public InternalCDOBranch getBranch()
   {
     return branch;
   }

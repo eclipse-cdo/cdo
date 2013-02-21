@@ -52,7 +52,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -395,7 +394,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
      */
     private static final class DetachCounter extends CDOFeatureDeltaVisitorImpl
     {
-      private Map<CDOID, AtomicInteger> counters = new HashMap<CDOID, AtomicInteger>();
+      private Map<CDOID, AtomicInteger> counters = CDOIDUtil.createMap();
 
       private InternalCDORevision oldRevision;
 

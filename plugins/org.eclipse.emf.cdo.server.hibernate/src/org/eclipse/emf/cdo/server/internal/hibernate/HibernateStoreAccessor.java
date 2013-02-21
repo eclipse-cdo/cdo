@@ -95,7 +95,6 @@ import java.sql.Clob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -878,7 +877,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       // versions later on. The versions can be updated when inserting new objects
       // this will result in a version difference when the object gets merged
       // this repair is done just before the merge
-      final Map<CDOID, InternalCDORevision> existingRevisions = new HashMap<CDOID, InternalCDORevision>();
+      final Map<CDOID, InternalCDORevision> existingRevisions = CDOIDUtil.createMap();
       for (InternalCDORevision revision : context.getDirtyObjects())
       {
         final String entityName = HibernateUtil.getInstance().getEntityName(revision.getID());

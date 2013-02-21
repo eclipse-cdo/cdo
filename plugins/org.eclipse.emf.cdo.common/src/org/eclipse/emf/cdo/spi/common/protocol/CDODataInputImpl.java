@@ -99,7 +99,6 @@ import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -317,7 +316,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     boolean readOnly = readBoolean();
 
     int nLockStates = readInt();
-    Map<CDOID, LockGrade> locks = new HashMap<CDOID, LockGrade>();
+    Map<CDOID, LockGrade> locks = CDOIDUtil.createMap();
     for (int i = 0; i < nLockStates; i++)
     {
       CDOID key = readCDOID();
@@ -477,6 +476,11 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     }
 
     InternalCDOList list = (InternalCDOList)getListFactory().createList(size, size, referenceChunk);
+    if (feature instanceof EReference)
+    {
+      list.setUseEquals(false);
+    }
+
     for (int j = 0; j < referenceChunk; j++)
     {
       if (isFeatureMap)

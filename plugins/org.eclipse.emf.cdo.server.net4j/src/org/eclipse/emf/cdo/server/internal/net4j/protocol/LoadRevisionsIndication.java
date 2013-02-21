@@ -275,7 +275,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
 
   private void prefetchRevisions(int depth, CDORevision[] revisions, List<CDORevision> additionalRevisions)
   {
-    Map<CDOID, CDORevision> map = new HashMap<CDOID, CDORevision>();
+    Map<CDOID, CDORevision> map = CDOIDUtil.createMap();
     for (CDORevision revision : revisions)
     {
       map.put(revision.getID(), revision);

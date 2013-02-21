@@ -874,12 +874,12 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       return null;
     }
 
-    if (rootResource != null && rootResource.cdoID().equals(id))
+    if (rootResource != null && rootResource.cdoID() == id)
     {
       return rootResource;
     }
 
-    if (id.equals(lastLookupID))
+    if (id == lastLookupID)
     {
       return lastLookupObject;
     }
@@ -923,7 +923,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         {
           registerObject(localLookupObject);
         }
-        else if (id.equals(getSession().getRepositoryInfo().getRootResourceID()))
+        else if (id == getSession().getRepositoryInfo().getRootResourceID())
         {
           setRootResource((CDOResourceImpl)localLookupObject);
         }
@@ -998,7 +998,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       return null;
     }
 
-    if (id.equals(lastLookupID))
+    if (id == lastLookupID)
     {
       lastLookupID = null;
       lastLookupObject = null;
@@ -1025,7 +1025,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
     EClass eClass = revision.getEClass();
     InternalCDOObject object;
-    if (CDOModelUtil.isResource(eClass) && !id.equals(getSession().getRepositoryInfo().getRootResourceID()))
+    if (CDOModelUtil.isResource(eClass) && id != getSession().getRepositoryInfo().getRootResourceID())
     {
       object = (InternalCDOObject)newResourceInstance(revision);
       // object is PROXY
@@ -1214,7 +1214,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
     if (view != null && view.getSession() == getSession())
     {
-      boolean sameTarget = view.getBranch().equals(getBranch()) && view.getTimeStamp() == getTimeStamp();
+      boolean sameTarget = view.getBranch() == getBranch() && view.getTimeStamp() == getTimeStamp();
       if (sameTarget)
       {
         return object.cdoID();
@@ -1681,7 +1681,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
     if (eClass == EresourcePackage.Literals.CDO_RESOURCE)
     {
-      if (rootResourceID.equals(delta.getID()))
+      if (rootResourceID == delta.getID())
       {
         CDOListFeatureDelta featureDelta = (CDOListFeatureDelta)delta
             .getFeatureDelta(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS);

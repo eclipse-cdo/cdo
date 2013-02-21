@@ -1354,14 +1354,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private InternalCDORevision getRevisionFromBranch(CDOID id, CDOBranchPoint branchPoint)
   {
-    InternalCDORevision revision = revisionManager.getRevision(id, branchPoint, CDORevision.UNCHUNKED,
-        CDORevision.DEPTH_NONE, true);
-    // if (revision == null || !ObjectUtil.equals(revision.getBranch(), branchPoint.getBranch()))
-    // {
-    // return null;
-    // }
-
-    return revision;
+    return revisionManager.getRevision(id, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
   }
 
   public void queryLobs(List<byte[]> ids)
@@ -1441,6 +1434,7 @@ public class Repository extends Container<Object> implements InternalRepository
         lockables.add(id);
       }
     }
+
     return lockables;
   }
 
@@ -1455,6 +1449,7 @@ public class Repository extends Container<Object> implements InternalRepository
       List<CDORevisionKey> loadedRevs, boolean recursive, long timeout)
   {
     List<LockState<Object, IView>> newLockStates = null;
+
     try
     {
       newLockStates = getLockingManager().lock2(true, type, view, lockables, recursive, timeout);
@@ -1530,7 +1525,6 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     // Convert the list to an array, to satisfy the API later
-    //
     CDORevisionKey[] staleRevisionsArray = new CDORevisionKey[staleRevisions.size()];
     staleRevisions.toArray(staleRevisionsArray);
 
@@ -1679,11 +1673,6 @@ public class Repository extends Container<Object> implements InternalRepository
 
     if (initialPackages != null)
     {
-      // if (type != Type.MASTER)
-      // {
-      // throw new IllegalStateException("Only master repositories can have initial packages");
-      // }
-
       for (EPackage initialPackage : initialPackages)
       {
         if (!packageRegistry.containsKey(initialPackage.getNsURI()))

@@ -13,8 +13,6 @@ package org.eclipse.emf.cdo.internal.common.branch;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 
-import org.eclipse.net4j.util.ObjectUtil;
-
 import java.text.MessageFormat;
 
 /**
@@ -59,7 +57,7 @@ public class CDOBranchVersionImpl implements CDOBranchVersion
     if (obj instanceof CDOBranchVersion)
     {
       CDOBranchVersion that = (CDOBranchVersion)obj;
-      return ObjectUtil.equals(branch, that.getBranch()) && version == that.getVersion();
+      return branch == that.getBranch() && version == that.getVersion();
     }
 
     return false;

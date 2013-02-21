@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -30,6 +31,7 @@ import org.eclipse.emf.internal.cdo.object.CDOLegacyWrapper;
 
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.FSMUtil;
@@ -64,6 +66,27 @@ public abstract class AbstractCDOTest extends ConfigTest
     // This override adds no functionality.
     // It just ensures that the IDE shows doSetUp() and doTearDown() in the same class.
     super.doTearDown();
+  }
+
+  public static void assertEquals(Object expected, Object actual)
+  {
+    if (expected instanceof CDOID || expected instanceof CDOBranch)
+    {
+      if (expected != actual)
+      {
+        failNotEquals(null, expected, actual);
+      }
+
+      return;
+    }
+
+    // IMPORTANT: Give possible CDOLegacyWrapper a chance for actual, too
+    if (actual != null && actual.equals(expected))
+    {
+      return;
+    }
+
+    AbstractOMTest.assertEquals(expected, actual);
   }
 
   protected static void assertTransient(EObject eObject)

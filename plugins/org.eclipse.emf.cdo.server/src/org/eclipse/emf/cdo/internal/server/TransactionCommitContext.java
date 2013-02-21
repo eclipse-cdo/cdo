@@ -72,7 +72,6 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.CheckUtil;
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
@@ -99,8 +98,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Simon McDuff
@@ -158,7 +155,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private List<CDOID> lockedTargets;
 
-  private ConcurrentMap<CDOID, CDOID> idMappings = new ConcurrentHashMap<CDOID, CDOID>();
+  private Map<CDOID, CDOID> idMappings = CDOIDUtil.createMap();
 
   private CDOReferenceAdjuster idMapper = new CDOIDMapper(idMappings);
 
@@ -321,7 +318,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private Map<CDOID, InternalCDORevision> cacheRevisions()
   {
-    Map<CDOID, InternalCDORevision> cache = new HashMap<CDOID, InternalCDORevision>();
+    Map<CDOID, InternalCDORevision> cache = CDOIDUtil.createMap();
     if (newObjects != null)
     {
       for (int i = 0; i < newObjects.length; i++)
@@ -363,10 +360,10 @@ public class TransactionCommitContext implements InternalCommitContext
       throw new IllegalStateException("newID=" + newID); //$NON-NLS-1$
     }
 
-    CDOID previousMapping = idMappings.putIfAbsent(oldID, newID);
-    if (previousMapping != null)
+    CDOID previousMapping = idMappings.put(oldID, newID);
+    if (previousMapping != null && previousMapping != newID)
     {
-      throw new IllegalStateException("previousMapping != null"); //$NON-NLS-1$
+      throw new IllegalStateException("previousMapping != null && previousMapping != newID"); //$NON-NLS-1$
     }
   }
 
@@ -1093,7 +1090,7 @@ public class TransactionCommitContext implements InternalCommitContext
       oldRevision = revisionManager.getRevisionByVersion(id, delta, CDORevision.UNCHUNKED, true);
       if (oldRevision != null)
       {
-        if (ObjectUtil.equals(oldRevision.getBranch(), branch) && oldRevision.isHistorical())
+        if (oldRevision.getBranch() == branch && oldRevision.isHistorical())
         {
           oldRevision = null;
         }
@@ -1493,7 +1490,12 @@ public class TransactionCommitContext implements InternalCommitContext
       if (obj instanceof DeltaLockWrapper)
       {
         DeltaLockWrapper wrapper = (DeltaLockWrapper)obj;
-        return key.equals(wrapper.getKey());
+        obj = wrapper.getKey();
+      }
+
+      if (key instanceof CDOID)
+      {
+        return key == obj;
       }
 
       return key.equals(obj);
@@ -1516,7 +1518,6 @@ public class TransactionCommitContext implements InternalCommitContext
      */
     private static final class ForID extends DeltaLockWrapper
     {
-
       private static final long serialVersionUID = 1L;
 
       public ForID(CDOID key, InternalCDORevisionDelta delta)

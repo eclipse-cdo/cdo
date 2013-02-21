@@ -4,13 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Ibrahim Sallam - initial API and implementation
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.schema;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.OBJYCDOIDUtil;
 
@@ -19,7 +20,6 @@ import com.objy.db.app.ooObj;
 import com.objy.db.util.ooTreeSetX;
 
 import java.text.MessageFormat;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -130,7 +130,7 @@ public class ObjyLockArea extends ooObj
   {
     fetch();
 
-    Map<CDOID, LockGrade> locks = new HashMap<CDOID, LockGrade>();
+    Map<CDOID, LockGrade> locks = CDOIDUtil.createMap();
 
     @SuppressWarnings("rawtypes")
     Iterator itr = readLockSet.iterator();

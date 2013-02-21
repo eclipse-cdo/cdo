@@ -13,7 +13,6 @@
  */
 package org.eclipse.emf.cdo.spi.common.revision;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
@@ -39,6 +38,7 @@ import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
@@ -357,14 +357,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 3.0
    */
-  public CDOBranch getBranch()
+  public InternalCDOBranch getBranch()
   {
     if (branchPoint == null)
     {
       return null;
     }
 
-    return branchPoint.getBranch();
+    return (InternalCDOBranch)branchPoint.getBranch();
   }
 
   /**
@@ -684,10 +684,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   public CDOList getList(EStructuralFeature feature, int size)
   {
     int featureIndex = getFeatureIndex(feature);
-    CDOList list = (CDOList)getValue(featureIndex);
+    InternalCDOList list = (InternalCDOList)getValue(featureIndex);
     if (list == null && size != -1)
     {
-      list = CDOListFactory.DEFAULT.createList(size, 0, 0);
+      list = (InternalCDOList)CDOListFactory.DEFAULT.createList(size, 0, 0);
+      if (feature instanceof EReference)
+      {
+        list.setUseEquals(false);
+      }
 
       synchronized (this)
       {

@@ -12,24 +12,25 @@
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A HibernateCommitContext contains the commitcontext as well as support for direct (hashmap) based search for a new or
  * changed object using the id.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateCommitContext
 {
   private InternalCommitContext commitContext;
 
-  private HashMap<CDOID, InternalCDORevision> dirtyObjects;
+  private Map<CDOID, InternalCDORevision> dirtyObjects;
 
-  private HashMap<CDOID, InternalCDORevision> newObjects;
+  private Map<CDOID, InternalCDORevision> newObjects;
 
   private boolean inDoWrite = false;
 
@@ -53,13 +54,13 @@ public class HibernateCommitContext
       return;
     }
 
-    dirtyObjects = new HashMap<CDOID, InternalCDORevision>();
+    dirtyObjects = CDOIDUtil.createMap();
     for (InternalCDORevision cdoRevision : commitContext.getDirtyObjects())
     {
       dirtyObjects.put(cdoRevision.getID(), cdoRevision);
     }
 
-    newObjects = new HashMap<CDOID, InternalCDORevision>();
+    newObjects = CDOIDUtil.createMap();
     for (InternalCDORevision cdoRevision : commitContext.getNewObjects())
     {
       newObjects.put(cdoRevision.getID(), cdoRevision);

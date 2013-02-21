@@ -204,6 +204,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
           public boolean handleRevision(CDORevision revision)
           {
             InternalCDORevision rev = (InternalCDORevision)revision;
+            adjustRevisionBranch(rev);
             accessor.rawStore(rev, monitor);
 
             long commitTime = revision.getTimeStamp();
@@ -617,6 +618,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
         accessor.rawDelete(id, localRevision.getVersion(), localBranch, eClass, new Monitor());
         localRevision.setVersion(remoteRevision.getVersion());
+        adjustRevisionBranch(localRevision);
         accessor.rawStore(localRevision, new Monitor());
       }
     }
@@ -627,6 +629,17 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       StoreThreadLocal.release();
       localRepository.getRevisionManager().getCache().clear();
       localSession.getRevisionManager().getCache().clear();
+    }
+  }
+
+  private void adjustRevisionBranch(InternalCDORevision revision)
+  {
+    InternalCDOBranchManager branchManager = localRepository.getBranchManager();
+    InternalCDOBranch branch = revision.getBranch();
+    if (branch.getBranchManager() != branchManager)
+    {
+      branch = branchManager.getBranch(branch.getID());
+      revision.setBranchPoint(branch.getPoint(revision.getTimeStamp()));
     }
   }
 

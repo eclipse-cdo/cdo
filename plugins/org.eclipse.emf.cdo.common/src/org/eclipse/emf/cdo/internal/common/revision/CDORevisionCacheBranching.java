@@ -19,11 +19,8 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 
-import org.eclipse.net4j.util.ObjectUtil;
-
 import org.eclipse.emf.ecore.EClass;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -31,7 +28,7 @@ import java.util.Map;
  */
 public class CDORevisionCacheBranching extends CDORevisionCacheAuditing
 {
-  private Map<CDOID, TypeAndRefCounter> typeMap = new HashMap<CDOID, TypeAndRefCounter>();
+  private Map<CDOID, TypeAndRefCounter> typeMap = CDOIDUtil.createMap();
 
   public CDORevisionCacheBranching()
   {
@@ -90,7 +87,7 @@ public class CDORevisionCacheBranching extends CDORevisionCacheAuditing
   @Override
   protected boolean isKeyInBranch(Object key, CDOBranch branch)
   {
-    return ObjectUtil.equals(((CDOIDAndBranch)key).getBranch(), branch);
+    return ((CDOIDAndBranch)key).getBranch() == branch;
   }
 
   @Override

@@ -168,7 +168,7 @@ public class Bugzilla_335772_Test extends AbstractCDOTest
 
         for (Map.Entry<Product1, SalesOrder> entry : orderByProduct.entrySet())
         {
-          if (CDOUtil.getCDOObject(entry.getKey()).cdoID().equals(product1CDOID))
+          if (CDOUtil.getCDOObject(entry.getKey()).cdoID() == product1CDOID)
           {
             return entry.getValue().getId();
           }

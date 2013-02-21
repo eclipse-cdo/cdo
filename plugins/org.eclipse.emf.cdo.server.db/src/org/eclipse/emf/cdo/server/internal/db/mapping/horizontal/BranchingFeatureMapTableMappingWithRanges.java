@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -66,7 +67,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -104,7 +104,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
   /**
    * The tags mapped to column names
    */
-  private HashMap<CDOID, String> tagMap;
+  private Map<CDOID, String> tagMap;
 
   /**
    * Column name Set
@@ -175,8 +175,8 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
     // add field for FeatureMap tag (MetaID for Feature in CDO registry)
     IDBField tagField = table.addField(CDODBSchema.FEATUREMAP_TAG, idType, idLength);
 
-    tagMap = new HashMap<CDOID, String>();
-    typeMappings = new HashMap<CDOID, ITypeMapping>();
+    tagMap = CDOIDUtil.createMap();
+    typeMappings = CDOIDUtil.createMap();
     columnNames = new ArrayList<String>();
 
     // create columns for all DBTypes

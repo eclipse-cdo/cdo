@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.objectivity.clustering;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStore;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
@@ -27,7 +28,6 @@ import org.eclipse.emf.ecore.EClass;
 
 import com.objy.db.app.ooId;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /***
@@ -64,13 +64,13 @@ public class ObjyPlacementManagerLocal
     this.objySession = objySession;
     this.commitContext = commitContext;
     // first put them in a map for easy lookup and processing....
-    newObjectsMap = new HashMap<CDOID, InternalCDORevision>();
+    newObjectsMap = CDOIDUtil.createMap();
     for (InternalCDORevision revision : commitContext.getNewObjects())
     {
       newObjectsMap.put(revision.getID(), revision);
     }
 
-    idMapper = new HashMap<CDOID, CDOID>();
+    idMapper = CDOIDUtil.createMap();
 
     this.newObjyObjectsMap = newObjyObjectsMap;
   }

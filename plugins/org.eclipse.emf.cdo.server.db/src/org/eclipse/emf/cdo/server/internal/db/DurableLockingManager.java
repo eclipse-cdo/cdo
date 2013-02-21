@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea.Handler;
@@ -45,7 +46,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -611,7 +611,7 @@ public class DurableLockingManager extends Lifecycle
       stmt.setString(1, durableLockingID);
       resultSet = stmt.executeQuery();
 
-      Map<CDOID, LockGrade> lockMap = new HashMap<CDOID, LockGrade>();
+      Map<CDOID, LockGrade> lockMap = CDOIDUtil.createMap();
       while (resultSet.next())
       {
         CDOID id = idHandler.getCDOID(resultSet, 1);

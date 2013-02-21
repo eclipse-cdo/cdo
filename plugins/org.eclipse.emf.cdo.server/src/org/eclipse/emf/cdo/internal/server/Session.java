@@ -516,7 +516,7 @@ public class Session extends Container<IView> implements InternalSession
           if (view.options().isLockNotificationEnabled())
           {
             CDOBranch affectedBranch = lockChangeInfo.getBranch();
-            if (view.getBranch().equals(affectedBranch) || affectedBranch == null)
+            if (view.getBranch() == affectedBranch || affectedBranch == null)
             {
               protocol.sendLockNotification(lockChangeInfo);
               break;

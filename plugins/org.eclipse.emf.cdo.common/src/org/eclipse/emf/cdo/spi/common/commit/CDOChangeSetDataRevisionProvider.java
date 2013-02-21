@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.spi.common.commit;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetDataProvider;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -20,7 +21,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaProvider;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -121,7 +121,7 @@ public class CDOChangeSetDataRevisionProvider implements CDORevisionProvider, CD
 
   private Map<CDOID, CDOIDAndVersion> cacheRevisions()
   {
-    Map<CDOID, CDOIDAndVersion> cache = new HashMap<CDOID, CDOIDAndVersion>();
+    Map<CDOID, CDOIDAndVersion> cache = CDOIDUtil.createMap();
 
     for (CDOIDAndVersion key : changeSetData.getNewObjects())
     {

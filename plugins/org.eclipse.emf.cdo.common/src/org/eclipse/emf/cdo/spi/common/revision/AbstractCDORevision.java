@@ -24,7 +24,6 @@ import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 
 import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -173,7 +172,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
    */
   public void adjustForCommit(CDOBranch branch, long timeStamp)
   {
-    if (ObjectUtil.equals(branch, getBranch()))
+    if (branch == getBranch())
     {
       // Same branch, increase version
       setVersion(getVersion() + 1);
@@ -205,7 +204,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     if (obj instanceof CDORevision)
     {
       CDORevision that = (CDORevision)obj;
-      return getID().equals(that.getID()) && getBranch().equals(that.getBranch()) && getVersion() == that.getVersion();
+      return getID() == that.getID() && getVersion() == that.getVersion() && getBranch() == that.getBranch();
     }
 
     return false;

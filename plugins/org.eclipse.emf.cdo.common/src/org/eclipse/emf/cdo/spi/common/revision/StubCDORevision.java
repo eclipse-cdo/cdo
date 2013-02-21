@@ -196,6 +196,9 @@ public class StubCDORevision extends AbstractCDORevision
     throw new UnsupportedOperationException(getExceptionMessage());
   }
 
+  /**
+   * @since 4.2
+   */
   public InternalCDOBranch getBranch()
   {
     throw new UnsupportedOperationException(getExceptionMessage());

@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList.ConfigurableEquality;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
@@ -355,7 +356,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   }
 
   /**
-   * @since 3.0
+   * @since 4.2
    */
   public InternalCDOBranch getBranch()
   {
@@ -688,9 +689,9 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     if (list == null && size != -1)
     {
       list = (InternalCDOList)CDOListFactory.DEFAULT.createList(size, 0, 0);
-      if (feature instanceof EReference)
+      if (feature instanceof EReference && list instanceof ConfigurableEquality)
       {
-        list.setUseEquals(false);
+        ((ConfigurableEquality)list).setUseEquals(false);
       }
 
       synchronized (this)

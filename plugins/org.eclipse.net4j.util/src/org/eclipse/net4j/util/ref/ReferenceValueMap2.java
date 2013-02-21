@@ -32,6 +32,7 @@ import java.util.Set;
  * responsible for applying proper external synchronization!
  *
  * @author Eike Stepper
+ * @since 3.3
  */
 public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
 {

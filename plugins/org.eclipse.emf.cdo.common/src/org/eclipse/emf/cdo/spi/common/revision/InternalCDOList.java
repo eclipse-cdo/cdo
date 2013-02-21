@@ -50,12 +50,11 @@ public interface InternalCDOList extends CDOList
   public void setWithoutFrozenCheck(int i, Object value);
 
   /**
+   * @author Eike Stepper
    * @since 4.2
    */
-  public boolean useEquals();
-
-  /**
-   * @since 4.2
-   */
-  public void setUseEquals(boolean useEquals);
+  public interface ConfigurableEquality extends InternalCDOList
+  {
+    public void setUseEquals(boolean useEquals);
+  }
 }

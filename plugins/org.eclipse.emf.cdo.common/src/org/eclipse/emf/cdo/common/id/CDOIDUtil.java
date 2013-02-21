@@ -60,6 +60,9 @@ public final class CDOIDUtil
   {
   }
 
+  /**
+   * @since 4.2
+   */
   public static <V> Map<CDOID, V> createMap()
   {
     return new HashMap<CDOID, V>();

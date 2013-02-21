@@ -72,7 +72,7 @@ public class CDOListWithElementProxiesImpl extends CDOListImpl
     CDOType type = CDOModelUtil.getType(classifier);
     int size = size();
 
-    InternalCDOList list = new CDOListWithElementProxiesImpl(size, 0, 0);
+    CDOListWithElementProxiesImpl list = new CDOListWithElementProxiesImpl(size, 0, 0);
     list.setUseEquals(useEquals());
 
     for (int j = 0; j < size; j++)

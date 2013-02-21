@@ -76,6 +76,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList.ConfigurableEquality;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
@@ -476,9 +477,9 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     }
 
     InternalCDOList list = (InternalCDOList)getListFactory().createList(size, size, referenceChunk);
-    if (feature instanceof EReference)
+    if (feature instanceof EReference && list instanceof ConfigurableEquality)
     {
-      list.setUseEquals(false);
+      ((ConfigurableEquality)list).setUseEquals(false);
     }
 
     for (int j = 0; j < referenceChunk; j++)

@@ -73,6 +73,9 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
     return getDelegate().getTimeStamp();
   }
 
+  /**
+   * @since 4.2
+   */
   public InternalCDOBranch getBranch()
   {
     return getDelegate().getBranch();

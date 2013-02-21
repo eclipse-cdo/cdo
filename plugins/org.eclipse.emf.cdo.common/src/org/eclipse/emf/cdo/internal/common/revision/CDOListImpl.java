@@ -27,7 +27,7 @@ import java.util.Collection;
 /**
  * @author Simon McDuff
  */
-public class CDOListImpl extends BasicEList<Object> implements InternalCDOList
+public class CDOListImpl extends BasicEList<Object> implements InternalCDOList.ConfigurableEquality
 {
   public static final CDOListFactory FACTORY = new CDOListFactory()
   {
@@ -59,7 +59,7 @@ public class CDOListImpl extends BasicEList<Object> implements InternalCDOList
     CDOType type = CDOModelUtil.getType(classifier);
     int size = size();
 
-    InternalCDOList list = new CDOListImpl(size, 0);
+    CDOListImpl list = new CDOListImpl(size, 0);
     list.setUseEquals(useEquals());
 
     for (int j = 0; j < size; j++)

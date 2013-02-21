@@ -19,7 +19,10 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
+import org.eclipse.emf.cdo.etypes.EtypesPackage;
+import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -61,6 +64,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -90,6 +94,17 @@ public final class CDOUtil
 
   static
   {
+    CDOPackageRegistryImpl.SYSTEM_ELEMENTS[0] = EcorePackage.eINSTANCE;
+    CDOPackageRegistryImpl.SYSTEM_ELEMENTS[1] = EcorePackage.eINSTANCE.getEObject();
+
+    CDOPackageRegistryImpl.SYSTEM_ELEMENTS[2] = EresourcePackage.eINSTANCE;
+    CDOPackageRegistryImpl.SYSTEM_ELEMENTS[3] = EresourcePackage.eINSTANCE.getCDOResource();
+    CDOPackageRegistryImpl.SYSTEM_ELEMENTS[4] = EresourcePackage.eINSTANCE.getCDOResourceFolder();
+
+    CDOPackageRegistryImpl.SYSTEM_ELEMENTS[5] = EtypesPackage.eINSTANCE;
+    CDOPackageRegistryImpl.SYSTEM_ELEMENTS[6] = EtypesPackage.eINSTANCE.getBlob();
+    CDOPackageRegistryImpl.SYSTEM_ELEMENTS[7] = EtypesPackage.eINSTANCE.getClob();
+
     if (!OMPlatform.INSTANCE.isOSGiRunning())
     {
       registerResourceFactory(Resource.Factory.Registry.INSTANCE);

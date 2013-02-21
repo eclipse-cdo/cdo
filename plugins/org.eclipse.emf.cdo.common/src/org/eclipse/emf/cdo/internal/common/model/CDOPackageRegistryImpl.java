@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 
@@ -57,9 +58,11 @@ import java.util.Set;
  */
 public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements InternalCDOPackageRegistry
 {
-  private static final long serialVersionUID = 1L;
+  public static final EModelElement[] SYSTEM_ELEMENTS = new EModelElement[8];
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOPackageRegistryImpl.class);
+
+  private static final long serialVersionUID = 1L;
 
   private static final boolean eagerInternalCaches = false;
 

@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Martin Fluegge - bug 247226: Transparently support legacy models
  *    Christian W. Damus (CEA) - bug 397822: handling of REMOVE_MANY notifications
+ *    Christian W. Damus (CEA) - bug 381395: don't notify closed view of adapter changes
  */
 package org.eclipse.emf.internal.cdo.object;
 
@@ -313,7 +314,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
   }
 
   /**
-   * @author Martin Flügge
+   * @author Martin Fluegge
    * @since 3.0
    */
   protected class AdapterListListener implements
@@ -336,7 +337,10 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
       if (!FSMUtil.isTransient(CDOLegacyAdapter.this))
       {
         InternalCDOView view = cdoView();
-        view.handleAddAdapter(CDOLegacyAdapter.this, adapter);
+        if (view != null && view.isActive())
+        {
+          view.handleAddAdapter(CDOLegacyAdapter.this, adapter);
+        }
       }
     }
 
@@ -350,7 +354,10 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
       if (!FSMUtil.isTransient(CDOLegacyAdapter.this))
       {
         InternalCDOView view = cdoView();
-        view.handleRemoveAdapter(CDOLegacyAdapter.this, adapter);
+        if (view != null && view.isActive())
+        {
+          view.handleRemoveAdapter(CDOLegacyAdapter.this, adapter);
+        }
       }
     }
   }

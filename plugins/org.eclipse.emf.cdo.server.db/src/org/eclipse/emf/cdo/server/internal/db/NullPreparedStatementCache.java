@@ -52,6 +52,13 @@ public class NullPreparedStatementCache extends AbstractPreparedStatementCache
     DBUtil.close(ps);
   }
 
+  public void invalidate()
+  {
+    checkState(allocatedStatements.isEmpty(), "Cache can only be invalidated if there are no allocated statements");
+
+    // Do nothing, since there are no cached statements
+  }
+
   @Override
   protected void doBeforeDeactivate() throws Exception
   {

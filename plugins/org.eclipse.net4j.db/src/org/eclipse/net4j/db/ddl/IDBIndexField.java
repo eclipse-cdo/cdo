@@ -10,44 +10,19 @@
  */
 package org.eclipse.net4j.db.ddl;
 
-import org.eclipse.net4j.db.DBType;
-
 /**
- * A field (column) specification in a {@link IDBTable DB table}.
+ * An index field specification in a {@link IDBIndex DB index}.
  *
+ * @since 4.2
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface IDBField extends IDBSchemaElement
+public interface IDBIndexField extends IDBSchemaElement
 {
-  public static final int DEFAULT = -1;
+  public IDBIndex getIndex();
 
-  public IDBTable getTable();
-
-  public void setName(String name);
-
-  public DBType getType();
-
-  public void setType(DBType type);
-
-  public int getPrecision();
-
-  public void setPrecision(int precision);
-
-  public int getScale();
-
-  public void setScale(int scale);
-
-  public boolean isNotNull();
-
-  public void setNotNull(boolean on);
+  public IDBField getField();
 
   public int getPosition();
-
-  public String getFullName();
-
-  public String formatPrecision();
-
-  public String formatPrecisionAndScale();
 }

@@ -8,22 +8,22 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.db.ddl;
+package org.eclipse.net4j.db;
 
-import org.eclipse.net4j.db.IDBElement;
+import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.util.collection.Closeable;
 
 /**
- * Specifies a hierachical namespace for elements in a {@link IDBSchema DB schema}.
- *
+ * @since 4.2
  * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBSchemaElement extends IDBElement
+public interface IDBSchemaTransaction extends IDBElement, Closeable
 {
-  public IDBSchema getSchema();
+  public IDBConnection getDBConnection();
 
-  public String getName();
+  public IDBSchema getDBSchema();
 
-  public String getFullName();
+  public void commit();
 }

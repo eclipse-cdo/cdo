@@ -8,22 +8,35 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.db.ddl;
+package org.eclipse.net4j.db.ddl.delta;
 
-import org.eclipse.net4j.db.IDBElement;
+import org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind;
+
+import java.io.Serializable;
 
 /**
- * Specifies a hierachical namespace for elements in a {@link IDBSchema DB schema}.
- *
+ * @since 4.2
  * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBSchemaElement extends IDBElement
+public interface IDBPropertyDelta<T> extends Serializable
 {
-  public IDBSchema getSchema();
-
   public String getName();
 
-  public String getFullName();
+  public ChangeKind getChangeKind();
+
+  public IDBPropertyDelta.Type getType();
+
+  public T getValue();
+
+  public T getOldValue();
+
+  /**
+   * @author Eike Stepper
+   */
+  public enum Type
+  {
+    BOOLEAN, INTEGER, STRING, FIELD_TYPE, INDEX_TYPE
+  }
 }

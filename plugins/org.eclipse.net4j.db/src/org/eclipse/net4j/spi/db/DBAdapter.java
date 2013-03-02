@@ -18,6 +18,7 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -122,6 +123,13 @@ public abstract class DBAdapter implements IDBAdapter
   public DataSource createJDBCDataSource()
   {
     throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.2
+   */
+  public void updateSchema(IDBSchemaDelta delta, Connection connection) throws DBException
+  {
   }
 
   public Set<IDBTable> createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException

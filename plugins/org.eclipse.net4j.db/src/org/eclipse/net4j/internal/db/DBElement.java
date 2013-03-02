@@ -8,24 +8,32 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.internal.db.ddl;
+package org.eclipse.net4j.internal.db;
 
-import org.eclipse.net4j.db.ddl.IDBSchemaElement;
-import org.eclipse.net4j.internal.db.DBElement;
+import org.eclipse.net4j.db.IDBElement;
+import org.eclipse.net4j.util.event.Notifier;
+
+import java.util.Properties;
 
 /**
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class DBSchemaElement extends DBElement implements IDBSchemaElement
+public abstract class DBElement extends Notifier implements IDBElement
 {
-  public DBSchemaElement()
+  private Properties properties;
+
+  public DBElement()
   {
   }
 
-  @Override
-  public final String toString()
+  public synchronized final Properties getProperties()
   {
-    return getName();
+    if (properties == null)
+    {
+      properties = new Properties();
+    }
+
+    return properties;
   }
 }

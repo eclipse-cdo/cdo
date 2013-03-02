@@ -8,24 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.internal.db.ddl;
-
-import org.eclipse.net4j.db.ddl.IDBSchemaElement;
-import org.eclipse.net4j.internal.db.DBElement;
+package org.eclipse.net4j.db.ddl;
 
 /**
  * @author Eike Stepper
- * @since 2.0
+ * @since 4.2
  */
-public abstract class DBSchemaElement extends DBElement implements IDBSchemaElement
+public interface IDBSchemaProvider
 {
-  public DBSchemaElement()
-  {
-  }
-
-  @Override
-  public final String toString()
-  {
-    return getName();
-  }
+  public IDBSchema getDBSchema();
 }

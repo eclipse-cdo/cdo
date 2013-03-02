@@ -8,22 +8,23 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.db.ddl;
+package org.eclipse.net4j.db.ddl.delta;
 
-import org.eclipse.net4j.db.IDBElement;
+import org.eclipse.net4j.util.container.IContainer;
+
+import java.util.Map;
 
 /**
- * Specifies a hierachical namespace for elements in a {@link IDBSchema DB schema}.
- *
+ * @since 4.2
  * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBSchemaElement extends IDBElement
+public interface IDBTableDelta extends IDBDelta, IContainer<IDBTableElementDelta>, Comparable<IDBTableDelta>
 {
-  public IDBSchema getSchema();
+  public IDBSchemaDelta getParent();
 
-  public String getName();
+  public Map<String, IDBFieldDelta> getFieldDeltas();
 
-  public String getFullName();
+  public Map<String, IDBIndexDelta> getIndexDeltas();
 }

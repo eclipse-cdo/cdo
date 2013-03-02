@@ -8,24 +8,18 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.internal.db.ddl;
+package org.eclipse.net4j.db;
 
-import org.eclipse.net4j.db.ddl.IDBSchemaElement;
-import org.eclipse.net4j.internal.db.DBElement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * @author Eike Stepper
- * @since 2.0
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @since 4.2
  */
-public abstract class DBSchemaElement extends DBElement implements IDBSchemaElement
+public interface IDBResultSet extends IDBElement, ResultSet
 {
-  public DBSchemaElement()
-  {
-  }
-
-  @Override
-  public final String toString()
-  {
-    return getName();
-  }
+  public IDBPreparedStatement getStatement() throws SQLException;
 }

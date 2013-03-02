@@ -8,28 +8,23 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.db.dml;
+package org.eclipse.net4j.db;
 
-import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.util.collection.Closeable;
 
 /**
- * A parameter specification in a {@link IDBStatement DB statement}.
- *
+ * @since 4.2
  * @author Eike Stepper
+ * @see DBUtil#getSQLConnection(IDBConnection)
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
- * @deprecated
  */
-@Deprecated
-public interface IDBParameter
+public interface IDBConnection extends IDBElement, Closeable
 {
-  public IDBStatement getStatement();
+  public IDBInstance getDBInstance();
 
-  /**
-   * Returns the zero based position of this parameter within the {@link IDBStatement#getParameters() parameters} list
-   * of the containing {@link #getStatement() statement}.
-   */
-  public int getPosition();
+  public IDBPreparedStatement getPreparedStatement(String sql, ReuseProbability reuseProbability);
 
-  public DBType getType();
+  public IDBSchemaTransaction startSchemaTransaction();
 }

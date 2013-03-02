@@ -13,6 +13,7 @@ package org.eclipse.net4j.db;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.internal.db.DBConnection;
 import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.spi.db.DBSchema;
@@ -140,6 +141,22 @@ public final class DBUtil
     return new DBSchema(name);
   }
 
+  /**
+   * @since 4.2
+   */
+  public static IDBSchema readSchema(String name, Connection connection)
+  {
+    return new DBSchema(name, connection);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static IDBSchema copySchema(IDBSchema source)
+  {
+    return new DBSchema(source);
+  }
+
   public static DataSource createDataSource(Map<Object, Object> properties)
   {
     return createDataSource(properties, null);
@@ -174,6 +191,14 @@ public final class DBUtil
   public static IDBAdapter getDBAdapter(String adapterName)
   {
     return IDBAdapter.REGISTRY.get(adapterName);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static Connection getSQLConnection(IDBConnection dbConnection)
+  {
+    return ((DBConnection)dbConnection).getSQLConnection();
   }
 
   public static Exception close(Connection connection)
@@ -263,13 +288,33 @@ public final class DBUtil
 
   /**
    * @since 3.0
+   * @deprecated As of 4.2 use {@link #getAllSchemaNames(Connection)}.
    */
+  @Deprecated
   public static List<String> getAllSchemaTableNames(Connection connection)
+  {
+    return getAllSchemaNames(connection);
+  }
+
+  /**
+   * @since 3.0
+   * @deprecated As of 4.2 use {@link #getAllSchemaNames(DatabaseMetaData)}.
+   */
+  @Deprecated
+  public static List<String> getAllSchemaTableNames(DatabaseMetaData metaData)
+  {
+    return getAllSchemaNames(metaData);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static List<String> getAllSchemaNames(Connection connection)
   {
     try
     {
       DatabaseMetaData metaData = connection.getMetaData();
-      return getAllSchemaTableNames(metaData);
+      return getAllSchemaNames(metaData);
     }
     catch (SQLException ex)
     {
@@ -278,9 +323,9 @@ public final class DBUtil
   }
 
   /**
-   * @since 3.0
+   * @since 4.2
    */
-  public static List<String> getAllSchemaTableNames(DatabaseMetaData metaData)
+  public static List<String> getAllSchemaNames(DatabaseMetaData metaData)
   {
     ResultSet schemas = null;
 
@@ -317,7 +362,7 @@ public final class DBUtil
       if (dbName != null)
       {
         dbName = dbName.toUpperCase();
-        List<String> schemaNames = getAllSchemaTableNames(metaData);
+        List<String> schemaNames = getAllSchemaNames(metaData);
         if (!schemaNames.contains(dbName))
         {
           dbName = null;
@@ -328,7 +373,6 @@ public final class DBUtil
       while (tables.next())
       {
         String name = tables.getString(3);
-        // System.out.println(tables.getString(2) + "." + name);
         names.add(name);
       }
 

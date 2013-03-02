@@ -103,6 +103,19 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
     }
   }
 
+  public void invalidate()
+  {
+    checkState(checkOuts.isEmpty(), "Cache can only be invalidated if no prepared statement is checked out");
+
+    // Close all statements in the cache, then clear the cache.
+    for (CachedPreparedStatement stmt : cache.values())
+    {
+      DBUtil.close(stmt.getPreparedStatement());
+    }
+
+    cache.clear();
+  }
+
   @Override
   protected void doBeforeDeactivate() throws Exception
   {

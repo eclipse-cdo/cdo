@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -13,6 +13,8 @@ package org.eclipse.net4j.db.ddl;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
+import org.eclipse.net4j.util.container.IContainer;
 
 import javax.sql.DataSource;
 
@@ -23,10 +25,12 @@ import java.util.Set;
 /**
  * Specifies a number of {@link IDBTable DB tables} that can be created in or dropped from a database through a
  * {@link IDBAdapter DB adapter}.
- * 
+ *
  * @author Eike Stepper
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
-public interface IDBSchema extends IDBSchemaElement
+public interface IDBSchema extends IDBSchemaElement, IContainer<IDBTable>
 {
   public IDBTable addTable(String name) throws DBException;
 
@@ -56,4 +60,9 @@ public interface IDBSchema extends IDBSchemaElement
   public void export(DataSource dataSource, PrintStream out) throws DBException;
 
   public void export(IDBConnectionProvider connectionProvider, PrintStream out) throws DBException;
+
+  /**
+   * @since 4.2
+   */
+  public IDBSchemaDelta compare(IDBSchema oldSchema);
 }

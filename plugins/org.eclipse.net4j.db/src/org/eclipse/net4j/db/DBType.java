@@ -1066,4 +1066,22 @@ public enum DBType
 
     return null;
   }
+
+  /**
+   * @since 4.2
+   */
+  public static DBType getTypeByCode(int code)
+  {
+    DBType[] values = DBType.values();
+    for (int i = 0; i < values.length; i++)
+    {
+      DBType dbType = values[i];
+      if (dbType.getCode() == code)
+      {
+        return dbType;
+      }
+    }
+
+    return null;
+  }
 }

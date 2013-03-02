@@ -11,31 +11,49 @@
 package org.eclipse.net4j.spi.db;
 
 import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBRowHandler;
+import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.internal.db.ddl.DBSchemaElement;
 import org.eclipse.net4j.internal.db.ddl.DBTable;
+import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
 
 import javax.sql.DataSource;
 
 import java.io.PrintStream;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 /**
  * A useful base class for implementing custom {@link IDBSchema DB schemas}.
- * 
+ *
  * @author Eike Stepper
  */
 public class DBSchema extends DBSchemaElement implements IDBSchema
 {
+  /**
+   * @since 4.2
+   */
+  public static final IDBTable[] NO_TABLES = {};
+
   private String name;
 
   private Map<String, DBTable> tables = new HashMap<String, DBTable>();
@@ -45,6 +63,63 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
   public DBSchema(String name)
   {
     this.name = name;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public DBSchema(String name, Connection connection)
+  {
+    this(name);
+    Statement statement = null;
+
+    try
+    {
+      statement = connection.createStatement();
+      DatabaseMetaData metaData = connection.getMetaData();
+
+      ResultSet tables = metaData.getTables(null, name, null, new String[] { "TABLE" });
+      while (tables.next())
+      {
+        String tableName = tables.getString(3);
+
+        IDBTable table = addTable(tableName);
+        readFields(table, statement);
+
+        readIndices(table, metaData, name);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(statement);
+    }
+  }
+
+  /**
+   * @since 4.2
+   */
+  public DBSchema(IDBSchema source)
+  {
+    name = source.getName();
+
+    for (IDBTable sourceTable : source.getTables())
+    {
+      DBTable table = (DBTable)addTable(sourceTable.getName());
+
+      for (IDBField sourceField : sourceTable.getFields())
+      {
+        table.addField(sourceField.getName(), sourceField.getType(), sourceField.getScale(), sourceField.isNotNull());
+      }
+
+      for (IDBIndex sourceIndex : sourceTable.getIndices())
+      {
+        table.addIndex(sourceIndex.getType(), sourceIndex.getFields());
+      }
+    }
   }
 
   public String getFullName()
@@ -101,6 +176,22 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
   public IDBTable[] getTables()
   {
     return tables.values().toArray(new DBTable[tables.size()]);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public boolean isEmpty()
+  {
+    return tables.isEmpty();
+  }
+
+  /**
+   * @since 4.2
+   */
+  public IDBTable[] getElements()
+  {
+    return getTables();
   }
 
   public boolean isLocked()
@@ -224,11 +315,140 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
     }
   }
 
+  /**
+   * @since 4.2
+   */
+  public IDBSchemaDelta compare(IDBSchema oldSchema)
+  {
+    return new DBSchemaDelta(this, oldSchema);
+  }
+
   public void assertUnlocked() throws DBException
   {
     if (locked)
     {
       throw new DBException("DBSchema locked: " + name); //$NON-NLS-1$
+    }
+  }
+
+  private void readFields(IDBTable table, Statement statement) throws SQLException
+  {
+    ResultSet resultSet = null;
+
+    try
+    {
+      resultSet = statement.executeQuery("SELECT * FROM " + table);
+      ResultSetMetaData metaData = resultSet.getMetaData();
+
+      for (int i = 0; i < metaData.getColumnCount(); i++)
+      {
+        int column = i + 1;
+
+        String name = metaData.getColumnName(column);
+        DBType type = DBType.getTypeByCode(metaData.getColumnType(column));
+        int precision = metaData.getPrecision(column);
+        int scale = metaData.getScale(column);
+        boolean notNull = metaData.isNullable(column) == ResultSetMetaData.columnNoNulls;
+
+        table.addField(name, type, precision, scale, notNull);
+      }
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+    }
+  }
+
+  private void readIndices(IDBTable table, DatabaseMetaData metaData, String schemaName) throws SQLException
+  {
+    String tableName = table.getName();
+
+    ResultSet primaryKeys = metaData.getPrimaryKeys(null, schemaName, tableName);
+    readIndices(table, primaryKeys, 6, 0, 4, 5);
+
+    ResultSet indexInfo = metaData.getIndexInfo(null, schemaName, tableName, false, false);
+    readIndices(table, indexInfo, 6, 4, 9, 8);
+  }
+
+  private void readIndices(IDBTable table, ResultSet resultSet, int indexNameColumn, int indexTypeColumn,
+      int fieldNameColumn, int fieldPositionColumn) throws SQLException
+  {
+    try
+    {
+      String indexName = null;
+      IDBIndex.Type indexType = null;
+      List<FieldInfo> fieldInfos = new ArrayList<FieldInfo>();
+
+      while (resultSet.next())
+      {
+        String name = resultSet.getString(indexNameColumn);
+        if (indexName != null && !indexName.equals(name))
+        {
+          addIndex(table, indexName, indexType, fieldInfos);
+          fieldInfos.clear();
+        }
+
+        indexName = name;
+
+        if (indexTypeColumn == 0)
+        {
+          indexType = IDBIndex.Type.PRIMARY_KEY;
+        }
+        else
+        {
+          boolean nonUnique = resultSet.getBoolean(indexTypeColumn);
+          indexType = nonUnique ? IDBIndex.Type.NON_UNIQUE : IDBIndex.Type.UNIQUE;
+        }
+
+        FieldInfo fieldInfo = new FieldInfo();
+        fieldInfo.name = resultSet.getString(fieldNameColumn);
+        fieldInfo.position = resultSet.getShort(fieldPositionColumn);
+        fieldInfos.add(fieldInfo);
+      }
+
+      if (indexName != null)
+      {
+        addIndex(table, indexName, indexType, fieldInfos);
+      }
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+    }
+  }
+
+  private void addIndex(IDBTable table, String name, IDBIndex.Type type, List<FieldInfo> fieldInfos)
+  {
+    IDBField[] fields = new IDBField[fieldInfos.size()];
+
+    Collections.sort(fieldInfos);
+    for (int i = 0; i < fieldInfos.size(); i++)
+    {
+      FieldInfo fieldInfo = fieldInfos.get(i);
+      IDBField field = table.getField(fieldInfo.name);
+      if (field == null)
+      {
+        throw new IllegalStateException("Field not found: " + fieldInfo.name);
+      }
+
+      fields[i] = field;
+    }
+
+    table.addIndex(name, type, fields);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class FieldInfo implements Comparable<FieldInfo>
+  {
+    public String name;
+
+    public int position;
+
+    public int compareTo(FieldInfo o)
+    {
+      return o.position - position;
     }
   }
 }

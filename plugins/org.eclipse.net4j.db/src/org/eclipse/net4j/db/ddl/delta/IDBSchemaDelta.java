@@ -8,24 +8,19 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.internal.db.ddl;
+package org.eclipse.net4j.db.ddl.delta;
 
-import org.eclipse.net4j.db.ddl.IDBSchemaElement;
-import org.eclipse.net4j.internal.db.DBElement;
+import org.eclipse.net4j.util.container.IContainer;
+
+import java.util.Map;
 
 /**
+ * @since 4.2
  * @author Eike Stepper
- * @since 2.0
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
-public abstract class DBSchemaElement extends DBElement implements IDBSchemaElement
+public interface IDBSchemaDelta extends IDBDelta, IContainer<IDBTableDelta>, Comparable<IDBSchemaDelta>
 {
-  public DBSchemaElement()
-  {
-  }
-
-  @Override
-  public final String toString()
-  {
-    return getName();
-  }
+  public Map<String, IDBTableDelta> getTableDeltas();
 }

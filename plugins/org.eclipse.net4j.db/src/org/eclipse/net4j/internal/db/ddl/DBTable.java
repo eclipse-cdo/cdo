@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -16,6 +16,9 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind;
+import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
+import org.eclipse.net4j.internal.db.ddl.delta.DBTableDelta;
 import org.eclipse.net4j.spi.db.DBSchema;
 
 import java.util.ArrayList;
@@ -26,6 +29,10 @@ import java.util.List;
  */
 public class DBTable extends DBSchemaElement implements IDBTable
 {
+  public static final IDBField[] NO_FIELDS = {};
+
+  public static final IDBIndex[] NO_INDICES = {};
+
   private DBSchema schema;
 
   private String name;
@@ -116,12 +123,17 @@ public class DBTable extends DBSchemaElement implements IDBTable
     return fields.toArray(new DBField[fields.size()]);
   }
 
-  public DBIndex addIndex(Type type, IDBField... fields)
+  public DBIndex addIndex(String name, Type type, IDBField... fields)
   {
     schema.assertUnlocked();
-    DBIndex index = new DBIndex(this, type, fields, indices.size());
+    DBIndex index = new DBIndex(this, name, type, fields, indices.size());
     indices.add(index);
     return index;
+  }
+
+  public DBIndex addIndex(Type type, IDBField... fields)
+  {
+    return addIndex(null, type, fields);
   }
 
   public int getIndexCount()
@@ -171,5 +183,10 @@ public class DBTable extends DBSchemaElement implements IDBTable
 
     builder.append(")"); //$NON-NLS-1$
     return builder.toString();
+  }
+
+  public DBTableDelta createDelta(DBSchemaDelta parent)
+  {
+    return new DBTableDelta(parent, name, ChangeKind.ADDED);
   }
 }

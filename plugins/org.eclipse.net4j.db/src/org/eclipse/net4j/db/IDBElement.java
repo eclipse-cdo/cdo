@@ -8,24 +8,19 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.internal.db.ddl;
+package org.eclipse.net4j.db;
 
-import org.eclipse.net4j.db.ddl.IDBSchemaElement;
-import org.eclipse.net4j.internal.db.DBElement;
+import org.eclipse.net4j.util.event.INotifier;
+
+import java.util.Properties;
 
 /**
  * @author Eike Stepper
- * @since 2.0
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
+ * @since 4.2
  */
-public abstract class DBSchemaElement extends DBElement implements IDBSchemaElement
+public interface IDBElement extends INotifier
 {
-  public DBSchemaElement()
-  {
-  }
-
-  @Override
-  public final String toString()
-  {
-    return getName();
-  }
+  public Properties getProperties();
 }

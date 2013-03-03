@@ -13,8 +13,8 @@ package org.eclipse.net4j.db;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.internal.db.DBTransaction;
 import org.eclipse.net4j.internal.db.DBDatabase;
+import org.eclipse.net4j.internal.db.DBTransaction;
 import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.spi.db.DBAdapter;
@@ -141,7 +141,7 @@ public final class DBUtil
   /**
    * @since 4.2
    */
-  public static IDBDatabase createDatabase(IDBAdapter dbAdapter, IDBConnectionProvider dbConnectionProvider,
+  public static IDBDatabase openDatabase(IDBAdapter dbAdapter, IDBConnectionProvider dbConnectionProvider,
       String schemaName)
   {
     return new DBDatabase((DBAdapter)dbAdapter, dbConnectionProvider, schemaName);
@@ -402,32 +402,21 @@ public final class DBUtil
   /**
    * @since 4.2
    */
-  public static void createSchema(DataSource dataSource, String name, boolean dropIfExists)
+  public static void createSchema(DataSource dataSource, final String name, final boolean dropIfExists)
   {
-    Connection conn = null;
-    Statement stmt = null;
-
-    try
+    execute(createConnectionProvider(dataSource), new RunnableWithConnection<Object>()
     {
-      conn = dataSource.getConnection();
-      stmt = conn.createStatement();
-
-      if (dropIfExists)
+      public Object run(Connection connection) throws SQLException
       {
-        stmt.execute("DROP SCHEMA IF EXISTS " + name);
-      }
+        if (dropIfExists)
+        {
+          execute(connection, "DROP SCHEMA IF EXISTS " + name);
+        }
 
-      stmt.execute("CREATE SCHEMA IF NOT EXISTS " + name);
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      close(stmt);
-      close(conn);
-    }
+        execute(connection, "CREATE SCHEMA IF NOT EXISTS " + name);
+        return null;
+      }
+    });
   }
 
   /**

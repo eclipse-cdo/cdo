@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.db.tests;
 
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -27,7 +28,7 @@ public class H2Test extends AbstractDBTest
   private File dbFolder;
 
   @Override
-  protected IDBAdapter createDBAdapter()
+  protected IDBAdapter createAdapter()
   {
     return new org.eclipse.net4j.db.h2.H2Adapter();
   }
@@ -39,8 +40,14 @@ public class H2Test extends AbstractDBTest
     deleteDBFolder();
     msg("Using DB folder: " + dbFolder.getAbsolutePath());
 
+    String url = "jdbc:h2:" + dbFolder.getAbsolutePath() + "/h2test";
+
     JdbcDataSource dataSource = new JdbcDataSource();
-    dataSource.setURL("jdbc:h2:" + dbFolder.getAbsolutePath() + "/h2test");
+    dataSource.setURL(url);
+    DBUtil.createSchema(dataSource, SCHEMA_NAME, true);
+
+    dataSource = new JdbcDataSource();
+    dataSource.setURL(url + ";SCHEMA=" + SCHEMA_NAME);
     return dataSource;
   }
 

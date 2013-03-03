@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 public class HsqldbTest extends AbstractDBTest
 {
   @Override
-  protected IDBAdapter createDBAdapter()
+  protected IDBAdapter createAdapter()
   {
     return new org.eclipse.net4j.db.hsqldb.HSQLDBAdapter();
   }

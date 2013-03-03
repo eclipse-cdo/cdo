@@ -79,6 +79,7 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public void setType(DBType type)
   {
+    table.getSchema().assertUnlocked();
     this.type = type;
   }
 
@@ -106,6 +107,7 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public void setPrecision(int precision)
   {
+    table.getSchema().assertUnlocked();
     this.precision = precision;
   }
 
@@ -121,6 +123,7 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public void setScale(int scale)
   {
+    table.getSchema().assertUnlocked();
     this.scale = scale;
   }
 
@@ -129,9 +132,10 @@ public class DBField extends DBSchemaElement implements IDBField
     return notNull;
   }
 
-  public void setNotNull(boolean on)
+  public void setNotNull(boolean notNull)
   {
-    notNull = on;
+    table.getSchema().assertUnlocked();
+    this.notNull = notNull;
   }
 
   public int getPosition()
@@ -139,9 +143,20 @@ public class DBField extends DBSchemaElement implements IDBField
     return position;
   }
 
+  public void setPosition(int position)
+  {
+    table.getSchema().assertUnlocked();
+    this.position = position;
+  }
+
   public String getFullName()
   {
     return table.getName() + "." + name; //$NON-NLS-1$
+  }
+
+  public void remove()
+  {
+    table.removeField(this);
   }
 
   public String formatPrecision()

@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.db.ddl.delta;
 
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.util.container.IContainer;
 
 import java.util.Map;
@@ -23,4 +24,8 @@ import java.util.Map;
 public interface IDBSchemaDelta extends IDBDelta, IContainer<IDBTableDelta>, Comparable<IDBSchemaDelta>
 {
   public Map<String, IDBTableDelta> getTableDeltas();
+
+  public IDBSchema getElement(IDBSchema schema);
+
+  public void applyTo(IDBSchema schema);
 }

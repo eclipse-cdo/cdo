@@ -66,6 +66,29 @@ public abstract class DBDelta extends DBElement implements IDBDelta
     return changeKind;
   }
 
+  public <T> IDBPropertyDelta<T> getPropertyDelta(String name)
+  {
+    @SuppressWarnings("unchecked")
+    IDBPropertyDelta<T> propertyDelta = (IDBPropertyDelta<T>)propertyDeltas.get(name);
+    return propertyDelta;
+  }
+
+  public <T> T getPropertyValue(String name)
+  {
+    return getPropertyValue(name, false);
+  }
+
+  public <T> T getPropertyValue(String name, boolean old)
+  {
+    IDBPropertyDelta<T> propertyDelta = getPropertyDelta(name);
+    if (old)
+    {
+      return propertyDelta.getOldValue();
+    }
+
+    return propertyDelta.getValue();
+  }
+
   public final Map<String, IDBPropertyDelta<?>> getPropertyDeltas()
   {
     return Collections.unmodifiableMap(propertyDeltas);

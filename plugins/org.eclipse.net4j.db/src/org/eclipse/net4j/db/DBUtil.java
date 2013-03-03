@@ -14,6 +14,7 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.DBConnection;
+import org.eclipse.net4j.internal.db.DBInstance;
 import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.spi.db.DBSchema;
@@ -134,6 +135,15 @@ public final class DBUtil
     {
       close(connection);
     }
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static IDBInstance createInstance(IDBAdapter dbAdapter, IDBConnectionProvider dbConnectionProvider,
+      String schemaName)
+  {
+    return new DBInstance(dbAdapter, dbConnectionProvider, schemaName);
   }
 
   public static IDBSchema createSchema(String name)
@@ -572,6 +582,56 @@ public final class DBUtil
       {
         close(resultSet);
       }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      close(statement);
+    }
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static <T> T execute(IDBConnectionProvider connectionProvider, RunnableWithConnection<T> runnable)
+  {
+    Connection connection = null;
+
+    try
+    {
+      connection = connectionProvider.getConnection();
+      return runnable.run(connection);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      close(connection);
+    }
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static void execute(Connection connection, CharSequence sql)
+  {
+    String string = sql.toString();
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(string);
+    }
+
+    Statement statement = null;
+
+    try
+    {
+      statement = connection.createStatement();
+      statement.execute(string);
     }
     catch (SQLException ex)
     {
@@ -1128,11 +1188,20 @@ public final class DBUtil
   }
 
   /**
+   * @since 4.2
+   * @author Eike Stepper
+   */
+  public interface RunnableWithConnection<T>
+  {
+    public T run(Connection connection) throws SQLException;
+  }
+
+  /**
    * Call-back interface with a {@link #done(boolean) method} that is called <i>after</i>
    * a number of table rows have been handled by one of the subtypes of this interface.
    *
-   * @author Eike Stepper
    * @since 4.1
+   * @author Eike Stepper
    */
   public interface RowHandler
   {
@@ -1143,8 +1212,8 @@ public final class DBUtil
    * A {@link RowHandler row handler} with a {@link #handleRow(ExtendedDataOutput, Connection, IDBField[], Object[]) method}
    * that is called once per row serialized within {@link DBUtil#serializeTable(ExtendedDataOutput, Connection, IDBTable, String, String, SerializeRowHandler) DBUtil.serializeTable()}.
    *
-   * @author Eike Stepper
    * @since 4.1
+   * @author Eike Stepper
    */
   public interface SerializeRowHandler extends RowHandler
   {
@@ -1156,8 +1225,8 @@ public final class DBUtil
    * A {@link RowHandler row handler} with a {@link #handleRow(ExtendedDataInput, Connection, IDBField[], Object[]) method}
    * that is called once per row deserialized within {@link DBUtil#deserializeTable(ExtendedDataInput, Connection, IDBTable, OMMonitor, DeserializeRowHandler) DBUtil.deserializeTable()}.
    *
-   * @author Eike Stepper
    * @since 4.1
+   * @author Eike Stepper
    */
   public interface DeserializeRowHandler extends RowHandler
   {

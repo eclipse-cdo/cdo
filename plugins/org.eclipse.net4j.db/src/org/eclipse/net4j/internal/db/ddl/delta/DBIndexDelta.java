@@ -12,7 +12,10 @@ package org.eclipse.net4j.internal.db.ddl.delta;
 
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndexField;
+import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.delta.IDBDelta;
+import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta;
@@ -50,7 +53,7 @@ public final class DBIndexDelta extends DBTableElementDelta implements IDBIndexD
     IDBIndex.Type oldType = oldIndex == null ? null : oldIndex.getType();
     if (!ObjectUtil.equals(type, oldType))
     {
-      addPropertyDelta(new DBPropertyDelta<IDBIndex.Type>("type", IDBPropertyDelta.Type.STRING, type, oldType));
+      addPropertyDelta(new DBPropertyDelta<IDBIndex.Type>(TYPE_PROPERTY, IDBPropertyDelta.Type.STRING, type, oldType));
     }
 
     IDBIndexField[] indexFields = index == null ? DBIndex.NO_INDEX_FIELDS : index.getIndexFields();
@@ -117,5 +120,25 @@ public final class DBIndexDelta extends DBTableElementDelta implements IDBIndexD
   public void addIndexFieldDelta(DBIndexFieldDelta indexFieldDelta)
   {
     indexFieldDeltas.put(indexFieldDelta.getName(), indexFieldDelta);
+  }
+
+  public void accept(IDBDeltaVisitor visitor)
+  {
+    visitor.visit(this);
+    for (IDBIndexFieldDelta indexFieldDelta : getElements())
+    {
+      indexFieldDelta.accept(visitor);
+    }
+  }
+
+  public IDBIndex getElement(IDBSchema schema)
+  {
+    IDBTable table = getParent().getElement(schema);
+    if (table == null)
+    {
+      return null;
+    }
+
+    return table.getIndex(getName());
   }
 }

@@ -46,6 +46,12 @@ public class DBIndexField extends DBSchemaElement implements IDBIndexField
     return position;
   }
 
+  public void setPosition(int position)
+  {
+    index.getTable().getSchema().assertUnlocked();
+    this.position = position;
+  }
+
   public IDBSchema getSchema()
   {
     return field.getSchema();
@@ -59,5 +65,10 @@ public class DBIndexField extends DBSchemaElement implements IDBIndexField
   public String getFullName()
   {
     return field.getFullName();
+  }
+
+  public void remove()
+  {
+    index.removeIndexField(this);
   }
 }

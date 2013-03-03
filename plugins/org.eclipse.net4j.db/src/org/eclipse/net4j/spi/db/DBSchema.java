@@ -194,6 +194,15 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
     return getTables();
   }
 
+  /**
+   * @since 4.2
+   */
+  public void remove()
+  {
+    assertUnlocked();
+    tables.clear();
+  }
+
   public boolean isLocked()
   {
     return locked;
@@ -202,6 +211,14 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
   public boolean lock()
   {
     return locked = true;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public boolean unlock()
+  {
+    return locked = false;
   }
 
   public Set<IDBTable> create(IDBAdapter dbAdapter, Connection connection) throws DBException
@@ -323,11 +340,19 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
     return new DBSchemaDelta(this, oldSchema);
   }
 
+  /**
+   * @since 4.2
+   */
+  public String createIndexName(IDBTable table, IDBIndex.Type type, IDBField[] fields, int position)
+  {
+    return "idx_" + table.getName() + "_" + position;
+  }
+
   public void assertUnlocked() throws DBException
   {
     if (locked)
     {
-      throw new DBException("DBSchema locked: " + name); //$NON-NLS-1$
+      throw new DBException("Schema locked: " + name); //$NON-NLS-1$
     }
   }
 

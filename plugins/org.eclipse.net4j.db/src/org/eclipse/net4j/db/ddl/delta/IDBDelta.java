@@ -11,6 +11,8 @@
 package org.eclipse.net4j.db.ddl.delta;
 
 import org.eclipse.net4j.db.IDBElement;
+import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -29,13 +31,23 @@ public interface IDBDelta extends IDBElement, Serializable
 
   public ChangeKind getChangeKind();
 
+  public <T> IDBPropertyDelta<T> getPropertyDelta(String name);
+
+  public <T> T getPropertyValue(String name);
+
+  public <T> T getPropertyValue(String name, boolean old);
+
   public Map<String, IDBPropertyDelta<?>> getPropertyDeltas();
+
+  public void accept(IDBDeltaVisitor visitor);
+
+  public IDBSchemaElement getElement(IDBSchema schema);
 
   /**
    * @author Eike Stepper
    */
   public enum ChangeKind
   {
-    CHANGED, ADDED, REMOVED
+    ADDED, REMOVED, CHANGED
   }
 }

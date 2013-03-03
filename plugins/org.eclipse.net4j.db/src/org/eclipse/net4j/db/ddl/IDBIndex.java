@@ -26,7 +26,29 @@ public interface IDBIndex extends IDBSchemaElement
   /**
    * @since 4.2
    */
+  public void setType(Type type);
+
+  public int getPosition();
+
+  /**
+   * @since 4.2
+   */
+  public IDBIndexField addIndexField(IDBField field);
+
+  /**
+   * @since 4.2
+   */
+  public IDBIndexField getIndexField(String name);
+
+  /**
+   * @since 4.2
+   */
   public IDBIndexField getIndexField(int position);
+
+  /**
+   * @since 4.2
+   */
+  public IDBField getField(String name);
 
   public IDBField getField(int position);
 
@@ -38,8 +60,6 @@ public interface IDBIndex extends IDBSchemaElement
   public IDBIndexField[] getIndexFields();
 
   public IDBField[] getFields();
-
-  public int getPosition();
 
   /**
    * The type of an {@link IDBIndex index} specification in a {@link IDBTable DB table}.

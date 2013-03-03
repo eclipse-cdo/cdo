@@ -12,6 +12,7 @@
 package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.internal.db.DBAdapterRegistry;
@@ -56,7 +57,7 @@ public interface IDBAdapter
   /**
    * @since 4.2
    */
-  public void updateSchema(IDBSchemaDelta delta, Connection connection) throws DBException;
+  public void updateSchema(Connection connection, IDBSchema schema, IDBSchemaDelta delta) throws DBException;
 
   public Set<IDBTable> createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException;
 

@@ -25,7 +25,7 @@ public interface IDBField extends IDBSchemaElement
 
   public IDBTable getTable();
 
-  public void setName(String name);
+  public void setName(String name); // TODO Move to IDBSchemaElement
 
   public DBType getType();
 
@@ -41,7 +41,7 @@ public interface IDBField extends IDBSchemaElement
 
   public boolean isNotNull();
 
-  public void setNotNull(boolean on);
+  public void setNotNull(boolean notNull);
 
   public int getPosition();
 

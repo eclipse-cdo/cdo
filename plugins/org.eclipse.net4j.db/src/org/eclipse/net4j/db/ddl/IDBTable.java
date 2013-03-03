@@ -35,7 +35,7 @@ public interface IDBTable extends IDBSchemaElement
 
   public IDBField getField(String name);
 
-  public IDBField getField(int index);
+  public IDBField getField(int position);
 
   public int getFieldCount();
 
@@ -47,6 +47,16 @@ public interface IDBTable extends IDBSchemaElement
    * @since 4.2
    */
   public IDBIndex addIndex(String name, IDBIndex.Type type, IDBField... fields);
+
+  /**
+   * @since 4.2
+   */
+  public IDBIndex getIndex(String name);
+
+  /**
+   * @since 4.2
+   */
+  public IDBIndex getIndex(int position);
 
   public int getIndexCount();
 

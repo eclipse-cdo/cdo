@@ -16,12 +16,10 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind;
-import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
-import org.eclipse.net4j.internal.db.ddl.delta.DBTableDelta;
 import org.eclipse.net4j.spi.db.DBSchema;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -85,21 +83,43 @@ public class DBTable extends DBSchemaElement implements IDBTable
   public DBField addField(String name, DBType type, int precision, int scale, boolean notNull)
   {
     schema.assertUnlocked();
+
     if (getField(name) != null)
     {
-      throw new DBException("DBField exists: " + name); //$NON-NLS-1$
+      throw new DBException("Field exists: " + name); //$NON-NLS-1$
     }
 
-    DBField field = new DBField(this, name, type, precision, scale, notNull, fields.size());
+    int position = fields.size();
+    DBField field = new DBField(this, name, type, precision, scale, notNull, position);
     fields.add(field);
     return field;
+  }
+
+  public void removeField(IDBField fieldToRemove)
+  {
+    schema.assertUnlocked();
+
+    boolean found = false;
+    for (Iterator<DBField> it = fields.iterator(); it.hasNext();)
+    {
+      DBField field = it.next();
+      if (found)
+      {
+        field.setPosition(field.getPosition() - 1);
+      }
+      else if (field == fieldToRemove)
+      {
+        it.remove();
+        found = true;
+      }
+    }
   }
 
   public DBField getField(String name)
   {
     for (DBField field : fields)
     {
-      if (name.equals(field.getName()))
+      if (field.getName().equals(name))
       {
         return field;
       }
@@ -108,9 +128,9 @@ public class DBTable extends DBSchemaElement implements IDBTable
     return null;
   }
 
-  public DBField getField(int index)
+  public DBField getField(int position)
   {
-    return fields.get(index);
+    return fields.get(position);
   }
 
   public int getFieldCount()
@@ -126,6 +146,7 @@ public class DBTable extends DBSchemaElement implements IDBTable
   public DBIndex addIndex(String name, Type type, IDBField... fields)
   {
     schema.assertUnlocked();
+
     DBIndex index = new DBIndex(this, name, type, fields, indices.size());
     indices.add(index);
     return index;
@@ -134,6 +155,44 @@ public class DBTable extends DBSchemaElement implements IDBTable
   public DBIndex addIndex(Type type, IDBField... fields)
   {
     return addIndex(null, type, fields);
+  }
+
+  public void removeIndex(IDBIndex indexToRemove)
+  {
+    schema.assertUnlocked();
+
+    boolean found = false;
+    for (Iterator<DBIndex> it = indices.iterator(); it.hasNext();)
+    {
+      DBIndex index = it.next();
+      if (found)
+      {
+        index.setPosition(index.getPosition() - 1);
+      }
+      else if (index == indexToRemove)
+      {
+        it.remove();
+        found = true;
+      }
+    }
+  }
+
+  public DBIndex getIndex(String name)
+  {
+    for (DBIndex index : indices)
+    {
+      if (index.getName().equals(name))
+      {
+        return index;
+      }
+    }
+
+    return null;
+  }
+
+  public DBIndex getIndex(int position)
+  {
+    return indices.get(position);
   }
 
   public int getIndexCount()
@@ -164,6 +223,11 @@ public class DBTable extends DBSchemaElement implements IDBTable
     return name;
   }
 
+  public void remove()
+  {
+    schema.removeTable(name);
+  }
+
   public String sqlInsert()
   {
     StringBuilder builder = new StringBuilder();
@@ -183,10 +247,5 @@ public class DBTable extends DBSchemaElement implements IDBTable
 
     builder.append(")"); //$NON-NLS-1$
     return builder.toString();
-  }
-
-  public DBTableDelta createDelta(DBSchemaDelta parent)
-  {
-    return new DBTableDelta(parent, name, ChangeKind.ADDED);
   }
 }

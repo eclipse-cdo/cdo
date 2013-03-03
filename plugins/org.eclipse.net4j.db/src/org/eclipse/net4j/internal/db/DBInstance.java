@@ -10,15 +10,20 @@
  */
 package org.eclipse.net4j.internal.db;
 
+import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.DBUtil.RunnableWithConnection;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBInstance;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,20 +32,32 @@ import java.util.Set;
  */
 public final class DBInstance extends DBElement implements IDBInstance
 {
+  private final Set<IDBConnection> dbConnections = new HashSet<IDBConnection>();
+
   private IDBAdapter dbAdapter;
+
+  private IDBConnectionProvider dbConnectionProvider;
 
   private IDBSchema dbSchema;
 
   private DBSchemaTransaction dbSchemaTransaction;
 
-  private IDBConnectionProvider dbConnectionProvider;
-
-  private final Set<IDBConnection> dbConnections = new HashSet<IDBConnection>();
-
   private int statementCacheCapacity = DEFAULT_STATEMENT_CACHE_CAPACITY;
 
-  public DBInstance()
+  public DBInstance(IDBAdapter dbAdapter, IDBConnectionProvider dbConnectionProvider, final String schemaName)
   {
+    this.dbAdapter = dbAdapter;
+    this.dbConnectionProvider = dbConnectionProvider;
+
+    dbSchema = DBUtil.execute(dbConnectionProvider, new RunnableWithConnection<IDBSchema>()
+    {
+      public IDBSchema run(Connection connection) throws SQLException
+      {
+        return DBUtil.readSchema(schemaName, connection);
+      }
+    });
+
+    ((DBSchema)dbSchema).lock();
   }
 
   public IDBAdapter getDBAdapter()

@@ -12,6 +12,7 @@ package org.eclipse.net4j.internal.db.ddl.delta;
 
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
 import org.eclipse.net4j.spi.db.DBSchema;
@@ -83,5 +84,25 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
   public void addTableDelta(IDBTableDelta tableDelta)
   {
     tableDeltas.put(tableDelta.getName(), tableDelta);
+  }
+
+  public void accept(IDBDeltaVisitor visitor)
+  {
+    visitor.visit(this);
+    for (IDBTableDelta tableDelta : getElements())
+    {
+      tableDelta.accept(visitor);
+    }
+  }
+
+  public IDBSchema getElement(IDBSchema schema)
+  {
+    return schema;
+  }
+
+  public void applyTo(IDBSchema schema)
+  {
+    IDBDeltaVisitor visitor = new IDBDeltaVisitor.Applier(schema);
+    accept(visitor);
   }
 }

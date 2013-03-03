@@ -10,6 +10,9 @@
  */
 package org.eclipse.net4j.db.ddl.delta;
 
+import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBSchema;
+
 /**
  * @since 4.2
  * @author Eike Stepper
@@ -18,4 +21,15 @@ package org.eclipse.net4j.db.ddl.delta;
  */
 public interface IDBFieldDelta extends IDBTableElementDelta
 {
+  public static final String TYPE_PROPERTY = "type";
+
+  public static final String PRECISION_PROPERTY = "precision";
+
+  public static final String SCALE_PROPERTY = "scale";
+
+  public static final String NOT_NULL_PROPERTY = "notNull";
+
+  public static final String POSITION_PROPERTY = "position";
+
+  public IDBField getElement(IDBSchema schema);
 }

@@ -12,8 +12,10 @@ package org.eclipse.net4j.internal.db.ddl.delta;
 
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.delta.IDBDelta;
+import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
 import org.eclipse.net4j.db.ddl.delta.IDBFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
@@ -23,6 +25,7 @@ import org.eclipse.net4j.internal.db.ddl.DBTable;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,6 +85,33 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
     return (IDBSchemaDelta)super.getParent();
   }
 
+  public IDBFieldDelta[] getFieldDeltasSortedByPosition()
+  {
+    IDBFieldDelta[] result = fieldDeltas.values().toArray(new IDBFieldDelta[fieldDeltas.size()]);
+    Arrays.sort(result, new Comparator<IDBFieldDelta>()
+    {
+      public int compare(IDBFieldDelta o1, IDBFieldDelta o2)
+      {
+        int v1 = getValue(o1);
+        int v2 = getValue(o2);
+        return v2 - v1;
+      }
+
+      private Integer getValue(IDBFieldDelta fieldDelta)
+      {
+        Integer value = fieldDelta.getPropertyValue(IDBFieldDelta.POSITION_PROPERTY);
+        if (value == null)
+        {
+          return 0;
+        }
+
+        return value;
+      }
+    });
+
+    return result;
+  }
+
   public Map<String, IDBFieldDelta> getFieldDeltas()
   {
     return Collections.unmodifiableMap(fieldDeltas);
@@ -129,5 +159,19 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
   public void addIndexDelta(IDBIndexDelta indexDelta)
   {
     indexDeltas.put(indexDelta.getName(), indexDelta);
+  }
+
+  public void accept(IDBDeltaVisitor visitor)
+  {
+    visitor.visit(this);
+    for (IDBTableElementDelta tableElementDelta : getElements())
+    {
+      tableElementDelta.accept(visitor);
+    }
+  }
+
+  public IDBTable getElement(IDBSchema schema)
+  {
+    return schema.getTable(getName());
   }
 }

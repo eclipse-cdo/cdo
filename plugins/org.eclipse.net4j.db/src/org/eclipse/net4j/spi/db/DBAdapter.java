@@ -17,9 +17,15 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind;
+import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
+import org.eclipse.net4j.db.ddl.delta.IDBIndexDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
+import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
 import org.eclipse.net4j.internal.db.bundle.OM;
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import javax.sql.DataSource;
@@ -128,7 +134,141 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.2
    */
-  public void updateSchema(IDBSchemaDelta delta, Connection connection) throws DBException
+  public void updateSchema(final Connection connection, final IDBSchema schema, IDBSchemaDelta delta)
+      throws DBException
+  {
+    // Apply delta to in-memory representation of the schema
+    delta.applyTo(schema);
+
+    // Call DDL methods to update the database schema
+    IDBDeltaVisitor schemaUpdater = new IDBDeltaVisitor.Default()
+    {
+      @Override
+      public void visit(IDBTableDelta delta)
+      {
+        IDBTable table = delta.getElement(schema);
+        ChangeKind changeKind = delta.getChangeKind();
+        switch (changeKind)
+        {
+        case ADDED:
+          createTable(connection, table, delta);
+          break;
+
+        case REMOVED:
+          dropTable(connection, table, delta);
+          break;
+
+        case CHANGED:
+          alterTable(connection, table, delta);
+          break;
+
+        default:
+          throw new IllegalStateException("Illegal change kind: " + changeKind);
+        }
+      }
+
+      @Override
+      public void visit(IDBIndexDelta delta)
+      {
+        IDBIndex element = delta.getElement(schema);
+        ChangeKind changeKind = delta.getChangeKind();
+        switch (changeKind)
+        {
+        case ADDED:
+          createIndex(connection, element, delta);
+          break;
+
+        case REMOVED:
+          dropIndex(connection, element, delta);
+          break;
+
+        case CHANGED:
+          dropIndex(connection, element, delta);
+          createIndex(connection, element, delta);
+          break;
+
+        default:
+          throw new IllegalStateException("Illegal change kind: " + changeKind);
+        }
+      }
+    };
+
+    delta.accept(schemaUpdater);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void createTable(Connection connection, IDBTable table, IDBTableDelta delta)
+  {
+    CheckUtil.checkArg(delta.getChangeKind() == ChangeKind.ADDED, "Not added: " + delta.getName());
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("CREATE TABLE "); //$NON-NLS-1$
+    builder.append(delta.getName());
+    builder.append(" ("); //$NON-NLS-1$
+    appendFieldDefs(builder, table, createFieldDefinitions(table));
+    builder.append(")"); //$NON-NLS-1$
+
+    DBUtil.execute(connection, builder);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void dropTable(Connection connection, IDBTable table, IDBTableDelta delta)
+  {
+    String sql = getDropTableSQL(table);
+    DBUtil.execute(connection, sql);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void alterTable(Connection connection, IDBTable table, IDBTableDelta delta)
+  {
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void createIndex(Connection connection, IDBIndex index, IDBIndexDelta delta)
+  {
+    IDBTable table = index.getTable();
+    String indexName = getIndexNameFor(index, index.getPosition());
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("CREATE "); //$NON-NLS-1$
+    if (index.getType() == IDBIndex.Type.UNIQUE || index.getType() == IDBIndex.Type.PRIMARY_KEY)
+    {
+      builder.append("UNIQUE "); //$NON-NLS-1$
+    }
+
+    builder.append("INDEX "); //$NON-NLS-1$
+    builder.append(indexName);
+    builder.append(" ON "); //$NON-NLS-1$
+    builder.append(table);
+    builder.append(" ("); //$NON-NLS-1$
+    IDBField[] fields = index.getFields();
+    for (int i = 0; i < fields.length; i++)
+    {
+      if (i != 0)
+      {
+        builder.append(", "); //$NON-NLS-1$
+      }
+
+      addIndexField(builder, fields[i]);
+    }
+
+    builder.append(")"); //$NON-NLS-1$
+
+    DBUtil.execute(connection, builder);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void dropIndex(Connection connection, IDBIndex index, IDBIndexDelta delta)
   {
   }
 
@@ -389,6 +529,12 @@ public abstract class DBAdapter implements IDBAdapter
   {
     return getTypeName(field) + (field.isNotNull() ? " NOT NULL" : ""); //$NON-NLS-1$ //$NON-NLS-2$
   }
+
+  // protected String getTypeName(DBType type)
+  // {
+  // new DBField(null,null)
+  // return getTypeName(field);
+  // }
 
   protected String getTypeName(IDBField field)
   {

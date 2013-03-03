@@ -53,15 +53,17 @@ public final class DBSchemaTransaction extends DBElement implements IDBSchemaTra
     IDBAdapter dbAdapter = dbInstance.getDBAdapter();
     Connection connection = dbConnection.getSQLConnection();
 
-    IDBSchema oldSchema = dbInstance.getDBSchema();
+    DBSchema oldSchema = (DBSchema)dbInstance.getDBSchema();
     IDBSchemaDelta delta = dbSchema.compare(oldSchema);
 
     try
     {
-      dbAdapter.updateSchema(delta, connection);
+      oldSchema.unlock();
+      dbAdapter.updateSchema(connection, oldSchema, delta);
     }
     finally
     {
+      oldSchema.lock();
       close();
     }
   }

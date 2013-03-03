@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.db.ddl.delta;
 
+import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.util.container.IContainer;
 
 import java.util.Map;
@@ -22,5 +24,9 @@ import java.util.Map;
  */
 public interface IDBIndexDelta extends IDBTableElementDelta, IContainer<IDBIndexFieldDelta>
 {
+  public static final String TYPE_PROPERTY = "type";
+
   public Map<String, IDBIndexFieldDelta> getIndexFieldDeltas();
+
+  public IDBIndex getElement(IDBSchema schema);
 }

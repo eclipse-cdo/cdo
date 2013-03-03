@@ -10,6 +10,9 @@
  */
 package org.eclipse.net4j.db.ddl.delta;
 
+import org.eclipse.net4j.db.ddl.IDBIndexField;
+import org.eclipse.net4j.db.ddl.IDBSchema;
+
 /**
  * @since 4.2
  * @author Eike Stepper
@@ -18,5 +21,9 @@ package org.eclipse.net4j.db.ddl.delta;
  */
 public interface IDBIndexFieldDelta extends IDBDelta, Comparable<IDBIndexFieldDelta>
 {
+  public static final String POSITION_PROPERTY = "position";
+
   public IDBIndexDelta getParent();
+
+  public IDBIndexField getElement(IDBSchema schema);
 }

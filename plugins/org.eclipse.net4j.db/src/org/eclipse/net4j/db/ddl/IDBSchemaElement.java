@@ -26,4 +26,9 @@ public interface IDBSchemaElement extends IDBElement
   public String getName();
 
   public String getFullName();
+
+  /**
+   * @since 4.2
+   */
+  public void remove();
 }

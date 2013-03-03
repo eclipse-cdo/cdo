@@ -10,10 +10,15 @@
  */
 package org.eclipse.net4j.internal.db.ddl;
 
+import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndexField;
-import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.spi.db.DBSchema;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -28,9 +33,7 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
 
   private Type type;
 
-  private IDBField[] fields;
-
-  private IDBIndexField[] indexFields;
+  private List<DBIndexField> indexFields = new ArrayList<DBIndexField>();
 
   public int position;
 
@@ -38,30 +41,23 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
   {
     if (name == null)
     {
-      name = "idx_" + table.getName() + "_" + position;
+      name = table.getSchema().createIndexName(table, type, fields, position);
     }
 
     this.table = table;
     this.name = name;
     this.type = type;
-    this.fields = fields;
 
-    indexFields = new DBIndexField[fields.length];
     for (int i = 0; i < fields.length; i++)
     {
       IDBField field = fields[i];
-      indexFields[i] = new DBIndexField(this, (DBField)field, i);
+      addIndexField(field);
     }
 
     this.position = position;
   }
 
-  public DBIndex(DBTable table, Type type, IDBField[] fields, int position)
-  {
-    this(table, null, type, fields, position);
-  }
-
-  public IDBSchema getSchema()
+  public DBSchema getSchema()
   {
     return table.getSchema();
   }
@@ -76,34 +72,119 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
     return type;
   }
 
-  public IDBField getField(int position)
+  public void setType(Type type)
   {
-    return fields[position];
-  }
-
-  public IDBIndexField getIndexField(int position)
-  {
-    return indexFields[position];
-  }
-
-  public int getFieldCount()
-  {
-    return indexFields.length;
-  }
-
-  public IDBField[] getFields()
-  {
-    return fields;
-  }
-
-  public IDBIndexField[] getIndexFields()
-  {
-    return indexFields;
+    table.getSchema().assertUnlocked();
+    this.type = type;
   }
 
   public int getPosition()
   {
     return position;
+  }
+
+  public void setPosition(int position)
+  {
+    table.getSchema().assertUnlocked();
+    this.position = position;
+  }
+
+  public DBIndexField addIndexField(IDBField field)
+  {
+    table.getSchema().assertUnlocked();
+
+    if (field.getTable() != table)
+    {
+      throw new DBException("Index field is from different table: " + field); //$NON-NLS-1$
+    }
+
+    String name = field.getName();
+    if (getIndexField(name) != null)
+    {
+      throw new DBException("Index field exists: " + name); //$NON-NLS-1$
+    }
+
+    int position = indexFields.size();
+    DBIndexField indexField = new DBIndexField(this, (DBField)field, position);
+    indexFields.add(indexField);
+    return indexField;
+  }
+
+  public void removeIndexField(IDBIndexField indexFieldToRemove)
+  {
+    table.getSchema().assertUnlocked();
+
+    boolean found = false;
+    for (Iterator<DBIndexField> it = indexFields.iterator(); it.hasNext();)
+    {
+      DBIndexField indexField = it.next();
+      if (found)
+      {
+        indexField.setPosition(indexField.getPosition() - 1);
+      }
+      else if (indexField == indexFieldToRemove)
+      {
+        it.remove();
+        found = true;
+      }
+    }
+  }
+
+  public DBIndexField getIndexField(String name)
+  {
+    for (DBIndexField indexField : indexFields)
+    {
+      if (indexField.getName().equals(name))
+      {
+        return indexField;
+      }
+    }
+
+    return null;
+  }
+
+  public DBIndexField getIndexField(int position)
+  {
+    return indexFields.get(position);
+  }
+
+  public DBField getField(String name)
+  {
+    for (DBIndexField indexField : indexFields)
+    {
+      if (indexField.getName().equals(name))
+      {
+        return indexField.getField();
+      }
+    }
+
+    return null;
+  }
+
+  public DBField getField(int position)
+  {
+    return indexFields.get(position).getField();
+  }
+
+  public int getFieldCount()
+  {
+    return indexFields.size();
+  }
+
+  public DBIndexField[] getIndexFields()
+  {
+    return indexFields.toArray(new DBIndexField[indexFields.size()]);
+  }
+
+  public DBField[] getFields()
+  {
+    DBField[] fields = new DBField[indexFields.size()];
+    for (int i = 0; i < fields.length; i++)
+    {
+      fields[i] = getField(i);
+    }
+
+    return fields;
   }
 
   public String getName()
@@ -114,5 +195,10 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
   public String getFullName()
   {
     return getName();
+  }
+
+  public void remove()
+  {
+    table.removeIndex(this);
   }
 }

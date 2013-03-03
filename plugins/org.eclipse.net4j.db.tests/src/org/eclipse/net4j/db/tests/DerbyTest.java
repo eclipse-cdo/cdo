@@ -12,7 +12,6 @@ package org.eclipse.net4j.db.tests;
 
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.util.io.IOUtil;
-import org.eclipse.net4j.util.io.TMPUtil;
 
 import org.apache.derby.jdbc.EmbeddedDataSource;
 
@@ -36,13 +35,13 @@ public class DerbyTest extends AbstractDBTest
   @Override
   protected DataSource createDataSource()
   {
-    dbFolder = TMPUtil.createTempFolder("derby_"); //$NON-NLS-1$
+    dbFolder = createTempFolder("derby_");
     deleteDBFolder();
-    msg("Using DB folder: " + dbFolder.getAbsolutePath()); //$NON-NLS-1$
+    msg("Using DB folder: " + dbFolder.getAbsolutePath());
 
     EmbeddedDataSource dataSource = new EmbeddedDataSource();
     dataSource.setDatabaseName(dbFolder.getAbsolutePath());
-    dataSource.setCreateDatabase("create"); //$NON-NLS-1$
+    dataSource.setCreateDatabase("create");
     return dataSource;
   }
 

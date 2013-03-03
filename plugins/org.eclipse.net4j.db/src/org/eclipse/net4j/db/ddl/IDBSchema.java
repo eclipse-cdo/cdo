@@ -32,6 +32,11 @@ import java.util.Set;
  */
 public interface IDBSchema extends IDBSchemaElement, IContainer<IDBTable>
 {
+  /**
+   * @since 4.2
+   */
+  public boolean isLocked();
+
   public IDBTable addTable(String name) throws DBException;
 
   /**

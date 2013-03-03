@@ -19,21 +19,23 @@ import org.eclipse.net4j.util.container.IContainer;
  * @noextend This interface is not intended to be extended by clients.
  * @since 4.2
  */
-public interface IDBInstance extends IDBElement, IContainer<IDBConnection>
+public interface IDBDatabase extends IDBElement, IContainer<IDBTransaction>
 {
   public static final int DEFAULT_STATEMENT_CACHE_CAPACITY = 200;
 
-  public IDBAdapter getDBAdapter();
+  public IDBAdapter getAdapter();
 
-  public IDBSchema getDBSchema();
+  public IDBSchema getSchema();
 
-  public IDBSchemaTransaction getDBSchemaTransaction();
+  public IDBConnectionProvider getConnectionProvider();
 
-  public IDBConnectionProvider getDBConnectionProvider();
+  public IDBSchemaTransaction openSchemaTransaction();
 
-  public IDBConnection openDBConnection();
+  public IDBSchemaTransaction getSchemaTransaction();
 
-  public IDBConnection[] getDBConnections();
+  public IDBTransaction openTransaction();
+
+  public IDBTransaction[] getTransactions();
 
   public int getStatementCacheCapacity();
 

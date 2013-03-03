@@ -42,7 +42,7 @@ import java.util.Map;
  */
 public final class DBPreparedStatement extends DBElement implements IDBPreparedStatement
 {
-  private final DBConnection dbConnection;
+  private final DBTransaction transaction;
 
   private final String sql;
 
@@ -52,18 +52,18 @@ public final class DBPreparedStatement extends DBElement implements IDBPreparedS
 
   private int touch;
 
-  public DBPreparedStatement(DBConnection dbConnection, String sql, ReuseProbability reuseProbability,
+  public DBPreparedStatement(DBTransaction transaction, String sql, ReuseProbability reuseProbability,
       PreparedStatement delegate)
   {
-    this.dbConnection = dbConnection;
+    this.transaction = transaction;
     this.sql = sql;
     this.reuseProbability = reuseProbability;
     this.delegate = delegate;
   }
 
-  public DBConnection getDBConnection()
+  public DBTransaction getTransaction()
   {
-    return dbConnection;
+    return transaction;
   }
 
   public String getSQL()
@@ -105,7 +105,7 @@ public final class DBPreparedStatement extends DBElement implements IDBPreparedS
 
   public void close() throws SQLException
   {
-    dbConnection.releasePreparedStatement(this);
+    transaction.releasePreparedStatement(this);
   }
 
   public IDBResultSet getGeneratedKeys() throws SQLException

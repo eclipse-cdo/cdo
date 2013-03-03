@@ -10,79 +10,112 @@
  */
 package org.eclipse.net4j.internal.db;
 
-import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.DBUtil.RunnableWithConnection;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
-import org.eclipse.net4j.db.ddl.IDBSchema;
-import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
+import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
+import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.spi.db.DBSchema;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * @author Eike Stepper
  */
-public final class DBSchemaTransaction extends DBElement implements IDBSchemaTransaction
+public final class DBSchemaTransaction extends DBElement implements IDBSchemaTransaction,
+    RunnableWithConnection<DBSchemaDelta>
 {
-  private DBConnection dbConnection;
+  private DBDatabase database;
 
-  private IDBSchema dbSchema;
+  private DBTransaction transaction;
 
-  public DBSchemaTransaction(DBConnection dbConnection)
+  private DBSchema oldSchema;
+
+  private DBSchema schema;
+
+  public DBSchemaTransaction(DBDatabase database)
   {
-    this.dbConnection = dbConnection;
+    this.database = database;
 
-    IDBSchema oldSchema = dbConnection.getDBInstance().getDBSchema();
-    dbSchema = new DBSchema(oldSchema);
+    oldSchema = database.getSchema();
+    schema = new DBSchema(oldSchema);
   }
 
-  public IDBConnection getDBConnection()
+  public DBDatabase getDatabase()
   {
-    return dbConnection;
+    return database;
   }
 
-  public IDBSchema getDBSchema()
+  public DBTransaction getTransaction()
   {
-    return dbSchema;
+    return transaction;
   }
 
-  public IDBSchemaDelta getDBSchemaDelta()
+  public void setTransaction(DBTransaction getTransaction)
   {
-    DBInstance dbInstance = dbConnection.getDBInstance();
-    DBSchema oldSchema = (DBSchema)dbInstance.getDBSchema();
-    return dbSchema.compare(oldSchema);
+    transaction = getTransaction;
   }
 
-  public void commit()
+  public DBSchema getSchema()
   {
-    DBInstance dbInstance = dbConnection.getDBInstance();
-    DBSchema oldSchema = (DBSchema)dbInstance.getDBSchema();
-    IDBSchemaDelta delta = dbSchema.compare(oldSchema);
+    return schema;
+  }
 
-    IDBAdapter dbAdapter = dbInstance.getDBAdapter();
-    Connection connection = dbConnection.getSQLConnection();
+  public DBSchemaDelta getSchemaDelta()
+  {
+    return (DBSchemaDelta)schema.compare(oldSchema);
+  }
+
+  public DBSchemaDelta commit()
+  {
+    if (transaction == null)
+    {
+      return DBUtil.execute(database.getConnectionProvider(), this);
+    }
+
+    try
+    {
+      Connection connection = transaction.getConnection();
+      return run(connection);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+  }
+
+  public DBSchemaDelta run(Connection connection) throws SQLException
+  {
+    DBSchemaDelta delta = getSchemaDelta();
 
     try
     {
       oldSchema.unlock();
-      dbAdapter.updateSchema(connection, oldSchema, delta);
+
+      DBAdapter adapter = database.getAdapter();
+      adapter.updateSchema(connection, oldSchema, delta);
     }
     finally
     {
       oldSchema.lock();
       close();
     }
+
+    return delta;
   }
 
   public void close()
   {
-    dbConnection.getDBInstance().setDBSchemaTransaction(null);
-    dbConnection = null;
-    dbSchema = null;
+    database.closeSchemaTransaction();
+    transaction = null;
+    oldSchema = null;
+    schema = null;
   }
 
   public boolean isClosed()
   {
-    return dbConnection == null;
+    return schema == null;
   }
 }

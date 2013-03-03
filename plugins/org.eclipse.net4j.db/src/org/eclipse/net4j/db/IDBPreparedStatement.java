@@ -22,7 +22,7 @@ import java.sql.SQLException;
  */
 public interface IDBPreparedStatement extends IDBElement, Comparable<IDBPreparedStatement>, PreparedStatement
 {
-  public IDBConnection getDBConnection();
+  public IDBTransaction getTransaction();
 
   public String getSQL();
 

@@ -16,15 +16,15 @@ import org.eclipse.net4j.util.collection.Closeable;
 /**
  * @since 4.2
  * @author Eike Stepper
- * @see DBUtil#getSQLConnection(IDBConnection)
+ * @see DBUtil#getSQLConnection(IDBTransaction)
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface IDBConnection extends IDBElement, Closeable
+public interface IDBTransaction extends IDBElement, Closeable
 {
-  public IDBInstance getDBInstance();
+  public IDBDatabase getDatabase();
 
   public IDBPreparedStatement getPreparedStatement(String sql, ReuseProbability reuseProbability);
 
-  public IDBSchemaTransaction startSchemaTransaction();
+  public IDBSchemaTransaction openSchemaTransaction();
 }

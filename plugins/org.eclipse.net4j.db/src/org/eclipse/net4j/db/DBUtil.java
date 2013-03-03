@@ -13,10 +13,11 @@ package org.eclipse.net4j.db;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.internal.db.DBConnection;
-import org.eclipse.net4j.internal.db.DBInstance;
+import org.eclipse.net4j.internal.db.DBTransaction;
+import org.eclipse.net4j.internal.db.DBDatabase;
 import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 import org.eclipse.net4j.internal.db.bundle.OM;
+import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
@@ -140,10 +141,10 @@ public final class DBUtil
   /**
    * @since 4.2
    */
-  public static IDBInstance createInstance(IDBAdapter dbAdapter, IDBConnectionProvider dbConnectionProvider,
+  public static IDBDatabase createDatabase(IDBAdapter dbAdapter, IDBConnectionProvider dbConnectionProvider,
       String schemaName)
   {
-    return new DBInstance(dbAdapter, dbConnectionProvider, schemaName);
+    return new DBDatabase((DBAdapter)dbAdapter, dbConnectionProvider, schemaName);
   }
 
   public static IDBSchema createSchema(String name)
@@ -206,9 +207,9 @@ public final class DBUtil
   /**
    * @since 4.2
    */
-  public static Connection getSQLConnection(IDBConnection dbConnection)
+  public static Connection getSQLConnection(IDBTransaction dbConnection)
   {
-    return ((DBConnection)dbConnection).getSQLConnection();
+    return ((DBTransaction)dbConnection).getConnection();
   }
 
   public static Exception close(Connection connection)

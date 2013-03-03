@@ -12,7 +12,7 @@ package org.eclipse.net4j.internal.db;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.IDBTransaction;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
@@ -28,9 +28,9 @@ import java.util.TreeMap;
 /**
  * @author Eike Stepper
  */
-public final class DBConnection extends DBElement implements IDBConnection
+public final class DBTransaction extends DBElement implements IDBTransaction
 {
-  private final DBInstance dbInstance;
+  private final DBDatabase database;
 
   private final NavigableMap<String, DBPreparedStatement> cache = new TreeMap<String, DBPreparedStatement>();
 
@@ -40,15 +40,15 @@ public final class DBConnection extends DBElement implements IDBConnection
 
   private Connection connection;
 
-  public DBConnection(DBInstance dbInstance)
+  public DBTransaction(DBDatabase database)
   {
-    this.dbInstance = dbInstance;
-    connection = dbInstance.getDBConnectionProvider().getConnection();
+    this.database = database;
+    connection = database.getConnectionProvider().getConnection();
   }
 
-  public DBInstance getDBInstance()
+  public DBDatabase getDatabase()
   {
-    return dbInstance;
+    return database;
   }
 
   public void close()
@@ -56,7 +56,7 @@ public final class DBConnection extends DBElement implements IDBConnection
     DBUtil.close(connection);
     connection = null;
 
-    dbInstance.closeDBConnection(this);
+    database.closeTransaction(this);
   }
 
   public boolean isClosed()
@@ -64,7 +64,7 @@ public final class DBConnection extends DBElement implements IDBConnection
     return connection != null;
   }
 
-  public Connection getSQLConnection()
+  public Connection getConnection()
   {
     return connection;
   }
@@ -106,17 +106,17 @@ public final class DBConnection extends DBElement implements IDBConnection
       throw new IllegalStateException(sql + " already in cache"); //$NON-NLS-1$
     }
 
-    if (cache.size() > dbInstance.getStatementCacheCapacity())
+    if (cache.size() > database.getStatementCacheCapacity())
     {
       DBPreparedStatement old = cache.remove(cache.firstKey());
       DBUtil.close(old.getDelegate());
     }
   }
 
-  public IDBSchemaTransaction startSchemaTransaction()
+  public IDBSchemaTransaction openSchemaTransaction()
   {
-    DBSchemaTransaction dbSchemaTransaction = new DBSchemaTransaction(this);
-    dbInstance.setDBSchemaTransaction(dbSchemaTransaction);
-    return dbSchemaTransaction;
+    DBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
+    schemaTransaction.setTransaction(this);
+    return schemaTransaction;
   }
 }

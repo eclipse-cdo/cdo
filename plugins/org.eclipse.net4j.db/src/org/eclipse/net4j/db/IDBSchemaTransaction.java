@@ -22,11 +22,13 @@ import org.eclipse.net4j.util.collection.Closeable;
  */
 public interface IDBSchemaTransaction extends IDBElement, Closeable
 {
-  public IDBConnection getDBConnection();
+  public IDBDatabase getDatabase();
 
-  public IDBSchema getDBSchema();
+  public IDBTransaction getTransaction();
 
-  public IDBSchemaDelta getDBSchemaDelta();
+  public IDBSchema getSchema();
 
-  public void commit();
+  public IDBSchemaDelta getSchemaDelta();
+
+  public IDBSchemaDelta commit();
 }

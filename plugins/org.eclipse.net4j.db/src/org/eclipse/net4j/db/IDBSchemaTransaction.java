@@ -11,6 +11,7 @@
 package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.util.collection.Closeable;
 
 /**
@@ -24,6 +25,8 @@ public interface IDBSchemaTransaction extends IDBElement, Closeable
   public IDBConnection getDBConnection();
 
   public IDBSchema getDBSchema();
+
+  public IDBSchemaDelta getDBSchemaDelta();
 
   public void commit();
 }

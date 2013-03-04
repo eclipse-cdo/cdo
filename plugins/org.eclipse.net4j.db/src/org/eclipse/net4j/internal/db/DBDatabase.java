@@ -17,20 +17,17 @@ import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBTransaction;
 import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.spi.db.DBSchema;
-import org.eclipse.net4j.util.container.IContainerDelta;
-import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
+import org.eclipse.net4j.util.container.SetContainer;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public final class DBDatabase extends DBElement implements IDBDatabase
+public final class DBDatabase extends SetContainer<IDBTransaction> implements IDBDatabase
 {
-  private final Set<DBTransaction> transactions = new HashSet<DBTransaction>();
+  // private final Set<DBTransaction> transactions = new HashSet<DBTransaction>();
 
   private DBAdapter adapter;
 
@@ -44,6 +41,7 @@ public final class DBDatabase extends DBElement implements IDBDatabase
 
   public DBDatabase(DBAdapter adapter, IDBConnectionProvider dbConnectionProvider, final String schemaName)
   {
+    super(IDBTransaction.class);
     this.adapter = adapter;
     connectionProvider = dbConnectionProvider;
 
@@ -93,44 +91,18 @@ public final class DBDatabase extends DBElement implements IDBDatabase
   public DBTransaction openTransaction()
   {
     DBTransaction transaction = new DBTransaction(this);
-    synchronized (transactions)
-    {
-      transactions.add(transaction);
-    }
-
-    fireEvent(new SingleDeltaContainerEvent<IDBTransaction>(this, transaction, IContainerDelta.Kind.ADDED));
+    addElement(transaction);
     return transaction;
   }
 
   public void closeTransaction(DBTransaction transaction)
   {
-    synchronized (transactions)
-    {
-      transactions.remove(transaction);
-    }
-
-    fireEvent(new SingleDeltaContainerEvent<IDBTransaction>(this, transaction, IContainerDelta.Kind.REMOVED));
+    removeElement(transaction);
   }
 
-  public DBTransaction[] getTransactions()
+  public IDBTransaction[] getTransactions()
   {
-    synchronized (transactions)
-    {
-      return transactions.toArray(new DBTransaction[transactions.size()]);
-    }
-  }
-
-  public boolean isEmpty()
-  {
-    synchronized (transactions)
-    {
-      return transactions.isEmpty();
-    }
-  }
-
-  public DBTransaction[] getElements()
-  {
-    return getTransactions();
+    return getElements();
   }
 
   public int getStatementCacheCapacity()

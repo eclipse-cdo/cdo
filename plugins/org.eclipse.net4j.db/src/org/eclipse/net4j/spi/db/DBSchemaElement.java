@@ -8,24 +8,28 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.internal.db.ddl;
+package org.eclipse.net4j.spi.db;
 
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
-import org.eclipse.net4j.internal.db.DBElement;
 
 /**
  * @author Eike Stepper
- * @since 2.0
+ * @since 4.2
+ * @noextend This class is not intended to be subclassed by clients.
  */
-public abstract class DBSchemaElement extends DBElement implements IDBSchemaElement
+public abstract class DBSchemaElement extends DBNamedElement implements IDBSchemaElement
 {
-  public DBSchemaElement()
+  private static final long serialVersionUID = 1L;
+
+  public DBSchemaElement(String name)
   {
+    super(name);
   }
 
-  @Override
-  public final String toString()
+  /**
+   * Constructor for deserialization.
+   */
+  protected DBSchemaElement()
   {
-    return getName();
   }
 }

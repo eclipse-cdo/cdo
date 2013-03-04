@@ -12,12 +12,15 @@ package org.eclipse.net4j.internal.db.ddl;
 
 import org.eclipse.net4j.db.ddl.IDBIndexField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.spi.db.DBSchemaElement;
 
 /**
  * @author Eike Stepper
  */
 public class DBIndexField extends DBSchemaElement implements IDBIndexField
 {
+  private static final long serialVersionUID = 1L;
+
   private DBIndex index;
 
   private DBField field;
@@ -26,9 +29,17 @@ public class DBIndexField extends DBSchemaElement implements IDBIndexField
 
   public DBIndexField(DBIndex index, DBField field, int position)
   {
+    super(field.getName());
     this.index = index;
     this.field = field;
     this.position = position;
+  }
+
+  /**
+   * Constructor for deserialization.
+   */
+  protected DBIndexField()
+  {
   }
 
   public DBIndex getIndex()
@@ -55,11 +66,6 @@ public class DBIndexField extends DBSchemaElement implements IDBIndexField
   public IDBSchema getSchema()
   {
     return field.getSchema();
-  }
-
-  public String getName()
-  {
-    return field.getName();
   }
 
   public String getFullName()

@@ -24,8 +24,7 @@ import java.sql.SQLException;
 /**
  * @author Eike Stepper
  */
-public final class DBSchemaTransaction extends DBElement implements IDBSchemaTransaction,
-    RunnableWithConnection<DBSchemaDelta>
+public final class DBSchemaTransaction implements IDBSchemaTransaction, RunnableWithConnection<DBSchemaDelta>
 {
   private DBDatabase database;
 

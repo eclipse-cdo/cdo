@@ -12,10 +12,10 @@ package org.eclipse.net4j.internal.db;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.IDBTransaction;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
+import org.eclipse.net4j.db.IDBTransaction;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,7 +28,7 @@ import java.util.TreeMap;
 /**
  * @author Eike Stepper
  */
-public final class DBTransaction extends DBElement implements IDBTransaction
+public final class DBTransaction implements IDBTransaction
 {
   private final DBDatabase database;
 

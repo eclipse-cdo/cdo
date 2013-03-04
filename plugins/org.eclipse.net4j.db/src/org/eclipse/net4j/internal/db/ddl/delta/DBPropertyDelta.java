@@ -12,33 +12,34 @@ package org.eclipse.net4j.internal.db.ddl.delta;
 
 import org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind;
 import org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta;
+import org.eclipse.net4j.spi.db.DBNamedElement;
 
 /**
  * @author Eike Stepper
  */
-public final class DBPropertyDelta<T> implements IDBPropertyDelta<T>
+public final class DBPropertyDelta<T> extends DBNamedElement implements IDBPropertyDelta<T>
 {
   private static final long serialVersionUID = 1L;
 
-  private final String name;
+  private Type type;
 
-  private final Type type;
+  private T value;
 
-  private final T value;
-
-  private final T oldValue;
+  private T oldValue;
 
   public DBPropertyDelta(String name, Type type, T value, T oldValue)
   {
-    this.name = name;
+    super(name);
     this.type = type;
     this.value = value;
     this.oldValue = oldValue;
   }
 
-  public String getName()
+  /**
+   * Constructor for deserialization.
+   */
+  protected DBPropertyDelta()
   {
-    return name;
   }
 
   public ChangeKind getChangeKind()

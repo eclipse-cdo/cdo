@@ -23,6 +23,8 @@ public class TestSchema extends DBSchema
 {
   public static final TestSchema INSTANCE = new TestSchema();
 
+  private static final long serialVersionUID = 1L;
+
   /**
    * DBTable cdo_repository
    */

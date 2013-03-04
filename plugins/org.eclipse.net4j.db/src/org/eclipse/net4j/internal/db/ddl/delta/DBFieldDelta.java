@@ -11,13 +11,12 @@
 package org.eclipse.net4j.internal.db.ddl.delta;
 
 import org.eclipse.net4j.db.DBType;
-import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
-import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.db.ddl.delta.IDBDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
 import org.eclipse.net4j.db.ddl.delta.IDBFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta;
+import org.eclipse.net4j.internal.db.ddl.DBField;
+import org.eclipse.net4j.internal.db.ddl.DBTable;
 import org.eclipse.net4j.util.ObjectUtil;
 
 /**
@@ -27,12 +26,12 @@ public final class DBFieldDelta extends DBTableElementDelta implements IDBFieldD
 {
   private static final long serialVersionUID = 1L;
 
-  public DBFieldDelta(IDBDelta parent, String name, ChangeKind changeKind)
+  public DBFieldDelta(DBDelta parent, String name, ChangeKind changeKind)
   {
     super(parent, name, changeKind);
   }
 
-  public DBFieldDelta(DBTableDelta parent, IDBField field, IDBField oldField)
+  public DBFieldDelta(DBDelta parent, DBField field, DBField oldField)
   {
     this(parent, getName(field, oldField), getChangeKind(field, oldField));
 
@@ -92,9 +91,9 @@ public final class DBFieldDelta extends DBTableElementDelta implements IDBFieldD
     visitor.visit(this);
   }
 
-  public IDBField getElement(IDBSchema schema)
+  public DBField getElement(IDBSchema schema)
   {
-    IDBTable table = getParent().getElement(schema);
+    DBTable table = getParent().getElement(schema);
     if (table == null)
     {
       return null;

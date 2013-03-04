@@ -10,25 +10,13 @@
  */
 package org.eclipse.net4j.db;
 
-import org.eclipse.net4j.db.ddl.IDBSchema;
-import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
-import org.eclipse.net4j.util.collection.Closeable;
-
 /**
- * @since 4.2
  * @author Eike Stepper
- * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
+ * @since 4.2
  */
-public interface IDBSchemaTransaction extends Closeable
+public interface IDBNamedElement extends IDBElement
 {
-  public IDBDatabase getDatabase();
-
-  public IDBTransaction getTransaction();
-
-  public IDBSchema getSchema();
-
-  public IDBSchemaDelta getSchemaDelta();
-
-  public IDBSchemaDelta commit();
+  public String getName();
 }

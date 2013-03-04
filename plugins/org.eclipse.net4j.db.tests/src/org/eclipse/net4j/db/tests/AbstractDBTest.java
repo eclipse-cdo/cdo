@@ -130,7 +130,7 @@ public abstract class AbstractDBTest extends AbstractOMTest
     IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
     assertEquals(false, schemaTransaction.getSchema().isLocked());
     assertEquals(true, schemaTransaction.getSchema().isEmpty());
-    assertEquals(database.getSchema().getName(), schemaTransaction.getSchema().getName());
+    assertEquals(database.getSchema(), schemaTransaction.getSchema());
 
     IDBTable table1 = schemaTransaction.getSchema().addTable("table1");
     IDBField field11 = table1.addField("field1", DBType.INTEGER);
@@ -153,35 +153,36 @@ public abstract class AbstractDBTest extends AbstractOMTest
     assertEquals(false, database.getSchema().isEmpty());
     assertEquals(2, database.getSchema().getTables().length);
 
-    assertEquals(table1.getName(), database.getSchema().getTables()[0].getName());
+    assertEquals(table1, database.getSchema().getTables()[0]);
     assertEquals(table1.getFieldCount(), database.getSchema().getTables()[0].getFieldCount());
-    assertEquals(field11.getName(), database.getSchema().getTables()[0].getField(0).getName());
-    assertEquals(field12.getName(), database.getSchema().getTables()[0].getField(1).getName());
-    assertEquals(field13.getName(), database.getSchema().getTables()[0].getField(2).getName());
+    assertEquals(field11, database.getSchema().getTables()[0].getField(0));
+    assertEquals(field12, database.getSchema().getTables()[0].getField(1));
+    assertEquals(field13, database.getSchema().getTables()[0].getField(2));
     assertEquals(table1.getIndexCount(), database.getSchema().getTables()[0].getIndexCount());
-    assertEquals(index11.getName(), database.getSchema().getTables()[0].getIndex(0).getName());
+    assertEquals(index11, database.getSchema().getTables()[0].getIndex(0));
     assertEquals(index11.getType(), database.getSchema().getTables()[0].getIndex(0).getType());
-    assertEquals(index12.getName(), database.getSchema().getTables()[0].getIndex(1).getName());
+    assertEquals(index12, database.getSchema().getTables()[0].getIndex(1));
     assertEquals(index12.getType(), database.getSchema().getTables()[0].getIndex(1).getType());
-    assertEquals(index13.getName(), database.getSchema().getTables()[0].getIndex(2).getName());
+    assertEquals(index13, database.getSchema().getTables()[0].getIndex(2));
     assertEquals(index13.getType(), database.getSchema().getTables()[0].getIndex(2).getType());
 
-    assertEquals(table2.getName(), database.getSchema().getTables()[1].getName());
+    assertEquals(table2, database.getSchema().getTables()[1]);
     assertEquals(table2.getFieldCount(), database.getSchema().getTables()[1].getFieldCount());
-    assertEquals(field21.getName(), database.getSchema().getTables()[1].getField(0).getName());
-    assertEquals(field22.getName(), database.getSchema().getTables()[1].getField(1).getName());
-    assertEquals(field23.getName(), database.getSchema().getTables()[1].getField(2).getName());
+    assertEquals(field21, database.getSchema().getTables()[1].getField(0));
+    assertEquals(field22, database.getSchema().getTables()[1].getField(1));
+    assertEquals(field23, database.getSchema().getTables()[1].getField(2));
     assertEquals(table2.getIndexCount(), database.getSchema().getTables()[1].getIndexCount());
-    assertEquals(index21.getName(), database.getSchema().getTables()[1].getIndex(0).getName());
+    assertEquals(index21, database.getSchema().getTables()[1].getIndex(0));
     assertEquals(index21.getType(), database.getSchema().getTables()[1].getIndex(0).getType());
-    assertEquals(index22.getName(), database.getSchema().getTables()[1].getIndex(1).getName());
+    assertEquals(index22, database.getSchema().getTables()[1].getIndex(1));
     assertEquals(index22.getType(), database.getSchema().getTables()[1].getIndex(1).getType());
-    assertEquals(index23.getName(), database.getSchema().getTables()[1].getIndex(2).getName());
+    assertEquals(index23, database.getSchema().getTables()[1].getIndex(2));
     assertEquals(index23.getType(), database.getSchema().getTables()[1].getIndex(2).getType());
   }
 
   public void testSchemaAddition() throws Exception
   {
+    // Init database
     IDBDatabase database = DBUtil.openDatabase(adapter, connectionProvider, SCHEMA_NAME);
     IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
 
@@ -196,6 +197,7 @@ public abstract class AbstractDBTest extends AbstractOMTest
     schemaTransaction.commit();
     assertEquals(1, database.getSchema().getTables().length);
 
+    // Reload database
     database = DBUtil.openDatabase(adapter, connectionProvider, SCHEMA_NAME);
     assertEquals(true, database.getSchema().isLocked());
     assertEquals(false, database.getSchema().isEmpty());
@@ -208,9 +210,15 @@ public abstract class AbstractDBTest extends AbstractOMTest
     index11 = table.getIndex("index1");
     index12 = table.getIndex("index2");
     index13 = table.getIndex("index3");
+    assertNotNull(field11);
+    assertNotNull(field12);
+    assertNotNull(field13);
+    assertNotNull(index11);
+    assertNotNull(index12);
+    assertNotNull(index13);
 
     schemaTransaction = database.openSchemaTransaction();
-    assertEquals(false, database.getSchema().isLocked());
+    assertEquals(true, database.getSchema().isLocked());
     assertEquals(false, database.getSchema().isEmpty());
     assertEquals(1, database.getSchema().getTables().length);
 
@@ -222,35 +230,37 @@ public abstract class AbstractDBTest extends AbstractOMTest
     IDBIndex index22 = table2.addIndex("index2", IDBIndex.Type.UNIQUE, field21, field22);
     IDBIndex index23 = table2.addIndex("index3", IDBIndex.Type.NON_UNIQUE, field22);
 
+    // IDBSchemaDelta schemaDelta = schemaTransaction.getSchemaDelta();
+
     schemaTransaction.commit();
     assertEquals(true, database.getSchema().isLocked());
     assertEquals(false, database.getSchema().isEmpty());
     assertEquals(2, database.getSchema().getTables().length);
 
-    assertEquals(table1.getName(), database.getSchema().getTables()[0].getName());
+    assertEquals(table1, database.getSchema().getTables()[0]);
     assertEquals(table1.getFieldCount(), database.getSchema().getTables()[0].getFieldCount());
-    assertEquals(field11.getName(), database.getSchema().getTables()[0].getField(0).getName());
-    assertEquals(field12.getName(), database.getSchema().getTables()[0].getField(1).getName());
-    assertEquals(field13.getName(), database.getSchema().getTables()[0].getField(2).getName());
+    assertEquals(field11, database.getSchema().getTables()[0].getField(0));
+    assertEquals(field12, database.getSchema().getTables()[0].getField(1));
+    assertEquals(field13, database.getSchema().getTables()[0].getField(2));
     assertEquals(table1.getIndexCount(), database.getSchema().getTables()[0].getIndexCount());
-    assertEquals(index11.getName(), database.getSchema().getTables()[0].getIndex(0).getName());
+    assertEquals(index11, database.getSchema().getTables()[0].getIndex(0));
     assertEquals(index11.getType(), database.getSchema().getTables()[0].getIndex(0).getType());
-    assertEquals(index12.getName(), database.getSchema().getTables()[0].getIndex(1).getName());
+    assertEquals(index12, database.getSchema().getTables()[0].getIndex(1));
     assertEquals(index12.getType(), database.getSchema().getTables()[0].getIndex(1).getType());
-    assertEquals(index13.getName(), database.getSchema().getTables()[0].getIndex(2).getName());
+    assertEquals(index13, database.getSchema().getTables()[0].getIndex(2));
     assertEquals(index13.getType(), database.getSchema().getTables()[0].getIndex(2).getType());
 
-    assertEquals(table2.getName(), database.getSchema().getTables()[1].getName());
+    assertEquals(table2, database.getSchema().getTables()[1]);
     assertEquals(table2.getFieldCount(), database.getSchema().getTables()[1].getFieldCount());
-    assertEquals(field21.getName(), database.getSchema().getTables()[1].getField(0).getName());
-    assertEquals(field22.getName(), database.getSchema().getTables()[1].getField(1).getName());
-    assertEquals(field23.getName(), database.getSchema().getTables()[1].getField(2).getName());
+    assertEquals(field21, database.getSchema().getTables()[1].getField(0));
+    assertEquals(field22, database.getSchema().getTables()[1].getField(1));
+    assertEquals(field23, database.getSchema().getTables()[1].getField(2));
     assertEquals(table2.getIndexCount(), database.getSchema().getTables()[1].getIndexCount());
-    assertEquals(index21.getName(), database.getSchema().getTables()[1].getIndex(0).getName());
+    assertEquals(index21, database.getSchema().getTables()[1].getIndex(0));
     assertEquals(index21.getType(), database.getSchema().getTables()[1].getIndex(0).getType());
-    assertEquals(index22.getName(), database.getSchema().getTables()[1].getIndex(1).getName());
+    assertEquals(index22, database.getSchema().getTables()[1].getIndex(1));
     assertEquals(index22.getType(), database.getSchema().getTables()[1].getIndex(1).getType());
-    assertEquals(index23.getName(), database.getSchema().getTables()[1].getIndex(2).getName());
+    assertEquals(index23, database.getSchema().getTables()[1].getIndex(2));
     assertEquals(index23.getType(), database.getSchema().getTables()[1].getIndex(2).getType());
   }
 }

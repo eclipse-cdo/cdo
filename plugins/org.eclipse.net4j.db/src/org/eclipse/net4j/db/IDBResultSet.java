@@ -19,7 +19,7 @@ import java.sql.SQLException;
  * @noimplement This interface is not intended to be implemented by clients.
  * @since 4.2
  */
-public interface IDBResultSet extends IDBElement, ResultSet
+public interface IDBResultSet extends ResultSet
 {
   public IDBPreparedStatement getStatement() throws SQLException;
 }

@@ -17,6 +17,7 @@ import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.spi.db.DBSchema;
+import org.eclipse.net4j.spi.db.DBSchemaElement;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,9 +32,9 @@ public class DBTable extends DBSchemaElement implements IDBTable
 
   public static final IDBIndex[] NO_INDICES = {};
 
-  private DBSchema schema;
+  private static final long serialVersionUID = 1L;
 
-  private String name;
+  private DBSchema schema;
 
   private List<DBField> fields = new ArrayList<DBField>();
 
@@ -41,18 +42,20 @@ public class DBTable extends DBSchemaElement implements IDBTable
 
   public DBTable(DBSchema schema, String name)
   {
+    super(name);
     this.schema = schema;
-    this.name = name;
+  }
+
+  /**
+   * Constructor for deserialization.
+   */
+  protected DBTable()
+  {
   }
 
   public DBSchema getSchema()
   {
     return schema;
-  }
-
-  public String getName()
-  {
-    return name;
   }
 
   public DBField addField(String name, DBType type)
@@ -117,15 +120,7 @@ public class DBTable extends DBSchemaElement implements IDBTable
 
   public DBField getField(String name)
   {
-    for (DBField field : fields)
-    {
-      if (field.getName().equals(name))
-      {
-        return field;
-      }
-    }
-
-    return null;
+    return findElement(getFields(), name);
   }
 
   public DBField getField(int position)
@@ -147,7 +142,18 @@ public class DBTable extends DBSchemaElement implements IDBTable
   {
     schema.assertUnlocked();
 
-    DBIndex index = new DBIndex(this, name, type, fields, indices.size());
+    int position = indices.size();
+    if (name == null)
+    {
+      name = schema.createIndexName(this, type, fields, position);
+    }
+
+    if (getIndex(name) != null)
+    {
+      throw new DBException("Index exists: " + name); //$NON-NLS-1$
+    }
+
+    DBIndex index = new DBIndex(this, name, type, fields, position);
     indices.add(index);
     return index;
   }
@@ -179,15 +185,7 @@ public class DBTable extends DBSchemaElement implements IDBTable
 
   public DBIndex getIndex(String name)
   {
-    for (DBIndex index : indices)
-    {
-      if (index.getName().equals(name))
-      {
-        return index;
-      }
-    }
-
-    return null;
+    return findElement(getIndices(), name);
   }
 
   public DBIndex getIndex(int position)
@@ -220,12 +218,12 @@ public class DBTable extends DBSchemaElement implements IDBTable
 
   public String getFullName()
   {
-    return name;
+    return getName();
   }
 
   public void remove()
   {
-    schema.removeTable(name);
+    schema.removeTable(getName());
   }
 
   public String sqlInsert()

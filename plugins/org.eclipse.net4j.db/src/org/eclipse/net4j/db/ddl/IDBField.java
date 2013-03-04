@@ -25,8 +25,6 @@ public interface IDBField extends IDBSchemaElement
 
   public IDBTable getTable();
 
-  public void setName(String name); // TODO Move to IDBSchemaElement
-
   public DBType getType();
 
   public void setType(DBType type);

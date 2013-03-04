@@ -26,6 +26,8 @@ public interface IDBIndexDelta extends IDBTableElementDelta, IContainer<IDBIndex
 {
   public static final String TYPE_PROPERTY = "type";
 
+  public IDBIndexFieldDelta[] getIndexFieldDeltasSortedByPosition();
+
   public Map<String, IDBIndexFieldDelta> getIndexFieldDeltas();
 
   public IDBIndex getElement(IDBSchema schema);

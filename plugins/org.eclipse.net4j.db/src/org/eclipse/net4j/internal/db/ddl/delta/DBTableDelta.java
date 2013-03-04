@@ -13,19 +13,16 @@ package org.eclipse.net4j.internal.db.ddl.delta;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
-import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.db.ddl.delta.IDBDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
 import org.eclipse.net4j.db.ddl.delta.IDBFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexDelta;
-import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
-import org.eclipse.net4j.db.ddl.delta.IDBTableElementDelta;
+import org.eclipse.net4j.internal.db.ddl.DBField;
+import org.eclipse.net4j.internal.db.ddl.DBIndex;
 import org.eclipse.net4j.internal.db.ddl.DBTable;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,12 +37,12 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
 
   private Map<String, IDBIndexDelta> indexDeltas = new HashMap<String, IDBIndexDelta>();
 
-  public DBTableDelta(IDBDelta parent, String name, ChangeKind changeKind)
+  public DBTableDelta(DBDelta parent, String name, ChangeKind changeKind)
   {
     super(parent, name, changeKind);
   }
 
-  public DBTableDelta(DBSchemaDelta parent, IDBTable table, IDBTable oldTable)
+  public DBTableDelta(DBSchemaDelta parent, DBTable table, DBTable oldTable)
   {
     this(parent, table.getName(), oldTable == null ? ChangeKind.ADDED : ChangeKind.CHANGED);
 
@@ -55,7 +52,7 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
     {
       public void compare(IDBField field, IDBField oldField)
       {
-        DBFieldDelta fieldDelta = new DBFieldDelta(DBTableDelta.this, field, oldField);
+        DBFieldDelta fieldDelta = new DBFieldDelta(DBTableDelta.this, (DBField)field, (DBField)oldField);
         addFieldDelta(fieldDelta);
       }
     });
@@ -66,7 +63,7 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
     {
       public void compare(IDBIndex index, IDBIndex oldIndex)
       {
-        DBIndexDelta indexDelta = new DBIndexDelta(DBTableDelta.this, index, oldIndex);
+        DBIndexDelta indexDelta = new DBIndexDelta(DBTableDelta.this, (DBIndex)index, (DBIndex)oldIndex);
         addIndexDelta(indexDelta);
       }
     });
@@ -80,35 +77,15 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
   }
 
   @Override
-  public IDBSchemaDelta getParent()
+  public DBSchemaDelta getParent()
   {
-    return (IDBSchemaDelta)super.getParent();
+    return (DBSchemaDelta)super.getParent();
   }
 
-  public IDBFieldDelta[] getFieldDeltasSortedByPosition()
+  public DBFieldDelta[] getFieldDeltasSortedByPosition()
   {
-    IDBFieldDelta[] result = fieldDeltas.values().toArray(new IDBFieldDelta[fieldDeltas.size()]);
-    Arrays.sort(result, new Comparator<IDBFieldDelta>()
-    {
-      public int compare(IDBFieldDelta o1, IDBFieldDelta o2)
-      {
-        int v1 = getValue(o1);
-        int v2 = getValue(o2);
-        return v2 - v1;
-      }
-
-      private Integer getValue(IDBFieldDelta fieldDelta)
-      {
-        Integer value = fieldDelta.getPropertyValue(IDBFieldDelta.POSITION_PROPERTY);
-        if (value == null)
-        {
-          return 0;
-        }
-
-        return value;
-      }
-    });
-
+    DBFieldDelta[] result = fieldDeltas.values().toArray(new DBFieldDelta[fieldDeltas.size()]);
+    Arrays.sort(result, new PositionComparator());
     return result;
   }
 
@@ -127,19 +104,19 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
     return fieldDeltas.isEmpty() && indexDeltas.isEmpty();
   }
 
-  public IDBTableElementDelta[] getElements()
+  public DBTableElementDelta[] getElements()
   {
-    IDBTableElementDelta[] elements = new IDBTableElementDelta[fieldDeltas.size() + indexDeltas.size()];
+    DBTableElementDelta[] elements = new DBTableElementDelta[fieldDeltas.size() + indexDeltas.size()];
     int i = 0;
 
-    for (IDBFieldDelta fieldDelta : fieldDeltas.values())
+    for (IDBFieldDelta fieldDelta : getFieldDeltasSortedByPosition())
     {
-      elements[i++] = fieldDelta;
+      elements[i++] = (DBTableElementDelta)fieldDelta;
     }
 
     for (IDBIndexDelta indexDelta : indexDeltas.values())
     {
-      elements[i++] = indexDelta;
+      elements[i++] = (DBTableElementDelta)indexDelta;
     }
 
     Arrays.sort(elements);
@@ -164,14 +141,20 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
   public void accept(IDBDeltaVisitor visitor)
   {
     visitor.visit(this);
-    for (IDBTableElementDelta tableElementDelta : getElements())
+
+    for (IDBFieldDelta fieldDelta : getFieldDeltasSortedByPosition())
     {
-      tableElementDelta.accept(visitor);
+      fieldDelta.accept(visitor);
+    }
+
+    for (IDBIndexDelta indexDelta : getIndexDeltas().values())
+    {
+      indexDelta.accept(visitor);
     }
   }
 
-  public IDBTable getElement(IDBSchema schema)
+  public DBTable getElement(IDBSchema schema)
   {
-    return schema.getTable(getName());
+    return (DBTable)schema.getTable(getName());
   }
 }

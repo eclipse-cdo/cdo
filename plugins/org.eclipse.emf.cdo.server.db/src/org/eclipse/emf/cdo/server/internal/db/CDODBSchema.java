@@ -27,6 +27,8 @@ public class CDODBSchema extends DBSchema
 {
   public static final CDODBSchema INSTANCE = new CDODBSchema();
 
+  private static final long serialVersionUID = 1L;
+
   /**
    * DBTable cdo_properties
    */

@@ -10,14 +10,12 @@
  */
 package org.eclipse.net4j.internal.db.ddl.delta;
 
-import org.eclipse.net4j.db.ddl.IDBIndex;
-import org.eclipse.net4j.db.ddl.IDBIndexField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
-import org.eclipse.net4j.db.ddl.delta.IDBDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
-import org.eclipse.net4j.db.ddl.delta.IDBIndexDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta;
+import org.eclipse.net4j.internal.db.ddl.DBIndex;
+import org.eclipse.net4j.internal.db.ddl.DBIndexField;
 import org.eclipse.net4j.util.ObjectUtil;
 
 /**
@@ -27,16 +25,16 @@ public final class DBIndexFieldDelta extends DBDelta implements IDBIndexFieldDel
 {
   private static final long serialVersionUID = 1L;
 
-  public DBIndexFieldDelta(IDBDelta parent, ChangeKind changeKind, String name)
+  public DBIndexFieldDelta(DBDelta parent, ChangeKind changeKind, String name)
   {
     super(parent, name, changeKind);
   }
 
-  public DBIndexFieldDelta(DBIndexDelta parent, IDBIndexField indexField, IDBIndexField oldIndexField)
+  public DBIndexFieldDelta(DBIndexDelta parent, DBIndexField indexField, DBIndexField oldIndexField)
   {
     this(parent, getChangeKind(indexField, oldIndexField), getName(indexField, oldIndexField));
 
-    Integer position = oldIndexField == null ? null : indexField.getPosition();
+    Integer position = indexField == null ? null : indexField.getPosition();
     Integer oldPosition = oldIndexField == null ? null : oldIndexField.getPosition();
     if (!ObjectUtil.equals(position, oldPosition))
     {
@@ -53,9 +51,9 @@ public final class DBIndexFieldDelta extends DBDelta implements IDBIndexFieldDel
   }
 
   @Override
-  public IDBIndexDelta getParent()
+  public DBIndexDelta getParent()
   {
-    return (IDBIndexDelta)super.getParent();
+    return (DBIndexDelta)super.getParent();
   }
 
   public int compareTo(IDBIndexFieldDelta o)
@@ -68,9 +66,9 @@ public final class DBIndexFieldDelta extends DBDelta implements IDBIndexFieldDel
     visitor.visit(this);
   }
 
-  public IDBIndexField getElement(IDBSchema schema)
+  public DBIndexField getElement(IDBSchema schema)
   {
-    IDBIndex index = getParent().getElement(schema);
+    DBIndex index = getParent().getElement(schema);
     if (index == null)
     {
       return null;

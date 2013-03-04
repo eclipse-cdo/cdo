@@ -24,6 +24,8 @@ public class DBRevisionCacheSchema extends DBSchema
 {
   public static final DBRevisionCacheSchema INSTANCE = new DBRevisionCacheSchema();
 
+  private static final long serialVersionUID = 1L;
+
   /**
    * DBTable dbrevisioncache_revisions.
    * <p>

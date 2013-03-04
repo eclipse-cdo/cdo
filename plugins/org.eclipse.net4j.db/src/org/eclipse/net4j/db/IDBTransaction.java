@@ -20,7 +20,7 @@ import org.eclipse.net4j.util.collection.Closeable;
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface IDBTransaction extends IDBElement, Closeable
+public interface IDBTransaction extends Closeable
 {
   public IDBDatabase getDatabase();
 

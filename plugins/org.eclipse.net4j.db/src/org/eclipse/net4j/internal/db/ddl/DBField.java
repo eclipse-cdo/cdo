@@ -13,6 +13,7 @@ package org.eclipse.net4j.internal.db.ddl;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.spi.db.DBSchemaElement;
 
 /**
  * @author Eike Stepper
@@ -27,9 +28,9 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public static final int DEFAULT_VARCHAR_LENGTH = 255;
 
-  private DBTable table;
+  private static final long serialVersionUID = 1L;
 
-  private String name;
+  private DBTable table;
 
   private DBType type;
 
@@ -43,13 +44,20 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public DBField(DBTable table, String name, DBType type, int precision, int scale, boolean notNull, int position)
   {
+    super(name);
     this.table = table;
-    this.name = name;
     this.type = type;
     this.precision = precision;
     this.scale = scale;
     this.notNull = notNull;
     this.position = position;
+  }
+
+  /**
+   * Constructor for deserialization.
+   */
+  protected DBField()
+  {
   }
 
   public IDBSchema getSchema()
@@ -60,16 +68,6 @@ public class DBField extends DBSchemaElement implements IDBField
   public DBTable getTable()
   {
     return table;
-  }
-
-  public String getName()
-  {
-    return name;
-  }
-
-  public void setName(String name)
-  {
-    this.name = name;
   }
 
   public DBType getType()
@@ -151,7 +149,7 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public String getFullName()
   {
-    return table.getName() + "." + name; //$NON-NLS-1$
+    return table.getName() + "." + getName(); //$NON-NLS-1$
   }
 
   public void remove()

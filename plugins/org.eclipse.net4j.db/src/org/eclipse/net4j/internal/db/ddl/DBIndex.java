@@ -15,6 +15,7 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndexField;
 import org.eclipse.net4j.spi.db.DBSchema;
+import org.eclipse.net4j.spi.db.DBSchemaElement;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,9 +28,9 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
 {
   public static final IDBIndexField[] NO_INDEX_FIELDS = {};
 
-  private DBTable table;
+  private static final long serialVersionUID = 1L;
 
-  private String name;
+  private DBTable table;
 
   private Type type;
 
@@ -39,13 +40,8 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
 
   public DBIndex(DBTable table, String name, Type type, IDBField[] fields, int position)
   {
-    if (name == null)
-    {
-      name = table.getSchema().createIndexName(table, type, fields, position);
-    }
-
+    super(name);
     this.table = table;
-    this.name = name;
     this.type = type;
 
     for (int i = 0; i < fields.length; i++)
@@ -55,6 +51,13 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
     }
 
     this.position = position;
+  }
+
+  /**
+   * Constructor for deserialization.
+   */
+  protected DBIndex()
+  {
   }
 
   public DBSchema getSchema()
@@ -132,15 +135,7 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
 
   public DBIndexField getIndexField(String name)
   {
-    for (DBIndexField indexField : indexFields)
-    {
-      if (indexField.getName().equals(name))
-      {
-        return indexField;
-      }
-    }
-
-    return null;
+    return findElement(getIndexFields(), name);
   }
 
   public DBIndexField getIndexField(int position)
@@ -150,9 +145,10 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
 
   public DBField getField(String name)
   {
+    name = name(name);
     for (DBIndexField indexField : indexFields)
     {
-      if (indexField.getName().equals(name))
+      if (indexField.getName() == name)
       {
         return indexField.getField();
       }
@@ -185,11 +181,6 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
     }
 
     return fields;
-  }
-
-  public String getName()
-  {
-    return name;
   }
 
   public String getFullName()

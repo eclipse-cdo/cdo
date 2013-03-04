@@ -46,6 +46,8 @@ public class Index extends DBSchema implements IDBConnectionProvider
 
   private static final String INDENT = "       ";
 
+  private static final long serialVersionUID = 1L;
+
   private LissomeStore store;
 
   private IDBAdapter adapter;

@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.db.ddl.delta;
 
+import org.eclipse.net4j.db.IDBElement;
 import org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind;
 
 import java.io.Serializable;
@@ -20,7 +21,7 @@ import java.io.Serializable;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBPropertyDelta<T> extends Serializable
+public interface IDBPropertyDelta<T> extends IDBElement, Serializable
 {
   public String getName();
 

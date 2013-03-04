@@ -20,7 +20,7 @@ import java.sql.SQLException;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBPreparedStatement extends IDBElement, Comparable<IDBPreparedStatement>, PreparedStatement
+public interface IDBPreparedStatement extends Comparable<IDBPreparedStatement>, PreparedStatement
 {
   public IDBTransaction getTransaction();
 

@@ -8,19 +8,23 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.internal.db;
+package org.eclipse.net4j.spi.db;
 
 import org.eclipse.net4j.db.IDBElement;
 import org.eclipse.net4j.util.event.Notifier;
 
+import java.io.Serializable;
 import java.util.Properties;
 
 /**
  * @author Eike Stepper
- * @since 2.0
+ * @since 4.2
+ * @noextend This class is not intended to be subclassed by clients.
  */
-public abstract class DBElement extends Notifier implements IDBElement
+public abstract class DBElement extends Notifier implements IDBElement, Serializable
 {
+  private static final long serialVersionUID = 1L;
+
   private Properties properties;
 
   public DBElement()

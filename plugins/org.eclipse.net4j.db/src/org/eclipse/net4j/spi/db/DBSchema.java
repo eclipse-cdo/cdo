@@ -21,7 +21,8 @@ import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
-import org.eclipse.net4j.internal.db.ddl.DBSchemaElement;
+import org.eclipse.net4j.internal.db.ddl.DBField;
+import org.eclipse.net4j.internal.db.ddl.DBIndex;
 import org.eclipse.net4j.internal.db.ddl.DBTable;
 import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
 
@@ -54,15 +55,17 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
    */
   public static final IDBTable[] NO_TABLES = {};
 
-  private String name;
+  private static final long serialVersionUID = 1L;
 
   private Map<String, DBTable> tables = new HashMap<String, DBTable>();
 
-  private boolean locked;
+  private transient boolean locked;
+
+  private transient int indexCounter;
 
   public DBSchema(String name)
   {
-    this.name = name;
+    super(name);
   }
 
   /**
@@ -78,15 +81,14 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
       statement = connection.createStatement();
       DatabaseMetaData metaData = connection.getMetaData();
 
-      ResultSet tables = metaData.getTables(null, name, null, new String[] { "TABLE" });
+      ResultSet tables = metaData.getTables(null, getName(), null, new String[] { "TABLE" });
       while (tables.next())
       {
         String tableName = tables.getString(3);
 
         IDBTable table = addTable(tableName);
         readFields(table, statement);
-
-        readIndices(table, metaData, name);
+        readIndices(table, metaData, getName());
       }
     }
     catch (SQLException ex)
@@ -104,7 +106,7 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
    */
   public DBSchema(IDBSchema source)
   {
-    name = source.getName();
+    super(source.getName());
 
     for (IDBTable sourceTable : source.getTables())
     {
@@ -117,24 +119,33 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
 
       for (IDBIndex sourceIndex : sourceTable.getIndices())
       {
-        table.addIndex(sourceIndex.getType(), sourceIndex.getFields());
+        DBIndex index = table.addIndex(sourceIndex.getType());
+        for (IDBField sourceField : sourceIndex.getFields())
+        {
+          DBField field = table.getField(sourceField.getPosition());
+          index.addIndexField(field);
+        }
       }
     }
   }
 
+  /**
+   * Constructor for deserialization.
+   *
+   * @since 4.2
+   */
+  protected DBSchema()
+  {
+  }
+
   public String getFullName()
   {
-    return name;
+    return getName();
   }
 
   public IDBSchema getSchema()
   {
     return this;
-  }
-
-  public String getName()
-  {
-    return name;
   }
 
   /**
@@ -149,7 +160,7 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
     }
 
     DBTable table = new DBTable(this, name);
-    tables.put(name, table);
+    tables.put(table.getName(), table);
     return table;
   }
 
@@ -159,6 +170,7 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
   public IDBTable removeTable(String name)
   {
     assertUnlocked();
+    name = name(name);
     return tables.remove(name);
   }
 
@@ -167,6 +179,7 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
    */
   public IDBTable getTable(String name)
   {
+    name = name(name);
     return tables.get(name);
   }
 
@@ -219,6 +232,14 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
   public boolean unlock()
   {
     return locked = false;
+  }
+
+  public void assertUnlocked() throws DBException
+  {
+    if (locked)
+    {
+      throw new DBException("Schema locked: " + this); //$NON-NLS-1$
+    }
   }
 
   public Set<IDBTable> create(IDBAdapter dbAdapter, Connection connection) throws DBException
@@ -345,15 +366,7 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
    */
   public String createIndexName(IDBTable table, IDBIndex.Type type, IDBField[] fields, int position)
   {
-    return "idx_" + table.getName() + "_" + position;
-  }
-
-  public void assertUnlocked() throws DBException
-  {
-    if (locked)
-    {
-      throw new DBException("Schema locked: " + name); //$NON-NLS-1$
-    }
+    return "I" + System.currentTimeMillis() + "_" + ++indexCounter;
   }
 
   private void readFields(IDBTable table, Statement statement) throws SQLException

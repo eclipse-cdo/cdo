@@ -10,7 +10,7 @@
  */
 package org.eclipse.net4j.db.ddl;
 
-import org.eclipse.net4j.db.IDBElement;
+import org.eclipse.net4j.db.IDBNamedElement;
 
 /**
  * Specifies a hierachical namespace for elements in a {@link IDBSchema DB schema}.
@@ -19,11 +19,15 @@ import org.eclipse.net4j.db.IDBElement;
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface IDBSchemaElement extends IDBElement
+public interface IDBSchemaElement extends IDBNamedElement
 {
   public IDBSchema getSchema();
 
-  public String getName();
+  /**
+   * @since 4.2
+   */
+  @Deprecated
+  public void setName(String name);
 
   public String getFullName();
 

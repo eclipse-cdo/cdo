@@ -93,8 +93,6 @@ public abstract class DBAdapter implements IDBAdapter
 
   private Set<String> reservedWords;
 
-  private int indexCounter;
-
   public DBAdapter(String name, String version)
   {
     this.name = name;
@@ -235,7 +233,6 @@ public abstract class DBAdapter implements IDBAdapter
   protected void createIndex(Connection connection, IDBIndex index, IDBIndexDelta delta)
   {
     IDBTable table = index.getTable();
-    String indexName = getIndexNameFor(index, index.getPosition());
 
     StringBuilder builder = new StringBuilder();
     builder.append("CREATE "); //$NON-NLS-1$
@@ -245,7 +242,7 @@ public abstract class DBAdapter implements IDBAdapter
     }
 
     builder.append("INDEX "); //$NON-NLS-1$
-    builder.append(indexName);
+    builder.append(index);
     builder.append(" ON "); //$NON-NLS-1$
     builder.append(table);
     builder.append(" ("); //$NON-NLS-1$
@@ -476,7 +473,7 @@ public abstract class DBAdapter implements IDBAdapter
     }
 
     builder.append("INDEX "); //$NON-NLS-1$
-    builder.append(getIndexNameFor(index, num));
+    builder.append(index);
     builder.append(" ON "); //$NON-NLS-1$
     builder.append(table);
     builder.append(" ("); //$NON-NLS-1$
@@ -499,14 +496,6 @@ public abstract class DBAdapter implements IDBAdapter
     }
 
     statement.execute(sql);
-  }
-
-  /**
-   * @since 4.2
-   */
-  protected String getIndexNameFor(IDBIndex index, int num)
-  {
-    return "I" + System.currentTimeMillis() + "_" + ++indexCounter;
   }
 
   protected void addIndexField(StringBuilder builder, IDBField field)

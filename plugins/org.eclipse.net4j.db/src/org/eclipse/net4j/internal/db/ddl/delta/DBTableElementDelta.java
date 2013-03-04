@@ -10,8 +10,6 @@
  */
 package org.eclipse.net4j.internal.db.ddl.delta;
 
-import org.eclipse.net4j.db.ddl.delta.IDBDelta;
-import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBTableElementDelta;
 
 /**
@@ -21,7 +19,7 @@ public abstract class DBTableElementDelta extends DBDelta implements IDBTableEle
 {
   private static final long serialVersionUID = 1L;
 
-  public DBTableElementDelta(IDBDelta parent, String name, ChangeKind changeKind)
+  public DBTableElementDelta(DBDelta parent, String name, ChangeKind changeKind)
   {
     super(parent, name, changeKind);
   }
@@ -34,9 +32,9 @@ public abstract class DBTableElementDelta extends DBDelta implements IDBTableEle
   }
 
   @Override
-  public IDBTableDelta getParent()
+  public DBTableDelta getParent()
   {
-    return (IDBTableDelta)super.getParent();
+    return (DBTableDelta)super.getParent();
   }
 
   public int compareTo(IDBTableElementDelta o)

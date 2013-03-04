@@ -15,6 +15,7 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
+import org.eclipse.net4j.internal.db.ddl.DBTable;
 import org.eclipse.net4j.spi.db.DBSchema;
 
 import java.util.Arrays;
@@ -46,7 +47,7 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
     {
       public void compare(IDBTable table, IDBTable oldTable)
       {
-        DBTableDelta tableDelta = new DBTableDelta(DBSchemaDelta.this, table, oldTable);
+        DBTableDelta tableDelta = new DBTableDelta(DBSchemaDelta.this, (DBTable)table, (DBTable)oldTable);
         addTableDelta(tableDelta);
       }
     });
@@ -69,9 +70,9 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
     return tableDeltas.isEmpty();
   }
 
-  public IDBTableDelta[] getElements()
+  public DBTableDelta[] getElements()
   {
-    IDBTableDelta[] elements = tableDeltas.values().toArray(new IDBTableDelta[tableDeltas.size()]);
+    DBTableDelta[] elements = tableDeltas.values().toArray(new DBTableDelta[tableDeltas.size()]);
     Arrays.sort(elements);
     return elements;
   }
@@ -89,15 +90,15 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
   public void accept(IDBDeltaVisitor visitor)
   {
     visitor.visit(this);
-    for (IDBTableDelta tableDelta : getElements())
+    for (DBDelta tableDelta : getElements())
     {
       tableDelta.accept(visitor);
     }
   }
 
-  public IDBSchema getElement(IDBSchema schema)
+  public DBSchema getElement(IDBSchema schema)
   {
-    return schema;
+    return (DBSchema)schema;
   }
 
   public void applyTo(IDBSchema schema)

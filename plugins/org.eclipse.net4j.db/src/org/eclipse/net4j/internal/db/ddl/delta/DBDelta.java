@@ -12,35 +12,33 @@ package org.eclipse.net4j.internal.db.ddl.delta;
 
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.delta.IDBDelta;
+import org.eclipse.net4j.db.ddl.delta.IDBFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta;
-import org.eclipse.net4j.internal.db.DBElement;
-import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.spi.db.DBNamedElement;
+import org.eclipse.net4j.spi.db.DBSchemaElement;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public abstract class DBDelta extends DBElement implements IDBDelta
+public abstract class DBDelta extends DBNamedElement implements IDBDelta
 {
   private static final long serialVersionUID = 1L;
 
-  private IDBDelta parent;
-
-  private String name;
+  private DBDelta parent;
 
   private ChangeKind changeKind;
 
   private Map<String, IDBPropertyDelta<?>> propertyDeltas = new HashMap<String, IDBPropertyDelta<?>>();
 
-  public DBDelta(IDBDelta parent, String name, ChangeKind changeKind)
+  public DBDelta(DBDelta parent, String name, ChangeKind changeKind)
   {
-    CheckUtil.checkArg(name, "name");
-
+    super(name);
     this.parent = parent;
-    this.name = name;
     this.changeKind = changeKind;
   }
 
@@ -51,14 +49,9 @@ public abstract class DBDelta extends DBElement implements IDBDelta
   {
   }
 
-  public IDBDelta getParent()
+  public DBDelta getParent()
   {
     return parent;
-  }
-
-  public final String getName()
-  {
-    return name;
   }
 
   public final ChangeKind getChangeKind()
@@ -66,10 +59,12 @@ public abstract class DBDelta extends DBElement implements IDBDelta
     return changeKind;
   }
 
-  public <T> IDBPropertyDelta<T> getPropertyDelta(String name)
+  public <T> DBPropertyDelta<T> getPropertyDelta(String name)
   {
+    name = name(name);
+
     @SuppressWarnings("unchecked")
-    IDBPropertyDelta<T> propertyDelta = (IDBPropertyDelta<T>)propertyDeltas.get(name);
+    DBPropertyDelta<T> propertyDelta = (DBPropertyDelta<T>)propertyDeltas.get(name);
     return propertyDelta;
   }
 
@@ -81,6 +76,11 @@ public abstract class DBDelta extends DBElement implements IDBDelta
   public <T> T getPropertyValue(String name, boolean old)
   {
     IDBPropertyDelta<T> propertyDelta = getPropertyDelta(name);
+    if (propertyDelta == null)
+    {
+      return null;
+    }
+
     if (old)
     {
       return propertyDelta.getOldValue();
@@ -117,7 +117,7 @@ public abstract class DBDelta extends DBElement implements IDBDelta
       T element = elements[i];
       String name = element.getName();
 
-      T oldElement = findElement(oldElements, name);
+      T oldElement = DBSchemaElement.findElement(oldElements, name);
       comparator.compare(element, oldElement);
     }
 
@@ -126,25 +126,11 @@ public abstract class DBDelta extends DBElement implements IDBDelta
       T oldElement = oldElements[i];
       String name = oldElement.getName();
 
-      if (findElement(elements, name) == null)
+      if (DBSchemaElement.findElement(elements, name) == null)
       {
         comparator.compare(null, oldElement);
       }
     }
-  }
-
-  private static <T extends IDBSchemaElement> T findElement(T[] elements, String name)
-  {
-    for (int i = 0; i < elements.length; i++)
-    {
-      T element = elements[i];
-      if (element.getName().equals(name))
-      {
-        return element;
-      }
-    }
-
-    return null;
   }
 
   /**
@@ -153,5 +139,29 @@ public abstract class DBDelta extends DBElement implements IDBDelta
   public interface SchemaElementComparator<T extends IDBSchemaElement>
   {
     public void compare(T element, T oldElement);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class PositionComparator implements Comparator<IDBDelta>
+  {
+    public int compare(IDBDelta delta1, IDBDelta delta2)
+    {
+      int v1 = getValue(delta1);
+      int v2 = getValue(delta2);
+      return v2 - v1;
+    }
+
+    private Integer getValue(IDBDelta delta)
+    {
+      Integer value = delta.getPropertyValue(IDBFieldDelta.POSITION_PROPERTY);
+      if (value == null)
+      {
+        return 0;
+      }
+
+      return value;
+    }
   }
 }

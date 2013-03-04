@@ -40,7 +40,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public final class DBPreparedStatement extends DBElement implements IDBPreparedStatement
+public final class DBPreparedStatement implements IDBPreparedStatement
 {
   private final DBTransaction transaction;
 
@@ -593,7 +593,7 @@ public final class DBPreparedStatement extends DBElement implements IDBPreparedS
   /**
    * @author Eike Stepper
    */
-  private final class DBResultSet extends DBElement implements IDBResultSet
+  private final class DBResultSet implements IDBResultSet
   {
     private final ResultSet delegate;
 

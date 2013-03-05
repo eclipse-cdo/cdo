@@ -14,6 +14,8 @@ import org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind;
 import org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta;
 import org.eclipse.net4j.spi.db.DBNamedElement;
 
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  */
@@ -60,5 +62,12 @@ public final class DBPropertyDelta<T> extends DBNamedElement implements IDBPrope
   public T getOldValue()
   {
     return oldValue;
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("DBPropertyDelta[name={0}, kind={1}, type={2}, value={3}, oldValue={4}]", getName(),
+        getChangeKind(), getType(), getValue(), getOldValue());
   }
 }

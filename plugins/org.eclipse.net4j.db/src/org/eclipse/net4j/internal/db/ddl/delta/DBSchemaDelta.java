@@ -18,6 +18,7 @@ import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
 import org.eclipse.net4j.internal.db.ddl.DBTable;
 import org.eclipse.net4j.spi.db.DBSchema;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -90,7 +91,7 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
   public void accept(IDBDeltaVisitor visitor)
   {
     visitor.visit(this);
-    for (DBDelta tableDelta : getElements())
+    for (DBTableDelta tableDelta : getElements())
     {
       tableDelta.accept(visitor);
     }
@@ -105,5 +106,12 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
   {
     IDBDeltaVisitor visitor = new IDBDeltaVisitor.Applier(schema);
     accept(visitor);
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("DBSchemaDelta[name={0}, kind={1}, tableDeltas={2}]", getName(), getChangeKind(),
+        tableDeltas.values());
   }
 }

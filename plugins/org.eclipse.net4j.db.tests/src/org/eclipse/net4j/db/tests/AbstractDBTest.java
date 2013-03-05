@@ -20,6 +20,7 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import javax.sql.DataSource;
@@ -230,7 +231,7 @@ public abstract class AbstractDBTest extends AbstractOMTest
     IDBIndex index22 = table2.addIndex("index2", IDBIndex.Type.UNIQUE, field21, field22);
     IDBIndex index23 = table2.addIndex("index3", IDBIndex.Type.NON_UNIQUE, field22);
 
-    // IDBSchemaDelta schemaDelta = schemaTransaction.getSchemaDelta();
+    IDBSchemaDelta schemaDelta = schemaTransaction.getSchemaDelta();
 
     schemaTransaction.commit();
     assertEquals(true, database.getSchema().isLocked());

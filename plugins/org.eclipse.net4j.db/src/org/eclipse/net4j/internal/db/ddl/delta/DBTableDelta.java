@@ -21,6 +21,7 @@ import org.eclipse.net4j.internal.db.ddl.DBField;
 import org.eclipse.net4j.internal.db.ddl.DBIndex;
 import org.eclipse.net4j.internal.db.ddl.DBTable;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -147,7 +148,7 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
       fieldDelta.accept(visitor);
     }
 
-    for (IDBIndexDelta indexDelta : getIndexDeltas().values())
+    for (IDBIndexDelta indexDelta : indexDeltas.values())
     {
       indexDelta.accept(visitor);
     }
@@ -156,5 +157,12 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
   public DBTable getElement(IDBSchema schema)
   {
     return (DBTable)schema.getTable(getName());
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("DBTableDelta[name={0}, kind={1}, fieldDeltas={2}, indexDeltas={3}]", getName(),
+        getChangeKind(), fieldDeltas.values(), indexDeltas.values());
   }
 }

@@ -22,6 +22,7 @@ import org.eclipse.net4j.internal.db.ddl.DBIndexField;
 import org.eclipse.net4j.internal.db.ddl.DBTable;
 import org.eclipse.net4j.util.ObjectUtil;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -146,5 +147,12 @@ public final class DBIndexDelta extends DBTableElementDelta implements IDBIndexD
     }
 
     return table.getIndex(getName());
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("DBIndexDelta[name={0}, kind={1}, propertyDeltas={2}, indexFieldDeltas={3}]",
+        getName(), getChangeKind(), getPropertyDeltas().values(), indexFieldDeltas.values());
   }
 }

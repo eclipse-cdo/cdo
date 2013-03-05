@@ -70,7 +70,7 @@ public abstract class DBNamedElement extends DBElement implements IDBNamedElemen
   }
 
   @Override
-  public final String toString()
+  public String toString()
   {
     return name;
   }

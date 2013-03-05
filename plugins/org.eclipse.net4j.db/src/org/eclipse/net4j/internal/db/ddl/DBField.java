@@ -22,6 +22,8 @@ public class DBField extends DBSchemaElement implements IDBField
 {
   public static final int DEFAULT_DECIMAL_PRECISION = 5;
 
+  public static final int DEFAULT_PRECISION = 0;
+
   public static final int DEFAULT_SCALE = 0;
 
   public static final int DEFAULT_CHAR_LENGTH = 1;
@@ -97,6 +99,9 @@ public class DBField extends DBSchemaElement implements IDBField
       case DECIMAL:
       case NUMERIC:
         return DEFAULT_DECIMAL_PRECISION;
+
+      default:
+        return DEFAULT_PRECISION;
       }
     }
 

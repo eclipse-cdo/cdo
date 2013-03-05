@@ -18,6 +18,8 @@ import org.eclipse.net4j.internal.db.ddl.DBIndex;
 import org.eclipse.net4j.internal.db.ddl.DBIndexField;
 import org.eclipse.net4j.util.ObjectUtil;
 
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  */
@@ -75,5 +77,12 @@ public final class DBIndexFieldDelta extends DBDelta implements IDBIndexFieldDel
     }
 
     return index.getIndexField(getName());
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("DBIndexFieldDelta[name={0}, kind={1}, propertyDeltas={2}]", getName(),
+        getChangeKind(), getPropertyDeltas().values());
   }
 }

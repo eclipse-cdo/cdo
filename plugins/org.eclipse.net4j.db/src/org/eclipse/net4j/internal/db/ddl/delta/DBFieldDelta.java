@@ -19,6 +19,8 @@ import org.eclipse.net4j.internal.db.ddl.DBField;
 import org.eclipse.net4j.internal.db.ddl.DBTable;
 import org.eclipse.net4j.util.ObjectUtil;
 
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  */
@@ -100,5 +102,12 @@ public final class DBFieldDelta extends DBTableElementDelta implements IDBFieldD
     }
 
     return table.getField(getName());
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("DBFieldDelta[name={0}, kind={1}, propertyDeltas={2}]", getName(), getChangeKind(),
+        getPropertyDeltas().values());
   }
 }

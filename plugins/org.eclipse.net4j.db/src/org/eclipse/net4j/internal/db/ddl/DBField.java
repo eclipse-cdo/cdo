@@ -14,12 +14,20 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.spi.db.DBSchemaElement;
+import org.eclipse.net4j.util.StringUtil;
+
+import java.io.IOException;
+import java.io.Writer;
 
 /**
  * @author Eike Stepper
  */
 public class DBField extends DBSchemaElement implements IDBField
 {
+  public static final int DEFAULT_BOOLEAN_PRECISION = 1;
+
+  public static final int DEFAULT_INTEGER_PRECISION = 10;
+
   public static final int DEFAULT_DECIMAL_PRECISION = 5;
 
   public static final int DEFAULT_PRECISION = 0;
@@ -89,6 +97,12 @@ public class DBField extends DBSchemaElement implements IDBField
     {
       switch (type)
       {
+      case BOOLEAN:
+        return DEFAULT_BOOLEAN_PRECISION;
+
+      case INTEGER:
+        return DEFAULT_INTEGER_PRECISION;
+
       case CHAR:
         return DEFAULT_CHAR_LENGTH;
 
@@ -180,6 +194,25 @@ public class DBField extends DBSchemaElement implements IDBField
       return "(" + getPrecision() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    return "(" + getPrecision() + ", " + scale + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    return "(" + getPrecision() + ", " + getScale() + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  }
+
+  @Override
+  public void dump(Writer writer) throws IOException
+  {
+    writer.append("    FIELD ");
+    writer.append(getName());
+    writer.append(" (position=");
+    writer.append(String.valueOf(getPosition()));
+    writer.append(", type=");
+    writer.append(getType().toString());
+    writer.append(", precision=");
+    writer.append(String.valueOf(getPrecision()));
+    writer.append(", scale=");
+    writer.append(String.valueOf(getScale()));
+    writer.append(", notNull=");
+    writer.append(String.valueOf(isNotNull()));
+    writer.append(")");
+    writer.append(StringUtil.NL);
   }
 }

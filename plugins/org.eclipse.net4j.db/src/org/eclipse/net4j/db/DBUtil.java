@@ -18,6 +18,7 @@ import org.eclipse.net4j.internal.db.DBTransaction;
 import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.spi.db.DBAdapter;
+import org.eclipse.net4j.spi.db.DBNamedElement;
 import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
@@ -29,6 +30,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import javax.sql.DataSource;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
@@ -141,10 +143,33 @@ public final class DBUtil
   /**
    * @since 4.2
    */
-  public static IDBDatabase openDatabase(IDBAdapter dbAdapter, IDBConnectionProvider dbConnectionProvider,
-      String schemaName)
+  public static String dumpToString(IDBNamedElement namedElement)
   {
-    return new DBDatabase((DBAdapter)dbAdapter, dbConnectionProvider, schemaName);
+    return ((DBNamedElement)namedElement).dumpToString();
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static void dump(IDBNamedElement namedElement)
+  {
+    ((DBNamedElement)namedElement).dump();
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static void dump(IDBNamedElement namedElement, Writer writer) throws IOException
+  {
+    ((DBNamedElement)namedElement).dump(writer);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static IDBDatabase openDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName)
+  {
+    return new DBDatabase((DBAdapter)adapter, connectionProvider, schemaName);
   }
 
   public static IDBSchema createSchema(String name)
@@ -155,9 +180,17 @@ public final class DBUtil
   /**
    * @since 4.2
    */
-  public static IDBSchema readSchema(String name, Connection connection)
+  public static IDBSchema readSchema(IDBAdapter adapter, Connection connection, String name)
   {
-    return new DBSchema(name, connection);
+    return adapter.readSchema(connection, name);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static void readSchema(IDBAdapter adapter, Connection connection, IDBSchema schema)
+  {
+    adapter.readSchema(connection, schema);
   }
 
   /**

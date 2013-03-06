@@ -19,7 +19,7 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBFieldDelta extends IDBTableElementDelta
+public interface IDBFieldDelta extends IDBDeltaWithPosition
 {
   public static final String TYPE_PROPERTY = "type";
 
@@ -29,7 +29,7 @@ public interface IDBFieldDelta extends IDBTableElementDelta
 
   public static final String NOT_NULL_PROPERTY = "notNull";
 
-  public static final String POSITION_PROPERTY = "position";
+  public IDBTableDelta getParent();
 
-  public IDBField getElement(IDBSchema schema);
+  public IDBField getSchemaElement(IDBSchema schema);
 }

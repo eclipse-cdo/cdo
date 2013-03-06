@@ -118,99 +118,106 @@ public abstract class AbstractDBTest extends AbstractOMTest
 
   public void testSchemaEmpty() throws Exception
   {
-    IDBSchema schema = DBUtil.readSchema(SCHEMA_NAME, getConnection());
+    IDBSchema schema = DBUtil.readSchema(adapter, getConnection(), SCHEMA_NAME);
     assertEquals(true, schema.isEmpty());
   }
 
   public void testSchemaCreation() throws Exception
   {
     IDBDatabase database = DBUtil.openDatabase(adapter, connectionProvider, SCHEMA_NAME);
-    assertEquals(true, database.getSchema().isLocked());
-    assertEquals(true, database.getSchema().isEmpty());
+    IDBSchema schema = database.getSchema();
+    assertEquals(true, schema.isLocked());
+    assertEquals(true, schema.isEmpty());
 
     IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
-    assertEquals(false, schemaTransaction.getSchema().isLocked());
-    assertEquals(true, schemaTransaction.getSchema().isEmpty());
-    assertEquals(database.getSchema(), schemaTransaction.getSchema());
+    IDBSchema workingCopy = schemaTransaction.getSchema();
+    assertEquals(false, workingCopy.isLocked());
+    assertEquals(true, workingCopy.isEmpty());
+    assertEquals(schema, workingCopy);
 
-    IDBTable table1 = schemaTransaction.getSchema().addTable("table1");
-    IDBField field11 = table1.addField("field1", DBType.INTEGER);
-    IDBField field12 = table1.addField("field2", DBType.VARCHAR, 64);
-    IDBField field13 = table1.addField("field3", DBType.BOOLEAN);
-    IDBIndex index11 = table1.addIndex("index1", IDBIndex.Type.PRIMARY_KEY, field11, field12);
-    IDBIndex index12 = table1.addIndex("index2", IDBIndex.Type.UNIQUE, field11, field12);
-    IDBIndex index13 = table1.addIndex("index3", IDBIndex.Type.NON_UNIQUE, field12);
+    IDBTable table1 = workingCopy.addTable("table1");
+    IDBField field11 = table1.addField("field11", DBType.INTEGER, true);
+    IDBField field12 = table1.addField("field12", DBType.VARCHAR, 64, true);
+    IDBField field13 = table1.addField("field13", DBType.BOOLEAN);
+    IDBIndex index11 = table1.addIndex("index11", IDBIndex.Type.PRIMARY_KEY, field11, field12);
+    IDBIndex index12 = table1.addIndex("index12", IDBIndex.Type.UNIQUE, field11, field12);
+    IDBIndex index13 = table1.addIndex("index13", IDBIndex.Type.NON_UNIQUE, field12);
 
-    IDBTable table2 = schemaTransaction.getSchema().addTable("table2");
-    IDBField field21 = table2.addField("field1", DBType.INTEGER);
-    IDBField field22 = table2.addField("field2", DBType.VARCHAR, 64);
-    IDBField field23 = table2.addField("field3", DBType.BOOLEAN);
-    IDBIndex index21 = table2.addIndex("index1", IDBIndex.Type.PRIMARY_KEY, field21, field22);
-    IDBIndex index22 = table2.addIndex("index2", IDBIndex.Type.UNIQUE, field21, field22);
-    IDBIndex index23 = table2.addIndex("index3", IDBIndex.Type.NON_UNIQUE, field22);
+    IDBTable table2 = workingCopy.addTable("table2");
+    IDBField field21 = table2.addField("field21", DBType.INTEGER, true);
+    IDBField field22 = table2.addField("field22", DBType.VARCHAR, 64, true);
+    IDBField field23 = table2.addField("field23", DBType.BOOLEAN);
+    IDBIndex index21 = table2.addIndex("index21", IDBIndex.Type.PRIMARY_KEY, field21, field22);
+    IDBIndex index22 = table2.addIndex("index22", IDBIndex.Type.UNIQUE, field21, field22);
+    IDBIndex index23 = table2.addIndex("index23", IDBIndex.Type.NON_UNIQUE, field22);
 
     schemaTransaction.commit();
-    assertEquals(true, database.getSchema().isLocked());
-    assertEquals(false, database.getSchema().isEmpty());
-    assertEquals(2, database.getSchema().getTables().length);
+    assertEquals(true, schema.isLocked());
+    assertEquals(false, schema.isEmpty());
+    assertEquals(2, schema.getTables().length);
 
-    assertEquals(table1, database.getSchema().getTables()[0]);
-    assertEquals(table1.getFieldCount(), database.getSchema().getTables()[0].getFieldCount());
-    assertEquals(field11, database.getSchema().getTables()[0].getField(0));
-    assertEquals(field12, database.getSchema().getTables()[0].getField(1));
-    assertEquals(field13, database.getSchema().getTables()[0].getField(2));
-    assertEquals(table1.getIndexCount(), database.getSchema().getTables()[0].getIndexCount());
-    assertEquals(index11, database.getSchema().getTables()[0].getIndex(0));
-    assertEquals(index11.getType(), database.getSchema().getTables()[0].getIndex(0).getType());
-    assertEquals(index12, database.getSchema().getTables()[0].getIndex(1));
-    assertEquals(index12.getType(), database.getSchema().getTables()[0].getIndex(1).getType());
-    assertEquals(index13, database.getSchema().getTables()[0].getIndex(2));
-    assertEquals(index13.getType(), database.getSchema().getTables()[0].getIndex(2).getType());
+    assertEquals(table1, schema.getTables()[0]);
+    assertEquals(table1.getFieldCount(), schema.getTables()[0].getFieldCount());
+    assertEquals(field11, schema.getTables()[0].getField(0));
+    assertEquals(field12, schema.getTables()[0].getField(1));
+    assertEquals(field13, schema.getTables()[0].getField(2));
+    assertEquals(table1.getIndexCount(), schema.getTables()[0].getIndexCount());
+    assertEquals(index11, schema.getTables()[0].getIndex(0));
+    assertEquals(index11.getType(), schema.getTables()[0].getIndex(0).getType());
+    assertEquals(index12, schema.getTables()[0].getIndex(1));
+    assertEquals(index12.getType(), schema.getTables()[0].getIndex(1).getType());
+    assertEquals(index13, schema.getTables()[0].getIndex(2));
+    assertEquals(index13.getType(), schema.getTables()[0].getIndex(2).getType());
 
-    assertEquals(table2, database.getSchema().getTables()[1]);
-    assertEquals(table2.getFieldCount(), database.getSchema().getTables()[1].getFieldCount());
-    assertEquals(field21, database.getSchema().getTables()[1].getField(0));
-    assertEquals(field22, database.getSchema().getTables()[1].getField(1));
-    assertEquals(field23, database.getSchema().getTables()[1].getField(2));
-    assertEquals(table2.getIndexCount(), database.getSchema().getTables()[1].getIndexCount());
-    assertEquals(index21, database.getSchema().getTables()[1].getIndex(0));
-    assertEquals(index21.getType(), database.getSchema().getTables()[1].getIndex(0).getType());
-    assertEquals(index22, database.getSchema().getTables()[1].getIndex(1));
-    assertEquals(index22.getType(), database.getSchema().getTables()[1].getIndex(1).getType());
-    assertEquals(index23, database.getSchema().getTables()[1].getIndex(2));
-    assertEquals(index23.getType(), database.getSchema().getTables()[1].getIndex(2).getType());
+    assertEquals(table2, schema.getTables()[1]);
+    assertEquals(table2.getFieldCount(), schema.getTables()[1].getFieldCount());
+    assertEquals(field21, schema.getTables()[1].getField(0));
+    assertEquals(field22, schema.getTables()[1].getField(1));
+    assertEquals(field23, schema.getTables()[1].getField(2));
+    assertEquals(table2.getIndexCount(), schema.getTables()[1].getIndexCount());
+    assertEquals(index21, schema.getTables()[1].getIndex(0));
+    assertEquals(index21.getType(), schema.getTables()[1].getIndex(0).getType());
+    assertEquals(index22, schema.getTables()[1].getIndex(1));
+    assertEquals(index22.getType(), schema.getTables()[1].getIndex(1).getType());
+    assertEquals(index23, schema.getTables()[1].getIndex(2));
+    assertEquals(index23.getType(), schema.getTables()[1].getIndex(2).getType());
   }
 
   public void testSchemaAddition() throws Exception
   {
     // Init database
     IDBDatabase database = DBUtil.openDatabase(adapter, connectionProvider, SCHEMA_NAME);
-    IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
+    IDBSchema schema = database.getSchema();
 
-    IDBTable table1 = schemaTransaction.getSchema().addTable("table1");
-    IDBField field11 = table1.addField("field1", DBType.INTEGER);
-    IDBField field12 = table1.addField("field2", DBType.VARCHAR, 64);
-    IDBField field13 = table1.addField("field3", DBType.BOOLEAN);
-    IDBIndex index11 = table1.addIndex("index1", IDBIndex.Type.PRIMARY_KEY, field11, field12);
-    IDBIndex index12 = table1.addIndex("index2", IDBIndex.Type.UNIQUE, field11, field12);
-    IDBIndex index13 = table1.addIndex("index3", IDBIndex.Type.NON_UNIQUE, field12);
+    IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
+    IDBSchema workingCopy = schemaTransaction.getSchema();
+
+    IDBTable table1 = workingCopy.addTable("table1");
+    IDBField field11 = table1.addField("field11", DBType.INTEGER, true);
+    IDBField field12 = table1.addField("field12", DBType.VARCHAR, 64, true);
+    IDBField field13 = table1.addField("field13", DBType.BOOLEAN);
+    IDBIndex index11 = table1.addIndex("index11", IDBIndex.Type.PRIMARY_KEY, field11, field12);
+    IDBIndex index12 = table1.addIndex("index12", IDBIndex.Type.UNIQUE, field11, field12);
+    IDBIndex index13 = table1.addIndex("index13", IDBIndex.Type.NON_UNIQUE, field12);
 
     schemaTransaction.commit();
-    assertEquals(1, database.getSchema().getTables().length);
+    assertEquals(1, schema.getTables().length);
 
     // Reload database
-    database = DBUtil.openDatabase(adapter, connectionProvider, SCHEMA_NAME);
-    assertEquals(true, database.getSchema().isLocked());
-    assertEquals(false, database.getSchema().isEmpty());
-    assertEquals(1, database.getSchema().getTables().length);
+    IDBDatabase database2 = DBUtil.openDatabase(adapter, connectionProvider, SCHEMA_NAME);
+    IDBSchema schema2 = database2.getSchema();
+    DBUtil.dump(schema2);
+    assertEquals(true, schema2.isLocked());
+    assertEquals(false, schema2.isEmpty());
+    assertEquals(1, schema2.getTables().length);
 
-    IDBTable table = database.getSchema().getTable("table1");
-    field11 = table.getField("field1");
-    field12 = table.getField("field2");
-    field13 = table.getField("field3");
-    index11 = table.getIndex("index1");
-    index12 = table.getIndex("index2");
-    index13 = table.getIndex("index3");
+    IDBTable table = schema2.getTable("table1");
+    field11 = table.getField("field11");
+    field12 = table.getField("field12");
+    field13 = table.getField("field13");
+    index11 = table.getIndex("index11");
+    index12 = table.getIndex("index12");
+    index13 = table.getIndex("index13");
     assertNotNull(field11);
     assertNotNull(field12);
     assertNotNull(field13);
@@ -218,50 +225,62 @@ public abstract class AbstractDBTest extends AbstractOMTest
     assertNotNull(index12);
     assertNotNull(index13);
 
-    schemaTransaction = database.openSchemaTransaction();
-    assertEquals(true, database.getSchema().isLocked());
-    assertEquals(false, database.getSchema().isEmpty());
-    assertEquals(1, database.getSchema().getTables().length);
+    schemaTransaction = database2.openSchemaTransaction();
+    workingCopy = schemaTransaction.getSchema();
+    assertEquals(true, schema2.isLocked());
+    assertEquals(false, schema2.isEmpty());
+    assertEquals(1, schema2.getTables().length);
 
-    IDBTable table2 = schemaTransaction.getSchema().addTable("table2");
-    IDBField field21 = table2.addField("field1", DBType.INTEGER);
-    IDBField field22 = table2.addField("field2", DBType.VARCHAR, 64);
-    IDBField field23 = table2.addField("field3", DBType.BOOLEAN);
-    IDBIndex index21 = table2.addIndex("index1", IDBIndex.Type.PRIMARY_KEY, field21, field22);
-    IDBIndex index22 = table2.addIndex("index2", IDBIndex.Type.UNIQUE, field21, field22);
-    IDBIndex index23 = table2.addIndex("index3", IDBIndex.Type.NON_UNIQUE, field22);
+    IDBTable table2 = workingCopy.addTable("table2");
+    IDBField field21 = table2.addField("field21", DBType.INTEGER, true);
+    IDBField field22 = table2.addField("field22", DBType.VARCHAR, 64, true);
+    IDBField field23 = table2.addField("field23", DBType.BOOLEAN);
+    IDBIndex index21 = table2.addIndex("index21", IDBIndex.Type.PRIMARY_KEY, field21, field22);
+    IDBIndex index22 = table2.addIndex("index22", IDBIndex.Type.UNIQUE, field21, field22);
+    IDBIndex index23 = table2.addIndex("index23", IDBIndex.Type.NON_UNIQUE, field22);
+    assertEquals(table1, schema2.getTables()[0]);
+    assertEquals(table1.getFieldCount(), schema2.getTables()[0].getFieldCount());
+    assertEquals(field11, schema2.getTables()[0].getField(0));
+    assertEquals(field12, schema2.getTables()[0].getField(1));
+    assertEquals(field13, schema2.getTables()[0].getField(2));
+    assertEquals(table1.getIndexCount(), schema2.getTables()[0].getIndexCount());
+    assertEquals(index11, schema2.getTables()[0].getIndex(0));
+    assertEquals(index11.getType(), schema2.getTables()[0].getIndex(0).getType());
+    assertEquals(index12, schema2.getTables()[0].getIndex(1));
+    assertEquals(index12.getType(), schema2.getTables()[0].getIndex(1).getType());
+    assertEquals(index13, schema2.getTables()[0].getIndex(2));
+    assertEquals(index13.getType(), schema2.getTables()[0].getIndex(2).getType());
 
-    IDBSchemaDelta schemaDelta = schemaTransaction.getSchemaDelta();
+    IDBSchemaDelta delta = schemaTransaction.commit();
+    DBUtil.dump(delta);
+    assertEquals(true, schema2.isLocked());
+    assertEquals(false, schema2.isEmpty());
+    assertEquals(2, schema2.getTables().length);
 
-    schemaTransaction.commit();
-    assertEquals(true, database.getSchema().isLocked());
-    assertEquals(false, database.getSchema().isEmpty());
-    assertEquals(2, database.getSchema().getTables().length);
+    assertEquals(table1, schema2.getTables()[0]);
+    assertEquals(table1.getFieldCount(), schema2.getTables()[0].getFieldCount());
+    assertEquals(field11, schema2.getTables()[0].getField(0));
+    assertEquals(field12, schema2.getTables()[0].getField(1));
+    assertEquals(field13, schema2.getTables()[0].getField(2));
+    assertEquals(table1.getIndexCount(), schema2.getTables()[0].getIndexCount());
+    assertEquals(index11, schema2.getTables()[0].getIndex(0));
+    assertEquals(index11.getType(), schema2.getTables()[0].getIndex(0).getType());
+    assertEquals(index12, schema2.getTables()[0].getIndex(1));
+    assertEquals(index12.getType(), schema2.getTables()[0].getIndex(1).getType());
+    assertEquals(index13, schema2.getTables()[0].getIndex(2));
+    assertEquals(index13.getType(), schema2.getTables()[0].getIndex(2).getType());
 
-    assertEquals(table1, database.getSchema().getTables()[0]);
-    assertEquals(table1.getFieldCount(), database.getSchema().getTables()[0].getFieldCount());
-    assertEquals(field11, database.getSchema().getTables()[0].getField(0));
-    assertEquals(field12, database.getSchema().getTables()[0].getField(1));
-    assertEquals(field13, database.getSchema().getTables()[0].getField(2));
-    assertEquals(table1.getIndexCount(), database.getSchema().getTables()[0].getIndexCount());
-    assertEquals(index11, database.getSchema().getTables()[0].getIndex(0));
-    assertEquals(index11.getType(), database.getSchema().getTables()[0].getIndex(0).getType());
-    assertEquals(index12, database.getSchema().getTables()[0].getIndex(1));
-    assertEquals(index12.getType(), database.getSchema().getTables()[0].getIndex(1).getType());
-    assertEquals(index13, database.getSchema().getTables()[0].getIndex(2));
-    assertEquals(index13.getType(), database.getSchema().getTables()[0].getIndex(2).getType());
-
-    assertEquals(table2, database.getSchema().getTables()[1]);
-    assertEquals(table2.getFieldCount(), database.getSchema().getTables()[1].getFieldCount());
-    assertEquals(field21, database.getSchema().getTables()[1].getField(0));
-    assertEquals(field22, database.getSchema().getTables()[1].getField(1));
-    assertEquals(field23, database.getSchema().getTables()[1].getField(2));
-    assertEquals(table2.getIndexCount(), database.getSchema().getTables()[1].getIndexCount());
-    assertEquals(index21, database.getSchema().getTables()[1].getIndex(0));
-    assertEquals(index21.getType(), database.getSchema().getTables()[1].getIndex(0).getType());
-    assertEquals(index22, database.getSchema().getTables()[1].getIndex(1));
-    assertEquals(index22.getType(), database.getSchema().getTables()[1].getIndex(1).getType());
-    assertEquals(index23, database.getSchema().getTables()[1].getIndex(2));
-    assertEquals(index23.getType(), database.getSchema().getTables()[1].getIndex(2).getType());
+    assertEquals(table2, schema2.getTables()[1]);
+    assertEquals(table2.getFieldCount(), schema2.getTables()[1].getFieldCount());
+    assertEquals(field21, schema2.getTables()[1].getField(0));
+    assertEquals(field22, schema2.getTables()[1].getField(1));
+    assertEquals(field23, schema2.getTables()[1].getField(2));
+    assertEquals(table2.getIndexCount(), schema2.getTables()[1].getIndexCount());
+    assertEquals(index21, schema2.getTables()[1].getIndex(0));
+    assertEquals(index21.getType(), schema2.getTables()[1].getIndex(0).getType());
+    assertEquals(index22, schema2.getTables()[1].getIndex(1));
+    assertEquals(index22.getType(), schema2.getTables()[1].getIndex(1).getType());
+    assertEquals(index23, schema2.getTables()[1].getIndex(2));
+    assertEquals(index23.getType(), schema2.getTables()[1].getIndex(2).getType());
   }
 }

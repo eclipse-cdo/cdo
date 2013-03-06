@@ -13,6 +13,10 @@ package org.eclipse.net4j.internal.db.ddl;
 import org.eclipse.net4j.db.ddl.IDBIndexField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.spi.db.DBSchemaElement;
+import org.eclipse.net4j.util.StringUtil;
+
+import java.io.IOException;
+import java.io.Writer;
 
 /**
  * @author Eike Stepper
@@ -76,5 +80,16 @@ public class DBIndexField extends DBSchemaElement implements IDBIndexField
   public void remove()
   {
     index.removeIndexField(this);
+  }
+
+  @Override
+  public void dump(Writer writer) throws IOException
+  {
+    writer.append("      FIELD ");
+    writer.append(getName());
+    writer.append(" (position=");
+    writer.append(String.valueOf(getPosition()));
+    writer.append(")");
+    writer.append(StringUtil.NL);
   }
 }

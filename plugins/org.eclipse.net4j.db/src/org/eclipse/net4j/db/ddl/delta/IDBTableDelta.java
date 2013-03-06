@@ -12,7 +12,6 @@ package org.eclipse.net4j.db.ddl.delta;
 
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.util.container.IContainer;
 
 import java.util.Map;
 
@@ -22,15 +21,17 @@ import java.util.Map;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBTableDelta extends IDBDelta, IContainer<IDBTableElementDelta>, Comparable<IDBTableDelta>
+public interface IDBTableDelta extends IDBDelta
 {
   public IDBSchemaDelta getParent();
-
-  public IDBFieldDelta[] getFieldDeltasSortedByPosition();
 
   public Map<String, IDBFieldDelta> getFieldDeltas();
 
   public Map<String, IDBIndexDelta> getIndexDeltas();
 
-  public IDBTable getElement(IDBSchema schema);
+  public IDBFieldDelta[] getFieldDeltasSortedByPosition();
+
+  public IDBIndexDelta[] getIndexDeltasSortedByName();
+
+  public IDBTable getSchemaElement(IDBSchema schema);
 }

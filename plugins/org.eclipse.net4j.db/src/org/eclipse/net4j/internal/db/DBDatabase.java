@@ -27,8 +27,6 @@ import java.sql.SQLException;
  */
 public final class DBDatabase extends SetContainer<IDBTransaction> implements IDBDatabase
 {
-  // private final Set<DBTransaction> transactions = new HashSet<DBTransaction>();
-
   private DBAdapter adapter;
 
   private IDBConnectionProvider connectionProvider;
@@ -39,7 +37,7 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
 
   private int statementCacheCapacity = DEFAULT_STATEMENT_CACHE_CAPACITY;
 
-  public DBDatabase(DBAdapter adapter, IDBConnectionProvider dbConnectionProvider, final String schemaName)
+  public DBDatabase(final DBAdapter adapter, IDBConnectionProvider dbConnectionProvider, final String schemaName)
   {
     super(IDBTransaction.class);
     this.adapter = adapter;
@@ -49,7 +47,7 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
     {
       public DBSchema run(Connection connection) throws SQLException
       {
-        return (DBSchema)DBUtil.readSchema(schemaName, connection);
+        return (DBSchema)adapter.readSchema(connection, schemaName);
       }
     });
 

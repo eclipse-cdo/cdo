@@ -10,12 +10,12 @@
  */
 package org.eclipse.net4j.db.ddl.delta;
 
-import org.eclipse.net4j.db.IDBElement;
+import org.eclipse.net4j.db.IDBNamedElement;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
+import org.eclipse.net4j.util.container.IContainer;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * @since 4.2
@@ -23,25 +23,25 @@ import java.util.Map;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBDelta extends IDBElement, Serializable
+public interface IDBDelta extends IDBNamedElement, IContainer<IDBDelta>, Comparable<IDBDelta>, Serializable
 {
-  public IDBDelta getParent();
+  public DeltaType getDeltaType();
 
-  public String getName();
+  public IDBDelta getParent();
 
   public ChangeKind getChangeKind();
 
-  public <T> IDBPropertyDelta<T> getPropertyDelta(String name);
-
-  public <T> T getPropertyValue(String name);
-
-  public <T> T getPropertyValue(String name, boolean old);
-
-  public Map<String, IDBPropertyDelta<?>> getPropertyDeltas();
-
   public void accept(IDBDeltaVisitor visitor);
 
-  public IDBSchemaElement getElement(IDBSchema schema);
+  public IDBSchemaElement getSchemaElement(IDBSchema schema);
+
+  /**
+   * @author Eike Stepper
+   */
+  public enum DeltaType
+  {
+    SCHEMA, TABLE, FIELD, INDEX, INDEX_FIELD, PROPERTY
+  }
 
   /**
    * @author Eike Stepper

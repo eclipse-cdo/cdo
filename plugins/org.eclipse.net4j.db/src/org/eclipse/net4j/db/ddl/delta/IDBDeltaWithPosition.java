@@ -10,26 +10,15 @@
  */
 package org.eclipse.net4j.db.ddl.delta;
 
-import org.eclipse.net4j.db.ddl.IDBIndex;
-import org.eclipse.net4j.db.ddl.IDBSchema;
-
-import java.util.Map;
-
 /**
  * @since 4.2
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBIndexDelta extends IDBDeltaWithProperties
+public interface IDBDeltaWithPosition extends IDBDeltaWithProperties
 {
-  public static final String TYPE_PROPERTY = "type";
+  public static final String POSITION_PROPERTY = "position";
 
-  public IDBTableDelta getParent();
-
-  public Map<String, IDBIndexFieldDelta> getIndexFieldDeltas();
-
-  public IDBIndexFieldDelta[] getIndexFieldDeltasSortedByPosition();
-
-  public IDBIndex getSchemaElement(IDBSchema schema);
+  public int getPosition();
 }

@@ -57,6 +57,16 @@ public interface IDBAdapter
   /**
    * @since 4.2
    */
+  public IDBSchema readSchema(Connection connection, String name);
+
+  /**
+   * @since 4.2
+   */
+  public void readSchema(Connection connection, IDBSchema schema);
+
+  /**
+   * @since 4.2
+   */
   public void updateSchema(Connection connection, IDBSchema schema, IDBSchemaDelta delta) throws DBException;
 
   public Set<IDBTable> createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException;

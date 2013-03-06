@@ -23,7 +23,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public final class DBIndexFieldDelta extends DBDelta implements IDBIndexFieldDelta
+public final class DBIndexFieldDelta extends DBDeltaWithPosition implements IDBIndexFieldDelta
 {
   private static final long serialVersionUID = 1L;
 
@@ -40,7 +40,7 @@ public final class DBIndexFieldDelta extends DBDelta implements IDBIndexFieldDel
     Integer oldPosition = oldIndexField == null ? null : oldIndexField.getPosition();
     if (!ObjectUtil.equals(position, oldPosition))
     {
-      addPropertyDelta(new DBPropertyDelta<Integer>(POSITION_PROPERTY, IDBPropertyDelta.Type.INTEGER, position,
+      addPropertyDelta(new DBPropertyDelta<Integer>(this, POSITION_PROPERTY, IDBPropertyDelta.Type.INTEGER, position,
           oldPosition));
     }
   }
@@ -52,25 +52,20 @@ public final class DBIndexFieldDelta extends DBDelta implements IDBIndexFieldDel
   {
   }
 
+  public DeltaType getDeltaType()
+  {
+    return DeltaType.INDEX_FIELD;
+  }
+
   @Override
   public DBIndexDelta getParent()
   {
     return (DBIndexDelta)super.getParent();
   }
 
-  public int compareTo(IDBIndexFieldDelta o)
+  public DBIndexField getSchemaElement(IDBSchema schema)
   {
-    return getName().compareTo(o.getName());
-  }
-
-  public void accept(IDBDeltaVisitor visitor)
-  {
-    visitor.visit(this);
-  }
-
-  public DBIndexField getElement(IDBSchema schema)
-  {
-    DBIndex index = getParent().getElement(schema);
+    DBIndex index = getParent().getSchemaElement(schema);
     if (index == null)
     {
       return null;
@@ -84,5 +79,11 @@ public final class DBIndexFieldDelta extends DBDelta implements IDBIndexFieldDel
   {
     return MessageFormat.format("DBIndexFieldDelta[name={0}, kind={1}, propertyDeltas={2}]", getName(),
         getChangeKind(), getPropertyDeltas().values());
+  }
+
+  @Override
+  protected void doAccept(IDBDeltaVisitor visitor)
+  {
+    visitor.visit(this);
   }
 }

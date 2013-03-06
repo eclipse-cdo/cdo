@@ -18,7 +18,10 @@ import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.spi.db.DBSchemaElement;
+import org.eclipse.net4j.util.StringUtil;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -153,6 +156,17 @@ public class DBTable extends DBSchemaElement implements IDBTable
       throw new DBException("Index exists: " + name); //$NON-NLS-1$
     }
 
+    if (type == Type.PRIMARY_KEY)
+    {
+      for (DBIndex index : getIndices())
+      {
+        if (index.getType() == Type.PRIMARY_KEY)
+        {
+          throw new DBException("Primary key exists: " + index); //$NON-NLS-1$
+        }
+      }
+    }
+
     DBIndex index = new DBIndex(this, name, type, fields, position);
     indices.add(index);
     return index;
@@ -245,5 +259,23 @@ public class DBTable extends DBSchemaElement implements IDBTable
 
     builder.append(")"); //$NON-NLS-1$
     return builder.toString();
+  }
+
+  @Override
+  public void dump(Writer writer) throws IOException
+  {
+    writer.append("  TABLE ");
+    writer.append(getName());
+    writer.append(StringUtil.NL);
+
+    for (DBField field : fields)
+    {
+      field.dump(writer);
+    }
+
+    for (DBIndex index : indices)
+    {
+      index.dump(writer);
+    }
   }
 }

@@ -10,23 +10,23 @@
  */
 package org.eclipse.net4j.db.ddl.delta;
 
+import java.util.Map;
+
 /**
  * @since 4.2
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBTableElementDelta extends IDBDelta, Comparable<IDBTableElementDelta>
+public interface IDBDeltaWithProperties extends IDBDelta
 {
-  public IDBTableDelta getParent();
+  public <T> IDBPropertyDelta<T> getPropertyDelta(String name);
 
-  public Type getTableElementType();
+  public <T> T getPropertyValue(String name);
 
-  /**
-   * @author Eike Stepper
-   */
-  public enum Type
-  {
-    FIELD, INDEX
-  }
+  public <T> T getPropertyValue(String name, boolean old);
+
+  public Map<String, IDBPropertyDelta<?>> getPropertyDeltas();
+
+  public IDBPropertyDelta<?>[] getPropertyDeltasSortedByName();
 }

@@ -16,7 +16,10 @@ import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndexField;
 import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.spi.db.DBSchemaElement;
+import org.eclipse.net4j.util.StringUtil;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -95,6 +98,11 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
   public DBIndexField addIndexField(IDBField field)
   {
     table.getSchema().assertUnlocked();
+
+    if (!field.isNotNull())
+    {
+      throw new DBException("Index field is nullable: " + field); //$NON-NLS-1$
+    }
 
     if (field.getTable() != table)
     {
@@ -191,5 +199,20 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
   public void remove()
   {
     table.removeIndex(this);
+  }
+
+  @Override
+  public void dump(Writer writer) throws IOException
+  {
+    writer.append("    INDEX ");
+    writer.append(getName());
+    writer.append(" (type=");
+    writer.append(String.valueOf(getType()));
+    writer.append(")");
+    writer.append(StringUtil.NL);
+    for (DBIndexField indexField : indexFields)
+    {
+      indexField.dump(writer);
+    }
   }
 }

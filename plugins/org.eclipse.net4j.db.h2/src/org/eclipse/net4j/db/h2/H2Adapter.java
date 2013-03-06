@@ -13,8 +13,11 @@ package org.eclipse.net4j.db.h2;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex.Type;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.spi.db.DBAdapter;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
@@ -63,6 +66,17 @@ public class H2Adapter extends DBAdapter
   public String[] getReservedWords()
   {
     return getSQL92ReservedWords();
+  }
+
+  @Override
+  protected boolean isPrimaryKeyShadow(Connection connection, IDBTable table, String name, Type type, IDBField[] fields)
+  {
+    if (!name.toUpperCase().startsWith("PRIMARY_KEY"))
+    {
+      return false;
+    }
+
+    return super.isPrimaryKeyShadow(connection, table, name, type, fields);
   }
 
   @Override

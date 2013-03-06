@@ -10,16 +10,21 @@
  */
 package org.eclipse.net4j.internal.db.ddl.delta;
 
-import org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind;
+import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.IDBSchemaElement;
+import org.eclipse.net4j.db.ddl.delta.IDBDelta;
+import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
 import org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta;
-import org.eclipse.net4j.spi.db.DBNamedElement;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.text.MessageFormat;
+import java.util.List;
 
 /**
  * @author Eike Stepper
  */
-public final class DBPropertyDelta<T> extends DBNamedElement implements IDBPropertyDelta<T>
+public final class DBPropertyDelta<T> extends DBDelta implements IDBPropertyDelta<T>
 {
   private static final long serialVersionUID = 1L;
 
@@ -29,9 +34,9 @@ public final class DBPropertyDelta<T> extends DBNamedElement implements IDBPrope
 
   private T oldValue;
 
-  public DBPropertyDelta(String name, Type type, T value, T oldValue)
+  public DBPropertyDelta(DBDelta parent, String name, Type type, T value, T oldValue)
   {
-    super(name);
+    super(parent, name, DBDelta.getChangeKind(value, oldValue));
     this.type = type;
     this.value = value;
     this.oldValue = oldValue;
@@ -44,9 +49,14 @@ public final class DBPropertyDelta<T> extends DBNamedElement implements IDBPrope
   {
   }
 
-  public ChangeKind getChangeKind()
+  public DeltaType getDeltaType()
   {
-    return DBDelta.getChangeKind(value, oldValue);
+    return DeltaType.PROPERTY;
+  }
+
+  public IDBSchemaElement getSchemaElement(IDBSchema schema)
+  {
+    return null;
   }
 
   public Type getType()
@@ -69,5 +79,39 @@ public final class DBPropertyDelta<T> extends DBNamedElement implements IDBPrope
   {
     return MessageFormat.format("DBPropertyDelta[name={0}, kind={1}, type={2}, value={3}, oldValue={4}]", getName(),
         getChangeKind(), getType(), getValue(), getOldValue());
+  }
+
+  @Override
+  protected void doAccept(IDBDeltaVisitor visitor)
+  {
+    visitor.visit(this);
+  }
+
+  @Override
+  protected void collectElements(List<IDBDelta> elements)
+  {
+    // Do nothing
+  }
+
+  @Override
+  protected void dumpAdditionalProperties(Writer writer) throws IOException
+  {
+    writer.append(" (type=");
+    writer.append(getType().toString());
+    writer.append(", value=");
+    writer.append(toString(getValue()));
+    writer.append(", oldValue=");
+    writer.append(toString(getOldValue()));
+    writer.append(")");
+  }
+
+  private static CharSequence toString(Object object)
+  {
+    if (object == null)
+    {
+      return "null";
+    }
+
+    return object.toString();
   }
 }

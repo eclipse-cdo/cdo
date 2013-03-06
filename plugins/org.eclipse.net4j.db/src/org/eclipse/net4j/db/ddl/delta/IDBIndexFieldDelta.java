@@ -19,11 +19,9 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBIndexFieldDelta extends IDBDelta, Comparable<IDBIndexFieldDelta>
+public interface IDBIndexFieldDelta extends IDBDeltaWithPosition
 {
-  public static final String POSITION_PROPERTY = "position";
-
   public IDBIndexDelta getParent();
 
-  public IDBIndexField getElement(IDBSchema schema);
+  public IDBIndexField getSchemaElement(IDBSchema schema);
 }

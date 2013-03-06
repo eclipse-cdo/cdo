@@ -13,6 +13,7 @@ package org.eclipse.net4j.db.mysql;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.spi.db.DBAdapter;
 
 import java.sql.SQLException;
@@ -100,6 +101,14 @@ public class MYSQLAdapter extends DBAdapter
     }
 
     return super.getTypeName(field);
+  }
+
+  @Override
+  protected void dropPrimaryKey(IDBIndex index, StringBuilder builder)
+  {
+    builder.append("ALTER TABLE "); //$NON-NLS-1$
+    builder.append(index.getTable());
+    builder.append(" DROP PRIMARY KEY"); //$NON-NLS-1$
   }
 
   @Override

@@ -12,28 +12,32 @@ package org.eclipse.net4j.internal.db.ddl.delta;
 
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.delta.IDBDelta;
-import org.eclipse.net4j.db.ddl.delta.IDBFieldDelta;
-import org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta;
+import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
+import org.eclipse.net4j.db.ddl.delta.IDBDeltaWithPosition;
 import org.eclipse.net4j.spi.db.DBNamedElement;
 import org.eclipse.net4j.spi.db.DBSchemaElement;
+import org.eclipse.net4j.util.StringUtil;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Eike Stepper
  */
 public abstract class DBDelta extends DBNamedElement implements IDBDelta
 {
+  private static final IDBDelta[] NO_ELEMENTS = {};
+
   private static final long serialVersionUID = 1L;
 
   private DBDelta parent;
 
   private ChangeKind changeKind;
 
-  private Map<String, IDBPropertyDelta<?>> propertyDeltas = new HashMap<String, IDBPropertyDelta<?>>();
+  private transient IDBDelta[] elements;
 
   public DBDelta(DBDelta parent, String name, ChangeKind changeKind)
   {
@@ -59,44 +63,105 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
     return changeKind;
   }
 
-  public <T> DBPropertyDelta<T> getPropertyDelta(String name)
+  public final int compareTo(IDBDelta delta2)
   {
-    name = name(name);
-
-    @SuppressWarnings("unchecked")
-    DBPropertyDelta<T> propertyDelta = (DBPropertyDelta<T>)propertyDeltas.get(name);
-    return propertyDelta;
-  }
-
-  public <T> T getPropertyValue(String name)
-  {
-    return getPropertyValue(name, false);
-  }
-
-  public <T> T getPropertyValue(String name, boolean old)
-  {
-    IDBPropertyDelta<T> propertyDelta = getPropertyDelta(name);
-    if (propertyDelta == null)
+    int result = getDeltaType().compareTo(delta2.getDeltaType());
+    if (result == 0)
     {
-      return null;
+      if (this instanceof IDBDeltaWithPosition && delta2 instanceof IDBDeltaWithPosition)
+      {
+        IDBDeltaWithPosition withPosition1 = (IDBDeltaWithPosition)this;
+        IDBDeltaWithPosition withPosition2 = (IDBDeltaWithPosition)delta2;
+        return withPosition1.getPosition() - withPosition2.getPosition();
+      }
+
+      result = getName().compareTo(delta2.getName());
     }
 
-    if (old)
+    return result;
+  }
+
+  public final void accept(IDBDeltaVisitor visitor)
+  {
+    doAccept(visitor);
+
+    IDBDelta[] deltas = getElements();
+    for (IDBDelta delta : deltas)
     {
-      return propertyDelta.getOldValue();
+      delta.accept(visitor);
+    }
+  }
+
+  protected abstract void doAccept(IDBDeltaVisitor visitor);
+
+  public final boolean isEmpty()
+  {
+    return getElements().length == 0;
+  }
+
+  public final IDBDelta[] getElements()
+  {
+    if (elements == null)
+    {
+      List<IDBDelta> deltas = new ArrayList<IDBDelta>();
+      collectElements(deltas);
+
+      if (deltas.isEmpty())
+      {
+        elements = NO_ELEMENTS;
+      }
+      else
+      {
+        elements = deltas.toArray(new IDBDelta[deltas.size()]);
+        Arrays.sort(elements);
+      }
     }
 
-    return propertyDelta.getValue();
+    return elements;
   }
 
-  public final Map<String, IDBPropertyDelta<?>> getPropertyDeltas()
+  protected final void resetElements()
   {
-    return Collections.unmodifiableMap(propertyDeltas);
+    elements = null;
   }
 
-  public final void addPropertyDelta(IDBPropertyDelta<?> propertyDelta)
+  protected abstract void collectElements(List<IDBDelta> elements);
+
+  @Override
+  public void dump(Writer writer) throws IOException
   {
-    propertyDeltas.put(propertyDelta.getName(), propertyDelta);
+    int level = getLevel();
+    for (int i = 0; i < level; i++)
+    {
+      writer.append("  ");
+    }
+
+    writer.append(getChangeKind().toString());
+    writer.append(" ");
+    writer.append(getDeltaType().toString());
+    writer.append(" ");
+    writer.append(getName());
+    dumpAdditionalProperties(writer);
+    writer.append(StringUtil.NL);
+
+    for (IDBDelta delta : getElements())
+    {
+      ((DBDelta)delta).dump(writer);
+    }
+  }
+
+  protected void dumpAdditionalProperties(Writer writer) throws IOException
+  {
+  }
+
+  private int getLevel()
+  {
+    if (parent == null)
+    {
+      return 0;
+    }
+
+    return parent.getLevel() + 1;
   }
 
   public static String getName(IDBSchemaElement element, IDBSchemaElement oldElement)
@@ -139,29 +204,5 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
   public interface SchemaElementComparator<T extends IDBSchemaElement>
   {
     public void compare(T element, T oldElement);
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static final class PositionComparator implements Comparator<IDBDelta>
-  {
-    public int compare(IDBDelta delta1, IDBDelta delta2)
-    {
-      int v1 = getValue(delta1);
-      int v2 = getValue(delta2);
-      return v2 - v1;
-    }
-
-    private Integer getValue(IDBDelta delta)
-    {
-      Integer value = delta.getPropertyValue(IDBFieldDelta.POSITION_PROPERTY);
-      if (value == null)
-      {
-        return 0;
-      }
-
-      return value;
-    }
   }
 }

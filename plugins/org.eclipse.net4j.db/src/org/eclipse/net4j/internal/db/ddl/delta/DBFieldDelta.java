@@ -24,7 +24,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public final class DBFieldDelta extends DBTableElementDelta implements IDBFieldDelta
+public final class DBFieldDelta extends DBDeltaWithPosition implements IDBFieldDelta
 {
   private static final long serialVersionUID = 1L;
 
@@ -41,14 +41,14 @@ public final class DBFieldDelta extends DBTableElementDelta implements IDBFieldD
     DBType oldType = oldField == null ? null : oldField.getType();
     if (!ObjectUtil.equals(type, oldType))
     {
-      addPropertyDelta(new DBPropertyDelta<DBType>(TYPE_PROPERTY, IDBPropertyDelta.Type.STRING, type, oldType));
+      addPropertyDelta(new DBPropertyDelta<DBType>(this, TYPE_PROPERTY, IDBPropertyDelta.Type.STRING, type, oldType));
     }
 
     Integer precision = field == null ? null : field.getPrecision();
     Integer oldPrecision = oldField == null ? null : oldField.getPrecision();
     if (!ObjectUtil.equals(precision, oldPrecision))
     {
-      addPropertyDelta(new DBPropertyDelta<Integer>(PRECISION_PROPERTY, IDBPropertyDelta.Type.INTEGER, precision,
+      addPropertyDelta(new DBPropertyDelta<Integer>(this, PRECISION_PROPERTY, IDBPropertyDelta.Type.INTEGER, precision,
           oldPrecision));
     }
 
@@ -56,22 +56,23 @@ public final class DBFieldDelta extends DBTableElementDelta implements IDBFieldD
     Integer oldScale = oldField == null ? null : oldField.getScale();
     if (!ObjectUtil.equals(scale, oldScale))
     {
-      addPropertyDelta(new DBPropertyDelta<Integer>(SCALE_PROPERTY, IDBPropertyDelta.Type.INTEGER, scale, oldScale));
+      addPropertyDelta(new DBPropertyDelta<Integer>(this, SCALE_PROPERTY, IDBPropertyDelta.Type.INTEGER, scale,
+          oldScale));
     }
 
     Boolean notNull = field == null ? null : field.isNotNull();
     Boolean oldNotNull = oldField == null ? null : oldField.isNotNull();
     if (!ObjectUtil.equals(notNull, oldNotNull))
     {
-      addPropertyDelta(new DBPropertyDelta<Boolean>(NOT_NULL_PROPERTY, IDBPropertyDelta.Type.BOOLEAN, notNull,
+      addPropertyDelta(new DBPropertyDelta<Boolean>(this, NOT_NULL_PROPERTY, IDBPropertyDelta.Type.BOOLEAN, notNull,
           oldNotNull));
     }
 
-    Integer position = oldField == null ? null : field.getPosition();
+    Integer position = field == null ? null : field.getPosition();
     Integer oldPosition = oldField == null ? null : oldField.getPosition();
     if (!ObjectUtil.equals(position, oldPosition))
     {
-      addPropertyDelta(new DBPropertyDelta<Integer>(POSITION_PROPERTY, IDBPropertyDelta.Type.INTEGER, position,
+      addPropertyDelta(new DBPropertyDelta<Integer>(this, POSITION_PROPERTY, IDBPropertyDelta.Type.INTEGER, position,
           oldPosition));
     }
   }
@@ -83,19 +84,20 @@ public final class DBFieldDelta extends DBTableElementDelta implements IDBFieldD
   {
   }
 
-  public Type getTableElementType()
+  public DeltaType getDeltaType()
   {
-    return Type.FIELD;
+    return DeltaType.FIELD;
   }
 
-  public void accept(IDBDeltaVisitor visitor)
+  @Override
+  public DBTableDelta getParent()
   {
-    visitor.visit(this);
+    return (DBTableDelta)super.getParent();
   }
 
-  public DBField getElement(IDBSchema schema)
+  public DBField getSchemaElement(IDBSchema schema)
   {
-    DBTable table = getParent().getElement(schema);
+    DBTable table = getParent().getSchemaElement(schema);
     if (table == null)
     {
       return null;
@@ -109,5 +111,11 @@ public final class DBFieldDelta extends DBTableElementDelta implements IDBFieldD
   {
     return MessageFormat.format("DBFieldDelta[name={0}, kind={1}, propertyDeltas={2}]", getName(), getChangeKind(),
         getPropertyDeltas().values());
+  }
+
+  @Override
+  protected void doAccept(IDBDeltaVisitor visitor)
+  {
+    visitor.visit(this);
   }
 }

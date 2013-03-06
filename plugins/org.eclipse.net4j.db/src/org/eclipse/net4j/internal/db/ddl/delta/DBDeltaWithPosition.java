@@ -10,16 +10,16 @@
  */
 package org.eclipse.net4j.internal.db.ddl.delta;
 
-import org.eclipse.net4j.db.ddl.delta.IDBTableElementDelta;
+import org.eclipse.net4j.db.ddl.delta.IDBDeltaWithPosition;
 
 /**
  * @author Eike Stepper
  */
-public abstract class DBTableElementDelta extends DBDelta implements IDBTableElementDelta
+public abstract class DBDeltaWithPosition extends DBDeltaWithProperties implements IDBDeltaWithPosition
 {
   private static final long serialVersionUID = 1L;
 
-  public DBTableElementDelta(DBDelta parent, String name, ChangeKind changeKind)
+  public DBDeltaWithPosition(DBDelta parent, String name, ChangeKind changeKind)
   {
     super(parent, name, changeKind);
   }
@@ -27,24 +27,18 @@ public abstract class DBTableElementDelta extends DBDelta implements IDBTableEle
   /**
    * Constructor for deserialization.
    */
-  protected DBTableElementDelta()
+  protected DBDeltaWithPosition()
   {
   }
 
-  @Override
-  public DBTableDelta getParent()
+  public int getPosition()
   {
-    return (DBTableDelta)super.getParent();
-  }
-
-  public int compareTo(IDBTableElementDelta o)
-  {
-    int result = getTableElementType().compareTo(o.getTableElementType());
-    if (result == 0)
+    Integer value = getPropertyValue(POSITION_PROPERTY);
+    if (value == null)
     {
-      result = getName().compareTo(o.getName());
+      return 0;
     }
 
-    return result;
+    return value;
   }
 }

@@ -12,6 +12,12 @@ package org.eclipse.net4j.spi.db;
 
 import org.eclipse.net4j.db.IDBNamedElement;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
+import org.eclipse.net4j.util.io.IORuntimeException;
+
+import java.io.CharArrayWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 /**
  * @author Eike Stepper
@@ -74,6 +80,36 @@ public abstract class DBNamedElement extends DBElement implements IDBNamedElemen
   {
     return name;
   }
+
+  public String dumpToString()
+  {
+    try
+    {
+      CharArrayWriter writer = new CharArrayWriter();
+      dump(writer);
+      return writer.toString();
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  public final void dump()
+  {
+    try
+    {
+      OutputStreamWriter writer = new OutputStreamWriter(System.out);
+      dump(writer);
+      writer.flush();
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  public abstract void dump(Writer writer) throws IOException;
 
   public static String name(String name)
   {

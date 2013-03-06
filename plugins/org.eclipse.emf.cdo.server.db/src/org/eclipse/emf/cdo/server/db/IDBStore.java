@@ -46,6 +46,11 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
    */
   public IIDHandler getIDHandler();
 
+  /**
+   * @since 4.2
+   */
+  // public IDBDatabase getDatabase();
+
   public IDBAdapter getDBAdapter();
 
   public IDBSchema getDBSchema();

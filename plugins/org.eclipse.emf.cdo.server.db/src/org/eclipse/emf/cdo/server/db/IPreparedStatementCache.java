@@ -31,11 +31,6 @@ public interface IPreparedStatementCache
   public void releasePreparedStatement(PreparedStatement ps);
 
   /**
-   * @since 4.2
-   */
-  public void invalidate();
-
-  /**
    * An enum for the degree of probability to which a prepared statement is reused later on. This is used for managing
    * the cache of prepared statements so that statements which are more likely reused are kept in the cache longer. Rule
    * of thumb:

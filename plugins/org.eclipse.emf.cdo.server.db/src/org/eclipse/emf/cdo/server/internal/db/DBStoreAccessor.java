@@ -106,7 +106,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimerTask;
-import java.util.concurrent.locks.Lock;
 
 /**
  * @author Eike Stepper
@@ -124,10 +123,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   private Set<CDOID> newObjects = new HashSet<CDOID>();
 
   private CDOID maxID = CDOID.NULL;
-
-  private Lock dbSchemaLock;
-
-  private int dbSchemaModCount;
 
   public DBStoreAccessor(DBStore store, ISession session) throws DBException
   {
@@ -691,13 +686,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   }
 
   @Override
-  protected void doWrite(InternalCommitContext context, OMMonitor monitor)
-  {
-    lockSchema(context);
-    super.doWrite(context, monitor);
-  }
-
-  @Override
   protected final void doCommit(OMMonitor monitor)
   {
     if (TRACER.isEnabled())
@@ -736,7 +724,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
     finally
     {
-      unlockSchema();
       monitor.done();
     }
   }
@@ -761,46 +748,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     catch (SQLException ex)
     {
       throw new DBException(ex);
-    }
-    finally
-    {
-      unlockSchema();
-    }
-  }
-
-  private void lockSchema(InternalCommitContext context)
-  {
-    DBStore store = getStore();
-
-    InternalCDOPackageUnit[] newPackageUnits = context.getNewPackageUnits();
-    if (!ObjectUtil.isEmpty(newPackageUnits))
-    {
-      // This transaction will possibly execute DDL, so we need an exclusive lock
-      dbSchemaLock = store.getDBSchemaLock().writeLock();
-    }
-    else
-    {
-      // No DDL, so we are ok with a simple concurrent lock
-      dbSchemaLock = store.getDBSchemaLock().readLock();
-    }
-
-    dbSchemaLock.lock();
-
-    // Check if our prepared statement cache is still usable
-    int storeModCount = store.getDBSchemaModCount();
-    if (dbSchemaModCount != storeModCount)
-    {
-      statementCache.invalidate();
-      dbSchemaModCount = storeModCount;
-    }
-  }
-
-  private void unlockSchema()
-  {
-    if (dbSchemaLock != null)
-    {
-      dbSchemaLock.unlock();
-      dbSchemaLock = null;
     }
   }
 
@@ -828,8 +775,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     statementCache = CDODBUtil.createStatementCache();
     statementCache.setConnection(connection);
     LifecycleUtil.activate(statementCache);
-
-    dbSchemaModCount = store.getDBSchemaModCount();
   }
 
   @Override
@@ -885,12 +830,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
     finally
     {
-      // most likely, we have modified the database definition structure. So, we
-      // reflect this by incrementing the version which forces all other DBStoreAccessors
-      // to invalidate their statementCache, and we invalidate ours, too.
-      statementCache.invalidate();
-      dbSchemaModCount = getStore().incDBSchemaModCount();
-
       monitor.done();
     }
   }

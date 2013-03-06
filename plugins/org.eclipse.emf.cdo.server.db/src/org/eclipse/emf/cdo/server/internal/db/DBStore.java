@@ -67,8 +67,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Timer;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * @author Eike Stepper
@@ -117,25 +115,13 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
   private IMappingStrategy mappingStrategy;
 
+  // private IDBDatabase database;
+
   private IDBSchema dbSchema;
 
   private IDBAdapter dbAdapter;
 
   private IDBConnectionProvider dbConnectionProvider;
-
-  /**
-   * A global database-level lock to secure data read/write operations against data dictionary changes (DML vs. DDL).
-   *
-   * @see DBStoreAccessor#doWrite
-   * @see DBStoreAccessor#doCommit
-   * @see DBStoreAccessor#doRollback
-   */
-  private ReentrantReadWriteLock dbSchemaLock;
-
-  /**
-   * A transient version number that accessors rely upon to determine whether they need to invalidate their prepared statement caches.
-   */
-  private int dbSchemaModCount;
 
   @ExcludeFromDump
   private transient ProgressDistributor accessorWriteDistributor = new ProgressDistributor.Geometric()
@@ -275,21 +261,6 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   public IDBSchema getDBSchema()
   {
     return dbSchema;
-  }
-
-  public ReadWriteLock getDBSchemaLock()
-  {
-    return dbSchemaLock;
-  }
-
-  public int getDBSchemaModCount()
-  {
-    return dbSchemaModCount;
-  }
-
-  public int incDBSchemaModCount()
-  {
-    return ++dbSchemaModCount;
   }
 
   public void visitAllTables(Connection connection, IDBStore.TableVisitor visitor)
@@ -654,8 +625,6 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     }
 
     dbSchema = createSchema();
-    dbSchemaLock = new ReentrantReadWriteLock();
-    dbSchemaModCount = 1;
 
     LifecycleUtil.activate(idHandler);
     LifecycleUtil.activate(metaDataManager);

@@ -12,11 +12,11 @@ package org.eclipse.net4j.internal.db.ddl;
 
 import org.eclipse.net4j.db.ddl.IDBIndexField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.IDBSchemaElement;
+import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
 import org.eclipse.net4j.spi.db.DBSchemaElement;
-import org.eclipse.net4j.util.StringUtil;
 
-import java.io.IOException;
-import java.io.Writer;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -46,6 +46,11 @@ public class DBIndexField extends DBSchemaElement implements IDBIndexField
   {
   }
 
+  public SchemaElementType getSchemaElementType()
+  {
+    return SchemaElementType.INDEX_FIELD;
+  }
+
   public DBIndex getIndex()
   {
     return index;
@@ -63,7 +68,7 @@ public class DBIndexField extends DBSchemaElement implements IDBIndexField
 
   public void setPosition(int position)
   {
-    index.getTable().getSchema().assertUnlocked();
+    assertUnlocked();
     this.position = position;
   }
 
@@ -83,13 +88,19 @@ public class DBIndexField extends DBSchemaElement implements IDBIndexField
   }
 
   @Override
-  public void dump(Writer writer) throws IOException
+  protected void collectElements(List<IDBSchemaElement> elements)
   {
-    writer.append("      FIELD ");
-    writer.append(getName());
-    writer.append(" (position=");
-    writer.append(String.valueOf(getPosition()));
-    writer.append(")");
-    writer.append(StringUtil.NL);
+    // Do nothing
+  }
+
+  @Override
+  protected void doAccept(IDBSchemaVisitor visitor)
+  {
+    visitor.visit(this);
+  }
+
+  private void assertUnlocked()
+  {
+    index.getTable().getSchema().assertUnlocked();
   }
 }

@@ -11,6 +11,9 @@
 package org.eclipse.net4j.db.ddl;
 
 import org.eclipse.net4j.db.IDBNamedElement;
+import org.eclipse.net4j.util.container.IContainer;
+
+import java.io.Serializable;
 
 /**
  * Specifies a hierachical namespace for elements in a {@link IDBSchema DB schema}.
@@ -19,8 +22,14 @@ import org.eclipse.net4j.db.IDBNamedElement;
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface IDBSchemaElement extends IDBNamedElement
+public interface IDBSchemaElement extends IDBNamedElement, IContainer<IDBSchemaElement>, Comparable<IDBSchemaElement>,
+    Serializable
 {
+  /**
+   * @since 4.2
+   */
+  public SchemaElementType getSchemaElementType();
+
   public IDBSchema getSchema();
 
   /**
@@ -34,5 +43,31 @@ public interface IDBSchemaElement extends IDBNamedElement
   /**
    * @since 4.2
    */
+  public void accept(IDBSchemaVisitor visitor);
+
+  /**
+   * @since 4.2
+   */
   public void remove();
+
+  /**
+   * @since 4.2
+   * @author Eike Stepper
+   */
+  public enum SchemaElementType
+  {
+    SCHEMA(0), TABLE(1), FIELD(2), INDEX(2), INDEX_FIELD(3);
+
+    private final int level;
+
+    private SchemaElementType(int level)
+    {
+      this.level = level;
+    }
+
+    public int getLevel()
+    {
+      return level;
+    }
+  }
 }

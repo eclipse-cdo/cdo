@@ -18,22 +18,22 @@ import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.IDBSchemaElement;
+import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.internal.db.ddl.DBField;
 import org.eclipse.net4j.internal.db.ddl.DBIndex;
 import org.eclipse.net4j.internal.db.ddl.DBTable;
 import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
-import org.eclipse.net4j.util.StringUtil;
 
 import javax.sql.DataSource;
 
-import java.io.IOException;
 import java.io.PrintStream;
-import java.io.Writer;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -100,14 +100,22 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
   {
   }
 
-  public String getFullName()
+  /**
+   * @since 4.2
+   */
+  public SchemaElementType getSchemaElementType()
   {
-    return getName();
+    return SchemaElementType.SCHEMA;
   }
 
   public IDBSchema getSchema()
   {
     return this;
+  }
+
+  public String getFullName()
+  {
+    return getName();
   }
 
   /**
@@ -123,6 +131,7 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
 
     DBTable table = new DBTable(this, name);
     tables.put(table.getName(), table);
+    resetElements();
     return table;
   }
 
@@ -133,7 +142,9 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
   {
     assertUnlocked();
     name = name(name);
-    return tables.remove(name);
+    DBTable table = tables.remove(name);
+    resetElements();
+    return table;
   }
 
   /**
@@ -151,22 +162,6 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
   public IDBTable[] getTables()
   {
     return tables.values().toArray(new DBTable[tables.size()]);
-  }
-
-  /**
-   * @since 4.2
-   */
-  public boolean isEmpty()
-  {
-    return tables.isEmpty();
-  }
-
-  /**
-   * @since 4.2
-   */
-  public IDBTable[] getElements()
-  {
-    return getTables();
   }
 
   /**
@@ -331,15 +326,21 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
     return "I" + System.currentTimeMillis() + "_" + ++indexCounter;
   }
 
+  /**
+   * @since 4.2
+   */
   @Override
-  public void dump(Writer writer) throws IOException
+  protected void collectElements(List<IDBSchemaElement> elements)
   {
-    writer.append("SCHEMA ");
-    writer.append(getName());
-    writer.append(StringUtil.NL);
-    for (DBTable table : tables.values())
-    {
-      table.dump(writer);
-    }
+    elements.addAll(tables.values());
+  }
+
+  /**
+   * @since 4.2
+   */
+  @Override
+  protected void doAccept(IDBSchemaVisitor visitor)
+  {
+    visitor.visit(this);
   }
 }

@@ -96,13 +96,12 @@ public final class DBPropertyDelta<T> extends DBDelta implements IDBPropertyDelt
   @Override
   protected void dumpAdditionalProperties(Writer writer) throws IOException
   {
-    writer.append(" (type=");
+    writer.append(", type=");
     writer.append(getType().toString());
     writer.append(", value=");
     writer.append(toString(getValue()));
     writer.append(", oldValue=");
     writer.append(toString(getOldValue()));
-    writer.append(")");
   }
 
   private static CharSequence toString(Object object)

@@ -13,10 +13,10 @@ package org.eclipse.net4j.internal.db.ddl.delta;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.delta.IDBDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
-import org.eclipse.net4j.db.ddl.delta.IDBDeltaWithPosition;
 import org.eclipse.net4j.spi.db.DBNamedElement;
 import org.eclipse.net4j.spi.db.DBSchemaElement;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.collection.PositionProvider;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -68,10 +68,10 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
     int result = getDeltaType().compareTo(delta2.getDeltaType());
     if (result == 0)
     {
-      if (this instanceof IDBDeltaWithPosition && delta2 instanceof IDBDeltaWithPosition)
+      if (this instanceof PositionProvider && delta2 instanceof PositionProvider)
       {
-        IDBDeltaWithPosition withPosition1 = (IDBDeltaWithPosition)this;
-        IDBDeltaWithPosition withPosition2 = (IDBDeltaWithPosition)delta2;
+        PositionProvider withPosition1 = (PositionProvider)this;
+        PositionProvider withPosition2 = (PositionProvider)delta2;
         return withPosition1.getPosition() - withPosition2.getPosition();
       }
 
@@ -84,9 +84,7 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
   public final void accept(IDBDeltaVisitor visitor)
   {
     doAccept(visitor);
-
-    IDBDelta[] deltas = getElements();
-    for (IDBDelta delta : deltas)
+    for (IDBDelta delta : getElements())
     {
       delta.accept(visitor);
     }
@@ -103,16 +101,16 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
   {
     if (elements == null)
     {
-      List<IDBDelta> deltas = new ArrayList<IDBDelta>();
-      collectElements(deltas);
+      List<IDBDelta> result = new ArrayList<IDBDelta>();
+      collectElements(result);
 
-      if (deltas.isEmpty())
+      if (result.isEmpty())
       {
         elements = NO_ELEMENTS;
       }
       else
       {
-        elements = deltas.toArray(new IDBDelta[deltas.size()]);
+        elements = result.toArray(new IDBDelta[result.size()]);
         Arrays.sort(elements);
       }
     }

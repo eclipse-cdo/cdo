@@ -14,7 +14,6 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
-import org.eclipse.net4j.util.container.IContainer;
 
 import javax.sql.DataSource;
 
@@ -30,7 +29,7 @@ import java.util.Set;
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface IDBSchema extends IDBSchemaElement, IContainer<IDBTable>
+public interface IDBSchema extends IDBSchemaElement
 {
   /**
    * @since 4.2

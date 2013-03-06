@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.db.ddl;
 
+import org.eclipse.net4j.util.collection.PositionProvider;
+
 /**
  * An index field specification in a {@link IDBIndex DB index}.
  *
@@ -18,11 +20,9 @@ package org.eclipse.net4j.db.ddl;
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface IDBIndexField extends IDBSchemaElement
+public interface IDBIndexField extends IDBSchemaElement, PositionProvider
 {
   public IDBIndex getIndex();
 
   public IDBField getField();
-
-  public int getPosition();
 }

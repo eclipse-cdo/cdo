@@ -13,11 +13,13 @@ package org.eclipse.net4j.internal.db.ddl;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.IDBSchemaElement;
+import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
 import org.eclipse.net4j.spi.db.DBSchemaElement;
-import org.eclipse.net4j.util.StringUtil;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -70,6 +72,11 @@ public class DBField extends DBSchemaElement implements IDBField
   {
   }
 
+  public SchemaElementType getSchemaElementType()
+  {
+    return SchemaElementType.FIELD;
+  }
+
   public IDBSchema getSchema()
   {
     return table.getSchema();
@@ -87,7 +94,7 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public void setType(DBType type)
   {
-    table.getSchema().assertUnlocked();
+    assertUnlocked();
     this.type = type;
   }
 
@@ -124,7 +131,7 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public void setPrecision(int precision)
   {
-    table.getSchema().assertUnlocked();
+    assertUnlocked();
     this.precision = precision;
   }
 
@@ -140,7 +147,7 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public void setScale(int scale)
   {
-    table.getSchema().assertUnlocked();
+    assertUnlocked();
     this.scale = scale;
   }
 
@@ -151,7 +158,7 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public void setNotNull(boolean notNull)
   {
-    table.getSchema().assertUnlocked();
+    assertUnlocked();
     this.notNull = notNull;
   }
 
@@ -162,7 +169,7 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public void setPosition(int position)
   {
-    table.getSchema().assertUnlocked();
+    assertUnlocked();
     this.position = position;
   }
 
@@ -198,12 +205,20 @@ public class DBField extends DBSchemaElement implements IDBField
   }
 
   @Override
-  public void dump(Writer writer) throws IOException
+  protected void collectElements(List<IDBSchemaElement> elements)
   {
-    writer.append("    FIELD ");
-    writer.append(getName());
-    writer.append(" (position=");
-    writer.append(String.valueOf(getPosition()));
+    // Do nothing
+  }
+
+  @Override
+  protected void doAccept(IDBSchemaVisitor visitor)
+  {
+    visitor.visit(this);
+  }
+
+  @Override
+  protected void dumpAdditionalProperties(Writer writer) throws IOException
+  {
     writer.append(", type=");
     writer.append(getType().toString());
     writer.append(", precision=");
@@ -212,7 +227,10 @@ public class DBField extends DBSchemaElement implements IDBField
     writer.append(String.valueOf(getScale()));
     writer.append(", notNull=");
     writer.append(String.valueOf(isNotNull()));
-    writer.append(")");
-    writer.append(StringUtil.NL);
+  }
+
+  private void assertUnlocked()
+  {
+    table.getSchema().assertUnlocked();
   }
 }

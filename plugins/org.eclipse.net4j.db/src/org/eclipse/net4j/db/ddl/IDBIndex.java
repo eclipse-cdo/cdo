@@ -28,6 +28,7 @@ public interface IDBIndex extends IDBSchemaElement
    */
   public void setType(Type type);
 
+  @Deprecated
   public int getPosition();
 
   /**

@@ -230,10 +230,10 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
     int idLength = store.getIDColumnLength();
 
     table = store.getDBSchema().addTable(CDODBSchema.CDO_OBJECTS);
-    idField = table.addField(CDODBSchema.ATTRIBUTES_ID, idType, idLength);
+    idField = table.addField(CDODBSchema.ATTRIBUTES_ID, idType, idLength, true);
     typeField = table.addField(CDODBSchema.ATTRIBUTES_CLASS, idType, idLength);
     timeField = table.addField(CDODBSchema.ATTRIBUTES_CREATED, DBType.BIGINT);
-    table.addIndex(IDBIndex.Type.UNIQUE, idField);
+    table.addIndex(IDBIndex.Type.PRIMARY_KEY, idField);
 
     IDBAdapter dbAdapter = store.getDBAdapter();
     IDBStoreAccessor writer = store.getWriter(null);

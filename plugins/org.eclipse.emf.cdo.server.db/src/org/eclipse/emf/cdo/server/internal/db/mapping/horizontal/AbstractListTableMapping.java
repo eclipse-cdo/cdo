@@ -96,18 +96,18 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
 
     for (int i = 0; i < fields.length; i++)
     {
-      dbFields[i] = table.addField(fields[i].getName(), fields[i].getDbType(), fields[i].getPrecision());
+      dbFields[i] = table.addField(fields[i].getName(), fields[i].getDbType(), fields[i].getPrecision(), true);
     }
 
     // add field for list index
-    dbFields[dbFields.length - 1] = table.addField(CDODBSchema.LIST_IDX, DBType.INTEGER);
+    dbFields[dbFields.length - 1] = table.addField(CDODBSchema.LIST_IDX, DBType.INTEGER, true);
 
     // add field for value
     typeMapping = mappingStrategy.createValueMapping(getFeature());
     typeMapping.createDBField(table, CDODBSchema.LIST_VALUE);
 
     // add table indexes
-    table.addIndex(Type.UNIQUE, dbFields);
+    table.addIndex(Type.PRIMARY_KEY, dbFields);
   }
 
   protected abstract FieldInfo[] getKeyFields();

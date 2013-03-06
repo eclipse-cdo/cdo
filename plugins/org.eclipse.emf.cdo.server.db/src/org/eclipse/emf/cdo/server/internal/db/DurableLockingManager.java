@@ -389,7 +389,7 @@ public class DurableLockingManager extends Lifecycle
 
     // Lock areas
     lockAreas = schema.addTable("cdo_lock_areas");
-    lockAreasID = lockAreas.addField("id", DBType.VARCHAR);
+    lockAreasID = lockAreas.addField("id", DBType.VARCHAR, true);
     lockAreasUser = lockAreas.addField("user_id", DBType.VARCHAR);
     lockAreasBranch = lockAreas.addField("view_branch", DBType.INTEGER);
     lockAreasTime = lockAreas.addField("view_time", DBType.BIGINT);
@@ -400,8 +400,8 @@ public class DurableLockingManager extends Lifecycle
 
     // Locks
     locks = schema.addTable("cdo_locks");
-    locksArea = locks.addField("area_id", DBType.VARCHAR);
-    locksObject = locks.addField("object_id", idHandler.getDBType(), store.getIDColumnLength());
+    locksArea = locks.addField("area_id", DBType.VARCHAR, true);
+    locksObject = locks.addField("object_id", idHandler.getDBType(), store.getIDColumnLength(), true);
     locksGrade = locks.addField("lock_grade", DBType.INTEGER);
 
     locks.addIndex(IDBIndex.Type.PRIMARY_KEY, locksArea, locksObject);

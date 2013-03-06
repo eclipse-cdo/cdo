@@ -281,9 +281,10 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
             CDOServerUtil.addRepository(serverContainer, repository);
           }
         }
-        catch (Exception ex)
+        catch (RuntimeException ex)
         {
           deactivateRepositories();
+          throw ex;
         }
       }
     }
@@ -385,13 +386,16 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   public void tearDown() throws Exception
   {
     deactivateServerBrowser();
-    if (!isOptimizing() || mustLeaveCleanRepos())
+    if (repositories != null)
     {
-      deactivateRepositories();
-    }
-    else
-    {
-      removeResourcePathChecker();
+      if (!isOptimizing() || mustLeaveCleanRepos())
+      {
+        deactivateRepositories();
+      }
+      else
+      {
+        removeResourcePathChecker();
+      }
     }
 
     resourcePathChecker = null;

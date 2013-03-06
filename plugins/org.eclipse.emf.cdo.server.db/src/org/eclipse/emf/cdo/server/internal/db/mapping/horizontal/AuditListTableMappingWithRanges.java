@@ -133,10 +133,10 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     table = store.getDBSchema().addTable(tableName);
 
     IDBField[] dbFields = new IDBField[4];
-    dbFields[0] = table.addField(CDODBSchema.LIST_REVISION_ID, idType, idLength);
+    dbFields[0] = table.addField(CDODBSchema.LIST_REVISION_ID, idType, idLength, true);
     dbFields[1] = table.addField(CDODBSchema.LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
     dbFields[2] = table.addField(CDODBSchema.LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
-    dbFields[3] = table.addField(CDODBSchema.LIST_IDX, DBType.INTEGER);
+    dbFields[3] = table.addField(CDODBSchema.LIST_IDX, DBType.INTEGER, true);
 
     // add field for value
     typeMapping = getMappingStrategy().createValueMapping(getFeature());
@@ -144,7 +144,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
 
     // TODO think about indexes
     // add table indexes
-    table.addIndex(Type.UNIQUE, dbFields);
+    table.addIndex(Type.NON_UNIQUE, dbFields);
   }
 
   public Collection<IDBTable> getDBTables()

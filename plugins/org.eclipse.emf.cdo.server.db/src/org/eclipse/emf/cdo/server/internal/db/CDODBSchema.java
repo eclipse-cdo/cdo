@@ -35,7 +35,7 @@ public class CDODBSchema extends DBSchema
   public static final IDBTable PROPERTIES = INSTANCE.addTable("cdo_properties"); //$NON-NLS-1$
 
   public static final IDBField PROPERTIES_NAME = //
-  PROPERTIES.addField("name", DBType.VARCHAR, 255); //$NON-NLS-1$
+  PROPERTIES.addField("name", DBType.VARCHAR, 255, true); //$NON-NLS-1$
 
   public static final IDBField PROPERTIES_VALUE = //
   PROPERTIES.addField("value", DBType.LONGVARCHAR); //$NON-NLS-1$
@@ -60,7 +60,7 @@ public class CDODBSchema extends DBSchema
   public static final IDBTable PACKAGE_UNITS = INSTANCE.addTable("cdo_package_units"); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_UNITS_ID = //
-  PACKAGE_UNITS.addField("id", DBType.VARCHAR, 255); //$NON-NLS-1$
+  PACKAGE_UNITS.addField("id", DBType.VARCHAR, 255, true); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_UNITS_ORIGINAL_TYPE = //
   PACKAGE_UNITS.addField("original_type", DBType.INTEGER); //$NON-NLS-1$
@@ -80,7 +80,7 @@ public class CDODBSchema extends DBSchema
   public static final IDBTable PACKAGE_INFOS = INSTANCE.addTable("cdo_package_infos"); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_INFOS_URI = //
-  PACKAGE_INFOS.addField("uri", DBType.VARCHAR, 255); //$NON-NLS-1$
+  PACKAGE_INFOS.addField("uri", DBType.VARCHAR, 255, true); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_INFOS_PARENT = //
   PACKAGE_INFOS.addField("parent", DBType.VARCHAR, 255); //$NON-NLS-1$
@@ -103,7 +103,7 @@ public class CDODBSchema extends DBSchema
   public static final IDBTable BRANCHES = INSTANCE.addTable("cdo_branches"); //$NON-NLS-1$
 
   public static final IDBField BRANCHES_ID = //
-  BRANCHES.addField("id", DBType.INTEGER); //$NON-NLS-1$
+  BRANCHES.addField("id", DBType.INTEGER, true); //$NON-NLS-1$
 
   public static final IDBField BRANCHES_NAME = //
   BRANCHES.addField("name", DBType.VARCHAR); //$NON-NLS-1$
@@ -136,7 +136,7 @@ public class CDODBSchema extends DBSchema
   public static final IDBTable COMMIT_INFOS = INSTANCE.addTable("cdo_commit_infos"); //$NON-NLS-1$
 
   public static final IDBField COMMIT_INFOS_TIMESTAMP = //
-  COMMIT_INFOS.addField("commit_time", DBType.BIGINT); //$NON-NLS-1$
+  COMMIT_INFOS.addField("commit_time", DBType.BIGINT, true); //$NON-NLS-1$
 
   public static final IDBField COMMIT_INFOS_PREVIOUS_TIMESTAMP = //
   COMMIT_INFOS.addField("previous_time", DBType.BIGINT); //$NON-NLS-1$
@@ -169,7 +169,7 @@ public class CDODBSchema extends DBSchema
   public static final IDBTable LOBS = INSTANCE.addTable("cdo_lobs"); //$NON-NLS-1$
 
   public static final IDBField LOBS_ID = //
-  LOBS.addField("id", DBType.VARCHAR, 64); //$NON-NLS-1$
+  LOBS.addField("id", DBType.VARCHAR, 64, true); //$NON-NLS-1$
 
   public static final IDBField LOBS_SIZE = //
   LOBS.addField("lsize", DBType.BIGINT); //$NON-NLS-1$

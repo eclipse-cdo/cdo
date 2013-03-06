@@ -138,11 +138,11 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     table = store.getDBSchema().addTable(tableName);
 
     IDBField[] dbFields = new IDBField[5];
-    dbFields[0] = table.addField(CDODBSchema.LIST_REVISION_ID, idType, idLength);
-    dbFields[1] = table.addField(CDODBSchema.LIST_REVISION_BRANCH, DBType.INTEGER);
+    dbFields[0] = table.addField(CDODBSchema.LIST_REVISION_ID, idType, idLength, true);
+    dbFields[1] = table.addField(CDODBSchema.LIST_REVISION_BRANCH, DBType.INTEGER, true);
     dbFields[2] = table.addField(CDODBSchema.LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
     dbFields[3] = table.addField(CDODBSchema.LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
-    dbFields[4] = table.addField(CDODBSchema.LIST_IDX, DBType.INTEGER);
+    dbFields[4] = table.addField(CDODBSchema.LIST_IDX, DBType.INTEGER, true);
 
     // add field for value
     typeMapping = getMappingStrategy().createValueMapping(getFeature());

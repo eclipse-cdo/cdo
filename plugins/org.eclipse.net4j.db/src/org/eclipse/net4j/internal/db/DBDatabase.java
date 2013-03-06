@@ -17,10 +17,12 @@ import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBTransaction;
 import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.spi.db.DBSchema;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.SetContainer;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 /**
  * @author Eike Stepper
@@ -31,19 +33,21 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
 
   private IDBConnectionProvider connectionProvider;
 
+  private int statementCacheCapacity = DEFAULT_STATEMENT_CACHE_CAPACITY;
+
   private DBSchema schema;
 
   private DBSchemaTransaction schemaTransaction;
 
-  private int statementCacheCapacity = DEFAULT_STATEMENT_CACHE_CAPACITY;
+  private final LinkedList<SchemaAccess> schemaAccessQueue = new LinkedList<SchemaAccess>();
 
-  public DBDatabase(final DBAdapter adapter, IDBConnectionProvider dbConnectionProvider, final String schemaName)
+  public DBDatabase(final DBAdapter adapter, IDBConnectionProvider connectionProvider, final String schemaName)
   {
     super(IDBTransaction.class);
     this.adapter = adapter;
-    connectionProvider = dbConnectionProvider;
+    this.connectionProvider = connectionProvider;
 
-    schema = DBUtil.execute(dbConnectionProvider, new RunnableWithConnection<DBSchema>()
+    schema = DBUtil.execute(connectionProvider, new RunnableWithConnection<DBSchema>()
     {
       public DBSchema run(Connection connection) throws SQLException
       {
@@ -52,11 +56,27 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
     });
 
     schema.lock();
+    activate();
   }
 
   public DBAdapter getAdapter()
   {
     return adapter;
+  }
+
+  public IDBConnectionProvider getConnectionProvider()
+  {
+    return connectionProvider;
+  }
+
+  public int getStatementCacheCapacity()
+  {
+    return statementCacheCapacity;
+  }
+
+  public void setStatementCacheCapacity(int statementCacheCapacity)
+  {
+    this.statementCacheCapacity = statementCacheCapacity;
   }
 
   public DBSchema getSchema()
@@ -66,6 +86,8 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
 
   public DBSchemaTransaction openSchemaTransaction()
   {
+    beginSchemaAccess(true);
+
     DBSchemaTransaction schemaTransaction = new DBSchemaTransaction(this);
     this.schemaTransaction = schemaTransaction;
     return schemaTransaction;
@@ -73,17 +95,23 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
 
   public void closeSchemaTransaction()
   {
-    schemaTransaction = null;
+    try
+    {
+      for (IDBTransaction transaction : getTransactions())
+      {
+        ((DBTransaction)transaction).invalidateStatementCache();
+      }
+    }
+    finally
+    {
+      schemaTransaction = null;
+      endSchemaAccess();
+    }
   }
 
   public DBSchemaTransaction getSchemaTransaction()
   {
     return schemaTransaction;
-  }
-
-  public IDBConnectionProvider getConnectionProvider()
-  {
-    return connectionProvider;
   }
 
   public DBTransaction openTransaction()
@@ -103,13 +131,126 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
     return getElements();
   }
 
-  public int getStatementCacheCapacity()
+  public boolean isClosed()
   {
-    return statementCacheCapacity;
+    return !isActive();
   }
 
-  public void setStatementCacheCapacity(int statementCacheCapacity)
+  public void close()
   {
-    this.statementCacheCapacity = statementCacheCapacity;
+    deactivate();
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    for (IDBTransaction transaction : getTransactions())
+    {
+      transaction.close();
+    }
+
+    super.doDeactivate();
+  }
+
+  public void beginSchemaAccess(boolean write)
+  {
+    SchemaAccess schemaAccess = null;
+    synchronized (schemaAccessQueue)
+    {
+      if (write)
+      {
+        schemaAccess = new WriteSchemaAccess();
+        schemaAccessQueue.addLast(schemaAccess);
+      }
+      else
+      {
+        if (!schemaAccessQueue.isEmpty())
+        {
+          schemaAccess = schemaAccessQueue.getFirst();
+          if (schemaAccess instanceof ReadSchemaAccess)
+          {
+            ReadSchemaAccess readSchemaAccess = (ReadSchemaAccess)schemaAccess;
+            readSchemaAccess.incrementReaders();
+          }
+        }
+
+        if (schemaAccess == null)
+        {
+          schemaAccess = new ReadSchemaAccess();
+          schemaAccessQueue.addLast(schemaAccess);
+        }
+      }
+    }
+
+    for (;;)
+    {
+      synchronized (schemaAccessQueue)
+      {
+        if (schemaAccessQueue.getFirst() == schemaAccess)
+        {
+          return;
+        }
+
+        try
+        {
+          schemaAccessQueue.wait();
+        }
+        catch (InterruptedException ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+    }
+  }
+
+  public void endSchemaAccess()
+  {
+    synchronized (schemaAccessQueue)
+    {
+      SchemaAccess schemaAccess = schemaAccessQueue.getFirst();
+      if (schemaAccess instanceof ReadSchemaAccess)
+      {
+        ReadSchemaAccess readSchemaAccess = (ReadSchemaAccess)schemaAccess;
+        if (readSchemaAccess.decrementReaders())
+        {
+          return;
+        }
+      }
+
+      schemaAccessQueue.removeFirst();
+      schemaAccessQueue.notifyAll();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface SchemaAccess
+  {
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public final class ReadSchemaAccess implements SchemaAccess
+  {
+    private int readers;
+
+    public void incrementReaders()
+    {
+      ++readers;
+    }
+
+    public boolean decrementReaders()
+    {
+      return --readers > 0;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public final class WriteSchemaAccess implements SchemaAccess
+  {
   }
 }

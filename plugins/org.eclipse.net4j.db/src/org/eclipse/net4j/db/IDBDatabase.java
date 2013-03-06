@@ -11,6 +11,7 @@
 package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.container.IContainer;
 
 /**
@@ -19,7 +20,7 @@ import org.eclipse.net4j.util.container.IContainer;
  * @noextend This interface is not intended to be extended by clients.
  * @since 4.2
  */
-public interface IDBDatabase extends IContainer<IDBTransaction>
+public interface IDBDatabase extends IContainer<IDBTransaction>, Closeable
 {
   public static final int DEFAULT_STATEMENT_CACHE_CAPACITY = 200;
 

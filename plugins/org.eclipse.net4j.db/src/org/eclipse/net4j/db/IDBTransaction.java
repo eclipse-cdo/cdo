@@ -13,6 +13,8 @@ package org.eclipse.net4j.db;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.util.collection.Closeable;
 
+import java.sql.Connection;
+
 /**
  * @since 4.2
  * @author Eike Stepper
@@ -24,7 +26,9 @@ public interface IDBTransaction extends Closeable
 {
   public IDBDatabase getDatabase();
 
-  public IDBPreparedStatement getPreparedStatement(String sql, ReuseProbability reuseProbability);
+  public Connection getConnection();
 
   public IDBSchemaTransaction openSchemaTransaction();
+
+  public IDBPreparedStatement prepareStatement(String sql, ReuseProbability reuseProbability);
 }

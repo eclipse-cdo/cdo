@@ -16,6 +16,7 @@ import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.IDBTransaction;
+import org.eclipse.net4j.util.CheckUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -69,8 +70,17 @@ public final class DBTransaction implements IDBTransaction
     return connection;
   }
 
-  public IDBPreparedStatement getPreparedStatement(String sql, ReuseProbability reuseProbability)
+  public IDBSchemaTransaction openSchemaTransaction()
   {
+    DBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
+    schemaTransaction.setTransaction(this);
+    return schemaTransaction;
+  }
+
+  public IDBPreparedStatement prepareStatement(String sql, ReuseProbability reuseProbability)
+  {
+    database.beginSchemaAccess(false);
+
     DBPreparedStatement preparedStatement = cache.remove(sql);
     if (preparedStatement == null)
     {
@@ -91,32 +101,46 @@ public final class DBTransaction implements IDBTransaction
 
   public void releasePreparedStatement(DBPreparedStatement preparedStatement)
   {
-    if (preparedStatement == null)
+    try
     {
-      // Bug 276926: Silently accept preparedStatement == null and do nothing.
-      return;
+      if (preparedStatement == null)
+      {
+        // Bug 276926: Silently accept preparedStatement == null and do nothing.
+        return;
+      }
+
+      checkOuts.remove(preparedStatement);
+      preparedStatement.setTouch(++lastTouch);
+
+      String sql = preparedStatement.getSQL();
+      if (cache.put(sql, preparedStatement) != null)
+      {
+        throw new IllegalStateException(sql + " already in cache"); //$NON-NLS-1$
+      }
+
+      if (cache.size() > database.getStatementCacheCapacity())
+      {
+        DBPreparedStatement old = cache.remove(cache.firstKey());
+        DBUtil.close(old.getDelegate());
+      }
     }
-
-    checkOuts.remove(preparedStatement);
-    preparedStatement.setTouch(++lastTouch);
-
-    String sql = preparedStatement.getSQL();
-    if (cache.put(sql, preparedStatement) != null)
+    finally
     {
-      throw new IllegalStateException(sql + " already in cache"); //$NON-NLS-1$
-    }
-
-    if (cache.size() > database.getStatementCacheCapacity())
-    {
-      DBPreparedStatement old = cache.remove(cache.firstKey());
-      DBUtil.close(old.getDelegate());
+      database.endSchemaAccess();
     }
   }
 
-  public IDBSchemaTransaction openSchemaTransaction()
+  public void invalidateStatementCache()
   {
-    DBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
-    schemaTransaction.setTransaction(this);
-    return schemaTransaction;
+    CheckUtil.checkState(checkOuts.isEmpty(), "Statements are checked out: " + checkOuts);
+
+    // Close all statements in the cache, then clear the cache.
+    for (DBPreparedStatement preparedStatement : cache.values())
+    {
+      PreparedStatement delegate = preparedStatement.getDelegate();
+      DBUtil.close(delegate);
+    }
+
+    cache.clear();
   }
 }

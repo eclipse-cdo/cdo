@@ -40,6 +40,15 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public static final int DEFAULT_VARCHAR_LENGTH = 255;
 
+  private static final ThreadLocal<Boolean> TRACK_CONSTRUCTION = new InheritableThreadLocal<Boolean>()
+  {
+    @Override
+    protected Boolean initialValue()
+    {
+      return true;
+    }
+  };
+
   private static final long serialVersionUID = 1L;
 
   private DBTable table;
@@ -54,6 +63,11 @@ public class DBField extends DBSchemaElement implements IDBField
 
   private int position;
 
+  /**
+   * Tracks the construction stack trace to provide better debug infos in DBTable.addIndex().
+   */
+  private transient Exception constructionStackTrace;
+
   public DBField(DBTable table, String name, DBType type, int precision, int scale, boolean notNull, int position)
   {
     super(name);
@@ -63,6 +77,18 @@ public class DBField extends DBSchemaElement implements IDBField
     this.scale = scale;
     this.notNull = notNull;
     this.position = position;
+
+    if (TRACK_CONSTRUCTION.get() == Boolean.TRUE)
+    {
+      try
+      {
+        throw new Exception("The field " + this + " has been constructed here:");
+      }
+      catch (Exception ex)
+      {
+        constructionStackTrace = ex;
+      }
+    }
   }
 
   /**
@@ -204,6 +230,11 @@ public class DBField extends DBSchemaElement implements IDBField
     return "(" + getPrecision() + ", " + getScale() + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
+  public Exception getConstructionStackTrace()
+  {
+    return constructionStackTrace;
+  }
+
   @Override
   protected void collectElements(List<IDBSchemaElement> elements)
   {
@@ -232,5 +263,17 @@ public class DBField extends DBSchemaElement implements IDBField
   private void assertUnlocked()
   {
     table.getSchema().assertUnlocked();
+  }
+
+  public static void trackConstruction(boolean on)
+  {
+    if (on)
+    {
+      TRACK_CONSTRUCTION.set(true);
+    }
+    else
+    {
+      TRACK_CONSTRUCTION.remove();
+    }
   }
 }

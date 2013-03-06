@@ -106,9 +106,9 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
   {
     assertUnlocked();
 
-    if (!field.isNotNull())
+    if (type != Type.NON_UNIQUE && !field.isNotNull())
     {
-      throw new DBException("Index field is nullable: " + field); //$NON-NLS-1$
+      throw new DBException("Index field is nullable: " + field, ((DBField)field).getConstructionStackTrace()); //$NON-NLS-1$
     }
 
     if (field.getTable() != table)

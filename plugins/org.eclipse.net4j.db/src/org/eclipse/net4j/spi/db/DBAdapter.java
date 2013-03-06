@@ -25,6 +25,7 @@ import org.eclipse.net4j.db.ddl.delta.IDBIndexDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
 import org.eclipse.net4j.internal.db.bundle.OM;
+import org.eclipse.net4j.internal.db.ddl.DBField;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -149,6 +150,7 @@ public abstract class DBAdapter implements IDBAdapter
   {
     try
     {
+      DBField.trackConstruction(false);
       String schemaName = schema.getName();
 
       DatabaseMetaData metaData = connection.getMetaData();
@@ -165,6 +167,10 @@ public abstract class DBAdapter implements IDBAdapter
     catch (SQLException ex)
     {
       throw new DBException(ex);
+    }
+    finally
+    {
+      DBField.trackConstruction(true);
     }
   }
 

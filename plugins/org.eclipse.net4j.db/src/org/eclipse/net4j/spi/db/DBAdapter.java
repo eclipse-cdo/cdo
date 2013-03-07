@@ -340,15 +340,15 @@ public abstract class DBAdapter implements IDBAdapter
         ChangeKind changeKind = delta.getChangeKind();
         switch (changeKind)
         {
-        case ADDED:
+        case ADD:
           createTable(connection, table, delta);
           break;
 
-        case REMOVED:
+        case REMOVE:
           dropTable(connection, table, delta);
           break;
 
-        case CHANGED:
+        case CHANGE:
           alterTable(connection, table, delta);
           break;
 
@@ -364,15 +364,15 @@ public abstract class DBAdapter implements IDBAdapter
         ChangeKind changeKind = delta.getChangeKind();
         switch (changeKind)
         {
-        case ADDED:
+        case ADD:
           createIndex(connection, element, delta);
           break;
 
-        case REMOVED:
+        case REMOVE:
           dropIndex(connection, element, delta);
           break;
 
-        case CHANGED:
+        case CHANGE:
           dropIndex(connection, element, delta);
           createIndex(connection, element, delta);
           break;
@@ -391,7 +391,7 @@ public abstract class DBAdapter implements IDBAdapter
    */
   protected void createTable(Connection connection, IDBTable table, IDBTableDelta delta)
   {
-    CheckUtil.checkArg(delta.getChangeKind() == ChangeKind.ADDED, "Not added: " + delta.getName());
+    CheckUtil.checkArg(delta.getChangeKind() == ChangeKind.ADD, "Not added: " + delta.getName());
 
     StringBuilder builder = new StringBuilder();
     builder.append("CREATE TABLE "); //$NON-NLS-1$

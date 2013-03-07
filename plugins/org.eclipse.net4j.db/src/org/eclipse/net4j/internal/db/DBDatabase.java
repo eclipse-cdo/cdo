@@ -14,7 +14,12 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.DBUtil.RunnableWithConnection;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.IDBTransaction;
+import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind;
+import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
+import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.util.WrappedException;
@@ -23,6 +28,7 @@ import org.eclipse.net4j.util.container.SetContainer;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -112,6 +118,38 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
   public DBSchemaTransaction getSchemaTransaction()
   {
     return schemaTransaction;
+  }
+
+  public void ensureSchema(IDBSchema schema)
+  {
+    ensureSchema(schema, null);
+  }
+
+  public void ensureSchema(IDBSchema schema, Map<ChangeKind, Boolean> policy)
+  {
+    IDBSchemaTransaction schemaTransaction = null;
+
+    try
+    {
+      schemaTransaction = openSchemaTransaction();
+      IDBSchema workingCopy = schemaTransaction.getSchema();
+
+      IDBSchemaDelta delta = schema.compare(workingCopy);
+
+      IDBDeltaVisitor.Copier copier = new IDBDeltaVisitor.Copier(policy);
+      delta.accept(copier);
+      IDBSchemaDelta result = copier.getResult();
+
+      result.applyTo(workingCopy);
+      schemaTransaction.commit();
+    }
+    finally
+    {
+      if (schemaTransaction != null)
+      {
+        schemaTransaction.close();
+      }
+    }
   }
 
   public DBTransaction openTransaction()

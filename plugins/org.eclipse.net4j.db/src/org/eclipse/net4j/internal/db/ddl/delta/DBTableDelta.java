@@ -96,6 +96,39 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
     return (DBSchemaDelta)super.getParent();
   }
 
+  public int getFieldDeltaCount()
+  {
+    return fieldDeltas.size();
+  }
+
+  public int getIndexDeltaCount()
+  {
+    return indexDeltas.size();
+  }
+
+  public DBFieldDelta getFieldDelta(int position)
+  {
+    for (IDBFieldDelta fieldDelta : fieldDeltas.values())
+    {
+      if (fieldDelta.getPosition() == position)
+      {
+        return (DBFieldDelta)fieldDelta;
+      }
+    }
+
+    return null;
+  }
+
+  public DBFieldDelta getFieldDelta(String name)
+  {
+    return (DBFieldDelta)fieldDeltas.get(name);
+  }
+
+  public DBIndexDelta getIndexDelta(String name)
+  {
+    return (DBIndexDelta)indexDeltas.get(name);
+  }
+
   public Map<String, IDBFieldDelta> getFieldDeltas()
   {
     return Collections.unmodifiableMap(fieldDeltas);

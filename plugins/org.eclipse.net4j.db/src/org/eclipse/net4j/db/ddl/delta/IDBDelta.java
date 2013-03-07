@@ -48,6 +48,6 @@ public interface IDBDelta extends IDBNamedElement, IContainer<IDBDelta>, Compara
    */
   public enum ChangeKind
   {
-    ADDED, REMOVED, CHANGED
+    ADD, REMOVE, CHANGE
   }
 }

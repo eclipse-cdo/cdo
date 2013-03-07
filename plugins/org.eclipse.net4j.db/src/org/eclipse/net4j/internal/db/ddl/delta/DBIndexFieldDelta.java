@@ -27,14 +27,14 @@ public final class DBIndexFieldDelta extends DBDeltaWithPosition implements IDBI
 {
   private static final long serialVersionUID = 1L;
 
-  public DBIndexFieldDelta(DBDelta parent, ChangeKind changeKind, String name)
+  public DBIndexFieldDelta(DBDelta parent, String name, ChangeKind changeKind)
   {
     super(parent, name, changeKind);
   }
 
   public DBIndexFieldDelta(DBIndexDelta parent, DBIndexField indexField, DBIndexField oldIndexField)
   {
-    this(parent, getChangeKind(indexField, oldIndexField), getName(indexField, oldIndexField));
+    this(parent, getName(indexField, oldIndexField), getChangeKind(indexField, oldIndexField));
 
     Integer position = indexField == null ? null : indexField.getPosition();
     Integer oldPosition = oldIndexField == null ? null : oldIndexField.getPosition();

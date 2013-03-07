@@ -90,6 +90,29 @@ public final class DBIndexDelta extends DBDeltaWithProperties implements IDBInde
     return (DBTableDelta)super.getParent();
   }
 
+  public int getIndexFieldDeltaCount()
+  {
+    return indexFieldDeltas.size();
+  }
+
+  public DBIndexFieldDelta getIndexFieldDelta(int position)
+  {
+    for (IDBIndexFieldDelta indexFieldDelta : indexFieldDeltas.values())
+    {
+      if (indexFieldDelta.getPosition() == position)
+      {
+        return (DBIndexFieldDelta)indexFieldDelta;
+      }
+    }
+
+    return null;
+  }
+
+  public DBIndexFieldDelta getIndexFieldDelta(String name)
+  {
+    return (DBIndexFieldDelta)indexFieldDeltas.get(name);
+  }
+
   public Map<String, IDBIndexFieldDelta> getIndexFieldDeltas()
   {
     return Collections.unmodifiableMap(indexFieldDeltas);

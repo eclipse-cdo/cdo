@@ -27,6 +27,12 @@ public interface IDBIndexDelta extends IDBDeltaWithProperties
 
   public IDBTableDelta getParent();
 
+  public int getIndexFieldDeltaCount();
+
+  public IDBIndexFieldDelta getIndexFieldDelta(int position);
+
+  public IDBIndexFieldDelta getIndexFieldDelta(String name);
+
   public Map<String, IDBIndexFieldDelta> getIndexFieldDeltas();
 
   public IDBIndexFieldDelta[] getIndexFieldDeltasSortedByPosition();

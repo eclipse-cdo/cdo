@@ -22,6 +22,10 @@ import java.util.Map;
  */
 public interface IDBSchemaDelta extends IDBDelta
 {
+  public int getTableDeltaCount();
+
+  public IDBTableDelta getTableDelta(String name);
+
   public Map<String, IDBTableDelta> getTableDeltas();
 
   public IDBTableDelta[] getTableDeltasSortedByName();

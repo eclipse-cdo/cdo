@@ -169,7 +169,7 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
 
   public static ChangeKind getChangeKind(Object object, Object oldObject)
   {
-    return object == null ? ChangeKind.REMOVED : oldObject == null ? ChangeKind.ADDED : ChangeKind.CHANGED;
+    return object == null ? ChangeKind.REMOVE : oldObject == null ? ChangeKind.ADD : ChangeKind.CHANGE;
   }
 
   protected static <T extends IDBSchemaElement> void compare(T[] elements, T[] oldElements,

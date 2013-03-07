@@ -25,6 +25,16 @@ public interface IDBTableDelta extends IDBDelta
 {
   public IDBSchemaDelta getParent();
 
+  public int getFieldDeltaCount();
+
+  public int getIndexDeltaCount();
+
+  public IDBFieldDelta getFieldDelta(int position);
+
+  public IDBFieldDelta getFieldDelta(String name);
+
+  public IDBIndexDelta getIndexDelta(String name);
+
   public Map<String, IDBFieldDelta> getFieldDeltas();
 
   public Map<String, IDBIndexDelta> getIndexDeltas();

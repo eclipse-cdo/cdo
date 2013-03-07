@@ -12,6 +12,7 @@ package org.eclipse.net4j.internal.db;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
@@ -44,7 +45,22 @@ public final class DBTransaction implements IDBTransaction
   public DBTransaction(DBDatabase database)
   {
     this.database = database;
-    connection = database.getConnectionProvider().getConnection();
+
+    IDBConnectionProvider connectionProvider = database.getConnectionProvider();
+    connection = connectionProvider.getConnection();
+    if (connection == null)
+    {
+      throw new DBException("No connection from connection provider: " + connectionProvider);
+    }
+
+    try
+    {
+      connection.setAutoCommit(false);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex, "SET AUTO COMMIT = false");
+    }
   }
 
   public DBDatabase getDatabase()

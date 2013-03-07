@@ -49,7 +49,7 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
 
   public DBSchemaDelta(DBSchema schema, IDBSchema oldSchema)
   {
-    this(schema.getName(), oldSchema == null ? ChangeKind.ADDED : ChangeKind.CHANGED);
+    this(schema.getName(), oldSchema == null ? ChangeKind.ADD : ChangeKind.CHANGE);
 
     IDBTable[] tables = schema.getTables();
     IDBTable[] oldTables = oldSchema == null ? DBSchema.NO_TABLES : oldSchema.getTables();
@@ -76,6 +76,16 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
   public DeltaType getDeltaType()
   {
     return DeltaType.SCHEMA;
+  }
+
+  public int getTableDeltaCount()
+  {
+    return tableDeltas.size();
+  }
+
+  public DBTableDelta getTableDelta(String name)
+  {
+    return (DBTableDelta)tableDeltas.get(name);
   }
 
   public Map<String, IDBTableDelta> getTableDeltas()

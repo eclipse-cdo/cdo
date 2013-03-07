@@ -56,7 +56,7 @@ public class DBStoreFactory implements IStoreFactory
     DBStore store = new DBStore();
     store.setMappingStrategy(mappingStrategy);
     store.setDBAdapter(dbAdapter);
-    store.setDbConnectionProvider(connectionProvider);
+    store.setDBConnectionProvider(connectionProvider);
 
     Map<String, String> storeProperties = RepositoryConfigurator.getProperties(storeConfig, 1);
     store.setProperties(storeProperties);

@@ -99,7 +99,7 @@ public final class CDODBUtil
     DBStore store = new DBStore();
     store.setMappingStrategy(mappingStrategy);
     store.setDBAdapter(dbAdapter);
-    store.setDbConnectionProvider(dbConnectionProvider);
+    store.setDBConnectionProvider(dbConnectionProvider);
     store.setProperties(properties);
     return store;
   }

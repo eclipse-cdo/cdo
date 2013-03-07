@@ -42,15 +42,15 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.ddl.delta.IDBDelta;
 import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
-
-import javax.sql.DataSource;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -115,9 +115,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
   private IMappingStrategy mappingStrategy;
 
-  // private IDBDatabase database;
-
-  private IDBSchema dbSchema;
+  private IDBDatabase database;
 
   private IDBAdapter dbAdapter;
 
@@ -197,6 +195,11 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     return idHandler;
   }
 
+  public IDBDatabase getDatabase()
+  {
+    return database;
+  }
+
   public Connection getConnection()
   {
     Connection connection = dbConnectionProvider.getConnection();
@@ -217,14 +220,9 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     return connection;
   }
 
-  public void setDbConnectionProvider(IDBConnectionProvider dbConnectionProvider)
+  public void setDBConnectionProvider(IDBConnectionProvider dbConnectionProvider)
   {
     this.dbConnectionProvider = dbConnectionProvider;
-  }
-
-  public void setDataSource(DataSource dataSource)
-  {
-    dbConnectionProvider = DBUtil.createConnectionProvider(dataSource);
   }
 
   public IMetaDataManager getMetaDataManager()
@@ -260,7 +258,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
   public IDBSchema getDBSchema()
   {
-    return dbSchema;
+    return database.getSchema();
   }
 
   public void visitAllTables(Connection connection, IDBStore.TableVisitor visitor)
@@ -624,7 +622,10 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
       DBUtil.close(connection);
     }
 
-    dbSchema = createSchema();
+    IDBSchema schema = createSchema();
+
+    database = DBUtil.openDatabase(dbAdapter, dbConnectionProvider, repository.getName());
+    database.ensureSchema(schema, IDBDelta.ChangeKind.ADD);
 
     LifecycleUtil.activate(idHandler);
     LifecycleUtil.activate(metaDataManager);

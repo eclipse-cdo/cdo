@@ -12,6 +12,7 @@ package org.eclipse.net4j.spi.db;
 
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
+import org.eclipse.net4j.db.ddl.IDBSchemaVisitor.StopRecursion;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.PositionProvider;
 
@@ -99,7 +100,15 @@ public abstract class DBSchemaElement extends DBNamedElement implements IDBSchem
 
   public final void accept(IDBSchemaVisitor visitor)
   {
-    doAccept(visitor);
+    try
+    {
+      doAccept(visitor);
+    }
+    catch (StopRecursion ex)
+    {
+      return;
+    }
+
     for (IDBSchemaElement element : getElements())
     {
       element.accept(visitor);

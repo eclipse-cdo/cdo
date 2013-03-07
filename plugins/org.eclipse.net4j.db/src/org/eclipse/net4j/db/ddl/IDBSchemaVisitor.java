@@ -10,7 +10,6 @@
  */
 package org.eclipse.net4j.db.ddl;
 
-
 /**
  * @since 4.2
  * @author Eike Stepper
@@ -26,6 +25,14 @@ public interface IDBSchemaVisitor
   public void visit(IDBIndex index);
 
   public void visit(IDBIndexField indexField);
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class StopRecursion extends RuntimeException
+  {
+    private static final long serialVersionUID = 1L;
+  }
 
   /**
    * @author Eike Stepper
@@ -60,6 +67,11 @@ public interface IDBSchemaVisitor
     protected void visitDefault(IDBSchemaElement element)
     {
       visitDefault(element);
+    }
+
+    protected final void stopRecursion()
+    {
+      throw new StopRecursion();
     }
   }
 }

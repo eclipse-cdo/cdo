@@ -47,6 +47,14 @@ public interface IDBDeltaVisitor
   /**
    * @author Eike Stepper
    */
+  public static final class StopRecursion extends RuntimeException
+  {
+    private static final long serialVersionUID = 1L;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   public static class Default implements IDBDeltaVisitor
   {
     public void visit(IDBSchemaDelta delta)
@@ -71,6 +79,10 @@ public interface IDBDeltaVisitor
         default:
           illegalChangeKind(changeKind);
         }
+      }
+      else
+      {
+        stopRecursion();
       }
     }
 
@@ -112,6 +124,10 @@ public interface IDBDeltaVisitor
           illegalChangeKind(changeKind);
         }
       }
+      else
+      {
+        stopRecursion();
+      }
     }
 
     protected void added(IDBTableDelta delta)
@@ -151,6 +167,10 @@ public interface IDBDeltaVisitor
         default:
           illegalChangeKind(changeKind);
         }
+      }
+      else
+      {
+        stopRecursion();
       }
     }
 
@@ -192,6 +212,10 @@ public interface IDBDeltaVisitor
           illegalChangeKind(changeKind);
         }
       }
+      else
+      {
+        stopRecursion();
+      }
     }
 
     protected void added(IDBIndexDelta delta)
@@ -231,6 +255,10 @@ public interface IDBDeltaVisitor
         default:
           illegalChangeKind(changeKind);
         }
+      }
+      else
+      {
+        stopRecursion();
       }
     }
 
@@ -272,6 +300,10 @@ public interface IDBDeltaVisitor
           illegalChangeKind(changeKind);
         }
       }
+      else
+      {
+        stopRecursion();
+      }
     }
 
     protected void added(IDBPropertyDelta<?> delta)
@@ -297,6 +329,11 @@ public interface IDBDeltaVisitor
     protected boolean handle(IDBDelta delta)
     {
       return true;
+    }
+
+    protected final void stopRecursion()
+    {
+      throw new StopRecursion();
     }
 
     private void illegalChangeKind(ChangeKind changeKind)
@@ -477,7 +514,7 @@ public interface IDBDeltaVisitor
     }
 
     @Override
-    protected boolean handle(IDBDelta delta)
+    protected final boolean handle(IDBDelta delta)
     {
       Boolean deltaPolicy = policy.get(delta.getChangeKind());
       if (deltaPolicy == FORBIDDEN)

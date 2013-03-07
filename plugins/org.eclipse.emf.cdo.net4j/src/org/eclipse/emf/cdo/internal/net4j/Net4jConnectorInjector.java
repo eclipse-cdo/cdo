@@ -10,23 +10,17 @@
  */
 package org.eclipse.emf.cdo.internal.net4j;
 
-import org.eclipse.emf.cdo.internal.net4j.messages.Messages;
-
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
-import java.text.MessageFormat;
-
 /**
  * @author Eike Stepper
  */
 public class Net4jConnectorInjector implements IElementProcessor
 {
-  private static final String INVALID_URI_MESSAGE = Messages.getString("InvalidURIException.0"); //$NON-NLS-1$
-
   private static final String SCHEME_SEPARATOR = "://"; //$NON-NLS-1$
 
   public Net4jConnectorInjector()
@@ -54,22 +48,19 @@ public class Net4jConnectorInjector implements IElementProcessor
     int pos = description.indexOf(SCHEME_SEPARATOR);
     if (pos == -1)
     {
-      throw new IllegalArgumentException(MessageFormat.format(INVALID_URI_MESSAGE, description,
-          Messages.getString("FailOverStrategyInjector.0"))); //$NON-NLS-1$
+      throw new IllegalArgumentException("Malformed URI, could not find scheme separator :// in " + description);
     }
 
     String factoryType = description.substring(0, pos);
     if (StringUtil.isEmpty(factoryType))
     {
-      throw new IllegalArgumentException(MessageFormat.format(INVALID_URI_MESSAGE, description,
-          Messages.getString("FailOverStrategyInjector.1"))); //$NON-NLS-1$
+      throw new IllegalArgumentException("Factory type not defined in " + description);
     }
 
     String connectorDescription = description.substring(pos + SCHEME_SEPARATOR.length());
     if (StringUtil.isEmpty(connectorDescription))
     {
-      throw new IllegalArgumentException(MessageFormat.format(INVALID_URI_MESSAGE, description,
-          Messages.getString("FailOverStrategyInjector.2"))); //$NON-NLS-1$
+      throw new IllegalArgumentException("Connector description not defined in " + description);
     }
 
     pos = connectorDescription.indexOf('?');

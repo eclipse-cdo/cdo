@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.net4j;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
 import org.eclipse.emf.cdo.internal.net4j.FailoverCDOSessionConfigurationImpl;
+import org.eclipse.emf.cdo.internal.net4j.Net4jConnectorInjector;
 import org.eclipse.emf.cdo.internal.net4j.Net4jSessionFactory;
 import org.eclipse.emf.cdo.internal.net4j.ReconnectingCDOSessionConfigurationImpl;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocolFactory;
@@ -152,6 +153,7 @@ public final class CDONet4jUtil
   {
     container.registerFactory(new CDOClientProtocolFactory());
     container.registerFactory(new Net4jSessionFactory());
+    container.addPostProcessor(new Net4jConnectorInjector());
   }
 
   /**

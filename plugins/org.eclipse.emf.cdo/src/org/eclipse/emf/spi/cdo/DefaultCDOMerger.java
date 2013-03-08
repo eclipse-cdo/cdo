@@ -490,7 +490,7 @@ public class DefaultCDOMerger implements CDOMerger
 
       if (conflict != null)
       {
-        return new Pair<InternalCDORevisionDelta, ChangedInSourceAndTargetConflict>(result, conflict);
+        return Pair.create(result, conflict);
       }
 
       return result;

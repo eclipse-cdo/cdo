@@ -202,7 +202,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
 
     EClassifier eClassifier = descriptor.getEClassifier();
     DBType dbType = descriptor.getDBType();
-    Pair<EClassifier, DBType> sourceTargetPair = new Pair<EClassifier, DBType>(eClassifier, dbType);
+    Pair<EClassifier, DBType> sourceTargetPair = Pair.create(eClassifier, dbType);
 
     // currently we do not support more than one typeMapping per source-target type pair
     if (typeMappingByTypes.containsKey(sourceTargetPair))
@@ -345,13 +345,12 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
   private ITypeMapping.Descriptor getMappingByType(EStructuralFeature feature, DBType dbType)
   {
     // First try: lookup specific mapping for the immediate type.
-    ITypeMapping.Descriptor descriptor = typeMappingByTypes.get(new Pair<EClassifier, DBType>(feature.getEType(),
-        dbType));
+    ITypeMapping.Descriptor descriptor = typeMappingByTypes.get(Pair.create(feature.getEType(), dbType));
 
     if (descriptor == null)
     {
       // Second try: lookup general mapping
-      descriptor = typeMappingByTypes.get(new Pair<EClassifier, DBType>(getEType(feature), dbType));
+      descriptor = typeMappingByTypes.get(Pair.create(getEType(feature), dbType));
       if (descriptor == null)
       {
         // Lookup failed. Give up

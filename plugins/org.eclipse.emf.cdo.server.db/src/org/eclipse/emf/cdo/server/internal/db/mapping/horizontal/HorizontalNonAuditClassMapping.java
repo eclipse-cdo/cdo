@@ -590,7 +590,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
         throw new IllegalArgumentException("AttributeMapping for " + delta.getFeature() + " is null!"); //$NON-NLS-1$ //$NON-NLS-2$
       }
 
-      attributeChanges.add(new Pair<ITypeMapping, Object>(am, delta.getValue()));
+      attributeChanges.add(Pair.create(am, delta.getValue()));
     }
 
     public void visit(CDOUnsetFeatureDelta delta)
@@ -598,7 +598,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       // TODO: correct this when DBStore implements unsettable features
       // see Bugs 259868 and 263010
       ITypeMapping tm = getValueMapping(delta.getFeature());
-      attributeChanges.add(new Pair<ITypeMapping, Object>(tm, null));
+      attributeChanges.add(Pair.create(tm, null));
     }
 
     public void visit(CDOListFeatureDelta delta)
@@ -614,7 +614,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
       if (oldSize != newSize)
       {
-        listSizeChanges.add(new Pair<EStructuralFeature, Integer>(feature, newSize));
+        listSizeChanges.add(Pair.create(feature, newSize));
       }
     }
 

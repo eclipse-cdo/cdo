@@ -149,13 +149,13 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
 
   /**
    * Returns the number of indices as the first element of the array.
-   * 
+   *
    * @return never <code>null</code>.
    */
   public Pair<ListTargetAdding[], int[]> reconstructAddedIndices()
   {
     reconstructAddedIndicesWithNoCopy();
-    return new Pair<ListTargetAdding[], int[]>(copyOf(cachedSources, cachedSources.length, cachedSources.getClass()),
+    return Pair.create(copyOf(cachedSources, cachedSources.length, cachedSources.getClass()),
         copyOf(cachedIndices, cachedIndices.length));
   }
 

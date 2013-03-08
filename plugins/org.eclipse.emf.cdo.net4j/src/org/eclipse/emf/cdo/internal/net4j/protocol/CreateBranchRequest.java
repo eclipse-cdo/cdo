@@ -47,6 +47,6 @@ public class CreateBranchRequest extends CDOClientRequest<Pair<Integer, Long>>
   {
     branchID = in.readInt();
     long baseTimeStamp = in.readLong();
-    return new Pair<Integer, Long>(branchID, baseTimeStamp);
+    return Pair.create(branchID, baseTimeStamp);
   }
 }

@@ -219,7 +219,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
     }
 
     branchInfos.put(branchID, branchInfo);
-    return new Pair<Integer, Long>(branchID, branchInfo.getBaseTimeStamp());
+    return Pair.create(branchID, branchInfo.getBaseTimeStamp());
   }
 
   public synchronized BranchInfo loadBranch(int branchID)

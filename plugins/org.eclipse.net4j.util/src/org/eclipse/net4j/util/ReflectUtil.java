@@ -368,7 +368,7 @@ public final class ReflectUtil
     for (Field field : fields)
     {
       Object value = getValue(field, object);
-      result[i++] = new Pair<Field, Object>(field, value);
+      result[i++] = Pair.create(field, value);
     }
 
     return result;

@@ -351,7 +351,7 @@ public abstract class DBStoreVerifier
       {
         while (resultSet.next())
         {
-          idVersions.add(new Pair<Long, Integer>(resultSet.getLong(1), resultSet.getInt(2)));
+          idVersions.add(Pair.create(resultSet.getLong(1), resultSet.getInt(2)));
         }
       }
       finally
@@ -499,7 +499,7 @@ public abstract class DBStoreVerifier
       {
         while (resultSet.next())
         {
-          idVersions.add(new Pair<Long, Integer>(resultSet.getLong(1), resultSet.getInt(2)));
+          idVersions.add(Pair.create(resultSet.getLong(1), resultSet.getInt(2)));
         }
       }
       finally

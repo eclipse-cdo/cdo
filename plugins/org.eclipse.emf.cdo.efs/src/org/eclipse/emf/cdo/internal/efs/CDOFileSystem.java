@@ -147,7 +147,7 @@ public abstract class CDOFileSystem extends FileSystem
 
   protected CDOSession getSession(String authority, String repositoryName, IProgressMonitor monitor)
   {
-    Pair<String, String> sessionKey = new Pair<String, String>(authority, repositoryName);
+    Pair<String, String> sessionKey = Pair.create(authority, repositoryName);
     CDOSession session = sessions.get(sessionKey);
     if (session == null)
     {

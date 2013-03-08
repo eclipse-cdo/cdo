@@ -348,7 +348,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
           {
             toReadFromBase = new ArrayList<Pair<Integer, Integer>>();
           }
-          toReadFromBase.add(new Pair<Integer, Integer>(currentIndex, index));
+          toReadFromBase.add(Pair.create(currentIndex, index));
 
           if (TRACER.isEnabled())
           {
@@ -375,7 +375,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
         {
           toReadFromBase = new ArrayList<Pair<Integer, Integer>>();
         }
-        toReadFromBase.add(new Pair<Integer, Integer>(currentIndex, currentIndex + valuesToRead));
+        toReadFromBase.add(Pair.create(currentIndex, currentIndex + valuesToRead));
       }
     }
     catch (SQLException ex)

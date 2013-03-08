@@ -337,7 +337,7 @@ public class Net4jDBTest extends AbstractCDOTest
 
   private void registerColumn(DBType type, Object value)
   {
-    Pair<DBType, Object> column = new Pair<DBType, Object>(type, value);
+    Pair<DBType, Object> column = Pair.create(type, value);
     columns.add(column);
   }
 

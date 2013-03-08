@@ -2373,7 +2373,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           }
 
           Setting setting = internalReferencer.eSetting(reference);
-          objectsToBeRemoved.add(new Pair<Setting, EObject>(setting, referencedObject));
+          objectsToBeRemoved.add(Pair.create(setting, referencedObject));
         }
       }
     }

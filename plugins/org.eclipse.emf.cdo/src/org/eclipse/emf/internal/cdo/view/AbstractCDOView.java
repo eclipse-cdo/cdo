@@ -1404,8 +1404,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       CDOObject changedObject = objects.get(key.getID());
       if (changedObject != null)
       {
-        Pair<CDORevision, CDORevisionDelta> oldInfo = new Pair<CDORevision, CDORevisionDelta>(
-            changedObject.cdoRevision(), delta);
+        Pair<CDORevision, CDORevisionDelta> oldInfo = Pair.create(changedObject.cdoRevision(), delta);
         // if (!isLocked(changedObject))
         {
           CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)changedObject, key);
@@ -1429,8 +1428,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       InternalCDOObject detachedObject = removeObject(key.getID());
       if (detachedObject != null)
       {
-        Pair<CDORevision, CDORevisionDelta> oldInfo = new Pair<CDORevision, CDORevisionDelta>(
-            detachedObject.cdoRevision(), CDORevisionDelta.DETACHED);
+        Pair<CDORevision, CDORevisionDelta> oldInfo = Pair.create((CDORevision)detachedObject.cdoRevision(),
+            CDORevisionDelta.DETACHED);
         // if (!isLocked(detachedObject))
         {
           CDOStateMachine.INSTANCE.detachRemote(detachedObject);

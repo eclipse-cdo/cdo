@@ -201,7 +201,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     synchronized (transaction)
     {
       List<InternalCDOObject> contents = new ArrayList<InternalCDOObject>();
-      prepare(object, new Pair<InternalCDOTransaction, List<InternalCDOObject>>(transaction, contents));
+      prepare(object, Pair.create(transaction, contents));
 
       attachOrReattach(object, transaction);
       for (InternalCDOObject content : contents)

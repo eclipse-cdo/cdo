@@ -45,7 +45,7 @@ import java.util.List;
 /**
  * When instanced in Eclipse, it's populated with contributions from the viewProvider Extension Point. A default
  * CDOViewProvider implementation is registered, regardless of the execution environment.
- * 
+ *
  * @author Victor Roldan Betancort
  * @since 2.0
  * @see CDOViewProvider
@@ -90,7 +90,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
         CDOView view = viewSet.resolveView(uuid);
         if (view != null)
         {
-          return new Pair<CDOView, CDOViewProvider>(view, null);
+          return Pair.create(view, null);
         }
       }
       catch (Exception ignore)
@@ -104,7 +104,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
       CDOView view = viewProvider.getView(uri, resourceSet);
       if (view != null)
       {
-        return new Pair<CDOView, CDOViewProvider>(view, viewProvider);
+        return Pair.create(view, viewProvider);
       }
     }
 

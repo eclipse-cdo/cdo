@@ -858,7 +858,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
       DBUtil.update(stmt, true);
       getConnection().commit();
-      return new Pair<Integer, Long>(branchID, branchInfo.getBaseTimeStamp());
+      return Pair.create(branchID, branchInfo.getBaseTimeStamp());
     }
     catch (SQLException ex)
     {

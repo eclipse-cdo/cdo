@@ -113,6 +113,11 @@ public class DBField extends DBSchemaElement implements IDBField
     return table;
   }
 
+  public DBTable getParent()
+  {
+    return getTable();
+  }
+
   public DBType getType()
   {
     return type;

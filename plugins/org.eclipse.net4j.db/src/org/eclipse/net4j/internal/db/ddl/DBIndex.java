@@ -79,6 +79,11 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
     return table;
   }
 
+  public DBTable getParent()
+  {
+    return getTable();
+  }
+
   public Type getType()
   {
     return type;

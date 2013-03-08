@@ -22,6 +22,11 @@ import org.eclipse.net4j.util.collection.PositionProvider;
  */
 public interface IDBIndexField extends IDBSchemaElement, PositionProvider
 {
+  /**
+   * @since 4.2
+   */
+  public IDBIndex getParent();
+
   public IDBIndex getIndex();
 
   public IDBField getField();

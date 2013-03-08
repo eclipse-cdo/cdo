@@ -24,6 +24,11 @@ public interface IDBField extends IDBSchemaElement, PositionProvider
 {
   public static final int DEFAULT = -1;
 
+  /**
+   * @since 4.2
+   */
+  public IDBTable getParent();
+
   public IDBTable getTable();
 
   public DBType getType();

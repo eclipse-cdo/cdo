@@ -4,11 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.net4j.util;
+
+import org.eclipse.net4j.util.collection.Closeable;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
@@ -16,7 +18,7 @@ import java.util.Map;
 
 /**
  * Various static helper methods.
- * 
+ *
  * @author Eike Stepper
  */
 public final class ObjectUtil
@@ -47,7 +49,7 @@ public final class ObjectUtil
 
   /**
    * A collision-free hash code for small sets (<=4) of small, positive integers (<=128)
-   * 
+   *
    * @since 3.2
    */
   public static int hashCode(int... values)
@@ -106,5 +108,31 @@ public final class ObjectUtil
   public static boolean isEmpty(String string)
   {
     return string == null || string.length() == 0;
+  }
+
+  /**
+   * @since 3.3
+   */
+  public static Exception close(Object object)
+  {
+    try
+    {
+      if (object instanceof Closeable)
+      {
+        Closeable closeable = (Closeable)object;
+        closeable.close();
+      }
+      else if (object instanceof java.io.Closeable)
+      {
+        java.io.Closeable closeable = (java.io.Closeable)object;
+        closeable.close();
+      }
+    }
+    catch (Exception ex)
+    {
+      return ex;
+    }
+
+    return null;
   }
 }

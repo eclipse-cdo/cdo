@@ -19,6 +19,11 @@ package org.eclipse.net4j.db.ddl;
  */
 public interface IDBIndex extends IDBSchemaElement
 {
+  /**
+   * @since 4.2
+   */
+  public IDBTable getParent();
+
   public IDBTable getTable();
 
   public Type getType();

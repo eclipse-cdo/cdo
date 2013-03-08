@@ -35,10 +35,20 @@ public interface IDBSchemaElement extends IDBNamedElement, IContainer<IDBSchemaE
   /**
    * @since 4.2
    */
+  public IDBSchemaElement getParent();
+
+  /**
+   * @since 4.2
+   */
   @Deprecated
   public void setName(String name);
 
   public String getFullName();
+
+  /**
+   * @since 4.2
+   */
+  public <T extends IDBSchemaElement> T getElement(Class<T> type, String name);
 
   /**
    * @since 4.2

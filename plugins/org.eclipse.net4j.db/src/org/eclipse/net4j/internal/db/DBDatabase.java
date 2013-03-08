@@ -15,6 +15,9 @@ import org.eclipse.net4j.db.DBUtil.RunnableWithConnection;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBTransaction;
+import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.IDBSchemaElement;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.util.WrappedException;
@@ -69,16 +72,6 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
     return connectionProvider;
   }
 
-  public int getStatementCacheCapacity()
-  {
-    return statementCacheCapacity;
-  }
-
-  public void setStatementCacheCapacity(int statementCacheCapacity)
-  {
-    this.statementCacheCapacity = statementCacheCapacity;
-  }
-
   public DBSchema getSchema()
   {
     return schema;
@@ -129,6 +122,59 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
   public IDBTransaction[] getTransactions()
   {
     return getElements();
+  }
+
+  public int getStatementCacheCapacity()
+  {
+    return statementCacheCapacity;
+  }
+
+  public void setStatementCacheCapacity(int statementCacheCapacity)
+  {
+    this.statementCacheCapacity = statementCacheCapacity;
+  }
+
+  public <T extends IDBSchemaElement, P extends IDBSchemaElement> T ensureSchemaElement(P parent, Class<T> type,
+      String name, RunnableWithSchemaElement<T, P> runnable)
+  {
+    T element = parent.getElement(type, name);
+    if (element == null)
+    {
+      DBSchemaTransaction schemaTransaction = openSchemaTransaction();
+
+      try
+      {
+        DBSchema workingCopy = schemaTransaction.getWorkingCopy();
+        P parentCopy = workingCopy.findElement(parent);
+
+        T elementCopy = runnable.run(parentCopy, name);
+
+        schemaTransaction.commit();
+        if (elementCopy != null)
+        {
+          element = parent.getSchema().findElement(elementCopy);
+        }
+      }
+      finally
+      {
+        schemaTransaction.close();
+      }
+    }
+
+    return element;
+  }
+
+  public IDBTable ensureTable(String name, final RunnableWithTable runnable)
+  {
+    return ensureSchemaElement(schema, IDBTable.class, name, new RunnableWithSchemaElement<IDBTable, IDBSchema>()
+    {
+      public IDBTable run(IDBSchema parent, String name)
+      {
+        IDBTable table = parent.addTable(name);
+        runnable.run(table);
+        return table;
+      }
+    });
   }
 
   public boolean isClosed()

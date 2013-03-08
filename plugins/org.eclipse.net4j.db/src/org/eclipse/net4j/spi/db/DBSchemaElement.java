@@ -98,6 +98,22 @@ public abstract class DBSchemaElement extends DBNamedElement implements IDBSchem
 
   protected abstract void collectElements(List<IDBSchemaElement> elements);
 
+  public final <T extends IDBSchemaElement> T getElement(Class<T> type, String name)
+  {
+    name = name(name);
+    for (IDBSchemaElement element : getElements())
+    {
+      if (element.getName() == name && type.isAssignableFrom(element.getClass()))
+      {
+        @SuppressWarnings("unchecked")
+        T result = (T)element;
+        return result;
+      }
+    }
+
+    return null;
+  }
+
   public final void accept(IDBSchemaVisitor visitor)
   {
     try

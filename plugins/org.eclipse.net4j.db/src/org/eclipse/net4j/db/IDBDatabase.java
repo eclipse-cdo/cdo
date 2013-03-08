@@ -11,6 +11,8 @@
 package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.IDBSchemaElement;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.container.IContainer;
 
@@ -41,4 +43,25 @@ public interface IDBDatabase extends IContainer<IDBTransaction>, Closeable
   public int getStatementCacheCapacity();
 
   public void setStatementCacheCapacity(int statementCacheCapacity);
+
+  public <T extends IDBSchemaElement, P extends IDBSchemaElement> T ensureSchemaElement(P parent, Class<T> type,
+      String name, RunnableWithSchemaElement<T, P> runnable);
+
+  public IDBTable ensureTable(String name, RunnableWithTable runnable);
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface RunnableWithSchemaElement<T extends IDBSchemaElement, P extends IDBSchemaElement>
+  {
+    public T run(P parent, String name);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface RunnableWithTable
+  {
+    public void run(IDBTable table);
+  }
 }

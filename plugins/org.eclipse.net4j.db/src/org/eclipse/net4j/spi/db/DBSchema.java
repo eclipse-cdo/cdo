@@ -17,6 +17,7 @@ import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBIndexField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
@@ -113,9 +114,76 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
     return this;
   }
 
+  /**
+   * @since 4.2
+   */
+  public final IDBSchemaElement getParent()
+  {
+    return null;
+  }
+
   public String getFullName()
   {
     return getName();
+  }
+
+  /**
+   * @since 4.2
+   */
+  @SuppressWarnings("unchecked")
+  public final <T extends IDBSchemaElement> T findElement(IDBSchemaElement prototype)
+  {
+    SchemaElementType schemaElementType = prototype.getSchemaElementType();
+    switch (schemaElementType)
+    {
+    case SCHEMA:
+      return (T)(prototype.equals(this) ? this : null);
+
+    case TABLE:
+      return (T)getElement(IDBTable.class, prototype.getName());
+
+    case FIELD:
+    {
+      IDBTable table = getElement(IDBTable.class, prototype.getParent().getName());
+      if (table == null)
+      {
+        return null;
+      }
+
+      return (T)table.getElement(IDBField.class, prototype.getName());
+    }
+
+    case INDEX:
+    {
+      IDBTable table = getElement(IDBTable.class, prototype.getParent().getName());
+      if (table == null)
+      {
+        return null;
+      }
+
+      return (T)table.getElement(IDBIndex.class, prototype.getName());
+    }
+
+    case INDEX_FIELD:
+    {
+      IDBTable table = getElement(IDBTable.class, prototype.getParent().getParent().getName());
+      if (table == null)
+      {
+        return null;
+      }
+
+      IDBIndex index = table.getElement(IDBIndex.class, prototype.getParent().getName());
+      if (index == null)
+      {
+        return null;
+      }
+
+      return (T)index.getElement(IDBIndexField.class, prototype.getName());
+    }
+
+    default:
+      throw new IllegalStateException("Illegal schema element type: " + schemaElementType);
+    }
   }
 
   /**

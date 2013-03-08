@@ -56,6 +56,11 @@ public class DBIndexField extends DBSchemaElement implements IDBIndexField
     return index;
   }
 
+  public DBIndex getParent()
+  {
+    return getIndex();
+  }
+
   public DBField getField()
   {
     return field;

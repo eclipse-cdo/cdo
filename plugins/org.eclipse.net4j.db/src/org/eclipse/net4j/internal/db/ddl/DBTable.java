@@ -65,6 +65,11 @@ public class DBTable extends DBSchemaElement implements IDBTable
     return schema;
   }
 
+  public DBSchema getParent()
+  {
+    return getSchema();
+  }
+
   public DBField addField(String name, DBType type)
   {
     return addField(name, type, IDBField.DEFAULT, IDBField.DEFAULT, false);

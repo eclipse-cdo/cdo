@@ -116,6 +116,36 @@ public abstract class AbstractDBTest extends AbstractOMTest
     assertEquals(count, tables.size());
   }
 
+  public void testFindElement() throws Exception
+  {
+    IDBSchema schema1 = DBUtil.createSchema(SCHEMA_NAME);
+    IDBTable table1 = schema1.addTable("table");
+    IDBField field11 = table1.addField("field1", DBType.INTEGER, true);
+    IDBField field12 = table1.addField("field2", DBType.VARCHAR, 64, true);
+    IDBField field13 = table1.addField("field3", DBType.BOOLEAN);
+    IDBIndex index11 = table1.addIndex("index1", IDBIndex.Type.PRIMARY_KEY, field11, field12);
+    IDBIndex index12 = table1.addIndex("index2", IDBIndex.Type.UNIQUE, field11, field12);
+    IDBIndex index13 = table1.addIndex("index3", IDBIndex.Type.NON_UNIQUE, field12);
+
+    IDBSchema schema2 = DBUtil.createSchema(SCHEMA_NAME);
+    IDBTable table2 = schema2.addTable("table");
+    IDBField field21 = table2.addField("field1", DBType.INTEGER, true);
+    IDBField field22 = table2.addField("field2", DBType.VARCHAR, 64, true);
+    IDBField field23 = table2.addField("field3", DBType.BOOLEAN);
+    IDBIndex index21 = table2.addIndex("index1", IDBIndex.Type.PRIMARY_KEY, field21, field22);
+    IDBIndex index22 = table2.addIndex("index2", IDBIndex.Type.UNIQUE, field21, field22);
+    IDBIndex index23 = table2.addIndex("index3", IDBIndex.Type.NON_UNIQUE, field22);
+
+    assertSame(schema2, schema2.findElement(schema1));
+    assertSame(table2, schema2.findElement(table1));
+    assertSame(field21, schema2.findElement(field11));
+    assertSame(field22, schema2.findElement(field12));
+    assertSame(field23, schema2.findElement(field13));
+    assertSame(index21, schema2.findElement(index11));
+    assertSame(index22, schema2.findElement(index12));
+    assertSame(index23, schema2.findElement(index13));
+  }
+
   public void testReadSchema() throws Exception
   {
     IDBSchema schema = DBUtil.readSchema(adapter, getConnection(), SCHEMA_NAME);

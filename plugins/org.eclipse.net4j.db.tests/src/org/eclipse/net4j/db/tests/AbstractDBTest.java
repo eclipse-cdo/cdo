@@ -116,13 +116,13 @@ public abstract class AbstractDBTest extends AbstractOMTest
     assertEquals(count, tables.size());
   }
 
-  public void testSchemaEmpty() throws Exception
+  public void testReadSchema() throws Exception
   {
     IDBSchema schema = DBUtil.readSchema(adapter, getConnection(), SCHEMA_NAME);
     assertEquals(true, schema.isEmpty());
   }
 
-  public void testSchemaCreation() throws Exception
+  public void testCreateSchema() throws Exception
   {
     IDBDatabase database = DBUtil.openDatabase(adapter, connectionProvider, SCHEMA_NAME);
     IDBSchema schema = database.getSchema();
@@ -183,7 +183,7 @@ public abstract class AbstractDBTest extends AbstractOMTest
     assertEquals(index23.getType(), schema.getTables()[1].getIndex(2).getType());
   }
 
-  public void testSchemaAddition() throws Exception
+  public void testChangeSchema() throws Exception
   {
     // Init database
     IDBDatabase database = DBUtil.openDatabase(adapter, connectionProvider, SCHEMA_NAME);
@@ -282,5 +282,40 @@ public abstract class AbstractDBTest extends AbstractOMTest
     assertEquals(index22.getType(), schema2.getTables()[1].getIndex(1).getType());
     assertEquals(index23, schema2.getTables()[1].getIndex(2));
     assertEquals(index23.getType(), schema2.getTables()[1].getIndex(2).getType());
+  }
+
+  public void testEnsureSchema() throws Exception
+  {
+    // Init database
+    IDBDatabase database = DBUtil.openDatabase(adapter, connectionProvider, SCHEMA_NAME);
+    IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
+    IDBSchema workingCopy = schemaTransaction.getSchema();
+
+    IDBTable table1 = workingCopy.addTable("table1");
+    table1.addField("field11", DBType.INTEGER, true);
+    table1.addField("field12", DBType.VARCHAR, 64, true);
+    table1.addField("field13", DBType.BOOLEAN);
+
+    schemaTransaction.commit();
+
+    IDBSchema newSchema = DBUtil.createSchema("bla");
+    IDBTable table2 = newSchema.addTable("table2");
+    IDBField field21 = table2.addField("field21", DBType.INTEGER, true);
+    IDBField field22 = table2.addField("field22", DBType.VARCHAR, 64, true);
+    table2.addField("field23", DBType.BOOLEAN);
+    table2.addIndex("index21", IDBIndex.Type.PRIMARY_KEY, field21, field22);
+    table2.addIndex("index22", IDBIndex.Type.UNIQUE, field21, field22);
+    table2.addIndex("index23", IDBIndex.Type.NON_UNIQUE, field22);
+
+    // Reload database
+    IDBDatabase database2 = DBUtil.openDatabase(adapter, connectionProvider, SCHEMA_NAME);
+    database2.ensureSchema(newSchema);
+
+    IDBSchema schema2 = database2.getSchema();
+    assertEquals(true, schema2.isLocked());
+    assertEquals(false, schema2.isEmpty());
+    assertEquals(2, schema2.getTables().length);
+
+    DBUtil.dump(schema2);
   }
 }

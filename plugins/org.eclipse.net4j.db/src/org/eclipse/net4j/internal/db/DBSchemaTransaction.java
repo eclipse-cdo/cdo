@@ -107,10 +107,13 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
 
   public void close()
   {
-    database.closeSchemaTransaction();
-    transaction = null;
-    oldSchema = null;
-    schema = null;
+    if (!isClosed())
+    {
+      database.closeSchemaTransaction();
+      transaction = null;
+      oldSchema = null;
+      schema = null;
+    }
   }
 
   public boolean isClosed()

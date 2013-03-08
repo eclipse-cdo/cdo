@@ -18,7 +18,9 @@ import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.IDBTransaction;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind;
+import org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType;
 import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
+import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter.Policy;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.spi.db.DBSchema;
@@ -28,13 +30,15 @@ import org.eclipse.net4j.util.container.SetContainer;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.LinkedList;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
 public final class DBDatabase extends SetContainer<IDBTransaction> implements IDBDatabase
 {
+  private static final Policy DEFAULT_ENSURE_SCHEMA_POLICY = //
+  new IDBDeltaVisitor.Filter.Policy().allow(DeltaType.SCHEMA, ChangeKind.CHANGE).allow(ChangeKind.ADD).freeze();
+
   private DBAdapter adapter;
 
   private IDBConnectionProvider connectionProvider;
@@ -120,12 +124,7 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
     return schemaTransaction;
   }
 
-  public void ensureSchema(IDBSchema schema)
-  {
-    ensureSchema(schema, null);
-  }
-
-  public void ensureSchema(IDBSchema schema, Map<ChangeKind, Boolean> policy)
+  public void ensureSchema(IDBSchema schema, IDBDeltaVisitor.Filter.Policy policy)
   {
     IDBSchemaTransaction schemaTransaction = null;
 
@@ -150,6 +149,11 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
         schemaTransaction.close();
       }
     }
+  }
+
+  public void ensureSchema(IDBSchema schema)
+  {
+    ensureSchema(schema, DEFAULT_ENSURE_SCHEMA_POLICY);
   }
 
   public DBTransaction openTransaction()
@@ -283,6 +287,12 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
     {
       return --readers > 0;
     }
+
+    @Override
+    public String toString()
+    {
+      return "READERS[" + readers + "]";
+    }
   }
 
   /**
@@ -290,5 +300,10 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
    */
   public final class WriteSchemaAccess implements SchemaAccess
   {
+    @Override
+    public String toString()
+    {
+      return "WRITER";
+    }
   }
 }

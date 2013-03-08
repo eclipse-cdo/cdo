@@ -63,7 +63,7 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
       }
     });
 
-    IDBIndex[] indices = table.getIndices();
+    IDBIndex[] indices = table == null ? DBTable.NO_INDICES : table.getIndices();
     IDBIndex[] oldIndices = oldTable == null ? DBTable.NO_INDICES : oldTable.getIndices();
     compare(indices, oldIndices, new SchemaElementComparator<IDBIndex>()
     {

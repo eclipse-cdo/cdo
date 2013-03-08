@@ -20,11 +20,11 @@ import org.eclipse.net4j.internal.db.ddl.delta.DBIndexFieldDelta;
 import org.eclipse.net4j.internal.db.ddl.delta.DBPropertyDelta;
 import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
 import org.eclipse.net4j.internal.db.ddl.delta.DBTableDelta;
+import org.eclipse.net4j.util.collection.Pair;
 
-import java.util.Collections;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @since 4.2
@@ -347,30 +347,21 @@ public interface IDBDeltaVisitor
      */
   public static class Filter extends Default
   {
-    public static final Map<ChangeKind, Boolean> DEFAULT_POLICY = createPolicy(null, null);
+    public static final Policy DEFAULT_POLICY = new Policy().allowAll().freeze();
 
-    public static final Boolean ALLOWED = Boolean.TRUE;
-
-    public static final Boolean FORBIDDEN = Boolean.FALSE;
-
-    private Map<ChangeKind, Boolean> policy;
+    private Policy policy;
 
     public Filter()
     {
       this(null);
     }
 
-    public Filter(Map<ChangeKind, Boolean> policy)
+    public Filter(Policy policy)
     {
       this.policy = policy == null ? DEFAULT_POLICY : policy;
     }
 
-    public Filter(Set<ChangeKind> ignoredChanges, Set<ChangeKind> forbiddenChanges)
-    {
-      this(createPolicy(ignoredChanges, forbiddenChanges));
-    }
-
-    public final Map<ChangeKind, Boolean> getPolicy()
+    public final Policy getPolicy()
     {
       return policy;
     }
@@ -516,42 +507,231 @@ public interface IDBDeltaVisitor
     @Override
     protected final boolean handle(IDBDelta delta)
     {
-      Boolean deltaPolicy = policy.get(delta.getChangeKind());
-      if (deltaPolicy == FORBIDDEN)
+      if (policy.isForbidden(delta))
       {
         throw new ForbiddenChangeException(delta);
       }
 
-      return deltaPolicy == ALLOWED;
+      if (policy.isAllowed(delta))
+      {
+        return true;
+      }
+
+      return false;
     }
 
-    public static Map<ChangeKind, Boolean> createPolicy(Set<ChangeKind> ignoredChanges, Set<ChangeKind> forbiddenChanges)
+    /**
+     * @author Eike Stepper
+     */
+    public static final class Policy implements Serializable
     {
-      if (ignoredChanges == null)
+      public static final Object ALLOWED = "ALLOWED";
+
+      public static final Object FORBIDDEN = "FORBIDDEN";
+
+      public static final Object IGNORED = "IGNORED";
+
+      private static final long serialVersionUID = 1L;
+
+      private Map<Object, Object> clauses = new HashMap<Object, Object>();
+
+      private transient boolean frozen;
+
+      public Policy()
       {
-        ignoredChanges = Collections.emptySet();
       }
 
-      if (forbiddenChanges == null)
+      public boolean isAllowed(DeltaType deltaType)
       {
-        forbiddenChanges = Collections.emptySet();
+        Object value = clauses.get(deltaType);
+        return value == ALLOWED;
       }
 
-      Map<ChangeKind, Boolean> policy = new HashMap<IDBDelta.ChangeKind, Boolean>();
-      for (ChangeKind changeKind : ChangeKind.values())
+      public boolean isAllowed(ChangeKind changeKind)
       {
-        if (!ignoredChanges.contains(changeKind))
+        Object value = clauses.get(changeKind);
+        return value == ALLOWED;
+      }
+
+      public boolean isAllowed(DeltaType deltaType, ChangeKind changeKind)
+      {
+        Object value = clauses.get(Pair.create(deltaType, changeKind));
+        if (value == null)
         {
-          policy.put(changeKind, ALLOWED);
+          value = clauses.get(deltaType);
+          if (value == null)
+          {
+            value = clauses.get(changeKind);
+          }
+        }
+
+        return value == ALLOWED;
+      }
+
+      public boolean isAllowed(IDBDelta delta)
+      {
+        return isAllowed(delta.getDeltaType(), delta.getChangeKind());
+      }
+
+      public boolean isForbidden(DeltaType deltaType)
+      {
+        Object value = clauses.get(deltaType);
+        return value == FORBIDDEN;
+      }
+
+      public boolean isForbidden(ChangeKind changeKind)
+      {
+        Object value = clauses.get(changeKind);
+        return value == FORBIDDEN;
+      }
+
+      public boolean isForbidden(DeltaType deltaType, ChangeKind changeKind)
+      {
+        Object value = clauses.get(Pair.create(deltaType, changeKind));
+        if (value == null)
+        {
+          value = clauses.get(deltaType);
+          if (value == null)
+          {
+            value = clauses.get(changeKind);
+          }
+        }
+
+        return value == FORBIDDEN;
+      }
+
+      public boolean isForbidden(IDBDelta delta)
+      {
+        return isForbidden(delta.getDeltaType(), delta.getChangeKind());
+      }
+
+      public boolean isIgnored(DeltaType deltaType)
+      {
+        Object value = clauses.get(deltaType);
+        return value == null || value == IGNORED;
+      }
+
+      public boolean isIgnored(ChangeKind changeKind)
+      {
+        Object value = clauses.get(changeKind);
+        return value == null || value == IGNORED;
+      }
+
+      public boolean isIgnored(DeltaType deltaType, ChangeKind changeKind)
+      {
+        Object value = clauses.get(Pair.create(deltaType, changeKind));
+        if (value == null)
+        {
+          value = clauses.get(deltaType);
+          if (value == null)
+          {
+            value = clauses.get(changeKind);
+          }
+        }
+
+        return value == null || value == IGNORED;
+      }
+
+      public boolean isIgnored(IDBDelta delta)
+      {
+        return isIgnored(delta.getDeltaType(), delta.getChangeKind());
+      }
+
+      public Policy allow(DeltaType deltaType)
+      {
+        return addClause(deltaType, ALLOWED);
+      }
+
+      public Policy allow(ChangeKind changeKind)
+      {
+        return addClause(changeKind, ALLOWED);
+      }
+
+      public Policy allow(DeltaType deltaType, ChangeKind changeKind)
+      {
+        return addClause(Pair.create(deltaType, changeKind), ALLOWED);
+      }
+
+      public Policy allowAll()
+      {
+        return ignoreAll().allow(ChangeKind.ADD).allow(ChangeKind.REMOVE).allow(ChangeKind.CHANGE);
+      }
+
+      public Policy forbid(DeltaType deltaType)
+      {
+        return addClause(deltaType, FORBIDDEN);
+      }
+
+      public Policy forbid(ChangeKind changeKind)
+      {
+        return addClause(changeKind, FORBIDDEN);
+      }
+
+      public Policy forbid(DeltaType deltaType, ChangeKind changeKind)
+      {
+        return addClause(Pair.create(deltaType, changeKind), FORBIDDEN);
+      }
+
+      public Policy forbidAll()
+      {
+        return ignoreAll().forbid(ChangeKind.ADD).forbid(ChangeKind.REMOVE).forbid(ChangeKind.CHANGE);
+      }
+
+      public Policy ignore(DeltaType deltaType)
+      {
+        return removeClause(deltaType);
+      }
+
+      public Policy ignore(ChangeKind changeKind)
+      {
+        return removeClause(changeKind);
+      }
+
+      public Policy ignore(DeltaType deltaType, ChangeKind changeKind)
+      {
+        return removeClause(Pair.create(deltaType, changeKind));
+      }
+
+      public Policy ignoreAll()
+      {
+        checkFrozen();
+        clauses.clear();
+        return this;
+      }
+
+      @Override
+      public String toString()
+      {
+        return "Policy" + clauses;
+      }
+
+      public Policy freeze()
+      {
+        frozen = true;
+        return this;
+      }
+
+      private void checkFrozen()
+      {
+        if (frozen)
+        {
+          throw new IllegalStateException("Policy is frozen: " + this);
         }
       }
 
-      for (ChangeKind changeKind : forbiddenChanges)
+      private Policy addClause(Object key, Object value)
       {
-        policy.put(changeKind, FORBIDDEN);
+        checkFrozen();
+        clauses.put(key, value);
+        return this;
       }
 
-      return policy;
+      private Policy removeClause(Object key)
+      {
+        checkFrozen();
+        clauses.remove(key);
+        return this;
+      }
     }
 
     /**
@@ -587,14 +767,9 @@ public interface IDBDeltaVisitor
     {
     }
 
-    public Copier(Map<ChangeKind, Boolean> policies)
+    public Copier(Policy policy)
     {
-      super(policies);
-    }
-
-    public Copier(Set<ChangeKind> ignoredChanges, Set<ChangeKind> forbiddenChanges)
-    {
-      super(ignoredChanges, forbiddenChanges);
+      super(policy);
     }
 
     public final IDBSchemaDelta getResult()

@@ -13,6 +13,7 @@ package org.eclipse.net4j.internal.db.ddl.delta;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.delta.IDBDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
+import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.StopRecursion;
 import org.eclipse.net4j.spi.db.DBNamedElement;
 import org.eclipse.net4j.spi.db.DBSchemaElement;
 import org.eclipse.net4j.util.StringUtil;
@@ -83,7 +84,15 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
 
   public final void accept(IDBDeltaVisitor visitor)
   {
-    doAccept(visitor);
+    try
+    {
+      doAccept(visitor);
+    }
+    catch (StopRecursion ex)
+    {
+      return;
+    }
+
     for (IDBDelta delta : getElements())
     {
       delta.accept(visitor);

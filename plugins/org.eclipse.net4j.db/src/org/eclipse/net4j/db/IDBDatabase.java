@@ -11,11 +11,9 @@
 package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.db.ddl.IDBSchema;
-import org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind;
+import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
 import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.container.IContainer;
-
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -37,7 +35,9 @@ public interface IDBDatabase extends IContainer<IDBTransaction>, Closeable
 
   public IDBSchemaTransaction getSchemaTransaction();
 
-  public void ensureSchema(IDBSchema schema, Map<ChangeKind, Boolean> policy);
+  public void ensureSchema(IDBSchema schema, IDBDeltaVisitor.Filter.Policy policy);
+
+  public void ensureSchema(IDBSchema schema);
 
   public IDBTransaction openTransaction();
 

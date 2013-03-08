@@ -33,7 +33,7 @@ import java.util.Set;
  */
 public abstract class AbstractDBTest extends AbstractOMTest
 {
-  public static final String SCHEMA_NAME = "test";
+  public static final String SCHEMA_NAME = "TEST";
 
   private IDBAdapter adapter;
 
@@ -130,7 +130,7 @@ public abstract class AbstractDBTest extends AbstractOMTest
     assertEquals(true, schema.isEmpty());
 
     IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
-    IDBSchema workingCopy = schemaTransaction.getSchema();
+    IDBSchema workingCopy = schemaTransaction.getWorkingCopy();
     assertEquals(false, workingCopy.isLocked());
     assertEquals(true, workingCopy.isEmpty());
     assertEquals(schema, workingCopy);
@@ -190,7 +190,7 @@ public abstract class AbstractDBTest extends AbstractOMTest
     IDBSchema schema = database.getSchema();
 
     IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
-    IDBSchema workingCopy = schemaTransaction.getSchema();
+    IDBSchema workingCopy = schemaTransaction.getWorkingCopy();
 
     IDBTable table1 = workingCopy.addTable("table1");
     IDBField field11 = table1.addField("field11", DBType.INTEGER, true);
@@ -226,7 +226,7 @@ public abstract class AbstractDBTest extends AbstractOMTest
     assertNotNull(index13);
 
     schemaTransaction = database2.openSchemaTransaction();
-    workingCopy = schemaTransaction.getSchema();
+    workingCopy = schemaTransaction.getWorkingCopy();
     assertEquals(true, schema2.isLocked());
     assertEquals(false, schema2.isEmpty());
     assertEquals(1, schema2.getTables().length);
@@ -286,19 +286,21 @@ public abstract class AbstractDBTest extends AbstractOMTest
 
   public void testEnsureSchema() throws Exception
   {
-    // Init database
-    IDBDatabase database = DBUtil.openDatabase(adapter, connectionProvider, SCHEMA_NAME);
-    IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
-    IDBSchema workingCopy = schemaTransaction.getSchema();
+    {
+      // Init database
+      IDBDatabase database = DBUtil.openDatabase(adapter, connectionProvider, SCHEMA_NAME);
+      IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
+      IDBSchema workingCopy = schemaTransaction.getWorkingCopy();
 
-    IDBTable table1 = workingCopy.addTable("table1");
-    table1.addField("field11", DBType.INTEGER, true);
-    table1.addField("field12", DBType.VARCHAR, 64, true);
-    table1.addField("field13", DBType.BOOLEAN);
+      IDBTable table1 = workingCopy.addTable("table1");
+      table1.addField("field11", DBType.INTEGER, true);
+      table1.addField("field12", DBType.VARCHAR, 64, true);
+      table1.addField("field13", DBType.BOOLEAN);
 
-    schemaTransaction.commit();
+      schemaTransaction.commit();
+    }
 
-    IDBSchema newSchema = DBUtil.createSchema("bla");
+    IDBSchema newSchema = DBUtil.createSchema("DIFFERENT_NAME");
     IDBTable table2 = newSchema.addTable("table2");
     IDBField field21 = table2.addField("field21", DBType.INTEGER, true);
     IDBField field22 = table2.addField("field22", DBType.VARCHAR, 64, true);
@@ -308,14 +310,17 @@ public abstract class AbstractDBTest extends AbstractOMTest
     table2.addIndex("index23", IDBIndex.Type.NON_UNIQUE, field22);
 
     // Reload database
-    IDBDatabase database2 = DBUtil.openDatabase(adapter, connectionProvider, SCHEMA_NAME);
-    database2.ensureSchema(newSchema);
+    IDBDatabase database = DBUtil.openDatabase(adapter, connectionProvider, SCHEMA_NAME);
+    IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
+    schemaTransaction.ensureSchema(newSchema);
+    schemaTransaction.commit();
 
-    IDBSchema schema2 = database2.getSchema();
-    assertEquals(true, schema2.isLocked());
-    assertEquals(false, schema2.isEmpty());
-    assertEquals(2, schema2.getTables().length);
+    IDBSchema schema = database.getSchema();
+    assertEquals(true, schema.isLocked());
+    assertEquals(false, schema.isEmpty());
+    assertEquals(SCHEMA_NAME, schema.getName());
+    assertEquals(2, schema.getTables().length);
 
-    DBUtil.dump(schema2);
+    DBUtil.dump(schema);
   }
 }

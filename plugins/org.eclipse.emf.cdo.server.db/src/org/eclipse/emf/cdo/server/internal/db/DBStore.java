@@ -43,6 +43,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
@@ -621,10 +622,10 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
       DBUtil.close(connection);
     }
 
-    IDBSchema schema = createSchema();
-
     database = DBUtil.openDatabase(dbAdapter, dbConnectionProvider, repository.getName());
-    database.ensureSchema(schema);
+    IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
+    schemaTransaction.ensureSchema(CDODBSchema.INSTANCE);
+    schemaTransaction.commit();
 
     LifecycleUtil.activate(idHandler);
     LifecycleUtil.activate(metaDataManager);

@@ -11,6 +11,10 @@
 package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind;
+import org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType;
+import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
+import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter.Policy;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.util.collection.Closeable;
 
@@ -22,11 +26,18 @@ import org.eclipse.net4j.util.collection.Closeable;
  */
 public interface IDBSchemaTransaction extends Closeable
 {
+  public static final Policy DEFAULT_ENSURE_SCHEMA_POLICY = //
+  new IDBDeltaVisitor.Filter.Policy().allow(DeltaType.SCHEMA, ChangeKind.CHANGE).allow(ChangeKind.ADD).freeze();
+
   public IDBDatabase getDatabase();
 
   public IDBTransaction getTransaction();
 
-  public IDBSchema getSchema();
+  public IDBSchema getWorkingCopy();
+
+  public IDBSchemaDelta ensureSchema(IDBSchema schema, IDBDeltaVisitor.Filter.Policy policy);
+
+  public IDBSchemaDelta ensureSchema(IDBSchema schema);
 
   public IDBSchemaDelta getSchemaDelta();
 

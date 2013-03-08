@@ -14,6 +14,9 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.DBUtil.RunnableWithConnection;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
+import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
+import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
 import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.spi.db.DBSchema;
@@ -32,14 +35,14 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
 
   private DBSchema oldSchema;
 
-  private DBSchema schema;
+  private DBSchema workingCopy;
 
   public DBSchemaTransaction(DBDatabase database)
   {
     this.database = database;
 
     oldSchema = database.getSchema();
-    schema = new DBSchema(oldSchema);
+    workingCopy = new DBSchema(oldSchema);
   }
 
   public DBDatabase getDatabase()
@@ -57,14 +60,33 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
     transaction = getTransaction;
   }
 
-  public DBSchema getSchema()
+  public DBSchema getWorkingCopy()
   {
-    return schema;
+    return workingCopy;
+  }
+
+  public IDBSchemaDelta ensureSchema(IDBSchema schema, IDBDeltaVisitor.Filter.Policy policy)
+  {
+    IDBSchema workingCopy = getWorkingCopy();
+
+    IDBDeltaVisitor.Copier copier = new IDBDeltaVisitor.Copier(policy);
+    IDBSchemaDelta delta = schema.compare(workingCopy);
+    delta.accept(copier);
+
+    DBSchemaDelta result = (DBSchemaDelta)copier.getResult();
+    result.setName(workingCopy.getName());
+    result.applyTo(workingCopy);
+    return result;
+  }
+
+  public IDBSchemaDelta ensureSchema(IDBSchema schema)
+  {
+    return ensureSchema(schema, DEFAULT_ENSURE_SCHEMA_POLICY);
   }
 
   public DBSchemaDelta getSchemaDelta()
   {
-    return (DBSchemaDelta)schema.compare(oldSchema);
+    return (DBSchemaDelta)workingCopy.compare(oldSchema);
   }
 
   public DBSchemaDelta commit()
@@ -112,12 +134,12 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
       database.closeSchemaTransaction();
       transaction = null;
       oldSchema = null;
-      schema = null;
+      workingCopy = null;
     }
   }
 
   public boolean isClosed()
   {
-    return schema == null;
+    return workingCopy == null;
   }
 }

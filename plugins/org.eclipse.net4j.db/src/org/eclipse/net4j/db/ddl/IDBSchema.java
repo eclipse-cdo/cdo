@@ -48,6 +48,11 @@ public interface IDBSchema extends IDBSchemaElement
    */
   public IDBTable removeTable(String name) throws DBException;
 
+  /**
+   * @since 4.2
+   */
+  public IDBTable getTableSafe(String name) throws SchemaElementNotFoundException;
+
   public IDBTable getTable(String name);
 
   public IDBTable[] getTables();

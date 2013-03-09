@@ -137,12 +137,7 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
 
   public IDBIndexField addIndexField(String name) throws SchemaElementNotFoundException
   {
-    DBField field = table.getField(name);
-    if (field == null)
-    {
-      throw new SchemaElementNotFoundException(this, SchemaElementType.FIELD, name);
-    }
-
+    DBField field = table.getFieldSafe(name);
     return addIndexField(field);
   }
 
@@ -168,6 +163,17 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
     resetElements();
   }
 
+  public DBIndexField getIndexFieldSafe(String name) throws SchemaElementNotFoundException
+  {
+    DBIndexField indexField = getIndexField(name);
+    if (indexField == null)
+    {
+      throw new SchemaElementNotFoundException(this, SchemaElementType.INDEX_FIELD, name);
+    }
+
+    return indexField;
+  }
+
   public DBIndexField getIndexField(String name)
   {
     return findElement(getIndexFields(), name);
@@ -176,6 +182,12 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
   public DBIndexField getIndexField(int position)
   {
     return indexFields.get(position);
+  }
+
+  public DBField getFieldSafe(String name) throws SchemaElementNotFoundException
+  {
+    DBIndexField indexField = getIndexFieldSafe(name);
+    return indexField.getField();
   }
 
   public DBField getField(String name)

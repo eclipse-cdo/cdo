@@ -38,6 +38,11 @@ public interface IDBTable extends IDBSchemaElement
 
   public IDBField addField(String name, DBType type, int precision, int scale, boolean notNull);
 
+  /**
+   * @since 4.2
+   */
+  public IDBField getFieldSafe(String name) throws SchemaElementNotFoundException;
+
   public IDBField getField(String name);
 
   public IDBField getField(int position);
@@ -77,6 +82,11 @@ public interface IDBTable extends IDBSchemaElement
    * @since 4.2
    */
   public IDBIndex addIndexEmpty(IDBIndex.Type type);
+
+  /**
+   * @since 4.2
+   */
+  public IDBIndex getIndexSafe(String name) throws SchemaElementNotFoundException;
 
   /**
    * @since 4.2

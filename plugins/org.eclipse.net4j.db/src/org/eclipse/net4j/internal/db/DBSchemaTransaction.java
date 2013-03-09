@@ -121,7 +121,7 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
     finally
     {
       oldSchema.lock();
-      close();
+      doClose(delta);
     }
 
     return delta;
@@ -129,9 +129,14 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
 
   public void close()
   {
+    doClose(null);
+  }
+
+  private void doClose(DBSchemaDelta delta)
+  {
     if (!isClosed())
     {
-      database.closeSchemaTransaction();
+      database.closeSchemaTransaction(delta);
       transaction = null;
       oldSchema = null;
       workingCopy = null;

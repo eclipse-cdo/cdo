@@ -18,10 +18,15 @@ import org.eclipse.net4j.db.IDBTransaction;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
+import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
 import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.SetContainer;
+import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -86,7 +91,7 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
     return schemaTransaction;
   }
 
-  public void closeSchemaTransaction()
+  public void closeSchemaTransaction(DBSchemaDelta delta)
   {
     try
     {
@@ -94,6 +99,8 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
       {
         ((DBTransaction)transaction).invalidateStatementCache();
       }
+
+      fireEvent(new SchemaChangedEventImpl(delta));
     }
     finally
     {
@@ -107,31 +114,35 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
     return schemaTransaction;
   }
 
-  public DBTransaction openTransaction()
+  public void ensureSchemaElement(RunnableWithSchema updateRunnable, final RunnableWithSchema commitRunnable)
   {
-    DBTransaction transaction = new DBTransaction(this);
-    addElement(transaction);
-    return transaction;
-  }
+    if (schemaTransaction != null)
+    {
+      DBSchema workingCopy = schemaTransaction.getWorkingCopy();
+      updateRunnable.run(workingCopy);
 
-  public void closeTransaction(DBTransaction transaction)
-  {
-    removeElement(transaction);
-  }
-
-  public IDBTransaction[] getTransactions()
-  {
-    return getElements();
-  }
-
-  public int getStatementCacheCapacity()
-  {
-    return statementCacheCapacity;
-  }
-
-  public void setStatementCacheCapacity(int statementCacheCapacity)
-  {
-    this.statementCacheCapacity = statementCacheCapacity;
+      if (commitRunnable != null)
+      {
+        addListener(new IListener()
+        {
+          public void notifyEvent(IEvent event)
+          {
+            if (event instanceof SchemaChangedEvent)
+            {
+              commitRunnable.run(schema);
+              removeListener(this);
+            }
+          }
+        });
+      }
+    }
+    else
+    {
+      if (commitRunnable != null)
+      {
+        commitRunnable.run(schema);
+      }
+    }
   }
 
   public <T extends IDBSchemaElement, P extends IDBSchemaElement> T ensureSchemaElement(P parent, Class<T> type,
@@ -175,6 +186,33 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
         return table;
       }
     });
+  }
+
+  public DBTransaction openTransaction()
+  {
+    DBTransaction transaction = new DBTransaction(this);
+    addElement(transaction);
+    return transaction;
+  }
+
+  public void closeTransaction(DBTransaction transaction)
+  {
+    removeElement(transaction);
+  }
+
+  public IDBTransaction[] getTransactions()
+  {
+    return getElements();
+  }
+
+  public int getStatementCacheCapacity()
+  {
+    return statementCacheCapacity;
+  }
+
+  public void setStatementCacheCapacity(int statementCacheCapacity)
+  {
+    this.statementCacheCapacity = statementCacheCapacity;
   }
 
   public boolean isClosed()
@@ -271,14 +309,14 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
   /**
    * @author Eike Stepper
    */
-  public interface SchemaAccess
+  private interface SchemaAccess
   {
   }
 
   /**
    * @author Eike Stepper
    */
-  public final class ReadSchemaAccess implements SchemaAccess
+  private final class ReadSchemaAccess implements SchemaAccess
   {
     private int readers;
 
@@ -302,12 +340,39 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
   /**
    * @author Eike Stepper
    */
-  public final class WriteSchemaAccess implements SchemaAccess
+  private final class WriteSchemaAccess implements SchemaAccess
   {
     @Override
     public String toString()
     {
       return "WRITER";
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class SchemaChangedEventImpl extends Event implements SchemaChangedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final IDBSchemaDelta schemaDelta;
+
+    public SchemaChangedEventImpl(IDBSchemaDelta schemaDelta)
+    {
+      super(DBDatabase.this);
+      this.schemaDelta = schemaDelta;
+    }
+
+    @Override
+    public IDBDatabase getSource()
+    {
+      return (IDBDatabase)super.getSource();
+    }
+
+    public IDBSchemaDelta getSchemaDelta()
+    {
+      return schemaDelta;
     }
   }
 }

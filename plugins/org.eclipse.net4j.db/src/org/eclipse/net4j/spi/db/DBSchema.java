@@ -22,6 +22,7 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.ddl.SchemaElementNotFoundException;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.internal.db.ddl.DBField;
 import org.eclipse.net4j.internal.db.ddl.DBIndex;
@@ -52,11 +53,11 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
 
   private static final long serialVersionUID = 1L;
 
+  private static int indexCounter;
+
   private Map<String, DBTable> tables = new HashMap<String, DBTable>();
 
   private transient boolean locked;
-
-  private transient int indexCounter;
 
   public DBSchema(String name)
   {
@@ -212,6 +213,20 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
     name = name(name);
     DBTable table = tables.remove(name);
     resetElements();
+    return table;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public final IDBTable getTableSafe(String name) throws SchemaElementNotFoundException
+  {
+    IDBTable table = getTable(name);
+    if (table == null)
+    {
+      throw new SchemaElementNotFoundException(this, SchemaElementType.TABLE, name);
+    }
+  
     return table;
   }
 

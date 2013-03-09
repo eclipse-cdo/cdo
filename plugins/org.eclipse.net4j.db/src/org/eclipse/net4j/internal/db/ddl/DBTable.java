@@ -133,6 +133,17 @@ public class DBTable extends DBSchemaElement implements IDBTable
     resetElements();
   }
 
+  public DBField getFieldSafe(String name) throws SchemaElementNotFoundException
+  {
+    DBField field = getField(name);
+    if (field == null)
+    {
+      throw new SchemaElementNotFoundException(this, SchemaElementType.FIELD, name);
+    }
+
+    return field;
+  }
+
   public DBField getField(String name)
   {
     return findElement(getFields(), name);
@@ -158,11 +169,8 @@ public class DBTable extends DBSchemaElement implements IDBTable
     List<DBField> result = new ArrayList<DBField>();
     for (String fieldName : fieldNames)
     {
-      DBField field = getField(fieldName);
-      if (field == null)
-      {
-        throw new SchemaElementNotFoundException(this, SchemaElementType.FIELD, fieldName);
-      }
+      DBField field = getFieldSafe(fieldName);
+      result.add(field);
     }
 
     return result.toArray(new DBField[result.size()]);
@@ -217,7 +225,8 @@ public class DBTable extends DBSchemaElement implements IDBTable
 
   public DBIndex addIndex(IDBIndex.Type type, String... fieldNames)
   {
-    return addIndex(type, getFields(fieldNames));
+    DBField[] fields = getFields(fieldNames);
+    return addIndex(type, fields);
   }
 
   public DBIndex addIndexEmpty(IDBIndex.Type type)
@@ -246,6 +255,17 @@ public class DBTable extends DBSchemaElement implements IDBTable
     }
 
     resetElements();
+  }
+
+  public DBIndex getIndexSafe(String name) throws SchemaElementNotFoundException
+  {
+    DBIndex index = getIndex(name);
+    if (index == null)
+    {
+      throw new SchemaElementNotFoundException(this, SchemaElementType.INDEX, name);
+    }
+
+    return index;
   }
 
   public DBIndex getIndex(String name)

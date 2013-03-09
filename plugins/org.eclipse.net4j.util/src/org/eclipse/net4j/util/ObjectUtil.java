@@ -135,4 +135,17 @@ public final class ObjectUtil
 
     return null;
   }
+
+  /**
+   * @since 3.3
+   */
+  public static <T> T notNull(T object)
+  {
+    if (object == null)
+    {
+      throw new NullPointerException();
+    }
+
+    return object;
+  }
 }

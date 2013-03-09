@@ -44,6 +44,11 @@ public interface IDBIndex extends IDBSchemaElement
   /**
    * @since 4.2
    */
+  public IDBIndexField addIndexField(String name);
+
+  /**
+   * @since 4.2
+   */
   public IDBIndexField getIndexField(String name);
 
   /**

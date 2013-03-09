@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -44,9 +43,9 @@ public class HorizontalAuditMappingStrategy extends AbstractHorizontalMappingStr
   }
 
   @Override
-  public IClassMapping doCreateClassMapping(EClass eClass)
+  protected IClassMapping doCreateClassMapping(EClass eClass, boolean create)
   {
-    return new HorizontalAuditClassMapping(this, eClass);
+    return new HorizontalAuditClassMapping(this, eClass, create);
   }
 
   @Override
@@ -70,8 +69,8 @@ public class HorizontalAuditMappingStrategy extends AbstractHorizontalMappingStr
 
   protected String modifyListJoin(String attrTable, String listTable, String join)
   {
-    join += " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_VERSION;
-    join += "=" + listTable + "." + CDODBSchema.LIST_REVISION_VERSION;
+    join += " AND " + attrTable + "." + ATTRIBUTES_VERSION;
+    join += "=" + listTable + "." + LIST_REVISION_VERSION;
     return join;
   }
 }

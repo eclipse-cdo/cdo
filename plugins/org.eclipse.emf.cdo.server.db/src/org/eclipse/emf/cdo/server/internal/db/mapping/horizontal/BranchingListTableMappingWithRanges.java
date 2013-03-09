@@ -42,7 +42,6 @@ import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
@@ -84,7 +83,7 @@ import java.util.List;
  * @author Stefan Winkler
  * @author Lothar Werzinger
  */
-public class BranchingListTableMappingWithRanges extends BasicAbstractListTableMapping implements
+public class BranchingListTableMappingWithRanges extends AbstractBasicListTableMapping implements
     IListMappingDeltaSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, BranchingListTableMappingWithRanges.class);
@@ -138,15 +137,15 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     table = store.getDBSchema().addTable(tableName);
 
     IDBField[] dbFields = new IDBField[5];
-    dbFields[0] = table.addField(CDODBSchema.LIST_REVISION_ID, idType, idLength, true);
-    dbFields[1] = table.addField(CDODBSchema.LIST_REVISION_BRANCH, DBType.INTEGER, true);
-    dbFields[2] = table.addField(CDODBSchema.LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
-    dbFields[3] = table.addField(CDODBSchema.LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
-    dbFields[4] = table.addField(CDODBSchema.LIST_IDX, DBType.INTEGER, true);
+    dbFields[0] = table.addField(LIST_REVISION_ID, idType, idLength, true);
+    dbFields[1] = table.addField(LIST_REVISION_BRANCH, DBType.INTEGER, true);
+    dbFields[2] = table.addField(LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
+    dbFields[3] = table.addField(LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
+    dbFields[4] = table.addField(LIST_IDX, DBType.INTEGER, true);
 
     // add field for value
     typeMapping = getMappingStrategy().createValueMapping(getFeature());
-    typeMapping.createDBField(table, CDODBSchema.LIST_VALUE);
+    typeMapping.createDBField(table, LIST_VALUE);
 
     // add table indexes
     for (IDBField dbField : dbFields)
@@ -167,41 +166,41 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     // ---------------- read chunks ----------------------------
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(LIST_VALUE);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(tableName);
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_BRANCH);
+    builder.append(LIST_REVISION_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
+    builder.append(LIST_REVISION_VERSION_ADDED);
     builder.append("<=? AND ("); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NULL OR "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append(">?)"); //$NON-NLS-1$
     sqlSelectChunksPrefix = builder.toString();
 
-    sqlOrderByIndex = " ORDER BY " + CDODBSchema.LIST_IDX; //$NON-NLS-1$
+    sqlOrderByIndex = " ORDER BY " + LIST_IDX; //$NON-NLS-1$
 
     // ----------------- insert entry -----------------
     builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
     builder.append(tableName);
     builder.append("("); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append(","); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_BRANCH);
+    builder.append(LIST_REVISION_BRANCH);
     builder.append(","); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
+    builder.append(LIST_REVISION_VERSION_ADDED);
     builder.append(","); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append(","); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append(","); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(LIST_VALUE);
     builder.append(") VALUES (?, ?, ?, ?, ?, ?)"); //$NON-NLS-1$
     sqlInsertEntry = builder.toString();
 
@@ -209,16 +208,16 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_BRANCH);
+    builder.append(LIST_REVISION_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlRemoveEntry = builder.toString();
 
@@ -226,13 +225,13 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_BRANCH);
+    builder.append(LIST_REVISION_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
+    builder.append(LIST_REVISION_VERSION_ADDED);
     builder.append("=?"); //$NON-NLS-1$
     sqlDeleteEntry = builder.toString();
 
@@ -240,31 +239,31 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append("=? WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_BRANCH);
+    builder.append(LIST_REVISION_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
+    builder.append(LIST_REVISION_VERSION_ADDED);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append("=?"); //$NON-NLS-1$
     sqlUpdateIndex = builder.toString();
 
     // ----------------- get current value -----------------
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(LIST_VALUE);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_BRANCH);
+    builder.append(LIST_REVISION_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlGetValue = builder.toString();
 
@@ -272,14 +271,14 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_BRANCH);
+    builder.append(LIST_REVISION_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlClearList = builder.toString();
   }
@@ -1408,11 +1407,11 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
 
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT l_t."); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(LIST_VALUE);
     builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(tableName);
     builder.append(" l_t, ");//$NON-NLS-1$
@@ -1421,7 +1420,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     builder.append("a_t." + mainTableWhere);//$NON-NLS-1$
     builder.append(listJoin);
     builder.append(" AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(LIST_VALUE);
     builder.append(" IN "); //$NON-NLS-1$
     builder.append(idString);
     String sql = builder.toString();

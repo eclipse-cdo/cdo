@@ -28,6 +28,8 @@ import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBDatabase.RunnableWithTable;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
@@ -186,14 +188,24 @@ public class ExternalReferenceManager extends Lifecycle
   {
     super.doActivate();
 
-    IDBStore store = idHandler.getStore();
-    table = store.getDBSchema().addTable("cdo_external_refs"); //$NON-NLS-1$
-    idField = table.addField("id", idHandler.getDBType(), store.getIDColumnLength(), true); //$NON-NLS-1$
-    uriField = table.addField("uri", DBType.VARCHAR, 1024); //$NON-NLS-1$
-    timestampField = table.addField("committime", DBType.BIGINT); //$NON-NLS-1$
+    final IDBStore store = idHandler.getStore();
+    IDBDatabase database = store.getDatabase();
 
-    table.addIndex(IDBIndex.Type.PRIMARY_KEY, idField);
-    table.addIndex(IDBIndex.Type.NON_UNIQUE, uriField);
+    table = database.ensureTable("cdo_external_refs", new RunnableWithTable()
+    {
+      public void run(IDBTable table)
+      {
+        IDBField idField = table.addField("id", idHandler.getDBType(), store.getIDColumnLength(), true); //$NON-NLS-1$
+        IDBField uriField = table.addField("uri", DBType.VARCHAR, 1024); //$NON-NLS-1$
+        table.addField("committime", DBType.BIGINT); //$NON-NLS-1$
+        table.addIndex(IDBIndex.Type.PRIMARY_KEY, idField);
+        table.addIndex(IDBIndex.Type.NON_UNIQUE, uriField);
+      }
+    });
+
+    idField = table.getField(0);
+    uriField = table.getField(1);
+    timestampField = table.getField(2);
 
     IDBStoreAccessor writer = store.getWriter(null);
     Connection connection = writer.getConnection();
@@ -203,8 +215,6 @@ public class ExternalReferenceManager extends Lifecycle
     try
     {
       statement = connection.createStatement();
-      store.getDBAdapter().createTable(table, statement);
-      connection.commit();
 
       String sql = "SELECT MIN(" + idField + ") FROM " + table;
       resultSet = statement.executeQuery(sql);

@@ -489,7 +489,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
         if (!unmap)
         {
           // TODO Bug 296087: Before we go ahead with creation, we should check if it's already there
-          IClassMapping mapping = createClassMapping(eClass);
+          IClassMapping mapping = createClassMapping(eClass, true);
           getStore().getDBAdapter().createTables(mapping.getDBTables(), connection);
         }
         else
@@ -501,9 +501,9 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     }
   }
 
-  private IClassMapping createClassMapping(EClass eClass)
+  private IClassMapping createClassMapping(EClass eClass, boolean create)
   {
-    IClassMapping mapping = doCreateClassMapping(eClass);
+    IClassMapping mapping = doCreateClassMapping(eClass, create);
     if (mapping != null)
     {
       classMappings.put(eClass, mapping);
@@ -522,12 +522,13 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       {
         schema.removeTable(table.getName());
       }
+
       classMappings.remove(eClass);
     }
     return mapping;
   }
 
-  protected abstract IClassMapping doCreateClassMapping(EClass eClass);
+  protected abstract IClassMapping doCreateClassMapping(EClass eClass, boolean create);
 
   public final IClassMapping getClassMapping(EClass eClass)
   {
@@ -550,7 +551,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
         result = classMappings.get(eClass);
         if (result == null)
         {
-          result = createClassMapping(eClass);
+          result = createClassMapping(eClass, false);
         }
       }
     }

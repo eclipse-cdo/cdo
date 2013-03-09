@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.IMappingConstants;
 import org.eclipse.emf.cdo.server.internal.db.messages.Messages;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -71,7 +72,7 @@ import java.util.Timer;
 /**
  * @author Eike Stepper
  */
-public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
+public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAllRevisionsProvider
 {
   public static final String TYPE = "db"; //$NON-NLS-1$
 
@@ -919,11 +920,10 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
             {
               statement = connection.createStatement();
 
-              String from = " FROM " + name + " WHERE " + CDODBSchema.ATTRIBUTES_VERSION + "<"
-                  + CDOBranchVersion.FIRST_VERSION;
+              String from = " FROM " + name + " WHERE " + ATTRIBUTES_VERSION + "<" + CDOBranchVersion.FIRST_VERSION;
 
-              statement.executeUpdate("DELETE FROM " + CDODBSchema.CDO_OBJECTS + " WHERE " + CDODBSchema.ATTRIBUTES_ID
-                  + " IN (SELECT " + CDODBSchema.ATTRIBUTES_ID + from + ")");
+              statement.executeUpdate("DELETE FROM " + CDODBSchema.CDO_OBJECTS + " WHERE " + ATTRIBUTES_ID
+                  + " IN (SELECT " + ATTRIBUTES_ID + from + ")");
 
               statement.executeUpdate("DELETE" + from);
             }

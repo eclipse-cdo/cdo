@@ -34,7 +34,6 @@ import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -96,13 +95,13 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     builder.append("DELETE FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
+    builder.append(FEATUREMAP_REVISION_ID);
     builder.append("=? "); //$NON-NLS-1$
 
     sqlClear = builder.toString();
 
     builder.append(" AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append("=? "); //$NON-NLS-1$
 
     sqlDeleteItem = builder.toString();
@@ -112,12 +111,12 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     builder.append("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
+    builder.append(FEATUREMAP_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append("=? "); //$NON-NLS-1$
     sqlUpdateIndex = builder.toString();
 
@@ -127,7 +126,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
 
-    builder.append(CDODBSchema.FEATUREMAP_TAG);
+    builder.append(FEATUREMAP_TAG);
     builder.append("=?,"); //$NON-NLS-1$
 
     Iterator<String> iter = getColumnNames().iterator();
@@ -144,9 +143,9 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     }
 
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
+    builder.append(FEATUREMAP_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append("=? "); //$NON-NLS-1$
     sqlUpdateValue = builder.toString();
 
@@ -155,18 +154,18 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     builder.append("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append("="); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append("-1 WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
+    builder.append(FEATUREMAP_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append(">? "); //$NON-NLS-1$
     sqlMoveDown = builder.toString();
 
     builder.append(" AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append("<=?"); //$NON-NLS-1$
     sqlMoveDownWithLimit = builder.toString();
 
@@ -175,18 +174,18 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     builder.append("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append("="); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append("+1 WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
+    builder.append(FEATUREMAP_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append(">=? "); //$NON-NLS-1$
     sqlMoveUp = builder.toString();
 
     builder.append(" AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append("<?"); //$NON-NLS-1$
     sqlMoveUpWithLimit = builder.toString();
   }
@@ -198,7 +197,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     {
       IDBStore store = getMappingStrategy().getStore();
 
-      keyFields = new FieldInfo[] { new FieldInfo(CDODBSchema.FEATUREMAP_REVISION_ID, store.getIDHandler().getDBType(),
+      keyFields = new FieldInfo[] { new FieldInfo(FEATUREMAP_REVISION_ID, store.getIDHandler().getDBType(),
           store.getIDColumnLength()) };
     }
 

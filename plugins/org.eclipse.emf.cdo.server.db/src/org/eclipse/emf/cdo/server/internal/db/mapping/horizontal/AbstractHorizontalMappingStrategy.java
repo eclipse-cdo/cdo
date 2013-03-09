@@ -63,7 +63,7 @@ import java.util.List;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingStrategy
+public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingStrategy implements IMappingConstants
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractHorizontalMappingStrategy.class);
 
@@ -171,7 +171,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   {
     StringBuilder builder = new StringBuilder();
     builder.append(" WHERE a_t."); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    builder.append(ATTRIBUTES_CREATED);
     builder.append(" BETWEEN "); //$NON-NLS-1$
     builder.append(fromCommitTime);
     builder.append(" AND "); //$NON-NLS-1$
@@ -323,7 +323,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
   public String getListJoin(String attrTable, String listTable)
   {
-    return " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_ID + "=" + listTable + "." + CDODBSchema.LIST_REVISION_ID;
+    return " AND " + attrTable + "." + ATTRIBUTES_ID + "=" + listTable + "." + LIST_REVISION_ID;
   }
 
   @Override
@@ -456,11 +456,10 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     final IIDHandler idHandler = getStore().getIDHandler();
     final CDOID[] min = { idHandler.getMaxCDOID() };
 
-    final String prefix = "SELECT MIN(t." + CDODBSchema.ATTRIBUTES_ID + ") FROM " + CDODBSchema.CDO_OBJECTS + " o, ";
+    final String prefix = "SELECT MIN(t." + ATTRIBUTES_ID + ") FROM " + CDODBSchema.CDO_OBJECTS + " o, ";
 
-    final String suffix = " t WHERE t." + CDODBSchema.ATTRIBUTES_BRANCH + "<0 AND t." + CDODBSchema.ATTRIBUTES_ID
-        + "=o." + CDODBSchema.ATTRIBUTES_ID + " AND t." + CDODBSchema.ATTRIBUTES_CREATED + "=o."
-        + CDODBSchema.ATTRIBUTES_CREATED;
+    final String suffix = " t WHERE t." + ATTRIBUTES_BRANCH + "<0 AND t." + ATTRIBUTES_ID + "=o." + ATTRIBUTES_ID
+        + " AND t." + ATTRIBUTES_CREATED + "=o." + ATTRIBUTES_CREATED;
 
     getStore().visitAllTables(connection, new IDBStore.TableVisitor()
     {

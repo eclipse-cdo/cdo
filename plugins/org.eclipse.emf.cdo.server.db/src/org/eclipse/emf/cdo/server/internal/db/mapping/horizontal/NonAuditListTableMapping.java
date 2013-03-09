@@ -33,7 +33,6 @@ import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -98,13 +97,13 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append("DELETE FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? "); //$NON-NLS-1$
 
     sqlClear = builder.toString();
 
     builder.append(" AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append("=? "); //$NON-NLS-1$
 
     sqlDeleteItem = builder.toString();
@@ -114,12 +113,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(LIST_VALUE);
     builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append("=? "); //$NON-NLS-1$
     sqlUpdateValue = builder.toString();
 
@@ -128,11 +127,11 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append("INSERT INTO "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" ("); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(LIST_VALUE);
     builder.append(") VALUES(?, ?, ?) "); //$NON-NLS-1$
     sqlInsertValue = builder.toString();
 
@@ -141,12 +140,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append("=? "); //$NON-NLS-1$
     sqlUpdateIndex = builder.toString();
 
@@ -155,19 +154,19 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append("="); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append("+? WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append(" BETWEEN ? AND ?"); //$NON-NLS-1$
     // getMappingStrategy().getStore().getDBAdapter()
 
     // needed because of MySQL:
     builder.append("/*! ORDER BY "); //$NON-NLS-1$ /
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     sqlShiftDownIndex = builder.toString() + " */"; //$NON-NLS-1$
     builder.append(" DESC"); //$NON-NLS-1$
     sqlShiftUpIndex = builder.toString() + " */"; //$NON-NLS-1$
@@ -175,11 +174,11 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     // ----------- read current index offset --------------
     builder = new StringBuilder();
     builder.append("SELECT MIN("); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append(") FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=?"); //$NON-NLS-1$
     sqlReadCurrentIndexOffset = builder.toString();
   }
@@ -206,7 +205,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     {
       IDBStore store = getMappingStrategy().getStore();
 
-      keyFields = new FieldInfo[] { new FieldInfo(CDODBSchema.LIST_REVISION_ID, store.getIDHandler().getDBType(),
+      keyFields = new FieldInfo[] { new FieldInfo(LIST_REVISION_ID, store.getIDHandler().getDBType(),
           store.getIDColumnLength()) };
     }
 

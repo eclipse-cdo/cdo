@@ -39,7 +39,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -90,9 +89,9 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     }
   };
 
-  public HorizontalAuditClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
+  public HorizontalAuditClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass, boolean create)
   {
-    super(mappingStrategy, eClass);
+    super(mappingStrategy, eClass, create);
 
     initSQLStrings();
   }
@@ -106,17 +105,17 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     StringBuilder builder = new StringBuilder();
 
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(ATTRIBUTES_VERSION);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    builder.append(ATTRIBUTES_CREATED);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_RESOURCE);
+    builder.append(ATTRIBUTES_RESOURCE);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
+    builder.append(ATTRIBUTES_CONTAINER);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_FEATURE);
+    builder.append(ATTRIBUTES_FEATURE);
 
     for (ITypeMapping singleMapping : getValueMappings())
     {
@@ -145,23 +144,23 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append("=? AND ("); //$NON-NLS-1$
 
     String sqlSelectAttributesPrefix = builder.toString();
 
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append("=0)"); //$NON-NLS-1$
 
     sqlSelectCurrentAttributes = builder.toString();
 
     builder = new StringBuilder(sqlSelectAttributesPrefix);
 
-    builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    builder.append(ATTRIBUTES_CREATED);
     builder.append("<=? AND ("); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append("=0 OR "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append(">=?))"); //$NON-NLS-1$
 
     sqlSelectAttributesByTime = builder.toString();
@@ -169,7 +168,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     builder = new StringBuilder(sqlSelectAttributesPrefix);
 
     builder.append("ABS(");
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(ATTRIBUTES_VERSION);
     builder.append(")=?)"); //$NON-NLS-1$
 
     sqlSelectAttributesByVersion = builder.toString();
@@ -180,19 +179,19 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     builder.append(getTable());
 
     builder.append("("); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(ATTRIBUTES_VERSION);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    builder.append(ATTRIBUTES_CREATED);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_RESOURCE);
+    builder.append(ATTRIBUTES_RESOURCE);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
+    builder.append(ATTRIBUTES_CONTAINER);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_FEATURE);
+    builder.append(ATTRIBUTES_FEATURE);
 
     for (ITypeMapping singleMapping : getValueMappings())
     {
@@ -248,21 +247,21 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append("=? WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append("=0"); //$NON-NLS-1$
     sqlReviseAttributes = builder.toString();
 
     // ----------- Select all unrevised Object IDs ------
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append("=0"); //$NON-NLS-1$
     sqlSelectAllObjectIDs = builder.toString();
 
@@ -270,9 +269,9 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(ATTRIBUTES_VERSION);
     builder.append("=?"); //$NON-NLS-1$
     sqlRawDeleteAttributes = builder.toString();
   }
@@ -367,13 +366,13 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
 
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(ATTRIBUTES_VERSION);
     builder.append(">0 AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
+    builder.append(ATTRIBUTES_CONTAINER);
     builder.append("=? AND "); //$NON-NLS-1$
     builder.append(nameValueMapping.getField());
     if (name == null)
@@ -389,16 +388,16 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
 
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append("=0)"); //$NON-NLS-1$
     }
     else
     {
-      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+      builder.append(ATTRIBUTES_CREATED);
       builder.append("<=? AND ("); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append("=0 OR "); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append(">=?))"); //$NON-NLS-1$
     }
 
@@ -665,18 +664,18 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     long timeStamp = context.getTimeStamp();
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append("=0"); //$NON-NLS-1$
     }
     else
     {
-      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+      builder.append(ATTRIBUTES_CREATED);
       builder.append("<=");
       builder.append(timeStamp);
       builder.append(" AND ("); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append("=0 OR "); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append(">=");
       builder.append(timeStamp);
       builder.append(")"); //$NON-NLS-1$

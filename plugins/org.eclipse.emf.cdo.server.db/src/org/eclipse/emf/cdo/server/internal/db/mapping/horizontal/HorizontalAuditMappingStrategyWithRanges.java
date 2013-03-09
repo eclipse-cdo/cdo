@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -36,9 +35,9 @@ public class HorizontalAuditMappingStrategyWithRanges extends HorizontalAuditMap
   }
 
   @Override
-  public IClassMapping doCreateClassMapping(EClass eClass)
+  protected IClassMapping doCreateClassMapping(EClass eClass, boolean create)
   {
-    return new HorizontalAuditClassMapping(this, eClass);
+    return new HorizontalAuditClassMapping(this, eClass, create);
   }
 
   @Override
@@ -56,11 +55,11 @@ public class HorizontalAuditMappingStrategyWithRanges extends HorizontalAuditMap
   @Override
   protected String modifyListJoin(String attrTable, String listTable, String join)
   {
-    join += " AND " + listTable + "." + CDODBSchema.LIST_REVISION_VERSION_ADDED;
-    join += "<=" + attrTable + "." + CDODBSchema.ATTRIBUTES_VERSION;
-    join += " AND (" + listTable + "." + CDODBSchema.LIST_REVISION_VERSION_REMOVED;
-    join += " IS NULL OR " + listTable + "." + CDODBSchema.LIST_REVISION_VERSION_REMOVED;
-    join += ">" + attrTable + "." + CDODBSchema.ATTRIBUTES_VERSION + ")";
+    join += " AND " + listTable + "." + LIST_REVISION_VERSION_ADDED;
+    join += "<=" + attrTable + "." + ATTRIBUTES_VERSION;
+    join += " AND (" + listTable + "." + LIST_REVISION_VERSION_REMOVED;
+    join += " IS NULL OR " + listTable + "." + LIST_REVISION_VERSION_REMOVED;
+    join += ">" + attrTable + "." + ATTRIBUTES_VERSION + ")";
     return join;
   }
 }

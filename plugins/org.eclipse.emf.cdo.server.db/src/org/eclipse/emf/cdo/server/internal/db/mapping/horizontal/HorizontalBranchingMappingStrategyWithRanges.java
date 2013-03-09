@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -65,9 +64,9 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
   }
 
   @Override
-  public IClassMapping doCreateClassMapping(EClass eClass)
+  protected IClassMapping doCreateClassMapping(EClass eClass, boolean create)
   {
-    return new HorizontalBranchingClassMapping(this, eClass);
+    return new HorizontalBranchingClassMapping(this, eClass, create);
   }
 
   @Override
@@ -99,15 +98,15 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
   {
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT l_t.");
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append(", l_t.");
-    builder.append(CDODBSchema.LIST_REVISION_BRANCH);
+    builder.append(LIST_REVISION_BRANCH);
     builder.append(", l_t.");
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
+    builder.append(LIST_REVISION_VERSION_ADDED);
     builder.append(", l_t.");
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append(", l_t.");
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append(" FROM ");
     builder.append(table);
     builder.append(" l_t, ");
@@ -116,7 +115,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     builder.append(attrSuffix);
     builder.append(getListJoinForPostProcess("a_t", "l_t"));
     builder.append(" AND l_t.");
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NOT NULL");
     String sql = DBUtil.trace(builder.toString());
 
@@ -204,15 +203,15 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     builder.append("UPDATE "); //$NON-NLS-1$
     builder.append(table);
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append("=? WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_BRANCH);
+    builder.append(LIST_REVISION_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
+    builder.append(LIST_REVISION_VERSION_ADDED);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append("=?"); //$NON-NLS-1$
     String sql = DBUtil.trace(builder.toString());
 
@@ -287,33 +286,33 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     {
       if (forPostProcess)
       {
-        join += CDODBSchema.LIST_REVISION_VERSION_REMOVED;
+        join += LIST_REVISION_VERSION_REMOVED;
       }
       else
       {
-        join += CDODBSchema.LIST_REVISION_VERSION_ADDED;
+        join += LIST_REVISION_VERSION_ADDED;
       }
 
-      join += "=" + attrTable + "." + CDODBSchema.ATTRIBUTES_VERSION;
+      join += "=" + attrTable + "." + ATTRIBUTES_VERSION;
     }
     else
     {
-      join += CDODBSchema.LIST_REVISION_VERSION_ADDED;
-      join += "<=" + attrTable + "." + CDODBSchema.ATTRIBUTES_VERSION;
-      join += " AND (" + listTable + "." + CDODBSchema.LIST_REVISION_VERSION_REMOVED;
-      join += " IS NULL OR " + listTable + "." + CDODBSchema.LIST_REVISION_VERSION_REMOVED;
-      join += ">" + attrTable + "." + CDODBSchema.ATTRIBUTES_VERSION + ")";
+      join += LIST_REVISION_VERSION_ADDED;
+      join += "<=" + attrTable + "." + ATTRIBUTES_VERSION;
+      join += " AND (" + listTable + "." + LIST_REVISION_VERSION_REMOVED;
+      join += " IS NULL OR " + listTable + "." + LIST_REVISION_VERSION_REMOVED;
+      join += ">" + attrTable + "." + ATTRIBUTES_VERSION + ")";
     }
 
-    join += " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_BRANCH;
-    join += "=" + listTable + "." + CDODBSchema.LIST_REVISION_BRANCH;
+    join += " AND " + attrTable + "." + ATTRIBUTES_BRANCH;
+    join += "=" + listTable + "." + LIST_REVISION_BRANCH;
 
     if (forRawExport && !forPostProcess)
     {
-      join += " ORDER BY " + listTable + "." + CDODBSchema.LIST_REVISION_ID;
-      join += ", " + listTable + "." + CDODBSchema.LIST_REVISION_BRANCH;
-      join += ", " + listTable + "." + CDODBSchema.LIST_REVISION_VERSION_ADDED;
-      join += ", " + listTable + "." + CDODBSchema.LIST_IDX;
+      join += " ORDER BY " + listTable + "." + LIST_REVISION_ID;
+      join += ", " + listTable + "." + LIST_REVISION_BRANCH;
+      join += ", " + listTable + "." + LIST_REVISION_VERSION_ADDED;
+      join += ", " + listTable + "." + LIST_IDX;
     }
 
     return join;
@@ -355,12 +354,12 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
       if (stmt == null)
       {
         String sql = "UPDATE " + fields[0].getTable() //
-            + " SET " + CDODBSchema.LIST_REVISION_VERSION_REMOVED + "=?" //
-            + " WHERE " + CDODBSchema.LIST_REVISION_ID + "=?" //
-            + " AND " + CDODBSchema.LIST_REVISION_BRANCH + "=?" //
-            + " AND " + CDODBSchema.LIST_IDX + "=?" //
-            + " AND " + CDODBSchema.LIST_REVISION_VERSION_ADDED + "<?" //
-            + " AND " + CDODBSchema.LIST_REVISION_VERSION_REMOVED + " IS NULL";
+            + " SET " + LIST_REVISION_VERSION_REMOVED + "=?" //
+            + " WHERE " + LIST_REVISION_ID + "=?" //
+            + " AND " + LIST_REVISION_BRANCH + "=?" //
+            + " AND " + LIST_IDX + "=?" //
+            + " AND " + LIST_REVISION_VERSION_ADDED + "<?" //
+            + " AND " + LIST_REVISION_VERSION_REMOVED + " IS NULL";
         stmt = connection.prepareStatement(sql);
       }
 

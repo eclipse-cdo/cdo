@@ -44,7 +44,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
@@ -201,9 +200,10 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
   };
 
-  public HorizontalBranchingClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
+  public HorizontalBranchingClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass,
+      boolean create)
   {
-    super(mappingStrategy, eClass);
+    super(mappingStrategy, eClass, create);
 
     initSQLStrings();
   }
@@ -211,7 +211,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   protected IDBField addBranchingField(IDBTable table)
   {
-    return table.addField(CDODBSchema.ATTRIBUTES_BRANCH, DBType.INTEGER, true);
+    return table.addField(ATTRIBUTES_BRANCH, DBType.INTEGER, true);
   }
 
   private void initSQLStrings()
@@ -223,17 +223,17 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     StringBuilder builder = new StringBuilder();
 
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(ATTRIBUTES_VERSION);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    builder.append(ATTRIBUTES_CREATED);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_RESOURCE);
+    builder.append(ATTRIBUTES_RESOURCE);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
+    builder.append(ATTRIBUTES_CONTAINER);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_FEATURE);
+    builder.append(ATTRIBUTES_FEATURE);
 
     for (ITypeMapping singleMapping : getValueMappings())
     {
@@ -262,24 +262,24 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+    builder.append(ATTRIBUTES_BRANCH);
     builder.append("=? AND ("); //$NON-NLS-1$
     String sqlSelectAttributesPrefix = builder.toString();
 
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append("=0)"); //$NON-NLS-1$
 
     sqlSelectCurrentAttributes = builder.toString();
 
     builder = new StringBuilder(sqlSelectAttributesPrefix);
 
-    builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    builder.append(ATTRIBUTES_CREATED);
     builder.append("<=? AND ("); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append("=0 OR "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append(">=?))"); //$NON-NLS-1$
 
     sqlSelectAttributesByTime = builder.toString();
@@ -287,7 +287,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder = new StringBuilder(sqlSelectAttributesPrefix);
 
     builder.append("ABS("); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(ATTRIBUTES_VERSION);
     builder.append(")=?)"); //$NON-NLS-1$
 
     sqlSelectAttributesByVersion = builder.toString();
@@ -298,21 +298,21 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append(getTable());
 
     builder.append("("); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(ATTRIBUTES_VERSION);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+    builder.append(ATTRIBUTES_BRANCH);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    builder.append(ATTRIBUTES_CREATED);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_RESOURCE);
+    builder.append(ATTRIBUTES_RESOURCE);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
+    builder.append(ATTRIBUTES_CONTAINER);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_FEATURE);
+    builder.append(ATTRIBUTES_FEATURE);
 
     for (ITypeMapping singleMapping : getValueMappings())
     {
@@ -368,40 +368,40 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append("=? WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+    builder.append(ATTRIBUTES_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append("=0"); //$NON-NLS-1$
     sqlReviseAttributes = builder.toString();
 
     // ----------- Select all unrevised Object IDs ------
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append("=0"); //$NON-NLS-1$
     sqlSelectAllObjectIDs = builder.toString();
 
     // ----------- Select all revisions (for handleRevision) ---
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(ATTRIBUTES_VERSION);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+    builder.append(ATTRIBUTES_BRANCH);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     sqlSelectForHandle = builder.toString();
 
     // ----------- Select all revisions (for handleRevision) ---
     builder = new StringBuilder("SELECT DISTINCT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
@@ -411,11 +411,11 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+    builder.append(ATTRIBUTES_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(ATTRIBUTES_VERSION);
     builder.append("=?"); //$NON-NLS-1$
     sqlRawDeleteAttributes = builder.toString();
   }
@@ -519,15 +519,15 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(ATTRIBUTES_VERSION);
     builder.append(">0 AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+    builder.append(ATTRIBUTES_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
+    builder.append(ATTRIBUTES_CONTAINER);
     builder.append("=? AND "); //$NON-NLS-1$
     builder.append(nameValueMapping.getField());
     if (name == null)
@@ -543,16 +543,16 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append("=0)"); //$NON-NLS-1$
     }
     else
     {
-      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+      builder.append(ATTRIBUTES_CREATED);
       builder.append("<=? AND ("); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append("=0 OR "); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append(">=?))"); //$NON-NLS-1$
     }
 
@@ -885,7 +885,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     {
       // TODO: Prepare this string literal
       builder.append(" WHERE "); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+      builder.append(ATTRIBUTES_BRANCH);
       builder.append("=?"); //$NON-NLS-1$
 
       whereAppend = true;
@@ -899,7 +899,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
           builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
-          builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+          builder.append(ATTRIBUTES_CREATED);
           builder.append("=?"); //$NON-NLS-1$
           timeParameters = 1;
         }
@@ -909,17 +909,17 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
         if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
-          builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+          builder.append(ATTRIBUTES_CREATED);
           builder.append("<=? AND ("); //$NON-NLS-1$
-          builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+          builder.append(ATTRIBUTES_REVISED);
           builder.append("=0 OR "); //$NON-NLS-1$
-          builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+          builder.append(ATTRIBUTES_REVISED);
           builder.append(">=?)"); //$NON-NLS-1$
           timeParameters = 2;
         }
         else
         {
-          builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+          builder.append(ATTRIBUTES_REVISED);
           builder.append("="); //$NON-NLS-1$
           builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
         }
@@ -1004,15 +1004,15 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         builder.append(" OR "); //$NON-NLS-1$
       }
 
-      builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+      builder.append(ATTRIBUTES_BRANCH);
       builder.append("=? AND "); //$NON-NLS-1$
 
-      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+      builder.append(ATTRIBUTES_CREATED);
       builder.append(">=?"); //$NON-NLS-1$
       builder.append(" AND ("); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append("<=? OR "); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append("="); //$NON-NLS-1$
       builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
       builder.append(")"); //$NON-NLS-1$
@@ -1060,7 +1060,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   protected String getListXRefsWhere(QueryXRefsContext context)
   {
     StringBuilder builder = new StringBuilder();
-    builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+    builder.append(ATTRIBUTES_BRANCH);
     builder.append("=");
     builder.append(context.getBranch().getID());
     builder.append(" AND (");
@@ -1068,18 +1068,18 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     long timeStamp = context.getTimeStamp();
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append("=0)"); //$NON-NLS-1$
     }
     else
     {
-      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+      builder.append(ATTRIBUTES_CREATED);
       builder.append("<=");
       builder.append(timeStamp);
       builder.append(" AND ("); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append("=0 OR "); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append(">=");
       builder.append(timeStamp);
       builder.append("))"); //$NON-NLS-1$

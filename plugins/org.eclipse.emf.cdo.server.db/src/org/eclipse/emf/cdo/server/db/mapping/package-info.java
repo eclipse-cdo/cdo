@@ -13,3 +13,4 @@
  * Server concepts for dealing with mapping strategies and mappings for classes, lists and types.
  */
 package org.eclipse.emf.cdo.server.db.mapping;
+

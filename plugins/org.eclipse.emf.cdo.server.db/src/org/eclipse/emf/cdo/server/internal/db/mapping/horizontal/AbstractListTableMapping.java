@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -56,7 +55,7 @@ import java.util.List;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractListTableMapping extends BasicAbstractListTableMapping
+public abstract class AbstractListTableMapping extends AbstractBasicListTableMapping
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractListTableMapping.class);
 
@@ -100,11 +99,11 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
     }
 
     // add field for list index
-    dbFields[dbFields.length - 1] = table.addField(CDODBSchema.LIST_IDX, DBType.INTEGER, true);
+    dbFields[dbFields.length - 1] = table.addField(LIST_IDX, DBType.INTEGER, true);
 
     // add field for value
     typeMapping = mappingStrategy.createValueMapping(getFeature());
-    typeMapping.createDBField(table, CDODBSchema.LIST_VALUE);
+    typeMapping.createDBField(table, LIST_VALUE);
 
     // add table indexes
     table.addIndex(Type.PRIMARY_KEY, dbFields);
@@ -127,7 +126,7 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
     // ---------------- SELECT to read chunks ----------------------------
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(LIST_VALUE);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(tableName);
     builder.append(" WHERE "); //$NON-NLS-1$
@@ -149,7 +148,7 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
 
     sqlSelectChunksPrefix = builder.toString();
 
-    sqlOrderByIndex = " ORDER BY " + CDODBSchema.LIST_IDX; //$NON-NLS-1$
+    sqlOrderByIndex = " ORDER BY " + LIST_IDX; //$NON-NLS-1$
 
     // ----------------- INSERT - reference entry -----------------
     builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
@@ -162,9 +161,9 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
       builder.append(", "); //$NON-NLS-1$
     }
 
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(LIST_VALUE);
     builder.append(") VALUES ("); //$NON-NLS-1$
     for (int i = 0; i < fields.length; i++)
     {
@@ -388,11 +387,11 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
 
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT l_t."); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(LIST_VALUE);
     builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(tableName);
     builder.append(" l_t, ");//$NON-NLS-1$
@@ -401,7 +400,7 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
     builder.append("a_t." + mainTableWhere);//$NON-NLS-1$
     builder.append(listJoin);
     builder.append(" AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(LIST_VALUE);
     builder.append(" IN "); //$NON-NLS-1$
     builder.append(idString);
     String sql = builder.toString();

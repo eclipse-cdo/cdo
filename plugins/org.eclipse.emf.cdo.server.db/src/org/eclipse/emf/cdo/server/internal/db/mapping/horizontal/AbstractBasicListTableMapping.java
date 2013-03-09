@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping2;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -23,7 +22,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 /**
  * @author Stefan Winkler
  */
-public abstract class BasicAbstractListTableMapping implements IListMapping2
+public abstract class AbstractBasicListTableMapping implements IListMapping2, IMappingConstants
 {
   private IMappingStrategy mappingStrategy;
 
@@ -31,7 +30,7 @@ public abstract class BasicAbstractListTableMapping implements IListMapping2
 
   private EStructuralFeature feature;
 
-  public BasicAbstractListTableMapping(IMappingStrategy mappingStrategy, EClass containingClass,
+  public AbstractBasicListTableMapping(IMappingStrategy mappingStrategy, EClass containingClass,
       EStructuralFeature feature)
   {
     this.mappingStrategy = mappingStrategy;
@@ -56,7 +55,7 @@ public abstract class BasicAbstractListTableMapping implements IListMapping2
 
   public void addSimpleChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int index)
   {
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append('=');
     builder.append(index);
   }
@@ -64,7 +63,7 @@ public abstract class BasicAbstractListTableMapping implements IListMapping2
   public void addRangedChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int fromIndex,
       int toIndex)
   {
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append(" BETWEEN "); //$NON-NLS-1$
     builder.append(fromIndex);
     builder.append(" AND "); //$NON-NLS-1$

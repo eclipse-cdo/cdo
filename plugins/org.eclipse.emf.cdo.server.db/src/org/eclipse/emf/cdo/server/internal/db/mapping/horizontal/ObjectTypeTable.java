@@ -27,7 +27,8 @@ import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBDatabase.RunnableWithTable;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
@@ -46,7 +47,7 @@ import java.sql.Statement;
  * @author Eike Stepper
  * @since 4.0
  */
-public class ObjectTypeTable extends AbstractObjectTypeMapper
+public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappingConstants
 {
   private IDBTable table;
 
@@ -226,36 +227,25 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
     super.doActivate();
 
     IDBStore store = getMappingStrategy().getStore();
-    DBType idType = store.getIDHandler().getDBType();
-    int idLength = store.getIDColumnLength();
+    final DBType idType = store.getIDHandler().getDBType();
+    final int idLength = store.getIDColumnLength();
 
-    table = store.getDBSchema().addTable(CDODBSchema.CDO_OBJECTS);
-    idField = table.addField(CDODBSchema.ATTRIBUTES_ID, idType, idLength, true);
-    typeField = table.addField(CDODBSchema.ATTRIBUTES_CLASS, idType, idLength);
-    timeField = table.addField(CDODBSchema.ATTRIBUTES_CREATED, DBType.BIGINT);
-    table.addIndex(IDBIndex.Type.PRIMARY_KEY, idField);
+    IDBDatabase database = store.getDatabase();
 
-    IDBAdapter dbAdapter = store.getDBAdapter();
-    IDBStoreAccessor writer = store.getWriter(null);
-    Connection connection = writer.getConnection();
-    Statement statement = null;
+    table = database.ensureTable(CDODBSchema.CDO_OBJECTS, new RunnableWithTable()
+    {
+      public void run(IDBTable table)
+      {
+        IDBField idField = table.addField(ATTRIBUTES_ID, idType, idLength, true);
+        table.addField(ATTRIBUTES_CLASS, idType, idLength);
+        table.addField(ATTRIBUTES_CREATED, DBType.BIGINT);
+        table.addIndex(IDBIndex.Type.PRIMARY_KEY, idField);
+      }
+    });
 
-    try
-    {
-      statement = connection.createStatement();
-      dbAdapter.createTable(table, statement);
-      connection.commit();
-    }
-    catch (SQLException ex)
-    {
-      connection.rollback();
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(statement);
-      writer.release();
-    }
+    idField = table.getField(0);
+    typeField = table.getField(1);
+    timeField = table.getField(2);
 
     sqlSelect = "SELECT " + typeField + " FROM " + table + " WHERE " + idField + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     sqlInsert = "INSERT INTO " + table + "(" + idField + "," + typeField + "," + timeField + ") VALUES (?, ?, ?)";

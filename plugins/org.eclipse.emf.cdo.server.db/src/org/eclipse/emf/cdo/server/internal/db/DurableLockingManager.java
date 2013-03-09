@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockAreaNotFoundEx
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
-import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
@@ -31,9 +30,10 @@ import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBDatabase.RunnableWithTable;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
-import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -44,7 +44,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -384,50 +383,45 @@ public class DurableLockingManager extends Lifecycle
 
     branchManager = store.getRepository().getBranchManager();
     idHandler = store.getIDHandler();
-
-    IDBSchema schema = store.getDBSchema();
+    IDBDatabase database = store.getDatabase();
 
     // Lock areas
-    lockAreas = schema.addTable("cdo_lock_areas");
-    lockAreasID = lockAreas.addField("id", DBType.VARCHAR, true);
-    lockAreasUser = lockAreas.addField("user_id", DBType.VARCHAR);
-    lockAreasBranch = lockAreas.addField("view_branch", DBType.INTEGER);
-    lockAreasTime = lockAreas.addField("view_time", DBType.BIGINT);
-    lockAreasReadOnly = lockAreas.addField("read_only", DBType.BOOLEAN);
+    lockAreas = database.ensureTable("cdo_lock_areas", new RunnableWithTable()
+    {
+      public void run(IDBTable table)
+      {
+        IDBField lockAreasID = table.addField("id", DBType.VARCHAR, true);
+        IDBField lockAreasUser = table.addField("user_id", DBType.VARCHAR);
+        table.addField("view_branch", DBType.INTEGER);
+        table.addField("view_time", DBType.BIGINT);
+        table.addField("read_only", DBType.BOOLEAN);
+        table.addIndex(IDBIndex.Type.PRIMARY_KEY, lockAreasID);
+        table.addIndex(IDBIndex.Type.NON_UNIQUE, lockAreasUser);
+      }
+    });
 
-    lockAreas.addIndex(IDBIndex.Type.PRIMARY_KEY, lockAreasID);
-    lockAreas.addIndex(IDBIndex.Type.NON_UNIQUE, lockAreasUser);
+    lockAreasID = lockAreas.getField(0);
+    lockAreasUser = lockAreas.getField(1);
+    lockAreasBranch = lockAreas.getField(2);
+    lockAreasTime = lockAreas.getField(3);
+    lockAreasReadOnly = lockAreas.getField(4);
 
     // Locks
-    locks = schema.addTable("cdo_locks");
-    locksArea = locks.addField("area_id", DBType.VARCHAR, true);
-    locksObject = locks.addField("object_id", idHandler.getDBType(), store.getIDColumnLength(), true);
-    locksGrade = locks.addField("lock_grade", DBType.INTEGER);
-
-    locks.addIndex(IDBIndex.Type.PRIMARY_KEY, locksArea, locksObject);
-    locks.addIndex(IDBIndex.Type.NON_UNIQUE, locksArea);
-
-    IDBStoreAccessor writer = store.getWriter(null);
-    Connection connection = writer.getConnection();
-    Statement statement = null;
-
-    try
+    locks = database.ensureTable("cdo_locks", new RunnableWithTable()
     {
-      statement = connection.createStatement();
-      store.getDBAdapter().createTable(lockAreas, statement);
-      store.getDBAdapter().createTable(locks, statement);
-      connection.commit();
-    }
-    catch (SQLException ex)
-    {
-      connection.rollback();
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(statement);
-      writer.release();
-    }
+      public void run(IDBTable table)
+      {
+        IDBField locksArea = table.addField("area_id", DBType.VARCHAR, true);
+        IDBField locksObject = table.addField("object_id", idHandler.getDBType(), store.getIDColumnLength(), true);
+        table.addField("lock_grade", DBType.INTEGER);
+        table.addIndex(IDBIndex.Type.PRIMARY_KEY, locksArea, locksObject);
+        table.addIndex(IDBIndex.Type.NON_UNIQUE, locksArea);
+      }
+    });
+
+    locksArea = locks.getField(0);
+    locksObject = locks.getField(1);
+    locksGrade = locks.getField(2);
 
     StringBuilder builder = new StringBuilder();
     builder.append("INSERT INTO "); //$NON-NLS-1$

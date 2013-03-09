@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
@@ -57,9 +56,9 @@ public class AuditFeatureMapTableMapping extends AbstractFeatureMapTableMapping
     builder.append("DELETE FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION);
+    builder.append(LIST_REVISION_VERSION);
     builder.append("=? "); //$NON-NLS-1$
     sqlClear = builder.toString();
   }
@@ -72,8 +71,8 @@ public class AuditFeatureMapTableMapping extends AbstractFeatureMapTableMapping
       IDBStore store = getMappingStrategy().getStore();
 
       keyFields = new FieldInfo[] {
-          new FieldInfo(CDODBSchema.FEATUREMAP_REVISION_ID, store.getIDHandler().getDBType(), store.getIDColumnLength()),
-          new FieldInfo(CDODBSchema.FEATUREMAP_VERSION, DBType.INTEGER) };
+          new FieldInfo(FEATUREMAP_REVISION_ID, store.getIDHandler().getDBType(), store.getIDColumnLength()),
+          new FieldInfo(FEATUREMAP_VERSION, DBType.INTEGER) };
     }
 
     return keyFields;

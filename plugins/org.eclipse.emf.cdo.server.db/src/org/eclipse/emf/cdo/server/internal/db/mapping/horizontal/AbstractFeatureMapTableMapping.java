@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -65,7 +64,7 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 3.0
  */
-public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTableMapping
+public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTableMapping
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractFeatureMapTableMapping.class);
 
@@ -137,10 +136,10 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
     }
 
     // add field for list index
-    IDBField idxField = table.addField(CDODBSchema.FEATUREMAP_IDX, DBType.INTEGER);
+    IDBField idxField = table.addField(FEATUREMAP_IDX, DBType.INTEGER);
 
     // add field for FeatureMap tag (MetaID for Feature in CDO registry)
-    IDBField tagField = table.addField(CDODBSchema.FEATUREMAP_TAG, idType, idLength);
+    IDBField tagField = table.addField(FEATUREMAP_TAG, idType, idLength);
 
     tagMap = CDOIDUtil.createMap();
     typeMappings = CDOIDUtil.createMap();
@@ -149,7 +148,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
     // create columns for all DBTypes
     for (DBType type : getDBTypes())
     {
-      String column = CDODBSchema.FEATUREMAP_VALUE + "_" + type.name();
+      String column = FEATUREMAP_VALUE + "_" + type.name();
       table.addField(column, type);
       columnNames.add(column);
     }
@@ -177,7 +176,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT ");
 
-    builder.append(CDODBSchema.FEATUREMAP_TAG);
+    builder.append(FEATUREMAP_TAG);
     builder.append(", ");
 
     Iterator<String> iter = columnNames.iterator();
@@ -211,7 +210,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
 
     sqlSelectChunksPrefix = builder.toString();
 
-    sqlOrderByIndex = " ORDER BY " + CDODBSchema.FEATUREMAP_IDX; //$NON-NLS-1$
+    sqlOrderByIndex = " ORDER BY " + FEATUREMAP_IDX; //$NON-NLS-1$
 
     // INSERT with dynamic field name
     // TODO: Better: universal INSERT-Statement, because of stmt caching!
@@ -232,9 +231,9 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
       builder.append(", "); //$NON-NLS-1$
     }
 
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_TAG);
+    builder.append(FEATUREMAP_TAG);
     builder.append(") VALUES ("); //$NON-NLS-1$
     for (int i = 0; i < fields.length + columnNames.size(); i++)
     {
@@ -339,7 +338,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
     EStructuralFeature modelFeature = getFeatureByTag(tag);
 
     ITypeMapping typeMapping = getMappingStrategy().createValueMapping(modelFeature);
-    String column = CDODBSchema.FEATUREMAP_VALUE + "_" + typeMapping.getDBType();
+    String column = FEATUREMAP_VALUE + "_" + typeMapping.getDBType();
 
     tagMap.put(tag, column);
     typeMapping.setDBField(table, column);

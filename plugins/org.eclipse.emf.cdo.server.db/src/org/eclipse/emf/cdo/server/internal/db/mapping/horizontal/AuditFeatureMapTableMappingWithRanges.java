@@ -45,7 +45,6 @@ import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -76,8 +75,8 @@ import java.util.Map;
 /**
  * This is a featuremap-table mapping for audit mode. It is optimized for frequent insert operations at the list's end,
  * which causes just 1 DB row to be changed. This is achieved by introducing a version range (columns
- * {@link CDODBSchema#LIST_REVISION_VERSION_ADDED cdo_version_added} and
- * {@link CDODBSchema#LIST_REVISION_VERSION_REMOVED cdo_version_removed}) which records for which revisions a particular
+ * {@link IMappingConstants#LIST_REVISION_VERSION_ADDED cdo_version_added} and
+ * {@link IMappingConstants#LIST_REVISION_VERSION_REMOVED cdo_version_removed}) which records for which revisions a particular
  * entry existed. Also, this mapping is mainly optimized for potentially very large lists: the need for having the
  * complete list stored in memory to do in-the-middle-moved and inserts is traded in for a few more DB access
  * operations.
@@ -87,7 +86,7 @@ import java.util.Map;
  * @author Lothar Werzinger
  * @since 3.0
  */
-public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTableMapping implements
+public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTableMapping implements
     IListMappingDeltaSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AuditFeatureMapTableMappingWithRanges.class);
@@ -165,17 +164,17 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     table = store.getDBSchema().addTable(tableName);
 
     // add fields for CDOID
-    IDBField idField = table.addField(CDODBSchema.FEATUREMAP_REVISION_ID, idType, idLength);
+    IDBField idField = table.addField(FEATUREMAP_REVISION_ID, idType, idLength);
 
     // add fields for version range
-    IDBField versionAddedField = table.addField(CDODBSchema.FEATUREMAP_VERSION_ADDED, DBType.INTEGER);
-    IDBField versionRemovedField = table.addField(CDODBSchema.FEATUREMAP_VERSION_REMOVED, DBType.INTEGER);
+    IDBField versionAddedField = table.addField(FEATUREMAP_VERSION_ADDED, DBType.INTEGER);
+    IDBField versionRemovedField = table.addField(FEATUREMAP_VERSION_REMOVED, DBType.INTEGER);
 
     // add field for list index
-    IDBField idxField = table.addField(CDODBSchema.FEATUREMAP_IDX, DBType.INTEGER);
+    IDBField idxField = table.addField(FEATUREMAP_IDX, DBType.INTEGER);
 
     // add field for FeatureMap tag (MetaID for Feature in CDO registry)
-    IDBField tagField = table.addField(CDODBSchema.FEATUREMAP_TAG, idType, idLength);
+    IDBField tagField = table.addField(FEATUREMAP_TAG, idType, idLength);
 
     tagMap = CDOIDUtil.createMap();
     typeMappings = CDOIDUtil.createMap();
@@ -184,7 +183,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     // create columns for all DBTypes
     for (DBType type : getDBTypes())
     {
-      String column = CDODBSchema.FEATUREMAP_VALUE + "_" + type.name();
+      String column = FEATUREMAP_VALUE + "_" + type.name();
       table.addField(column, type);
       columnNames.add(column);
     }
@@ -205,7 +204,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
 
-    builder.append(CDODBSchema.FEATUREMAP_TAG);
+    builder.append(FEATUREMAP_TAG);
     builder.append(", "); //$NON-NLS-1$
 
     Iterator<String> iter = columnNames.iterator();
@@ -221,31 +220,31 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(tableName);
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
+    builder.append(FEATUREMAP_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VERSION_ADDED);
+    builder.append(FEATUREMAP_VERSION_ADDED);
     builder.append("<=? AND ("); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
+    builder.append(FEATUREMAP_VERSION_REMOVED);
     builder.append(" IS NULL OR "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
+    builder.append(FEATUREMAP_VERSION_REMOVED);
     builder.append(">?)"); //$NON-NLS-1$
     sqlSelectChunksPrefix = builder.toString();
 
-    sqlOrderByIndex = " ORDER BY " + CDODBSchema.FEATUREMAP_IDX; //$NON-NLS-1$
+    sqlOrderByIndex = " ORDER BY " + FEATUREMAP_IDX; //$NON-NLS-1$
 
     // ----------------- INSERT - prefix -----------------
     builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
     builder.append(tableName);
     builder.append("("); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
+    builder.append(FEATUREMAP_REVISION_ID);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VERSION_ADDED);
+    builder.append(FEATUREMAP_VERSION_ADDED);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
+    builder.append(FEATUREMAP_VERSION_REMOVED);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_TAG);
+    builder.append(FEATUREMAP_TAG);
 
     for (int i = 0; i < columnNames.size(); i++)
     {
@@ -266,14 +265,14 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(tableName);
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
+    builder.append(FEATUREMAP_VERSION_REMOVED);
     builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
+    builder.append(FEATUREMAP_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
+    builder.append(FEATUREMAP_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlRemoveEntry = builder.toString();
 
@@ -281,11 +280,11 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
     builder.append(tableName);
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
+    builder.append(FEATUREMAP_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VERSION_ADDED);
+    builder.append(FEATUREMAP_VERSION_ADDED);
     builder.append("=?"); //$NON-NLS-1$
     sqlDeleteEntry = builder.toString();
 
@@ -293,19 +292,19 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(tableName);
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append("=? WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
+    builder.append(FEATUREMAP_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VERSION_ADDED);
+    builder.append(FEATUREMAP_VERSION_ADDED);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append("=?"); //$NON-NLS-1$
     sqlUpdateIndex = builder.toString();
 
     // ----------------- get current value -----------------
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_TAG);
+    builder.append(FEATUREMAP_TAG);
     builder.append(", "); //$NON-NLS-1$
 
     iter = columnNames.iterator();
@@ -321,11 +320,11 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(tableName);
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
+    builder.append(FEATUREMAP_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
+    builder.append(FEATUREMAP_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlGetValue = builder.toString();
 
@@ -333,12 +332,12 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(tableName);
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
+    builder.append(FEATUREMAP_VERSION_REMOVED);
     builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
+    builder.append(FEATUREMAP_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
+    builder.append(FEATUREMAP_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlClearList = builder.toString();
 
@@ -346,11 +345,11 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
     builder.append(tableName);
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
+    builder.append(FEATUREMAP_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VERSION_ADDED);
+    builder.append(FEATUREMAP_VERSION_ADDED);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
+    builder.append(FEATUREMAP_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlDeleteList = builder.toString();
   }
@@ -459,7 +458,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     EStructuralFeature modelFeature = getFeatureByTag(tag);
 
     ITypeMapping typeMapping = getMappingStrategy().createValueMapping(modelFeature);
-    String column = CDODBSchema.FEATUREMAP_VALUE + "_" + typeMapping.getDBType(); //$NON-NLS-1$
+    String column = FEATUREMAP_VALUE + "_" + typeMapping.getDBType(); //$NON-NLS-1$
 
     tagMap.put(tag, column);
     typeMapping.setDBField(table, column);

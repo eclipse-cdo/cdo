@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -57,9 +56,9 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
   }
 
   @Override
-  public IClassMapping doCreateClassMapping(EClass eClass)
+  protected IClassMapping doCreateClassMapping(EClass eClass, boolean create)
   {
-    return new HorizontalBranchingClassMapping(this, eClass);
+    return new HorizontalBranchingClassMapping(this, eClass, create);
   }
 
   @Override
@@ -95,28 +94,25 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
 
   protected String modifyListJoin(String attrTable, String listTable, String join, boolean forRawExport)
   {
-    join += " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_VERSION;
-    join += "=" + listTable + "." + CDODBSchema.LIST_REVISION_VERSION;
-    join += " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_BRANCH;
-    join += "=" + listTable + "." + CDODBSchema.LIST_REVISION_BRANCH;
+    join += " AND " + attrTable + "." + ATTRIBUTES_VERSION;
+    join += "=" + listTable + "." + LIST_REVISION_VERSION;
+    join += " AND " + attrTable + "." + ATTRIBUTES_BRANCH;
+    join += "=" + listTable + "." + LIST_REVISION_BRANCH;
     return join;
   }
 
   @Override
   protected void rawImportReviseOldRevisions(Connection connection, IDBTable table, OMMonitor monitor)
   {
-    String sqlUpdate = "UPDATE " + table + " SET " + CDODBSchema.ATTRIBUTES_REVISED + "=? WHERE "
-        + CDODBSchema.ATTRIBUTES_ID + "=? AND " + CDODBSchema.ATTRIBUTES_BRANCH + "=? AND "
-        + CDODBSchema.ATTRIBUTES_VERSION + "=?";
+    String sqlUpdate = "UPDATE " + table + " SET " + ATTRIBUTES_REVISED + "=? WHERE " + ATTRIBUTES_ID + "=? AND "
+        + ATTRIBUTES_BRANCH + "=? AND " + ATTRIBUTES_VERSION + "=?";
 
-    String sqlQuery = "SELECT cdo1." + CDODBSchema.ATTRIBUTES_ID + ", cdo1." + CDODBSchema.ATTRIBUTES_BRANCH
-        + ", cdo1." + CDODBSchema.ATTRIBUTES_VERSION + ", cdo2." + CDODBSchema.ATTRIBUTES_CREATED + " FROM " + table
-        + " cdo1, " + table + " cdo2 WHERE cdo1." + CDODBSchema.ATTRIBUTES_ID + "=cdo2." + CDODBSchema.ATTRIBUTES_ID
-        + " AND cdo1." + CDODBSchema.ATTRIBUTES_BRANCH + "=cdo2." + CDODBSchema.ATTRIBUTES_BRANCH + " AND (cdo1."
-        + CDODBSchema.ATTRIBUTES_VERSION + "=cdo2." + CDODBSchema.ATTRIBUTES_VERSION + "-1 OR (cdo1."
-        + CDODBSchema.ATTRIBUTES_VERSION + "+cdo2." + CDODBSchema.ATTRIBUTES_VERSION + "=-1 AND cdo1."
-        + CDODBSchema.ATTRIBUTES_VERSION + ">cdo2." + CDODBSchema.ATTRIBUTES_VERSION + ")) AND cdo1."
-        + CDODBSchema.ATTRIBUTES_REVISED + "=0";
+    String sqlQuery = "SELECT cdo1." + ATTRIBUTES_ID + ", cdo1." + ATTRIBUTES_BRANCH + ", cdo1." + ATTRIBUTES_VERSION
+        + ", cdo2." + ATTRIBUTES_CREATED + " FROM " + table + " cdo1, " + table + " cdo2 WHERE cdo1." + ATTRIBUTES_ID
+        + "=cdo2." + ATTRIBUTES_ID + " AND cdo1." + ATTRIBUTES_BRANCH + "=cdo2." + ATTRIBUTES_BRANCH + " AND (cdo1."
+        + ATTRIBUTES_VERSION + "=cdo2." + ATTRIBUTES_VERSION + "-1 OR (cdo1." + ATTRIBUTES_VERSION + "+cdo2."
+        + ATTRIBUTES_VERSION + "=-1 AND cdo1." + ATTRIBUTES_VERSION + ">cdo2." + ATTRIBUTES_VERSION + ")) AND cdo1."
+        + ATTRIBUTES_REVISED + "=0";
 
     IIDHandler idHandler = getStore().getIDHandler();
     PreparedStatement stmtUpdate = null;
@@ -178,9 +174,9 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
   protected void rawImportUnreviseNewRevisions(Connection connection, IDBTable table, long fromCommitTime,
       long toCommitTime, OMMonitor monitor)
   {
-    String sqlUpdate = "UPDATE " + table + " SET " + CDODBSchema.ATTRIBUTES_REVISED + "=0 WHERE "
-        + CDODBSchema.ATTRIBUTES_BRANCH + ">=0 AND " + CDODBSchema.ATTRIBUTES_CREATED + "<=" + toCommitTime + " AND "
-        + CDODBSchema.ATTRIBUTES_REVISED + ">" + toCommitTime + " AND " + CDODBSchema.ATTRIBUTES_VERSION + ">0";
+    String sqlUpdate = "UPDATE " + table + " SET " + ATTRIBUTES_REVISED + "=0 WHERE " + ATTRIBUTES_BRANCH + ">=0 AND "
+        + ATTRIBUTES_CREATED + "<=" + toCommitTime + " AND " + ATTRIBUTES_REVISED + ">" + toCommitTime + " AND "
+        + ATTRIBUTES_VERSION + ">0";
 
     PreparedStatement stmtUpdate = null;
 

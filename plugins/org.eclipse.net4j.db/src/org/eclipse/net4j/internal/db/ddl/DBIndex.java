@@ -16,9 +16,9 @@ import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndexField;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
+import org.eclipse.net4j.db.ddl.SchemaElementNotFoundException;
 import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.spi.db.DBSchemaElement;
-import org.eclipse.net4j.util.CheckUtil;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -135,10 +135,14 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
     return indexField;
   }
 
-  public IDBIndexField addIndexField(String name)
+  public IDBIndexField addIndexField(String name) throws SchemaElementNotFoundException
   {
     DBField field = table.getField(name);
-    CheckUtil.checkArg(field, "Field not found: " + name);
+    if (field == null)
+    {
+      throw new SchemaElementNotFoundException(this, SchemaElementType.FIELD, name);
+    }
+
     return addIndexField(field);
   }
 

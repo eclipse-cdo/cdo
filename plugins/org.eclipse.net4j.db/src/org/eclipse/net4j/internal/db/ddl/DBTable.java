@@ -14,10 +14,10 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
-import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.ddl.SchemaElementNotFoundException;
 import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.spi.db.DBSchemaElement;
 
@@ -153,12 +153,22 @@ public class DBTable extends DBSchemaElement implements IDBTable
     return fields.toArray(new DBField[fields.size()]);
   }
 
-  public DBIndex addIndex(Type type, IDBField... fields)
+  public DBField[] getFields(String... fieldNames) throws SchemaElementNotFoundException
   {
-    return addIndex(null, type, fields);
+    List<DBField> result = new ArrayList<DBField>();
+    for (String fieldName : fieldNames)
+    {
+      DBField field = getField(fieldName);
+      if (field == null)
+      {
+        throw new SchemaElementNotFoundException(this, SchemaElementType.FIELD, fieldName);
+      }
+    }
+
+    return result.toArray(new DBField[result.size()]);
   }
 
-  public DBIndex addIndex(String name, Type type, IDBField... fields)
+  public DBIndex addIndex(String name, IDBIndex.Type type, IDBField... fields)
   {
     assertUnlocked();
 
@@ -173,11 +183,11 @@ public class DBTable extends DBSchemaElement implements IDBTable
       throw new DBException("Index exists: " + name); //$NON-NLS-1$
     }
 
-    if (type == Type.PRIMARY_KEY)
+    if (type == IDBIndex.Type.PRIMARY_KEY)
     {
       for (DBIndex index : getIndices())
       {
-        if (index.getType() == Type.PRIMARY_KEY)
+        if (index.getType() == IDBIndex.Type.PRIMARY_KEY)
         {
           throw new DBException("Primary key exists: " + index); //$NON-NLS-1$
         }
@@ -188,6 +198,31 @@ public class DBTable extends DBSchemaElement implements IDBTable
     indices.add(index);
     resetElements();
     return index;
+  }
+
+  public DBIndex addIndex(String name, IDBIndex.Type type, String... fieldNames)
+  {
+    return addIndex(name, type, getFields(fieldNames));
+  }
+
+  public DBIndex addIndexEmpty(String name, IDBIndex.Type type)
+  {
+    return addIndex(name, type, NO_FIELDS);
+  }
+
+  public DBIndex addIndex(IDBIndex.Type type, IDBField... fields)
+  {
+    return addIndex(null, type, fields);
+  }
+
+  public DBIndex addIndex(IDBIndex.Type type, String... fieldNames)
+  {
+    return addIndex(type, getFields(fieldNames));
+  }
+
+  public DBIndex addIndexEmpty(IDBIndex.Type type)
+  {
+    return addIndex(type, NO_FIELDS);
   }
 
   @SuppressWarnings("deprecation")
@@ -233,9 +268,9 @@ public class DBTable extends DBSchemaElement implements IDBTable
     return indices.toArray(new DBIndex[indices.size()]);
   }
 
-  public IDBIndex getPrimaryKeyIndex()
+  public DBIndex getPrimaryKeyIndex()
   {
-    for (IDBIndex index : indices)
+    for (DBIndex index : indices)
     {
       if (index.getType() == IDBIndex.Type.PRIMARY_KEY)
       {

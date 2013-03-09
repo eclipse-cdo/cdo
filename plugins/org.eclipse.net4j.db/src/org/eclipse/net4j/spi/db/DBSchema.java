@@ -82,7 +82,7 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
 
       for (IDBIndex sourceIndex : sourceTable.getIndices())
       {
-        DBIndex index = table.addIndex(sourceIndex.getName(), sourceIndex.getType());
+        DBIndex index = table.addIndexEmpty(sourceIndex.getName(), sourceIndex.getType());
         for (IDBField sourceField : sourceIndex.getFields())
         {
           DBField field = table.getField(sourceField.getPosition());

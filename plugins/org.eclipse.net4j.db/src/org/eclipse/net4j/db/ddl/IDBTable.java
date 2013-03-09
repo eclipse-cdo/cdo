@@ -46,12 +46,37 @@ public interface IDBTable extends IDBSchemaElement
 
   public IDBField[] getFields();
 
-  public IDBIndex addIndex(IDBIndex.Type type, IDBField... fields);
+  /**
+   * @since 4.2
+   */
+  public IDBField[] getFields(String... fieldNames) throws SchemaElementNotFoundException;
 
   /**
    * @since 4.2
    */
   public IDBIndex addIndex(String name, IDBIndex.Type type, IDBField... fields);
+
+  /**
+   * @since 4.2
+   */
+  public IDBIndex addIndex(String name, IDBIndex.Type type, String... fieldNames) throws SchemaElementNotFoundException;
+
+  /**
+   * @since 4.2
+   */
+  public IDBIndex addIndexEmpty(String name, IDBIndex.Type type);
+
+  public IDBIndex addIndex(IDBIndex.Type type, IDBField... fields);
+
+  /**
+   * @since 4.2
+   */
+  public IDBIndex addIndex(IDBIndex.Type type, String... fieldNames) throws SchemaElementNotFoundException;
+
+  /**
+   * @since 4.2
+   */
+  public IDBIndex addIndexEmpty(IDBIndex.Type type);
 
   /**
    * @since 4.2

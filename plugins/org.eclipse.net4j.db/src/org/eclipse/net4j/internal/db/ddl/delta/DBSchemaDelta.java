@@ -204,7 +204,7 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
       IDBIndex.Type type = delta.getPropertyValue(IDBIndexDelta.TYPE_PROPERTY);
 
       IDBTable table = delta.getParent().getSchemaElement(schema);
-      table.addIndex(name, type);
+      table.addIndexEmpty(name, type);
     }
 
     @Override

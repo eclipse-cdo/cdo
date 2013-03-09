@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.db.ddl;
 
+
 /**
  * An index specification in a {@link IDBTable DB table}.
  *
@@ -44,7 +45,7 @@ public interface IDBIndex extends IDBSchemaElement
   /**
    * @since 4.2
    */
-  public IDBIndexField addIndexField(String name);
+  public IDBIndexField addIndexField(String name) throws SchemaElementNotFoundException;
 
   /**
    * @since 4.2

@@ -13,14 +13,13 @@ package org.eclipse.net4j.internal.db.ddl.delta;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndexField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.delta.IDBDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta;
-import org.eclipse.net4j.internal.db.ddl.DBIndex;
-import org.eclipse.net4j.internal.db.ddl.DBIndexField;
-import org.eclipse.net4j.internal.db.ddl.DBTable;
+import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
 import org.eclipse.net4j.util.ObjectUtil;
 
 import java.text.MessageFormat;
@@ -44,7 +43,7 @@ public final class DBIndexDelta extends DBDeltaWithProperties implements IDBInde
     super(parent, name, changeKind);
   }
 
-  public DBIndexDelta(DBDelta parent, DBIndex index, DBIndex oldIndex)
+  public DBIndexDelta(DBDelta parent, IDBIndex index, IDBIndex oldIndex)
   {
     this(parent, getName(index, oldIndex), getChangeKind(index, oldIndex));
 
@@ -56,14 +55,13 @@ public final class DBIndexDelta extends DBDeltaWithProperties implements IDBInde
           oldType));
     }
 
-    IDBIndexField[] indexFields = index == null ? DBIndex.NO_INDEX_FIELDS : index.getIndexFields();
-    IDBIndexField[] oldIndexFields = oldIndex == null ? DBIndex.NO_INDEX_FIELDS : oldIndex.getIndexFields();
+    IDBIndexField[] indexFields = index == null ? InternalDBIndex.NO_INDEX_FIELDS : index.getIndexFields();
+    IDBIndexField[] oldIndexFields = oldIndex == null ? InternalDBIndex.NO_INDEX_FIELDS : oldIndex.getIndexFields();
     compare(indexFields, oldIndexFields, new SchemaElementComparator<IDBIndexField>()
     {
       public void compare(IDBIndexField indexField, IDBIndexField oldIndexField)
       {
-        DBIndexFieldDelta indexFieldDelta = new DBIndexFieldDelta(DBIndexDelta.this, (DBIndexField)indexField,
-            (DBIndexField)oldIndexField);
+        DBIndexFieldDelta indexFieldDelta = new DBIndexFieldDelta(DBIndexDelta.this, indexField, oldIndexField);
         if (!indexFieldDelta.isEmpty())
         {
           addIndexFieldDelta(indexFieldDelta);
@@ -125,9 +123,9 @@ public final class DBIndexDelta extends DBDeltaWithProperties implements IDBInde
     return result;
   }
 
-  public DBIndex getSchemaElement(IDBSchema schema)
+  public IDBIndex getSchemaElement(IDBSchema schema)
   {
-    DBTable table = getParent().getSchemaElement(schema);
+    IDBTable table = getParent().getSchemaElement(schema);
     if (table == null)
     {
       return null;

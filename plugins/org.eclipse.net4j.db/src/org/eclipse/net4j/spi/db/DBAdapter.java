@@ -138,9 +138,7 @@ public abstract class DBAdapter implements IDBAdapter
    */
   public IDBSchema readSchema(Connection connection, String name)
   {
-    DBSchema schema = new DBSchema(name);
-    readSchema(connection, schema);
-    return schema;
+    return DBUtil.readSchema(this, connection, name);
   }
 
   /**

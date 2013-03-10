@@ -10,12 +10,12 @@
  */
 package org.eclipse.net4j.internal.db.ddl.delta;
 
+import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBIndexField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta;
-import org.eclipse.net4j.internal.db.ddl.DBIndex;
-import org.eclipse.net4j.internal.db.ddl.DBIndexField;
 import org.eclipse.net4j.util.ObjectUtil;
 
 import java.text.MessageFormat;
@@ -32,7 +32,7 @@ public final class DBIndexFieldDelta extends DBDeltaWithPosition implements IDBI
     super(parent, name, changeKind);
   }
 
-  public DBIndexFieldDelta(DBIndexDelta parent, DBIndexField indexField, DBIndexField oldIndexField)
+  public DBIndexFieldDelta(DBIndexDelta parent, IDBIndexField indexField, IDBIndexField oldIndexField)
   {
     this(parent, getName(indexField, oldIndexField), getChangeKind(indexField, oldIndexField));
 
@@ -63,9 +63,9 @@ public final class DBIndexFieldDelta extends DBDeltaWithPosition implements IDBI
     return (DBIndexDelta)super.getParent();
   }
 
-  public DBIndexField getSchemaElement(IDBSchema schema)
+  public IDBIndexField getSchemaElement(IDBSchema schema)
   {
-    DBIndex index = getParent().getSchemaElement(schema);
+    IDBIndex index = getParent().getSchemaElement(schema);
     if (index == null)
     {
       return null;

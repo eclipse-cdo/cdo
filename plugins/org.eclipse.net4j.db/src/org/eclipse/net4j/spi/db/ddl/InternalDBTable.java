@@ -8,7 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.db.ddl.delta;
+package org.eclipse.net4j.spi.db.ddl;
+
+import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBTable;
 
 /**
  * @since 4.2
@@ -16,19 +20,13 @@ package org.eclipse.net4j.db.ddl.delta;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBPropertyDelta<T> extends IDBDelta
+public interface InternalDBTable extends IDBTable, InternalDBSchemaElement
 {
-  public IDBPropertyDelta.Type getType();
+  public static final IDBField[] NO_FIELDS = {};
 
-  public T getValue();
+  public static final IDBIndex[] NO_INDICES = {};
 
-  public T getOldValue();
+  public void removeField(IDBField fieldToRemove);
 
-  /**
-   * @author Eike Stepper
-   */
-  public enum Type
-  {
-    BOOLEAN, INTEGER, STRING, FIELD_TYPE, INDEX_TYPE
-  }
+  public void removeIndex(IDBIndex indexToRemove);
 }

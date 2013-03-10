@@ -10,7 +10,7 @@
  */
 package org.eclipse.net4j.db.ddl.delta;
 
-import org.eclipse.net4j.db.IDBNamedElement;
+import org.eclipse.net4j.db.ddl.IDBNamedElement;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.util.container.IContainer;

@@ -11,7 +11,7 @@
 package org.eclipse.net4j.db.ddl;
 
 import org.eclipse.net4j.db.DBException;
-import org.eclipse.net4j.spi.db.DBSchemaElement;
+import org.eclipse.net4j.internal.db.ddl.DBSchemaElement;
 
 /**
  * @since 4.2

@@ -8,19 +8,26 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.db;
+package org.eclipse.net4j.spi.db.ddl;
 
-import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.db.ddl.IDBNamedElement;
 
-import java.util.Properties;
+import java.io.IOException;
+import java.io.Writer;
 
 /**
- * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
- * @noextend This interface is not intended to be extended by clients.
  * @since 4.2
+ * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBElement extends INotifier
+public interface InternalDBNamedElement extends IDBNamedElement, InternalDBElement
 {
-  public Properties getProperties();
+  public void setName(String name);
+
+  public String dumpToString();
+
+  public void dump();
+
+  public void dump(Writer writer) throws IOException;
 }

@@ -8,11 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.spi.db;
+package org.eclipse.net4j.internal.db.ddl;
 
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor.StopRecursion;
+import org.eclipse.net4j.spi.db.ddl.InternalDBSchemaElement;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.PositionProvider;
 
@@ -23,11 +24,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author Eike Stepper
  * @since 4.2
- * @noextend This class is not intended to be subclassed by clients.
+ * @author Eike Stepper
  */
-public abstract class DBSchemaElement extends DBNamedElement implements IDBSchemaElement
+public abstract class DBSchemaElement extends DBNamedElement implements InternalDBSchemaElement
 {
   private static final long serialVersionUID = 1L;
 
@@ -133,7 +133,6 @@ public abstract class DBSchemaElement extends DBNamedElement implements IDBSchem
 
   protected abstract void doAccept(IDBSchemaVisitor visitor);
 
-  @Override
   public void dump(Writer writer) throws IOException
   {
     SchemaElementType schemaElementType = getSchemaElementType();
@@ -151,7 +150,7 @@ public abstract class DBSchemaElement extends DBNamedElement implements IDBSchem
 
     for (IDBSchemaElement element : getElements())
     {
-      ((DBSchemaElement)element).dump(writer);
+      ((InternalDBSchemaElement)element).dump(writer);
     }
   }
 

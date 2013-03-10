@@ -19,6 +19,7 @@ Export-Package: org.eclipse.net4j.db;version="4.2.0",
  org.eclipse.net4j.internal.db.ddl;version="4.2.0";x-internal:=true,
  org.eclipse.net4j.internal.db.ddl.delta;version="4.2.0";x-internal:=true,
  org.eclipse.net4j.internal.db.dml;version="4.2.0";x-internal:=true,
- org.eclipse.net4j.spi.db;version="4.2.0"
+ org.eclipse.net4j.spi.db;version="4.2.0",
+ org.eclipse.net4j.spi.db.ddl;version="4.2.0"
 Bundle-ActivationPolicy: lazy
 Eclipse-BuddyPolicy: registered

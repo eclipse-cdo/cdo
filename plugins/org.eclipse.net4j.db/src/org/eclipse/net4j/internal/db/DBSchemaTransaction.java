@@ -19,7 +19,7 @@ import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
 import org.eclipse.net4j.spi.db.DBAdapter;
-import org.eclipse.net4j.spi.db.DBSchema;
+import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -33,16 +33,16 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
 
   private DBTransaction transaction;
 
-  private DBSchema oldSchema;
+  private IDBSchema oldSchema;
 
-  private DBSchema workingCopy;
+  private IDBSchema workingCopy;
 
   public DBSchemaTransaction(DBDatabase database)
   {
     this.database = database;
 
     oldSchema = database.getSchema();
-    workingCopy = new DBSchema(oldSchema);
+    workingCopy = DBUtil.copySchema(oldSchema);
   }
 
   public DBDatabase getDatabase()
@@ -60,12 +60,12 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
     transaction = getTransaction;
   }
 
-  public DBSchema getWorkingCopy()
+  public IDBSchema getWorkingCopy()
   {
     return workingCopy;
   }
 
-  public IDBSchemaDelta ensureSchema(IDBSchema schema, IDBDeltaVisitor.Filter.Policy policy)
+  public DBSchemaDelta ensureSchema(IDBSchema schema, IDBDeltaVisitor.Filter.Policy policy)
   {
     IDBSchema workingCopy = getWorkingCopy();
 
@@ -79,7 +79,7 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
     return result;
   }
 
-  public IDBSchemaDelta ensureSchema(IDBSchema schema)
+  public DBSchemaDelta ensureSchema(IDBSchema schema)
   {
     return ensureSchema(schema, DEFAULT_ENSURE_SCHEMA_POLICY);
   }
@@ -113,14 +113,14 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
 
     try
     {
-      oldSchema.unlock();
+      ((InternalDBSchema)oldSchema).unlock();
 
       DBAdapter adapter = database.getAdapter();
       adapter.updateSchema(connection, oldSchema, delta);
     }
     finally
     {
-      oldSchema.lock();
+      ((InternalDBSchema)oldSchema).lock();
       doClose(delta);
     }
 

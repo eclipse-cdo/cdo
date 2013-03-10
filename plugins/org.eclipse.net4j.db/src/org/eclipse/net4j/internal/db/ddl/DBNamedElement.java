@@ -8,23 +8,22 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.spi.db;
+package org.eclipse.net4j.internal.db.ddl;
 
-import org.eclipse.net4j.db.IDBNamedElement;
+import org.eclipse.net4j.db.ddl.IDBNamedElement;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
+import org.eclipse.net4j.spi.db.ddl.InternalDBNamedElement;
 import org.eclipse.net4j.util.io.IORuntimeException;
 
 import java.io.CharArrayWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.Writer;
 
 /**
- * @author Eike Stepper
  * @since 4.2
- * @noextend This class is not intended to be subclassed by clients.
+ * @author Eike Stepper
  */
-public abstract class DBNamedElement extends DBElement implements IDBNamedElement
+public abstract class DBNamedElement extends DBElement implements InternalDBNamedElement
 {
   private static final long serialVersionUID = 1L;
 
@@ -108,8 +107,6 @@ public abstract class DBNamedElement extends DBElement implements IDBNamedElemen
       throw new IORuntimeException(ex);
     }
   }
-
-  public abstract void dump(Writer writer) throws IOException;
 
   public static String name(String name)
   {

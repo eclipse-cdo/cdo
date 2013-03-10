@@ -11,15 +11,15 @@
 package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBNamedElement;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.DBDatabase;
 import org.eclipse.net4j.internal.db.DBTransaction;
 import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 import org.eclipse.net4j.internal.db.bundle.OM;
+import org.eclipse.net4j.internal.db.ddl.DBNamedElement;
 import org.eclipse.net4j.spi.db.DBAdapter;
-import org.eclipse.net4j.spi.db.DBNamedElement;
-import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
@@ -174,7 +174,7 @@ public final class DBUtil
 
   public static IDBSchema createSchema(String name)
   {
-    return new DBSchema(name);
+    return new org.eclipse.net4j.internal.db.ddl.DBSchema(name);
   }
 
   /**
@@ -182,7 +182,9 @@ public final class DBUtil
    */
   public static IDBSchema readSchema(IDBAdapter adapter, Connection connection, String name)
   {
-    return adapter.readSchema(connection, name);
+    IDBSchema schema = new org.eclipse.net4j.internal.db.ddl.DBSchema(name);
+    readSchema(adapter, connection, schema);
+    return schema;
   }
 
   /**
@@ -198,7 +200,7 @@ public final class DBUtil
    */
   public static IDBSchema copySchema(IDBSchema source)
   {
-    return new DBSchema(source);
+    return new org.eclipse.net4j.internal.db.ddl.DBSchema(source);
   }
 
   public static DataSource createDataSource(Map<Object, Object> properties)

@@ -11,12 +11,12 @@
 package org.eclipse.net4j.internal.db.ddl.delta;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
 import org.eclipse.net4j.db.ddl.delta.IDBFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta;
-import org.eclipse.net4j.internal.db.ddl.DBField;
-import org.eclipse.net4j.internal.db.ddl.DBTable;
 import org.eclipse.net4j.util.ObjectUtil;
 
 import java.text.MessageFormat;
@@ -33,7 +33,7 @@ public final class DBFieldDelta extends DBDeltaWithPosition implements IDBFieldD
     super(parent, name, changeKind);
   }
 
-  public DBFieldDelta(DBDelta parent, DBField field, DBField oldField)
+  public DBFieldDelta(DBDelta parent, IDBField field, IDBField oldField)
   {
     this(parent, getName(field, oldField), getChangeKind(field, oldField));
 
@@ -95,9 +95,9 @@ public final class DBFieldDelta extends DBDeltaWithPosition implements IDBFieldD
     return (DBTableDelta)super.getParent();
   }
 
-  public DBField getSchemaElement(IDBSchema schema)
+  public IDBField getSchemaElement(IDBSchema schema)
   {
-    DBTable table = getParent().getSchemaElement(schema);
+    IDBTable table = getParent().getSchemaElement(schema);
     if (table == null)
     {
       return null;

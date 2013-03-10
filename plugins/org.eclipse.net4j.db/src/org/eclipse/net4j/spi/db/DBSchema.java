@@ -14,50 +14,28 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
-import org.eclipse.net4j.db.IDBRowHandler;
-import org.eclipse.net4j.db.ddl.IDBField;
-import org.eclipse.net4j.db.ddl.IDBIndex;
-import org.eclipse.net4j.db.ddl.IDBIndexField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
-import org.eclipse.net4j.db.ddl.IDBSchemaElement;
-import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.db.ddl.SchemaElementNotFoundException;
-import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
-import org.eclipse.net4j.internal.db.ddl.DBField;
-import org.eclipse.net4j.internal.db.ddl.DBIndex;
-import org.eclipse.net4j.internal.db.ddl.DBTable;
-import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 
 import javax.sql.DataSource;
 
 import java.io.PrintStream;
 import java.sql.Connection;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 /**
- * A useful base class for implementing custom {@link IDBSchema DB schemas}.
- *
  * @author Eike Stepper
+ * @deprecated As of 4.2 call {@link DBUtil#createSchema(String)}, {@link DBUtil#createSchema(DataSource, String, boolean)},
+ *    {@link DBUtil#readSchema(IDBAdapter, Connection, IDBSchema)}, {@link DBUtil#readSchema(IDBAdapter, Connection, String)}
+ *    or {@link DBUtil#copySchema(IDBSchema)}.
  */
-public class DBSchema extends DBSchemaElement implements IDBSchema
+@Deprecated
+public class DBSchema extends org.eclipse.net4j.internal.db.ddl.DBSchema
 {
-  /**
-   * @since 4.2
-   */
-  public static final IDBTable[] NO_TABLES = {};
-
   private static final long serialVersionUID = 1L;
-
-  private static int indexCounter;
-
-  private Map<String, DBTable> tables = new HashMap<String, DBTable>();
-
-  private transient boolean locked;
 
   public DBSchema(String name)
   {
@@ -69,28 +47,7 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
    */
   public DBSchema(IDBSchema source)
   {
-    super(source.getName());
-
-    for (IDBTable sourceTable : source.getTables())
-    {
-      DBTable table = (DBTable)addTable(sourceTable.getName());
-
-      for (IDBField sourceField : sourceTable.getFields())
-      {
-        table.addField(sourceField.getName(), sourceField.getType(), sourceField.getPrecision(),
-            sourceField.getScale(), sourceField.isNotNull());
-      }
-
-      for (IDBIndex sourceIndex : sourceTable.getIndices())
-      {
-        DBIndex index = table.addIndexEmpty(sourceIndex.getName(), sourceIndex.getType());
-        for (IDBField sourceField : sourceIndex.getFields())
-        {
-          DBField field = table.getField(sourceField.getPosition());
-          index.addIndexField(field);
-        }
-      }
-    }
+    super(source);
   }
 
   /**
@@ -102,328 +59,195 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
   {
   }
 
-  /**
-   * @since 4.2
-   */
-  public SchemaElementType getSchemaElementType()
-  {
-    return SchemaElementType.SCHEMA;
-  }
-
+  @Override
   public IDBSchema getSchema()
   {
-    return this;
+    return super.getSchema();
   }
 
-  /**
-   * @since 4.2
-   */
-  public final IDBSchemaElement getParent()
-  {
-    return null;
-  }
-
+  @Override
   public String getFullName()
   {
-    return getName();
+    return super.getFullName();
   }
 
-  /**
-   * @since 4.2
-   */
-  @SuppressWarnings("unchecked")
-  public final <T extends IDBSchemaElement> T findElement(IDBSchemaElement prototype)
-  {
-    SchemaElementType schemaElementType = prototype.getSchemaElementType();
-    switch (schemaElementType)
-    {
-    case SCHEMA:
-      return (T)(prototype.equals(this) ? this : null);
-
-    case TABLE:
-      return (T)getElement(IDBTable.class, prototype.getName());
-
-    case FIELD:
-    {
-      IDBTable table = getElement(IDBTable.class, prototype.getParent().getName());
-      if (table == null)
-      {
-        return null;
-      }
-
-      return (T)table.getElement(IDBField.class, prototype.getName());
-    }
-
-    case INDEX:
-    {
-      IDBTable table = getElement(IDBTable.class, prototype.getParent().getName());
-      if (table == null)
-      {
-        return null;
-      }
-
-      return (T)table.getElement(IDBIndex.class, prototype.getName());
-    }
-
-    case INDEX_FIELD:
-    {
-      IDBTable table = getElement(IDBTable.class, prototype.getParent().getParent().getName());
-      if (table == null)
-      {
-        return null;
-      }
-
-      IDBIndex index = table.getElement(IDBIndex.class, prototype.getParent().getName());
-      if (index == null)
-      {
-        return null;
-      }
-
-      return (T)index.getElement(IDBIndexField.class, prototype.getName());
-    }
-
-    default:
-      throw new IllegalStateException("Illegal schema element type: " + schemaElementType);
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
+  @Override
   public IDBTable addTable(String name) throws DBException
   {
-    assertUnlocked();
-    if (tables.containsKey(name))
-    {
-      throw new DBException("DBTable exists: " + name); //$NON-NLS-1$
-    }
-
-    DBTable table = new DBTable(this, name);
-    tables.put(table.getName(), table);
-    resetElements();
-    return table;
+    return super.addTable(name);
   }
 
-  /**
-   * @since 4.0
-   */
+  @Override
   public IDBTable removeTable(String name)
   {
-    assertUnlocked();
-    name = name(name);
-    DBTable table = tables.remove(name);
-    resetElements();
-    return table;
+    return super.removeTable(name);
   }
 
-  /**
-   * @since 4.2
-   */
-  public final IDBTable getTableSafe(String name) throws SchemaElementNotFoundException
-  {
-    IDBTable table = getTable(name);
-    if (table == null)
-    {
-      throw new SchemaElementNotFoundException(this, SchemaElementType.TABLE, name);
-    }
-  
-    return table;
-  }
-
-  /**
-   * @since 2.0
-   */
+  @Override
   public IDBTable getTable(String name)
   {
-    name = name(name);
-    return tables.get(name);
+    return super.getTable(name);
   }
 
-  /**
-   * @since 2.0
-   */
+  @Override
   public IDBTable[] getTables()
   {
-    return tables.values().toArray(new DBTable[tables.size()]);
+    return super.getTables();
   }
 
-  /**
-   * @since 4.2
-   */
-  public void remove()
-  {
-    assertUnlocked();
-    tables.clear();
-  }
-
+  @Override
   public boolean isLocked()
   {
-    return locked;
+    return super.isLocked();
   }
 
+  @Override
   public boolean lock()
   {
-    return locked = true;
+    return super.lock();
   }
 
-  /**
-   * @since 4.2
-   */
-  public boolean unlock()
-  {
-    return locked = false;
-  }
-
+  @Override
   public void assertUnlocked() throws DBException
   {
-    if (locked)
-    {
-      throw new DBException("Schema locked: " + this); //$NON-NLS-1$
-    }
+    super.assertUnlocked();
   }
 
+  @Override
   public Set<IDBTable> create(IDBAdapter dbAdapter, Connection connection) throws DBException
   {
-    return dbAdapter.createTables(tables.values(), connection);
+    return super.create(dbAdapter, connection);
   }
 
+  @Override
   public Set<IDBTable> create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException
   {
-    return create(dbAdapter, DBUtil.createConnectionProvider(dataSource));
+    return super.create(dbAdapter, dataSource);
   }
 
+  @Override
   public Set<IDBTable> create(IDBAdapter dbAdapter, IDBConnectionProvider connectionProvider) throws DBException
   {
-    Connection connection = null;
-
-    try
-    {
-      connection = connectionProvider.getConnection();
-      if (connection == null)
-      {
-        throw new DBException("No connection available from " + connectionProvider); //$NON-NLS-1$
-      }
-
-      return create(dbAdapter, connection);
-    }
-    finally
-    {
-      DBUtil.close(connection);
-    }
+    return super.create(dbAdapter, connectionProvider);
   }
 
+  @Override
   public void drop(IDBAdapter dbAdapter, Connection connection) throws DBException
   {
-    dbAdapter.dropTables(tables.values(), connection);
+    super.drop(dbAdapter, connection);
   }
 
+  @Override
   public void drop(IDBAdapter dbAdapter, DataSource dataSource) throws DBException
   {
-    drop(dbAdapter, DBUtil.createConnectionProvider(dataSource));
+    super.drop(dbAdapter, dataSource);
   }
 
+  @Override
   public void drop(IDBAdapter dbAdapter, IDBConnectionProvider connectionProvider) throws DBException
   {
-    Connection connection = null;
-
-    try
-    {
-      connection = connectionProvider.getConnection();
-      drop(dbAdapter, connection);
-    }
-    finally
-    {
-      DBUtil.close(connection);
-    }
+    super.drop(dbAdapter, connectionProvider);
   }
 
+  @Override
   public void export(Connection connection, PrintStream out) throws DBException
   {
-    for (IDBTable table : getTables())
-    {
-      export(table, connection, out);
-    }
+    super.export(connection, out);
   }
 
-  private void export(final IDBTable table, Connection connection, final PrintStream out)
-  {
-    if (DBUtil.select(connection, new IDBRowHandler()
-    {
-      public boolean handle(int row, Object... values)
-      {
-        if (row == 0)
-        {
-          String tableName = table.getName();
-          out.println(tableName);
-          for (int i = 0; i < tableName.length(); i++)
-          {
-            out.print("="); //$NON-NLS-1$
-          }
-
-          out.println();
-        }
-
-        out.println(Arrays.asList(values));
-        return true;
-      }
-    }, table.getFields()) > 0)
-
-    {
-      out.println();
-    }
-  }
-
+  @Override
   public void export(DataSource dataSource, PrintStream out) throws DBException
   {
-    export(DBUtil.createConnectionProvider(dataSource), out);
+    super.export(dataSource, out);
   }
 
+  @Override
   public void export(IDBConnectionProvider connectionProvider, PrintStream out) throws DBException
   {
-    Connection connection = null;
-
-    try
-    {
-      connection = connectionProvider.getConnection();
-      export(connection, out);
-    }
-    finally
-    {
-      DBUtil.close(connection);
-    }
+    super.export(connectionProvider, out);
   }
 
-  /**
-   * @since 4.2
-   */
-  public IDBSchemaDelta compare(IDBSchema oldSchema)
-  {
-    return new DBSchemaDelta(this, oldSchema);
-  }
-
-  /**
-   * @since 4.2
-   */
-  public String createIndexName(IDBTable table, IDBIndex.Type type, IDBField[] fields, int position)
-  {
-    return "I" + System.currentTimeMillis() + "_" + ++indexCounter;
-  }
-
-  /**
-   * @since 4.2
-   */
   @Override
-  protected void collectElements(List<IDBSchemaElement> elements)
+  public String getName()
   {
-    elements.addAll(tables.values());
+    return super.getName();
   }
 
-  /**
-   * @since 4.2
-   */
   @Override
-  protected void doAccept(IDBSchemaVisitor visitor)
+  public String toString()
   {
-    visitor.visit(this);
+    return super.toString();
+  }
+
+  @Override
+  public void addListener(IListener listener)
+  {
+    super.addListener(listener);
+  }
+
+  @Override
+  public void removeListener(IListener listener)
+  {
+    super.removeListener(listener);
+  }
+
+  @Override
+  public boolean hasListeners()
+  {
+    return super.hasListeners();
+  }
+
+  @Override
+  public IListener[] getListeners()
+  {
+    return super.getListeners();
+  }
+
+  @Override
+  public void fireEvent()
+  {
+    super.fireEvent();
+  }
+
+  @Override
+  public void fireEvent(IEvent event)
+  {
+    super.fireEvent(event);
+  }
+
+  @Override
+  public void fireEvent(IEvent event, IListener[] listeners)
+  {
+    super.fireEvent(event, listeners);
+  }
+
+  @Override
+  protected void fireThrowable(Throwable throwable)
+  {
+    super.fireThrowable(throwable);
+  }
+
+  @Override
+  protected ExecutorService getNotificationService()
+  {
+    return super.getNotificationService();
+  }
+
+  @Override
+  protected void firstListenerAdded()
+  {
+    super.firstListenerAdded();
+  }
+
+  @Override
+  protected void lastListenerRemoved()
+  {
+    super.lastListenerRemoved();
+  }
+
+  @Override
+  protected void finalize() throws Throwable
+  {
+    super.finalize();
   }
 }

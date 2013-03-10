@@ -11,11 +11,13 @@
 package org.eclipse.net4j.internal.db.ddl;
 
 import org.eclipse.net4j.db.DBType;
-import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
-import org.eclipse.net4j.spi.db.DBSchemaElement;
+import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.spi.db.ddl.InternalDBField;
+import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
+import org.eclipse.net4j.spi.db.ddl.InternalDBTable;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -24,7 +26,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class DBField extends DBSchemaElement implements IDBField
+public class DBField extends DBSchemaElement implements InternalDBField
 {
   public static final int DEFAULT_BOOLEAN_PRECISION = 1;
 
@@ -51,7 +53,7 @@ public class DBField extends DBSchemaElement implements IDBField
 
   private static final long serialVersionUID = 1L;
 
-  private DBTable table;
+  private IDBTable table;
 
   private DBType type;
 
@@ -64,11 +66,11 @@ public class DBField extends DBSchemaElement implements IDBField
   private int position;
 
   /**
-   * Tracks the construction stack trace to provide better debug infos in DBTable.addIndex().
+   * Tracks the construction stack trace to provide better debug infos in IDBTable.addIndex().
    */
   private transient Exception constructionStackTrace;
 
-  public DBField(DBTable table, String name, DBType type, int precision, int scale, boolean notNull, int position)
+  public DBField(IDBTable table, String name, DBType type, int precision, int scale, boolean notNull, int position)
   {
     super(name);
     this.table = table;
@@ -108,12 +110,12 @@ public class DBField extends DBSchemaElement implements IDBField
     return table.getSchema();
   }
 
-  public DBTable getTable()
+  public IDBTable getTable()
   {
     return table;
   }
 
-  public DBTable getParent()
+  public IDBTable getParent()
   {
     return getTable();
   }
@@ -211,7 +213,7 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public void remove()
   {
-    table.removeField(this);
+    ((InternalDBTable)table).removeField(this);
   }
 
   public String formatPrecision()
@@ -267,7 +269,7 @@ public class DBField extends DBSchemaElement implements IDBField
 
   private void assertUnlocked()
   {
-    table.getSchema().assertUnlocked();
+    ((InternalDBSchema)table.getSchema()).assertUnlocked();
   }
 
   public static void trackConstruction(boolean on)

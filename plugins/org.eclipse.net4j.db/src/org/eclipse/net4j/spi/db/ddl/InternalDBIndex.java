@@ -8,15 +8,20 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.db;
+package org.eclipse.net4j.spi.db.ddl;
+
+import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBIndexField;
 
 /**
- * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
- * @noextend This interface is not intended to be extended by clients.
  * @since 4.2
+ * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBNamedElement extends IDBElement
+public interface InternalDBIndex extends IDBIndex, InternalDBSchemaElement
 {
-  public String getName();
+  public static final IDBIndexField[] NO_INDEX_FIELDS = {};
+
+  public void removeIndexField(IDBIndexField indexFieldToRemove);
 }

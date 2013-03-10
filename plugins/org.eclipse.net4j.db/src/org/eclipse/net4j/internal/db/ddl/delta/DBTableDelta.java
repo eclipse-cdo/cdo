@@ -13,14 +13,13 @@ package org.eclipse.net4j.internal.db.ddl.delta;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.delta.IDBDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
 import org.eclipse.net4j.db.ddl.delta.IDBFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
-import org.eclipse.net4j.internal.db.ddl.DBField;
-import org.eclipse.net4j.internal.db.ddl.DBIndex;
-import org.eclipse.net4j.internal.db.ddl.DBTable;
+import org.eclipse.net4j.spi.db.ddl.InternalDBTable;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -45,17 +44,17 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
     super(parent, name, changeKind);
   }
 
-  public DBTableDelta(DBSchemaDelta parent, DBTable table, DBTable oldTable)
+  public DBTableDelta(DBSchemaDelta parent, IDBTable table, IDBTable oldTable)
   {
     this(parent, getName(table, oldTable), getChangeKind(table, oldTable));
 
-    IDBField[] fields = table == null ? DBTable.NO_FIELDS : table.getFields();
-    IDBField[] oldFields = oldTable == null ? DBTable.NO_FIELDS : oldTable.getFields();
+    IDBField[] fields = table == null ? InternalDBTable.NO_FIELDS : table.getFields();
+    IDBField[] oldFields = oldTable == null ? InternalDBTable.NO_FIELDS : oldTable.getFields();
     compare(fields, oldFields, new SchemaElementComparator<IDBField>()
     {
       public void compare(IDBField field, IDBField oldField)
       {
-        DBFieldDelta fieldDelta = new DBFieldDelta(DBTableDelta.this, (DBField)field, (DBField)oldField);
+        DBFieldDelta fieldDelta = new DBFieldDelta(DBTableDelta.this, field, oldField);
         if (!fieldDelta.isEmpty())
         {
           addFieldDelta(fieldDelta);
@@ -63,13 +62,13 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
       }
     });
 
-    IDBIndex[] indices = table == null ? DBTable.NO_INDICES : table.getIndices();
-    IDBIndex[] oldIndices = oldTable == null ? DBTable.NO_INDICES : oldTable.getIndices();
+    IDBIndex[] indices = table == null ? InternalDBTable.NO_INDICES : table.getIndices();
+    IDBIndex[] oldIndices = oldTable == null ? InternalDBTable.NO_INDICES : oldTable.getIndices();
     compare(indices, oldIndices, new SchemaElementComparator<IDBIndex>()
     {
       public void compare(IDBIndex index, IDBIndex oldIndex)
       {
-        DBIndexDelta indexDelta = new DBIndexDelta(DBTableDelta.this, (DBIndex)index, (DBIndex)oldIndex);
+        DBIndexDelta indexDelta = new DBIndexDelta(DBTableDelta.this, index, oldIndex);
         if (!indexDelta.isEmpty())
         {
           addIndexDelta(indexDelta);
@@ -153,9 +152,9 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
     return result;
   }
 
-  public DBTable getSchemaElement(IDBSchema schema)
+  public IDBTable getSchemaElement(IDBSchema schema)
   {
-    return (DBTable)schema.getTable(getName());
+    return schema.getTable(getName());
   }
 
   @Override

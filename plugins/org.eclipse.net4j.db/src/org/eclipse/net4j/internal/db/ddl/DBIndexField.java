@@ -10,28 +10,31 @@
  */
 package org.eclipse.net4j.internal.db.ddl;
 
-import org.eclipse.net4j.db.ddl.IDBIndexField;
+import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
-import org.eclipse.net4j.spi.db.DBSchemaElement;
+import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
+import org.eclipse.net4j.spi.db.ddl.InternalDBIndexField;
+import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 
 import java.util.List;
 
 /**
  * @author Eike Stepper
  */
-public class DBIndexField extends DBSchemaElement implements IDBIndexField
+public class DBIndexField extends DBSchemaElement implements InternalDBIndexField
 {
   private static final long serialVersionUID = 1L;
 
-  private DBIndex index;
+  private IDBIndex index;
 
-  private DBField field;
+  private IDBField field;
 
   private int position;
 
-  public DBIndexField(DBIndex index, DBField field, int position)
+  public DBIndexField(IDBIndex index, IDBField field, int position)
   {
     super(field.getName());
     this.index = index;
@@ -51,17 +54,17 @@ public class DBIndexField extends DBSchemaElement implements IDBIndexField
     return SchemaElementType.INDEX_FIELD;
   }
 
-  public DBIndex getIndex()
+  public IDBIndex getIndex()
   {
     return index;
   }
 
-  public DBIndex getParent()
+  public IDBIndex getParent()
   {
     return getIndex();
   }
 
-  public DBField getField()
+  public IDBField getField()
   {
     return field;
   }
@@ -89,7 +92,7 @@ public class DBIndexField extends DBSchemaElement implements IDBIndexField
 
   public void remove()
   {
-    index.removeIndexField(this);
+    ((InternalDBIndex)index).removeIndexField(this);
   }
 
   @Override
@@ -106,6 +109,6 @@ public class DBIndexField extends DBSchemaElement implements IDBIndexField
 
   private void assertUnlocked()
   {
-    index.getTable().getSchema().assertUnlocked();
+    ((InternalDBSchema)index.getTable().getSchema()).assertUnlocked();
   }
 }

@@ -21,7 +21,7 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
 import org.eclipse.net4j.spi.db.DBAdapter;
-import org.eclipse.net4j.spi.db.DBSchema;
+import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.SetContainer;
 import org.eclipse.net4j.util.event.Event;
@@ -43,7 +43,7 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
 
   private int statementCacheCapacity = DEFAULT_STATEMENT_CACHE_CAPACITY;
 
-  private DBSchema schema;
+  private IDBSchema schema;
 
   private DBSchemaTransaction schemaTransaction;
 
@@ -55,15 +55,15 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
     this.adapter = adapter;
     this.connectionProvider = connectionProvider;
 
-    schema = DBUtil.execute(connectionProvider, new RunnableWithConnection<DBSchema>()
+    schema = DBUtil.execute(connectionProvider, new RunnableWithConnection<IDBSchema>()
     {
-      public DBSchema run(Connection connection) throws SQLException
+      public IDBSchema run(Connection connection) throws SQLException
       {
-        return (DBSchema)adapter.readSchema(connection, schemaName);
+        return adapter.readSchema(connection, schemaName);
       }
     });
 
-    schema.lock();
+    ((InternalDBSchema)schema).lock();
     activate();
   }
 
@@ -77,7 +77,7 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
     return connectionProvider;
   }
 
-  public DBSchema getSchema()
+  public IDBSchema getSchema()
   {
     return schema;
   }
@@ -118,7 +118,7 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
   {
     if (schemaTransaction != null)
     {
-      DBSchema workingCopy = schemaTransaction.getWorkingCopy();
+      IDBSchema workingCopy = schemaTransaction.getWorkingCopy();
       updateRunnable.run(workingCopy);
 
       if (commitRunnable != null)
@@ -155,7 +155,7 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
 
       try
       {
-        DBSchema workingCopy = schemaTransaction.getWorkingCopy();
+        IDBSchema workingCopy = schemaTransaction.getWorkingCopy();
         P parentCopy = workingCopy.findElement(parent);
 
         T elementCopy = runnable.run(parentCopy, name);

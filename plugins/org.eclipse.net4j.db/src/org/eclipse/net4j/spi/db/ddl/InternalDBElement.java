@@ -4,13 +4,21 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
+package org.eclipse.net4j.spi.db.ddl;
+
+import org.eclipse.net4j.db.ddl.IDBElement;
 
 /**
- * Server service provider interfaces and useful base implementations for the Net4j DB framework.
+ * @since 4.2
+ * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
-package org.eclipse.net4j.spi.db;
+public interface InternalDBElement extends IDBElement
+{
 
+}

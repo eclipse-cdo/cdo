@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.net4j.db" version="2">
+    <resource path="src/org/eclipse/net4j/spi/db/DBSchema.java" type="org.eclipse.net4j.spi.db.DBSchema">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="DBSchema"/>
+                <message_argument value="DBSchema"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

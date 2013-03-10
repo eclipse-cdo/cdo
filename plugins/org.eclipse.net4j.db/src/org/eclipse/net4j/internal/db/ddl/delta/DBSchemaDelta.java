@@ -23,8 +23,7 @@ import org.eclipse.net4j.db.ddl.delta.IDBIndexDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
-import org.eclipse.net4j.internal.db.ddl.DBTable;
-import org.eclipse.net4j.spi.db.DBSchema;
+import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -47,17 +46,17 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
     super(null, name, changeKind);
   }
 
-  public DBSchemaDelta(DBSchema schema, IDBSchema oldSchema)
+  public DBSchemaDelta(IDBSchema schema, IDBSchema oldSchema)
   {
     this(schema.getName(), oldSchema == null ? ChangeKind.ADD : ChangeKind.CHANGE);
 
     IDBTable[] tables = schema.getTables();
-    IDBTable[] oldTables = oldSchema == null ? DBSchema.NO_TABLES : oldSchema.getTables();
+    IDBTable[] oldTables = oldSchema == null ? InternalDBSchema.NO_TABLES : oldSchema.getTables();
     compare(tables, oldTables, new SchemaElementComparator<IDBTable>()
     {
       public void compare(IDBTable table, IDBTable oldTable)
       {
-        DBTableDelta tableDelta = new DBTableDelta(DBSchemaDelta.this, (DBTable)table, (DBTable)oldTable);
+        DBTableDelta tableDelta = new DBTableDelta(DBSchemaDelta.this, table, oldTable);
         if (!tableDelta.isEmpty())
         {
           addTableDelta(tableDelta);
@@ -106,9 +105,9 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
     resetElements();
   }
 
-  public DBSchema getSchemaElement(IDBSchema schema)
+  public IDBSchema getSchemaElement(IDBSchema schema)
   {
-    return (DBSchema)schema;
+    return schema;
   }
 
   public void applyTo(IDBSchema schema)

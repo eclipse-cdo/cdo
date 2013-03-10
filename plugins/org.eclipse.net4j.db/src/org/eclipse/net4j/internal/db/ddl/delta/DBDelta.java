@@ -14,8 +14,8 @@ import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.delta.IDBDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
 import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.StopRecursion;
-import org.eclipse.net4j.spi.db.DBNamedElement;
-import org.eclipse.net4j.spi.db.DBSchemaElement;
+import org.eclipse.net4j.internal.db.ddl.DBNamedElement;
+import org.eclipse.net4j.internal.db.ddl.DBSchemaElement;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.PositionProvider;
 
@@ -134,7 +134,6 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
 
   protected abstract void collectElements(List<IDBDelta> elements);
 
-  @Override
   public void dump(Writer writer) throws IOException
   {
     int level = getLevel();

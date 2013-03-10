@@ -8,7 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.db.ddl.delta;
+package org.eclipse.net4j.spi.db.ddl;
+
+import org.eclipse.net4j.db.ddl.IDBField;
 
 /**
  * @since 4.2
@@ -16,19 +18,9 @@ package org.eclipse.net4j.db.ddl.delta;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBPropertyDelta<T> extends IDBDelta
+public interface InternalDBField extends IDBField, InternalDBSchemaElement
 {
-  public IDBPropertyDelta.Type getType();
+  public void setPosition(int position);
 
-  public T getValue();
-
-  public T getOldValue();
-
-  /**
-   * @author Eike Stepper
-   */
-  public enum Type
-  {
-    BOOLEAN, INTEGER, STRING, FIELD_TYPE, INDEX_TYPE
-  }
+  public Exception getConstructionStackTrace();
 }

@@ -10,7 +10,6 @@
  */
 package org.eclipse.net4j.db.ddl;
 
-import org.eclipse.net4j.db.IDBNamedElement;
 import org.eclipse.net4j.util.container.IContainer;
 
 import java.io.Serializable;

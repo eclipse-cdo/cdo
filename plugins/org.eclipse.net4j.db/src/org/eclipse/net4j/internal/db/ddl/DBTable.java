@@ -17,6 +17,7 @@ import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.SchemaElementNotFoundException;
 import org.eclipse.net4j.spi.db.ddl.InternalDBField;
 import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
@@ -50,6 +51,12 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
    */
   protected DBTable()
   {
+  }
+
+  @Override
+  public IDBTable getWrapper()
+  {
+    return (IDBTable)super.getWrapper();
   }
 
   public SchemaElementType getSchemaElementType()

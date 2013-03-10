@@ -30,7 +30,7 @@ public class Table
   public Table(Index index, String name)
   {
     this.index = index;
-    table = index.addTable(name);
+    table = index.getSchema().addTable(name);
   }
 
   public Index getIndex()

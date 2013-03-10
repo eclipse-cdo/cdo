@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.db.ddl;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
@@ -98,6 +99,12 @@ public class DBField extends DBSchemaElement implements InternalDBField
    */
   protected DBField()
   {
+  }
+
+  @Override
+  public IDBField getWrapper()
+  {
+    return (IDBField)super.getWrapper();
   }
 
   public SchemaElementType getSchemaElementType()

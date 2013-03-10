@@ -93,6 +93,12 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   {
   }
 
+  @Override
+  public IDBSchema getWrapper()
+  {
+    return (IDBSchema)super.getWrapper();
+  }
+
   /**
    * @since 4.2
    */

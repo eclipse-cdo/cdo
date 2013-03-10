@@ -20,6 +20,8 @@ import org.eclipse.net4j.db.ddl.IDBField;
  */
 public interface InternalDBField extends IDBField, InternalDBSchemaElement
 {
+  public IDBField getWrapper();
+
   public void setPosition(int position);
 
   public Exception getConstructionStackTrace();

@@ -12,8 +12,6 @@ package org.eclipse.net4j.db.ddl;
 
 import org.eclipse.net4j.util.container.IContainer;
 
-import java.io.Serializable;
-
 /**
  * Specifies a hierachical namespace for elements in a {@link IDBSchema DB schema}.
  *
@@ -21,8 +19,7 @@ import java.io.Serializable;
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface IDBSchemaElement extends IDBNamedElement, IContainer<IDBSchemaElement>, Comparable<IDBSchemaElement>,
-    Serializable
+public interface IDBSchemaElement extends IDBNamedElement, IContainer<IDBSchemaElement>, Comparable<IDBSchemaElement>
 {
   /**
    * @since 4.2

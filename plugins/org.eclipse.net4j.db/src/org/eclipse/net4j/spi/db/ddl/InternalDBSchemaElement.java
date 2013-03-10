@@ -20,4 +20,7 @@ import org.eclipse.net4j.db.ddl.IDBSchemaElement;
  */
 public interface InternalDBSchemaElement extends IDBSchemaElement, InternalDBNamedElement
 {
+  public IDBSchemaElement getWrapper();
+
+  public void setWrapper(IDBSchemaElement wrapper);
 }

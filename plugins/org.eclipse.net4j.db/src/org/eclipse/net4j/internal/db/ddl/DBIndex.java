@@ -64,6 +64,12 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
   {
   }
 
+  @Override
+  public IDBIndex getWrapper()
+  {
+    return (IDBIndex)super.getWrapper();
+  }
+
   public SchemaElementType getSchemaElementType()
   {
     return SchemaElementType.INDEX;

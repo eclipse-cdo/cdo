@@ -35,6 +35,8 @@ public abstract class DBSchemaElement extends DBNamedElement implements Internal
 
   private transient IDBSchemaElement[] elements;
 
+  private transient IDBSchemaElement wrapper;
+
   public DBSchemaElement(String name)
   {
     super(name);
@@ -45,6 +47,33 @@ public abstract class DBSchemaElement extends DBNamedElement implements Internal
    */
   protected DBSchemaElement()
   {
+  }
+
+  public IDBSchemaElement getWrapper()
+  {
+    return wrapper;
+  }
+
+  public final void setWrapper(IDBSchemaElement wrapper)
+  {
+    this.wrapper = wrapper;
+  }
+
+  @Override
+  public final boolean equals(Object obj)
+  {
+    if (super.equals(obj))
+    {
+      return getSchemaElementType() == ((IDBSchemaElement)obj).getSchemaElementType();
+    }
+
+    return false;
+  }
+
+  @Override
+  public final int hashCode()
+  {
+    return super.hashCode() ^ getSchemaElementType().hashCode();
   }
 
   public final int compareTo(IDBSchemaElement element2)

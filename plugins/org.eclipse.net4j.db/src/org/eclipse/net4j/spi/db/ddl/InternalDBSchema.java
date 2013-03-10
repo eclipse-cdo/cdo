@@ -26,6 +26,8 @@ public interface InternalDBSchema extends IDBSchema, InternalDBSchemaElement
 {
   public static final IDBTable[] NO_TABLES = {};
 
+  public IDBSchema getWrapper();
+
   public IDBTable addTable(String name);
 
   public IDBTable removeTable(String name);

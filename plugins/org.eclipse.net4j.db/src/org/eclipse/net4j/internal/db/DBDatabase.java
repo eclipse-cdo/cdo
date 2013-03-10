@@ -16,8 +16,6 @@ import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBTransaction;
 import org.eclipse.net4j.db.ddl.IDBSchema;
-import org.eclipse.net4j.db.ddl.IDBSchemaElement;
-import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
 import org.eclipse.net4j.spi.db.DBAdapter;
@@ -25,8 +23,6 @@ import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.SetContainer;
 import org.eclipse.net4j.util.event.Event;
-import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -114,78 +110,20 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
     return schemaTransaction;
   }
 
-  public void ensureSchemaElement(RunnableWithSchema updateRunnable, final RunnableWithSchema commitRunnable)
+  public void updateSchema(RunnableWithSchema runnable)
   {
-    if (schemaTransaction != null)
+    DBSchemaTransaction schemaTransaction = openSchemaTransaction();
+
+    try
     {
       IDBSchema workingCopy = schemaTransaction.getWorkingCopy();
-      updateRunnable.run(workingCopy);
-
-      if (commitRunnable != null)
-      {
-        addListener(new IListener()
-        {
-          public void notifyEvent(IEvent event)
-          {
-            if (event instanceof SchemaChangedEvent)
-            {
-              commitRunnable.run(schema);
-              removeListener(this);
-            }
-          }
-        });
-      }
+      runnable.run(workingCopy);
+      schemaTransaction.commit();
     }
-    else
+    finally
     {
-      if (commitRunnable != null)
-      {
-        commitRunnable.run(schema);
-      }
+      schemaTransaction.close();
     }
-  }
-
-  public <T extends IDBSchemaElement, P extends IDBSchemaElement> T ensureSchemaElement(P parent, Class<T> type,
-      String name, RunnableWithSchemaElement<T, P> runnable)
-  {
-    T element = parent.getElement(type, name);
-    if (element == null)
-    {
-      DBSchemaTransaction schemaTransaction = openSchemaTransaction();
-
-      try
-      {
-        IDBSchema workingCopy = schemaTransaction.getWorkingCopy();
-        P parentCopy = workingCopy.findElement(parent);
-
-        T elementCopy = runnable.run(parentCopy, name);
-
-        schemaTransaction.commit();
-        if (elementCopy != null)
-        {
-          element = parent.getSchema().findElement(elementCopy);
-        }
-      }
-      finally
-      {
-        schemaTransaction.close();
-      }
-    }
-
-    return element;
-  }
-
-  public IDBTable ensureTable(String name, final RunnableWithTable runnable)
-  {
-    return ensureSchemaElement(schema, IDBTable.class, name, new RunnableWithSchemaElement<IDBTable, IDBSchema>()
-    {
-      public IDBTable run(IDBSchema parent, String name)
-      {
-        IDBTable table = parent.addTable(name);
-        runnable.run(table);
-        return table;
-      }
-    });
   }
 
   public DBTransaction openTransaction()

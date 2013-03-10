@@ -15,15 +15,13 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.util.container.IContainer;
 
-import java.io.Serializable;
-
 /**
  * @since 4.2
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBDelta extends IDBNamedElement, IContainer<IDBDelta>, Comparable<IDBDelta>, Serializable
+public interface IDBDelta extends IDBNamedElement, IContainer<IDBDelta>, Comparable<IDBDelta>
 {
   public DeltaType getDeltaType();
 

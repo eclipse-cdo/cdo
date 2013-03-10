@@ -52,7 +52,7 @@ public abstract class DBNamedElement extends DBElement implements InternalDBName
   }
 
   @Override
-  public final boolean equals(Object obj)
+  public boolean equals(Object obj)
   {
     if (obj == this)
     {
@@ -69,7 +69,7 @@ public abstract class DBNamedElement extends DBElement implements InternalDBName
   }
 
   @Override
-  public final int hashCode()
+  public int hashCode()
   {
     return name.hashCode();
   }

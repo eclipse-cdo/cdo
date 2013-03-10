@@ -26,6 +26,8 @@ public interface InternalDBTable extends IDBTable, InternalDBSchemaElement
 
   public static final IDBIndex[] NO_INDICES = {};
 
+  public IDBTable getWrapper();
+
   public void removeField(IDBField fieldToRemove);
 
   public void removeIndex(IDBIndex indexToRemove);

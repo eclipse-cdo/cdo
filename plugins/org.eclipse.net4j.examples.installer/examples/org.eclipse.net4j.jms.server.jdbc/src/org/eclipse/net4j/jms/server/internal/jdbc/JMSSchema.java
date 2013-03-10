@@ -11,19 +11,19 @@
 package org.eclipse.net4j.jms.server.internal.jdbc;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.spi.db.DBSchema;
+import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 
 /**
  * @author Eike Stepper
  */
-public class JMSSchema extends DBSchema
+public class JMSSchema
 {
-  public static final JMSSchema INSTANCE = new JMSSchema();
-
-  private static final long serialVersionUID = 1L;
+  public static final IDBSchema INSTANCE = DBUtil.createSchema("JMS");
 
   /**
    * DBTable Destinations
@@ -63,13 +63,8 @@ public class JMSSchema extends DBSchema
       + " FROM " + DESTINATIONS + ", " + MESSAGES + " WHERE " + DESTINATIONS_NAME + "=" + MESSAGES_DESTINATION //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
       + " AND " + DESTINATIONS_NAME + "=?"; //$NON-NLS-1$ //$NON-NLS-2$
 
-  private JMSSchema()
-  {
-    super("JMS"); //$NON-NLS-1$
-  }
-
   static
   {
-    INSTANCE.lock();
+    ((InternalDBSchema)INSTANCE).lock();
   }
 }

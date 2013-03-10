@@ -12,19 +12,19 @@
 package org.eclipse.emf.cdo.common.internal.db.cache;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.spi.db.DBSchema;
+import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 
 /**
  * @author Andre Dietisheim
  */
-public class DBRevisionCacheSchema extends DBSchema
+public class DBRevisionCacheSchema
 {
-  public static final DBRevisionCacheSchema INSTANCE = new DBRevisionCacheSchema();
-
-  private static final long serialVersionUID = 1L;
+  public static final IDBSchema INSTANCE = DBUtil.createSchema("DBRevisionCache");
 
   /**
    * DBTable dbrevisioncache_revisions.
@@ -69,13 +69,8 @@ public class DBRevisionCacheSchema extends DBSchema
   public static final IDBIndex INDEX_REVISIONS_CONTAINERID = //
   REVISIONS.addIndex(IDBIndex.Type.NON_UNIQUE, REVISIONS_CONTAINERID);
 
-  private DBRevisionCacheSchema()
-  {
-    super("DBRevisionCache");
-  }
-
   static
   {
-    INSTANCE.lock();
+    ((InternalDBSchema)INSTANCE).lock();
   }
 }

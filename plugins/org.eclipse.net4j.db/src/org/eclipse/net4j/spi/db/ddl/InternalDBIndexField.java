@@ -20,5 +20,7 @@ import org.eclipse.net4j.db.ddl.IDBIndexField;
  */
 public interface InternalDBIndexField extends IDBIndexField, InternalDBSchemaElement
 {
+  public IDBIndexField getWrapper();
+
   public void setPosition(int position);
 }

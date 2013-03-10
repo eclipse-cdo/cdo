@@ -23,5 +23,7 @@ public interface InternalDBIndex extends IDBIndex, InternalDBSchemaElement
 {
   public static final IDBIndexField[] NO_INDEX_FIELDS = {};
 
+  public IDBIndex getWrapper();
+
   public void removeIndexField(IDBIndexField indexFieldToRemove);
 }

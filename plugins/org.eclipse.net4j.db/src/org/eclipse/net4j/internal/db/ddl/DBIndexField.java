@@ -12,6 +12,7 @@ package org.eclipse.net4j.internal.db.ddl;
 
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBIndexField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
@@ -47,6 +48,12 @@ public class DBIndexField extends DBSchemaElement implements InternalDBIndexFiel
    */
   protected DBIndexField()
   {
+  }
+
+  @Override
+  public IDBIndexField getWrapper()
+  {
+    return (IDBIndexField)super.getWrapper();
   }
 
   public SchemaElementType getSchemaElementType()

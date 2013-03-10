@@ -11,19 +11,19 @@
 package org.eclipse.net4j.db.tests;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.spi.db.DBSchema;
+import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 
 /**
  * @author Eike Stepper
  */
-public class TestSchema extends DBSchema
+public class TestSchema
 {
-  public static final TestSchema INSTANCE = new TestSchema();
-
-  private static final long serialVersionUID = 1L;
+  public static final IDBSchema INSTANCE = DBUtil.createSchema("CDO");
 
   /**
    * DBTable cdo_repository
@@ -195,13 +195,8 @@ public class TestSchema extends DBSchema
 
   public static final String REFERENCES_TARGET = "cdo_target";
 
-  private TestSchema()
-  {
-    super("CDO");
-  }
-
   static
   {
-    INSTANCE.lock();
+    ((InternalDBSchema)INSTANCE).lock();
   }
 }

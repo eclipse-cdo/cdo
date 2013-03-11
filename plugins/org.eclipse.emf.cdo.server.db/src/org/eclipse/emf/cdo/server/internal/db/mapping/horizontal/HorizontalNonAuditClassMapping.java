@@ -41,6 +41,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.util.ImplementationError;
@@ -52,7 +53,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -192,7 +192,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   protected void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH);
 
     try
     {
@@ -252,17 +252,17 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
   }
 
-  public PreparedStatement createObjectIDStatement(IDBStoreAccessor accessor)
+  public IDBPreparedStatement createObjectIDStatement(IDBStoreAccessor accessor)
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Created ObjectID Statement : {0}", sqlSelectAllObjectIDs); //$NON-NLS-1$
     }
 
-    return accessor.getDBTransaction().prepareStatement(sqlSelectAllObjectIDs, ReuseProbability.HIGH);
+    return accessor.getDBConnection().prepareStatement(sqlSelectAllObjectIDs, ReuseProbability.HIGH);
   }
 
-  public PreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name,
+  public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name,
       boolean exactMatch, CDOBranchPoint branchPoint)
   {
     long timeStamp = branchPoint.getTimeStamp();
@@ -300,7 +300,8 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(builder.toString(), ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = accessor.getDBConnection()
+        .prepareStatement(builder.toString(), ReuseProbability.MEDIUM);
 
     try
     {
@@ -336,7 +337,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlSelectCurrentAttributes,
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectCurrentAttributes,
         ReuseProbability.HIGH);
 
     try
@@ -379,7 +380,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       OMMonitor monitor)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlDelete, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDelete, ReuseProbability.HIGH);
 
     try
     {
@@ -564,7 +565,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     private void updateAttributes()
     {
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(buildUpdateStatement(),
+      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(buildUpdateStatement(),
           ReuseProbability.MEDIUM);
 
       try
@@ -631,7 +632,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       return builder.toString();
     }
 
-    private int setUpdateAttributeValues(List<Pair<ITypeMapping, Object>> attributeChanges, PreparedStatement stmt,
+    private int setUpdateAttributeValues(List<Pair<ITypeMapping, Object>> attributeChanges, IDBPreparedStatement stmt,
         int col) throws SQLException
     {
       for (Pair<ITypeMapping, Object> change : attributeChanges)
@@ -664,7 +665,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
 
     private int setUpdateListSizeChanges(List<Pair<EStructuralFeature, Integer>> attributeChanges,
-        PreparedStatement stmt, int col) throws SQLException
+        IDBPreparedStatement stmt, int col) throws SQLException
     {
       for (Pair<EStructuralFeature, Integer> change : listSizeChanges)
       {

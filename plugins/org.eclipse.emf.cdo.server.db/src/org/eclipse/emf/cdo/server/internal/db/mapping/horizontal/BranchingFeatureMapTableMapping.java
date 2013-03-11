@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 
 import org.eclipse.emf.ecore.EClass;
@@ -87,7 +88,7 @@ public class BranchingFeatureMapTableMapping extends AbstractFeatureMapTableMapp
   @Override
   public void rawDeleted(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version)
   {
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlClear, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlClear, ReuseProbability.HIGH);
 
     try
     {

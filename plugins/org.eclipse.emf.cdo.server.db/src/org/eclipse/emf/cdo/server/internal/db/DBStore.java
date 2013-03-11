@@ -42,8 +42,11 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBPreparedStatement;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
@@ -53,7 +56,6 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -291,24 +293,23 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
   public Map<String, String> getPersistentProperties(Set<String> names)
   {
-    Connection connection = null;
-    PreparedStatement selectStmt = null;
+    IDBConnection connection = database.getConnection();
+    IDBPreparedStatement stmt = null;
     String sql = null;
 
     try
     {
-      connection = getConnection();
       Map<String, String> result = new HashMap<String, String>();
       boolean allProperties = names == null || names.isEmpty();
       if (allProperties)
       {
         sql = CDODBSchema.SQL_SELECT_ALL_PROPERTIES;
-        selectStmt = connection.prepareStatement(sql);
+        stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
         ResultSet resultSet = null;
 
         try
         {
-          resultSet = selectStmt.executeQuery();
+          resultSet = stmt.executeQuery();
           while (resultSet.next())
           {
             String key = resultSet.getString(1);
@@ -324,15 +325,15 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
       else
       {
         sql = CDODBSchema.SQL_SELECT_PROPERTIES;
-        selectStmt = connection.prepareStatement(sql);
+        stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
         for (String name : names)
         {
-          selectStmt.setString(1, name);
+          stmt.setString(1, name);
           ResultSet resultSet = null;
 
           try
           {
-            resultSet = selectStmt.executeQuery();
+            resultSet = stmt.executeQuery();
             if (resultSet.next())
             {
               String value = resultSet.getString(1);
@@ -354,24 +355,22 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
     finally
     {
-      DBUtil.close(selectStmt);
+      DBUtil.close(stmt);
       DBUtil.close(connection);
     }
   }
 
   public void setPersistentProperties(Map<String, String> properties)
   {
-    Connection connection = null;
-    PreparedStatement deleteStmt = null;
-    PreparedStatement insertStmt = null;
+    IDBConnection connection = database.getConnection();
+    IDBPreparedStatement deleteStmt = connection.prepareStatement(CDODBSchema.SQL_DELETE_PROPERTIES,
+        ReuseProbability.MEDIUM);
+    IDBPreparedStatement insertStmt = connection.prepareStatement(CDODBSchema.SQL_INSERT_PROPERTIES,
+        ReuseProbability.MEDIUM);
     String sql = null;
 
     try
     {
-      connection = getConnection();
-      deleteStmt = connection.prepareStatement(CDODBSchema.SQL_DELETE_PROPERTIES);
-      insertStmt = connection.prepareStatement(CDODBSchema.SQL_INSERT_PROPERTIES);
-
       for (Entry<String, String> entry : properties.entrySet())
       {
         String name = entry.getKey();
@@ -412,18 +411,15 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
   public void removePersistentProperties(Set<String> names)
   {
-    Connection connection = null;
-    PreparedStatement deleteStmt = null;
+    IDBConnection connection = database.getConnection();
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_DELETE_PROPERTIES, ReuseProbability.MEDIUM);
 
     try
     {
-      connection = getConnection();
-      deleteStmt = connection.prepareStatement(CDODBSchema.SQL_DELETE_PROPERTIES);
-
       for (String name : names)
       {
-        deleteStmt.setString(1, name);
-        deleteStmt.executeUpdate();
+        stmt.setString(1, name);
+        stmt.executeUpdate();
       }
 
       connection.commit();
@@ -434,7 +430,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
     finally
     {
-      DBUtil.close(deleteStmt);
+      DBUtil.close(stmt);
       DBUtil.close(connection);
     }
   }

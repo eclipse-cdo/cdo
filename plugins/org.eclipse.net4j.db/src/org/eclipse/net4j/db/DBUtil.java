@@ -15,7 +15,6 @@ import org.eclipse.net4j.db.ddl.IDBNamedElement;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.DBDatabase;
-import org.eclipse.net4j.internal.db.DBTransaction;
 import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.internal.db.ddl.DBNamedElement;
@@ -237,14 +236,6 @@ public final class DBUtil
   public static IDBAdapter getDBAdapter(String adapterName)
   {
     return IDBAdapter.REGISTRY.get(adapterName);
-  }
-
-  /**
-   * @since 4.2
-   */
-  public static Connection getSQLConnection(IDBTransaction dbConnection)
-  {
-    return ((DBTransaction)dbConnection).getConnection();
   }
 
   public static Exception close(Connection connection)

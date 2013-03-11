@@ -21,10 +21,10 @@ import org.eclipse.emf.cdo.server.db.IIDHandler;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 
 import java.sql.Clob;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -103,7 +103,7 @@ public class SQLQueryHandler implements IQueryHandler
     boolean mapQuery = false;
 
     IIDHandler idHandler = accessor.getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,
         ResultSet.CONCUR_READ_ONLY, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 

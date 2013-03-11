@@ -42,7 +42,7 @@ import java.util.Map;
  */
 public final class DBPreparedStatement implements IDBPreparedStatement
 {
-  private final DBTransaction transaction;
+  private final DBConnection transaction;
 
   private final String sql;
 
@@ -52,7 +52,7 @@ public final class DBPreparedStatement implements IDBPreparedStatement
 
   private int touch;
 
-  public DBPreparedStatement(DBTransaction transaction, String sql, ReuseProbability reuseProbability,
+  public DBPreparedStatement(DBConnection transaction, String sql, ReuseProbability reuseProbability,
       PreparedStatement delegate)
   {
     this.transaction = transaction;
@@ -61,7 +61,7 @@ public final class DBPreparedStatement implements IDBPreparedStatement
     this.delegate = delegate;
   }
 
-  public DBTransaction getTransaction()
+  public DBConnection getTransaction()
   {
     return transaction;
   }

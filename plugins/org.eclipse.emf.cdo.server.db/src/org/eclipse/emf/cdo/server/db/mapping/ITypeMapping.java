@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.factory.IFactory;
@@ -98,7 +99,7 @@ public interface ITypeMapping
   public void setDBField(IDBTable table, String fieldName);
 
   /**
-   * Set the given value to the JDBC {@link PreparedStatement} using an appropriate <code>setXxx</code> method.
+   * Set the given value to the JDBC {@link IDBPreparedStatement} using an appropriate <code>setXxx</code> method.
    *
    * @param stmt
    *          the prepared statement to set the value
@@ -112,7 +113,7 @@ public interface ITypeMapping
   public void setValue(PreparedStatement stmt, int index, Object value) throws SQLException;
 
   /**
-   * Set the feature's default value to the JDBC {@link PreparedStatement} using an appropriate <code>setXxx</code>
+   * Set the feature's default value to the JDBC {@link IDBPreparedStatement} using an appropriate <code>setXxx</code>
    * method.
    *
    * @param stmt
@@ -126,7 +127,7 @@ public interface ITypeMapping
   public void setDefaultValue(PreparedStatement stmt, int index) throws SQLException;
 
   /**
-   * Set a value of the given revision to the JDBC {@link PreparedStatement} using an appropriate <code>setXxx</code>
+   * Set a value of the given revision to the JDBC {@link IDBPreparedStatement} using an appropriate <code>setXxx</code>
    * method. The feature from which the value is taken is determined by {@link #getFeature()}.
    *
    * @param stmt

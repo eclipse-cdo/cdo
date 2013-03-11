@@ -36,6 +36,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
@@ -319,7 +320,7 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
     String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sql, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
@@ -395,7 +396,7 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
     String sql = builder.toString();
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = chunkReader.getAccessor().getDBTransaction().prepareStatement(sql, ReuseProbability.LOW);
+    IDBPreparedStatement stmt = chunkReader.getAccessor().getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     try
@@ -488,7 +489,7 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
     String columnName = getColumnName(tag);
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsert, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsert, ReuseProbability.HIGH);
 
     try
     {

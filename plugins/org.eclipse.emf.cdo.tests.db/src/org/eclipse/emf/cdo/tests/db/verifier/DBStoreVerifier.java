@@ -82,7 +82,7 @@ public abstract class DBStoreVerifier
 
     try
     {
-      return accessor.getDBTransaction().getConnection().createStatement();
+      return accessor.getDBConnection().createStatement();
     }
     catch (SQLException ex)
     {

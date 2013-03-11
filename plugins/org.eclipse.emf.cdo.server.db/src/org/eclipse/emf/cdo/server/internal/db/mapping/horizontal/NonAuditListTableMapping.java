@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -224,7 +225,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   public void clearList(IDBStoreAccessor accessor, CDOID id)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlClear, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlClear, ReuseProbability.HIGH);
 
     try
     {
@@ -250,7 +251,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   public int getCurrentIndexOffset(IDBStoreAccessor accessor, CDOID id)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlReadCurrentIndexOffset,
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlReadCurrentIndexOffset,
         ReuseProbability.HIGH);
     ResultSet rset = null;
 
@@ -698,10 +699,10 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     private void writeResultToDatabase(IDBStoreAccessor accessor, CDOID id)
     {
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      PreparedStatement deleteStmt = null;
-      PreparedStatement moveStmt = null;
-      PreparedStatement setValueStmt = null;
-      PreparedStatement insertStmt = null;
+      IDBPreparedStatement deleteStmt = null;
+      IDBPreparedStatement moveStmt = null;
+      IDBPreparedStatement setValueStmt = null;
+      IDBPreparedStatement insertStmt = null;
 
       int deleteCounter = 0;
       int moveCounter = 0;
@@ -735,7 +736,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
             if (deleteStmt == null)
             {
-              deleteStmt = accessor.getDBTransaction().prepareStatement(sqlDeleteItem, ReuseProbability.HIGH);
+              deleteStmt = accessor.getDBConnection().prepareStatement(sqlDeleteItem, ReuseProbability.HIGH);
               idHandler.setCDOID(deleteStmt, 1, id);
             }
 
@@ -757,7 +758,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
              */
             if (moveStmt == null)
             {
-              moveStmt = accessor.getDBTransaction().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
+              moveStmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
               idHandler.setCDOID(moveStmt, 2, id);
             }
 
@@ -825,7 +826,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
              */
             if (setValueStmt == null)
             {
-              setValueStmt = accessor.getDBTransaction().prepareStatement(sqlUpdateValue, ReuseProbability.HIGH);
+              setValueStmt = accessor.getDBConnection().prepareStatement(sqlUpdateValue, ReuseProbability.HIGH);
               idHandler.setCDOID(setValueStmt, 2, id);
             }
 
@@ -847,7 +848,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
              */
             if (insertStmt == null)
             {
-              insertStmt = accessor.getDBTransaction().prepareStatement(sqlInsertValue, ReuseProbability.HIGH);
+              insertStmt = accessor.getDBConnection().prepareStatement(sqlInsertValue, ReuseProbability.HIGH);
               idHandler.setCDOID(insertStmt, 1, id);
             }
 
@@ -993,7 +994,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
        */
       ListIterator<ShiftOperation> operationIt = shiftOperations.listIterator();
 
-      PreparedStatement shiftDownStmt = null;
+      IDBPreparedStatement shiftDownStmt = null;
       int operationCounter = 0;
 
       try
@@ -1005,7 +1006,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           {
             if (shiftDownStmt == null)
             {
-              shiftDownStmt = accessor.getDBTransaction().prepareStatement(sqlShiftDownIndex, ReuseProbability.HIGH);
+              shiftDownStmt = accessor.getDBConnection().prepareStatement(sqlShiftDownIndex, ReuseProbability.HIGH);
               idHandler.setCDOID(shiftDownStmt, 2, id);
             }
 
@@ -1034,7 +1035,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         close(shiftDownStmt);
       }
 
-      PreparedStatement shiftUpStmt = null;
+      IDBPreparedStatement shiftUpStmt = null;
       operationCounter = 0;
 
       try
@@ -1045,7 +1046,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           ShiftOperation operation = operationIt.previous();
           if (shiftUpStmt == null)
           {
-            shiftUpStmt = accessor.getDBTransaction().prepareStatement(sqlShiftUpIndex, ReuseProbability.HIGH);
+            shiftUpStmt = accessor.getDBConnection().prepareStatement(sqlShiftUpIndex, ReuseProbability.HIGH);
             idHandler.setCDOID(shiftUpStmt, 2, id);
           }
 

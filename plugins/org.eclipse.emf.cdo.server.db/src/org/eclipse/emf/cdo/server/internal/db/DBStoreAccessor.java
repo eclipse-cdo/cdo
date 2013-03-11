@@ -66,8 +66,9 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessor;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
-import org.eclipse.net4j.db.IDBTransaction;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -113,7 +114,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreAccessor.class);
 
-  private IDBTransaction transaction;
+  private IDBConnection connection;
 
   private ConnectionKeepAliveTask connectionKeepAliveTask;
 
@@ -137,9 +138,14 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     return (DBStore)super.getStore();
   }
 
-  public IDBTransaction getDBTransaction()
+  public IDBConnection getDBConnection()
   {
-    return transaction;
+    return connection;
+  }
+
+  public Connection getConnection()
+  {
+    return connection;
   }
 
   @Deprecated
@@ -152,12 +158,12 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
         // Do nothing
       }
 
-      public PreparedStatement getPreparedStatement(String sql, ReuseProbability reuseProbability)
+      public IDBPreparedStatement getPreparedStatement(String sql, ReuseProbability reuseProbability)
       {
         org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability converted = //
         org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability.values()[reuseProbability.ordinal()];
 
-        return transaction.prepareStatement(sql, converted);
+        return connection.prepareStatement(sql, converted);
       }
 
       public void releasePreparedStatement(PreparedStatement ps)
@@ -344,7 +350,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
   public void queryLobs(List<byte[]> ids)
   {
-    PreparedStatement stmt = transaction.prepareStatement(CDODBSchema.SQL_QUERY_LOBS, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_QUERY_LOBS, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
@@ -380,7 +386,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
   public void loadLob(byte[] id, OutputStream out) throws IOException
   {
-    PreparedStatement stmt = transaction.prepareStatement(CDODBSchema.SQL_LOAD_LOB, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_LOAD_LOB, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
@@ -416,7 +422,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
   public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
   {
-    PreparedStatement stmt = transaction.prepareStatement(CDODBSchema.SQL_HANDLE_LOBS, ReuseProbability.LOW);
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_HANDLE_LOBS, ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     try
@@ -501,7 +507,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
       String comment, OMMonitor monitor)
   {
-    PreparedStatement stmt = transaction.prepareStatement(CDODBSchema.SQL_CREATE_COMMIT_INFO, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_CREATE_COMMIT_INFO, ReuseProbability.HIGH);
 
     try
     {
@@ -629,12 +635,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
-  @Deprecated
-  public Connection getConnection()
-  {
-    return transaction.getConnection();
-  }
-
   @Override
   protected CDOID getNextCDOID(CDORevision revision)
   {
@@ -644,7 +644,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   @Override
   protected void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
   {
-    PreparedStatement stmt = transaction.prepareStatement(CDODBSchema.SQL_WRITE_BLOB, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_WRITE_BLOB, ReuseProbability.MEDIUM);
 
     try
     {
@@ -667,7 +667,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   @Override
   protected void writeClob(byte[] id, long size, Reader reader) throws IOException
   {
-    PreparedStatement stmt = transaction.prepareStatement(CDODBSchema.SQL_WRITE_CLOB, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_WRITE_CLOB, ReuseProbability.MEDIUM);
 
     try
     {
@@ -757,7 +757,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   protected void doActivate() throws Exception
   {
     DBStore store = getStore();
-    transaction = store.getDatabase().openTransaction();
+    connection = store.getDatabase().getConnection();
     connectionKeepAliveTask = new ConnectionKeepAliveTask(this);
 
     long keepAlivePeriod = ConnectionKeepAliveTask.EXECUTION_PERIOD;
@@ -780,8 +780,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     connectionKeepAliveTask.cancel();
     connectionKeepAliveTask = null;
 
-    ObjectUtil.close(transaction);
-    transaction = null;
+    ObjectUtil.close(connection);
+    connection = null;
   }
 
   @Override
@@ -841,7 +841,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       branchID = getStore().getNextLocalBranchID();
     }
 
-    PreparedStatement stmt = transaction.prepareStatement(CDODBSchema.SQL_CREATE_BRANCH, ReuseProbability.LOW);
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_CREATE_BRANCH, ReuseProbability.LOW);
 
     try
     {
@@ -867,7 +867,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   public BranchInfo loadBranch(int branchID)
   {
     checkBranchingSupport();
-    PreparedStatement stmt = transaction.prepareStatement(CDODBSchema.SQL_LOAD_BRANCH, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_LOAD_BRANCH, ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
@@ -899,7 +899,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   public SubBranchInfo[] loadSubBranches(int baseID)
   {
     checkBranchingSupport();
-    PreparedStatement stmt = transaction.prepareStatement(CDODBSchema.SQL_LOAD_SUB_BRANCHES, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_LOAD_SUB_BRANCHES, ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
@@ -940,7 +940,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   public int loadBranches(int startID, int endID, CDOBranchHandler handler)
   {
     int count = 0;
-    PreparedStatement stmt = transaction.prepareStatement(CDODBSchema.SQL_LOAD_BRANCHES, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_LOAD_BRANCHES, ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     InternalRepository repository = getSession().getManager().getRepository();
@@ -1032,7 +1032,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     builder.append(count < 0 || CDOBranchPoint.UNSPECIFIED_DATE <= endTime && endTime <= startTime ? " DESC" : " ASC"); //$NON-NLS-1$
     String sql = builder.toString();
 
-    PreparedStatement stmt = transaction.prepareStatement(sql, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     InternalRepository repository = getStore().getRepository();

@@ -28,6 +28,7 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema;
+import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
@@ -38,7 +39,6 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicLong;
@@ -109,7 +109,7 @@ public class ExternalReferenceManager extends Lifecycle
 
   public String unmapURI(IDBStoreAccessor accessor, long mappedId)
   {
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlSelectByLongID, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectByLongID, ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
@@ -138,7 +138,7 @@ public class ExternalReferenceManager extends Lifecycle
 
   public long lookupByURI(IDBStoreAccessor accessor, String uri)
   {
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlSelectByURI, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectByURI, ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
@@ -207,7 +207,7 @@ public class ExternalReferenceManager extends Lifecycle
       String sql = "SELECT MIN(" + EXTERNAL_REFS_ID + ") FROM " + table;
 
       IDBStoreAccessor writer = store.getWriter(null);
-      PreparedStatement stmt = writer.getDBTransaction().prepareStatement(sql, ReuseProbability.LOW);
+      IDBPreparedStatement stmt = writer.getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
       ResultSet resultSet = null;
 
       try
@@ -223,7 +223,7 @@ public class ExternalReferenceManager extends Lifecycle
       }
       catch (SQLException ex)
       {
-        writer.getDBTransaction().rollback();
+        writer.getDBConnection().rollback();
         throw new DBException(ex);
       }
       finally
@@ -243,7 +243,7 @@ public class ExternalReferenceManager extends Lifecycle
   private long insertNew(IDBStoreAccessor accessor, String uri, long commitTime)
   {
     long newMappedID = lastMappedID.decrementAndGet();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsert, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsert, ReuseProbability.MEDIUM);
 
     try
     {

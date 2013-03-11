@@ -18,6 +18,9 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.IDBPreparedStatement;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -25,8 +28,6 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -102,7 +103,7 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
   }
 
   @Override
-  protected void rawImportReviseOldRevisions(Connection connection, IDBTable table, OMMonitor monitor)
+  protected void rawImportReviseOldRevisions(IDBConnection connection, IDBTable table, OMMonitor monitor)
   {
     String sqlUpdate = "UPDATE " + table + " SET " + ATTRIBUTES_REVISED + "=? WHERE " + ATTRIBUTES_ID + "=? AND "
         + ATTRIBUTES_BRANCH + "=? AND " + ATTRIBUTES_VERSION + "=?";
@@ -115,15 +116,13 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
         + ATTRIBUTES_REVISED + "=0";
 
     IIDHandler idHandler = getStore().getIDHandler();
-    PreparedStatement stmtUpdate = null;
-    PreparedStatement stmtQuery = null;
+    IDBPreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmtQuery = connection.prepareStatement(sqlQuery, ResultSet.TYPE_SCROLL_INSENSITIVE,
+        ResultSet.CONCUR_READ_ONLY, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
     {
-      stmtUpdate = connection.prepareStatement(sqlUpdate);
-      stmtQuery = connection.prepareStatement(sqlQuery, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
       resultSet = stmtQuery.executeQuery();
       int size = DBUtil.getRowCount(resultSet);
       if (size == 0)
@@ -148,6 +147,7 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
       }
 
       Async async = monitor.forkAsync(size);
+
       try
       {
         stmtUpdate.executeBatch();
@@ -171,25 +171,23 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
   }
 
   @Override
-  protected void rawImportUnreviseNewRevisions(Connection connection, IDBTable table, long fromCommitTime,
+  protected void rawImportUnreviseNewRevisions(IDBConnection connection, IDBTable table, long fromCommitTime,
       long toCommitTime, OMMonitor monitor)
   {
-    String sqlUpdate = "UPDATE " + table + " SET " + ATTRIBUTES_REVISED + "=0 WHERE " + ATTRIBUTES_BRANCH + ">=0 AND "
+    String sql = "UPDATE " + table + " SET " + ATTRIBUTES_REVISED + "=0 WHERE " + ATTRIBUTES_BRANCH + ">=0 AND "
         + ATTRIBUTES_CREATED + "<=" + toCommitTime + " AND " + ATTRIBUTES_REVISED + ">" + toCommitTime + " AND "
         + ATTRIBUTES_VERSION + ">0";
 
-    PreparedStatement stmtUpdate = null;
+    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
 
     try
     {
-      stmtUpdate = connection.prepareStatement(sqlUpdate);
-
       monitor.begin();
       Async async = monitor.forkAsync();
 
       try
       {
-        stmtUpdate.executeUpdate();
+        stmt.executeUpdate();
       }
       finally
       {
@@ -202,7 +200,7 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
     }
     finally
     {
-      DBUtil.close(stmtUpdate);
+      DBUtil.close(stmt);
       monitor.done();
     }
   }

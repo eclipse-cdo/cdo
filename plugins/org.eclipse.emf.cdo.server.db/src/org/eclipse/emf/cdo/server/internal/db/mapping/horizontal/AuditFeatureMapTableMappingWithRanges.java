@@ -50,6 +50,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
@@ -61,7 +62,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMap;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -405,7 +405,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sql, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
@@ -483,7 +483,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     String sql = builder.toString();
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = chunkReader.getAccessor().getDBTransaction().prepareStatement(sql, ReuseProbability.LOW);
+    IDBPreparedStatement stmt = chunkReader.getAccessor().getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     try
@@ -647,9 +647,9 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
   public void clearList(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmtDeleteTemp = accessor.getDBTransaction().prepareStatement(sqlDeleteList,
+    IDBPreparedStatement stmtDeleteTemp = accessor.getDBConnection().prepareStatement(sqlDeleteList,
         ReuseProbability.HIGH);
-    PreparedStatement stmtClear = accessor.getDBTransaction().prepareStatement(sqlClearList, ReuseProbability.HIGH);
+    IDBPreparedStatement stmtClear = accessor.getDBConnection().prepareStatement(sqlClearList, ReuseProbability.HIGH);
 
     try
     {
@@ -891,7 +891,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
         int endIndex)
     {
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
+      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
 
       try
       {
@@ -959,7 +959,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
         int endIndex)
     {
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
+      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
 
       try
       {
@@ -1039,7 +1039,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     String columnName = getColumnName(tag);
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsert, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsert, ReuseProbability.HIGH);
 
     try
     {
@@ -1087,7 +1087,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlDeleteEntry, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDeleteEntry, ReuseProbability.HIGH);
 
     try
     {
@@ -1118,7 +1118,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
       {
         // no temporary entry found, so mark the entry as removed
         DBUtil.close(stmt);
-        stmt = accessor.getDBTransaction().prepareStatement(sqlRemoveEntry, ReuseProbability.HIGH);
+        stmt = accessor.getDBConnection().prepareStatement(sqlRemoveEntry, ReuseProbability.HIGH);
 
         column = 1;
         stmt.setInt(column++, newVersion);
@@ -1156,7 +1156,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
   private FeatureMap.Entry getValue(IDBStoreAccessor accessor, CDOID id, int index)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlGetValue, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlGetValue, ReuseProbability.HIGH);
 
     try
     {

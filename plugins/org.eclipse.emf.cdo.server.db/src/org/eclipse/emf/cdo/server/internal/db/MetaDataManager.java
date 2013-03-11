@@ -33,6 +33,9 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.IDBPreparedStatement;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.Monitor;
@@ -49,7 +52,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -136,7 +138,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     try
     {
       monitor.begin(2);
-      fillSystemTables(connection, packageUnits, monitor.fork());
+      fillSystemTables((IDBConnection)connection, packageUnits, monitor.fork());
     }
     finally
     {
@@ -222,7 +224,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     return EMFUtil.getEPackageBytes(ePackage, ZIP_PACKAGE_BYTES, getPackageRegistry());
   }
 
-  private void fillSystemTables(Connection connection, InternalCDOPackageUnit packageUnit, OMMonitor monitor)
+  private void fillSystemTables(IDBConnection connection, InternalCDOPackageUnit packageUnit, OMMonitor monitor)
   {
     if (TRACER.isEnabled())
     {
@@ -237,12 +239,11 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     {
       String sql = "INSERT INTO " + CDODBSchema.PACKAGE_UNITS + " VALUES (?, ?, ?, ?)"; //$NON-NLS-1$ //$NON-NLS-2$
       DBUtil.trace(sql);
-      PreparedStatement stmt = null;
+      IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
 
       try
       {
         async = monitor.forkAsync();
-        stmt = connection.prepareStatement(sql);
         stmt.setString(1, packageUnit.getID());
         stmt.setInt(2, packageUnit.getOriginalType().ordinal());
         stmt.setLong(3, packageUnit.getTimeStamp());
@@ -282,7 +283,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     }
   }
 
-  private void fillSystemTables(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
+  private void fillSystemTables(IDBConnection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
     try
     {
@@ -298,7 +299,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     }
   }
 
-  private void fillSystemTables(Connection connection, InternalCDOPackageInfo packageInfo, OMMonitor monitor)
+  private void fillSystemTables(IDBConnection connection, InternalCDOPackageInfo packageInfo, OMMonitor monitor)
   {
     if (TRACER.isEnabled())
     {
@@ -311,12 +312,12 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
     String sql = "INSERT INTO " + CDODBSchema.PACKAGE_INFOS + " VALUES (?, ?, ?)"; //$NON-NLS-1$ //$NON-NLS-2$
     DBUtil.trace(sql);
-    PreparedStatement stmt = null;
+
+    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
     Async async = monitor.forkAsync();
 
     try
     {
-      stmt = connection.prepareStatement(sql);
       stmt.setString(1, packageURI);
       stmt.setString(2, parentURI);
       stmt.setString(3, unitID);

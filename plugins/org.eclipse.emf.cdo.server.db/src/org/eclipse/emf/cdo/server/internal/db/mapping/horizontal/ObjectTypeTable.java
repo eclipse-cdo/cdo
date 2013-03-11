@@ -27,6 +27,7 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema;
+import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
@@ -37,7 +38,6 @@ import org.eclipse.emf.ecore.EClass;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -63,7 +63,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
   public final CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlSelect, ReuseProbability.MAX);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelect, ReuseProbability.MAX);
 
     try
     {
@@ -104,7 +104,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
   {
     IDBStore store = getMappingStrategy().getStore();
     IIDHandler idHandler = store.getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsert, ReuseProbability.MAX);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsert, ReuseProbability.MAX);
 
     try
     {
@@ -141,7 +141,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
   public final void removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlDelete, ReuseProbability.MAX);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDelete, ReuseProbability.MAX);
 
     try
     {

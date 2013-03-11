@@ -36,6 +36,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.DBUtil.DeserializeRowHandler;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -182,7 +183,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     builder.append(toCommitTime);
 
     String attrSuffix = builder.toString();
-    Connection connection = accessor.getConnection();
+    IDBConnection connection = accessor.getDBConnection();
 
     Collection<IClassMapping> classMappings = getClassMappings(true).values();
     out.writeInt(classMappings.size());
@@ -204,8 +205,8 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     objectTypeMapper.rawExport(connection, out, fromCommitTime, toCommitTime);
   }
 
-  protected void rawExportList(CDODataOutput out, Connection connection, IListMapping listMapping, IDBTable attrTable,
-      String attrSuffix) throws IOException
+  protected void rawExportList(CDODataOutput out, IDBConnection connection, IListMapping listMapping,
+      IDBTable attrTable, String attrSuffix) throws IOException
   {
     for (IDBTable table : listMapping.getDBTables())
     {
@@ -239,7 +240,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
     try
     {
-      Connection connection = accessor.getConnection();
+      IDBConnection connection = accessor.getDBConnection();
       for (int i = 0; i < size; i++)
       {
         EClass eClass = (EClass)in.readCDOClassifierRefAndResolve();
@@ -283,18 +284,18 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
   }
 
-  protected void rawImportUnreviseNewRevisions(Connection connection, IDBTable table, long fromCommitTime,
+  protected void rawImportUnreviseNewRevisions(IDBConnection connection, IDBTable table, long fromCommitTime,
       long toCommitTime, OMMonitor monitor)
   {
     throw new UnsupportedOperationException("Must be overridden");
   }
 
-  protected void rawImportReviseOldRevisions(Connection connection, IDBTable table, OMMonitor monitor)
+  protected void rawImportReviseOldRevisions(IDBConnection connection, IDBTable table, OMMonitor monitor)
   {
     throw new UnsupportedOperationException("Must be overridden");
   }
 
-  protected void rawImportList(CDODataInput in, Connection connection, IListMapping listMapping, OMMonitor monitor)
+  protected void rawImportList(CDODataInput in, IDBConnection connection, IListMapping listMapping, OMMonitor monitor)
       throws IOException
   {
     Collection<IDBTable> tables = listMapping.getDBTables();

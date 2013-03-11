@@ -30,6 +30,7 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema;
+import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
@@ -40,7 +41,6 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -132,7 +132,7 @@ public class DurableLockingManager extends Lifecycle
       }
     }
 
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsertLockArea, ReuseProbability.LOW);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertLockArea, ReuseProbability.LOW);
 
     try
     {
@@ -158,14 +158,14 @@ public class DurableLockingManager extends Lifecycle
       insertLocks(accessor, durableLockingID, locks);
     }
 
-    accessor.getDBTransaction().commit();
+    commit(accessor);
 
     return CDOLockUtil.createLockArea(durableLockingID, userID, branchPoint, readOnly, locks);
   }
 
   private void insertLocks(DBStoreAccessor accessor, String durableLockingID, Map<CDOID, LockGrade> locks)
   {
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsertLock, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertLock, ReuseProbability.MEDIUM);
 
     try
     {
@@ -194,7 +194,7 @@ public class DurableLockingManager extends Lifecycle
 
   public LockArea getLockArea(DBStoreAccessor accessor, String durableLockingID) throws LockAreaNotFoundException
   {
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlSelectLockArea, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectLockArea, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
@@ -227,18 +227,18 @@ public class DurableLockingManager extends Lifecycle
 
   public void getLockAreas(DBStoreAccessor accessor, String userIDPrefix, Handler handler)
   {
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = null;
     ResultSet resultSet = null;
 
     try
     {
       if (userIDPrefix.length() == 0)
       {
-        stmt = accessor.getDBTransaction().prepareStatement(sqlSelectAllLockAreas, ReuseProbability.MEDIUM);
+        stmt = accessor.getDBConnection().prepareStatement(sqlSelectAllLockAreas, ReuseProbability.MEDIUM);
       }
       else
       {
-        stmt = accessor.getDBTransaction().prepareStatement(sqlSelectLockAreas, ReuseProbability.MEDIUM);
+        stmt = accessor.getDBConnection().prepareStatement(sqlSelectLockAreas, ReuseProbability.MEDIUM);
         stmt.setString(1, userIDPrefix + "%");
       }
 
@@ -273,7 +273,7 @@ public class DurableLockingManager extends Lifecycle
   {
     unlockWithoutCommit(accessor, durableLockingID);
 
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlDeleteLockArea, ReuseProbability.LOW);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDeleteLockArea, ReuseProbability.LOW);
 
     try
     {
@@ -289,7 +289,7 @@ public class DurableLockingManager extends Lifecycle
       DBUtil.close(stmt);
     }
 
-    accessor.getDBTransaction().commit();
+    commit(accessor);
   }
 
   public void updateLockArea(DBStoreAccessor accessor, LockArea area)
@@ -297,8 +297,7 @@ public class DurableLockingManager extends Lifecycle
     String areaID = area.getDurableLockingID();
     unlockWithoutCommit(accessor, areaID);
     insertLocks(accessor, areaID, area.getLocks());
-
-    accessor.getDBTransaction().commit();
+    commit(accessor);
   }
 
   public void lock(DBStoreAccessor accessor, String durableLockingID, LockType type,
@@ -316,12 +315,12 @@ public class DurableLockingManager extends Lifecycle
   public void unlock(DBStoreAccessor accessor, String durableLockingID)
   {
     unlockWithoutCommit(accessor, durableLockingID);
-    accessor.getDBTransaction().commit();
+    commit(accessor);
   }
 
   private void unlockWithoutCommit(DBStoreAccessor accessor, String durableLockingID)
   {
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlDeleteLocks, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDeleteLocks, ReuseProbability.MEDIUM);
 
     try
     {
@@ -436,7 +435,7 @@ public class DurableLockingManager extends Lifecycle
 
   private Map<CDOID, LockGrade> getLockMap(DBStoreAccessor accessor, String durableLockingID)
   {
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlSelectLocks, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectLocks, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
@@ -476,9 +475,11 @@ public class DurableLockingManager extends Lifecycle
 
     String sql = on ? sqlInsertLock : sqlDeleteLock;
 
-    PreparedStatement stmtSelect = accessor.getDBTransaction().prepareStatement(sqlSelectLock, ReuseProbability.MEDIUM);
-    PreparedStatement stmtInsertOrDelete = accessor.getDBTransaction().prepareStatement(sql, ReuseProbability.MEDIUM);
-    PreparedStatement stmtUpdate = accessor.getDBTransaction().prepareStatement(sqlUpdateLock, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmtSelect = accessor.getDBConnection().prepareStatement(sqlSelectLock,
+        ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmtInsertOrDelete = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmtUpdate = accessor.getDBConnection().prepareStatement(sqlUpdateLock,
+        ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
@@ -520,7 +521,7 @@ public class DurableLockingManager extends Lifecycle
         }
       }
 
-      accessor.getDBTransaction().commit();
+      accessor.getDBConnection().commit();
     }
     catch (SQLException e)
     {
@@ -563,6 +564,18 @@ public class DurableLockingManager extends Lifecycle
     finally
     {
       monitor.done();
+    }
+  }
+
+  private static void commit(DBStoreAccessor accessor)
+  {
+    try
+    {
+      accessor.getDBConnection().commit();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
     }
   }
 }

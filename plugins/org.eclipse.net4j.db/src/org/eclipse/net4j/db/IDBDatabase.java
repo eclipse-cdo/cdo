@@ -22,7 +22,7 @@ import org.eclipse.net4j.util.event.IEvent;
  * @noextend This interface is not intended to be extended by clients.
  * @since 4.2
  */
-public interface IDBDatabase extends IContainer<IDBTransaction>, Closeable
+public interface IDBDatabase extends IContainer<IDBConnection>, IDBConnectionProvider, Closeable
 {
   public static final int DEFAULT_STATEMENT_CACHE_CAPACITY = 200;
 
@@ -30,17 +30,15 @@ public interface IDBDatabase extends IContainer<IDBTransaction>, Closeable
 
   public IDBSchema getSchema();
 
-  public IDBConnectionProvider getConnectionProvider();
-
   public IDBSchemaTransaction openSchemaTransaction();
 
   public IDBSchemaTransaction getSchemaTransaction();
 
   public void updateSchema(RunnableWithSchema runnable);
 
-  public IDBTransaction openTransaction();
+  public IDBConnection getConnection();
 
-  public IDBTransaction[] getTransactions();
+  public IDBConnection[] getConnections();
 
   public int getStatementCacheCapacity();
 

@@ -41,6 +41,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
@@ -604,7 +605,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(builder.toString(), ReuseProbability.LOW);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(), ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     try
@@ -671,7 +672,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(builder.toString(), ReuseProbability.LOW);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(), ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     Set<CDOID> result = new HashSet<CDOID>();
@@ -857,7 +858,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       }
 
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sql, ReuseProbability.MEDIUM);
+      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
       ResultSet resultSet = null;
 
       try

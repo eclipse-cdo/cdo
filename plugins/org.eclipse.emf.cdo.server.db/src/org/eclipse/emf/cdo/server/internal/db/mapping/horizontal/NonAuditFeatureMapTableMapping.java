@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.util.ImplementationError;
 
@@ -215,7 +216,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
   public void clearList(IDBStoreAccessor accessor, CDOID id)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlClear, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlClear, ReuseProbability.HIGH);
 
     try
     {
@@ -265,7 +266,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     String columnName = getColumnName(tag);
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsert, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsert, ReuseProbability.HIGH);
 
     try
     {
@@ -339,7 +340,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
   private void updateOneIndex(IDBStoreAccessor accessor, CDOID id, int oldIndex, int newIndex)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
 
     try
     {
@@ -381,7 +382,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
   private void move1down(IDBStoreAccessor accessor, CDOID id, int index, int upperIndex)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(
         upperIndex == UNBOUNDED_MOVE ? sqlMoveDown : sqlMoveDownWithLimit, ReuseProbability.HIGH);
 
     try
@@ -412,7 +413,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
   private void move1up(IDBStoreAccessor accessor, CDOID id, int index, int upperIndex)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(
         upperIndex == UNBOUNDED_MOVE ? sqlMoveUp : sqlMoveUpWithLimit, ReuseProbability.HIGH);
 
     try
@@ -439,7 +440,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
   private void deleteItem(IDBStoreAccessor accessor, CDOID id, int index)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlDeleteItem, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDeleteItem, ReuseProbability.HIGH);
 
     try
     {
@@ -478,7 +479,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     String columnName = getColumnName(tag);
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlUpdateValue, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateValue, ReuseProbability.HIGH);
 
     try
     {

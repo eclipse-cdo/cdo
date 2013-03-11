@@ -33,7 +33,7 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
 {
   private DBDatabase database;
 
-  private DBTransaction transaction;
+  private DBConnection connection;
 
   private IDBSchema oldSchema;
 
@@ -53,14 +53,14 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
     return database;
   }
 
-  public DBTransaction getTransaction()
+  public DBConnection getConnection()
   {
-    return transaction;
+    return connection;
   }
 
-  public void setTransaction(DBTransaction getTransaction)
+  public void setConnection(DBConnection connection)
   {
-    transaction = getTransaction;
+    this.connection = connection;
   }
 
   public IDBSchema getWorkingCopy()
@@ -94,14 +94,13 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
 
   public DBSchemaDelta commit()
   {
-    if (transaction == null)
+    if (connection == null)
     {
-      return DBUtil.execute(database.getConnectionProvider(), this);
+      return DBUtil.execute(database, this);
     }
 
     try
     {
-      Connection connection = transaction.getConnection();
       return run(connection);
     }
     catch (SQLException ex)
@@ -142,7 +141,7 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
     if (!isClosed())
     {
       database.closeSchemaTransaction(delta);
-      transaction = null;
+      connection = null;
       oldSchema = null;
       workingCopy = null;
     }

@@ -24,8 +24,8 @@ import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalMappi
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalNonAuditMappingStrategy;
 
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBConnectionProvider;
-import org.eclipse.net4j.db.IDBTransaction;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -200,7 +200,7 @@ public final class CDODBUtil
 
   /**
    * @since 2.0
-   * @deprecated As of 4.2 use {@link IDBTransaction#prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)}.
+   * @deprecated As of 4.2 use {@link IDBConnection#prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)}.
    */
   @Deprecated
   public static IPreparedStatementCache createStatementCache()
@@ -210,7 +210,7 @@ public final class CDODBUtil
 
   /**
    * @since 2.0
-   * @deprecated As of 4.2 use {@link IDBTransaction#prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)}.
+   * @deprecated As of 4.2 use {@link IDBConnection#prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)}.
    */
   @Deprecated
   public static IPreparedStatementCache createStatementCache(int capacity)

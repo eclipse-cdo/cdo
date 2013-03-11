@@ -10,11 +10,12 @@
  */
 package org.eclipse.net4j.internal.db;
 
+import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.DBUtil.RunnableWithConnection;
+import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBDatabase;
-import org.eclipse.net4j.db.IDBTransaction;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
@@ -31,7 +32,7 @@ import java.util.LinkedList;
 /**
  * @author Eike Stepper
  */
-public final class DBDatabase extends SetContainer<IDBTransaction> implements IDBDatabase
+public final class DBDatabase extends SetContainer<IDBConnection> implements IDBDatabase
 {
   private DBAdapter adapter;
 
@@ -47,7 +48,7 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
 
   public DBDatabase(final DBAdapter adapter, IDBConnectionProvider connectionProvider, final String schemaName)
   {
-    super(IDBTransaction.class);
+    super(IDBConnection.class);
     this.adapter = adapter;
     this.connectionProvider = connectionProvider;
 
@@ -68,11 +69,6 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
     return adapter;
   }
 
-  public IDBConnectionProvider getConnectionProvider()
-  {
-    return connectionProvider;
-  }
-
   public IDBSchema getSchema()
   {
     return schema;
@@ -91,9 +87,9 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
     {
       beginSchemaAccess(true);
 
-      for (IDBTransaction transaction : getTransactions())
+      for (IDBConnection transaction : getConnections())
       {
-        ((DBTransaction)transaction).invalidateStatementCache();
+        ((DBConnection)transaction).invalidateStatementCache();
       }
 
       fireEvent(new SchemaChangedEventImpl(delta));
@@ -126,19 +122,25 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
     }
   }
 
-  public DBTransaction openTransaction()
+  public DBConnection getConnection()
   {
-    DBTransaction transaction = new DBTransaction(this);
-    addElement(transaction);
-    return transaction;
+    Connection delegate = connectionProvider.getConnection();
+    if (delegate == null)
+    {
+      throw new DBException("No connection from connection provider: " + connectionProvider);
+    }
+
+    DBConnection connection = new DBConnection(this, delegate);
+    addElement(connection);
+    return connection;
   }
 
-  public void closeTransaction(DBTransaction transaction)
+  public void closeConnection(DBConnection connection)
   {
-    removeElement(transaction);
+    removeElement(connection);
   }
 
-  public IDBTransaction[] getTransactions()
+  public IDBConnection[] getConnections()
   {
     return getElements();
   }
@@ -166,9 +168,9 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
   @Override
   protected void doDeactivate() throws Exception
   {
-    for (IDBTransaction transaction : getTransactions())
+    for (IDBConnection connection : getConnections())
     {
-      transaction.close();
+      connection.close();
     }
 
     super.doDeactivate();

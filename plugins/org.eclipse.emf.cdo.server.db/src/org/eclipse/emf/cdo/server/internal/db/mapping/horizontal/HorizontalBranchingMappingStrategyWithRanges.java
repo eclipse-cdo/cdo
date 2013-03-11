@@ -24,6 +24,9 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.DBUtil.DeserializeRowHandler;
+import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.IDBPreparedStatement;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
@@ -35,7 +38,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -82,8 +84,8 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
   }
 
   @Override
-  protected void rawExportList(CDODataOutput out, Connection connection, IListMapping listMapping, IDBTable attrTable,
-      String attrSuffix) throws IOException
+  protected void rawExportList(CDODataOutput out, IDBConnection connection, IListMapping listMapping,
+      IDBTable attrTable, String attrSuffix) throws IOException
   {
     super.rawExportList(out, connection, listMapping, attrTable, attrSuffix);
 
@@ -93,7 +95,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     }
   }
 
-  private void rawExportListPostProcess(CDODataOutput out, Connection connection, IDBTable attrTable,
+  private void rawExportListPostProcess(CDODataOutput out, IDBConnection connection, IDBTable attrTable,
       String attrSuffix, IDBTable table) throws IOException
   {
     StringBuilder builder = new StringBuilder();
@@ -120,12 +122,12 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     String sql = DBUtil.trace(builder.toString());
 
     IIDHandler idHandler = getStore().getIDHandler();
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+        ResultSet.CONCUR_READ_ONLY, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
     {
-      stmt = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
       resultSet = stmt.executeQuery();
 
       // Write resultSet size for progress monitoring
@@ -163,7 +165,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
   }
 
   @Override
-  protected void rawImportList(CDODataInput in, Connection connection, IListMapping listMapping, OMMonitor monitor)
+  protected void rawImportList(CDODataInput in, IDBConnection connection, IListMapping listMapping, OMMonitor monitor)
       throws IOException
   {
     Collection<IDBTable> tables = listMapping.getDBTables();
@@ -190,7 +192,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     }
   }
 
-  private void rawImportListPostProcess(CDODataInput in, Connection connection, IDBTable table, OMMonitor monitor)
+  private void rawImportListPostProcess(CDODataInput in, IDBConnection connection, IDBTable table, OMMonitor monitor)
       throws IOException
   {
     int size = in.readInt();
@@ -216,13 +218,12 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     String sql = DBUtil.trace(builder.toString());
 
     IIDHandler idHandler = getStore().getIDHandler();
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
 
     monitor.begin(1 + 2 * size);
 
     try
     {
-      stmt = connection.prepareStatement(sql);
       monitor.worked();
 
       for (int row = 0; row < size; row++)
@@ -340,7 +341,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
   {
     private final IIDHandler idHandler = getStore().getIDHandler();
 
-    private PreparedStatement stmt;
+    private IDBPreparedStatement stmt;
 
     public void handleRow(ExtendedDataInput in, Connection connection, IDBField[] fields, Object[] values)
         throws SQLException, IOException
@@ -360,7 +361,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
             + " AND " + LIST_IDX + "=?" //
             + " AND " + LIST_REVISION_VERSION_ADDED + "<?" //
             + " AND " + LIST_REVISION_VERSION_REMOVED + " IS NULL";
-        stmt = connection.prepareStatement(sql);
+        stmt = ((IDBConnection)connection).prepareStatement(sql, ReuseProbability.MEDIUM);
       }
 
       Object sourceID = values[0];

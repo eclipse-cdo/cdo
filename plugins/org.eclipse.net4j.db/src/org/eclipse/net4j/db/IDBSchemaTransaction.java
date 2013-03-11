@@ -31,7 +31,7 @@ public interface IDBSchemaTransaction extends Closeable
 
   public IDBDatabase getDatabase();
 
-  public IDBTransaction getTransaction();
+  public IDBConnection getConnection();
 
   public IDBSchema getWorkingCopy();
 

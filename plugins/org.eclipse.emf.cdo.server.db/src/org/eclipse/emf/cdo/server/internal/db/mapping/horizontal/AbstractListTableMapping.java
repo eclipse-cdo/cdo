@@ -46,7 +46,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -426,19 +425,18 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     builder.append(idString);
     String sql = builder.toString();
 
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Query XRefs (list): {0}", sql);
+    }
+
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sql, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
-    Statement stmt = null;
 
     try
     {
-      stmt = accessor.getConnection().createStatement();
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Query XRefs (list): {0}", sql);
-      }
-
-      resultSet = stmt.executeQuery(sql);
+      resultSet = stmt.executeQuery();
       while (resultSet.next())
       {
         CDOID srcId = idHandler.getCDOID(resultSet, 1);

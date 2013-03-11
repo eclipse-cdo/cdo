@@ -60,7 +60,6 @@ import org.eclipse.core.runtime.Assert;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -852,20 +851,18 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       builder.append(" IN ");
       builder.append(idString);
       String sql = builder.toString();
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Query XRefs (attributes): {0}", sql);
+      }
 
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sql, ReuseProbability.MEDIUM);
       ResultSet resultSet = null;
-      Statement stmt = null;
 
       try
       {
-        stmt = accessor.getConnection().createStatement();
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Query XRefs (attributes): {0}", sql);
-        }
-
-        resultSet = stmt.executeQuery(sql);
+        resultSet = stmt.executeQuery();
         while (resultSet.next())
         {
           CDOID sourceID = idHandler.getCDOID(resultSet, 1);

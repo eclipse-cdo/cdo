@@ -31,4 +31,11 @@ public interface IDBTransaction extends Closeable
   public IDBSchemaTransaction openSchemaTransaction();
 
   public IDBPreparedStatement prepareStatement(String sql, ReuseProbability reuseProbability);
+
+  public IDBPreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency,
+      ReuseProbability reuseProbability);
+
+  public void commit();
+
+  public void rollback();
 }

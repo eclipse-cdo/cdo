@@ -21,9 +21,9 @@ import org.eclipse.emf.cdo.server.db.IIDHandler;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 
 import java.sql.Clob;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,16 +49,16 @@ public class SQLQueryHandler implements IQueryHandler
 
   public static final String QUERY_STATEMENT = "queryStatement";
 
-  private DBStoreAccessor storeAccessor;
+  private DBStoreAccessor accessor;
 
   public SQLQueryHandler(DBStoreAccessor storeAccessor)
   {
-    this.storeAccessor = storeAccessor;
+    accessor = storeAccessor;
   }
 
   public DBStoreAccessor getStoreAccessor()
   {
-    return storeAccessor;
+    return accessor;
   }
 
   /**
@@ -94,23 +94,21 @@ public class SQLQueryHandler implements IQueryHandler
       throw new IllegalArgumentException("Unsupported query language: " + language);
     }
 
-    IIDHandler idHandler = storeAccessor.getStore().getIDHandler();
-    Connection connection = storeAccessor.getConnection();
-    PreparedStatement statement = null;
+    HashMap<String, List<Integer>> paramMap = new HashMap<String, List<Integer>>();
+    String query = parse(info.getQueryString(), paramMap);
+
+    int firstResult = -1;
+    boolean queryStatement = true;
+    boolean objectQuery = true;
+    boolean mapQuery = false;
+
+    IIDHandler idHandler = accessor.getStore().getIDHandler();
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,
+        ResultSet.CONCUR_READ_ONLY, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
-    String query = info.getQueryString();
 
     try
     {
-      int firstResult = -1;
-      boolean queryStatement = true;
-      boolean objectQuery = true;
-      boolean mapQuery = false;
-
-      HashMap<String, List<Integer>> paramMap = new HashMap<String, List<Integer>>();
-      query = parse(query, paramMap);
-      statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
       for (String key : info.getParameters().keySet())
       {
         if (FIRST_RESULT.equalsIgnoreCase(key))
@@ -189,14 +187,14 @@ public class SQLQueryHandler implements IQueryHandler
           {
             Object parameter = info.getParameters().get(key);
             // parameter = convertToSQL(parameter);
-            statement.setObject(indexes[i], parameter);
+            stmt.setObject(indexes[i], parameter);
           }
         }
       }
 
       if (queryStatement)
       {
-        resultSet = statement.executeQuery();
+        resultSet = stmt.executeQuery();
         if (firstResult > -1)
         {
           resultSet.absolute(firstResult);
@@ -250,7 +248,7 @@ public class SQLQueryHandler implements IQueryHandler
       }
       else
       {
-        int result = statement.executeUpdate();
+        int result = stmt.executeUpdate();
         context.addResult(result);
       }
     }
@@ -261,7 +259,7 @@ public class SQLQueryHandler implements IQueryHandler
     finally
     {
       DBUtil.close(resultSet);
-      DBUtil.close(statement);
+      DBUtil.close(stmt);
     }
   }
 

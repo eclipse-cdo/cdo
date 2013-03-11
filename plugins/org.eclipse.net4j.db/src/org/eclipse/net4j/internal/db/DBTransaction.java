@@ -21,6 +21,7 @@ import org.eclipse.net4j.util.CheckUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.NavigableMap;
@@ -95,6 +96,12 @@ public final class DBTransaction implements IDBTransaction
 
   public IDBPreparedStatement prepareStatement(String sql, ReuseProbability reuseProbability)
   {
+    return prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY, reuseProbability);
+  }
+
+  public IDBPreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency,
+      ReuseProbability reuseProbability)
+  {
     database.beginSchemaAccess(false);
 
     DBPreparedStatement preparedStatement = cache.remove(sql);
@@ -102,7 +109,7 @@ public final class DBTransaction implements IDBTransaction
     {
       try
       {
-        PreparedStatement delegate = connection.prepareStatement(sql);
+        PreparedStatement delegate = connection.prepareStatement(sql, resultSetType, resultSetConcurrency);
         preparedStatement = new DBPreparedStatement(this, sql, reuseProbability, delegate);
       }
       catch (SQLException ex)
@@ -158,5 +165,29 @@ public final class DBTransaction implements IDBTransaction
     }
 
     cache.clear();
+  }
+
+  public void commit()
+  {
+    try
+    {
+      connection.commit();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException("Problem during commit of " + this, ex);
+    }
+  }
+
+  public void rollback()
+  {
+    try
+    {
+      connection.rollback();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException("Problem during rollback of " + this, ex);
+    }
   }
 }

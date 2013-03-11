@@ -114,60 +114,53 @@ public class DurableLockingManager extends Lifecycle
   public synchronized LockArea createLockArea(DBStoreAccessor accessor, String durableLockingID, String userID,
       CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
-    try
+    if (durableLockingID == null)
     {
-      if (durableLockingID == null)
-      {
-        durableLockingID = getNextDurableLockingID(accessor);
-      }
-      else
-      {
-        // If the caller is specifying the ID, make sure there is no area with this ID yet
-        //
-        try
-        {
-          getLockArea(accessor, durableLockingID);
-          throw new LockAreaAlreadyExistsException(durableLockingID);
-        }
-        catch (LockAreaNotFoundException good)
-        {
-        }
-      }
-
-      PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsertLockArea, ReuseProbability.LOW);
-
+      durableLockingID = getNextDurableLockingID(accessor);
+    }
+    else
+    {
+      // If the caller is specifying the ID, make sure there is no area with this ID yet
+      //
       try
       {
-        stmt.setString(1, durableLockingID);
-        stmt.setString(2, userID);
-        stmt.setInt(3, branchPoint.getBranch().getID());
-        stmt.setLong(4, branchPoint.getTimeStamp());
-        stmt.setBoolean(5, readOnly);
-
-        DBUtil.update(stmt, true);
+        getLockArea(accessor, durableLockingID);
+        throw new LockAreaAlreadyExistsException(durableLockingID);
       }
-      catch (SQLException e)
+      catch (LockAreaNotFoundException good)
       {
-        throw new DBException(e);
       }
-      finally
-      {
-        DBUtil.close(stmt);
-      }
-
-      if (!locks.isEmpty())
-      {
-        insertLocks(accessor, durableLockingID, locks);
-      }
-
-      accessor.getConnection().commit();
-
-      return CDOLockUtil.createLockArea(durableLockingID, userID, branchPoint, readOnly, locks);
     }
-    catch (SQLException ex)
+
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsertLockArea, ReuseProbability.LOW);
+
+    try
     {
-      throw new DBException(ex);
+      stmt.setString(1, durableLockingID);
+      stmt.setString(2, userID);
+      stmt.setInt(3, branchPoint.getBranch().getID());
+      stmt.setLong(4, branchPoint.getTimeStamp());
+      stmt.setBoolean(5, readOnly);
+
+      DBUtil.update(stmt, true);
     }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+    }
+
+    if (!locks.isEmpty())
+    {
+      insertLocks(accessor, durableLockingID, locks);
+    }
+
+    accessor.getDBTransaction().commit();
+
+    return CDOLockUtil.createLockArea(durableLockingID, userID, branchPoint, readOnly, locks);
   }
 
   private void insertLocks(DBStoreAccessor accessor, String durableLockingID, Map<CDOID, LockGrade> locks)
@@ -278,49 +271,34 @@ public class DurableLockingManager extends Lifecycle
 
   public void deleteLockArea(DBStoreAccessor accessor, String durableLockingID)
   {
+    unlockWithoutCommit(accessor, durableLockingID);
+
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlDeleteLockArea, ReuseProbability.LOW);
+
     try
     {
-      unlockWithoutCommit(accessor, durableLockingID);
-
-      PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlDeleteLockArea, ReuseProbability.LOW);
-
-      try
-      {
-        stmt.setString(1, durableLockingID);
-
-        DBUtil.update(stmt, true);
-      }
-      catch (SQLException e)
-      {
-        throw new DBException(e);
-      }
-      finally
-      {
-        DBUtil.close(stmt);
-      }
-
-      accessor.getConnection().commit();
+      stmt.setString(1, durableLockingID);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException e)
     {
       throw new DBException(e);
     }
+    finally
+    {
+      DBUtil.close(stmt);
+    }
+
+    accessor.getDBTransaction().commit();
   }
 
   public void updateLockArea(DBStoreAccessor accessor, LockArea area)
   {
-    try
-    {
-      String areaID = area.getDurableLockingID();
-      unlockWithoutCommit(accessor, areaID);
-      insertLocks(accessor, areaID, area.getLocks());
+    String areaID = area.getDurableLockingID();
+    unlockWithoutCommit(accessor, areaID);
+    insertLocks(accessor, areaID, area.getLocks());
 
-      accessor.getConnection().commit();
-    }
-    catch (SQLException e)
-    {
-      throw new DBException(e);
-    }
+    accessor.getDBTransaction().commit();
   }
 
   public void lock(DBStoreAccessor accessor, String durableLockingID, LockType type,
@@ -337,15 +315,8 @@ public class DurableLockingManager extends Lifecycle
 
   public void unlock(DBStoreAccessor accessor, String durableLockingID)
   {
-    try
-    {
-      unlockWithoutCommit(accessor, durableLockingID);
-      accessor.getConnection().commit();
-    }
-    catch (SQLException e)
-    {
-      throw new DBException(e);
-    }
+    unlockWithoutCommit(accessor, durableLockingID);
+    accessor.getDBTransaction().commit();
   }
 
   private void unlockWithoutCommit(DBStoreAccessor accessor, String durableLockingID)
@@ -549,7 +520,7 @@ public class DurableLockingManager extends Lifecycle
         }
       }
 
-      accessor.getConnection().commit();
+      accessor.getDBTransaction().commit();
     }
     catch (SQLException e)
     {

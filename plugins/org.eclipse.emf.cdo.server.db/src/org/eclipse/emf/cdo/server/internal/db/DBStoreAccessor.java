@@ -629,6 +629,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
+  @Deprecated
   public Connection getConnection()
   {
     return transaction.getConnection();

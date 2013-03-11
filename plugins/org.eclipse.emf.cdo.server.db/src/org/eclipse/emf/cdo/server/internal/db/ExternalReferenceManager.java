@@ -41,7 +41,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -205,18 +204,15 @@ public class ExternalReferenceManager extends Lifecycle
     }
     else
     {
+      String sql = "SELECT MIN(" + EXTERNAL_REFS_ID + ") FROM " + table;
+
       IDBStoreAccessor writer = store.getWriter(null);
-      Connection connection = writer.getConnection();
-      Statement statement = null;
+      PreparedStatement stmt = writer.getDBTransaction().prepareStatement(sql, ReuseProbability.LOW);
       ResultSet resultSet = null;
 
       try
       {
-        statement = connection.createStatement();
-
-        String sql = "SELECT MIN(" + EXTERNAL_REFS_ID + ") FROM " + table;
-        resultSet = statement.executeQuery(sql);
-
+        resultSet = stmt.executeQuery();
         if (resultSet.next())
         {
           lastMappedID.set(resultSet.getLong(1));
@@ -227,13 +223,13 @@ public class ExternalReferenceManager extends Lifecycle
       }
       catch (SQLException ex)
       {
-        connection.rollback();
+        writer.getDBTransaction().rollback();
         throw new DBException(ex);
       }
       finally
       {
         DBUtil.close(resultSet);
-        DBUtil.close(statement);
+        DBUtil.close(stmt);
         writer.release();
       }
     }

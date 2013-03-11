@@ -32,6 +32,10 @@ public interface IDBStoreAccessor extends IStoreAccessor.Raw
    */
   public IDBTransaction getDBTransaction();
 
+  /**
+   * @deprecated As of 4.2 use {@link #getDBTransaction()}.
+   */
+  @Deprecated
   public Connection getConnection();
 
   /**

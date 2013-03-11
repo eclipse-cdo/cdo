@@ -47,7 +47,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
@@ -62,8 +62,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -124,31 +124,33 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
 
   private void initTable()
   {
+    String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
+    typeMapping = getMappingStrategy().createValueMapping(getFeature());
+
     IDBStore store = getMappingStrategy().getStore();
     DBType idType = store.getIDHandler().getDBType();
     int idLength = store.getIDColumnLength();
 
-    String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
-    table = store.getDBSchema().addTable(tableName);
+    IDBDatabase database = getMappingStrategy().getStore().getDatabase();
+    table = database.getSchema().getTable(tableName);
+    if (table == null)
+    {
+      table = database.getSchemaTransaction().getWorkingCopy().addTable(tableName);
+      table.addField(LIST_REVISION_ID, idType, idLength, true);
+      table.addField(LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
+      table.addField(LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
+      table.addField(LIST_IDX, DBType.INTEGER, true);
 
-    IDBField[] dbFields = new IDBField[4];
-    dbFields[0] = table.addField(LIST_REVISION_ID, idType, idLength, true);
-    dbFields[1] = table.addField(LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
-    dbFields[2] = table.addField(LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
-    dbFields[3] = table.addField(LIST_IDX, DBType.INTEGER, true);
+      // TODO think about indexes
+      table.addIndex(Type.NON_UNIQUE, LIST_REVISION_ID, LIST_REVISION_VERSION_ADDED, LIST_REVISION_VERSION_REMOVED,
+          LIST_IDX);
 
-    // add field for value
-    typeMapping = getMappingStrategy().createValueMapping(getFeature());
-    typeMapping.createDBField(table, LIST_VALUE);
-
-    // TODO think about indexes
-    // add table indexes
-    table.addIndex(Type.NON_UNIQUE, dbFields);
-  }
-
-  public Collection<IDBTable> getDBTables()
-  {
-    return Arrays.asList(table);
+      typeMapping.createDBField(table, LIST_VALUE);
+    }
+    else
+    {
+      typeMapping.setDBField(table, LIST_VALUE);
+    }
   }
 
   private void initSQLStrings()
@@ -269,6 +271,11 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlDeleteList = builder.toString();
+  }
+
+  public Collection<IDBTable> getDBTables()
+  {
+    return Collections.singleton(table);
   }
 
   protected final IDBTable getTable()

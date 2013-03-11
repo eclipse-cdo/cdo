@@ -51,7 +51,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
@@ -66,8 +66,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -102,24 +102,23 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
   private IDBTable table;
 
   /**
-   * The tags mapped to column names
+   * Column names.
    */
-  private Map<CDOID, String> tagMap;
-
-  /**
-   * Column name Set
-   */
-  private List<String> columnNames;
+  private List<String> columnNames = new ArrayList<String>();
 
   /**
    * The type mappings for the value fields.
    */
-  private Map<CDOID, ITypeMapping> typeMappings;
+  private Map<CDOID, ITypeMapping> typeMappings = CDOIDUtil.createMap();
+
+  /**
+   * The tags mapped to column names
+   */
+  private Map<CDOID, String> tagMap = CDOIDUtil.createMap();
 
   private List<DBType> dbTypes;
 
   // --------- SQL strings - see initSQLStrings() -----------------
-
   private String sqlSelectChunksPrefix;
 
   private String sqlOrderByIndex;
@@ -156,44 +155,49 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
 
   private void initTable()
   {
+    String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
     IDBStore store = getMappingStrategy().getStore();
     DBType idType = store.getIDHandler().getDBType();
     int idLength = store.getIDColumnLength();
 
-    String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
-    table = store.getDBSchema().addTable(tableName);
+    IDBDatabase database = getMappingStrategy().getStore().getDatabase();
+    table = database.getSchema().getTable(tableName);
+    if (table == null)
+    {
+      table = database.getSchemaTransaction().getWorkingCopy().addTable(tableName);
+      table.addField(FEATUREMAP_REVISION_ID, idType, idLength);
+      table.addField(FEATUREMAP_VERSION_ADDED, DBType.INTEGER);
+      table.addField(FEATUREMAP_VERSION_REMOVED, DBType.INTEGER);
+      table.addField(FEATUREMAP_IDX, DBType.INTEGER);
+      table.addField(FEATUREMAP_TAG, idType, idLength);
 
-    // add fields for CDOID
-    IDBField idField = table.addField(FEATUREMAP_REVISION_ID, idType, idLength);
+      initTypeColumns(true);
 
-    // add fields for version range
-    IDBField versionAddedField = table.addField(FEATUREMAP_VERSION_ADDED, DBType.INTEGER);
-    IDBField versionRemovedField = table.addField(FEATUREMAP_VERSION_REMOVED, DBType.INTEGER);
+      // TODO think about indices
+      table.addIndex(Type.NON_UNIQUE, FEATUREMAP_REVISION_ID);
+      table.addIndex(Type.NON_UNIQUE, FEATUREMAP_VERSION_ADDED);
+      table.addIndex(Type.NON_UNIQUE, FEATUREMAP_VERSION_REMOVED);
+      table.addIndex(Type.NON_UNIQUE, FEATUREMAP_IDX);
+      table.addIndex(Type.NON_UNIQUE, FEATUREMAP_TAG);
+    }
+    else
+    {
+      initTypeColumns(false);
+    }
+  }
 
-    // add field for list index
-    IDBField idxField = table.addField(FEATUREMAP_IDX, DBType.INTEGER);
-
-    // add field for FeatureMap tag (MetaID for Feature in CDO registry)
-    IDBField tagField = table.addField(FEATUREMAP_TAG, idType, idLength);
-
-    tagMap = CDOIDUtil.createMap();
-    typeMappings = CDOIDUtil.createMap();
-    columnNames = new ArrayList<String>();
-
-    // create columns for all DBTypes
+  private void initTypeColumns(boolean create)
+  {
     for (DBType type : getDBTypes())
     {
       String column = FEATUREMAP_VALUE + "_" + type.name();
-      table.addField(column, type);
+      if (create)
+      {
+        table.addField(column, type);
+      }
+
       columnNames.add(column);
     }
-
-    // TODO think about indices
-    table.addIndex(Type.NON_UNIQUE, idField);
-    table.addIndex(Type.NON_UNIQUE, versionAddedField);
-    table.addIndex(Type.NON_UNIQUE, versionRemovedField);
-    table.addIndex(Type.NON_UNIQUE, idxField);
-    table.addIndex(Type.NON_UNIQUE, tagField);
   }
 
   private void initSQLStrings()
@@ -361,7 +365,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
 
   public Collection<IDBTable> getDBTables()
   {
-    return Arrays.asList(table);
+    return Collections.singleton(table);
   }
 
   protected final IDBTable getTable()

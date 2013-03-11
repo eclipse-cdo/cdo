@@ -15,19 +15,19 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.spi.db.DBSchema;
+import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 
 /**
  * @author Eike Stepper
  */
-public class CDODBSchema extends DBSchema
+public class CDODBSchema
 {
-  public static final CDODBSchema INSTANCE = new CDODBSchema();
-
-  private static final long serialVersionUID = 1L;
+  public static final IDBSchema INSTANCE = DBUtil.createSchema("CDO");
 
   /**
    * DBTable cdo_properties
@@ -198,13 +198,8 @@ public class CDODBSchema extends DBSchema
    */
   public static final String CDO_OBJECTS = "cdo_objects"; //$NON-NLS-1$
 
-  private CDODBSchema()
-  {
-    super("CDO"); //$NON-NLS-1$
-  }
-
   static
   {
-    INSTANCE.lock();
+    ((InternalDBSchema)INSTANCE).lock();
   }
 }

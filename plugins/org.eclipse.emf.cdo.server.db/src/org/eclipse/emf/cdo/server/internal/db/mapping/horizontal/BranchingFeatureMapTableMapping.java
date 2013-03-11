@@ -16,7 +16,6 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
@@ -31,6 +30,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * This is a featuremap-table mapping for audit mode. It has ID and version columns and no delta support.
@@ -41,8 +41,6 @@ import java.sql.SQLException;
  */
 public class BranchingFeatureMapTableMapping extends AbstractFeatureMapTableMapping
 {
-  private FieldInfo[] keyFields;
-
   private String sqlClear;
 
   public BranchingFeatureMapTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
@@ -68,18 +66,10 @@ public class BranchingFeatureMapTableMapping extends AbstractFeatureMapTableMapp
   }
 
   @Override
-  protected FieldInfo[] getKeyFields()
+  protected void addKeyFields(List<FieldInfo> list)
   {
-    if (keyFields == null)
-    {
-      IDBStore store = getMappingStrategy().getStore();
-
-      keyFields = new FieldInfo[] {
-          new FieldInfo(FEATUREMAP_REVISION_ID, store.getIDHandler().getDBType(), store.getIDColumnLength()),
-          new FieldInfo(FEATUREMAP_BRANCH, DBType.INTEGER), new FieldInfo(FEATUREMAP_VERSION, DBType.INTEGER) };
-    }
-
-    return keyFields;
+    list.add(new FieldInfo(FEATUREMAP_BRANCH, DBType.INTEGER));
+    list.add(new FieldInfo(FEATUREMAP_VERSION, DBType.INTEGER));
   }
 
   @Override

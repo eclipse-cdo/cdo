@@ -45,6 +45,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -89,21 +90,16 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     }
   };
 
-  public HorizontalAuditClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass, boolean create)
+  public HorizontalAuditClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
-    super(mappingStrategy, eClass, create);
-
+    super(mappingStrategy, eClass);
     initSQLStrings();
   }
 
   private void initSQLStrings()
   {
-    Map<EStructuralFeature, String> unsettableFields = getUnsettableFields();
-    Map<EStructuralFeature, String> listSizeFields = getListSizeFields();
-
     // ----------- Select Revision ---------------------------
     StringBuilder builder = new StringBuilder();
-
     builder.append("SELECT "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_VERSION);
     builder.append(", "); //$NON-NLS-1$
@@ -116,68 +112,38 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     builder.append(ATTRIBUTES_CONTAINER);
     builder.append(", "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_FEATURE);
-
-    for (ITypeMapping singleMapping : getValueMappings())
-    {
-      builder.append(", "); //$NON-NLS-1$
-      builder.append(singleMapping.getField());
-    }
-
-    if (unsettableFields != null)
-    {
-      for (String fieldName : unsettableFields.values())
-      {
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(fieldName);
-      }
-    }
-
-    if (listSizeFields != null)
-    {
-      for (String fieldName : listSizeFields.values())
-      {
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(fieldName);
-      }
-    }
-
+    appendTypeMappingNames(builder, getValueMappings());
+    appendFieldNames(builder, getUnsettableFields());
+    appendFieldNames(builder, getListSizeFields());
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_ID);
     builder.append("=? AND ("); //$NON-NLS-1$
-
     String sqlSelectAttributesPrefix = builder.toString();
-
     builder.append(ATTRIBUTES_REVISED);
     builder.append("=0)"); //$NON-NLS-1$
-
     sqlSelectCurrentAttributes = builder.toString();
 
     builder = new StringBuilder(sqlSelectAttributesPrefix);
-
     builder.append(ATTRIBUTES_CREATED);
     builder.append("<=? AND ("); //$NON-NLS-1$
     builder.append(ATTRIBUTES_REVISED);
     builder.append("=0 OR "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_REVISED);
     builder.append(">=?))"); //$NON-NLS-1$
-
     sqlSelectAttributesByTime = builder.toString();
 
     builder = new StringBuilder(sqlSelectAttributesPrefix);
-
     builder.append("ABS(");
     builder.append(ATTRIBUTES_VERSION);
     builder.append(")=?)"); //$NON-NLS-1$
-
     sqlSelectAttributesByVersion = builder.toString();
 
     // ----------- Insert Attributes -------------------------
     builder = new StringBuilder();
     builder.append("INSERT INTO "); //$NON-NLS-1$
     builder.append(getTable());
-
     builder.append("("); //$NON-NLS-1$
     builder.append(ATTRIBUTES_ID);
     builder.append(", "); //$NON-NLS-1$
@@ -192,54 +158,13 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     builder.append(ATTRIBUTES_CONTAINER);
     builder.append(", "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_FEATURE);
-
-    for (ITypeMapping singleMapping : getValueMappings())
-    {
-      builder.append(", "); //$NON-NLS-1$
-      builder.append(singleMapping.getField());
-    }
-
-    if (unsettableFields != null)
-    {
-      for (String fieldName : unsettableFields.values())
-      {
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(fieldName);
-      }
-    }
-
-    if (listSizeFields != null)
-    {
-      for (String fieldName : listSizeFields.values())
-      {
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(fieldName);
-      }
-    }
-
+    appendTypeMappingNames(builder, getValueMappings());
+    appendFieldNames(builder, getUnsettableFields());
+    appendFieldNames(builder, getListSizeFields());
     builder.append(") VALUES (?, ?, ?, ?, ?, ?, ?"); //$NON-NLS-1$
-
-    for (int i = 0; i < getValueMappings().size(); i++)
-    {
-      builder.append(", ?"); //$NON-NLS-1$
-    }
-
-    if (unsettableFields != null)
-    {
-      for (int i = 0; i < unsettableFields.size(); i++)
-      {
-        builder.append(", ?"); //$NON-NLS-1$
-      }
-    }
-
-    if (listSizeFields != null)
-    {
-      for (int i = 0; i < listSizeFields.size(); i++)
-      {
-        builder.append(", ?"); //$NON-NLS-1$
-      }
-    }
-
+    appendTypeMappingParameters(builder, getValueMappings());
+    appendFieldParameters(builder, getUnsettableFields());
+    appendFieldParameters(builder, getListSizeFields());
     builder.append(")"); //$NON-NLS-1$
     sqlInsertAttributes = builder.toString();
 
@@ -491,7 +416,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
         mapping.setValueFromRevision(stmt, column++, revision);
       }
 
-      Map<EStructuralFeature, String> listSizeFields = getListSizeFields();
+      Map<EStructuralFeature, IDBField> listSizeFields = getListSizeFields();
       if (listSizeFields != null)
       {
         // isSetCol now points to the first listTableSize-column
@@ -551,7 +476,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
         mapping.setDefaultValue(stmt, column++);
       }
 
-      Map<EStructuralFeature, String> listSizeFields = getListSizeFields();
+      Map<EStructuralFeature, IDBField> listSizeFields = getListSizeFields();
       if (listSizeFields != null)
       {
         // list size columns begin after isSet-columns

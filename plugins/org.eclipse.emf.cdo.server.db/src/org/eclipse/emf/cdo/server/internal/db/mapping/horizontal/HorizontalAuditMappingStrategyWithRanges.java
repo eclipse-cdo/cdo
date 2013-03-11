@@ -35,9 +35,9 @@ public class HorizontalAuditMappingStrategyWithRanges extends HorizontalAuditMap
   }
 
   @Override
-  protected IClassMapping doCreateClassMapping(EClass eClass, boolean create)
+  protected IClassMapping doCreateClassMapping(EClass eClass)
   {
-    return new HorizontalAuditClassMapping(this, eClass, create);
+    return new HorizontalAuditClassMapping(this, eClass);
   }
 
   @Override

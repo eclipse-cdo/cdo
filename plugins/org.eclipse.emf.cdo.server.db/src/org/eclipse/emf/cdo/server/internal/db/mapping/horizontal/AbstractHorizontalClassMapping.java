@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -27,7 +26,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
-import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
@@ -45,9 +43,9 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
-import org.eclipse.net4j.db.IDBDatabase.RunnableWithTable;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -66,6 +64,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -91,80 +90,143 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
   private List<IListMapping> listMappings;
 
-  private Map<EStructuralFeature, String> listSizeFields;
+  private Map<EStructuralFeature, IDBField> listSizeFields;
 
-  private Map<EStructuralFeature, String> unsettableFields;
+  private Map<EStructuralFeature, IDBField> unsettableFields;
 
   private String sqlSelectForHandle;
 
   private String sqlSelectForChangeSet;
 
-  public AbstractHorizontalClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass, boolean create)
+  public AbstractHorizontalClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
     this.mappingStrategy = mappingStrategy;
     this.eClass = eClass;
+
     initTable();
-
-    CDOClassInfo classInfo = CDOModelUtil.getClassInfo(eClass);
-    EStructuralFeature[] allPersistentFeatures = classInfo.getAllPersistentFeatures();
-    initFeatures(allPersistentFeatures);
-
+    initFields();
     initSQLStrings();
   }
 
   private void initTable()
   {
-    final IDBStore store = getMappingStrategy().getStore();
-    final DBType idType = store.getIDHandler().getDBType();
-    final int idLength = store.getIDColumnLength();
-    final String name = getMappingStrategy().getTableName(eClass);
+    final String tableName = mappingStrategy.getTableName(eClass);
+    final DBType idType = mappingStrategy.getStore().getIDHandler().getDBType();
+    final int idLength = mappingStrategy.getStore().getIDColumnLength();
 
-    IDBDatabase database = store.getDatabase();
-    table = database.ensureTable(name, new RunnableWithTable()
+    IDBDatabase database = mappingStrategy.getStore().getDatabase();
+    table = database.getSchema().getTable(tableName);
+    if (table == null)
     {
-      public void run(IDBTable table)
+      IDBSchema workingCopy = database.getSchemaTransaction().getWorkingCopy();
+      table = workingCopy.addTable(tableName);
+      table.addField(ATTRIBUTES_ID, idType, idLength, true);
+      table.addField(ATTRIBUTES_VERSION, DBType.INTEGER, true);
+
+      IDBField branchField = addBranchField(table);
+
+      table.addField(ATTRIBUTES_CREATED, DBType.BIGINT, true);
+      table.addField(ATTRIBUTES_REVISED, DBType.BIGINT, true);
+      table.addField(ATTRIBUTES_RESOURCE, idType, idLength, true);
+      table.addField(ATTRIBUTES_CONTAINER, idType, idLength, true);
+      table.addField(ATTRIBUTES_FEATURE, DBType.INTEGER, true);
+
+      IDBIndex primaryKey = table.addIndex(IDBIndex.Type.PRIMARY_KEY, ATTRIBUTES_ID, ATTRIBUTES_VERSION);
+      if (branchField != null)
       {
-        IDBField idField = table.addField(ATTRIBUTES_ID, idType, idLength, true);
-        IDBField versionField = table.addField(ATTRIBUTES_VERSION, DBType.INTEGER, true);
-
-        IDBField branchField = addBranchingField(table);
-
-        table.addField(ATTRIBUTES_CREATED, DBType.BIGINT, true);
-        IDBField revisedField = table.addField(ATTRIBUTES_REVISED, DBType.BIGINT, true);
-        table.addField(ATTRIBUTES_RESOURCE, idType, idLength, true);
-        table.addField(ATTRIBUTES_CONTAINER, idType, idLength, true);
-        table.addField(ATTRIBUTES_FEATURE, DBType.INTEGER, true);
-
-        if (branchField != null)
-        {
-          table.addIndex(IDBIndex.Type.PRIMARY_KEY, idField, versionField, branchField);
-        }
-        else
-        {
-          table.addIndex(IDBIndex.Type.PRIMARY_KEY, idField, versionField);
-        }
-
-        table.addIndex(IDBIndex.Type.NON_UNIQUE, idField, revisedField);
+        primaryKey.addIndexField(branchField);
       }
-    });
+
+      table.addIndex(IDBIndex.Type.NON_UNIQUE, ATTRIBUTES_ID, ATTRIBUTES_REVISED);
+    }
   }
 
-  protected IDBField addBranchingField(IDBTable table)
+  private void initFields()
   {
-    return null;
-  }
-
-  private void initFeatures(EStructuralFeature[] features)
-  {
-    if (features == null)
+    final EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getClassInfo(eClass).getAllPersistentFeatures();
+    if (allPersistentFeatures == null)
     {
       valueMappings = Collections.emptyList();
       listMappings = Collections.emptyList();
     }
     else
     {
-      valueMappings = createValueMappings(features);
-      listMappings = createListMappings(features);
+      valueMappings = new ArrayList<ITypeMapping>();
+      listMappings = new ArrayList<IListMapping>();
+
+      boolean hasUnsettableFeatures = false;
+      for (EStructuralFeature feature : allPersistentFeatures)
+      {
+        String fieldName = mappingStrategy.getFieldName(feature);
+        if (feature.isMany())
+        {
+          IListMapping mapping = null;
+          if (FeatureMapUtil.isFeatureMap(feature))
+          {
+            mapping = mappingStrategy.createFeatureMapMapping(eClass, feature);
+          }
+          else
+          {
+            mapping = mappingStrategy.createListMapping(eClass, feature);
+          }
+
+          listMappings.add(mapping);
+
+          // Add field for list sizes
+          if (listSizeFields == null)
+          {
+            listSizeFields = new LinkedHashMap<EStructuralFeature, IDBField>();
+          }
+
+          IDBField field = table.getField(fieldName);
+          if (field == null)
+          {
+            field = table.addField(fieldName, DBType.INTEGER);
+          }
+
+          listSizeFields.put(feature, field);
+        }
+        else
+        {
+          ITypeMapping mapping = mappingStrategy.createValueMapping(feature);
+          IDBField field = table.getField(fieldName);
+          if (field == null)
+          {
+            mapping.createDBField(table, fieldName);
+          }
+          else
+          {
+            mapping.setDBField(table, fieldName);
+          }
+
+          valueMappings.add(mapping);
+
+          if (feature.isUnsettable())
+          {
+            hasUnsettableFeatures = true;
+          }
+        }
+      }
+
+      // Add unsettable fields to end of table
+      if (hasUnsettableFeatures)
+      {
+        unsettableFields = new LinkedHashMap<EStructuralFeature, IDBField>();
+        for (EStructuralFeature feature : allPersistentFeatures)
+        {
+          if (!feature.isMany() && feature.isUnsettable())
+          {
+            String fieldName = mappingStrategy.getUnsettableFieldName(feature);
+            IDBField field = table.getField(fieldName);
+            if (field == null)
+            {
+              field = table.addField(fieldName, DBType.BOOLEAN);
+            }
+
+            unsettableFields.put(feature, field);
+          }
+        }
+      }
     }
   }
 
@@ -176,95 +238,21 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     builder.append(", "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_VERSION);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable());
+    builder.append(table);
     sqlSelectForHandle = builder.toString();
 
     // ----------- Select all revisions (for readChangeSet) ---
     builder = new StringBuilder("SELECT DISTINCT "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable());
+    builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
     sqlSelectForChangeSet = builder.toString();
   }
 
-  private List<ITypeMapping> createValueMappings(EStructuralFeature[] features)
+  protected IDBField addBranchField(IDBTable table)
   {
-    List<ITypeMapping> mappings = new ArrayList<ITypeMapping>();
-    for (EStructuralFeature feature : features)
-    {
-      if (!feature.isMany())
-      {
-        ITypeMapping mapping = mappingStrategy.createValueMapping(feature);
-        mapping.createDBField(getTable());
-        mappings.add(mapping);
-
-        if (feature.isUnsettable())
-        {
-          String fieldName = mappingStrategy.getUnsettableFieldName(feature);
-          if (unsettableFields == null)
-          {
-            unsettableFields = new LinkedHashMap<EStructuralFeature, String>();
-          }
-
-          unsettableFields.put(feature, fieldName);
-        }
-      }
-    }
-
-    // Add unsettable fields to end of table
-    if (unsettableFields != null)
-    {
-      for (String fieldName : unsettableFields.values())
-      {
-        table.addField(fieldName, DBType.BOOLEAN, 1);
-      }
-    }
-
-    return mappings;
-  }
-
-  private List<IListMapping> createListMappings(EStructuralFeature[] features)
-  {
-    List<IListMapping> listMappings = new ArrayList<IListMapping>();
-    for (EStructuralFeature feature : features)
-    {
-      if (feature.isMany())
-      {
-        IListMapping mapping = null;
-        if (FeatureMapUtil.isFeatureMap(feature))
-        {
-          mapping = mappingStrategy.createFeatureMapMapping(eClass, feature);
-        }
-        else
-        {
-          mapping = mappingStrategy.createListMapping(eClass, feature);
-        }
-
-        listMappings.add(mapping);
-
-        // Add field for list sizes
-        createListSizeField(feature);
-      }
-    }
-
-    return listMappings;
-  }
-
-  /**
-   * Create an integer field in the attribute tabel for the list size of the associated list mapping.
-   */
-  private void createListSizeField(EStructuralFeature feature)
-  {
-    if (listSizeFields == null)
-    {
-      listSizeFields = new LinkedHashMap<EStructuralFeature, String>();
-    }
-
-    String fieldName = mappingStrategy.getFieldName(feature);
-    table.addField(fieldName, DBType.INTEGER);
-
-    listSizeFields.put(feature, fieldName);
+    return null;
   }
 
   /**
@@ -316,7 +304,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         EStructuralFeature feature = mapping.getFeature();
         if (feature.isUnsettable())
         {
-          if (!resultSet.getBoolean(unsettableFields.get(feature)))
+          IDBField field = unsettableFields.get(feature);
+          if (!resultSet.getBoolean(field.getName()))
           {
             // isSet==false -- setValue: null
             revision.setValue(feature, null);
@@ -329,11 +318,11 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
       if (listSizeFields != null)
       {
-        for (Map.Entry<EStructuralFeature, String> listSizeEntry : listSizeFields.entrySet())
+        for (Map.Entry<EStructuralFeature, IDBField> listSizeEntry : listSizeFields.entrySet())
         {
           EStructuralFeature feature = listSizeEntry.getKey();
-          String fieldName = listSizeEntry.getValue();
-          int size = resultSet.getInt(fieldName);
+          IDBField field = listSizeEntry.getValue();
+          int size = resultSet.getInt(field.getName());
 
           // ensure the listSize (TODO: remove assertion)
           CDOList list = revision.getList(feature, size);
@@ -380,12 +369,12 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     return eClass;
   }
 
-  protected final Map<EStructuralFeature, String> getUnsettableFields()
+  protected final Map<EStructuralFeature, IDBField> getUnsettableFields()
   {
     return unsettableFields;
   }
 
-  protected final Map<EStructuralFeature, String> getListSizeFields()
+  protected final Map<EStructuralFeature, IDBField> getListSizeFields()
   {
     return listSizeFields;
   }
@@ -806,7 +795,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
   public final boolean queryXRefs(IDBStoreAccessor accessor, QueryXRefsContext context, String idString)
   {
-    String tableName = getTable().getName();
+    String tableName = table.getName();
     List<EReference> refs = context.getSourceCandidates().get(eClass);
     List<EReference> scalarRefs = new ArrayList<EReference>();
 
@@ -844,7 +833,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
   protected final boolean queryScalarXRefs(IDBStoreAccessor accessor, List<EReference> scalarRefs,
       QueryXRefsContext context, String idString)
   {
-    String tableName = getTable().getName();
+    String tableName = table.getName();
     String where = getListXRefsWhere(context);
 
     for (EReference ref : scalarRefs)
@@ -926,4 +915,50 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
   protected abstract void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long timeStamp);
 
   protected abstract void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision);
+
+  protected static void appendTypeMappingNames(StringBuilder builder, Collection<ITypeMapping> typeMappings)
+  {
+    if (typeMappings != null)
+    {
+      for (ITypeMapping typeMapping : typeMappings)
+      {
+        builder.append(", "); //$NON-NLS-1$
+        builder.append(typeMapping.getField());
+      }
+    }
+  }
+
+  protected static void appendFieldNames(StringBuilder builder, Map<EStructuralFeature, IDBField> fields)
+  {
+    if (fields != null)
+    {
+      for (IDBField field : fields.values())
+      {
+        builder.append(", "); //$NON-NLS-1$
+        builder.append(field);
+      }
+    }
+  }
+
+  protected static void appendTypeMappingParameters(StringBuilder builder, Collection<ITypeMapping> typeMappings)
+  {
+    if (typeMappings != null)
+    {
+      for (int i = 0; i < typeMappings.size(); i++)
+      {
+        builder.append(", ?"); //$NON-NLS-1$
+      }
+    }
+  }
+
+  protected static void appendFieldParameters(StringBuilder builder, Map<EStructuralFeature, IDBField> fields)
+  {
+    if (fields != null)
+    {
+      for (int i = 0; i < fields.size(); i++)
+      {
+        builder.append(", ?"); //$NON-NLS-1$
+      }
+    }
+  }
 }

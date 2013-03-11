@@ -22,20 +22,20 @@ public final class FieldInfo
 {
   private final String name;
 
-  private final DBType dbType;
+  private final DBType type;
 
   private final int precision;
 
-  public FieldInfo(String name, DBType dbType, int precision)
+  public FieldInfo(String name, DBType type, int precision)
   {
     this.name = name;
-    this.dbType = dbType;
+    this.type = type;
     this.precision = precision;
   }
 
-  public FieldInfo(String name, DBType dbType)
+  public FieldInfo(String name, DBType type)
   {
-    this(name, dbType, IDBField.DEFAULT);
+    this(name, type, IDBField.DEFAULT);
   }
 
   public String getName()
@@ -43,13 +43,19 @@ public final class FieldInfo
     return name;
   }
 
-  public DBType getDbType()
+  public DBType getType()
   {
-    return dbType;
+    return type;
   }
 
   public int getPrecision()
   {
     return precision;
+  }
+
+  @Override
+  public String toString()
+  {
+    return "FieldInfo[name=" + name + ", type=" + type + ", precision=" + precision + "]";
   }
 }

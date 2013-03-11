@@ -201,9 +201,9 @@ public class RepositoryTest extends AbstractCDOTest
 
     resource.getContents().add(createCustomer("Martin"));
     transaction.commit();
+
     resource.getContents().add(createCustomer("Nick"));
     transaction.commit();
-    session.close();
   }
 
   public void testWriteAccessHandlers_WithServerCDOView() throws Exception
@@ -261,9 +261,9 @@ public class RepositoryTest extends AbstractCDOTest
 
     resource.getContents().add(createCustomer("Martin"));
     transaction.commit();
+
     resource.getContents().add(createCustomer("Nick"));
     transaction.commit();
-    session.close();
   }
 
   public void testObjectWriteAccessHandler() throws Exception

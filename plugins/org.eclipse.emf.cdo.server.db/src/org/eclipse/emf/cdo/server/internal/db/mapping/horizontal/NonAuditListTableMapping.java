@@ -26,7 +26,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
-import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
@@ -38,6 +37,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -51,6 +51,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
 
 /**
@@ -62,8 +63,6 @@ import java.util.ListIterator;
 public class NonAuditListTableMapping extends AbstractListTableMapping implements IListMappingDeltaSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, NonAuditListTableMapping.class);
-
-  private FieldInfo[] keyFields;
 
   private static final int UNBOUNDED_SHIFT = -1;
 
@@ -91,21 +90,20 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
   private void initSQLStrings()
   {
+    IDBTable table = getTable();
+
     // ----------- clear list -------------------------
     StringBuilder builder = new StringBuilder();
-
     builder.append("DELETE FROM "); //$NON-NLS-1$
-    builder.append(getTable());
+    builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(LIST_REVISION_ID);
-    builder.append("=? "); //$NON-NLS-1$
-
+    builder.append("=?"); //$NON-NLS-1$
     sqlClear = builder.toString();
 
     builder.append(" AND "); //$NON-NLS-1$
     builder.append(LIST_IDX);
-    builder.append("=? "); //$NON-NLS-1$
-
+    builder.append("=?"); //$NON-NLS-1$
     sqlDeleteItem = builder.toString();
 
     // ----------- update one item --------------------
@@ -119,7 +117,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
     builder.append(LIST_IDX);
-    builder.append("=? "); //$NON-NLS-1$
+    builder.append("=?"); //$NON-NLS-1$
     sqlUpdateValue = builder.toString();
 
     // ----------- insert one item --------------------
@@ -132,7 +130,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append(LIST_IDX);
     builder.append(", "); //$NON-NLS-1$
     builder.append(LIST_VALUE);
-    builder.append(") VALUES(?, ?, ?) "); //$NON-NLS-1$
+    builder.append(") VALUES(?, ?, ?)"); //$NON-NLS-1$
     sqlInsertValue = builder.toString();
 
     // ----------- update one item index --------------
@@ -146,7 +144,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
     builder.append(LIST_IDX);
-    builder.append("=? "); //$NON-NLS-1$
+    builder.append("=?"); //$NON-NLS-1$
     sqlUpdateIndex = builder.toString();
 
     // ----------- mass update item indexes --------------
@@ -162,12 +160,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append("=? AND "); //$NON-NLS-1$
     builder.append(LIST_IDX);
     builder.append(" BETWEEN ? AND ?"); //$NON-NLS-1$
-    // getMappingStrategy().getStore().getDBAdapter()
 
     // needed because of MySQL:
-    builder.append("/*! ORDER BY "); //$NON-NLS-1$ /
+    builder.append(" /*! ORDER BY "); //$NON-NLS-1$ /
     builder.append(LIST_IDX);
     sqlShiftDownIndex = builder.toString() + " */"; //$NON-NLS-1$
+
     builder.append(" DESC"); //$NON-NLS-1$
     sqlShiftUpIndex = builder.toString() + " */"; //$NON-NLS-1$
 
@@ -199,23 +197,16 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   }
 
   @Override
-  protected FieldInfo[] getKeyFields()
+  protected void addKeyFields(List<FieldInfo> list)
   {
-    if (keyFields == null)
-    {
-      IDBStore store = getMappingStrategy().getStore();
-
-      keyFields = new FieldInfo[] { new FieldInfo(LIST_REVISION_ID, store.getIDHandler().getDBType(),
-          store.getIDColumnLength()) };
-    }
-
-    return keyFields;
+    // Do nothing
   }
 
   @Override
   protected void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException
   {
-    getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, revision.getID());
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    idHandler.setCDOID(stmt, 1, revision.getID());
   }
 
   public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised)
@@ -233,13 +224,14 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
    */
   public void clearList(IDBStoreAccessor accessor, CDOID id)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
       stmt = statementCache.getPreparedStatement(sqlClear, ReuseProbability.HIGH);
-      getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, id);
+      idHandler.setCDOID(stmt, 1, id);
       DBUtil.update(stmt, false);
     }
     catch (SQLException e)
@@ -260,6 +252,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
   public int getCurrentIndexOffset(IDBStoreAccessor accessor, CDOID id)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
     ResultSet rset = null;
@@ -267,7 +260,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     try
     {
       stmt = statementCache.getPreparedStatement(sqlReadCurrentIndexOffset, ReuseProbability.HIGH);
-      getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, id);
+      idHandler.setCDOID(stmt, 1, id);
       rset = stmt.executeQuery();
       if (!rset.next())
       {
@@ -928,7 +921,6 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
        * to their proper position. This has to be done in two phases to avoid collisions, as the index has to be unique
        * and shift up operations have to be executed in top to bottom order.
        */
-
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
       int size = manipulations.size();
 

@@ -48,7 +48,6 @@ import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
@@ -615,7 +614,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
         migrateSchema(schemaVersion);
       }
 
-      CDODBSchema.INSTANCE.create(dbAdapter, connection);
+      // CDODBSchema.INSTANCE.create(dbAdapter, connection);
       connection.commit();
     }
     finally
@@ -822,12 +821,6 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
         pool.setCapacity(capacity);
       }
     }
-  }
-
-  protected IDBSchema createSchema()
-  {
-    String name = getRepository().getName();
-    return new DBSchema(name);
   }
 
   protected int selectSchemaVersion(Connection connection) throws SQLException

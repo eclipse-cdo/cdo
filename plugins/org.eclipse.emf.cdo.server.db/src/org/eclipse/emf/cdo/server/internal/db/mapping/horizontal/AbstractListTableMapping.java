@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
@@ -31,7 +32,9 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.collection.MoveableList;
@@ -45,8 +48,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -63,6 +67,8 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
    * The table of this mapping.
    */
   private IDBTable table;
+
+  private FieldInfo[] keyFields;
 
   /**
    * The type mapping for the value field.
@@ -85,42 +91,38 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
 
   private void initTable()
   {
-    IMappingStrategy mappingStrategy = getMappingStrategy();
-    String tableName = mappingStrategy.getTableName(getContainingClass(), getFeature());
-    table = mappingStrategy.getStore().getDBSchema().addTable(tableName);
+    String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
+    typeMapping = getMappingStrategy().createValueMapping(getFeature());
 
-    // add fields for keys (cdo_id, version, feature_id)
-    FieldInfo[] fields = getKeyFields();
-    IDBField[] dbFields = new IDBField[fields.length + 1];
-
-    for (int i = 0; i < fields.length; i++)
+    IDBDatabase database = getMappingStrategy().getStore().getDatabase();
+    table = database.getSchema().getTable(tableName);
+    if (table == null)
     {
-      dbFields[i] = table.addField(fields[i].getName(), fields[i].getDbType(), fields[i].getPrecision(), true);
+      table = database.getSchemaTransaction().getWorkingCopy().addTable(tableName);
+
+      IDBIndex primaryKey = table.addIndexEmpty(Type.PRIMARY_KEY);
+      for (FieldInfo info : getKeyFields())
+      {
+        IDBField field = table.addField(info.getName(), info.getType(), info.getPrecision(), true);
+        primaryKey.addIndexField(field);
+      }
+
+      // Add field for list index
+      IDBField field = table.addField(LIST_IDX, DBType.INTEGER, true);
+      primaryKey.addIndexField(field);
+
+      // Add field for value
+      typeMapping.createDBField(table, LIST_VALUE);
     }
-
-    // add field for list index
-    dbFields[dbFields.length - 1] = table.addField(LIST_IDX, DBType.INTEGER, true);
-
-    // add field for value
-    typeMapping = mappingStrategy.createValueMapping(getFeature());
-    typeMapping.createDBField(table, LIST_VALUE);
-
-    // add table indexes
-    table.addIndex(Type.PRIMARY_KEY, dbFields);
-  }
-
-  protected abstract FieldInfo[] getKeyFields();
-
-  protected abstract void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException;
-
-  public Collection<IDBTable> getDBTables()
-  {
-    return Arrays.asList(table);
+    else
+    {
+      typeMapping.setDBField(table, LIST_VALUE);
+    }
   }
 
   private void initSQLStrings()
   {
-    String tableName = getTable().getName();
+    String tableName = table.getName();
     FieldInfo[] fields = getKeyFields();
 
     // ---------------- SELECT to read chunks ----------------------------
@@ -172,6 +174,34 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
 
     builder.append(" ?, ?)"); //$NON-NLS-1$
     sqlInsertEntry = builder.toString();
+  }
+
+  protected final FieldInfo[] getKeyFields()
+  {
+    if (keyFields == null)
+    {
+      List<FieldInfo> list = new ArrayList<FieldInfo>(3);
+
+      IDBStore store = getMappingStrategy().getStore();
+      DBType type = store.getIDHandler().getDBType();
+      int precision = store.getIDColumnLength();
+      list.add(new FieldInfo(LIST_REVISION_ID, type, precision));
+
+      addKeyFields(list);
+
+      keyFields = list.toArray(new FieldInfo[list.size()]);
+    }
+
+    return keyFields;
+  }
+
+  protected abstract void addKeyFields(List<FieldInfo> list);
+
+  protected abstract void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException;
+
+  public Collection<IDBTable> getDBTables()
+  {
+    return Collections.singleton(table);
   }
 
   protected final IDBTable getTable()
@@ -382,7 +412,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
   public boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere,
       QueryXRefsContext context, String idString)
   {
-    String tableName = getTable().getName();
+    String tableName = table.getName();
     String listJoin = getMappingStrategy().getListJoin("a_t", "l_t");
 
     StringBuilder builder = new StringBuilder();

@@ -26,7 +26,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
-import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
@@ -46,6 +45,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * This is a featuremap-to-table mapping optimized for non-audit-mode. It doesn't care about version and has delta
@@ -56,8 +56,6 @@ import java.util.Iterator;
  */
 public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMapping implements IListMappingDeltaSupport
 {
-  private FieldInfo[] keyFields;
-
   private static final int TEMP_INDEX = -1;
 
   private static final int UNBOUNDED_MOVE = -1;
@@ -191,17 +189,9 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
   }
 
   @Override
-  protected FieldInfo[] getKeyFields()
+  protected void addKeyFields(List<FieldInfo> list)
   {
-    if (keyFields == null)
-    {
-      IDBStore store = getMappingStrategy().getStore();
-
-      keyFields = new FieldInfo[] { new FieldInfo(FEATUREMAP_REVISION_ID, store.getIDHandler().getDBType(),
-          store.getIDColumnLength()) };
-    }
-
-    return keyFields;
+    // Do nothing
   }
 
   @Override

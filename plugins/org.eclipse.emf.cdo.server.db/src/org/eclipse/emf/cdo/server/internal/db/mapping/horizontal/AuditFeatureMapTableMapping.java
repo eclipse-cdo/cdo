@@ -15,8 +15,8 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * This is a featuremap-table mapping for audit mode. It has ID and version columns and no delta support.
@@ -39,8 +40,6 @@ import java.sql.SQLException;
  */
 public class AuditFeatureMapTableMapping extends AbstractFeatureMapTableMapping
 {
-  private FieldInfo[] keyFields;
-
   private String sqlClear;
 
   public AuditFeatureMapTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
@@ -64,24 +63,16 @@ public class AuditFeatureMapTableMapping extends AbstractFeatureMapTableMapping
   }
 
   @Override
-  protected FieldInfo[] getKeyFields()
+  protected void addKeyFields(List<FieldInfo> list)
   {
-    if (keyFields == null)
-    {
-      IDBStore store = getMappingStrategy().getStore();
-
-      keyFields = new FieldInfo[] {
-          new FieldInfo(FEATUREMAP_REVISION_ID, store.getIDHandler().getDBType(), store.getIDColumnLength()),
-          new FieldInfo(FEATUREMAP_VERSION, DBType.INTEGER) };
-    }
-
-    return keyFields;
+    list.add(new FieldInfo(FEATUREMAP_VERSION, DBType.INTEGER));
   }
 
   @Override
   protected void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException
   {
-    getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, revision.getID());
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    idHandler.setCDOID(stmt, 1, revision.getID());
     stmt.setInt(2, revision.getVersion());
   }
 
@@ -93,13 +84,14 @@ public class AuditFeatureMapTableMapping extends AbstractFeatureMapTableMapping
   @Override
   public void rawDeleted(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
       stmt = statementCache.getPreparedStatement(sqlClear, ReuseProbability.HIGH);
-      getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, id);
+      idHandler.setCDOID(stmt, 1, id);
       stmt.setInt(2, version);
       DBUtil.update(stmt, false);
     }

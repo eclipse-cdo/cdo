@@ -63,9 +63,9 @@ public class HorizontalNonAuditMappingStrategy extends AbstractHorizontalMapping
   }
 
   @Override
-  protected IClassMapping doCreateClassMapping(EClass eClass, boolean create)
+  protected IClassMapping doCreateClassMapping(EClass eClass)
   {
-    return new HorizontalNonAuditClassMapping(this, eClass, create);
+    return new HorizontalNonAuditClassMapping(this, eClass);
   }
 
   @Override

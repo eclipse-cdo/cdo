@@ -29,9 +29,9 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
-import org.eclipse.net4j.db.IDBDatabase.RunnableWithTable;
-import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema;
 import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -50,15 +50,17 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class ExternalReferenceManager extends Lifecycle
 {
+  private static final String EXTERNAL_REFS = "cdo_external_refs";
+
+  private static final String EXTERNAL_REFS_ID = "ID";
+
+  private static final String EXTERNAL_REFS_URI = "URI";
+
+  private static final String EXTERNAL_REFS_COMMITTIME = "COMMITTIME";
+
   private static final int NULL = 0;
 
   private IDBTable table;
-
-  private IDBField idField;
-
-  private IDBField uriField;
-
-  private IDBField timestampField;
 
   private final IIDHandler idHandler;
 
@@ -173,7 +175,7 @@ public class ExternalReferenceManager extends Lifecycle
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
       throws IOException
   {
-    String where = " WHERE " + timestampField + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
+    String where = " WHERE " + EXTERNAL_REFS_COMMITTIME + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, table, null, where);
   }
 
@@ -191,85 +193,61 @@ public class ExternalReferenceManager extends Lifecycle
     final IDBStore store = idHandler.getStore();
     IDBDatabase database = store.getDatabase();
 
-    table = database.ensureTable("cdo_external_refs", new RunnableWithTable()
+    table = database.getSchema().getTable(EXTERNAL_REFS);
+    if (table == null)
     {
-      public void run(IDBTable table)
+      database.updateSchema(new RunnableWithSchema()
       {
-        IDBField idField = table.addField("id", idHandler.getDBType(), store.getIDColumnLength(), true); //$NON-NLS-1$
-        IDBField uriField = table.addField("uri", DBType.VARCHAR, 1024); //$NON-NLS-1$
-        table.addField("committime", DBType.BIGINT); //$NON-NLS-1$
-        table.addIndex(IDBIndex.Type.PRIMARY_KEY, idField);
-        table.addIndex(IDBIndex.Type.NON_UNIQUE, uriField);
-      }
-    });
-
-    idField = table.getField(0);
-    uriField = table.getField(1);
-    timestampField = table.getField(2);
-
-    IDBStoreAccessor writer = store.getWriter(null);
-    Connection connection = writer.getConnection();
-    Statement statement = null;
-    ResultSet resultSet = null;
-
-    try
+        public void run(IDBSchema schema)
+        {
+          table = schema.addTable(EXTERNAL_REFS);
+          table.addField(EXTERNAL_REFS_ID, idHandler.getDBType(), store.getIDColumnLength(), true);
+          table.addField(EXTERNAL_REFS_URI, DBType.VARCHAR, 1024);
+          table.addField(EXTERNAL_REFS_COMMITTIME, DBType.BIGINT);
+          table.addIndex(IDBIndex.Type.PRIMARY_KEY, EXTERNAL_REFS_ID);
+          table.addIndex(IDBIndex.Type.NON_UNIQUE, EXTERNAL_REFS_URI);
+        }
+      });
+    }
+    else
     {
-      statement = connection.createStatement();
+      IDBStoreAccessor writer = store.getWriter(null);
+      Connection connection = writer.getConnection();
+      Statement statement = null;
+      ResultSet resultSet = null;
 
-      String sql = "SELECT MIN(" + idField + ") FROM " + table;
-      resultSet = statement.executeQuery(sql);
-
-      if (resultSet.next())
+      try
       {
-        lastMappedID.set(resultSet.getLong(1));
+        statement = connection.createStatement();
+
+        String sql = "SELECT MIN(" + EXTERNAL_REFS_ID + ") FROM " + table;
+        resultSet = statement.executeQuery(sql);
+
+        if (resultSet.next())
+        {
+          lastMappedID.set(resultSet.getLong(1));
+        }
+
+        // else: resultSet is empty => table is empty
+        // and lastMappedId stays 0 - as initialized.
       }
-
-      // else: resultSet is empty => table is empty
-      // and lastMappedId stays 0 - as initialized.
-    }
-    catch (SQLException ex)
-    {
-      connection.rollback();
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
-      DBUtil.close(statement);
-      writer.release();
+      catch (SQLException ex)
+      {
+        connection.rollback();
+        throw new DBException(ex);
+      }
+      finally
+      {
+        DBUtil.close(resultSet);
+        DBUtil.close(statement);
+        writer.release();
+      }
     }
 
-    StringBuilder builder = new StringBuilder();
-    builder.append("INSERT INTO ");
-    builder.append(table);
-    builder.append("(");
-    builder.append(idField);
-    builder.append(",");
-    builder.append(uriField);
-    builder.append(",");
-    builder.append(timestampField);
-    builder.append(") VALUES (?, ?, ?)");
-    sqlInsert = builder.toString();
-
-    builder = new StringBuilder();
-    builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(uriField);
-    builder.append("=?"); //$NON-NLS-1$
-    sqlSelectByURI = builder.toString();
-
-    builder = new StringBuilder();
-    builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(uriField);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append("=?"); //$NON-NLS-1$
-    sqlSelectByLongID = builder.toString();
+    sqlInsert = "INSERT INTO " + table + "(" + EXTERNAL_REFS_ID + "," + EXTERNAL_REFS_URI + ","
+        + EXTERNAL_REFS_COMMITTIME + ") VALUES (?, ?, ?)";
+    sqlSelectByURI = "SELECT " + EXTERNAL_REFS_ID + " FROM " + table + " WHERE " + EXTERNAL_REFS_URI + "=?";
+    sqlSelectByLongID = "SELECT " + EXTERNAL_REFS_URI + " FROM " + table + " WHERE " + EXTERNAL_REFS_ID + "=?";
   }
 
   private long insertNew(IDBStoreAccessor accessor, String uri, long commitTime)

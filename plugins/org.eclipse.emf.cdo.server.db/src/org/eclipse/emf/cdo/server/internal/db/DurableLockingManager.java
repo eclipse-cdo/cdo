@@ -31,9 +31,9 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
-import org.eclipse.net4j.db.IDBDatabase.RunnableWithTable;
-import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema;
 import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -53,31 +53,35 @@ import java.util.Map.Entry;
  */
 public class DurableLockingManager extends Lifecycle
 {
+  private static final String LOCK_AREAS = "CDO_LOCK_AREAS";
+
+  private static final String LOCK_AREAS_ID = "ID";
+
+  private static final String LOCK_AREAS_USER_ID = "USER_ID";
+
+  private static final String LOCK_AREAS_VIEW_BRANCH = "VIEW_BRANCH";
+
+  private static final String LOCK_AREAS_VIEW_TIME = "VIEW_TIME";
+
+  private static final String LOCK_AREAS_READ_ONLY = "READ_ONLY";
+
+  private static final String LOCKS = "CDO_LOCKS";
+
+  private static final String LOCKS_AREA_ID = "AREA_ID";
+
+  private static final String LOCKS_OBJECT_ID = "OBJECT_ID";
+
+  private static final String LOCKS_LOCK_GRADE = "LOCK_GRADE";
+
   private DBStore store;
 
   private InternalCDOBranchManager branchManager;
 
   private IIDHandler idHandler;
 
-  private IDBTable lockAreas;
+  private IDBTable lockAreasTable;
 
-  private IDBField lockAreasID;
-
-  private IDBField lockAreasUser;
-
-  private IDBField lockAreasBranch;
-
-  private IDBField lockAreasTime;
-
-  private IDBField lockAreasReadOnly;
-
-  private IDBTable locks;
-
-  private IDBField locksArea;
-
-  private IDBField locksObject;
-
-  private IDBField locksGrade;
+  private IDBTable locksTable;
 
   private String sqlInsertLockArea;
 
@@ -386,185 +390,64 @@ public class DurableLockingManager extends Lifecycle
     IDBDatabase database = store.getDatabase();
 
     // Lock areas
-    lockAreas = database.ensureTable("cdo_lock_areas", new RunnableWithTable()
+    lockAreasTable = database.getSchema().getTable(LOCK_AREAS);
+    if (lockAreasTable == null)
     {
-      public void run(IDBTable table)
+      database.updateSchema(new RunnableWithSchema()
       {
-        IDBField lockAreasID = table.addField("id", DBType.VARCHAR, true);
-        IDBField lockAreasUser = table.addField("user_id", DBType.VARCHAR);
-        table.addField("view_branch", DBType.INTEGER);
-        table.addField("view_time", DBType.BIGINT);
-        table.addField("read_only", DBType.BOOLEAN);
-        table.addIndex(IDBIndex.Type.PRIMARY_KEY, lockAreasID);
-        table.addIndex(IDBIndex.Type.NON_UNIQUE, lockAreasUser);
-      }
-    });
+        public void run(IDBSchema schema)
+        {
+          lockAreasTable = schema.addTable(LOCK_AREAS);
+          lockAreasTable.addField(LOCK_AREAS_ID, DBType.VARCHAR, true);
+          lockAreasTable.addField(LOCK_AREAS_USER_ID, DBType.VARCHAR);
+          lockAreasTable.addField(LOCK_AREAS_VIEW_BRANCH, DBType.INTEGER);
+          lockAreasTable.addField(LOCK_AREAS_VIEW_TIME, DBType.BIGINT);
+          lockAreasTable.addField(LOCK_AREAS_READ_ONLY, DBType.BOOLEAN);
+          lockAreasTable.addIndex(IDBIndex.Type.PRIMARY_KEY, LOCK_AREAS_ID);
+          lockAreasTable.addIndex(IDBIndex.Type.NON_UNIQUE, LOCK_AREAS_USER_ID);
+        }
+      });
+    }
 
-    lockAreasID = lockAreas.getField(0);
-    lockAreasUser = lockAreas.getField(1);
-    lockAreasBranch = lockAreas.getField(2);
-    lockAreasTime = lockAreas.getField(3);
-    lockAreasReadOnly = lockAreas.getField(4);
+    sqlInsertLockArea = "INSERT INTO " + LOCK_AREAS + "(" + LOCK_AREAS_ID + "," + LOCK_AREAS_USER_ID + ","
+        + LOCK_AREAS_VIEW_BRANCH + "," + LOCK_AREAS_VIEW_TIME + "," + LOCK_AREAS_READ_ONLY + ") VALUES (?, ?, ?, ?, ?)";
+    sqlSelectLockArea = "SELECT " + LOCK_AREAS_USER_ID + "," + LOCK_AREAS_VIEW_BRANCH + "," + LOCK_AREAS_VIEW_TIME
+        + "," + LOCK_AREAS_READ_ONLY + " FROM " + LOCK_AREAS + " WHERE " + LOCK_AREAS_ID + "=?";
+    sqlSelectAllLockAreas = "SELECT " + LOCK_AREAS_ID + "," + LOCK_AREAS_USER_ID + "," + LOCK_AREAS_VIEW_BRANCH + ","
+        + LOCK_AREAS_VIEW_TIME + "," + LOCK_AREAS_READ_ONLY + " FROM " + LOCK_AREAS;
+    sqlSelectLockAreas = sqlSelectAllLockAreas + " WHERE " + LOCK_AREAS_USER_ID + " LIKE ?";
+    sqlDeleteLockArea = "DELETE FROM " + LOCK_AREAS + " WHERE " + LOCK_AREAS_ID + "=?";
+    sqlDeleteLockAreas = "DELETE FROM " + LOCK_AREAS + " WHERE EXISTS (SELECT * FROM " + LOCKS + " WHERE " + LOCKS
+        + "." + LOCKS_AREA_ID + "=" + LOCK_AREAS + "." + LOCK_AREAS_ID + ")";
 
     // Locks
-    locks = database.ensureTable("cdo_locks", new RunnableWithTable()
+    locksTable = database.getSchema().getTable(LOCKS);
+    if (locksTable == null)
     {
-      public void run(IDBTable table)
+      database.updateSchema(new RunnableWithSchema()
       {
-        IDBField locksArea = table.addField("area_id", DBType.VARCHAR, true);
-        IDBField locksObject = table.addField("object_id", idHandler.getDBType(), store.getIDColumnLength(), true);
-        table.addField("lock_grade", DBType.INTEGER);
-        table.addIndex(IDBIndex.Type.PRIMARY_KEY, locksArea, locksObject);
-        table.addIndex(IDBIndex.Type.NON_UNIQUE, locksArea);
-      }
-    });
+        public void run(IDBSchema schema)
+        {
+          locksTable = schema.addTable(LOCKS);
+          locksTable.addField(LOCKS_AREA_ID, DBType.VARCHAR, true);
+          locksTable.addField(LOCKS_OBJECT_ID, idHandler.getDBType(), store.getIDColumnLength(), true);
+          locksTable.addField(LOCKS_LOCK_GRADE, DBType.INTEGER);
+          locksTable.addIndex(IDBIndex.Type.PRIMARY_KEY, LOCKS_AREA_ID, LOCKS_OBJECT_ID);
+          locksTable.addIndex(IDBIndex.Type.NON_UNIQUE, LOCKS_AREA_ID);
+        }
+      });
+    }
 
-    locksArea = locks.getField(0);
-    locksObject = locks.getField(1);
-    locksGrade = locks.getField(2);
-
-    StringBuilder builder = new StringBuilder();
-    builder.append("INSERT INTO "); //$NON-NLS-1$
-    builder.append(lockAreas);
-    builder.append("("); //$NON-NLS-1$
-    builder.append(lockAreasID);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(lockAreasUser);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(lockAreasBranch);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(lockAreasTime);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(lockAreasReadOnly);
-    builder.append(") VALUES (?, ?, ?, ?, ?)"); //$NON-NLS-1$
-    sqlInsertLockArea = builder.toString();
-
-    builder = new StringBuilder();
-    builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(lockAreasUser);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(lockAreasBranch);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(lockAreasTime);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(lockAreasReadOnly);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(lockAreas);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(lockAreasID);
-    builder.append("=?"); //$NON-NLS-1$
-    sqlSelectLockArea = builder.toString();
-
-    builder = new StringBuilder();
-    builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(lockAreasID);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(lockAreasUser);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(lockAreasBranch);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(lockAreasTime);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(lockAreasReadOnly);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(lockAreas);
-    sqlSelectAllLockAreas = builder.toString();
-
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(lockAreasUser);
-    builder.append(" LIKE ?"); //$NON-NLS-1$
-    sqlSelectLockAreas = builder.toString();
-
-    builder = new StringBuilder();
-    builder.append("DELETE FROM "); //$NON-NLS-1$
-    builder.append(lockAreas);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(lockAreasID);
-    builder.append("=?"); //$NON-NLS-1$
-    sqlDeleteLockArea = builder.toString();
-
-    builder = new StringBuilder();
-    builder.append("DELETE FROM ");
-    builder.append(lockAreas);
-    builder.append(" WHERE EXISTS (SELECT * FROM ");
-    builder.append(locks);
-    builder.append(" WHERE ");
-    builder.append(locks);
-    builder.append(".");
-    builder.append(locksArea);
-    builder.append("=");
-    builder.append(lockAreas);
-    builder.append(".");
-    builder.append(lockAreasID);
-    builder.append(")");
-    sqlDeleteLockAreas = builder.toString();
-
-    builder = new StringBuilder();
-    builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(locksObject);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(locksGrade);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(locks);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(locksArea);
-    builder.append("=?"); //$NON-NLS-1$
-    sqlSelectLocks = builder.toString();
-
-    builder = new StringBuilder();
-    builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(locksGrade);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(locks);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(locksArea);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(locksObject);
-    builder.append("=?"); //$NON-NLS-1$
-    sqlSelectLock = builder.toString();
-
-    builder = new StringBuilder();
-    builder.append("INSERT INTO "); //$NON-NLS-1$
-    builder.append(locks);
-    builder.append("("); //$NON-NLS-1$
-    builder.append(locksArea);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(locksObject);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(locksGrade);
-    builder.append(") VALUES (?, ?, ?)"); //$NON-NLS-1$
-    sqlInsertLock = builder.toString();
-
-    builder = new StringBuilder();
-    builder.append("UPDATE "); //$NON-NLS-1$
-    builder.append(locks);
-    builder.append(" SET "); //$NON-NLS-1$
-    builder.append(locksGrade);
-    builder.append("=? "); //$NON-NLS-1$
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(locksArea);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(locksObject);
-    builder.append("=?"); //$NON-NLS-1$
-    sqlUpdateLock = builder.toString();
-
-    builder = new StringBuilder();
-    builder.append("DELETE FROM "); //$NON-NLS-1$
-    builder.append(locks);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(locksArea);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(locksObject);
-    builder.append("=?"); //$NON-NLS-1$
-    sqlDeleteLock = builder.toString();
-
-    builder = new StringBuilder();
-    builder.append("DELETE FROM "); //$NON-NLS-1$
-    builder.append(locks);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(locksArea);
-    builder.append("=?"); //$NON-NLS-1$
-    sqlDeleteLocks = builder.toString();
+    sqlSelectLocks = "SELECT " + LOCKS_OBJECT_ID + "," + LOCKS_LOCK_GRADE + " FROM " + LOCKS + " WHERE "
+        + LOCKS_AREA_ID + "=?";
+    sqlSelectLock = "SELECT " + LOCKS_LOCK_GRADE + " FROM " + LOCKS + " WHERE " + LOCKS_AREA_ID + "=? AND "
+        + LOCKS_OBJECT_ID + "=?";
+    sqlInsertLock = "INSERT INTO " + LOCKS + "(" + LOCKS_AREA_ID + "," + LOCKS_OBJECT_ID + "," + LOCKS_LOCK_GRADE
+        + ") VALUES (?, ?, ?)";
+    sqlUpdateLock = "UPDATE " + LOCKS + " SET " + LOCKS_LOCK_GRADE + "=? " + " WHERE " + LOCKS_AREA_ID + "=? AND "
+        + LOCKS_OBJECT_ID + "=?";
+    sqlDeleteLock = "DELETE FROM " + LOCKS + " WHERE " + LOCKS_AREA_ID + "=? AND " + LOCKS_OBJECT_ID + "=?";
+    sqlDeleteLocks = "DELETE FROM " + LOCKS + " WHERE " + LOCKS_AREA_ID + "=?";
   }
 
   private String getNextDurableLockingID(DBStoreAccessor accessor)
@@ -704,8 +587,8 @@ public class DurableLockingManager extends Lifecycle
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
       throws IOException
   {
-    DBUtil.serializeTable(out, connection, lockAreas, null, null);
-    DBUtil.serializeTable(out, connection, locks, null, null);
+    DBUtil.serializeTable(out, connection, lockAreasTable, null, null);
+    DBUtil.serializeTable(out, connection, locksTable, null, null);
   }
 
   public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime,
@@ -719,12 +602,12 @@ public class DurableLockingManager extends Lifecycle
       DBUtil.update(connection, sqlDeleteLockAreas);
       monitor.worked();
 
-      DBUtil.deserializeTable(in, connection, lockAreas, monitor.fork());
+      DBUtil.deserializeTable(in, connection, lockAreasTable, monitor.fork());
 
-      DBUtil.clearTable(connection, locks);
+      DBUtil.clearTable(connection, locksTable);
       monitor.worked();
 
-      DBUtil.deserializeTable(in, connection, locks, monitor.fork());
+      DBUtil.deserializeTable(in, connection, locksTable, monitor.fork());
     }
     finally
     {

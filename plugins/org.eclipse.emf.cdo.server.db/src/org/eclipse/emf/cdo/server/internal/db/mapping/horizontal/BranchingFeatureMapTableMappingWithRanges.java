@@ -49,7 +49,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
@@ -64,8 +64,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -152,51 +152,54 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
 
   private void initTable()
   {
+    String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
     IDBStore store = getMappingStrategy().getStore();
     DBType idType = store.getIDHandler().getDBType();
     int idLength = store.getIDColumnLength();
 
-    String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
-    table = store.getDBSchema().addTable(tableName);
+    IDBDatabase database = getMappingStrategy().getStore().getDatabase();
+    table = database.getSchema().getTable(tableName);
+    if (table == null)
+    {
+      table = database.getSchemaTransaction().getWorkingCopy().addTable(tableName);
+      table.addField(FEATUREMAP_REVISION_ID, idType, idLength);
+      table.addField(LIST_REVISION_BRANCH, DBType.INTEGER);
+      table.addField(FEATUREMAP_VERSION_ADDED, DBType.INTEGER);
+      table.addField(FEATUREMAP_VERSION_REMOVED, DBType.INTEGER);
+      table.addField(FEATUREMAP_IDX, DBType.INTEGER);
+      table.addField(FEATUREMAP_TAG, idType, idLength);
 
-    // add fields for CDOID
-    IDBField idField = table.addField(FEATUREMAP_REVISION_ID, idType, idLength);
+      tagMap = CDOIDUtil.createMap();
+      typeMappings = CDOIDUtil.createMap();
+      columnNames = new ArrayList<String>();
 
-    IDBField branchField = table.addField(LIST_REVISION_BRANCH, DBType.INTEGER);
+      initTypeColumns(true);
 
-    // add fields for version range
-    IDBField versionAddedField = table.addField(FEATUREMAP_VERSION_ADDED, DBType.INTEGER);
-    IDBField versionRemovedField = table.addField(FEATUREMAP_VERSION_REMOVED, DBType.INTEGER);
+      table.addIndex(Type.NON_UNIQUE, FEATUREMAP_REVISION_ID);
+      table.addIndex(Type.NON_UNIQUE, LIST_REVISION_BRANCH);
+      table.addIndex(Type.NON_UNIQUE, FEATUREMAP_VERSION_ADDED);
+      table.addIndex(Type.NON_UNIQUE, FEATUREMAP_VERSION_REMOVED);
+      table.addIndex(Type.NON_UNIQUE, FEATUREMAP_IDX);
+      table.addIndex(Type.NON_UNIQUE, FEATUREMAP_TAG);
+    }
+    else
+    {
+      initTypeColumns(false);
+    }
+  }
 
-    // add field for list index
-    IDBField idxField = table.addField(FEATUREMAP_IDX, DBType.INTEGER);
-
-    // add field for FeatureMap tag (MetaID for Feature in CDO registry)
-    IDBField tagField = table.addField(FEATUREMAP_TAG, idType, idLength);
-
-    tagMap = CDOIDUtil.createMap();
-    typeMappings = CDOIDUtil.createMap();
-    columnNames = new ArrayList<String>();
-
-    // create columns for all DBTypes
+  private void initTypeColumns(boolean create)
+  {
     for (DBType type : getDBTypes())
     {
       String column = FEATUREMAP_VALUE + "_" + type.name();
-      table.addField(column, type);
+      if (create)
+      {
+        table.addField(column, type);
+      }
+
       columnNames.add(column);
     }
-
-    table.addIndex(Type.NON_UNIQUE, idField);
-    table.addIndex(Type.NON_UNIQUE, branchField);
-    table.addIndex(Type.NON_UNIQUE, versionAddedField);
-    table.addIndex(Type.NON_UNIQUE, versionRemovedField);
-    table.addIndex(Type.NON_UNIQUE, idxField);
-    table.addIndex(Type.NON_UNIQUE, tagField);
-  }
-
-  public Collection<IDBTable> getDBTables()
-  {
-    return Arrays.asList(table);
   }
 
   private void initSQLStrings()
@@ -361,6 +364,11 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
     sqlClearList = builder.toString();
   }
 
+  public Collection<IDBTable> getDBTables()
+  {
+    return Collections.singleton(table);
+  }
+
   protected List<DBType> getDBTypes()
   {
     return dbTypes;
@@ -509,18 +517,6 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
       TRACER.format("Reading list values done for feature {0}.{1} of {2}", getContainingClass().getName(), //$NON-NLS-1$
           getFeature().getName(), revision);
     }
-  }
-
-  private void addFeature(CDOID tag)
-  {
-    EStructuralFeature modelFeature = getFeatureByTag(tag);
-
-    ITypeMapping typeMapping = getMappingStrategy().createValueMapping(modelFeature);
-    String column = FEATUREMAP_VALUE + "_" + typeMapping.getDBType(); //$NON-NLS-1$
-
-    tagMap.put(tag, column);
-    typeMapping.setDBField(table, column);
-    typeMappings.put(tag, typeMapping);
   }
 
   public final void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String where)
@@ -756,6 +752,18 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
     }
 
     return typeMapping;
+  }
+
+  private void addFeature(CDOID tag)
+  {
+    EStructuralFeature modelFeature = getFeatureByTag(tag);
+
+    ITypeMapping typeMapping = getMappingStrategy().createValueMapping(modelFeature);
+    String column = FEATUREMAP_VALUE + "_" + typeMapping.getDBType(); //$NON-NLS-1$
+
+    tagMap.put(tag, column);
+    typeMapping.setDBField(table, column);
+    typeMappings.put(tag, typeMapping);
   }
 
   /**

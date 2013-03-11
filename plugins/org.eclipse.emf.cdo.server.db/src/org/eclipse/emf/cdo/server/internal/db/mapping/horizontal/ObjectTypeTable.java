@@ -28,9 +28,9 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
-import org.eclipse.net4j.db.IDBDatabase.RunnableWithTable;
-import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema;
 import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -50,12 +50,6 @@ import java.sql.Statement;
 public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappingConstants
 {
   private IDBTable table;
-
-  private IDBField idField;
-
-  private IDBField typeField;
-
-  private IDBField timeField;
 
   private String sqlDelete;
 
@@ -189,7 +183,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
     try
     {
       stmt = connection.createStatement();
-      resultSet = stmt.executeQuery("SELECT MAX(" + idField + ") FROM " + table);
+      resultSet = stmt.executeQuery("SELECT MAX(" + ATTRIBUTES_ID + ") FROM " + table);
 
       if (resultSet.next())
       {
@@ -212,7 +206,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
       throws IOException
   {
-    String where = " WHERE " + timeField + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
+    String where = " WHERE " + ATTRIBUTES_CREATED + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, table, null, where);
   }
 
@@ -231,33 +225,25 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
     final int idLength = store.getIDColumnLength();
 
     IDBDatabase database = store.getDatabase();
-
-    table = database.ensureTable(CDODBSchema.CDO_OBJECTS, new RunnableWithTable()
+    table = database.getSchema().getTable(CDODBSchema.CDO_OBJECTS);
+    if (table == null)
     {
-      public void run(IDBTable table)
+      database.updateSchema(new RunnableWithSchema()
       {
-        IDBField idField = table.addField(ATTRIBUTES_ID, idType, idLength, true);
-        table.addField(ATTRIBUTES_CLASS, idType, idLength);
-        table.addField(ATTRIBUTES_CREATED, DBType.BIGINT);
-        table.addIndex(IDBIndex.Type.PRIMARY_KEY, idField);
-      }
-    });
+        public void run(IDBSchema schema)
+        {
+          table = schema.addTable(CDODBSchema.CDO_OBJECTS);
+          table.addField(ATTRIBUTES_ID, idType, idLength, true);
+          table.addField(ATTRIBUTES_CLASS, idType, idLength);
+          table.addField(ATTRIBUTES_CREATED, DBType.BIGINT);
+          table.addIndex(IDBIndex.Type.PRIMARY_KEY, ATTRIBUTES_ID);
+        }
+      });
+    }
 
-    idField = table.getField(0);
-    typeField = table.getField(1);
-    timeField = table.getField(2);
-
-    sqlSelect = "SELECT " + typeField + " FROM " + table + " WHERE " + idField + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-    sqlInsert = "INSERT INTO " + table + "(" + idField + "," + typeField + "," + timeField + ") VALUES (?, ?, ?)";
-    sqlDelete = "DELETE FROM " + table + " WHERE " + idField + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-  }
-
-  @Override
-  protected void doDeactivate() throws Exception
-  {
-    table = null;
-    idField = null;
-    typeField = null;
-    super.doDeactivate();
+    sqlSelect = "SELECT " + ATTRIBUTES_CLASS + " FROM " + table + " WHERE " + ATTRIBUTES_ID + "=?";
+    sqlInsert = "INSERT INTO " + table + "(" + ATTRIBUTES_ID + "," + ATTRIBUTES_CLASS + "," + ATTRIBUTES_CREATED
+        + ") VALUES (?, ?, ?)";
+    sqlDelete = "DELETE FROM " + table + " WHERE " + ATTRIBUTES_ID + "=?";
   }
 }

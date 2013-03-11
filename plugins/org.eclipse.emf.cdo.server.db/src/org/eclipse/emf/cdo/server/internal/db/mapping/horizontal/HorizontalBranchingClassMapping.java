@@ -200,28 +200,22 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
   };
 
-  public HorizontalBranchingClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass,
-      boolean create)
+  public HorizontalBranchingClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
-    super(mappingStrategy, eClass, create);
-
+    super(mappingStrategy, eClass);
     initSQLStrings();
   }
 
   @Override
-  protected IDBField addBranchingField(IDBTable table)
+  protected IDBField addBranchField(IDBTable table)
   {
     return table.addField(ATTRIBUTES_BRANCH, DBType.INTEGER, true);
   }
 
   private void initSQLStrings()
   {
-    Map<EStructuralFeature, String> unsettableFields = getUnsettableFields();
-    Map<EStructuralFeature, String> listSizeFields = getListSizeFields();
-
     // ----------- Select Revision ---------------------------
     StringBuilder builder = new StringBuilder();
-
     builder.append("SELECT "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_VERSION);
     builder.append(", "); //$NON-NLS-1$
@@ -234,31 +228,9 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append(ATTRIBUTES_CONTAINER);
     builder.append(", "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_FEATURE);
-
-    for (ITypeMapping singleMapping : getValueMappings())
-    {
-      builder.append(", "); //$NON-NLS-1$
-      builder.append(singleMapping.getField());
-    }
-
-    if (unsettableFields != null)
-    {
-      for (String fieldName : unsettableFields.values())
-      {
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(fieldName);
-      }
-    }
-
-    if (listSizeFields != null)
-    {
-      for (String fieldName : listSizeFields.values())
-      {
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(fieldName);
-      }
-    }
-
+    appendTypeMappingNames(builder, getValueMappings());
+    appendFieldNames(builder, getUnsettableFields());
+    appendFieldNames(builder, getListSizeFields());
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
@@ -267,36 +239,29 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append(ATTRIBUTES_BRANCH);
     builder.append("=? AND ("); //$NON-NLS-1$
     String sqlSelectAttributesPrefix = builder.toString();
-
     builder.append(ATTRIBUTES_REVISED);
     builder.append("=0)"); //$NON-NLS-1$
-
     sqlSelectCurrentAttributes = builder.toString();
 
     builder = new StringBuilder(sqlSelectAttributesPrefix);
-
     builder.append(ATTRIBUTES_CREATED);
     builder.append("<=? AND ("); //$NON-NLS-1$
     builder.append(ATTRIBUTES_REVISED);
     builder.append("=0 OR "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_REVISED);
     builder.append(">=?))"); //$NON-NLS-1$
-
     sqlSelectAttributesByTime = builder.toString();
 
     builder = new StringBuilder(sqlSelectAttributesPrefix);
-
     builder.append("ABS("); //$NON-NLS-1$
     builder.append(ATTRIBUTES_VERSION);
     builder.append(")=?)"); //$NON-NLS-1$
-
     sqlSelectAttributesByVersion = builder.toString();
 
     // ----------- Insert Attributes -------------------------
     builder = new StringBuilder();
     builder.append("INSERT INTO "); //$NON-NLS-1$
     builder.append(getTable());
-
     builder.append("("); //$NON-NLS-1$
     builder.append(ATTRIBUTES_ID);
     builder.append(", "); //$NON-NLS-1$
@@ -313,54 +278,13 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append(ATTRIBUTES_CONTAINER);
     builder.append(", "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_FEATURE);
-
-    for (ITypeMapping singleMapping : getValueMappings())
-    {
-      builder.append(", "); //$NON-NLS-1$
-      builder.append(singleMapping.getField());
-    }
-
-    if (unsettableFields != null)
-    {
-      for (String fieldName : unsettableFields.values())
-      {
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(fieldName);
-      }
-    }
-
-    if (listSizeFields != null)
-    {
-      for (String fieldName : listSizeFields.values())
-      {
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(fieldName);
-      }
-    }
-
+    appendTypeMappingNames(builder, getValueMappings());
+    appendFieldNames(builder, getUnsettableFields());
+    appendFieldNames(builder, getListSizeFields());
     builder.append(") VALUES (?, ?, ?, ?, ?, ?, ?, ?"); //$NON-NLS-1$
-
-    for (int i = 0; i < getValueMappings().size(); i++)
-    {
-      builder.append(", ?"); //$NON-NLS-1$
-    }
-
-    if (unsettableFields != null)
-    {
-      for (int i = 0; i < unsettableFields.size(); i++)
-      {
-        builder.append(", ?"); //$NON-NLS-1$
-      }
-    }
-
-    if (listSizeFields != null)
-    {
-      for (int i = 0; i < listSizeFields.size(); i++)
-      {
-        builder.append(", ?"); //$NON-NLS-1$
-      }
-    }
-
+    appendTypeMappingParameters(builder, getValueMappings());
+    appendFieldParameters(builder, getUnsettableFields());
+    appendFieldParameters(builder, getListSizeFields());
     builder.append(")"); //$NON-NLS-1$
     sqlInsertAttributes = builder.toString();
 
@@ -647,7 +571,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         mapping.setValueFromRevision(stmt, column++, revision);
       }
 
-      Map<EStructuralFeature, String> listSizeFields = getListSizeFields();
+      Map<EStructuralFeature, IDBField> listSizeFields = getListSizeFields();
       if (listSizeFields != null)
       {
         // isSetCol now points to the first listTableSize-column
@@ -707,7 +631,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         mapping.setDefaultValue(stmt, column++);
       }
 
-      Map<EStructuralFeature, String> listSizeFields = getListSizeFields();
+      Map<EStructuralFeature, IDBField> listSizeFields = getListSizeFields();
       if (listSizeFields != null)
       {
         // list size columns begin after isSet-columns

@@ -43,9 +43,11 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -424,13 +426,17 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     try
     {
       async = monitor.forkAsync();
+      IDBSchemaTransaction schemaTransaction = null;
 
       try
       {
+        schemaTransaction = store.getDatabase().openSchemaTransaction();
         mapPackageUnits(packageUnits, connection, false);
+        schemaTransaction.commit();
       }
       finally
       {
+        ObjectUtil.close(schemaTransaction);
         if (async != null)
         {
           async.stop();
@@ -486,24 +492,27 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
           continue;
         }
 
-        if (!unmap)
+        if (unmap)
         {
-          // TODO Bug 296087: Before we go ahead with creation, we should check if it's already there
-          IClassMapping mapping = createClassMapping(eClass, true);
-          getStore().getDBAdapter().createTables(mapping.getDBTables(), connection);
+          int todo;
+          // IClassMapping mapping = removeClassMapping(eClass);
+          // getStore().getDBAdapter().dropTables(mapping.getDBTables(), connection);
         }
         else
         {
-          IClassMapping mapping = removeClassMapping(eClass);
-          getStore().getDBAdapter().dropTables(mapping.getDBTables(), connection);
+          createClassMapping(eClass);
+
+          // TODO Bug 296087: Before we go ahead with creation, we should check if it's already there
+          // IClassMapping mapping = createClassMapping(eClass);
+          // getStore().getDBAdapter().createTables(mapping.getDBTables(), connection);
         }
       }
     }
   }
 
-  private IClassMapping createClassMapping(EClass eClass, boolean create)
+  private IClassMapping createClassMapping(EClass eClass)
   {
-    IClassMapping mapping = doCreateClassMapping(eClass, create);
+    IClassMapping mapping = doCreateClassMapping(eClass);
     if (mapping != null)
     {
       classMappings.put(eClass, mapping);
@@ -528,7 +537,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     return mapping;
   }
 
-  protected abstract IClassMapping doCreateClassMapping(EClass eClass, boolean create);
+  protected abstract IClassMapping doCreateClassMapping(EClass eClass);
 
   public final IClassMapping getClassMapping(EClass eClass)
   {
@@ -551,7 +560,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
         result = classMappings.get(eClass);
         if (result == null)
         {
-          result = createClassMapping(eClass, false);
+          result = createClassMapping(eClass);
         }
       }
     }
@@ -625,15 +634,13 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   public final IListMapping createListMapping(EClass containingClass, EStructuralFeature feature)
   {
     checkArg(feature.isMany(), "Only many-valued features allowed"); //$NON-NLS-1$
-    IListMapping mapping = doCreateListMapping(containingClass, feature);
-    return mapping;
+    return doCreateListMapping(containingClass, feature);
   }
 
   public final IListMapping createFeatureMapMapping(EClass containingClass, EStructuralFeature feature)
   {
     checkArg(FeatureMapUtil.isFeatureMap(feature), "Only FeatureMaps allowed"); //$NON-NLS-1$
-    IListMapping mapping = doCreateFeatureMapMapping(containingClass, feature);
-    return mapping;
+    return doCreateFeatureMapMapping(containingClass, feature);
   }
 
   public abstract IListMapping doCreateListMapping(EClass containingClass, EStructuralFeature feature);

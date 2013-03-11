@@ -50,7 +50,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
@@ -67,8 +67,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -129,34 +129,39 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
   private void initTable()
   {
+    String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
+    typeMapping = getMappingStrategy().createValueMapping(getFeature());
+
     IDBStore store = getMappingStrategy().getStore();
     DBType idType = store.getIDHandler().getDBType();
     int idLength = store.getIDColumnLength();
 
-    String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
-    table = store.getDBSchema().addTable(tableName);
-
-    IDBField[] dbFields = new IDBField[5];
-    dbFields[0] = table.addField(LIST_REVISION_ID, idType, idLength, true);
-    dbFields[1] = table.addField(LIST_REVISION_BRANCH, DBType.INTEGER, true);
-    dbFields[2] = table.addField(LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
-    dbFields[3] = table.addField(LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
-    dbFields[4] = table.addField(LIST_IDX, DBType.INTEGER, true);
-
-    // add field for value
-    typeMapping = getMappingStrategy().createValueMapping(getFeature());
-    typeMapping.createDBField(table, LIST_VALUE);
-
-    // add table indexes
-    for (IDBField dbField : dbFields)
+    IDBDatabase database = getMappingStrategy().getStore().getDatabase();
+    table = database.getSchema().getTable(tableName);
+    if (table == null)
     {
-      table.addIndex(Type.NON_UNIQUE, dbField);
+      table = database.getSchemaTransaction().getWorkingCopy().addTable(tableName);
+      table.addField(LIST_REVISION_ID, idType, idLength, true);
+      table.addField(LIST_REVISION_BRANCH, DBType.INTEGER, true);
+      table.addField(LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
+      table.addField(LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
+      table.addField(LIST_IDX, DBType.INTEGER, true);
+
+      // TODO think about indexes
+      table.addIndex(Type.NON_UNIQUE, LIST_REVISION_ID, LIST_REVISION_BRANCH, LIST_REVISION_VERSION_ADDED,
+          LIST_REVISION_VERSION_REMOVED, LIST_IDX);
+
+      typeMapping.createDBField(table, LIST_VALUE);
+    }
+    else
+    {
+      typeMapping.setDBField(table, LIST_VALUE);
     }
   }
 
   public Collection<IDBTable> getDBTables()
   {
-    return Arrays.asList(table);
+    return Collections.singleton(table);
   }
 
   private void initSQLStrings()

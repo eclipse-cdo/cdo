@@ -37,7 +37,9 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
@@ -52,8 +54,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -73,20 +75,22 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
    */
   private IDBTable table;
 
-  /**
-   * The tags mapped to column names
-   */
-  private Map<CDOID, String> tagMap;
+  private FieldInfo[] keyFields;
 
   /**
-   * Column name Set
+   * The tags mapped to column names.
    */
-  private List<String> columnNames;
+  private Map<CDOID, String> tagMap = CDOIDUtil.createMap();
+
+  /**
+   * Column names.
+   */
+  private List<String> columnNames = new ArrayList<String>();
 
   /**
    * The type mappings for the value fields.
    */
-  private Map<CDOID, ITypeMapping> typeMappings;
+  private Map<CDOID, ITypeMapping> typeMappings = CDOIDUtil.createMap();
 
   // --------- SQL strings - see initSQLStrings() -----------------
   private String sqlSelectChunksPrefix;
@@ -119,66 +123,67 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
 
   private void initTable()
   {
-    IDBStore store = getMappingStrategy().getStore();
-    DBType idType = store.getIDHandler().getDBType();
-    int idLength = store.getIDColumnLength();
-
     String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
-    table = store.getDBSchema().addTable(tableName);
+    DBType idType = getMappingStrategy().getStore().getIDHandler().getDBType();
+    int idLength = getMappingStrategy().getStore().getIDColumnLength();
 
-    // add fields for keys (cdo_id, version, feature_id)
-    FieldInfo[] fields = getKeyFields();
-    IDBField[] dbFields = new IDBField[fields.length];
-
-    for (int i = 0; i < fields.length; i++)
+    IDBDatabase database = getMappingStrategy().getStore().getDatabase();
+    table = database.getSchema().getTable(tableName);
+    if (table == null)
     {
-      dbFields[i] = table.addField(fields[i].getName(), fields[i].getDbType(), fields[i].getPrecision());
+      table = database.getSchemaTransaction().getWorkingCopy().addTable(tableName);
+
+      IDBIndex index = table.addIndexEmpty(Type.NON_UNIQUE);
+      for (FieldInfo fieldInfo : getKeyFields())
+      {
+        IDBField field = table.addField(fieldInfo.getName(), fieldInfo.getType(), fieldInfo.getPrecision());
+        index.addIndexField(field);
+      }
+
+      // Add field for list index
+      table.addField(FEATUREMAP_IDX, DBType.INTEGER);
+
+      // Add field for FeatureMap tag (MetaID for Feature in CDO registry)
+      table.addField(FEATUREMAP_TAG, idType, idLength);
+
+      // Create columns for all DBTypes
+      initTypeColumns(true);
+
+      table.addIndex(Type.NON_UNIQUE, FEATUREMAP_IDX);
+      table.addIndex(Type.NON_UNIQUE, FEATUREMAP_TAG);
     }
+    else
+    {
+      initTypeColumns(false);
+    }
+  }
 
-    // add field for list index
-    IDBField idxField = table.addField(FEATUREMAP_IDX, DBType.INTEGER);
-
-    // add field for FeatureMap tag (MetaID for Feature in CDO registry)
-    IDBField tagField = table.addField(FEATUREMAP_TAG, idType, idLength);
-
-    tagMap = CDOIDUtil.createMap();
-    typeMappings = CDOIDUtil.createMap();
-    columnNames = new ArrayList<String>();
-
-    // create columns for all DBTypes
+  private void initTypeColumns(boolean create)
+  {
     for (DBType type : getDBTypes())
     {
       String column = FEATUREMAP_VALUE + "_" + type.name();
-      table.addField(column, type);
+      if (create)
+      {
+        table.addField(column, type);
+      }
+
       columnNames.add(column);
     }
-
-    table.addIndex(Type.NON_UNIQUE, dbFields);
-    table.addIndex(Type.NON_UNIQUE, idxField);
-    table.addIndex(Type.NON_UNIQUE, tagField);
-  }
-
-  protected abstract FieldInfo[] getKeyFields();
-
-  protected abstract void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException;
-
-  public Collection<IDBTable> getDBTables()
-  {
-    return Arrays.asList(table);
   }
 
   private void initSQLStrings()
   {
     String tableName = getTable().getName();
     FieldInfo[] fields = getKeyFields();
-
+  
     // ---------------- SELECT to read chunks ----------------------------
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT ");
-
+  
     builder.append(FEATUREMAP_TAG);
     builder.append(", ");
-
+  
     Iterator<String> iter = columnNames.iterator();
     while (iter.hasNext())
     {
@@ -188,11 +193,11 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
         builder.append(", ");
       }
     }
-
+  
     builder.append(" FROM ");
     builder.append(tableName);
     builder.append(" WHERE ");
-
+  
     for (int i = 0; i < fields.length; i++)
     {
       builder.append(fields[i].getName());
@@ -207,14 +212,14 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
         builder.append("=? ");
       }
     }
-
+  
     sqlSelectChunksPrefix = builder.toString();
-
+  
     sqlOrderByIndex = " ORDER BY " + FEATUREMAP_IDX; //$NON-NLS-1$
-
+  
     // INSERT with dynamic field name
     // TODO: Better: universal INSERT-Statement, because of stmt caching!
-
+  
     // ----------------- INSERT - prefix -----------------
     builder = new StringBuilder("INSERT INTO ");
     builder.append(tableName);
@@ -224,13 +229,13 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
       builder.append(fields[i].getName());
       builder.append(", "); //$NON-NLS-1$
     }
-
+  
     for (int i = 0; i < columnNames.size(); i++)
     {
       builder.append(columnNames.get(i));
       builder.append(", "); //$NON-NLS-1$
     }
-
+  
     builder.append(FEATUREMAP_IDX);
     builder.append(", "); //$NON-NLS-1$
     builder.append(FEATUREMAP_TAG);
@@ -239,9 +244,37 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
     {
       builder.append("?, ");
     }
-
+  
     builder.append("?, ?)");
     sqlInsert = builder.toString();
+  }
+
+  protected final FieldInfo[] getKeyFields()
+  {
+    if (keyFields == null)
+    {
+      List<FieldInfo> list = new ArrayList<FieldInfo>(3);
+
+      IDBStore store = getMappingStrategy().getStore();
+      DBType type = store.getIDHandler().getDBType();
+      int precision = store.getIDColumnLength();
+      list.add(new FieldInfo(FEATUREMAP_REVISION_ID, type, precision));
+
+      addKeyFields(list);
+
+      keyFields = list.toArray(new FieldInfo[list.size()]);
+    }
+
+    return keyFields;
+  }
+
+  protected abstract void addKeyFields(List<FieldInfo> list);
+
+  protected abstract void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException;
+
+  public Collection<IDBTable> getDBTables()
+  {
+    return Collections.singleton(table);
   }
 
   protected List<DBType> getDBTypes()

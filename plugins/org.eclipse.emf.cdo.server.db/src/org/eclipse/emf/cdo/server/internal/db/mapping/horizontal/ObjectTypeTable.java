@@ -20,8 +20,6 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 
 import org.eclipse.net4j.db.DBException;
@@ -29,6 +27,7 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
@@ -64,12 +63,10 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
   public final CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlSelect, ReuseProbability.MAX);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlSelect, ReuseProbability.MAX);
       idHandler.setCDOID(stmt, 1, id);
 
       if (DBUtil.isTracerEnabled())
@@ -99,7 +96,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -107,12 +104,10 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
   {
     IDBStore store = getMappingStrategy().getStore();
     IIDHandler idHandler = store.getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsert, ReuseProbability.MAX);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlInsert, ReuseProbability.MAX);
       idHandler.setCDOID(stmt, 1, id);
       idHandler.setCDOID(stmt, 2, getMetaDataManager().getMetaID(type, timeStamp));
       stmt.setLong(3, timeStamp);
@@ -139,19 +134,17 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
   public final void removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlDelete, ReuseProbability.MAX);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlDelete, ReuseProbability.MAX);
       idHandler.setCDOID(stmt, 1, id);
 
       if (DBUtil.isTracerEnabled())
@@ -171,7 +164,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 

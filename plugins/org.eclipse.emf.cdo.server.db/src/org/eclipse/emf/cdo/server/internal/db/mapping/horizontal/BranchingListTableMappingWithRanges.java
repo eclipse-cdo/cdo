@@ -37,8 +37,6 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
@@ -51,6 +49,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
@@ -322,17 +321,15 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
           getFeature().getName(), revision);
     }
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
-    ResultSet resultSet = null;
+    String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
 
-    // list of chunks to be read from base revision
-    ArrayList<Pair<Integer, Integer>> toReadFromBase = null;
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sql, ReuseProbability.HIGH);
+    ResultSet resultSet = null;
+    ArrayList<Pair<Integer, Integer>> toReadFromBase = null; // list of chunks to be read from base revision
+
     try
     {
-      String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
-      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.HIGH);
       idHandler.setCDOID(stmt, 1, id);
       stmt.setInt(2, branchID);
       stmt.setInt(3, revision.getVersion());
@@ -389,7 +386,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
 
     // read missing values from base revision ...
@@ -434,36 +431,33 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
   public final void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String where)
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Reading list chunk values for feature {0}.{1} of {2}", getContainingClass().getName(), //$NON-NLS-1$
+          getFeature().getName(), chunkReader.getRevision());
+    }
+
     CDORevision revision = chunkReader.getRevision();
     CDOID id = revision.getID();
     int branchID = revision.getBranch().getID();
 
-    if (TRACER.isEnabled())
+    StringBuilder builder = new StringBuilder(sqlSelectChunksPrefix);
+    if (where != null)
     {
-      TRACER.format("Reading list chunk values for feature {0}.{1} of {2}", getContainingClass().getName(), //$NON-NLS-1$
-          getFeature().getName(), revision);
+      builder.append(" AND "); //$NON-NLS-1$
+      builder.append(where);
     }
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = chunkReader.getAccessor().getStatementCache();
-    PreparedStatement stmt = null;
-    ResultSet resultSet = null;
+    builder.append(sqlOrderByIndex);
+    String sql = builder.toString();
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    PreparedStatement stmt = chunkReader.getAccessor().getDBTransaction().prepareStatement(sql, ReuseProbability.LOW);
+    ResultSet resultSet = null;
     IStoreChunkReader baseReader = null;
 
     try
     {
-      StringBuilder builder = new StringBuilder(sqlSelectChunksPrefix);
-      if (where != null)
-      {
-        builder.append(" AND "); //$NON-NLS-1$
-        builder.append(where);
-      }
-
-      builder.append(sqlOrderByIndex);
-
-      String sql = builder.toString();
-      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.LOW);
       idHandler.setCDOID(stmt, 1, id);
       stmt.setInt(2, branchID);
       stmt.setInt(3, revision.getVersion());
@@ -572,7 +566,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
 
     // now read missing values from base revision.
@@ -656,23 +650,21 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
    */
   public void clearList(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, int lastIndex)
   {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    // check for each index if the value exists in the current branch
+    for (int i = 0; i <= lastIndex; i++)
+    {
+      if (getValue(accessor, id, branchId, i, false) == null)
+      {
+        // if not, add a historic entry for missing ones.
+        addHistoricEntry(accessor, id, branchId, 0, newVersion, i, getValueFromBase(accessor, id, branchId, i));
+      }
+    }
+
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlClearList, ReuseProbability.HIGH);
 
     try
     {
-      // check for each index if the value exists in the current branch
-      for (int i = 0; i <= lastIndex; i++)
-      {
-        if (getValue(accessor, id, branchId, i, false) == null)
-        {
-          // if not, add a historic entry for missing ones.
-          addHistoricEntry(accessor, id, branchId, 0, newVersion, i, getValueFromBase(accessor, id, branchId, i));
-        }
-      }
-
       // clear rest of the list
-      stmt = statementCache.getPreparedStatement(sqlClearList, ReuseProbability.HIGH);
       stmt.setInt(1, newVersion);
       getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 2, id);
       stmt.setInt(3, branchId);
@@ -689,7 +681,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -956,13 +948,10 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
         int startIndex, int endIndex)
     {
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      IPreparedStatementCache statementCache = accessor.getStatementCache();
-      PreparedStatement stmt = null;
+      PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
 
       try
       {
-        stmt = statementCache.getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
-
         for (int index = startIndex; index <= endIndex; ++index)
         {
           if (TRACER.isEnabled())
@@ -1035,7 +1024,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       }
       finally
       {
-        statementCache.releasePreparedStatement(stmt);
+        DBUtil.close(stmt);
       }
     }
 
@@ -1043,13 +1032,10 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
         int startIndex, int endIndex)
     {
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      IPreparedStatementCache statementCache = accessor.getStatementCache();
-      PreparedStatement stmt = null;
+      PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
 
       try
       {
-        stmt = statementCache.getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
-
         for (int index = endIndex; index >= startIndex; --index)
         {
           if (TRACER.isEnabled())
@@ -1122,27 +1108,24 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       }
       finally
       {
-        statementCache.releasePreparedStatement(stmt);
+        DBUtil.close(stmt);
       }
     }
   }
 
   private void addEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int version, int index, Object value)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
-
     if (TRACER.isEnabled())
     {
       TRACER.format("Adding value for feature {0}.{1} index {2} of {3}:{4}v{5} : {6}", //$NON-NLS-1$
           getContainingClass().getName(), getFeature().getName(), index, id, branchId, version, value);
     }
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsertEntry, ReuseProbability.HIGH);
+
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlInsertEntry, ReuseProbability.HIGH);
-
       int column = 1;
       idHandler.setCDOID(stmt, column++, id);
       stmt.setInt(column++, branchId);
@@ -1163,17 +1146,13 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
   private void addHistoricEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int versionAdded,
       int versionRemoved, int index, Object value)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
-
     if (TRACER.isEnabled())
     {
       TRACER.format(
@@ -1182,10 +1161,11 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
           value);
     }
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsertEntry, ReuseProbability.HIGH);
+
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlInsertEntry, ReuseProbability.HIGH);
-
       int column = 1;
       idHandler.setCDOID(stmt, column++, id);
       stmt.setInt(column++, branchId);
@@ -1206,27 +1186,24 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
   private void removeEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, int index)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
-
     if (TRACER.isEnabled())
     {
       TRACER.format("Removing value for feature {0}.{1} index {2} of {3}:{4}v{5}", //$NON-NLS-1$
           getContainingClass().getName(), getFeature().getName(), index, id, branchId, newVersion);
     }
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlDeleteEntry, ReuseProbability.HIGH);
+
     try
     {
       // Try to delete a temporary entry first
-      stmt = statementCache.getPreparedStatement(sqlDeleteEntry, ReuseProbability.HIGH);
-
       int column = 1;
       idHandler.setCDOID(stmt, column++, id);
       stmt.setInt(column++, branchId);
@@ -1253,8 +1230,8 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       else
       {
         // no temporary entry found, so mark the entry as removed
-        statementCache.releasePreparedStatement(stmt);
-        stmt = statementCache.getPreparedStatement(sqlRemoveEntry, ReuseProbability.HIGH);
+        DBUtil.close(stmt);
+        stmt = accessor.getDBTransaction().prepareStatement(sqlRemoveEntry, ReuseProbability.HIGH);
 
         column = 1;
         stmt.setInt(column++, newVersion);
@@ -1296,7 +1273,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -1319,13 +1296,11 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
   private Object getValue(IDBStoreAccessor accessor, CDOID id, int branchId, int index, boolean getFromBase)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlGetValue, ReuseProbability.HIGH);
     Object result = null;
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlGetValue, ReuseProbability.HIGH);
       int column = 1;
       idHandler.setCDOID(stmt, column++, id);
       stmt.setInt(column++, branchId);
@@ -1356,7 +1331,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
 
     return result;

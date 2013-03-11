@@ -28,7 +28,6 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -277,8 +276,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
       private void releaseCurrentStatement()
       {
-        IPreparedStatementCache statementCache = getAccessor().getStatementCache();
-        statementCache.releasePreparedStatement(currentStatement);
+        DBUtil.close(currentStatement);
         currentStatement = null;
       }
     };

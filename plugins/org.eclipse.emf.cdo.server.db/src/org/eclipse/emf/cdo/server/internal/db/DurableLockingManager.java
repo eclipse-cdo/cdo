@@ -22,8 +22,6 @@ import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 
@@ -32,6 +30,7 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
@@ -135,12 +134,10 @@ public class DurableLockingManager extends Lifecycle
         }
       }
 
-      IPreparedStatementCache statementCache = accessor.getStatementCache();
-      PreparedStatement stmt = null;
+      PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsertLockArea, ReuseProbability.LOW);
 
       try
       {
-        stmt = statementCache.getPreparedStatement(sqlInsertLockArea, ReuseProbability.LOW);
         stmt.setString(1, durableLockingID);
         stmt.setString(2, userID);
         stmt.setInt(3, branchPoint.getBranch().getID());
@@ -155,7 +152,7 @@ public class DurableLockingManager extends Lifecycle
       }
       finally
       {
-        statementCache.releasePreparedStatement(stmt);
+        DBUtil.close(stmt);
       }
 
       if (!locks.isEmpty())
@@ -175,12 +172,10 @@ public class DurableLockingManager extends Lifecycle
 
   private void insertLocks(DBStoreAccessor accessor, String durableLockingID, Map<CDOID, LockGrade> locks)
   {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsertLock, ReuseProbability.MEDIUM);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlInsertLock, ReuseProbability.MEDIUM);
       stmt.setString(1, durableLockingID);
 
       for (Entry<CDOID, LockGrade> entry : locks.entrySet())
@@ -200,22 +195,20 @@ public class DurableLockingManager extends Lifecycle
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
   public LockArea getLockArea(DBStoreAccessor accessor, String durableLockingID) throws LockAreaNotFoundException
   {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlSelectLockArea, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlSelectLockArea, ReuseProbability.MEDIUM);
       stmt.setString(1, durableLockingID);
-      resultSet = stmt.executeQuery();
 
+      resultSet = stmt.executeQuery();
       if (!resultSet.next())
       {
         throw new LockAreaNotFoundException(durableLockingID);
@@ -235,13 +228,12 @@ public class DurableLockingManager extends Lifecycle
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
   public void getLockAreas(DBStoreAccessor accessor, String userIDPrefix, Handler handler)
   {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
     ResultSet resultSet = null;
 
@@ -249,11 +241,11 @@ public class DurableLockingManager extends Lifecycle
     {
       if (userIDPrefix.length() == 0)
       {
-        stmt = statementCache.getPreparedStatement(sqlSelectAllLockAreas, ReuseProbability.MEDIUM);
+        stmt = accessor.getDBTransaction().prepareStatement(sqlSelectAllLockAreas, ReuseProbability.MEDIUM);
       }
       else
       {
-        stmt = statementCache.getPreparedStatement(sqlSelectLockAreas, ReuseProbability.MEDIUM);
+        stmt = accessor.getDBTransaction().prepareStatement(sqlSelectLockAreas, ReuseProbability.MEDIUM);
         stmt.setString(1, userIDPrefix + "%");
       }
 
@@ -280,7 +272,7 @@ public class DurableLockingManager extends Lifecycle
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -290,12 +282,10 @@ public class DurableLockingManager extends Lifecycle
     {
       unlockWithoutCommit(accessor, durableLockingID);
 
-      IPreparedStatementCache statementCache = accessor.getStatementCache();
-      PreparedStatement stmt = null;
+      PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlDeleteLockArea, ReuseProbability.LOW);
 
       try
       {
-        stmt = statementCache.getPreparedStatement(sqlDeleteLockArea, ReuseProbability.LOW);
         stmt.setString(1, durableLockingID);
 
         DBUtil.update(stmt, true);
@@ -306,7 +296,7 @@ public class DurableLockingManager extends Lifecycle
       }
       finally
       {
-        statementCache.releasePreparedStatement(stmt);
+        DBUtil.close(stmt);
       }
 
       accessor.getConnection().commit();
@@ -360,14 +350,11 @@ public class DurableLockingManager extends Lifecycle
 
   private void unlockWithoutCommit(DBStoreAccessor accessor, String durableLockingID)
   {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlDeleteLocks, ReuseProbability.MEDIUM);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlDeleteLocks, ReuseProbability.MEDIUM);
       stmt.setString(1, durableLockingID);
-
       DBUtil.update(stmt, false);
     }
     catch (SQLException e)
@@ -376,7 +363,7 @@ public class DurableLockingManager extends Lifecycle
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -478,13 +465,11 @@ public class DurableLockingManager extends Lifecycle
 
   private Map<CDOID, LockGrade> getLockMap(DBStoreAccessor accessor, String durableLockingID)
   {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlSelectLocks, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlSelectLocks, ReuseProbability.MEDIUM);
       stmt.setString(1, durableLockingID);
       resultSet = stmt.executeQuery();
 
@@ -506,7 +491,7 @@ public class DurableLockingManager extends Lifecycle
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -518,22 +503,17 @@ public class DurableLockingManager extends Lifecycle
       return;
     }
 
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmtSelect = null;
-    PreparedStatement stmtInsertOrDelete = null;
-    PreparedStatement stmtUpdate = null;
+    String sql = on ? sqlInsertLock : sqlDeleteLock;
+
+    PreparedStatement stmtSelect = accessor.getDBTransaction().prepareStatement(sqlSelectLock, ReuseProbability.MEDIUM);
+    PreparedStatement stmtInsertOrDelete = accessor.getDBTransaction().prepareStatement(sql, ReuseProbability.MEDIUM);
+    PreparedStatement stmtUpdate = accessor.getDBTransaction().prepareStatement(sqlUpdateLock, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
     {
-      stmtSelect = statementCache.getPreparedStatement(sqlSelectLock, ReuseProbability.MEDIUM);
       stmtSelect.setString(1, durableLockingID);
-
-      String sql = on ? sqlInsertLock : sqlDeleteLock;
-      stmtInsertOrDelete = statementCache.getPreparedStatement(sql, ReuseProbability.MEDIUM);
       stmtInsertOrDelete.setString(1, durableLockingID);
-
-      stmtUpdate = statementCache.getPreparedStatement(sqlUpdateLock, ReuseProbability.MEDIUM);
       stmtUpdate.setString(2, durableLockingID);
 
       InternalLockManager lockManager = accessor.getStore().getRepository().getLockingManager();
@@ -578,9 +558,9 @@ public class DurableLockingManager extends Lifecycle
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmtUpdate);
-      statementCache.releasePreparedStatement(stmtInsertOrDelete);
-      statementCache.releasePreparedStatement(stmtSelect);
+      DBUtil.close(stmtUpdate);
+      DBUtil.close(stmtInsertOrDelete);
+      DBUtil.close(stmtSelect);
     }
   }
 

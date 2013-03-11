@@ -28,8 +28,6 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -43,6 +41,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
@@ -562,11 +561,6 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     CDORevisionManager revisionManager = repository.getRevisionManager();
     CDOBranchManager branchManager = repository.getBranchManager();
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
-    ResultSet resultSet = null;
-
     // TODO: test for timeStamp == INVALID_TIME and encode revision.isValid() as WHERE instead of fetching all revisions
     // in order to increase performance
 
@@ -610,9 +604,12 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       }
     }
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(builder.toString(), ReuseProbability.LOW);
+    ResultSet resultSet = null;
+
     try
     {
-      stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.LOW);
       for (int i = 0; i < timeParameters; i++)
       {
         stmt.setLong(i + 1, timeStamp);
@@ -643,7 +640,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -675,15 +672,13 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(builder.toString(), ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     Set<CDOID> result = new HashSet<CDOID>();
 
     try
     {
-      stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.LOW);
       int column = 1;
       for (CDOChangeSetSegment segment : segments)
       {
@@ -707,7 +702,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 

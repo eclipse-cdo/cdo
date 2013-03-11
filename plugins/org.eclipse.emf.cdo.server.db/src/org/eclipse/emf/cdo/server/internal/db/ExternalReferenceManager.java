@@ -21,8 +21,6 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBException;
@@ -30,6 +28,7 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
@@ -111,16 +110,14 @@ public class ExternalReferenceManager extends Lifecycle
 
   public String unmapURI(IDBStoreAccessor accessor, long mappedId)
   {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlSelectByLongID, ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlSelectByLongID, ReuseProbability.HIGH);
       stmt.setLong(1, mappedId);
-      resultSet = stmt.executeQuery();
 
+      resultSet = stmt.executeQuery();
       if (!resultSet.next())
       {
         OM.LOG.error("External ID " + mappedId + " not found. Database inconsistent!");
@@ -136,23 +133,20 @@ public class ExternalReferenceManager extends Lifecycle
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
   public long lookupByURI(IDBStoreAccessor accessor, String uri)
   {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlSelectByURI, ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlSelectByURI, ReuseProbability.HIGH);
       stmt.setString(1, uri);
 
       resultSet = stmt.executeQuery();
-
       if (resultSet.next())
       {
         return resultSet.getLong(1);
@@ -168,7 +162,7 @@ public class ExternalReferenceManager extends Lifecycle
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -253,13 +247,10 @@ public class ExternalReferenceManager extends Lifecycle
   private long insertNew(IDBStoreAccessor accessor, String uri, long commitTime)
   {
     long newMappedID = lastMappedID.decrementAndGet();
-
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsert, ReuseProbability.MEDIUM);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlInsert, ReuseProbability.MEDIUM);
       stmt.setLong(1, newMappedID);
       stmt.setString(2, uri);
       stmt.setLong(3, commitTime);
@@ -273,7 +264,7 @@ public class ExternalReferenceManager extends Lifecycle
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 

@@ -80,8 +80,6 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
 
   public DBSchemaTransaction openSchemaTransaction()
   {
-    beginSchemaAccess(true);
-
     DBSchemaTransaction schemaTransaction = new DBSchemaTransaction(this);
     this.schemaTransaction = schemaTransaction;
     return schemaTransaction;
@@ -91,6 +89,8 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
   {
     try
     {
+      beginSchemaAccess(true);
+
       for (IDBTransaction transaction : getTransactions())
       {
         ((DBTransaction)transaction).invalidateStatementCache();
@@ -194,6 +194,10 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
             ReadSchemaAccess readSchemaAccess = (ReadSchemaAccess)schemaAccess;
             readSchemaAccess.incrementReaders();
           }
+          else
+          {
+            schemaAccess = null;
+          }
         }
 
         if (schemaAccess == null)
@@ -256,7 +260,7 @@ public final class DBDatabase extends SetContainer<IDBTransaction> implements ID
    */
   private final class ReadSchemaAccess implements SchemaAccess
   {
-    private int readers;
+    private int readers = 1;
 
     public void incrementReaders()
     {

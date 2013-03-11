@@ -414,19 +414,17 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
    */
   private boolean queryResources(IDBStoreAccessor accessor, IClassMapping classMapping, QueryResourcesContext context)
   {
-    IIDHandler idHandler = getStore().getIDHandler();
-    PreparedStatement stmt = null;
-    ResultSet resultSet = null;
-
     CDOID folderID = context.getFolderID();
     String name = context.getName();
     boolean exactMatch = context.exactMatch();
 
+    IIDHandler idHandler = getStore().getIDHandler();
+    PreparedStatement stmt = classMapping.createResourceQueryStatement(accessor, folderID, name, exactMatch, context);
+    ResultSet resultSet = null;
+
     try
     {
-      stmt = classMapping.createResourceQueryStatement(accessor, folderID, name, exactMatch, context);
       resultSet = stmt.executeQuery();
-
       while (resultSet.next())
       {
         CDOID id = idHandler.getCDOID(resultSet, 1);
@@ -451,7 +449,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     finally
     {
       DBUtil.close(resultSet);
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 

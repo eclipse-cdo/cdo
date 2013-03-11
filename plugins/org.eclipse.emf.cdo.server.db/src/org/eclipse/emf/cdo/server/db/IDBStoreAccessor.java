@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 
+import org.eclipse.net4j.db.IDBTransaction;
+
 import java.sql.Connection;
 
 /**
@@ -25,10 +27,17 @@ public interface IDBStoreAccessor extends IStoreAccessor.Raw
 {
   public IDBStore getStore();
 
+  /**
+   * @since 4.2
+   */
+  public IDBTransaction getDBTransaction();
+
   public Connection getConnection();
 
   /**
    * @since 2.0
+   * @depreacted As of 4.2 use {@link IDBTransaction#prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)}.
    */
+  @Deprecated
   public IPreparedStatementCache getStatementCache();
 }

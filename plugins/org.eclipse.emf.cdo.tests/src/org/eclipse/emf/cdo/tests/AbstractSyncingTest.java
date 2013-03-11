@@ -149,24 +149,28 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
 
   protected static void checkRevision(EObject object, InternalRepository repository, String location)
   {
+    CDORevision revision = CDOUtil.getCDOObject(object).cdoRevision();
+    CDOBranch branch = repository.getBranchManager().getBranch(revision.getBranch().getID());
+
     // Check if revision arrived in cache
-    checkRevision(object, repository.getRevisionManager().getCache().getAllRevisions(), location + " cache");
+    checkRevision(revision, branch, repository.getRevisionManager().getCache().getAllRevisions(), location + " cache");
 
     // Check if revision arrived in store
     InternalStore store = repository.getStore();
     if (store instanceof IMEMStore)
     {
-      checkRevision(object, ((IMEMStore)store).getAllRevisions(), location + " store");
+      checkRevision(revision, branch, ((IMEMStore)store).getAllRevisions(), location + " store");
     }
   }
 
-  protected static void checkRevision(EObject object, Map<CDOBranch, List<CDORevision>> allRevisions, String location)
+  protected static void checkRevision(CDORevision revision, CDOBranch branch,
+      Map<CDOBranch, List<CDORevision>> allRevisions, String location)
   {
-    CDORevision revision = CDOUtil.getCDOObject(object).cdoRevision();
-    List<CDORevision> revisions = allRevisions.get(revision.getBranch());
+    List<CDORevision> revisions = allRevisions.get(branch);
     for (CDORevision rev : revisions)
     {
-      if (revision.equals(rev))
+      if (rev.getID() == revision.getID() && rev.getBranch().getID() == revision.getBranch().getID()
+          && rev.getVersion() == revision.getVersion())
       {
         return;
       }

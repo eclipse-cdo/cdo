@@ -22,8 +22,6 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
@@ -33,6 +31,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
@@ -230,14 +229,12 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
           getFeature().getName(), revision.getID(), revision.getVersion());
     }
 
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sql, ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
     {
-      String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
-      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.HIGH);
       setKeyFields(stmt, revision);
 
       if (TRACER.isEnabled())
@@ -271,7 +268,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
 
     if (TRACER.isEnabled())
@@ -289,23 +286,21 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
           getFeature().getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
     }
 
-    IPreparedStatementCache statementCache = chunkReader.getAccessor().getStatementCache();
-    PreparedStatement stmt = null;
+    StringBuilder builder = new StringBuilder(sqlSelectChunksPrefix);
+    if (where != null)
+    {
+      builder.append(" AND "); //$NON-NLS-1$
+      builder.append(where);
+    }
+
+    builder.append(sqlOrderByIndex);
+    String sql = builder.toString();
+
+    PreparedStatement stmt = chunkReader.getAccessor().getDBTransaction().prepareStatement(sql, ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     try
     {
-      StringBuilder builder = new StringBuilder(sqlSelectChunksPrefix);
-      if (where != null)
-      {
-        builder.append(" AND "); //$NON-NLS-1$
-        builder.append(where);
-      }
-
-      builder.append(sqlOrderByIndex);
-
-      String sql = builder.toString();
-      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.LOW);
       setKeyFields(stmt, chunkReader.getRevision());
 
       resultSet = stmt.executeQuery();
@@ -362,7 +357,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -379,24 +374,20 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
 
   protected final void writeValue(IDBStoreAccessor accessor, CDORevision revision, int idx, Object value)
   {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
-
     if (TRACER.isEnabled())
     {
       TRACER.format("Writing value for feature {0}.{1} index {2} of {3}v{4} : {5}", getContainingClass().getName(),
           getFeature().getName(), idx, revision.getID(), revision.getVersion(), value);
     }
 
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsertEntry, ReuseProbability.HIGH);
+
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlInsertEntry, ReuseProbability.HIGH);
-
       setKeyFields(stmt, revision);
       int column = getKeyFields().length + 1;
       stmt.setInt(column++, idx);
       typeMapping.setValue(stmt, column++, value);
-
       DBUtil.update(stmt, true);
     }
     catch (SQLException e)
@@ -405,7 +396,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 

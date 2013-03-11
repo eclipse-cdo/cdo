@@ -33,8 +33,6 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
@@ -45,6 +43,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -204,7 +203,6 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
@@ -212,14 +210,14 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
       long timeStamp = revision.getTimeStamp();
       if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
       {
-        stmt = statementCache.getPreparedStatement(sqlSelectAttributesByTime, ReuseProbability.MEDIUM);
+        stmt = accessor.getDBTransaction().prepareStatement(sqlSelectAttributesByTime, ReuseProbability.MEDIUM);
         idHandler.setCDOID(stmt, 1, revision.getID());
         stmt.setLong(2, timeStamp);
         stmt.setLong(3, timeStamp);
       }
       else
       {
-        stmt = statementCache.getPreparedStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
+        stmt = accessor.getDBTransaction().prepareStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
         idHandler.setCDOID(stmt, 1, revision.getID());
       }
 
@@ -240,19 +238,18 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
   public boolean readRevisionByVersion(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlSelectAttributesByVersion,
+        ReuseProbability.HIGH);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlSelectAttributesByVersion, ReuseProbability.HIGH);
       idHandler.setCDOID(stmt, 1, revision.getID());
       stmt.setInt(2, revision.getVersion());
 
@@ -273,7 +270,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -327,14 +324,11 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(builder.toString(), ReuseProbability.MEDIUM);
 
     try
     {
       int column = 1;
-
-      stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.MEDIUM);
       idHandler.setCDOID(stmt, column++, folderId);
 
       if (name != null)
@@ -358,7 +352,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     }
     catch (SQLException ex)
     {
-      statementCache.releasePreparedStatement(stmt); // only release on error
+      DBUtil.close(stmt); // only release on error
       throw new DBException(ex);
     }
   }
@@ -370,21 +364,18 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
       TRACER.format("Created ObjectID Statement : {0}", sqlSelectAllObjectIDs); //$NON-NLS-1$
     }
 
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    return statementCache.getPreparedStatement(sqlSelectAllObjectIDs, ReuseProbability.HIGH);
+    return accessor.getDBTransaction().prepareStatement(sqlSelectAllObjectIDs, ReuseProbability.HIGH);
   }
 
   @Override
   protected final void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH);
 
     try
     {
       int column = 1;
-      stmt = statementCache.getPreparedStatement(sqlInsertAttributes, ReuseProbability.HIGH);
       idHandler.setCDOID(stmt, column++, revision.getID());
       stmt.setInt(column++, revision.getVersion());
       stmt.setLong(column++, revision.getTimeStamp());
@@ -437,7 +428,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -446,15 +437,11 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
       OMMonitor mon)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlInsertAttributes, ReuseProbability.HIGH);
-
       int column = 1;
-
       idHandler.setCDOID(stmt, column++, id);
       stmt.setInt(column++, -version); // cdo_version
       stmt.setLong(column++, timeStamp); // cdo_created
@@ -496,19 +483,18 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
   @Override
   protected void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version, OMMonitor fork)
   {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction()
+        .prepareStatement(sqlRawDeleteAttributes, ReuseProbability.HIGH);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlRawDeleteAttributes, ReuseProbability.HIGH);
       getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, id);
       stmt.setInt(2, version);
       DBUtil.update(stmt, false);
@@ -519,7 +505,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -527,13 +513,10 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
   protected void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long revised)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    PreparedStatement stmt = accessor.getDBTransaction().prepareStatement(sqlReviseAttributes, ReuseProbability.HIGH);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlReviseAttributes, ReuseProbability.HIGH);
-
       stmt.setLong(1, revised);
       idHandler.setCDOID(stmt, 2, id);
 
@@ -545,7 +528,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 

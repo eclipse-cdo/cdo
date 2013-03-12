@@ -171,6 +171,50 @@ public final class DBUtil
     return new DBDatabase((DBAdapter)adapter, connectionProvider, schemaName);
   }
 
+  // /**
+  // * @since 4.2
+  // */
+  // public static <T> T updateSchema(IDBConnectionProvider connectionProvider, RunnableWithConnection<T> runnable)
+  // {
+  // return execute(connectionProvider, new RunnableWithConnection<T>()
+  // {
+  // public T run(Connection connection) throws SQLException
+  // {
+  // return null;
+  // }
+  // });
+  // }
+  //
+  // /**
+  // * @since 4.2
+  // */
+  // public static <T> T updateSchema(Connection connection, RunnableWithConnection<T> runnable)
+  // {
+  // DBConnection dbConnection = null;
+  //
+  // try
+  // {
+  // if (connection instanceof DBConnection)
+  // {
+  // dbConnection = (DBConnection)connection;
+  // dbConnection.getDatabase().beginSchemaAccess(true);
+  // }
+  //
+  // return runnable.run(connection);
+  // }
+  // catch (SQLException ex)
+  // {
+  // throw new DBException(ex);
+  // }
+  // finally
+  // {
+  // if (dbConnection != null)
+  // {
+  //
+  // }
+  // }
+  // }
+
   public static IDBSchema createSchema(String name)
   {
     return new org.eclipse.net4j.internal.db.ddl.DBSchema(name);
@@ -230,12 +274,63 @@ public final class DBUtil
   }
 
   /**
-   * Can only be used when Eclipse is running. In standalone scenarios create the adapter instance by directly calling
-   * the constructor of the adapter class.
+   * Retrieves an {@link IDBAdapter adapter} from the {@link IDBAdapter#REGISTRY adapter registry}.
+   * <p>
+   * If Eclipse is running adapters are automatically created from descriptors that are contributed to the extension point <code>org.eclipse.net4j.db.dbAdapters</code>.
+   * <p>
+   * In standalone scenarios the needed adapter instances must be registered with the {@link IDBAdapter#REGISTRY adapter registry} manually.
    */
   public static IDBAdapter getDBAdapter(String adapterName)
   {
     return IDBAdapter.REGISTRY.get(adapterName);
+  }
+
+  public static Exception close(ResultSet resultSet)
+  {
+    if (resultSet != null)
+    {
+      try
+      {
+        Statement statement = resultSet.getStatement();
+        if (statement != null && statement.getMaxRows() != 0)
+        {
+          statement.setMaxRows(0);
+        }
+      }
+      catch (Exception ignore)
+      {
+      }
+
+      try
+      {
+        resultSet.close();
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+        return ex;
+      }
+    }
+
+    return null;
+  }
+
+  public static Exception close(Statement statement)
+  {
+    if (statement != null)
+    {
+      try
+      {
+        statement.close();
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+        return ex;
+      }
+    }
+
+    return null;
   }
 
   public static Exception close(Connection connection)
@@ -273,54 +368,6 @@ public final class DBUtil
     {
       OM.LOG.error(ex);
     }
-  }
-
-  public static Exception close(Statement statement)
-  {
-    if (statement != null)
-    {
-      try
-      {
-        statement.close();
-      }
-      catch (Exception ex)
-      {
-        OM.LOG.error(ex);
-        return ex;
-      }
-    }
-
-    return null;
-  }
-
-  public static Exception close(ResultSet resultSet)
-  {
-    if (resultSet != null)
-    {
-      try
-      {
-        Statement statement = resultSet.getStatement();
-        if (statement != null && statement.getMaxRows() != 0)
-        {
-          statement.setMaxRows(0);
-        }
-      }
-      catch (Exception ignore)
-      {
-      }
-
-      try
-      {
-        resultSet.close();
-      }
-      catch (Exception ex)
-      {
-        OM.LOG.error(ex);
-        return ex;
-      }
-    }
-
-    return null;
   }
 
   /**
@@ -423,26 +470,6 @@ public final class DBUtil
     {
       close(tables);
     }
-  }
-
-  /**
-   * @since 4.2
-   */
-  public static void createSchema(DataSource dataSource, final String name, final boolean dropIfExists)
-  {
-    execute(createConnectionProvider(dataSource), new RunnableWithConnection<Object>()
-    {
-      public Object run(Connection connection) throws SQLException
-      {
-        if (dropIfExists)
-        {
-          execute(connection, "DROP SCHEMA IF EXISTS " + name);
-        }
-
-        execute(connection, "CREATE SCHEMA IF NOT EXISTS " + name);
-        return null;
-      }
-    });
   }
 
   /**

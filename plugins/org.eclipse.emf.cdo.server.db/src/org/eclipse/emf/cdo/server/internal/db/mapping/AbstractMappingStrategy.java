@@ -46,7 +46,6 @@ import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -424,17 +423,16 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     try
     {
       async = monitor.forkAsync();
-      IDBSchemaTransaction schemaTransaction = null;
+      IDBSchemaTransaction schemaTransaction = store.getDatabase().openSchemaTransaction();
 
       try
       {
-        schemaTransaction = store.getDatabase().openSchemaTransaction();
         mapPackageUnits(packageUnits, connection, false);
         schemaTransaction.commit();
       }
       finally
       {
-        ObjectUtil.close(schemaTransaction);
+        schemaTransaction.close();
         if (async != null)
         {
           async.stop();
@@ -449,7 +447,17 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public void removeMapping(Connection connection, InternalCDOPackageUnit[] packageUnits)
   {
-    mapPackageUnits(packageUnits, connection, true);
+    IDBSchemaTransaction schemaTransaction = store.getDatabase().openSchemaTransaction();
+
+    try
+    {
+      mapPackageUnits(packageUnits, connection, true);
+      schemaTransaction.commit();
+    }
+    finally
+    {
+      schemaTransaction.close();
+    }
   }
 
   private void mapPackageUnits(InternalCDOPackageUnit[] packageUnits, Connection connection, boolean unmap)
@@ -492,17 +500,11 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
         if (unmap)
         {
-          int todo;
-          // IClassMapping mapping = removeClassMapping(eClass);
-          // getStore().getDBAdapter().dropTables(mapping.getDBTables(), connection);
+          removeClassMapping(eClass);
         }
         else
         {
           createClassMapping(eClass);
-
-          // TODO Bug 296087: Before we go ahead with creation, we should check if it's already there
-          // IClassMapping mapping = createClassMapping(eClass);
-          // getStore().getDBAdapter().createTables(mapping.getDBTables(), connection);
         }
       }
     }

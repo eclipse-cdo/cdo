@@ -11,11 +11,15 @@
 package org.eclipse.net4j.db.h2;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.DBUtil.RunnableWithConnection;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.spi.db.DBAdapter;
+
+import javax.sql.DataSource;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -90,5 +94,25 @@ public class H2Adapter extends DBAdapter
   public String sqlRenameField(IDBField field, String oldName)
   {
     return "ALTER TABLE " + field.getTable() + " ALTER COLUMN " + oldName + " RENAME TO " + field;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static void createSchema(DataSource dataSource, final String name, final boolean dropIfExists)
+  {
+    DBUtil.execute(DBUtil.createConnectionProvider(dataSource), new RunnableWithConnection<Object>()
+    {
+      public Object run(Connection connection) throws SQLException
+      {
+        if (dropIfExists)
+        {
+          DBUtil.execute(connection, "DROP SCHEMA IF EXISTS " + name);
+        }
+
+        DBUtil.execute(connection, "CREATE SCHEMA IF NOT EXISTS " + name);
+        return null;
+      }
+    });
   }
 }

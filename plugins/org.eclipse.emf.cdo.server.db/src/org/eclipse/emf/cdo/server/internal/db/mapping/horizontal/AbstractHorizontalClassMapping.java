@@ -445,7 +445,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     CDOID existingID = accessor.readResourceID(folderID, name, revision.getBranch().getHead());
     if (existingID != null && !existingID.equals(revision.getID()))
     {
-      throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder " + folderID); //$NON-NLS-1$ //$NON-NLS-2$
+      throw new IllegalStateException("Duplicate resource node in folder " + folderID + ": " + name); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 

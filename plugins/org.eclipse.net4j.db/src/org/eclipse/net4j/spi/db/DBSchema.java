@@ -28,9 +28,8 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
- * @deprecated As of 4.2 call {@link DBUtil#createSchema(String)}, {@link DBUtil#createSchema(DataSource, String, boolean)},
- *    {@link DBUtil#readSchema(IDBAdapter, Connection, IDBSchema)}, {@link DBUtil#readSchema(IDBAdapter, Connection, String)}
- *    or {@link DBUtil#copySchema(IDBSchema)}.
+ * @deprecated As of 4.2 call {@link DBUtil#createSchema(String)}, {@link DBUtil#readSchema(IDBAdapter, Connection, IDBSchema)},
+ *    {@link DBUtil#readSchema(IDBAdapter, Connection, String)} or {@link DBUtil#copySchema(IDBSchema)}.
  */
 @Deprecated
 public class DBSchema extends org.eclipse.net4j.internal.db.ddl.DBSchema

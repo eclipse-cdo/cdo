@@ -10,8 +10,8 @@
  */
 package org.eclipse.net4j.db.tests;
 
-import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.h2.jdbcx.JdbcDataSource;
@@ -44,7 +44,7 @@ public class H2Test extends AbstractDBTest
 
     JdbcDataSource dataSource = new JdbcDataSource();
     dataSource.setURL(url);
-    DBUtil.createSchema(dataSource, SCHEMA_NAME, true);
+    H2Adapter.createSchema(dataSource, SCHEMA_NAME, true);
 
     dataSource = new JdbcDataSource();
     dataSource.setURL(url + ";SCHEMA=" + SCHEMA_NAME);

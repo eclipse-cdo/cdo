@@ -1486,8 +1486,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
     CDOBranchPoint base = branch.getBase();
     if (base.getBranch() == null)
     {
-      // Branch is main branch!
-      throw new IllegalArgumentException("Base of main branch is null");
+      throw new IllegalArgumentException("Base branch is null: " + branch);
     }
 
     InternalCDORevisionManager revisionManager = repository.getRevisionManager();

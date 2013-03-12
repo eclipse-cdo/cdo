@@ -780,7 +780,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     connectionKeepAliveTask.cancel();
     connectionKeepAliveTask = null;
 
-    ObjectUtil.close(connection);
+    DBUtil.close(connection);
     connection = null;
   }
 

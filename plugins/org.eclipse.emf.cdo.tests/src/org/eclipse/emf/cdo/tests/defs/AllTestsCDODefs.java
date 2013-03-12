@@ -27,7 +27,7 @@ public class AllTestsCDODefs extends ConfigTestSuite
 {
   public static Test suite()
   {
-    return new AllTestsCDODefs().getTestSuite("CDO Defs Tests");
+    return new AllTestsCDODefs().getTestSuite();
   }
 
   @Override

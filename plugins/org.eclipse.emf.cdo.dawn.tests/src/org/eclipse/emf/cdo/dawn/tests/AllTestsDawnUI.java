@@ -31,7 +31,7 @@ public class AllTestsDawnUI extends AllTests
 {
   public static Test suite()
   {
-    return new AllTestsDawnUI().getTestSuite(AllTests.class.getName());
+    return new AllTestsDawnUI().getTestSuite();
   }
 
   @Override

@@ -23,7 +23,7 @@ public class AllTestsDBH2Branching extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBH2Branching().getTestSuite("CDO Tests (DBStore H2 Horizontal - branching mode)");
+    return new AllTestsDBH2Branching().getTestSuite();
   }
 
   public static void initConfigSuites(ConfigTestSuite suite, TestSuite parent, IDGenerationLocation idGenerationLocation)

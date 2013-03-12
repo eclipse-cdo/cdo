@@ -24,7 +24,6 @@ import org.eclipse.emf.cdo.dawn.tests.ui.gmf.DawnCreationWizardSWTBotTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.GMFLockingTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.MultipleResourcesTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.SimpleDiagramTest;
-import org.eclipse.emf.cdo.tests.AllTests;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
@@ -41,7 +40,7 @@ public class AllTestsDawnUISWTBot extends ConfigTestSuite
 {
   public static Test suite()
   {
-    TestSuite testSuite = (TestSuite)new AllTestsDawnUISWTBot().getTestSuite(AllTests.class.getName());
+    TestSuite testSuite = (TestSuite)new AllTestsDawnUISWTBot().getTestSuite();
     // testSuite.addTest(new JUnit4TestAdapter(AllTestsDawnUISWTBotGMF.class));
     return testSuite;
   }

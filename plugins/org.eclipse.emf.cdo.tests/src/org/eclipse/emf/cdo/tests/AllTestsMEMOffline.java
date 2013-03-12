@@ -30,7 +30,7 @@ public class AllTestsMEMOffline extends AllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsMEMOffline().getTestSuite(AllConfigs.class.getName());
+    return new AllTestsMEMOffline().getTestSuite();
   }
 
   @Override

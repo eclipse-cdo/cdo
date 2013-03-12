@@ -27,7 +27,7 @@ public class TCPConfigStarter extends AllConfigs
 {
   public static Test suite()
   {
-    return new TCPConfigStarter().getTestSuite(AllConfigs.class.getName());
+    return new TCPConfigStarter().getTestSuite();
   }
 
   @Override

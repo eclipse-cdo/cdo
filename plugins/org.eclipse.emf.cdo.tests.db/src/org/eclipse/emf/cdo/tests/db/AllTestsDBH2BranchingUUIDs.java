@@ -22,7 +22,7 @@ public class AllTestsDBH2BranchingUUIDs extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBH2BranchingUUIDs().getTestSuite("CDO Tests (DBStore H2 Horizontal - branching mode, UUIDs)");
+    return new AllTestsDBH2BranchingUUIDs().getTestSuite();
   }
 
   @Override

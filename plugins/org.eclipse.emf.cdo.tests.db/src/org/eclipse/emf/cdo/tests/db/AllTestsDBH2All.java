@@ -23,7 +23,7 @@ public class AllTestsDBH2All extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBH2All().getTestSuite("CDO Tests (DBStore H2 All)");
+    return new AllTestsDBH2All().getTestSuite();
   }
 
   @Override

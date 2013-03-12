@@ -20,7 +20,7 @@ public class AllTestsMEMBranchesTCP extends AllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsMEMBranchesTCP().getTestSuite(AllConfigs.class.getName());
+    return new AllTestsMEMBranchesTCP().getTestSuite();
   }
 
   @Override

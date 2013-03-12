@@ -22,7 +22,7 @@ public class AllTestsDBDerby extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBDerby().getTestSuite("CDO Tests (DBStore Derby Horizontal)");
+    return new AllTestsDBDerby().getTestSuite();
   }
 
   @Override

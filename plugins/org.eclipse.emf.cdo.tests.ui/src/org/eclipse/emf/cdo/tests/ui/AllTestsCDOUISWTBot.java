@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.ui;
 
-import org.eclipse.emf.cdo.tests.AllTests;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
@@ -22,15 +21,14 @@ import junit.framework.TestSuite;
 
 /**
  * This test suite should be executed as SWTBot test.
- * 
+ *
  * @author Martin Fluegge
  */
 public class AllTestsCDOUISWTBot extends ConfigTestSuite
 {
   public static Test suite()
   {
-    TestSuite testSuite = (TestSuite)new AllTestsCDOUISWTBot().getTestSuite(AllTests.class.getName());
-    return testSuite;
+    return new AllTestsCDOUISWTBot().getTestSuite();
   }
 
   @Override

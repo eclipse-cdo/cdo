@@ -33,7 +33,7 @@ public class SampleTestsObjy extends ObjyDBConfigs
 {
   public static Test suite()
   {
-    return new SampleTestsObjy().getTestSuite("CDO Tests (DBStoreRepositoryConfig Objectivity/DB)");
+    return new SampleTestsObjy().getTestSuite();
   }
 
   @Override

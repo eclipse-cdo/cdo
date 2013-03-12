@@ -31,7 +31,7 @@ public class AllTestsDB4O extends AllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDB4O().getTestSuite("CDO Tests (DB4O)");
+    return new AllTestsDB4O().getTestSuite();
   }
 
   @Override

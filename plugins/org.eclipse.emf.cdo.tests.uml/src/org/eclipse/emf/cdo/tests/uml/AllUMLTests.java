@@ -26,7 +26,7 @@ public class AllUMLTests extends ConfigTestSuite
 {
   public static Test suite()
   {
-    return new AllUMLTests().getTestSuite("All Tests for UML");
+    return new AllUMLTests().getTestSuite();
   }
 
   @Override

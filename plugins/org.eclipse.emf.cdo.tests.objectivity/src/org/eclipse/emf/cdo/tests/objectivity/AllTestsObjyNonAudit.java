@@ -27,7 +27,7 @@ public class AllTestsObjyNonAudit extends ObjyDBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsObjyNonAudit().getTestSuite("CDO Tests (ObjectivityStore - non-audit mode)"); //$NON-NLS-1$
+    return new AllTestsObjyNonAudit().getTestSuite();
   }
 
   @Override
@@ -45,5 +45,4 @@ public class AllTestsObjyNonAudit extends ObjyDBConfigs
     // out ExternalReferenceTest and Bugzilla_259869_Test
     testClasses.remove(ExternalReferenceTest.class);
   }
-
 }

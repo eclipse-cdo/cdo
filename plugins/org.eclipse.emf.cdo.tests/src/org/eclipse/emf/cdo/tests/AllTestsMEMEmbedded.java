@@ -22,7 +22,7 @@ public class AllTestsMEMEmbedded extends AllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsMEMEmbedded().getTestSuite(AllConfigs.class.getName());
+    return new AllTestsMEMEmbedded().getTestSuite();
   }
 
   @Override

@@ -24,14 +24,14 @@ import junit.framework.TestSuite;
  * <li>create databases cdodb1, authrepo, repo2
  * </ol>
  * Database creation/removal is avoided because it takes too long and makes the test-suite impractical.
- * 
+ *
  * @author Victor Roldan Betancort
  */
 public class AllTestsDBPsql extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBPsql().getTestSuite("CDO Tests (DBStore PSQL Horizontal)");
+    return new AllTestsDBPsql().getTestSuite();
   }
 
   @Override

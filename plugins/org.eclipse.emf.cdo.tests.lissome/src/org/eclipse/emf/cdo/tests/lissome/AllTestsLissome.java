@@ -22,7 +22,7 @@ public class AllTestsLissome extends AllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsLissome().getTestSuite(AllConfigs.class.getName());
+    return new AllTestsLissome().getTestSuite();
   }
 
   @Override

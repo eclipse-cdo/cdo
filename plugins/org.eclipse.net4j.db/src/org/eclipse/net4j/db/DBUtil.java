@@ -40,8 +40,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A utility class with various static factory and convenience methods.
@@ -387,7 +389,7 @@ public final class DBUtil
   @Deprecated
   public static List<String> getAllSchemaTableNames(DatabaseMetaData metaData)
   {
-    return getAllSchemaNames(metaData);
+    return new ArrayList<String>(getAllSchemaNames(metaData));
   }
 
   /**
@@ -398,7 +400,7 @@ public final class DBUtil
     try
     {
       DatabaseMetaData metaData = connection.getMetaData();
-      return getAllSchemaNames(metaData);
+      return new ArrayList<String>(getAllSchemaNames(metaData));
     }
     catch (SQLException ex)
     {
@@ -409,13 +411,13 @@ public final class DBUtil
   /**
    * @since 4.2
    */
-  public static List<String> getAllSchemaNames(DatabaseMetaData metaData)
+  public static Set<String> getAllSchemaNames(DatabaseMetaData metaData)
   {
     ResultSet schemas = null;
 
     try
     {
-      List<String> names = new ArrayList<String>();
+      Set<String> names = new HashSet<String>();
       schemas = metaData.getSchemas();
       while (schemas.next())
       {
@@ -446,7 +448,7 @@ public final class DBUtil
       if (dbName != null)
       {
         dbName = dbName.toUpperCase();
-        List<String> schemaNames = getAllSchemaNames(metaData);
+        Set<String> schemaNames = getAllSchemaNames(metaData);
         if (!schemaNames.contains(dbName))
         {
           dbName = null;

@@ -620,8 +620,16 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
     database = DBUtil.openDatabase(dbAdapter, dbConnectionProvider, repository.getName());
     IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
-    schemaTransaction.ensureSchema(CDODBSchema.INSTANCE);
-    schemaTransaction.commit();
+
+    try
+    {
+      schemaTransaction.ensureSchema(CDODBSchema.INSTANCE);
+      schemaTransaction.commit();
+    }
+    finally
+    {
+      schemaTransaction.close();
+    }
 
     LifecycleUtil.activate(idHandler);
     LifecycleUtil.activate(metaDataManager);

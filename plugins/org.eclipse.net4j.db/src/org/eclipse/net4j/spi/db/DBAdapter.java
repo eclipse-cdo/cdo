@@ -152,6 +152,12 @@ public abstract class DBAdapter implements IDBAdapter
       String schemaName = schema.getName();
 
       DatabaseMetaData metaData = connection.getMetaData();
+      Set<String> schemaNames = DBUtil.getAllSchemaNames(metaData);
+      if (!schemaNames.contains(schemaName))
+      {
+        schemaName = null;
+      }
+
       ResultSet tables = metaData.getTables(null, schemaName, null, new String[] { "TABLE" });
       while (tables.next())
       {

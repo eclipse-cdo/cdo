@@ -10,7 +10,7 @@ Bundle-Activator: org.eclipse.emf.cdo.tests.hibernate.Activator
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Eclipse-RegisterBuddy: org.eclipse.emf.cdo.server.hibernate
 Bundle-ClassPath: .
-Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.net4j.tcp;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo.server;bundle-version="[4.0.0,5.0.0)",

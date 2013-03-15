@@ -712,7 +712,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   /**
-   * Code took from {@link BasicEObjectImpl#eBasicSetContainer} and modify it to detect when object are moved in the
+   * Code taken from {@link BasicEObjectImpl#eBasicSetContainer} and modified to detect whether the object is moved in the
    * same context. (E.g.: An object is moved from resA to resB. resA and resB belongs to the same CDORepositoryInfo.
    * Without this special handling, a detach and newObject will be generated for the object moved)
    *

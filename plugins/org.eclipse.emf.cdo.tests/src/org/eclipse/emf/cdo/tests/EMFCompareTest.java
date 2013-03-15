@@ -17,7 +17,9 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
+import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -103,6 +105,79 @@ public class EMFCompareTest extends AbstractCDOTest
 
     Comparison comparison = CDOCompareUtil.compare(transaction, session.openView(commit2), null);
     dump(comparison);
+  }
+
+  public void testContainmentProxy() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource1 = transaction.createResource(getResourcePath("/res1"));
+    CDOResource resource2 = transaction.createResource(getResourcePath("/res2"));
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("Eclipse");
+    resource1.getContents().add(company);
+
+    Category categoryCrossContained = getModel1Factory().createCategory();
+    categoryCrossContained.setName("Category");
+    company.getCategories().add(categoryCrossContained);
+    resource2.getContents().add(categoryCrossContained);
+
+    for (int i = 0; i < 10; ++i)
+    {
+      Product1 product = getModel1Factory().createProduct1();
+      categoryCrossContained.getProducts().add(product);
+    }
+
+    CDOCommitInfo commitInfo = transaction.commit();
+
+    Product1 product0 = categoryCrossContained.getProducts().get(0);
+    product0.setName("CHANGED");
+
+    transaction.commit();
+
+    Comparison comparison = CDOCompareUtil.compare(transaction, session.openView(commitInfo), null);
+    dump(comparison);
+
+    Match match = comparison.getMatch(categoryCrossContained);
+    EList<Diff> differences = match.getDifferences();
+
+    int fails;
+    assertEquals(0, differences.size());
+  }
+
+  public void testNoContainmentProxy() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource1 = transaction.createResource(getResourcePath("/res1"));
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("Company");
+    resource1.getContents().add(company);
+
+    Category category = getModel1Factory().createCategory();
+    category.setName("Category");
+    company.getCategories().add(category);
+
+    for (int i = 0; i < 10; ++i)
+    {
+      Product1 product = getModel1Factory().createProduct1();
+      category.getProducts().add(product);
+    }
+
+    company.setName("Company2");
+
+    CDOCommitInfo commitInfo = transaction.commit();
+
+    category.getProducts().get(0).setName("EclipseProduct");
+    transaction.commit();
+
+    Comparison comparison = CDOCompareUtil.compare(transaction, session.openView(commitInfo), null);
+    dump(comparison);
+
+    Match match = comparison.getMatch(category);
+    assertEquals(0, match.getDifferences().size());
   }
 
   private Company createCompany()

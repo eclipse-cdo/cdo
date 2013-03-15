@@ -68,7 +68,7 @@ public interface Category extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Categories</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCategory_Categories()
-   * @model containment="true"
+   * @model containment="true" resolveProxies="true"
    * @generated
    */
   EList<Category> getCategories();
@@ -84,7 +84,7 @@ public interface Category extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Products</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCategory_Products()
-   * @model containment="true"
+   * @model containment="true" resolveProxies="true"
    * @generated
    */
   EList<Product1> getProducts();

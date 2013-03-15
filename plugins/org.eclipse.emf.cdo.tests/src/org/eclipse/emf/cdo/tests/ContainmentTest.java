@@ -565,22 +565,43 @@ public class ContainmentTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getOrCreateResource(getResourcePath("res1"));
 
+    // Model1Package.eINSTANCE.getClass();
+    // Resource resource = new XMIResourceImpl();
+
+    EList<EObject> contents = resource.getContents();
+
     Company company = getModel1Factory().createCompany();
-    resource.getContents().add(company);
+    contents.add(company);
 
     Category category = getModel1Factory().createCategory();
     company.getCategories().add(category);
 
     Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("supplier" + System.currentTimeMillis());
-    resource.getContents().add(supplier);
-    company.getSuppliers().add(supplier);
+    contents.add(supplier);
 
+    EList<Supplier> suppliers = company.getSuppliers();
+    suppliers.add(supplier);
+
+    // // Test succeeds with this intermediary commit:
     // transaction.commit();
 
-    resource.getContents().addAll(resource.getContents().get(0).eContents());
-    resource.getContents().remove(0);
+    EList<EObject> companyContents = company.eContents();
+    contents.addAll(companyContents);
+    contents.remove(company);
 
+    // FileOutputStream stream = IOUtil.openOutputStream("/develop/test.xml");
+    //
+    // try
+    // {
+    // resource.save(stream, null);
+    // }
+    // finally
+    // {
+    // IOUtil.close(stream);
+    // }
+
+    int fails;
     transaction.commit();
   }
 }

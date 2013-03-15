@@ -138,7 +138,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   {
     if (orderDetails == null)
     {
-      orderDetails = new EObjectContainmentWithInverseEList<OrderDetail>(OrderDetail.class, this,
+      orderDetails = new EObjectContainmentWithInverseEList.Resolving<OrderDetail>(OrderDetail.class, this,
           Model1Package.ORDER_ADDRESS__ORDER_DETAILS, Model1Package.ORDER_DETAIL__ORDER);
     }
     return orderDetails;
@@ -153,6 +153,18 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
     if (eContainerFeatureID() != Model1Package.ORDER_ADDRESS__ORDER)
       return null;
     return (Order)eContainer();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Order basicGetOrder()
+  {
+    if (eContainerFeatureID() != Model1Package.ORDER_ADDRESS__ORDER)
+      return null;
+    return (Order)eInternalContainer();
   }
 
   /**
@@ -376,7 +388,9 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
     case Model1Package.ORDER_ADDRESS__ORDER_DETAILS:
       return getOrderDetails();
     case Model1Package.ORDER_ADDRESS__ORDER:
-      return getOrder();
+      if (resolve)
+        return getOrder();
+      return basicGetOrder();
     case Model1Package.ORDER_ADDRESS__PRODUCT:
       if (resolve)
         return getProduct();
@@ -459,7 +473,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
     case Model1Package.ORDER_ADDRESS__ORDER_DETAILS:
       return orderDetails != null && !orderDetails.isEmpty();
     case Model1Package.ORDER_ADDRESS__ORDER:
-      return getOrder() != null;
+      return basicGetOrder() != null;
     case Model1Package.ORDER_ADDRESS__PRODUCT:
       return product != null;
     case Model1Package.ORDER_ADDRESS__PRICE:

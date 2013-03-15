@@ -43,7 +43,7 @@ public interface Order extends EObject
    * @return the value of the '<em>Order Details</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getOrder_OrderDetails()
    * @see org.eclipse.emf.cdo.tests.model1.OrderDetail#getOrder
-   * @model opposite="order" containment="true"
+   * @model opposite="order" containment="true" resolveProxies="true"
    * @generated
    */
   EList<OrderDetail> getOrderDetails();

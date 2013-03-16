@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.compare.CDOComparisonScope.Minimal;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -91,10 +92,7 @@ public final class CDOCompareUtil
   public static Comparison compare(CDOObject left, CDOView rightView, CDOView[] originView)
   {
     CDOView leftView = left.cdoView();
-    if (leftView.getSession() != rightView.getSession())
-    {
-      throw new IllegalArgumentException("Sessions are different");
-    }
+    assertSameSession(leftView, rightView);
 
     CDOView view = openOriginView(leftView, rightView, originView);
 
@@ -113,28 +111,40 @@ public final class CDOCompareUtil
    */
   public static Comparison compare(CDOView leftView, CDOView rightView, CDOView[] originView)
   {
-    InternalCDOSession session = (InternalCDOSession)leftView.getSession();
-    if (rightView.getSession() != session)
+    assertSameSession(leftView, rightView);
+
+    CDOView view = openOriginView(leftView, rightView, originView);
+    Set<CDOID> ids = getAffectedIDs(leftView, rightView, view);
+    return createComparison(leftView, rightView, view, ids);
+  }
+
+  public static Comparison compare(CDOView leftView, CDOView rightView, CDOView[] originView, Set<CDOID> ids)
+  {
+    assertSameSession(leftView, rightView);
+
+    CDOView view = openOriginView(leftView, rightView, originView);
+    return createComparison(leftView, rightView, view, ids);
+  }
+
+  public static Comparison compareUncommittedChanges(CDOTransaction transaction)
+  {
+    CDOSession session = transaction.getSession();
+    CDOView lastView = session.openView(transaction.getLastUpdateTime());
+
+    Set<CDOID> ids = new HashSet<CDOID>();
+    ids.addAll(transaction.getNewObjects().keySet());
+    ids.addAll(transaction.getDirtyObjects().keySet());
+    ids.addAll(transaction.getDetachedObjects().keySet());
+
+    return createComparison(transaction, lastView, null, ids);
+  }
+
+  private static void assertSameSession(CDOView view1, CDOView view2)
+  {
+    if (view1.getSession() != view2.getSession())
     {
       throw new IllegalArgumentException("Sessions are different");
     }
-
-    CDOView view = openOriginView(leftView, rightView, originView);
-
-    Set<CDOID> ids;
-    if (view != null)
-    {
-      MergeData mergeData = session.getMergeData(leftView, rightView, view, false);
-      ids = mergeData.getIDs();
-    }
-    else
-    {
-      CDOChangeSetData changeSetData = leftView.compareRevisions(rightView);
-      ids = new HashSet<CDOID>(changeSetData.getChangeKinds().keySet());
-    }
-
-    IComparisonScope scope = new CDOComparisonScope.Minimal(leftView, rightView, view, ids);
-    return createComparison(scope);
   }
 
   private static CDOView openOriginView(CDOView leftView, CDOView rightView, CDOView[] originView)
@@ -160,6 +170,25 @@ public final class CDOCompareUtil
     }
 
     return null;
+  }
+
+  private static Set<CDOID> getAffectedIDs(CDOView leftView, CDOView rightView, CDOView originView)
+  {
+    if (originView != null)
+    {
+      InternalCDOSession session = (InternalCDOSession)leftView.getSession();
+      MergeData mergeData = session.getMergeData(leftView, rightView, originView, false);
+      return mergeData.getIDs();
+    }
+
+    CDOChangeSetData changeSetData = leftView.compareRevisions(rightView);
+    return new HashSet<CDOID>(changeSetData.getChangeKinds().keySet());
+  }
+
+  private static Comparison createComparison(CDOView leftView, CDOView rightView, CDOView originView, Set<CDOID> ids)
+  {
+    IComparisonScope scope = new CDOComparisonScope.Minimal(leftView, rightView, originView, ids);
+    return createComparison(scope);
   }
 
   private static Comparison createComparison(IComparisonScope scope)

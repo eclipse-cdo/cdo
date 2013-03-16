@@ -11,9 +11,10 @@
 package org.eclipse.emf.cdo.compare;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -142,13 +143,24 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
 
     private void collectRequiredParentIDs(CDOObject object, Set<CDOID> requiredParentIDs)
     {
-      CDOView view = object.cdoView();
-      CDORevision revision = object.cdoRevision();
+      CDOState state = object.cdoState();
+      if (state == CDOState.TRANSIENT)
+      {
+        return;
+      }
 
-      CDOID containerID = (CDOID)revision.data().getContainerID();
+      CDOView view = object.cdoView();
+      if (state == CDOState.PROXY)
+      {
+        CDOUtil.load(object, view);
+      }
+
+      CDORevisionData revisionData = object.cdoRevision().data();
+
+      CDOID containerID = (CDOID)revisionData.getContainerID();
       collectRequiredParentIDs(view, containerID, requiredParentIDs);
 
-      CDOID resourceID = revision.data().getResourceID();
+      CDOID resourceID = revisionData.getResourceID();
       collectRequiredParentIDs(view, resourceID, requiredParentIDs);
     }
 
@@ -156,10 +168,8 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
     {
       if (!CDOIDUtil.isNull(id))
       {
-        if (!ids.contains(id) && !requiredParentIDs.contains(id))
+        if (!ids.contains(id) && requiredParentIDs.add(id))
         {
-          requiredParentIDs.add(id);
-
           collectRequiredParentID(view, id, requiredParentIDs);
         }
       }

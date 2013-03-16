@@ -180,6 +180,62 @@ public class EMFCompareTest extends AbstractCDOTest
     assertEquals(0, match.getDifferences().size());
   }
 
+  public void testChanges() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("Company");
+    resource.getContents().add(company);
+
+    Category category1 = getModel1Factory().createCategory();
+    category1.setName("Category1");
+    company.getCategories().add(category1);
+
+    transaction.commit();
+
+    // Change category1
+    category1.setName("CHANGED");
+
+    Category category2 = getModel1Factory().createCategory();
+    category2.setName("Category2");
+
+    // Change company, add category2
+    company.getCategories().add(category2);
+
+    Comparison comparison = CDOCompareUtil.compareUncommittedChanges(transaction);
+    dump(comparison);
+
+    assertEquals(1, comparison.getMatch(category1).getDifferences().size());
+    assertEquals(1, comparison.getMatch(company).getDifferences().size());
+  }
+
+  public void testChangesDelete() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("Company");
+    resource.getContents().add(company);
+
+    Category category = getModel1Factory().createCategory();
+    category.setName("Category");
+    company.getCategories().add(category);
+
+    transaction.commit();
+
+    company.getCategories().clear();
+
+    Comparison comparison = CDOCompareUtil.compareUncommittedChanges(transaction);
+    dump(comparison);
+
+    assertEquals(1, comparison.getMatch(company).getDifferences().size());
+  }
+
   private Company createCompany()
   {
     Company company = getModel1Factory().createCompany();

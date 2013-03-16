@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.compare.CDOCompareUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -20,14 +21,29 @@ import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Product1;
+import org.eclipse.emf.cdo.tests.model1.legacy.Model1Factory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.Diff;
+import org.eclipse.emf.compare.EMFCompare;
 import org.eclipse.emf.compare.Match;
+import org.eclipse.emf.compare.match.DefaultComparisonFactory;
+import org.eclipse.emf.compare.match.DefaultEqualityHelperFactory;
+import org.eclipse.emf.compare.match.DefaultMatchEngine;
+import org.eclipse.emf.compare.match.IComparisonFactory;
+import org.eclipse.emf.compare.match.IMatchEngine;
+import org.eclipse.emf.compare.match.eobject.IEObjectMatcher;
+import org.eclipse.emf.compare.scope.IComparisonScope;
+import org.eclipse.emf.compare.utils.UseIdentifiers;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 /**
  * @author Eike Stepper
@@ -146,6 +162,32 @@ public class EMFCompareTest extends AbstractCDOTest
     assertEquals(0, differences.size());
   }
 
+  public void testContainmentProxyEMF() throws Exception
+  {
+    ResourceSet resourceSetA = createResourceSet();
+    Category categoryCrossContained = populate(resourceSetA);
+
+    ResourceSet resourceSetB = createResourceSet();
+    Product1 product0 = populate(resourceSetA).getProducts().get(0);
+    product0.setName("CHANGED");
+
+    IComparisonScope scope = EMFCompare.createDefaultScope(resourceSetA, resourceSetB);
+
+    // Configure EMF Compare
+    IEObjectMatcher matcher = DefaultMatchEngine.createDefaultEObjectMatcher(UseIdentifiers.NEVER);
+    IComparisonFactory comparisonFactory = new DefaultComparisonFactory(new DefaultEqualityHelperFactory());
+    IMatchEngine matchEngine = new DefaultMatchEngine(matcher, comparisonFactory);
+    EMFCompare comparator = EMFCompare.builder().setMatchEngine(matchEngine).build();
+
+    // Compare the two models
+    Comparison comparison = comparator.compare(scope);
+    dump(comparison);
+
+    Match match = comparison.getMatch(categoryCrossContained);
+    EList<Diff> differences = match.getDifferences();
+    assertEquals(0, differences.size());
+  }
+
   public void testNoContainmentProxy() throws Exception
   {
     CDOSession session = openSession();
@@ -247,6 +289,38 @@ public class EMFCompareTest extends AbstractCDOTest
     return company;
   }
 
+  private static ResourceSet createResourceSet()
+  {
+    ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
+    return resourceSet;
+  }
+
+  private static Category populate(ResourceSet resourceSet)
+  {
+    Model1Factory factory = org.eclipse.emf.cdo.tests.model1.legacy.Model1Factory.eINSTANCE;
+
+    Resource resourceA1 = resourceSet.createResource(URI.createURI("res1"));
+    Resource resourceA2 = resourceSet.createResource(URI.createURI("res2"));
+
+    Company company = factory.createCompany();
+    company.setName("Eclipse");
+    resourceA1.getContents().add(company);
+
+    Category categoryCrossContained = factory.createCategory();
+    categoryCrossContained.setName("Category");
+    company.getCategories().add(categoryCrossContained);
+    resourceA2.getContents().add(categoryCrossContained);
+
+    for (int i = 0; i < 10; ++i)
+    {
+      Product1 product = factory.createProduct1();
+      categoryCrossContained.getProducts().add(product);
+    }
+
+    return categoryCrossContained;
+  }
+
   private static void dump(Comparison comparison)
   {
     dump(comparison.getMatches(), "");
@@ -257,8 +331,8 @@ public class EMFCompareTest extends AbstractCDOTest
     for (Match match : matches)
     {
       System.out.println(indent + "Match:");
-      System.out.println(indent + "   Left:   " + toString(match.getLeft()));
-      System.out.println(indent + "   Right:  " + toString(match.getRight()));
+      System.out.println(indent + "   Left:   " + toString(match == null ? null : match.getLeft()));
+      System.out.println(indent + "   Right:  " + toString(match == null ? null : match.getRight()));
       String origin = toString(match.getOrigin());
       if (origin != null)
       {
@@ -285,7 +359,11 @@ public class EMFCompareTest extends AbstractCDOTest
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
     if (cdoObject != null)
     {
-      return cdoObject.cdoRevision().toString();
+      CDORevision revision = cdoObject.cdoRevision();
+      if (revision != null)
+      {
+        return revision.toString();
+      }
     }
 
     return object.toString();

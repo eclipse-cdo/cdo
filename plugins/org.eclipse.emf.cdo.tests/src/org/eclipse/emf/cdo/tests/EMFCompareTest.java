@@ -13,7 +13,9 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.compare.CDOCompare;
 import org.eclipse.emf.cdo.compare.CDOCompareUtil;
+import org.eclipse.emf.cdo.compare.CDOComparisonScope;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
@@ -31,6 +33,10 @@ import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.Diff;
 import org.eclipse.emf.compare.EMFCompare;
 import org.eclipse.emf.compare.Match;
+import org.eclipse.emf.compare.diff.DefaultDiffEngine;
+import org.eclipse.emf.compare.diff.DiffBuilder;
+import org.eclipse.emf.compare.diff.FeatureFilter;
+import org.eclipse.emf.compare.diff.IDiffEngine;
 import org.eclipse.emf.compare.match.DefaultComparisonFactory;
 import org.eclipse.emf.compare.match.DefaultEqualityHelperFactory;
 import org.eclipse.emf.compare.match.DefaultMatchEngine;
@@ -39,11 +45,16 @@ import org.eclipse.emf.compare.match.IMatchEngine;
 import org.eclipse.emf.compare.match.eobject.IEObjectMatcher;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.compare.utils.UseIdentifiers;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -275,6 +286,52 @@ public class EMFCompareTest extends AbstractCDOTest
     Comparison comparison = CDOCompareUtil.compareUncommittedChanges(transaction);
     dump(comparison);
 
+    assertEquals(1, comparison.getMatch(company).getDifferences().size());
+  }
+
+  public void testFeatureFilter() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
+
+    Company company = createCompany();
+    company.setName("ESC");
+    company.setCity("Berlin");
+    resource.getContents().add(company);
+    CDOCommitInfo commit1 = transaction.commit();
+
+    company.setName("Eclipse");
+    company.setCity("Ottawa");
+    transaction.commit();
+
+    IComparisonScope scope = CDOComparisonScope.Minimal.create(transaction, session.openView(commit1), null);
+    Comparison comparison = new CDOCompare()
+    {
+      @Override
+      protected IDiffEngine createDiffEngine()
+      {
+        return new DefaultDiffEngine(new DiffBuilder())
+        {
+          @Override
+          protected FeatureFilter createFeatureFilter()
+          {
+            return new FeatureFilter()
+            {
+              Set<? extends EStructuralFeature> ignored = Collections.singleton(getModel1Package().getAddress_City());
+
+              @Override
+              protected boolean isIgnoredAttribute(EAttribute attribute)
+              {
+                return ignored.contains(attribute);
+              }
+            };
+          }
+        };
+      }
+    }.compare(scope);
+
+    dump(comparison);
     assertEquals(1, comparison.getMatch(company).getDifferences().size());
   }
 

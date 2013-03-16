@@ -10,9 +10,8 @@
  */
 package org.eclipse.emf.cdo.ui.compare;
 
-import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.compare.CDOCompare;
 import org.eclipse.emf.cdo.compare.CDOCompareUtil;
-import org.eclipse.emf.cdo.compare.ComparisonScopeAdapter;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -38,7 +37,7 @@ public class CDOCompareEditorUtil
   {
     Comparison comparison = CDOCompareUtil.compare(leftView, rightView, originView);
 
-    IComparisonScope scope = EMFUtil.getAdapter(comparison, ComparisonScopeAdapter.class).getScope();
+    IComparisonScope scope = CDOCompare.getScope(comparison);
     ICompareEditingDomain editingDomain = EMFCompareEditingDomain.create(scope.getLeft(), scope.getRight(),
         scope.getOrigin());
 

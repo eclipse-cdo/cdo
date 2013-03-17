@@ -68,6 +68,7 @@ import org.eclipse.net4j.util.concurrent.QueueRunner;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
+import org.eclipse.net4j.util.event.ThrowableEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
@@ -864,6 +865,7 @@ public class CDOViewImpl extends AbstractCDOView
     {
       if (isActive())
       {
+        fireEvent(new ThrowableEvent(this, ex));
         throw ex;
       }
     }

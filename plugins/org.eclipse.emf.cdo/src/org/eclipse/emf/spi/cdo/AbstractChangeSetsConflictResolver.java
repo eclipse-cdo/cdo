@@ -89,6 +89,11 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
   public CDOChangeSet getRemoteChangeSet()
   {
     CDOChangeSetData changeSetData = remoteInvalidationEvents.getChangeSetData();
+    if (changeSetData == null)
+    {
+      return null;
+    }
+
     return createChangeSet(changeSetData);
   }
 

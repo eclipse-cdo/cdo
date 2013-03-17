@@ -30,6 +30,11 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOMerger.ConflictException;
 
+import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
+
+import org.eclipse.net4j.util.om.trace.ContextTracer;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.HashMap;
@@ -44,6 +49,8 @@ import java.util.Set;
  */
 public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolver
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
+
   private CDOMerger merger;
 
   public CDOMergingConflictResolver(CDOMerger merger)
@@ -204,7 +211,6 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     }
     catch (RuntimeException ex)
     {
-      ex.printStackTrace();
       throw ex;
     }
   }
@@ -214,7 +220,15 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     Map<CDOID, CDORevisionDelta> remoteDeltas = new HashMap<CDOID, CDORevisionDelta>();
     for (CDORevisionKey key : remoteChangeSet.getChangedObjects())
     {
-      remoteDeltas.put(key.getID(), (CDORevisionDelta)key);
+      if (key instanceof CDORevisionDelta)
+      {
+        CDORevisionDelta delta = (CDORevisionDelta)key;
+        remoteDeltas.put(key.getID(), delta);
+      }
+      else if (TRACER.isEnabled())
+      {
+        TRACER.format("Not a CDORevisionDelta: {0}", key); //$NON-NLS-1$
+      }
     }
 
     return remoteDeltas;

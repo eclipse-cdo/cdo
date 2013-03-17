@@ -28,10 +28,20 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.object.CDOLegacyWrapper;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.ThrowableEvent;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 
 import java.util.List;
@@ -192,21 +202,163 @@ public abstract class AbstractCDOTest extends ConfigTest
     }
   }
 
+  protected static void dumpAllContents(Notifier root)
+  {
+    try
+    {
+      StringBuilder builder = new StringBuilder();
+      dumpAllContents(root, "", builder);
+      IOUtil.OUT().println(builder);
+    }
+    catch (Exception ex)
+    {
+      IOUtil.print(ex);
+    }
+  }
+
+  private static void dumpAllContents(Notifier object, String indent, StringBuilder builder)
+  {
+    builder.append(indent);
+    if (object instanceof ResourceSet)
+    {
+      ResourceSet resourceSet = (ResourceSet)object;
+      builder.append("ResourceSet");
+      builder.append(StringUtil.NL);
+
+      for (Resource resource : resourceSet.getResources())
+      {
+        dumpAllContents(resource, indent + "  ", builder);
+      }
+    }
+    else if (object instanceof Resource)
+    {
+      Resource resource = (Resource)object;
+      if (object instanceof CDOResource)
+      {
+        builder.append("CDOResource[uri=" + ((CDOResource)resource).getName() + "]");
+      }
+      else
+      {
+        builder.append("Resource[uri=" + resource.getURI() + "]");
+      }
+
+      builder.append(StringUtil.NL);
+      for (EObject child : resource.getContents())
+      {
+        dumpAllContents(child, indent + "  ", builder);
+      }
+    }
+    else
+    {
+      EObject eObject = (EObject)object;
+      CDOObject cdoObject = CDOUtil.getCDOObject(eObject);
+      builder.append(cdoObject.toString());
+
+      boolean added = false;
+      for (EStructuralFeature feature : cdoObject.eClass().getEAllStructuralFeatures())
+      {
+        if (feature instanceof EReference)
+        {
+          EReference reference = (EReference)feature;
+          if (reference.isContainment() || reference.isContainer())
+          {
+            continue;
+          }
+        }
+
+        if (cdoObject.eIsSet(feature))
+        {
+          if (added)
+          {
+            builder.append(", ");
+          }
+          else
+          {
+            builder.append("[");
+          }
+
+          added = true;
+
+          Object value = cdoObject.eGet(feature);
+          builder.append(feature.getName() + "=" + value);
+        }
+      }
+
+      if (added)
+      {
+        builder.append("]");
+      }
+
+      builder.append(StringUtil.NL);
+      for (TreeIterator<EObject> it = cdoObject.eAllContents(); it.hasNext();)
+      {
+        EObject child = it.next();
+        dumpAllContents(child, indent + "  ", builder);
+      }
+    }
+  }
+
   protected static CDOCommitInfo commitAndSync(CDOTransaction transaction, CDOUpdatable... updatables)
       throws CommitException
   {
-    CDOCommitInfo info = transaction.commit();
-    if (info != null)
+    final RuntimeException[] exception = { null };
+    IListener listener = new IListener()
     {
-      for (CDOUpdatable updatable : updatables)
+      public void notifyEvent(IEvent event)
       {
-        if (!updatable.waitForUpdate(info.getTimeStamp(), DEFAULT_TIMEOUT))
+        if (exception[0] == null && event instanceof ThrowableEvent)
         {
-          throw new TimeoutRuntimeException(updatable.toString() + " did not receive an update of " + info);
+          ThrowableEvent e = (ThrowableEvent)event;
+          exception[0] = new RuntimeException(e.getThrowable());
         }
+      }
+    };
+
+    for (CDOUpdatable updatable : updatables)
+    {
+      if (updatable instanceof CDOView)
+      {
+        CDOView view = (CDOView)updatable;
+        view.addListener(listener);
       }
     }
 
-    return info;
+    try
+    {
+      CDOCommitInfo info = transaction.commit();
+      if (info != null)
+      {
+        for (CDOUpdatable updatable : updatables)
+        {
+          if (!updatable.waitForUpdate(info.getTimeStamp(), DEFAULT_TIMEOUT))
+          {
+            if (exception[0] == null)
+            {
+              exception[0] = new TimeoutRuntimeException(updatable.toString() + " did not receive an update of " + info);
+            }
+
+            break;
+          }
+        }
+      }
+
+      if (exception[0] != null)
+      {
+        throw exception[0];
+      }
+
+      return info;
+    }
+    finally
+    {
+      for (CDOUpdatable updatable : updatables)
+      {
+        if (updatable instanceof CDOView)
+        {
+          CDOView view = (CDOView)updatable;
+          view.removeListener(listener);
+        }
+      }
+    }
   }
 }

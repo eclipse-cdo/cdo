@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
+import org.eclipse.emf.cdo.internal.ui.LegacyModeRegistry;
 import org.eclipse.emf.cdo.internal.ui.dialogs.OpenAuditDialog;
 import org.eclipse.emf.cdo.internal.ui.dialogs.OpenDurableViewDialog;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
@@ -18,6 +19,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbenchPage;
@@ -57,7 +59,10 @@ public final class OpenDurableViewAction extends AbstractOpenViewAction
   {
     try
     {
-      CDOTransaction transaction = getSession().openTransaction(areaID);
+      CDOSession session = getSession();
+      CDOUtil.setLegacyModeDefault(LegacyModeRegistry.isLegacyEnabled(session));
+
+      CDOTransaction transaction = session.openTransaction(areaID);
       new CDOTransactionCommentator(transaction);
     }
     catch (IllegalStateException ex)

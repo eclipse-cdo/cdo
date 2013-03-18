@@ -165,12 +165,7 @@ public class EMFCompareTest extends AbstractCDOTest
 
     Comparison comparison = CDOCompareUtil.compare(transaction, session.openView(commitInfo), null);
     dump(comparison);
-
-    Match match = comparison.getMatch(categoryCrossContained);
-    EList<Diff> differences = match.getDifferences();
-
-    int fails;
-    assertEquals(0, differences.size());
+    assertEquals(0, comparison.getMatch(categoryCrossContained).getDifferences().size());
   }
 
   public void testContainmentProxyEMF() throws Exception
@@ -179,8 +174,8 @@ public class EMFCompareTest extends AbstractCDOTest
     Category categoryCrossContained = populate(resourceSetA);
 
     ResourceSet resourceSetB = createResourceSet();
-    Product1 product0 = populate(resourceSetA).getProducts().get(0);
-    product0.setName("CHANGED");
+    Product1 product0 = populate(resourceSetB).getProducts().get(0);
+    product0.setName("ProductB");
 
     IComparisonScope scope = EMFCompare.createDefaultScope(resourceSetA, resourceSetB);
 
@@ -193,10 +188,8 @@ public class EMFCompareTest extends AbstractCDOTest
     // Compare the two models
     Comparison comparison = comparator.compare(scope);
     dump(comparison);
-
-    Match match = comparison.getMatch(categoryCrossContained);
-    EList<Diff> differences = match.getDifferences();
-    assertEquals(0, differences.size());
+    assertEquals(0, comparison.getMatch(categoryCrossContained).getDifferences().size());
+    assertEquals(1, comparison.getMatch(product0).getDifferences().size());
   }
 
   public void testNoContainmentProxy() throws Exception
@@ -228,9 +221,7 @@ public class EMFCompareTest extends AbstractCDOTest
 
     Comparison comparison = CDOCompareUtil.compare(transaction, session.openView(commitInfo), null);
     dump(comparison);
-
-    Match match = comparison.getMatch(category);
-    assertEquals(0, match.getDifferences().size());
+    assertEquals(0, comparison.getMatch(category).getDifferences().size());
   }
 
   public void testChanges() throws Exception
@@ -260,7 +251,6 @@ public class EMFCompareTest extends AbstractCDOTest
 
     Comparison comparison = CDOCompareUtil.compareUncommittedChanges(transaction);
     dump(comparison);
-
     assertEquals(1, comparison.getMatch(category1).getDifferences().size());
     assertEquals(1, comparison.getMatch(company).getDifferences().size());
   }
@@ -285,7 +275,6 @@ public class EMFCompareTest extends AbstractCDOTest
 
     Comparison comparison = CDOCompareUtil.compareUncommittedChanges(transaction);
     dump(comparison);
-
     assertEquals(1, comparison.getMatch(company).getDifferences().size());
   }
 
@@ -372,6 +361,7 @@ public class EMFCompareTest extends AbstractCDOTest
     for (int i = 0; i < 10; ++i)
     {
       Product1 product = factory.createProduct1();
+      product.setName("Product" + i);
       categoryCrossContained.getProducts().add(product);
     }
 

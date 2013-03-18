@@ -34,6 +34,8 @@ import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.EcoreUtil.ProperContentIterator;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSession.MergeData;
 
@@ -51,6 +53,8 @@ import java.util.Set;
  */
 public abstract class CDOComparisonScope extends AbstractComparisonScope
 {
+  private boolean resolveProxies = true;
+
   public CDOComparisonScope(Notifier left, Notifier right, Notifier origin)
   {
     super(left, right, origin);
@@ -64,6 +68,16 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
   public Iterator<? extends EObject> getCoveredEObjects(Resource resource)
   {
     return Iterators.emptyIterator();
+  }
+
+  public final boolean isResolveProxies()
+  {
+    return resolveProxies;
+  }
+
+  public final void setResolveProxies(boolean resolveProxies)
+  {
+    this.resolveProxies = resolveProxies;
   }
 
   private static CDOView openOriginView(CDOView leftView, CDOView rightView, CDOView[] originView)
@@ -117,7 +131,7 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
 
     public Iterator<? extends EObject> getChildren(EObject eObject)
     {
-      return eObject.eAllContents();
+      return EcoreUtil.getAllProperContents(eObject, isResolveProxies());
     }
 
     /**
@@ -181,7 +195,14 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
         @Override
         public Iterator<EObject> getChildren(Object object)
         {
-          return Iterators.filter(((EObject)object).eContents().iterator(), Minimal.this);
+          if (object instanceof Resource)
+          {
+            Iterator<EObject> iterator = ((Resource)object).getContents().iterator();
+            return Iterators.filter(iterator, Minimal.this);
+          }
+
+          Iterator<EObject> iterator = new ProperContentIterator<EObject>((EObject)object, isResolveProxies());
+          return Iterators.filter(iterator, Minimal.this);
         }
       };
     }
@@ -209,11 +230,16 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
 
       CDORevisionData revisionData = object.cdoRevision().data();
 
-      CDOID containerID = (CDOID)revisionData.getContainerID();
-      collectRequiredParentIDs(view, containerID, requiredParentIDs);
-
       CDOID resourceID = revisionData.getResourceID();
-      collectRequiredParentIDs(view, resourceID, requiredParentIDs);
+      if (!CDOIDUtil.isNull(resourceID))
+      {
+        collectRequiredParentIDs(view, resourceID, requiredParentIDs);
+      }
+      else
+      {
+        CDOID containerID = (CDOID)revisionData.getContainerID();
+        collectRequiredParentIDs(view, containerID, requiredParentIDs);
+      }
     }
 
     private void collectRequiredParentIDs(CDOView view, CDOID id, Set<CDOID> requiredParentIDs)

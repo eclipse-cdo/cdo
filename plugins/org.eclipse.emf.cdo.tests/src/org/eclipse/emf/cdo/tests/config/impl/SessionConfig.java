@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
-import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
@@ -207,8 +206,6 @@ public abstract class SessionConfig extends Config implements ISessionConfig
         IOUtil.delete(lobCache);
       }
     });
-
-    CDOUtil.setLegacyModeDefault(true);
   }
 
   private Set<String> captureGlobalPackageRegistry()

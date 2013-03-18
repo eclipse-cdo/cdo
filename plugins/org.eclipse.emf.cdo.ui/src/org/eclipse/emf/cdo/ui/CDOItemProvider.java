@@ -42,7 +42,6 @@ import org.eclipse.emf.cdo.internal.ui.actions.RegisterSinglePackageAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ReloadViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RollbackTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.SwitchTargetAction;
-import org.eclipse.emf.cdo.internal.ui.actions.ToggleLegacyModeDefaultAction;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -499,8 +498,6 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       fillBranch(manager, session.getBranchManager().getMainBranch());
     }
 
-    manager.add(new Separator());
-    manager.add(new ToggleLegacyModeDefaultAction(session));
     manager.add(new Separator());
     manager.add(new CloseSessionAction(page, session));
   }

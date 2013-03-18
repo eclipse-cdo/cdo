@@ -33,8 +33,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class ObjectWriteAccessHandler implements WriteAccessHandler
 {
-  private boolean legacyModeEnabled;
-
   private IStoreAccessor.CommitContext commitContext;
 
   private CDOView view;
@@ -47,14 +45,21 @@ public class ObjectWriteAccessHandler implements WriteAccessHandler
   {
   }
 
+  /**
+   * @deprecated As of 4.2 the legacy mode is always enabled.
+   */
+  @Deprecated
   public ObjectWriteAccessHandler(boolean legacyModeEnabled)
   {
-    this.legacyModeEnabled = legacyModeEnabled;
   }
 
+  /**
+   * @deprecated As of 4.2 the legacy mode is always enabled.
+   */
+  @Deprecated
   public final boolean isLegacyModeEnabled()
   {
-    return legacyModeEnabled;
+    return true;
   }
 
   protected final IStoreAccessor.CommitContext getCommitContext()
@@ -71,7 +76,7 @@ public class ObjectWriteAccessHandler implements WriteAccessHandler
   {
     if (view == null)
     {
-      view = CDOServerUtil.openView(commitContext, legacyModeEnabled);
+      view = CDOServerUtil.openView(commitContext);
     }
 
     return view;

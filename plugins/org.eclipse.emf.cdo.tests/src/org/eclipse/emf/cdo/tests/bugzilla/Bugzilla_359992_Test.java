@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.legacy.Model1Factory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 
@@ -37,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Bug 359992.
- * 
+ *
  * @author Martin Fluegge
  */
 public class Bugzilla_359992_Test extends AbstractCDOTest
@@ -58,7 +57,6 @@ public class Bugzilla_359992_Test extends AbstractCDOTest
   public void testInvalidationNotification() throws Exception
   {
     CDOSession session = openSession();
-    CDOUtil.setLegacyModeDefault(true);
     CDONet4jSession.Options options = (Options)session.options();
     options.setCommitTimeout(10 * CommitTransactionRequest.DEFAULT_MONITOR_TIMEOUT_SECONDS);
 
@@ -77,8 +75,6 @@ public class Bugzilla_359992_Test extends AbstractCDOTest
     session.close();
 
     session = openSession();
-    CDOUtil.setLegacyModeDefault(true);
-
     transaction1 = session.openTransaction();
     transaction1.options().setInvalidationNotificationEnabled(true);
 
@@ -100,7 +96,6 @@ public class Bugzilla_359992_Test extends AbstractCDOTest
   public void testDeltaNotification() throws Exception
   {
     CDOSession session = openSession();
-    CDOUtil.setLegacyModeDefault(true);
     CDONet4jSession.Options options = (Options)session.options();
     options.setCommitTimeout(10 * CommitTransactionRequest.DEFAULT_MONITOR_TIMEOUT_SECONDS);
 
@@ -119,8 +114,6 @@ public class Bugzilla_359992_Test extends AbstractCDOTest
     session.close();
 
     session = openSession();
-    CDOUtil.setLegacyModeDefault(true);
-
     transaction1 = session.openTransaction();
     transaction1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
@@ -154,7 +147,6 @@ public class Bugzilla_359992_Test extends AbstractCDOTest
   private void doClient2() throws CommitException
   {
     CDOSession session = openSession();
-    CDOUtil.setLegacyModeDefault(true);
     CDONet4jSession.Options options = (Options)session.options();
     options.setCommitTimeout(10 * CommitTransactionRequest.DEFAULT_MONITOR_TIMEOUT_SECONDS);
     CDOTransaction transaction2 = session.openTransaction();

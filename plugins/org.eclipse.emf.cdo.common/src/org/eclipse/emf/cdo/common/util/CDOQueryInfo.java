@@ -69,7 +69,9 @@ public interface CDOQueryInfo
    * <code>false</code> otherwise.
    *
    * @since 4.0
+   * @deprecated As of 4.2 the legacy mode is always enabled.
    */
+  @Deprecated
   public boolean isLegacyModeEnabled();
 
   /**

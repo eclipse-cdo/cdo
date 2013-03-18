@@ -11,12 +11,10 @@
 package org.eclipse.emf.cdo.ui.internal.compare;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.internal.ui.LegacyModeRegistry;
 import org.eclipse.emf.cdo.internal.ui.dialogs.SelectBranchPointDialog;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
-import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -93,7 +91,6 @@ public abstract class MergeAction implements IObjectActionDelegate
     CDOSession session = leftView.getSession();
     if (branchPoint.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
     {
-      CDOUtil.setLegacyModeDefault(LegacyModeRegistry.isLegacyEnabled(session));
       return session.openTransaction(branchPoint.getBranch());
     }
 

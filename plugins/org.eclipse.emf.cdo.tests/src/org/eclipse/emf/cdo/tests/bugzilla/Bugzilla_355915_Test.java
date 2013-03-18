@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 
@@ -49,8 +48,6 @@ public class Bugzilla_355915_Test extends AbstractCDOTest
   public void testInvalidationNotification() throws Exception
   {
     CDOSession session = openSession();
-    CDOUtil.setLegacyModeDefault(true);
-
     CDOTransaction transaction1 = session.openTransaction();
     transaction1.options().setInvalidationNotificationEnabled(true);
 
@@ -73,8 +70,6 @@ public class Bugzilla_355915_Test extends AbstractCDOTest
       public void run()
       {
         CDOSession session = openSession();
-        CDOUtil.setLegacyModeDefault(true);
-
         CDOTransaction transaction2 = session.openTransaction();
 
         Resource resource2 = transaction2.getResource(getResourcePath(RESOURCE_PATH));
@@ -105,8 +100,6 @@ public class Bugzilla_355915_Test extends AbstractCDOTest
   public void testDeltaNotification() throws Exception
   {
     CDOSession session = openSession();
-    CDOUtil.setLegacyModeDefault(true);
-
     CDOTransaction transaction1 = session.openTransaction();
     transaction1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
@@ -129,8 +122,6 @@ public class Bugzilla_355915_Test extends AbstractCDOTest
       public void run()
       {
         CDOSession session = openSession();
-        CDOUtil.setLegacyModeDefault(true);
-
         CDOTransaction transaction2 = session.openTransaction();
 
         Resource resource2 = transaction2.getResource(getResourcePath(RESOURCE_PATH));

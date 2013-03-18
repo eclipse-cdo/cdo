@@ -99,7 +99,6 @@ import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
-import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -3004,14 +3003,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       if (!objects.isEmpty())
       {
-        boolean noLegacy = !isLegacyModeEnabled();
         for (CDOObject object : objects.values())
         {
-          if (noLegacy && object instanceof CDOObjectWrapper)
-          {
-            throw new LegacyModeNotEnabledException(object.toString());
-          }
-
           collectLobs((InternalCDORevision)object.cdoRevision(), lobs);
           ((InternalCDOObject)object).cdoInternalPreCommit();
         }

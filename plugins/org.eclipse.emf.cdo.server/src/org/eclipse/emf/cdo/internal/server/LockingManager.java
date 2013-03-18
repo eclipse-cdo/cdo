@@ -237,7 +237,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   private Set<? extends Object> createContentSet(Collection<? extends Object> objectsToLock, IView view)
   {
     CDOBranch branch = view.getBranch();
-    CDOView cdoView = CDOServerUtil.openView(view.getSession(), branch.getHead(), true);
+    CDOView cdoView = CDOServerUtil.openView(view.getSession(), branch.getHead());
 
     Set<Object> contents = new HashSet<Object>();
     for (Object o : objectsToLock)

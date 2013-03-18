@@ -98,10 +98,9 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
   private CDORevisionProvider revisionProvider;
 
-  public ServerCDOView(InternalSession session, CDOBranchPoint branchPoint, boolean legacyModeEnabled,
-      CDORevisionProvider revisionProvider)
+  public ServerCDOView(InternalSession session, CDOBranchPoint branchPoint, CDORevisionProvider revisionProvider)
   {
-    super(branchPoint, legacyModeEnabled);
+    super(branchPoint);
     this.session = new ServerCDOSession(session);
     this.revisionProvider = revisionProvider;
 

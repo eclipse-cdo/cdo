@@ -219,7 +219,7 @@ public class RepositoryTest extends AbstractCDOTest
       public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
           OMMonitor monitor) throws RuntimeException
       {
-        CDOView view = CDOServerUtil.openView(commitContext, isConfig(LEGACY));
+        CDOView view = CDOServerUtil.openView(commitContext);
         for (CDORevision revision : commitContext.getNewObjects())
         {
           EObject object = view.getObject(revision.getID());
@@ -274,7 +274,7 @@ public class RepositoryTest extends AbstractCDOTest
     resource.getContents().add(createCustomer("Eike"));
     transaction.commit(); // Ensure that model1 is committed to the repository
 
-    getRepository().addHandler(new ObjectWriteAccessHandler(isConfig(LEGACY))
+    getRepository().addHandler(new ObjectWriteAccessHandler()
     {
       @Override
       protected void handleTransactionBeforeCommitting(OMMonitor monitor) throws RuntimeException

@@ -122,8 +122,6 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   private final ViewAndState[] viewAndStates = ViewAndState.create(this);
 
-  private final boolean legacyModeEnabled;
-
   private CDOBranchPoint branchPoint;
 
   private final CDOURIHandler uriHandler = new CDOURIHandler(this);
@@ -154,15 +152,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   @ExcludeFromDump
   private transient InternalCDOObject lastLookupObject;
 
-  public AbstractCDOView(CDOBranchPoint branchPoint, boolean legacyModeEnabled)
+  public AbstractCDOView(CDOBranchPoint branchPoint)
   {
-    this(legacyModeEnabled);
     basicSetBranchPoint(branchPoint);
   }
 
-  public AbstractCDOView(boolean legacyModeEnabled)
+  public AbstractCDOView()
   {
-    this.legacyModeEnabled = legacyModeEnabled;
   }
 
   public boolean isReadOnly()
@@ -170,9 +166,10 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return true;
   }
 
+  @Deprecated
   public boolean isLegacyModeEnabled()
   {
-    return legacyModeEnabled;
+    return true;
   }
 
   protected synchronized final Map<CDOID, InternalCDOObject> getModifiableObjects()

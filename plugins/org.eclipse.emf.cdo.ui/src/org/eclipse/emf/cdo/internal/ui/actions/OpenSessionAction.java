@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
 import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
-import org.eclipse.emf.cdo.internal.ui.LegacyModeRegistry;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.OpenSessionDialog;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
@@ -83,11 +82,6 @@ public final class OpenSessionAction extends LongRunningAction
       if (sessionComposite.isAutomaticRegistry())
       {
         CDOPackageRegistryPopulator.populate(session.getPackageRegistry());
-      }
-
-      if (sessionComposite.isLegacyMode())
-      {
-        LegacyModeRegistry.setLegacyEnabled(session, true);
       }
     }
     catch (RemoteException ex)

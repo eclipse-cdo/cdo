@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.Notification;
@@ -50,7 +49,7 @@ import java.util.Map;
 /**
  * Test case for {@link CDODeltaNotification#getNewValue()} which must returns a local {@link EObject} contained in a
  * {@link XMIResource} because a {@link CDOObject} stored in a {@link CDOResource} references the local {@link EObject}.
- * 
+ *
  * @author Esteban Dugueperoux
  */
 public class Bugzilla_362270_Test extends AbstractCDOTest
@@ -74,7 +73,6 @@ public class Bugzilla_362270_Test extends AbstractCDOTest
     obeoCompany.getSuppliers().add(martinSupplier);
 
     CDOSession session = openSession();
-    CDOUtil.setLegacyModeDefault(true);
     final CDOTransaction cdoTransaction = session.openTransaction(resourceSet);
 
     CDOResource cdoResource = cdoTransaction.createResource(getResourcePath("/test1"));

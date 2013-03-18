@@ -144,13 +144,12 @@ public class CDOViewImpl extends AbstractCDOView
    */
   public CDOViewImpl(CDOBranch branch, long timeStamp)
   {
-    super(branch.getPoint(timeStamp), CDOUtil.isLegacyModeDefault());
+    super(branch.getPoint(timeStamp));
     options = createOptions();
   }
 
   public CDOViewImpl(String durableLockingID)
   {
-    super(CDOUtil.isLegacyModeDefault());
     this.durableLockingID = durableLockingID;
     options = createOptions();
   }

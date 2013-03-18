@@ -163,7 +163,9 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   /**
    * @see CDOUtil#setLegacyModeDefault(boolean)
    * @since 3.0
+   * @deprecated As of 4.2 the legacy mode is always enabled.
    */
+  @Deprecated
   public boolean isLegacyModeEnabled();
 
   /**

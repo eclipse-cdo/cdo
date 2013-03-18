@@ -95,7 +95,7 @@ public class OCLQueryHandler implements IQueryHandler
       }
 
       ISession session = context.getView().getSession();
-      CDOView view = CDOServerUtil.openView(session, context, info.isLegacyModeEnabled(), revisionProvider);
+      CDOView view = CDOServerUtil.openView(session, context, revisionProvider);
       CDOPackageRegistry packageRegistry = view.getSession().getPackageRegistry();
 
       EcoreEnvironmentFactory envFactory = new EcoreEnvironmentFactory(packageRegistry);

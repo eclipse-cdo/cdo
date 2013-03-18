@@ -29,7 +29,6 @@ import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -328,51 +327,6 @@ public class PackageRegistryTest extends AbstractCDOTest
       session.close();
     }
     catch (Exception ex)
-    {
-      EPackage.Registry.INSTANCE.remove(nsURI);
-    }
-  }
-
-  public void testGlobalDynamicPackageUnprepared() throws Exception
-  {
-    String nsURI = "http://dynamic";
-
-    try
-    {
-      EPackage p = EcoreFactory.eINSTANCE.createEPackage();
-      p.setName("dynamic");
-      p.setNsPrefix("dynamic");
-      p.setNsURI(nsURI);
-
-      EClass c = EcoreFactory.eINSTANCE.createEClass();
-      c.setName("DClass");
-
-      p.getEClassifiers().add(c);
-      EPackage.Registry.INSTANCE.put(nsURI, p);
-
-      CDOSession session = openSession();
-
-      // The default case is that legacy is disabled. For our test bed it is always enabled.
-      // To test the default case we must switch of legacy here.
-      CDOUtil.setLegacyModeDefault(false);
-
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource(getResourcePath("/res"));
-
-      EFactory factory = p.getEFactoryInstance();
-      EObject object = factory.create(c);
-
-      res.getContents().add(object);
-      transaction.commit();
-      session.close();
-
-      fail("LegacyModeNotEnabledException expected");
-    }
-    catch (LegacyModeNotEnabledException expected)
-    {
-      // SUCCESS
-    }
-    finally
     {
       EPackage.Registry.INSTANCE.remove(nsURI);
     }

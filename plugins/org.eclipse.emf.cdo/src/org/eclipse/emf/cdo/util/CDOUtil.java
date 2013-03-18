@@ -83,15 +83,6 @@ import java.util.Map;
  */
 public final class CDOUtil
 {
-  private static final ThreadLocal<Boolean> legacyModeDefault = new InheritableThreadLocal<Boolean>()
-  {
-    @Override
-    protected Boolean initialValue()
-    {
-      return false;
-    }
-  };
-
   static
   {
     CDOPackageRegistryImpl.SYSTEM_ELEMENTS[0] = EcorePackage.eINSTANCE;
@@ -586,18 +577,21 @@ public final class CDOUtil
 
   /**
    * @since 3.0
+   * @deprecated As of 4.2 the legacy mode is always enabled.
    */
+  @Deprecated
   public static boolean isLegacyModeDefault()
   {
-    return legacyModeDefault.get();
+    return true;
   }
 
   /**
    * @since 3.0
+   * @deprecated As of 4.2 the legacy mode is always enabled.
    */
+  @Deprecated
   public static void setLegacyModeDefault(boolean on)
   {
-    legacyModeDefault.set(on);
   }
 
   /**

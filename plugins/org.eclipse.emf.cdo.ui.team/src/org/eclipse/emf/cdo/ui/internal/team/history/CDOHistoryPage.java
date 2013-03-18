@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
-import org.eclipse.emf.cdo.internal.ui.LegacyModeRegistry;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -25,7 +24,6 @@ import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.LabelProvider;
-import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.event.IListener;
@@ -118,8 +116,6 @@ public class CDOHistoryPage extends HistoryPage
             try
             {
               CDOSession session = input.getSession();
-              CDOUtil.setLegacyModeDefault(LegacyModeRegistry.isLegacyEnabled(session));
-
               leftView = session.openView(commitInfo);
               rightView = session.openView(previous);
 

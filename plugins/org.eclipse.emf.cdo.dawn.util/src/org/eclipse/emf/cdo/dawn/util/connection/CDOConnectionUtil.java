@@ -96,11 +96,6 @@ public class CDOConnectionUtil
    */
   public CDOSession openSession()
   {
-    if (!CDOUtil.isLegacyModeDefault())
-    {
-      CDOUtil.setLegacyModeDefault(true);
-    }
-
     currentSession = (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions", "cdo", protocol
         + "://" + host + "?repositoryName=" + repositoryName);
 

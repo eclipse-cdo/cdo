@@ -118,14 +118,12 @@ public class WorkspaceTest extends AbstractCDOTest
 
     JVMUtil.prepareContainer(getClientContainer());
     localStore = createLocalStore();
-    CDOUtil.setLegacyModeDefault(true);
   }
 
   @Override
   protected void doTearDown() throws Exception
   {
     disableConsole();
-    CDOUtil.setLegacyModeDefault(false);
     for (CDOWorkspace workspace : workspaces)
     {
       IOUtil.closeSilent(workspace);

@@ -25,7 +25,6 @@ import org.eclipse.emf.compare.EMFCompare.Builder;
 import org.eclipse.emf.compare.conflict.IConflictDetector;
 import org.eclipse.emf.compare.diff.IDiffEngine;
 import org.eclipse.emf.compare.equi.IEquiEngine;
-import org.eclipse.emf.compare.extension.PostProcessorRegistry;
 import org.eclipse.emf.compare.match.DefaultComparisonFactory;
 import org.eclipse.emf.compare.match.DefaultEqualityHelperFactory;
 import org.eclipse.emf.compare.match.DefaultMatchEngine;
@@ -34,6 +33,7 @@ import org.eclipse.emf.compare.match.IEqualityHelperFactory;
 import org.eclipse.emf.compare.match.IMatchEngine;
 import org.eclipse.emf.compare.match.eobject.IEObjectMatcher;
 import org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher;
+import org.eclipse.emf.compare.postprocessor.IPostProcessor;
 import org.eclipse.emf.compare.req.IReqEngine;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.ecore.EObject;
@@ -106,7 +106,7 @@ public class CDOCompare
       builder.setEquivalenceEngine(equiEngine);
     }
 
-    PostProcessorRegistry registry = createPostProcessorRegistry();
+    IPostProcessor.Descriptor.Registry<?> registry = createPostProcessorRegistry();
     if (registry != null)
     {
       builder.setPostProcessorRegistry(registry);
@@ -141,7 +141,7 @@ public class CDOCompare
     return null;
   }
 
-  protected PostProcessorRegistry createPostProcessorRegistry()
+  protected IPostProcessor.Descriptor.Registry<?> createPostProcessorRegistry()
   {
     return null;
   }

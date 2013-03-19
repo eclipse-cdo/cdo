@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.ui.editor.DefaultPersistencyBehavior;
+import org.eclipse.graphiti.ui.editor.DiagramBehavior;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.graphiti.ui.editor.IDiagramEditorInput;
 import org.eclipse.graphiti.ui.internal.services.GraphitiUiInternal;
@@ -94,8 +95,11 @@ public class DawnGraphitiDiagramEditor extends DiagramEditor implements IDawnEdi
     }
   }
 
+  /**
+   * @since 2.1
+   */
   @Override
-  protected void initializeGraphicalViewer()
+  public void initializeGraphicalViewer()
   {
     super.initializeGraphicalViewer();
     dawnEditorSupport.registerListeners();
@@ -129,19 +133,39 @@ public class DawnGraphitiDiagramEditor extends DiagramEditor implements IDawnEdi
   }
 
   @Override
-  protected DefaultPersistencyBehavior createPersistencyBehavior()
+  protected DiagramBehavior createDiagramBehavior()
   {
-    persistencyBehavior = new DefaultPersistencyBehavior(this)
+    DiagramBehavior diagramBehavior = new DiagramBehavior(this)
     {
-      @Override
-      public void saveDiagram(IProgressMonitor monitor)
       {
-        dawnEditorSupport.setDirty(false);
-        super.saveDiagram(monitor);
+        setParentPart(DawnGraphitiDiagramEditor.this);
+        initDefaultBehaviors();
+      }
+
+      @Override
+      protected DefaultPersistencyBehavior createPersistencyBehavior()
+      {
+        persistencyBehavior = new DefaultPersistencyBehavior(getDiagramBehavior())
+        {
+          @Override
+          public void saveDiagram(IProgressMonitor monitor)
+          {
+            dawnEditorSupport.setDirty(false);
+            super.saveDiagram(monitor);
+          }
+        };
+
+        return persistencyBehavior;
       }
     };
 
-    return persistencyBehavior;
+    return diagramBehavior;
+  }
+
+  @Deprecated
+  protected DefaultPersistencyBehavior createPersistencyBehavior()
+  {
+    throw new UnsupportedOperationException();
   }
 
   @Override

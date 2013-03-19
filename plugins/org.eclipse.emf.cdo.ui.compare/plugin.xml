@@ -18,7 +18,7 @@
             id="org.eclipse.emf.cdo.ui.compare.contribution1"
             objectClass="org.eclipse.emf.cdo.transaction.CDOTransaction">
          <menu
-               id="org.eclipse.emf.cdo.ui.compare.menu"
+               id="org.eclipse.emf.cdo.ui.compare.MergeMenu"
                label="Merge"
                path="additions">
             <separator name="group1"/>
@@ -26,16 +26,29 @@
          <action
                class="org.eclipse.emf.cdo.ui.internal.compare.MergeAction$FromBranchPoint"
                enablesFor="1"
-               id="org.eclipse.emf.cdo.ui.compare.newAction"
+               id="org.eclipse.emf.cdo.ui.compare.MergeFromBranchPointAction"
                label="From Branch Point..."
-               menubarPath="org.eclipse.emf.cdo.ui.compare.menu/group1">
+               menubarPath="org.eclipse.emf.cdo.ui.compare.MergeMenu/group1">
          </action>
          <action
                class="org.eclipse.emf.cdo.ui.internal.compare.MergeAction$FromBranch"
                enablesFor="1"
-               id="org.eclipse.emf.cdo.ui.compare.newAction"
+               id="org.eclipse.emf.cdo.ui.compare.MergeFromBranchAction"
                label="From Branch..."
-               menubarPath="org.eclipse.emf.cdo.ui.compare.menu/group1">
+               menubarPath="org.eclipse.emf.cdo.ui.compare.MergeMenu/group1">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.emf.cdo.ui.compare.contribution2"
+            objectClass="org.eclipse.emf.cdo.common.commit.CDOCommitInfo">
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.compare.CompareWithPreviousVersionAction"
+               enablesFor="1"
+               id="org.eclipse.emf.cdo.ui.compare.CompareWithPreviousVersionAction"
+               label="Compare With Previous Version..."
+               menubarPath="additions"
+               style="push">
          </action>
       </objectContribution>
    </extension>

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.common.commit;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 
 /**
@@ -25,6 +26,11 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 public interface CDOCommitInfoManager extends CDOCommitInfoProvider,
     CDOCommitHistory.Provider<CDOBranch, CDOCommitHistory>
 {
+  /**
+   * @since 4.2
+   */
+  public CDOCommonRepository getRepository();
+
   /**
    * @since 4.0
    */

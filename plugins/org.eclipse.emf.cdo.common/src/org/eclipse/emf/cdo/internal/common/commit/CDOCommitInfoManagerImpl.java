@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.internal.common.commit;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
@@ -39,6 +40,8 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
 
   private final Map<CDOBranch, BranchInfoCache> branches = new WeakHashMap<CDOBranch, BranchInfoCache>();
 
+  private CDOCommonRepository repository;
+
   private CommitInfoLoader loader;
 
   private List<CDOCommitInfoHandler> handlers = new ArrayList<CDOCommitInfoHandler>();
@@ -53,6 +56,17 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     {
       cache = null;
     }
+  }
+
+  public CDOCommonRepository getRepository()
+  {
+    return repository;
+  }
+
+  public void setRepository(CDOCommonRepository repository)
+  {
+    checkInactive();
+    this.repository = repository;
   }
 
   public CommitInfoLoader getCommitInfoLoader()

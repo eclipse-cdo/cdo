@@ -10,9 +10,16 @@
  */
 package org.eclipse.emf.cdo.ui.compare;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.compare.CDOCompare;
 import org.eclipse.emf.cdo.compare.CDOCompareUtil;
+import org.eclipse.emf.cdo.session.CDORepositoryInfo;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.compare.Comparison;
@@ -33,6 +40,35 @@ import org.eclipse.compare.CompareUI;
  */
 public class CDOCompareEditorUtil
 {
+  public static boolean openDialog(CDOCommitInfo commitInfo)
+  {
+    long previousTimeStamp = commitInfo.getPreviousTimeStamp();
+    if (previousTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      return false;
+    }
+
+    CDORepositoryInfo repositoryInfo = (CDORepositoryInfo)commitInfo.getCommitInfoManager().getRepository();
+    CDOSession session = repositoryInfo.getSession();
+    CDOBranchPoint previous = CDOBranchUtil.normalizeBranchPoint(commitInfo.getBranch(), previousTimeStamp);
+
+    CDOView leftView = null;
+    CDOView rightView = null;
+
+    try
+    {
+      leftView = session.openView(commitInfo);
+      rightView = session.openView(previous);
+
+      return openDialog(leftView, rightView, null);
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(rightView);
+      LifecycleUtil.deactivate(leftView);
+    }
+  }
+
   public static boolean openDialog(CDOView leftView, CDOView rightView, CDOView[] originView)
   {
     Comparison comparison = CDOCompareUtil.compare(leftView, rightView, originView);

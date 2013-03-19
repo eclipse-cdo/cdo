@@ -1846,6 +1846,7 @@ public class Repository extends Container<Object> implements InternalRepository
     revisionManager.setRevisionLoader(this);
     sessionManager.setRepository(this);
     queryManager.setRepository(this);
+    commitInfoManager.setRepository(this);
     commitInfoManager.setCommitInfoLoader(this);
     commitManager.setRepository(this);
     getLockingManager().setRepository(this);

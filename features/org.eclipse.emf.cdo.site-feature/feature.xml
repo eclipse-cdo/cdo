@@ -79,6 +79,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.cdo.compare"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.server.hibernate"
          version="0.0.0"/>
 

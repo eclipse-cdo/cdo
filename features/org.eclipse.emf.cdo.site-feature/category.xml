@@ -18,6 +18,9 @@
    <feature id="org.eclipse.emf.cdo.sdk" version="0.0.0">
       <category name="org.eclipse.emf.cdo.category"/>
    </feature>
+   <feature id="org.eclipse.emf.cdo.compare" version="0.0.0">
+      <category name="org.eclipse.emf.cdo.category"/>
+   </feature>
    <feature id="org.eclipse.emf.cdo.server" version="0.0.0">
       <category name="org.eclipse.emf.cdo.category"/>
    </feature>

@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.id.CDOWithID;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
@@ -339,7 +340,18 @@ public final class CDORevisionUtil
 
   private static InternalCDORevision getParentRevision(InternalCDORevision revision, CDORevisionProvider provider)
   {
-    CDOID parentID = (CDOID)revision.getContainerID();
+    CDOID parentID;
+
+    Object containerID = revision.getContainerID();
+    if (containerID instanceof CDOWithID)
+    {
+      parentID = ((CDOWithID)containerID).cdoID();
+    }
+    else
+    {
+      parentID = (CDOID)containerID;
+    }
+
     if (CDOIDUtil.isNull(parentID))
     {
       parentID = revision.getResourceID();

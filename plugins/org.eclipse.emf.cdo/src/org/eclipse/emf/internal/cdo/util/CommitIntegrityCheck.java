@@ -130,11 +130,7 @@ public class CommitIntegrityCheck
 
     if (CDOIDUtil.isNull(containerOrResourceID))
     {
-      idOrObject = revision.getResourceID();
-      if (idOrObject != null)
-      {
-        containerOrResourceID = (CDOID)transaction.convertObjectToID(idOrObject);
-      }
+      containerOrResourceID = revision.getResourceID();
     }
 
     return containerOrResourceID;
@@ -182,8 +178,8 @@ public class CommitIntegrityCheck
         // Nothing to be done. (I think...)
 
         // @3
-        CDOID currentResourceID = (CDOID)transaction.convertObjectToID(dirtyRev.getResourceID());
-        CDOID cleanResourceID = (CDOID)transaction.convertObjectToID(cleanRev.getResourceID());
+        CDOID currentResourceID = dirtyRev.getResourceID();
+        CDOID cleanResourceID = cleanRev.getResourceID();
         if (!CDOIDUtil.equals(currentResourceID, cleanResourceID))
         {
           if (currentResourceID != CDOID.NULL)

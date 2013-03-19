@@ -24,11 +24,13 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.id.CDOWithID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
@@ -1062,7 +1064,19 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   private String getResourcePath(InternalCDORevision revision)
   {
-    CDOID folderID = (CDOID)revision.data().getContainerID();
+    CDORevisionData data = revision.data();
+    CDOID folderID;
+
+    Object containerID = data.getContainerID();
+    if (containerID instanceof CDOWithID)
+    {
+      folderID = ((CDOWithID)containerID).cdoID();
+    }
+    else
+    {
+      folderID = (CDOID)containerID;
+    }
+
     String name = (String)revision.data().get(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME, 0);
     if (CDOIDUtil.isNull(folderID))
     {

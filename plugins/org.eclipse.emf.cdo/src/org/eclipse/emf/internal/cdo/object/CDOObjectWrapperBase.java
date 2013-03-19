@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus - Fix failure to attach CDOLegacyAdapter to EGenericTypes (bug 403681)
  */
 package org.eclipse.emf.internal.cdo.object;
 
@@ -341,11 +342,20 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
 
   public boolean eIsSet(EStructuralFeature feature)
   {
-    return instance.eIsSet(feature);
+    return isSetInstanceValue(instance, feature);
   }
 
   public boolean eIsSet(int featureID)
   {
+    // Features that need special handling
+    if (featureID == EcorePackage.ETYPED_ELEMENT__EGENERIC_TYPE
+        || featureID == EcorePackage.ECLASSIFIER__INSTANCE_TYPE_NAME
+        || featureID == EcorePackage.ECLASS__EGENERIC_SUPER_TYPES
+        || featureID == EcorePackage.EOPERATION__EGENERIC_EXCEPTIONS)
+    {
+      return isSetInstanceValue(instance, instance.eClass().getEStructuralFeature(featureID));
+    }
+
     return instance.eIsSet(featureID);
   }
 

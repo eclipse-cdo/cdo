@@ -197,7 +197,7 @@ public class CommitHistoryComposite extends Composite
 
   protected TableViewer createTableViewer()
   {
-    return new TableViewer(this, SWT.BORDER | SWT.FULL_SELECTION);
+    return new TableViewer(this, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
   }
 
   protected ContentProvider createContentProvider()

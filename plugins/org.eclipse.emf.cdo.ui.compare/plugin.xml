@@ -43,6 +43,14 @@
             id="org.eclipse.emf.cdo.ui.compare.contribution2"
             objectClass="org.eclipse.emf.cdo.common.commit.CDOCommitInfo">
          <action
+               class="org.eclipse.emf.cdo.ui.internal.compare.CompareWithEachOtherAction"
+               enablesFor="2"
+               id="org.eclipse.emf.cdo.ui.compare.CompareWithEachOtherAction"
+               label="Compare With Each Other..."
+               menubarPath="additions"
+               style="push">
+         </action>
+         <action
                class="org.eclipse.emf.cdo.ui.internal.compare.CompareWithPreviousVersionAction"
                enablesFor="1"
                id="org.eclipse.emf.cdo.ui.compare.CompareWithPreviousVersionAction"

@@ -20,9 +20,9 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class CompareWithPreviousVersionAction extends AbstractAction<CDOCommitInfo>
+public class CompareWithEachOtherAction extends AbstractAction<CDOCommitInfo>
 {
-  public CompareWithPreviousVersionAction()
+  public CompareWithEachOtherAction()
   {
     super(CDOCommitInfo.class);
   }
@@ -30,10 +30,11 @@ public class CompareWithPreviousVersionAction extends AbstractAction<CDOCommitIn
   @Override
   protected void run(IAction action, List<CDOCommitInfo> targets)
   {
-    if (targets.size() == 1)
+    if (targets.size() == 2)
     {
-      CDOCommitInfo commitInfo = targets.get(0);
-      CDOCompareEditorUtil.openDialog(commitInfo);
+      CDOCommitInfo commitInfo0 = targets.get(0);
+      CDOCommitInfo commitInfo1 = targets.get(1);
+      CDOCompareEditorUtil.openDialog(commitInfo0, commitInfo1);
     }
   }
 }

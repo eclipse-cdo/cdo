@@ -40,25 +40,15 @@ import org.eclipse.compare.CompareUI;
  */
 public class CDOCompareEditorUtil
 {
-  public static boolean openDialog(CDOCommitInfo commitInfo)
+  public static boolean openDialog(CDOSession session, CDOBranchPoint leftPoint, CDOBranchPoint rightPoint)
   {
-    long previousTimeStamp = commitInfo.getPreviousTimeStamp();
-    if (previousTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
-    {
-      return false;
-    }
-
-    CDORepositoryInfo repositoryInfo = (CDORepositoryInfo)commitInfo.getCommitInfoManager().getRepository();
-    CDOSession session = repositoryInfo.getSession();
-    CDOBranchPoint previous = CDOBranchUtil.normalizeBranchPoint(commitInfo.getBranch(), previousTimeStamp);
-
     CDOView leftView = null;
     CDOView rightView = null;
 
     try
     {
-      leftView = session.openView(commitInfo);
-      rightView = session.openView(previous);
+      leftView = session.openView(leftPoint);
+      rightView = session.openView(rightPoint);
 
       return openDialog(leftView, rightView, null);
     }
@@ -67,6 +57,26 @@ public class CDOCompareEditorUtil
       LifecycleUtil.deactivate(rightView);
       LifecycleUtil.deactivate(leftView);
     }
+  }
+
+  public static boolean openDialog(CDOCommitInfo leftCommitInfo, CDOBranchPoint rightPoint)
+  {
+    CDORepositoryInfo repositoryInfo = (CDORepositoryInfo)leftCommitInfo.getCommitInfoManager().getRepository();
+    CDOSession session = repositoryInfo.getSession();
+
+    return openDialog(session, leftCommitInfo, rightPoint);
+  }
+
+  public static boolean openDialog(CDOCommitInfo commitInfo)
+  {
+    long previousTimeStamp = commitInfo.getPreviousTimeStamp();
+    if (previousTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      return false;
+    }
+
+    CDOBranchPoint previous = CDOBranchUtil.normalizeBranchPoint(commitInfo.getBranch(), previousTimeStamp);
+    return openDialog(commitInfo, previous);
   }
 
   public static boolean openDialog(CDOView leftView, CDOView rightView, CDOView[] originView)

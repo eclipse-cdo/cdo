@@ -452,8 +452,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     CDORevisionData data = CDOUtil.getCDOObject(salesOrder).cdoRevision().data();
     CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
 
-    int fails;
-    assertEquals(false, id.isExternal());
+    assertEquals(true, id.isExternal());
   }
 
   @Skips("Hibernate")

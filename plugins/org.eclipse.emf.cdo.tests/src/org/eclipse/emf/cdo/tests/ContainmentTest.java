@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.tests.model2.TaskContainer;
 import org.eclipse.emf.cdo.tests.model2.TransientContainer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.DanglingReferenceException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -564,10 +566,6 @@ public class ContainmentTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getOrCreateResource(getResourcePath("res1"));
-
-    // Model1Package.eINSTANCE.getClass();
-    // Resource resource = new XMIResourceImpl();
-
     EList<EObject> contents = resource.getContents();
 
     Company company = getModel1Factory().createCompany();
@@ -583,25 +581,27 @@ public class ContainmentTest extends AbstractCDOTest
     EList<Supplier> suppliers = company.getSuppliers();
     suppliers.add(supplier);
 
-    // // Test succeeds with this intermediary commit:
-    // transaction.commit();
+    // "Control" all company contents (supplier + category) to resource contents.
+    // These two objects now have eContainer and eDirectResource set
+    contents.addAll(company.eContents());
 
-    EList<EObject> companyContents = company.eContents();
-    contents.addAll(companyContents);
+    // Detach the eContainer of supplier + category
     contents.remove(company);
 
-    // FileOutputStream stream = IOUtil.openOutputStream("/develop/test.xml");
-    //
-    // try
-    // {
-    // resource.save(stream, null);
-    // }
-    // finally
-    // {
-    // IOUtil.close(stream);
-    // }
+    try
+    {
+      transaction.commit();
+      fail("CommitException expected");
+    }
+    catch (CommitException expected)
+    {
+      assertInstanceOf(DanglingReferenceException.class, expected.getCause());
+    }
 
-    int fails;
+    // Unset eContainer of supplier + category
+    company.getSuppliers().remove(supplier);
+    company.getCategories().remove(category);
+
     transaction.commit();
   }
 }

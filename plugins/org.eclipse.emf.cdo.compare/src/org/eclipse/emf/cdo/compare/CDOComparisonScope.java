@@ -38,6 +38,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.ProperContentIterator;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSession.MergeData;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterators;
@@ -237,7 +238,18 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
       }
       else
       {
-        CDOID containerID = (CDOID)revisionData.getContainerID();
+        CDOID containerID;
+
+        Object containerOrID = revisionData.getContainerID();
+        if (containerOrID instanceof EObject)
+        {
+          containerID = (CDOID)((InternalCDOView)object.cdoView()).convertObjectToID(containerOrID);
+        }
+        else
+        {
+          containerID = (CDOID)containerOrID;
+        }
+
         collectRequiredParentIDs(view, containerID, requiredParentIDs);
       }
     }

@@ -7,14 +7,14 @@
  * 
  * Contributors:
  *     Martin Fluegge - initial API and implementation
+ *     Christian W. Damus (CEA) - bug 404043: contents of views not shown in Dawn Explorer
  */
 package org.eclipse.emf.cdo.dawn.ui.views;
 
 import org.eclipse.emf.cdo.dawn.ui.helper.EditorDescriptionHelper;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
-import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
@@ -37,25 +37,30 @@ public class DawnItemProvider extends CDOItemProvider
   @Override
   public Object[] getChildren(Object element)
   {
-    // if (element instanceof CDOView)
-    // {
-    // return ((CDOView)element).getRootResource().getContents().toArray();
-    // }
+    Object[] result = super.getChildren(element);
 
-    if (element instanceof CDOResourceFolder)
+    if (result.length > 0 && result[0] instanceof CDOView)
     {
-      return ((CDOResourceFolder)element).getNodes().toArray();
+      // filter the views to show only our view
+      CDOView ourView = null;
+      for (int i = 0; i < result.length; i++)
+      {
+        if (result[i] == dawnExplorer.getView())
+        {
+          ourView = (CDOView)result[i];
+          break;
+        }
+      }
+
+      if (ourView != null)
+      {
+        result = new Object[] { ourView };
+      } // otherwise, we're showing something totally else, so don't worry about it
+
+      return result;
     }
 
-    if (element instanceof CDOSession)
-    {
-      CDOSession session = (CDOSession)element;
-      Object[] child = new Object[1];
-      child[0] = session.getView(dawnExplorer.getView().getViewID());
-      return child;
-    }
-
-    return super.getChildren(element);
+    return result;
   }
 
   @Override

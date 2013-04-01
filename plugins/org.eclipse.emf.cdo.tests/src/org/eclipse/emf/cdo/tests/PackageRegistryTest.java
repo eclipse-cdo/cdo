@@ -332,6 +332,23 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
   }
 
+  public void testDynamicPackageLoaded() throws Exception
+  {
+    EPackage model1 = loadModel("model1.ecore");
+
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(model1);
+
+    EFactory modelFactory = model1.getEFactoryInstance(); // Must happen AFTER putEPackage!!!
+    EObject object = modelFactory.create((EClass)model1.getEClassifier("Company"));
+
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
+    resource.getContents().add(object);
+
+    transaction.commit();
+  }
+
   @CleanRepositoriesBefore
   public void testDynamicPackageFactory() throws Exception
   {

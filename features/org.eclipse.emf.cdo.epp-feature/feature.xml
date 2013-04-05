@@ -74,18 +74,6 @@
          id="org.eclipse.emf.cdo.doc"
          version="0.0.0"/>
 
-   <includes
-         id="org.eclipse.net4j.db.doc"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.net4j.doc"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.net4j.util.doc"
-         version="0.0.0"/>
-
    <plugin
          id="org.eclipse.emf.cdo.migrator"
          download-size="0"

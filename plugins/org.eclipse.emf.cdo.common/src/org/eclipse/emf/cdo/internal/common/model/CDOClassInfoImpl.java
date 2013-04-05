@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Christian W. Damus (CEA) - support partially persistent features
+ *    Christian W. Damus (CEA) - bug 404318: NPEs in dynamic objects whose EClasses are unloaded
  */
 package org.eclipse.emf.cdo.internal.common.model;
 
@@ -112,7 +113,9 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
 
   public void unsetTarget(Notifier oldTarget)
   {
-    eClass = null;
+    // pass. In particular, don't forget the EClass because it may still
+    // be required by dependents such as DynamicCDOObjectImpls that retain
+    // me as a descriptor of their class
   }
 
   public EClass getEClass()

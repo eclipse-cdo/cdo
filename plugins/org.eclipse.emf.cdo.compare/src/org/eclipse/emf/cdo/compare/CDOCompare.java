@@ -37,10 +37,13 @@ import org.eclipse.emf.compare.postprocessor.IPostProcessor;
 import org.eclipse.emf.compare.req.IReqEngine;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 
 import com.google.common.base.Function;
 
 /**
+ * A class with many overridable factory methods that help to create EMF {@link Comparison comparisons}.
+ *
  * @author Eike Stepper
  */
 public class CDOCompare
@@ -181,6 +184,8 @@ public class CDOCompare
   }
 
   /**
+   * A {@link DefaultMatchEngine match engine} that treats {@link Resource resources} as {@link EObject EObjects}.
+   *
    * @author Eike Stepper
    */
   public static final class CDOMatchEngine extends DefaultMatchEngine

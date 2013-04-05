@@ -91,7 +91,7 @@ import java.util.concurrent.TimeoutException;
  * All {@link CDOTransaction} includes in the commit process need to have finish their phase before moving to the next
  * phase. For one phase, every {@link CDOTransaction} could have their own thread. It depends of the ExecutorService.
  * <p>
- * 
+ *
  * @author Simon McDuff
  * @since 2.0
  */
@@ -294,9 +294,34 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
   public CDOCommitInfo commit(IProgressMonitor progressMonitor) throws CommitException
   {
+    commitPrepare(progressMonitor);
+    int phase = 0;
+
+    try
+    {
+      // We need to complete 3 phases
+      while (phase <= 2)
+      {
+        commitPhase(progressMonitor);
+        ++phase;
+      }
+    }
+    catch (Exception ex)
+    {
+      commitException(progressMonitor, phase, ex);
+    }
+    finally
+    {
+      commitFinally(progressMonitor);
+    }
+
+    return null;
+  }
+
+  public void commitPrepare(IProgressMonitor progressMonitor)
+  {
     CheckUtil.checkArg(progressMonitor, "progressMonitor"); //$NON-NLS-1$
     progressMonitor.beginTask(Messages.getString("CDOXATransactionImpl.4"), 3); //$NON-NLS-1$
-    int phase = 0;
 
     for (InternalCDOTransaction transaction : transactions)
     {
@@ -305,49 +330,44 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       xaContext.setState(CDOXAPhase1State.INSTANCE);
       activeContexts.put(transaction, xaContext);
     }
+  }
 
-    try
+  public void commitPhase(IProgressMonitor progressMonitor) throws InterruptedException, ExecutionException
+  {
+    send(activeContexts.values(), new SubProgressMonitor(progressMonitor, 1));
+  }
+
+  public void commitException(IProgressMonitor progressMonitor, int phase, Exception ex) throws CommitException
+  {
+    if (phase < 2)
     {
-      // We need to complete 3 phases
-      while (phase < 3)
+      // Phase 0 and 1 are the only two phases we can cancel.
+      for (InternalCDOXACommitContext xaContext : activeContexts.values())
       {
-        send(activeContexts.values(), new SubProgressMonitor(progressMonitor, 1));
-        ++phase;
+        xaContext.setState(CDOXACancel.INSTANCE);
       }
 
-      return null;
-    }
-    catch (Exception ex)
-    {
-      if (phase < 2)
+      try
       {
-        // Phase 0 and 1 are the only two phases we can cancel.
-        for (InternalCDOXACommitContext xaContext : activeContexts.values())
-        {
-          xaContext.setState(CDOXACancel.INSTANCE);
-        }
-
-        try
-        {
-          send(activeContexts.values(), new SubProgressMonitor(progressMonitor, 2 - phase));
-        }
-        catch (InterruptedException ex1)
-        {
-          throw WrappedException.wrap(ex1);
-        }
-        catch (ExecutionException ex1)
-        {
-          OM.LOG.warn(ex1);
-        }
+        send(activeContexts.values(), new SubProgressMonitor(progressMonitor, 2 - phase));
       }
+      catch (InterruptedException ex1)
+      {
+        throw WrappedException.wrap(ex1);
+      }
+      catch (ExecutionException ex1)
+      {
+        OM.LOG.warn(ex1);
+      }
+    }
 
-      throw new CommitException(ex);
-    }
-    finally
-    {
-      cleanUp();
-      progressMonitor.done();
-    }
+    throw new CommitException(ex);
+  }
+
+  public void commitFinally(IProgressMonitor progressMonitor)
+  {
+    cleanUp();
+    progressMonitor.done();
   }
 
   public InternalCDOXASavepoint getLastSavepoint()

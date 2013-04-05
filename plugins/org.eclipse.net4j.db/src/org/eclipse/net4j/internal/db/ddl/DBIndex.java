@@ -23,6 +23,7 @@ import org.eclipse.net4j.spi.db.ddl.InternalDBField;
 import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
 import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 import org.eclipse.net4j.spi.db.ddl.InternalDBTable;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -36,6 +37,9 @@ import java.util.List;
  */
 public class DBIndex extends DBSchemaElement implements InternalDBIndex
 {
+  private static final boolean DISABLE_NULLABLE_CHECK = Boolean.parseBoolean(OMPlatform.INSTANCE.getProperty(
+      "org.eclipse.net4j.db.DisableNullableCheck", "true"));
+
   private static final long serialVersionUID = 1L;
 
   private IDBTable table;
@@ -112,10 +116,11 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
   {
     assertUnlocked();
 
-    if (type != Type.NON_UNIQUE && !field.isNotNull())
+    if (type != Type.NON_UNIQUE && !field.isNotNull() && !DISABLE_NULLABLE_CHECK)
     {
       Exception constructionStackTrace = ((InternalDBField)field).getConstructionStackTrace();
-      throw new DBException("Index field is nullable: " + field, constructionStackTrace); //$NON-NLS-1$
+      throw new DBException(
+          "Index field is nullable: " + field + " (to disable this check run with '-Dorg.eclipse.net4j.db.DisableNullableCheck=true')", constructionStackTrace); //$NON-NLS-1$
     }
 
     if (field.getTable() != table)

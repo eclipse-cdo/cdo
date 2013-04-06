@@ -60,7 +60,7 @@
 
 		<!-- EMF Compare -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/emf/compare/updates/interim/2.1"/>
+			<rm:uri format="http://download.eclipse.org/modeling/emf/compare/updates/milestones/2.1"/>
 		</rm:provider>
 
 		<!-- MWE -->
@@ -123,7 +123,7 @@
 
 		<!-- EGIT -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/egit/updates-nightly"/>
+			<rm:uri format="http://download.eclipse.org/egit/updates"/>
 		</rm:provider>
 
 		<!-- BUCKMINSTER -->

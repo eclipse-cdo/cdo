@@ -37,14 +37,7 @@ import org.eclipse.emf.compare.diff.DefaultDiffEngine;
 import org.eclipse.emf.compare.diff.DiffBuilder;
 import org.eclipse.emf.compare.diff.FeatureFilter;
 import org.eclipse.emf.compare.diff.IDiffEngine;
-import org.eclipse.emf.compare.match.DefaultComparisonFactory;
-import org.eclipse.emf.compare.match.DefaultEqualityHelperFactory;
-import org.eclipse.emf.compare.match.DefaultMatchEngine;
-import org.eclipse.emf.compare.match.IComparisonFactory;
-import org.eclipse.emf.compare.match.IMatchEngine;
-import org.eclipse.emf.compare.match.eobject.IEObjectMatcher;
 import org.eclipse.emf.compare.scope.IComparisonScope;
-import org.eclipse.emf.compare.utils.UseIdentifiers;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -180,10 +173,11 @@ public class EMFCompareTest extends AbstractCDOTest
     IComparisonScope scope = EMFCompare.createDefaultScope(resourceSetA, resourceSetB);
 
     // Configure EMF Compare
-    IEObjectMatcher matcher = DefaultMatchEngine.createDefaultEObjectMatcher(UseIdentifiers.NEVER);
-    IComparisonFactory comparisonFactory = new DefaultComparisonFactory(new DefaultEqualityHelperFactory());
-    IMatchEngine matchEngine = new DefaultMatchEngine(matcher, comparisonFactory);
-    EMFCompare comparator = EMFCompare.builder().setMatchEngine(matchEngine).build();
+    // IEObjectMatcher matcher = DefaultMatchEngine.createDefaultEObjectMatcher(UseIdentifiers.NEVER);
+    // IComparisonFactory comparisonFactory = new DefaultComparisonFactory(new DefaultEqualityHelperFactory());
+    // IMatchEngine matchEngine = new DefaultMatchEngine(matcher, comparisonFactory);
+    // EMFCompare comparator = EMFCompare.builder().setMatchEngine(matchEngine).build();
+    EMFCompare comparator = EMFCompare.builder().build();
 
     // Compare the two models
     Comparison comparison = comparator.compare(scope);

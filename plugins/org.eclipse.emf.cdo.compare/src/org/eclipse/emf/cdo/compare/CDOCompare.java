@@ -33,6 +33,7 @@ import org.eclipse.emf.compare.match.IEqualityHelperFactory;
 import org.eclipse.emf.compare.match.IMatchEngine;
 import org.eclipse.emf.compare.match.eobject.IEObjectMatcher;
 import org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher;
+import org.eclipse.emf.compare.match.impl.MatchEngineFactoryRegistryImpl;
 import org.eclipse.emf.compare.postprocessor.IPostProcessor;
 import org.eclipse.emf.compare.req.IReqEngine;
 import org.eclipse.emf.compare.scope.IComparisonScope;
@@ -85,10 +86,11 @@ public class CDOCompare
   {
     Builder builder = EMFCompare.builder();
 
-    IMatchEngine matchEngine = createMatchEngine(matcher, comparisonFactory);
-    if (matchEngine != null)
+    IMatchEngine.Factory.Registry matchEngineFactoryRegistry = createMatchEngineFactoryRegistry(matcher,
+        comparisonFactory);
+    if (matchEngineFactoryRegistry != null)
     {
-      builder.setMatchEngine(matchEngine);
+      builder.setMatchEngineFactoryRegistry(matchEngineFactoryRegistry);
     }
 
     IDiffEngine diffEngine = createDiffEngine();
@@ -124,9 +126,12 @@ public class CDOCompare
     return builder.build();
   }
 
-  protected CDOMatchEngine createMatchEngine(IEObjectMatcher matcher, IComparisonFactory comparisonFactory)
+  protected IMatchEngine.Factory.Registry createMatchEngineFactoryRegistry(IEObjectMatcher matcher,
+      IComparisonFactory comparisonFactory)
   {
-    return new CDOMatchEngine(matcher, comparisonFactory);
+    IMatchEngine.Factory.Registry registry = new MatchEngineFactoryRegistryImpl();
+    registry.add(new CDOMatchEngine.Factory(matcher, comparisonFactory));
+    return registry;
   }
 
   protected IDiffEngine createDiffEngine()
@@ -188,7 +193,7 @@ public class CDOCompare
    *
    * @author Eike Stepper
    */
-  public static final class CDOMatchEngine extends DefaultMatchEngine
+  public static class CDOMatchEngine extends DefaultMatchEngine
   {
     CDOMatchEngine(IEObjectMatcher matcher, IComparisonFactory comparisonFactory)
     {
@@ -200,6 +205,51 @@ public class CDOCompare
         final Notifier origin, Monitor monitor)
     {
       match(comparison, scope, (EObject)left, (EObject)right, (EObject)origin, monitor);
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class Factory implements IMatchEngine.Factory
+    {
+      private final IMatchEngine matchEngine;
+
+      private int ranking;
+
+      public Factory(IEObjectMatcher matcher, IComparisonFactory comparisonFactory)
+      {
+        matchEngine = createMatchEngine(matcher, comparisonFactory);
+      }
+
+      protected Factory(IMatchEngine matchEngine)
+      {
+        this.matchEngine = matchEngine;
+      }
+
+      protected CDOMatchEngine createMatchEngine(IEObjectMatcher matcher, IComparisonFactory comparisonFactory)
+      {
+        return new CDOMatchEngine(matcher, comparisonFactory);
+      }
+
+      public IMatchEngine getMatchEngine()
+      {
+        return matchEngine;
+      }
+
+      public int getRanking()
+      {
+        return ranking;
+      }
+
+      public void setRanking(int ranking)
+      {
+        this.ranking = ranking;
+      }
+
+      public boolean isMatchEngineFactoryFor(IComparisonScope scope)
+      {
+        return scope instanceof CDOComparisonScope;
+      }
     }
   }
 

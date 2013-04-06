@@ -618,7 +618,10 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
       DBUtil.close(connection);
     }
 
-    database = DBUtil.openDatabase(dbAdapter, dbConnectionProvider, repository.getName());
+    String schemaName = repository.getName();
+    boolean fixNullableIndexColumns = schemaVersion < FIRST_VERSION_WITH_NULLABLE_CHECKS;
+
+    database = DBUtil.openDatabase(dbAdapter, dbConnectionProvider, schemaName, fixNullableIndexColumns);
     IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
 
     try
@@ -897,6 +900,8 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     public abstract void migrateSchema(DBStore store, Connection connection) throws Exception;
   }
 
+  private static final int FIRST_VERSION_WITH_NULLABLE_CHECKS = 4;
+
   private static final SchemaMigrator NO_MIGRATION_NEEDED = null;
 
   private static final SchemaMigrator NON_AUDIT_MIGRATION = new SchemaMigrator()
@@ -956,31 +961,8 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
   };
 
-  private static final SchemaMigrator NULLABLE_COLUMNS_MIGRATION = new SchemaMigrator()
-  {
-    @Override
-    public void migrateSchema(DBStore store, final Connection connection) throws Exception
-    {
-      IDBAdapter dbAdapter = store.getDBAdapter();
-      IDBSchema schema = DBUtil.createSchema("MIGRATION");
-      IDBField field1 = schema.addTable(null).addField(null, null);
-
-      Statement statement = null;
-
-      try
-      {
-        statement = connection.createStatement();
-        statement.execute(dbAdapter.sqlModifyField(field1));
-      }
-      finally
-      {
-        DBUtil.close(statement);
-      }
-    }
-  };
-
   private static final SchemaMigrator[] SCHEMA_MIGRATORS = { NO_MIGRATION_NEEDED, NON_AUDIT_MIGRATION,
-      LOB_SIZE_MIGRATION, NULLABLE_COLUMNS_MIGRATION };
+      LOB_SIZE_MIGRATION, NO_MIGRATION_NEEDED };
 
   static
   {

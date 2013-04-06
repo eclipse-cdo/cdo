@@ -198,7 +198,11 @@ public class DBField extends DBSchemaElement implements InternalDBField
 
   public void setNotNull(boolean notNull)
   {
-    assertUnlocked();
+    if (DBIndex.FIX_NULLABLE_INDEX_COLUMNS.get() != Boolean.TRUE)
+    {
+      assertUnlocked();
+    }
+
     this.notNull = notNull;
   }
 

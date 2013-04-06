@@ -11,15 +11,19 @@
 package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBIndexField;
 import org.eclipse.net4j.db.ddl.IDBNamedElement;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.DBDatabase;
 import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 import org.eclipse.net4j.internal.db.bundle.OM;
+import org.eclipse.net4j.internal.db.ddl.DBIndex;
 import org.eclipse.net4j.internal.db.ddl.DBNamedElement;
 import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -170,7 +174,16 @@ public final class DBUtil
    */
   public static IDBDatabase openDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName)
   {
-    return new DBDatabase((DBAdapter)adapter, connectionProvider, schemaName);
+    return openDatabase(adapter, connectionProvider, schemaName, false);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static IDBDatabase openDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider,
+      String schemaName, boolean fixNullableIndexColumns)
+  {
+    return new DBDatabase((DBAdapter)adapter, connectionProvider, schemaName, fixNullableIndexColumns);
   }
 
   // /**
@@ -225,19 +238,109 @@ public final class DBUtil
   /**
    * @since 4.2
    */
-  public static IDBSchema readSchema(IDBAdapter adapter, Connection connection, String name)
+  public static void readSchema(IDBAdapter adapter, Connection connection, IDBSchema schema)
   {
-    IDBSchema schema = new org.eclipse.net4j.internal.db.ddl.DBSchema(name);
-    readSchema(adapter, connection, schema);
-    return schema;
+    adapter.readSchema(connection, schema);
   }
 
   /**
    * @since 4.2
    */
-  public static void readSchema(IDBAdapter adapter, Connection connection, IDBSchema schema)
+  public static IDBSchema readSchema(IDBAdapter adapter, Connection connection, String name)
   {
-    adapter.readSchema(connection, schema);
+    return readSchema(adapter, connection, name, false);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static IDBSchema readSchema(IDBAdapter adapter, Connection connection, String name,
+      boolean fixNullableIndexColumns)
+  {
+    IDBSchema schema = new org.eclipse.net4j.internal.db.ddl.DBSchema(name);
+
+    if (fixNullableIndexColumns)
+    {
+      DBIndex.FIX_NULLABLE_INDEX_COLUMNS.set(true);
+    }
+
+    try
+    {
+      readSchema(adapter, connection, schema);
+    }
+    finally
+    {
+      if (fixNullableIndexColumns)
+      {
+        try
+        {
+          fixNullableIndexColumns(adapter, connection, schema);
+        }
+        finally
+        {
+          DBIndex.FIX_NULLABLE_INDEX_COLUMNS.remove();
+        }
+      }
+    }
+
+    return schema;
+  }
+
+  private static void fixNullableIndexColumns(IDBAdapter adapter, Connection connection, IDBSchema schema)
+  {
+    Statement statement = null;
+    StringBuilder builder = new StringBuilder();
+
+    try
+    {
+      for (IDBTable table : schema.getTables())
+      {
+        for (IDBIndex index : table.getIndices())
+        {
+          if (index.getType() != IDBIndex.Type.NON_UNIQUE)
+          {
+            for (IDBIndexField indexField : index.getIndexFields())
+            {
+              IDBField field = indexField.getField();
+              boolean nullable = !field.isNotNull();
+              if (nullable)
+              {
+                field.setNotNull(true);
+
+                if (statement == null)
+                {
+                  statement = connection.createStatement();
+                  builder.append("The internal schema migration has fixed the following nullable index columns:");
+                  builder.append(StringUtil.NL);
+                }
+
+                String sql = adapter.sqlModifyField(field);
+                builder.append("- ");
+                builder.append(sql);
+                builder.append(StringUtil.NL);
+
+                statement.execute(sql);
+              }
+            }
+          }
+        }
+      }
+
+      if (statement != null)
+      {
+        connection.commit();
+        OM.LOG.info(builder.toString());
+      }
+    }
+    catch (SQLException ex)
+    {
+      rollback(connection);
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(statement);
+    }
   }
 
   /**

@@ -153,4 +153,10 @@ public class MYSQLAdapter extends DBAdapter
     return "ALTER TABLE " + field.getTable() + " CHANGE COLUMN " + oldName + " " + field + " "
         + createFieldDefinition(field);
   }
+
+  @Override
+  protected String sqlModifyField(String tableName, String fieldName, String definition)
+  {
+    return "ALTER TABLE " + tableName + " MODIFY " + fieldName + " " + definition;
+  }
 }

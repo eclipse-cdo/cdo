@@ -37,6 +37,8 @@ import java.util.List;
  */
 public class DBIndex extends DBSchemaElement implements InternalDBIndex
 {
+  public static final ThreadLocal<Boolean> FIX_NULLABLE_INDEX_COLUMNS = new InheritableThreadLocal<Boolean>();
+
   private static final boolean DISABLE_NULLABLE_CHECK = Boolean.parseBoolean(OMPlatform.INSTANCE.getProperty(
       "org.eclipse.net4j.db.DisableNullableCheck", "true"));
 
@@ -116,7 +118,8 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
   {
     assertUnlocked();
 
-    if (type != Type.NON_UNIQUE && !field.isNotNull() && !DISABLE_NULLABLE_CHECK)
+    if (type != Type.NON_UNIQUE && !field.isNotNull() && !DISABLE_NULLABLE_CHECK
+        && FIX_NULLABLE_INDEX_COLUMNS.get() != Boolean.TRUE)
     {
       Exception constructionStackTrace = ((InternalDBField)field).getConstructionStackTrace();
       throw new DBException(

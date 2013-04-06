@@ -1010,6 +1010,26 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.2
    */
+  public String sqlModifyField(IDBField field)
+  {
+    String tableName = field.getTable().getName();
+    String fieldName = field.getName();
+
+    String definition = createFieldDefinition(field);
+    return sqlModifyField(tableName, fieldName, definition);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected String sqlModifyField(String tableName, String fieldName, String definition)
+  {
+    return "ALTER TABLE " + tableName + " ALTER COLUMN " + fieldName + " " + definition;
+  }
+
+  /**
+   * @since 4.2
+   */
   public String format(PreparedStatement stmt)
   {
     return stmt.toString();

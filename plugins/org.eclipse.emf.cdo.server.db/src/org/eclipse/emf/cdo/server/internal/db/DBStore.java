@@ -77,7 +77,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 {
   public static final String TYPE = "db"; //$NON-NLS-1$
 
-  public static final int SCHEMA_VERSION = 3;
+  public static final int SCHEMA_VERSION = 4;
 
   private static final int FIRST_START = -1;
 
@@ -956,8 +956,31 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
   };
 
+  private static final SchemaMigrator NULLABLE_COLUMNS_MIGRATION = new SchemaMigrator()
+  {
+    @Override
+    public void migrateSchema(DBStore store, final Connection connection) throws Exception
+    {
+      IDBAdapter dbAdapter = store.getDBAdapter();
+      IDBSchema schema = DBUtil.createSchema("MIGRATION");
+      IDBField field1 = schema.addTable(null).addField(null, null);
+
+      Statement statement = null;
+
+      try
+      {
+        statement = connection.createStatement();
+        statement.execute(dbAdapter.sqlModifyField(field1));
+      }
+      finally
+      {
+        DBUtil.close(statement);
+      }
+    }
+  };
+
   private static final SchemaMigrator[] SCHEMA_MIGRATORS = { NO_MIGRATION_NEEDED, NON_AUDIT_MIGRATION,
-      LOB_SIZE_MIGRATION };
+      LOB_SIZE_MIGRATION, NULLABLE_COLUMNS_MIGRATION };
 
   static
   {

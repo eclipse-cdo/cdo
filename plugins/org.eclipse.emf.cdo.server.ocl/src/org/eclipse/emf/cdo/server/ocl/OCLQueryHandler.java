@@ -72,9 +72,16 @@ import java.util.Set;
  */
 public class OCLQueryHandler implements IQueryHandler
 {
+  public static final String LANGUAGE_NAME = "ocl"; //$NON-NLS-1$
+
+  /**
+   * @since 4.1
+   */
+  public static final String LAZY_EXTENTS_PARAMETER = "cdoLazyExtents";
+
   private static final EcoreFactory FACTORY = EcoreFactory.eINSTANCE;
 
-  public static final String LANGUAGE_NAME = "ocl"; //$NON-NLS-1$
+  private boolean lazyExtents = true;
 
   public OCLQueryHandler()
   {
@@ -87,6 +94,21 @@ public class OCLQueryHandler implements IQueryHandler
 
     try
     {
+      Map<String, Object> queryParameters = info.getParameters();
+      Object o = queryParameters.get(LAZY_EXTENTS_PARAMETER);
+      if (o != null)
+      {
+        try
+        {
+          lazyExtents = (Boolean)o;
+        }
+        catch (ClassCastException ex)
+        {
+          throw new IllegalArgumentException("Parameter " + LAZY_EXTENTS_PARAMETER + " must be a boolean but it is a "
+              + o + " class " + o.getClass().getName(), ex);
+        }
+      }
+
       CDORevisionProvider revisionProvider = context.getView();
       CDOChangeSetData changeSetData = info.getChangeSetData();
       if (changeSetData != null)
@@ -135,7 +157,7 @@ public class OCLQueryHandler implements IQueryHandler
 
       helper.setContext(classifier);
 
-      Map<String, Object> parameters = new HashMap<String, Object>(info.getParameters());
+      Map<String, Object> parameters = new HashMap<String, Object>(queryParameters);
       initEnvironment(ocl.getEnvironment(), packageRegistry, parameters);
 
       OCLExpression<EClassifier> expr = helper.createQuery(queryString);
@@ -224,7 +246,7 @@ public class OCLQueryHandler implements IQueryHandler
 
   protected boolean createsLazyExtents()
   {
-    return false;
+    return lazyExtents;
   }
 
   protected EClassifier getArbitraryContextClassifier(CDOPackageRegistry packageRegistry)

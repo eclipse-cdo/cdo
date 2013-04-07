@@ -101,6 +101,7 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(LobTest.class);
     testClasses.add(EMFCompareTest.class);
     testClasses.add(OCLQueryTest.class);
+    testClasses.add(OCLQueryTest.Lazy.class);
     testClasses.add(ViewProviderTest.class);
     testClasses.add(WorkspaceTest.class);
     testClasses.add(BackupTest.class);

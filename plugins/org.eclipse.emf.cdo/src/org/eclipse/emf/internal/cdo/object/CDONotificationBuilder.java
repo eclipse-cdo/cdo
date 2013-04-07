@@ -286,52 +286,24 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
       Object newValue, int position)
   {
     Class<?> instanceClass = feature.getEType().getInstanceClass();
-    if (instanceClass == Integer.TYPE)
+    if (instanceClass.isPrimitive())
     {
-      int old = oldValue == null ? 0 : ((Integer)oldValue).intValue();
-      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Integer)newValue).intValue());
-    }
+      Object defaultValue = null;
+      if (oldValue == null)
+      {
+        defaultValue = feature.getDefaultValue();
+        oldValue = defaultValue;
+      }
 
-    if (instanceClass == Boolean.TYPE)
-    {
-      boolean old = oldValue == null ? false : ((Boolean)oldValue).booleanValue();
-      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Boolean)newValue).booleanValue());
-    }
+      if (newValue == null)
+      {
+        if (defaultValue == null)
+        {
+          defaultValue = feature.getDefaultValue();
+        }
 
-    if (instanceClass == Long.TYPE)
-    {
-      long old = oldValue == null ? 0 : ((Long)oldValue).longValue();
-      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Long)newValue).longValue());
-    }
-
-    if (instanceClass == Float.TYPE)
-    {
-      float old = oldValue == null ? 0 : ((Float)oldValue).floatValue();
-      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Float)newValue).floatValue());
-    }
-
-    if (instanceClass == Double.TYPE)
-    {
-      double old = oldValue == null ? 0 : ((Double)oldValue).doubleValue();
-      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Double)newValue).doubleValue());
-    }
-
-    if (instanceClass == Short.TYPE)
-    {
-      short old = oldValue == null ? 0 : ((Short)oldValue).shortValue();
-      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Short)newValue).shortValue());
-    }
-
-    if (instanceClass == Byte.TYPE)
-    {
-      byte old = oldValue == null ? 0 : ((Byte)oldValue).byteValue();
-      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Byte)newValue).byteValue());
-    }
-
-    if (instanceClass == Character.TYPE)
-    {
-      char old = oldValue == null ? 0 : ((Character)oldValue).charValue();
-      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Character)newValue).charValue());
+        newValue = defaultValue;
+      }
     }
 
     return new CDODeltaNotificationImpl(object, eventType, feature, oldValue, newValue, position);

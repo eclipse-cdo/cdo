@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.model6.impl;
 
 import org.eclipse.emf.cdo.tests.model6.BaseObject;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
+import org.eclipse.emf.cdo.tests.model6.EmptyStringDefault;
 import org.eclipse.emf.cdo.tests.model6.HasNillableAttribute;
 import org.eclipse.emf.cdo.tests.model6.Holdable;
 import org.eclipse.emf.cdo.tests.model6.Holder;
@@ -178,6 +179,13 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * @generated
    */
   private EClass hasNillableAttributeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass emptyStringDefaultEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -779,6 +787,26 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getEmptyStringDefault()
+  {
+    return emptyStringDefaultEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEmptyStringDefault_Attribute()
+  {
+    return (EAttribute)emptyStringDefaultEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EEnum getMyEnum()
   {
     return myEnumEEnum;
@@ -897,6 +925,9 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
     hasNillableAttributeEClass = createEClass(HAS_NILLABLE_ATTRIBUTE);
     createEAttribute(hasNillableAttributeEClass, HAS_NILLABLE_ATTRIBUTE__NILLABLE);
+
+    emptyStringDefaultEClass = createEClass(EMPTY_STRING_DEFAULT);
+    createEAttribute(emptyStringDefaultEClass, EMPTY_STRING_DEFAULT__ATTRIBUTE);
 
     // Create enums
     myEnumEEnum = createEEnum(MY_ENUM);
@@ -1100,6 +1131,12 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getHasNillableAttribute_Nillable(), this.getMyString(), "nillable", null, 0, 1,
         HasNillableAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(emptyStringDefaultEClass, EmptyStringDefault.class, "EmptyStringDefault", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEmptyStringDefault_Attribute(), ecorePackage.getEString(), "attribute", "", 0, 1,
+        EmptyStringDefault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals

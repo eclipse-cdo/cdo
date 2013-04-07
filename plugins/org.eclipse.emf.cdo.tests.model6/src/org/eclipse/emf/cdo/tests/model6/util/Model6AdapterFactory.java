@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.tests.model6.C;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
+import org.eclipse.emf.cdo.tests.model6.EmptyStringDefault;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
 import org.eclipse.emf.cdo.tests.model6.HasNillableAttribute;
@@ -222,6 +223,12 @@ public class Model6AdapterFactory extends AdapterFactoryImpl
     public Adapter caseHasNillableAttribute(HasNillableAttribute object)
     {
       return createHasNillableAttributeAdapter();
+    }
+
+    @Override
+    public Adapter caseEmptyStringDefault(EmptyStringDefault object)
+    {
+      return createEmptyStringDefaultAdapter();
     }
 
     @Override
@@ -541,6 +548,21 @@ public class Model6AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createHasNillableAttributeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model6.EmptyStringDefault <em>Empty String Default</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model6.EmptyStringDefault
+   * @generated
+   */
+  public Adapter createEmptyStringDefaultAdapter()
   {
     return null;
   }

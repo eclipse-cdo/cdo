@@ -9,6 +9,7 @@ import org.eclipse.emf.cdo.tests.model6.C;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
+import org.eclipse.emf.cdo.tests.model6.EmptyStringDefault;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
 import org.eclipse.emf.cdo.tests.model6.HasNillableAttribute;
@@ -213,6 +214,15 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    * @generated
    */
   HasNillableAttribute createHasNillableAttribute();
+
+  /**
+   * Returns a new object of class '<em>Empty String Default</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Empty String Default</em>'.
+   * @generated
+   */
+  EmptyStringDefault createEmptyStringDefault();
 
   /**
    * Returns the package supported by this factory.

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.tests.model6.C;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
+import org.eclipse.emf.cdo.tests.model6.EmptyStringDefault;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
 import org.eclipse.emf.cdo.tests.model6.HasNillableAttribute;
@@ -283,6 +284,14 @@ public class Model6Switch<T>
     {
       HasNillableAttribute hasNillableAttribute = (HasNillableAttribute)theEObject;
       T result = caseHasNillableAttribute(hasNillableAttribute);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model6Package.EMPTY_STRING_DEFAULT:
+    {
+      EmptyStringDefault emptyStringDefault = (EmptyStringDefault)theEObject;
+      T result = caseEmptyStringDefault(emptyStringDefault);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -602,6 +611,22 @@ public class Model6Switch<T>
    * @generated
    */
   public T caseHasNillableAttribute(HasNillableAttribute object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Empty String Default</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Empty String Default</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEmptyStringDefault(EmptyStringDefault object)
   {
     return null;
   }

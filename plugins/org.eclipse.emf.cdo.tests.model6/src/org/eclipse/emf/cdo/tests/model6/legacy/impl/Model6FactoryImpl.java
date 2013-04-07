@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.tests.model6.C;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
+import org.eclipse.emf.cdo.tests.model6.EmptyStringDefault;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
 import org.eclipse.emf.cdo.tests.model6.HasNillableAttribute;
@@ -132,6 +133,8 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
       return createThing();
     case Model6Package.HAS_NILLABLE_ATTRIBUTE:
       return createHasNillableAttribute();
+    case Model6Package.EMPTY_STRING_DEFAULT:
+      return createEmptyStringDefault();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -382,6 +385,17 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
   {
     HasNillableAttributeImpl hasNillableAttribute = new HasNillableAttributeImpl();
     return hasNillableAttribute;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EmptyStringDefault createEmptyStringDefault()
+  {
+    EmptyStringDefaultImpl emptyStringDefault = new EmptyStringDefaultImpl();
+    return emptyStringDefault;
   }
 
   /**

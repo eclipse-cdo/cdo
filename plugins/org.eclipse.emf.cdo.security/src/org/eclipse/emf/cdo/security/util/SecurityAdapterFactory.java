@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.security.Assignee;
 import org.eclipse.emf.cdo.security.ClassPermission;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.ObjectPermission;
 import org.eclipse.emf.cdo.security.PackagePermission;
 import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
@@ -171,6 +172,12 @@ public class SecurityAdapterFactory extends AdapterFactoryImpl
     public Adapter caseResourcePermission(ResourcePermission object)
     {
       return createResourcePermissionAdapter();
+    }
+
+    @Override
+    public Adapter caseObjectPermission(ObjectPermission object)
+    {
+      return createObjectPermissionAdapter();
     }
 
     @Override
@@ -391,6 +398,22 @@ public class SecurityAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createResourcePermissionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.security.ObjectPermission <em>Object Permission</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.security.ObjectPermission
+   * @generated
+   */
+  public Adapter createObjectPermissionAdapter()
   {
     return null;
   }

@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.internal.security.ViewCreator;
+import org.eclipse.emf.cdo.internal.security.ViewUtil;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
@@ -32,8 +34,10 @@ import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.security.UserPassword;
+import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
@@ -535,7 +539,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   }
 
   protected CDOPermission getPermission(CDORevision revision, CDORevisionProvider revisionProvider,
-      CDOBranchPoint securityContext, User user)
+      CDOBranchPoint securityContext, ISession session, User user)
   {
     CDOPermission result = convertPermission(user.getDefaultAccess());
     if (result == CDOPermission.WRITE)
@@ -615,6 +619,19 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
    */
   private final class PermissionManager implements IPermissionManager
   {
+    public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, ISession session)
+    {
+      String userID = session.getUserID();
+      if (SYSTEM_USER_ID.equals(userID))
+      {
+        // TODO Should we also check for access to the /security resource (the realm)?
+        return CDOPermission.WRITE;
+      }
+
+      return doGetPermission(revision, securityContext, session, userID);
+    }
+
+    @Deprecated
     public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID)
     {
       if (SYSTEM_USER_ID.equals(userID))
@@ -623,12 +640,33 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
         return CDOPermission.WRITE;
       }
 
+      return doGetPermission(revision, securityContext, null, userID);
+    }
+
+    private CDOPermission doGetPermission(CDORevision revision, final CDOBranchPoint securityContext,
+        final ISession session, String userID)
+    {
       User user = getUser(userID);
 
       InternalCDORevisionManager revisionManager = repository.getRevisionManager();
       CDORevisionProvider revisionProvider = new ManagedRevisionProvider(revisionManager, securityContext);
 
-      return SecurityManager.this.getPermission(revision, revisionProvider, securityContext, user);
+      ViewUtil.initViewCreation(new ViewCreator()
+      {
+        public CDOView createView(CDORevisionProvider revisionProvider)
+        {
+          return CDOServerUtil.openView(session, securityContext, revisionProvider);
+        }
+      });
+
+      try
+      {
+        return SecurityManager.this.getPermission(revision, revisionProvider, securityContext, session, user);
+      }
+      finally
+      {
+        ViewUtil.doneViewCreation();
+      }
     }
   }
 
@@ -637,7 +675,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
    */
   private final class WriteAccessHandler implements IRepository.WriteAccessHandler
   {
-    public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
+    public void handleTransactionBeforeCommitting(ITransaction transaction, final CommitContext commitContext,
         OMMonitor monitor) throws RuntimeException
     {
       if (transaction.getSessionID() == session.getSessionID())
@@ -651,16 +689,32 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
       handleCommit(commitContext, user);
 
-      permissionRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getNewObjects());
-      permissionRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getDirtyObjects());
+      ViewUtil.initViewCreation(new ViewCreator()
+      {
+        public CDOView createView(CDORevisionProvider revisionProvider)
+        {
+          return CDOServerUtil.openView(commitContext);
+        }
+      });
+
+      try
+      {
+        permissionRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getNewObjects());
+        permissionRevisionsBeforeCommitting(commitContext, securityContext, user, commitContext.getDirtyObjects());
+      }
+      finally
+      {
+        ViewUtil.doneViewCreation();
+      }
     }
 
     private void permissionRevisionsBeforeCommitting(CommitContext commitContext, CDOBranchPoint securityContext,
         User user, InternalCDORevision[] revisions)
     {
+      ISession session = commitContext.getTransaction().getSession();
       for (InternalCDORevision revision : revisions)
       {
-        CDOPermission permission = getPermission(revision, commitContext, securityContext, user);
+        CDOPermission permission = getPermission(revision, commitContext, securityContext, session, user);
         if (permission != CDOPermission.WRITE)
         {
           throw new SecurityException("User " + user + " is not allowed to write to " + revision);

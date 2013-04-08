@@ -361,7 +361,7 @@ public class Session extends Container<IView> implements InternalSession
     IPermissionManager permissionManager = manager.getPermissionManager();
     if (permissionManager != null)
     {
-      return permissionManager.getPermission(revision, securityContext, userID);
+      return permissionManager.getPermission(revision, securityContext, this);
     }
 
     return CDORevision.PERMISSION_PROVIDER.getPermission(revision, securityContext);

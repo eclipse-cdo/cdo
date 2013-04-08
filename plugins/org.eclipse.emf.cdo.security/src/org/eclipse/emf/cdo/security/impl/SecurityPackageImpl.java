@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.security.Assignee;
 import org.eclipse.emf.cdo.security.ClassPermission;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.ObjectPermission;
 import org.eclipse.emf.cdo.security.PackagePermission;
 import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
@@ -135,6 +136,13 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * @generated
    */
   private EClass resourcePermissionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass objectPermissionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -774,6 +782,17 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
 
   /**
    * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getObjectPermission()
+  {
+    return objectPermissionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
@@ -893,6 +912,8 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     resourcePermissionEClass = createEClass(RESOURCE_PERMISSION);
     createEAttribute(resourcePermissionEClass, RESOURCE_PERMISSION__PATTERN);
 
+    objectPermissionEClass = createEClass(OBJECT_PERMISSION);
+
     // Create enums
     accessEEnum = createEEnum(ACCESS);
 
@@ -947,6 +968,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     classPermissionEClass.getESuperTypes().add(getPermission());
     packagePermissionEClass.getESuperTypes().add(getPermission());
     resourcePermissionEClass.getESuperTypes().add(getPermission());
+    objectPermissionEClass.getESuperTypes().add(getPermission());
 
     // Initialize classes and features; add operations and parameters
     initEClass(securityElementEClass, SecurityElement.class,
@@ -1178,6 +1200,9 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
         getResourcePermission_Pattern(),
         theEcorePackage.getEString(),
         "pattern", null, 0, 1, ResourcePermission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+    initEClass(objectPermissionEClass, ObjectPermission.class,
+        "ObjectPermission", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
     // Initialize enums and add enum literals
     initEEnum(accessEEnum, Access.class, "Access"); //$NON-NLS-1$

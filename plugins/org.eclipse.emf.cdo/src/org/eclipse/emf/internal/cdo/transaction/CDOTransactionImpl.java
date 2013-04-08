@@ -100,7 +100,6 @@ import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
-import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -1458,7 +1457,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     CDOID id = object.cdoID();
     if (object.cdoState() == CDOState.NEW)
     {
-      Map<CDOID, CDOObject> map = getLastSavepoint().getNewObjects();
+      Map<CDOID, CDOObject> map = lastSavepoint.getNewObjects();
 
       // Determine if we added object
       if (map.containsKey(id))
@@ -1467,7 +1466,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
       else
       {
-        getLastSavepoint().getDetachedObjects().put(id, object);
+        lastSavepoint.getDetachedObjects().put(id, object);
       }
 
       // deregister object
@@ -1475,12 +1474,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
     else
     {
-      getLastSavepoint().getDetachedObjects().put(id, object);
-
       if (!cleanRevisions.containsKey(object))
       {
         cleanRevisions.put(object, object.cdoRevision());
       }
+
+      lastSavepoint.getDetachedObjects().put(id, object);
 
       // Object may have been reattached previously, in which case it must
       // here be removed from the collection of reattached objects
@@ -1862,6 +1861,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     if (commitContext == null || !commitContext.isPartialCommit())
     {
+      if (commitContext != null)
+      {
+        for (CDOObject object : commitContext.getDetachedObjects().values())
+        {
+          cleanUpLockState(object);
+        }
+      }
+
       lastSavepoint = firstSavepoint;
       firstSavepoint.clear();
       firstSavepoint.setNextSavepoint(null);
@@ -1878,6 +1885,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       for (CDOObject object : commitContext.getDetachedObjects().values())
       {
         cleanRevisions.remove(object);
+        cleanUpLockState(object);
       }
 
       for (CDOObject object : commitContext.getDirtyObjects().values())
@@ -1888,6 +1896,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     // Reset partial-commit filter
     committables = null;
+  }
+
+  private void cleanUpLockState(CDOObject object)
+  {
+    InternalCDOLockState lockState = (InternalCDOLockState)removeLockState(object);
+    if (lockState != null)
+    {
+      lockState.dispose();
+    }
   }
 
   private void collapseSavepoints(CDOCommitContext commitContext)
@@ -2555,24 +2572,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     return locksOnNewObjects;
-  }
-
-  private static Object getLockTarget(CDOObject object)
-  {
-    CDOView view = object.cdoView();
-    if (view == null)
-    {
-      return null;
-    }
-
-    CDOID id = object.cdoID();
-    boolean branching = view.getSession().getRepositoryInfo().isSupportingBranches();
-    if (branching)
-    {
-      return CDOIDUtil.createIDAndBranch(id, view.getBranch());
-    }
-
-    return id;
   }
 
   private final class ResolvingRevisionMap extends HashMap<InternalCDOObject, InternalCDORevision>

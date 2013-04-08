@@ -276,6 +276,16 @@ public class CDOViewImpl extends AbstractCDOView
     return result;
   }
 
+  private Set<? extends CDOObject> getSet(Collection<? extends CDOObject> objects)
+  {
+    if (objects instanceof Set)
+    {
+      return (Set<? extends CDOObject>)objects;
+    }
+
+    return new HashSet<CDOObject>(objects);
+  }
+
   /**
    * @throws InterruptedException
    * @since 2.0
@@ -292,9 +302,13 @@ public class CDOViewImpl extends AbstractCDOView
     checkActive();
     checkState(getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE, "Locking not supported for historial views");
 
-    List<CDORevisionKey> revisionKeys = new LinkedList<CDORevisionKey>();
-    List<CDOLockState> locksOnNewObjects = new LinkedList<CDOLockState>();
-    for (CDOObject object : objects)
+    Set<? extends CDOObject> uniqueObjects = getSet(objects);
+    int size = uniqueObjects.size();
+
+    List<CDORevisionKey> revisionKeys = new ArrayList<CDORevisionKey>(size);
+    List<CDOLockState> locksOnNewObjects = new ArrayList<CDOLockState>(size);
+
+    for (CDOObject object : uniqueObjects)
     {
       if (FSMUtil.isNew(object))
       {
@@ -392,7 +406,16 @@ public class CDOViewImpl extends AbstractCDOView
       InternalCDOObject object = getObject(id, false);
       if (object != null)
       {
-        lockStates.put(object, lockState);
+        InternalCDOLockState existingLockState = (InternalCDOLockState)lockStates.get(object);
+        if (existingLockState != null)
+        {
+          Object lockTarget = getLockTarget(object);
+          existingLockState.updateFrom(lockTarget, lockState);
+        }
+        else
+        {
+          lockStates.put(object, lockState);
+        }
       }
     }
   }
@@ -511,7 +534,7 @@ public class CDOViewImpl extends AbstractCDOView
     {
       objectIDs = new ArrayList<CDOID>();
 
-      for (CDOObject object : objects)
+      for (CDOObject object : getSet(objects))
       {
         if (FSMUtil.isNew(object))
         {
@@ -748,6 +771,11 @@ public class CDOViewImpl extends AbstractCDOView
     }
 
     return lockStates.toArray(new CDOLockState[lockStates.size()]);
+  }
+
+  protected CDOLockState removeLockState(CDOObject object)
+  {
+    return lockStates.remove(object);
   }
 
   protected CDOLockState getLockState(CDOObject object)
@@ -1227,6 +1255,24 @@ public class CDOViewImpl extends AbstractCDOView
         }
       }
     }
+  }
+
+  protected static Object getLockTarget(CDOObject object)
+  {
+    CDOView view = object.cdoView();
+    if (view == null)
+    {
+      return null;
+    }
+
+    CDOID id = object.cdoID();
+    boolean branching = view.getSession().getRepositoryInfo().isSupportingBranches();
+    if (branching)
+    {
+      return CDOIDUtil.createIDAndBranch(id, view.getBranch());
+    }
+
+    return id;
   }
 
   /**

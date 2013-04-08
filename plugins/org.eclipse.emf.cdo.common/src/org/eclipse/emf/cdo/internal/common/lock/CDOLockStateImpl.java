@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Caspar De Groot - initial API and implementation
  */
@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.common.lock;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 
@@ -27,9 +28,9 @@ import java.util.Set;
  */
 public class CDOLockStateImpl implements InternalCDOLockState
 {
-  private final Object lockedObject;
+  private Object lockedObject;
 
-  private final Set<CDOLockOwner> readLockOwners = new HashSet<CDOLockOwner>();
+  private Set<CDOLockOwner> readLockOwners = new HashSet<CDOLockOwner>();
 
   private CDOLockOwner writeLockOwner;
 
@@ -45,6 +46,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
 
   public CDOLockStateImpl copy()
   {
+    checkDisposed();
     CDOLockStateImpl newLockState = new CDOLockStateImpl(lockedObject);
     for (CDOLockOwner owner : readLockOwners)
     {
@@ -56,8 +58,21 @@ public class CDOLockStateImpl implements InternalCDOLockState
     return newLockState;
   }
 
+  public void updateFrom(Object object, CDOLockState source)
+  {
+    lockedObject = object;
+    readLockOwners = source.getReadLockOwners();
+    writeLockOwner = source.getWriteLockOwner();
+    writeOptionOwner = source.getWriteOptionOwner();
+  }
+
   public boolean isLocked(LockType lockType, CDOLockOwner lockOwner, boolean others)
   {
+    if (lockedObject == null)
+    {
+      return false;
+    }
+
     switch (lockType)
     {
     case READ:
@@ -111,16 +126,23 @@ public class CDOLockStateImpl implements InternalCDOLockState
 
   public Set<CDOLockOwner> getReadLockOwners()
   {
+    if (lockedObject == null)
+    {
+      return Collections.emptySet();
+    }
+
     return Collections.unmodifiableSet(readLockOwners);
   }
 
   public void addReadLockOwner(CDOLockOwner lockOwner)
   {
+    checkDisposed();
     readLockOwners.add(lockOwner);
   }
 
   public boolean removeReadLockOwner(CDOLockOwner lockOwner)
   {
+    checkDisposed();
     return readLockOwners.remove(lockOwner);
   }
 
@@ -131,6 +153,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
 
   public void setWriteLockOwner(CDOLockOwner lockOwner)
   {
+    checkDisposed();
     writeLockOwner = lockOwner;
   }
 
@@ -141,6 +164,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
 
   public void setWriteOptionOwner(CDOLockOwner lockOwner)
   {
+    checkDisposed();
     writeOptionOwner = lockOwner;
   }
 
@@ -150,12 +174,55 @@ public class CDOLockStateImpl implements InternalCDOLockState
   }
 
   @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (lockedObject == null ? 0 : lockedObject.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+
+    if (obj == null)
+    {
+      return false;
+    }
+
+    if (!(obj instanceof CDOLockStateImpl))
+    {
+      return false;
+    }
+
+    CDOLockStateImpl other = (CDOLockStateImpl)obj;
+    if (lockedObject == null)
+    {
+      if (other.lockedObject != null)
+      {
+        return false;
+      }
+    }
+    else if (!lockedObject.equals(other.lockedObject))
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+  @Override
   public String toString()
   {
-    StringBuilder builder = new StringBuilder("CDOLockState\nlockedObject=");
+    StringBuilder builder = new StringBuilder("CDOLockState\n  lockedObject=");
     builder.append(lockedObject);
 
-    builder.append("\nreadLockOwners=");
+    builder.append("\n  readLockOwners=");
     if (readLockOwners.size() > 0)
     {
       boolean first = true;
@@ -180,12 +247,28 @@ public class CDOLockStateImpl implements InternalCDOLockState
       builder.append("NONE");
     }
 
-    builder.append("\nwriteLockOwner=");
+    builder.append("\n  writeLockOwner=");
     builder.append(writeLockOwner != null ? writeLockOwner : "NONE");
 
-    builder.append("\nwriteOptionOwner=");
+    builder.append("\n  writeOptionOwner=");
     builder.append(writeOptionOwner != null ? writeOptionOwner : "NONE");
 
     return builder.toString();
+  }
+
+  public void dispose()
+  {
+    lockedObject = null;
+    readLockOwners = null;
+    writeLockOwner = null;
+    writeOptionOwner = null;
+  }
+
+  private void checkDisposed()
+  {
+    if (lockedObject == null)
+    {
+      throw new IllegalStateException("Lock state is disposed");
+    }
   }
 }

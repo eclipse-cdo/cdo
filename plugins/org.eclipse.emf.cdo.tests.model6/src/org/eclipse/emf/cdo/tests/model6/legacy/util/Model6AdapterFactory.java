@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.tests.model6.legacy.util;
 
@@ -10,6 +18,7 @@ import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.EmptyStringDefault;
+import org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
 import org.eclipse.emf.cdo.tests.model6.HasNillableAttribute;
@@ -226,6 +235,12 @@ public class Model6AdapterFactory extends AdapterFactoryImpl
     public Adapter caseEmptyStringDefault(EmptyStringDefault object)
     {
       return createEmptyStringDefaultAdapter();
+    }
+
+    @Override
+    public Adapter caseEmptyStringDefaultUnsettable(EmptyStringDefaultUnsettable object)
+    {
+      return createEmptyStringDefaultUnsettableAdapter();
     }
 
     @Override
@@ -580,13 +595,28 @@ public class Model6AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for the default case.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable <em>Empty String Default Unsettable</em>}'.
    * <!-- begin-user-doc -->
-   * This default implementation returns null.
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable
    * @generated
    */
+  public Adapter createEmptyStringDefaultUnsettableAdapter()
+  {
+    return null;
+  }
+
+  /**
+  	 * Creates a new adapter for the default case.
+  	 * <!-- begin-user-doc -->
+     * This default implementation returns null.
+     * <!-- end-user-doc -->
+  	 * @return the new adapter.
+  	 * @generated
+  	 */
   public Adapter createEObjectAdapter()
   {
     return null;

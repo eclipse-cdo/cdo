@@ -865,14 +865,42 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
   int EMPTY_STRING_DEFAULT_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}' enum.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.EmptyStringDefaultUnsettableImpl <em>Empty String Default Unsettable</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.model6.MyEnum
-   * @see org.eclipse.emf.cdo.tests.model6.legacy.impl.Model6PackageImpl#getMyEnum()
+   * @see org.eclipse.emf.cdo.tests.model6.legacy.impl.EmptyStringDefaultUnsettableImpl
+   * @see org.eclipse.emf.cdo.tests.model6.legacy.impl.Model6PackageImpl#getEmptyStringDefaultUnsettable()
    * @generated
    */
-  int MY_ENUM = 22;
+  int EMPTY_STRING_DEFAULT_UNSETTABLE = 22;
+
+  /**
+  	 * The feature id for the '<em><b>Attribute</b></em>' attribute.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int EMPTY_STRING_DEFAULT_UNSETTABLE__ATTRIBUTE = 0;
+
+  /**
+  	 * The number of structural features of the '<em>Empty String Default Unsettable</em>' class.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int EMPTY_STRING_DEFAULT_UNSETTABLE_FEATURE_COUNT = 1;
+
+  /**
+  	 * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}' enum.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @see org.eclipse.emf.cdo.tests.model6.MyEnum
+  	 * @see org.eclipse.emf.cdo.tests.model6.legacy.impl.Model6PackageImpl#getMyEnum()
+  	 * @generated
+  	 */
+  int MY_ENUM = 23;
 
   /**
    * The meta object id for the '<em>My String</em>' data type.
@@ -882,7 +910,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model6.legacy.impl.Model6PackageImpl#getMyString()
    * @generated
    */
-  int MY_STRING = 23;
+  int MY_STRING = 24;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.Root <em>Root</em>}'.
@@ -1492,13 +1520,34 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
   EAttribute getEmptyStringDefault_Attribute();
 
   /**
-   * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}'.
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable <em>Empty String Default Unsettable</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for enum '<em>My Enum</em>'.
-   * @see org.eclipse.emf.cdo.tests.model6.MyEnum
+   * @return the meta object for class '<em>Empty String Default Unsettable</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable
    * @generated
    */
+  EClass getEmptyStringDefaultUnsettable();
+
+  /**
+  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable#getAttribute <em>Attribute</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the attribute '<em>Attribute</em>'.
+  	 * @see org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable#getAttribute()
+  	 * @see #getEmptyStringDefaultUnsettable()
+  	 * @generated
+  	 */
+  EAttribute getEmptyStringDefaultUnsettable_Attribute();
+
+  /**
+  	 * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}'.
+  	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+  	 * @return the meta object for enum '<em>My Enum</em>'.
+  	 * @see org.eclipse.emf.cdo.tests.model6.MyEnum
+  	 * @generated
+  	 */
   EEnum getMyEnum();
 
   /**

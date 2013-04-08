@@ -99,5 +99,8 @@
     <genClasses ecoreClass="model6.ecore#//EmptyStringDefault">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//EmptyStringDefault/attribute"/>
     </genClasses>
+    <genClasses ecoreClass="model6.ecore#//EmptyStringDefaultUnsettable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//EmptyStringDefaultUnsettable/attribute"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

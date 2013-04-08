@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.model6.impl;
 
-import org.eclipse.emf.cdo.tests.model6.EmptyStringDefault;
+import org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
@@ -19,25 +19,25 @@ import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Empty String Default</b></em>'.
+ * An implementation of the model object '<em><b>Empty String Default Unsettable</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.EmptyStringDefaultImpl#getAttribute <em>Attribute</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.EmptyStringDefaultUnsettableImpl#getAttribute <em>Attribute</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class EmptyStringDefaultImpl extends CDOObjectImpl implements EmptyStringDefault
+public class EmptyStringDefaultUnsettableImpl extends CDOObjectImpl implements EmptyStringDefaultUnsettable
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected EmptyStringDefaultImpl()
+  protected EmptyStringDefaultUnsettableImpl()
   {
     super();
   }
@@ -50,7 +50,7 @@ public class EmptyStringDefaultImpl extends CDOObjectImpl implements EmptyString
   @Override
   protected EClass eStaticClass()
   {
-    return Model6Package.Literals.EMPTY_STRING_DEFAULT;
+    return Model6Package.Literals.EMPTY_STRING_DEFAULT_UNSETTABLE;
   }
 
   /**
@@ -71,7 +71,7 @@ public class EmptyStringDefaultImpl extends CDOObjectImpl implements EmptyString
    */
   public String getAttribute()
   {
-    return (String)eGet(Model6Package.Literals.EMPTY_STRING_DEFAULT__ATTRIBUTE, true);
+    return (String)eGet(Model6Package.Literals.EMPTY_STRING_DEFAULT_UNSETTABLE__ATTRIBUTE, true);
   }
 
   /**
@@ -81,7 +81,27 @@ public class EmptyStringDefaultImpl extends CDOObjectImpl implements EmptyString
    */
   public void setAttribute(String newAttribute)
   {
-    eSet(Model6Package.Literals.EMPTY_STRING_DEFAULT__ATTRIBUTE, newAttribute);
+    eSet(Model6Package.Literals.EMPTY_STRING_DEFAULT_UNSETTABLE__ATTRIBUTE, newAttribute);
   }
 
-} // EmptyStringDefaultImpl
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void unsetAttribute()
+  {
+    eUnset(Model6Package.Literals.EMPTY_STRING_DEFAULT_UNSETTABLE__ATTRIBUTE);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isSetAttribute()
+  {
+    return eIsSet(Model6Package.Literals.EMPTY_STRING_DEFAULT_UNSETTABLE__ATTRIBUTE);
+  }
+
+} // EmptyStringDefaultUnsettableImpl

@@ -8,21 +8,22 @@
  * Contributors:
  *    Steve Monnier - initial API and implementation
  *    Eike Stepper - adapted for more correct test model definition
+ *    Christian W. Damus (CEA) - adapted for new test model with unsettable attribute
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.model6.EmptyStringDefault;
+import org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
- * Bug 404152.
+ * Bug 405191.
  *
  * @author Steve Monnier
  */
-public class Bugzilla_404152_Test extends AbstractCDOTest
+public class Bugzilla_405191_Test extends AbstractCDOTest
 {
   /**
    * This scenario validates that null can be set on a String feature with an empty string has default value has.
@@ -33,24 +34,24 @@ public class Bugzilla_404152_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
-    // Create a company element and set is name has an empty string
-    EmptyStringDefault localObject = getModel6Factory().createEmptyStringDefault();
+    // Create an object and set is a string attribute to the empty string
+    EmptyStringDefaultUnsettable localObject = getModel6Factory().createEmptyStringDefaultUnsettable();
     localObject.setAttribute("");
     resource.getContents().add(localObject);
     transaction.commit();
 
     CDOTransaction remoteTransaction = openSession().openTransaction();
-    EmptyStringDefault remoteObject = remoteTransaction.getObject(localObject);
+    EmptyStringDefaultUnsettable remoteObject = remoteTransaction.getObject(localObject);
 
-    // Validate that for another user (another transaction) the name is an empty string
+    // Validate that for another user (another transaction) the value is an empty string
     assertNotNull("Attribute should not be null", remoteObject.getAttribute());
 
-    // Change company name from empty string to null
-    assertNotNull("Attribute should be null", localObject.getAttribute());
+    // Change attribute value from empty string to null
+    assertNotNull("Attribute should not be be null", localObject.getAttribute());
     localObject.setAttribute(null);
     assertNull("Attribute should be null", localObject.getAttribute());
 
-    // Validate that for another user (another transaction) the name is null
+    // Validate that for another user (another transaction) the value is null
     commitAndSync(transaction, remoteTransaction);
     assertNull(remoteObject.getAttribute());
   }

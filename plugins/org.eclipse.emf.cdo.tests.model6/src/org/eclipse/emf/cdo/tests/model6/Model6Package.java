@@ -863,32 +863,258 @@ public interface Model6Package extends EPackage
   int EMPTY_STRING_DEFAULT_UNSETTABLE = 22;
 
   /**
-  	 * The feature id for the '<em><b>Attribute</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Attribute</b></em>' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int EMPTY_STRING_DEFAULT_UNSETTABLE__ATTRIBUTE = 0;
 
   /**
-  	 * The number of structural features of the '<em>Empty String Default Unsettable</em>' class.
-  	 * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>Empty String Default Unsettable</em>' class.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int EMPTY_STRING_DEFAULT_UNSETTABLE_FEATURE_COUNT = 1;
 
   /**
-  	 * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}' enum.
-  	 * <!-- begin-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.UnsettableAttributesImpl <em>Unsettable Attributes</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model6.impl.UnsettableAttributesImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getUnsettableAttributes()
+   * @generated
+   */
+  int UNSETTABLE_ATTRIBUTES = 23;
+
+  /**
+   * The feature id for the '<em><b>Attr Big Decimal</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_BIG_DECIMAL = 0;
+
+  /**
+   * The feature id for the '<em><b>Attr Big Integer</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_BIG_INTEGER = 1;
+
+  /**
+   * The feature id for the '<em><b>Attr Boolean</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN = 2;
+
+  /**
+   * The feature id for the '<em><b>Attr Boolean Object</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN_OBJECT = 3;
+
+  /**
+   * The feature id for the '<em><b>Attr Byte</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_BYTE = 4;
+
+  /**
+   * The feature id for the '<em><b>Attr Byte Array</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_BYTE_ARRAY = 5;
+
+  /**
+   * The feature id for the '<em><b>Attr Byte Object</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_BYTE_OBJECT = 6;
+
+  /**
+   * The feature id for the '<em><b>Attr Char</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_CHAR = 7;
+
+  /**
+   * The feature id for the '<em><b>Attr Character Object</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_CHARACTER_OBJECT = 8;
+
+  /**
+   * The feature id for the '<em><b>Attr Date</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_DATE = 9;
+
+  /**
+   * The feature id for the '<em><b>Attr Double</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE = 10;
+
+  /**
+   * The feature id for the '<em><b>Attr Double Object</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE_OBJECT = 11;
+
+  /**
+   * The feature id for the '<em><b>Attr Float</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_FLOAT = 12;
+
+  /**
+   * The feature id for the '<em><b>Attr Float Object</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_FLOAT_OBJECT = 13;
+
+  /**
+   * The feature id for the '<em><b>Attr Int</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_INT = 14;
+
+  /**
+   * The feature id for the '<em><b>Attr Integer Object</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_INTEGER_OBJECT = 15;
+
+  /**
+   * The feature id for the '<em><b>Attr Java Class</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_JAVA_CLASS = 16;
+
+  /**
+   * The feature id for the '<em><b>Attr Java Object</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_JAVA_OBJECT = 17;
+
+  /**
+   * The feature id for the '<em><b>Attr Long</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_LONG = 18;
+
+  /**
+   * The feature id for the '<em><b>Attr Long Object</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_LONG_OBJECT = 19;
+
+  /**
+   * The feature id for the '<em><b>Attr Short</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_SHORT = 20;
+
+  /**
+   * The feature id for the '<em><b>Attr Short Object</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_SHORT_OBJECT = 21;
+
+  /**
+   * The feature id for the '<em><b>Attr String</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES__ATTR_STRING = 22;
+
+  /**
+   * The number of structural features of the '<em>Unsettable Attributes</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE_ATTRIBUTES_FEATURE_COUNT = 23;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}' enum.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @see org.eclipse.emf.cdo.tests.model6.MyEnum
-  	 * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnum()
-  	 * @generated
-  	 */
-  int MY_ENUM = 23;
+   * @see org.eclipse.emf.cdo.tests.model6.MyEnum
+   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnum()
+   * @generated
+   */
+  int MY_ENUM = 24;
 
   /**
    * The meta object id for the '<em>My String</em>' data type.
@@ -898,7 +1124,7 @@ public interface Model6Package extends EPackage
    * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyString()
    * @generated
    */
-  int MY_STRING = 24;
+  int MY_STRING = 25;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.Root <em>Root</em>}'. <!--
@@ -1505,24 +1731,287 @@ public interface Model6Package extends EPackage
   EClass getEmptyStringDefaultUnsettable();
 
   /**
-  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable#getAttribute <em>Attribute</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable#getAttribute <em>Attribute</em>}'.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @return the meta object for the attribute '<em>Attribute</em>'.
-  	 * @see org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable#getAttribute()
-  	 * @see #getEmptyStringDefaultUnsettable()
-  	 * @generated
-  	 */
+   * @return the meta object for the attribute '<em>Attribute</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable#getAttribute()
+   * @see #getEmptyStringDefaultUnsettable()
+   * @generated
+   */
   EAttribute getEmptyStringDefaultUnsettable_Attribute();
 
   /**
-  	 * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes <em>Unsettable Attributes</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Unsettable Attributes</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes
+   * @generated
+   */
+  EClass getUnsettableAttributes();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrBigDecimal <em>Attr Big Decimal</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Big Decimal</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrBigDecimal()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrBigDecimal();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrBigInteger <em>Attr Big Integer</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Big Integer</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrBigInteger()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrBigInteger();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#isAttrBoolean <em>Attr Boolean</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Boolean</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#isAttrBoolean()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrBoolean();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrBooleanObject <em>Attr Boolean Object</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Boolean Object</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrBooleanObject()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrBooleanObject();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrByte <em>Attr Byte</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Byte</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrByte()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrByte();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrByteArray <em>Attr Byte Array</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Byte Array</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrByteArray()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrByteArray();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrByteObject <em>Attr Byte Object</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Byte Object</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrByteObject()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrByteObject();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrChar <em>Attr Char</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Char</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrChar()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrChar();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrCharacterObject <em>Attr Character Object</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Character Object</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrCharacterObject()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrCharacterObject();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrDate <em>Attr Date</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Date</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrDate()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrDate();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrDouble <em>Attr Double</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Double</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrDouble()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrDouble();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrDoubleObject <em>Attr Double Object</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Double Object</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrDoubleObject()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrDoubleObject();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrFloat <em>Attr Float</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Float</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrFloat()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrFloat();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrFloatObject <em>Attr Float Object</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Float Object</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrFloatObject()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrFloatObject();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrInt <em>Attr Int</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Int</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrInt()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrInt();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrIntegerObject <em>Attr Integer Object</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Integer Object</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrIntegerObject()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrIntegerObject();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrJavaClass <em>Attr Java Class</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Java Class</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrJavaClass()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrJavaClass();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrJavaObject <em>Attr Java Object</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Java Object</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrJavaObject()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrJavaObject();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrLong <em>Attr Long</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Long</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrLong()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrLong();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrLongObject <em>Attr Long Object</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Long Object</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrLongObject()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrLongObject();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrShort <em>Attr Short</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Short</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrShort()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrShort();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrShortObject <em>Attr Short Object</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr Short Object</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrShortObject()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrShortObject();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrString <em>Attr String</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attr String</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrString()
+   * @see #getUnsettableAttributes()
+   * @generated
+   */
+  EAttribute getUnsettableAttributes_AttrString();
+
+  /**
+   * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}'.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @return the meta object for enum '<em>My Enum</em>'.
-  	 * @see org.eclipse.emf.cdo.tests.model6.MyEnum
-  	 * @generated
-  	 */
+   * @return the meta object for enum '<em>My Enum</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.MyEnum
+   * @generated
+   */
   EEnum getMyEnum();
 
   /**
@@ -2069,21 +2558,215 @@ public interface Model6Package extends EPackage
     EClass EMPTY_STRING_DEFAULT_UNSETTABLE = eINSTANCE.getEmptyStringDefaultUnsettable();
 
     /**
-    	 * The meta object literal for the '<em><b>Attribute</b></em>' attribute feature.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Attribute</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
     	 * <!-- end-user-doc -->
-    	 * @generated
-    	 */
+     * @generated
+     */
     EAttribute EMPTY_STRING_DEFAULT_UNSETTABLE__ATTRIBUTE = eINSTANCE.getEmptyStringDefaultUnsettable_Attribute();
 
     /**
-    	 * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}' enum.
-    	 * <!-- begin-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.UnsettableAttributesImpl <em>Unsettable Attributes</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.tests.model6.impl.UnsettableAttributesImpl
+     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getUnsettableAttributes()
+     * @generated
+     */
+    EClass UNSETTABLE_ATTRIBUTES = eINSTANCE.getUnsettableAttributes();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Big Decimal</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_BIG_DECIMAL = eINSTANCE.getUnsettableAttributes_AttrBigDecimal();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Big Integer</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_BIG_INTEGER = eINSTANCE.getUnsettableAttributes_AttrBigInteger();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Boolean</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN = eINSTANCE.getUnsettableAttributes_AttrBoolean();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Boolean Object</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN_OBJECT = eINSTANCE.getUnsettableAttributes_AttrBooleanObject();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Byte</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_BYTE = eINSTANCE.getUnsettableAttributes_AttrByte();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Byte Array</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_BYTE_ARRAY = eINSTANCE.getUnsettableAttributes_AttrByteArray();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Byte Object</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_BYTE_OBJECT = eINSTANCE.getUnsettableAttributes_AttrByteObject();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Char</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_CHAR = eINSTANCE.getUnsettableAttributes_AttrChar();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Character Object</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_CHARACTER_OBJECT = eINSTANCE.getUnsettableAttributes_AttrCharacterObject();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Date</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_DATE = eINSTANCE.getUnsettableAttributes_AttrDate();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Double</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE = eINSTANCE.getUnsettableAttributes_AttrDouble();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Double Object</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE_OBJECT = eINSTANCE.getUnsettableAttributes_AttrDoubleObject();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Float</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_FLOAT = eINSTANCE.getUnsettableAttributes_AttrFloat();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Float Object</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_FLOAT_OBJECT = eINSTANCE.getUnsettableAttributes_AttrFloatObject();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Int</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_INT = eINSTANCE.getUnsettableAttributes_AttrInt();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Integer Object</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_INTEGER_OBJECT = eINSTANCE.getUnsettableAttributes_AttrIntegerObject();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Java Class</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_JAVA_CLASS = eINSTANCE.getUnsettableAttributes_AttrJavaClass();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Java Object</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_JAVA_OBJECT = eINSTANCE.getUnsettableAttributes_AttrJavaObject();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Long</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_LONG = eINSTANCE.getUnsettableAttributes_AttrLong();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Long Object</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_LONG_OBJECT = eINSTANCE.getUnsettableAttributes_AttrLongObject();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Short</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_SHORT = eINSTANCE.getUnsettableAttributes_AttrShort();
+
+    /**
+     * The meta object literal for the '<em><b>Attr Short Object</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_SHORT_OBJECT = eINSTANCE.getUnsettableAttributes_AttrShortObject();
+
+    /**
+     * The meta object literal for the '<em><b>Attr String</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNSETTABLE_ATTRIBUTES__ATTR_STRING = eINSTANCE.getUnsettableAttributes_AttrString();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}' enum.
+     * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-    	 * @see org.eclipse.emf.cdo.tests.model6.MyEnum
-    	 * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnum()
-    	 * @generated
-    	 */
+     * @see org.eclipse.emf.cdo.tests.model6.MyEnum
+     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnum()
+     * @generated
+     */
     EEnum MY_ENUM = eINSTANCE.getMyEnum();
 
     /**

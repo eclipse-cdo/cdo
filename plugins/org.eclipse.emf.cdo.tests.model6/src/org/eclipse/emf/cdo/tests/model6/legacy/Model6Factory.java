@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
 import org.eclipse.emf.cdo.tests.model6.Thing;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
+import org.eclipse.emf.cdo.tests.model6.UnsettableAttributes;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -235,12 +236,21 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
   EmptyStringDefaultUnsettable createEmptyStringDefaultUnsettable();
 
   /**
-  	 * Returns the package supported by this factory.
-  	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>Unsettable Attributes</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Unsettable Attributes</em>'.
+   * @generated
+   */
+  UnsettableAttributes createUnsettableAttributes();
+
+  /**
+   * Returns the package supported by this factory.
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @return the package supported by this factory.
-  	 * @generated
-  	 */
+   * @return the package supported by this factory.
+   * @generated
+   */
   Model6Package getModel6Package();
 
 } // Model6Factory

@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
 import org.eclipse.emf.cdo.tests.model6.Thing;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
+import org.eclipse.emf.cdo.tests.model6.UnsettableAttributes;
 import org.eclipse.emf.cdo.tests.model6.legacy.Model6Package;
 
 import org.eclipse.emf.ecore.EClass;
@@ -311,6 +312,14 @@ public class Model6Switch<T>
     {
       EmptyStringDefaultUnsettable emptyStringDefaultUnsettable = (EmptyStringDefaultUnsettable)theEObject;
       T result = caseEmptyStringDefaultUnsettable(emptyStringDefaultUnsettable);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model6Package.UNSETTABLE_ATTRIBUTES:
+    {
+      UnsettableAttributes unsettableAttributes = (UnsettableAttributes)theEObject;
+      T result = caseUnsettableAttributes(unsettableAttributes);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -689,16 +698,32 @@ public class Model6Switch<T>
   }
 
   /**
-  	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
-  	 * <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>Unsettable Attributes</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Unsettable Attributes</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseUnsettableAttributes(UnsettableAttributes object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
+   * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch, but this is the last case anyway.
      * <!-- end-user-doc -->
-  	 * @param object the target of the switch.
-  	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
-  	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
-  	 * @generated
-  	 */
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject)
+   * @generated
+   */
   public T defaultCase(EObject object)
   {
     return null;

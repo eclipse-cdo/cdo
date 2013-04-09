@@ -206,11 +206,20 @@ public interface Model6Factory extends EFactory
   EmptyStringDefaultUnsettable createEmptyStringDefaultUnsettable();
 
   /**
-  	 * Returns the package supported by this factory.
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @return the package supported by this factory.
-  	 * @generated
-  	 */
+   * Returns a new object of class '<em>Unsettable Attributes</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Unsettable Attributes</em>'.
+   * @generated
+   */
+  UnsettableAttributes createUnsettableAttributes();
+
+  /**
+   * Returns the package supported by this factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @return the package supported by this factory.
+   * @generated
+   */
   Model6Package getModel6Package();
 
 } // Model6Factory

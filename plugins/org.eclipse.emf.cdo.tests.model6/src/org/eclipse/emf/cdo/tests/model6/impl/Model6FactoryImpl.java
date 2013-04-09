@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
 import org.eclipse.emf.cdo.tests.model6.Thing;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
+import org.eclipse.emf.cdo.tests.model6.UnsettableAttributes;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -138,6 +139,8 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
       return createEmptyStringDefault();
     case Model6Package.EMPTY_STRING_DEFAULT_UNSETTABLE:
       return createEmptyStringDefaultUnsettable();
+    case Model6Package.UNSETTABLE_ATTRIBUTES:
+      return createUnsettableAttributes();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -413,10 +416,21 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public UnsettableAttributes createUnsettableAttributes()
+  {
+    UnsettableAttributesImpl unsettableAttributes = new UnsettableAttributesImpl();
+    return unsettableAttributes;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public MyEnum createMyEnumFromString(EDataType eDataType, String initialValue)
   {
     MyEnum result = MyEnum.get(initialValue);

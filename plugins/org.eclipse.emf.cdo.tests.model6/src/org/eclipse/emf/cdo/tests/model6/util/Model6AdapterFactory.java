@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
 import org.eclipse.emf.cdo.tests.model6.Thing;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
+import org.eclipse.emf.cdo.tests.model6.UnsettableAttributes;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -236,6 +237,12 @@ public class Model6AdapterFactory extends AdapterFactoryImpl
     public Adapter caseEmptyStringDefaultUnsettable(EmptyStringDefaultUnsettable object)
     {
       return createEmptyStringDefaultUnsettableAdapter();
+    }
+
+    @Override
+    public Adapter caseUnsettableAttributes(UnsettableAttributes object)
+    {
+      return createUnsettableAttributesAdapter();
     }
 
     @Override
@@ -590,12 +597,27 @@ public class Model6AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-  	 * Creates a new adapter for the default case.
-  	 * <!-- begin-user-doc --> This default implementation returns null. <!--
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes <em>Unsettable Attributes</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes
+   * @generated
+   */
+  public Adapter createUnsettableAttributesAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for the default case.
+   * <!-- begin-user-doc --> This default implementation returns null. <!--
      * end-user-doc -->
-  	 * @return the new adapter.
-  	 * @generated
-  	 */
+   * @return the new adapter.
+   * @generated
+   */
   public Adapter createEObjectAdapter()
   {
     return null;

@@ -105,10 +105,8 @@ public class EmptyStringDefaultUnsettableImpl extends EObjectImpl implements Emp
     boolean oldAttributeESet = attributeESet;
     attributeESet = true;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.EMPTY_STRING_DEFAULT_UNSETTABLE__ATTRIBUTE,
           oldAttribute, attribute, !oldAttributeESet));
-    }
   }
 
   /**
@@ -123,10 +121,8 @@ public class EmptyStringDefaultUnsettableImpl extends EObjectImpl implements Emp
     attribute = ATTRIBUTE_EDEFAULT;
     attributeESet = false;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.EMPTY_STRING_DEFAULT_UNSETTABLE__ATTRIBUTE,
           oldAttribute, ATTRIBUTE_EDEFAULT, oldAttributeESet));
-    }
   }
 
   /**
@@ -214,20 +210,14 @@ public class EmptyStringDefaultUnsettableImpl extends EObjectImpl implements Emp
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (attribute: ");
     if (attributeESet)
-    {
       result.append(attribute);
-    }
     else
-    {
       result.append("<unset>");
-    }
     result.append(')');
     return result.toString();
   }

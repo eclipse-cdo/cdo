@@ -27,6 +27,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Internal.DynamicValueHolder;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.CDOStore;
 import org.eclipse.emf.spi.cdo.FSMUtil;
@@ -144,7 +145,19 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
   protected void notifySet(EStructuralFeature feature, int position, Object oldValue, Object newValue)
   {
     CDOStore store = viewAndState.view.getStore();
-    store.set(instance, feature, position, newValue);
+
+    // bug 405257: handle unsettable features set explicitly to null.
+    // Note that an unsettable list feature doesn't allow individual
+    // positions to be set/unset
+    if (newValue == null && feature.isUnsettable() && position == Notification.NO_INDEX)
+    {
+      store.set(instance, feature, position, DynamicValueHolder.NIL);
+    }
+    else
+    {
+      store.set(instance, feature, position, newValue);
+    }
+
     if (feature instanceof EReference)
     {
       EReference reference = (EReference)feature;

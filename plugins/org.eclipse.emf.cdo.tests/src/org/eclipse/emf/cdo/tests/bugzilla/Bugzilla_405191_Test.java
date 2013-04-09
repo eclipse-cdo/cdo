@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable;
 import org.eclipse.emf.cdo.tests.model6.UnsettableAttributes;
+import org.eclipse.emf.cdo.tests.model6.legacy.Model6Factory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import java.math.BigDecimal;
@@ -145,6 +146,30 @@ public class Bugzilla_405191_Test extends AbstractCDOTest
     assertEquals(localObject.isSetAttrShort(), remoteObject.isSetAttrShort());
     assertEquals(localObject.isSetAttrShortObject(), remoteObject.isSetAttrShortObject());
     assertEquals(localObject.isSetAttrString(), remoteObject.isSetAttrString());
+
+    assertEquals(true, remoteObject.isSetAttrBigDecimal());
+    assertEquals(true, remoteObject.isSetAttrBigInteger());
+    assertEquals(true, remoteObject.isSetAttrBoolean());
+    assertEquals(true, remoteObject.isSetAttrBooleanObject());
+    assertEquals(true, remoteObject.isSetAttrByte());
+    assertEquals(true, remoteObject.isSetAttrByteObject());
+    assertEquals(true, remoteObject.isSetAttrByteArray());
+    assertEquals(true, remoteObject.isSetAttrChar());
+    assertEquals(true, remoteObject.isSetAttrCharacterObject());
+    assertEquals(true, remoteObject.isSetAttrDate());
+    assertEquals(true, remoteObject.isSetAttrDouble());
+    assertEquals(true, remoteObject.isSetAttrDoubleObject());
+    assertEquals(true, remoteObject.isSetAttrFloat());
+    assertEquals(true, remoteObject.isSetAttrFloatObject());
+    assertEquals(true, remoteObject.isSetAttrInt());
+    assertEquals(true, remoteObject.isSetAttrIntegerObject());
+    assertEquals(true, remoteObject.isSetAttrJavaClass());
+    assertEquals(true, remoteObject.isSetAttrJavaObject());
+    assertEquals(true, remoteObject.isSetAttrLong());
+    assertEquals(true, remoteObject.isSetAttrLongObject());
+    assertEquals(true, remoteObject.isSetAttrShort());
+    assertEquals(true, remoteObject.isSetAttrShortObject());
+    assertEquals(true, remoteObject.isSetAttrString());
 
     // Unset all attributes
     localObject.unsetAttrBigDecimal();
@@ -378,5 +403,227 @@ public class Bugzilla_405191_Test extends AbstractCDOTest
     assertEquals(localObject.isSetAttrShort(), remoteObject.isSetAttrShort());
     assertEquals(localObject.isSetAttrShortObject(), remoteObject.isSetAttrShortObject());
     assertEquals(localObject.isSetAttrString(), remoteObject.isSetAttrString());
+
+    assertEquals(true, remoteObject.isSetAttrBigDecimal());
+    assertEquals(true, remoteObject.isSetAttrBigInteger());
+    assertEquals(true, remoteObject.isSetAttrBoolean());
+    assertEquals(true, remoteObject.isSetAttrBooleanObject());
+    assertEquals(true, remoteObject.isSetAttrByte());
+    assertEquals(true, remoteObject.isSetAttrByteObject());
+    assertEquals(true, remoteObject.isSetAttrByteArray());
+    assertEquals(true, remoteObject.isSetAttrChar());
+    assertEquals(true, remoteObject.isSetAttrCharacterObject());
+    assertEquals(true, remoteObject.isSetAttrDate());
+    assertEquals(true, remoteObject.isSetAttrDouble());
+    assertEquals(true, remoteObject.isSetAttrDoubleObject());
+    assertEquals(true, remoteObject.isSetAttrFloat());
+    assertEquals(true, remoteObject.isSetAttrFloatObject());
+    assertEquals(true, remoteObject.isSetAttrInt());
+    assertEquals(true, remoteObject.isSetAttrIntegerObject());
+    assertEquals(true, remoteObject.isSetAttrJavaClass());
+    assertEquals(true, remoteObject.isSetAttrJavaObject());
+    assertEquals(true, remoteObject.isSetAttrLong());
+    assertEquals(true, remoteObject.isSetAttrLongObject());
+    assertEquals(true, remoteObject.isSetAttrShort());
+    assertEquals(true, remoteObject.isSetAttrShortObject());
+    assertEquals(true, remoteObject.isSetAttrString());
+  }
+
+  public void testAllTypesSetAndNull() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
+
+    // Create an object and set all attributes to non-default values
+    UnsettableAttributes localObject = getModel6Factory().createUnsettableAttributes();
+    localObject.setAttrBigDecimal(new BigDecimal("4711.1234"));
+    localObject.setAttrBigInteger(new BigInteger("4711"));
+    localObject.setAttrBooleanObject(true);
+    localObject.setAttrByteObject((byte)47);
+    localObject.setAttrByteArray(new byte[] { 4, 7, 1, 1 });
+    localObject.setAttrCharacterObject('4');
+    localObject.setAttrDate(new Date(4711));
+    localObject.setAttrDoubleObject(4711.1234);
+    localObject.setAttrFloatObject(4711.1234f);
+    localObject.setAttrIntegerObject(4711);
+    localObject.setAttrJavaClass(getClass());
+    localObject.setAttrJavaObject(new int[] { 4, 7, 1, 1 });
+    localObject.setAttrLongObject(4711L);
+    localObject.setAttrShortObject((short)4711);
+    localObject.setAttrString("4711");
+    resource.getContents().add(localObject);
+    transaction.commit();
+
+    CDOTransaction remoteTransaction = openSession().openTransaction();
+    UnsettableAttributes remoteObject = remoteTransaction.getObject(localObject);
+
+    // Set all attributes to default values
+    localObject.setAttrBigDecimal(null);
+    localObject.setAttrBigInteger(null);
+    localObject.setAttrBooleanObject(null);
+    localObject.setAttrByteObject(null);
+    localObject.setAttrByteArray(null);
+    localObject.setAttrCharacterObject(null);
+    localObject.setAttrDate(null);
+    localObject.setAttrDoubleObject(null);
+    localObject.setAttrFloatObject(null);
+    localObject.setAttrIntegerObject(null);
+    localObject.setAttrJavaClass(null);
+    localObject.setAttrJavaObject(null);
+    localObject.setAttrLongObject(null);
+    localObject.setAttrShortObject(null);
+    localObject.setAttrString(null);
+
+    commitAndSync(transaction, remoteTransaction);
+    assertEquals(localObject.getAttrBigDecimal(), remoteObject.getAttrBigDecimal());
+    assertEquals(localObject.getAttrBigInteger(), remoteObject.getAttrBigInteger());
+    assertEquals(localObject.getAttrBooleanObject(), remoteObject.getAttrBooleanObject());
+    assertEquals(localObject.getAttrByteObject(), remoteObject.getAttrByteObject());
+    assertEquals(true, Arrays.equals(localObject.getAttrByteArray(), remoteObject.getAttrByteArray()));
+    assertEquals(localObject.getAttrCharacterObject(), remoteObject.getAttrCharacterObject());
+    assertEquals(localObject.getAttrDate(), remoteObject.getAttrDate());
+    assertEquals(localObject.getAttrDoubleObject(), remoteObject.getAttrDoubleObject());
+    assertEquals(localObject.getAttrFloatObject(), remoteObject.getAttrFloatObject());
+    assertEquals(localObject.getAttrIntegerObject(), remoteObject.getAttrIntegerObject());
+    assertEquals(localObject.getAttrJavaClass(), remoteObject.getAttrJavaClass());
+    assertEquals(true, Arrays.equals((int[])localObject.getAttrJavaObject(), (int[])remoteObject.getAttrJavaObject()));
+    assertEquals(localObject.getAttrLongObject(), remoteObject.getAttrLongObject());
+    assertEquals(localObject.getAttrShortObject(), remoteObject.getAttrShortObject());
+    assertEquals(localObject.getAttrString(), remoteObject.getAttrString());
+
+    assertEquals(localObject.isSetAttrBigDecimal(), remoteObject.isSetAttrBigDecimal());
+    assertEquals(localObject.isSetAttrBigInteger(), remoteObject.isSetAttrBigInteger());
+    assertEquals(localObject.isSetAttrBooleanObject(), remoteObject.isSetAttrBooleanObject());
+    assertEquals(localObject.isSetAttrByteObject(), remoteObject.isSetAttrByteObject());
+    assertEquals(localObject.isSetAttrByteArray(), remoteObject.isSetAttrByteArray());
+    assertEquals(localObject.isSetAttrCharacterObject(), remoteObject.isSetAttrCharacterObject());
+    assertEquals(localObject.isSetAttrDate(), remoteObject.isSetAttrDate());
+    assertEquals(localObject.isSetAttrDoubleObject(), remoteObject.isSetAttrDoubleObject());
+    assertEquals(localObject.isSetAttrFloatObject(), remoteObject.isSetAttrFloatObject());
+    assertEquals(localObject.isSetAttrIntegerObject(), remoteObject.isSetAttrIntegerObject());
+    assertEquals(localObject.isSetAttrJavaClass(), remoteObject.isSetAttrJavaClass());
+    assertEquals(localObject.isSetAttrJavaObject(), remoteObject.isSetAttrJavaObject());
+    assertEquals(localObject.isSetAttrLongObject(), remoteObject.isSetAttrLongObject());
+    assertEquals(localObject.isSetAttrShortObject(), remoteObject.isSetAttrShortObject());
+    assertEquals(localObject.isSetAttrString(), remoteObject.isSetAttrString());
+
+    assertEquals(true, remoteObject.isSetAttrBigDecimal());
+    assertEquals(true, remoteObject.isSetAttrBigInteger());
+    assertEquals(true, remoteObject.isSetAttrBooleanObject());
+    assertEquals(true, remoteObject.isSetAttrByteObject());
+    assertEquals(true, remoteObject.isSetAttrByteArray());
+    assertEquals(true, remoteObject.isSetAttrCharacterObject());
+    assertEquals(true, remoteObject.isSetAttrDate());
+    assertEquals(true, remoteObject.isSetAttrDoubleObject());
+    assertEquals(true, remoteObject.isSetAttrFloatObject());
+    assertEquals(true, remoteObject.isSetAttrIntegerObject());
+    assertEquals(true, remoteObject.isSetAttrJavaClass());
+    assertEquals(true, remoteObject.isSetAttrJavaObject());
+    assertEquals(true, remoteObject.isSetAttrLongObject());
+    assertEquals(true, remoteObject.isSetAttrShortObject());
+    assertEquals(true, remoteObject.isSetAttrString());
+  }
+
+  public void testAllTypesSetAndDefaultEMF() throws Exception
+  {
+    // Create an object and set all attributes to non-default values
+    UnsettableAttributes localObject = Model6Factory.eINSTANCE.createUnsettableAttributes();
+    localObject.setAttrBigDecimal(new BigDecimal("4711.1234"));
+    localObject.setAttrBigInteger(new BigInteger("4711"));
+    localObject.setAttrBoolean(true);
+    localObject.setAttrBooleanObject(true);
+    localObject.setAttrByte((byte)47);
+    localObject.setAttrByteObject((byte)47);
+    localObject.setAttrByteArray(new byte[] { 4, 7, 1, 1 });
+    localObject.setAttrChar('4');
+    localObject.setAttrCharacterObject('4');
+    localObject.setAttrDate(new Date(4711));
+    localObject.setAttrDouble(4711.1234);
+    localObject.setAttrDoubleObject(4711.1234);
+    localObject.setAttrFloat(4711.1234f);
+    localObject.setAttrFloatObject(4711.1234f);
+    localObject.setAttrInt(4711);
+    localObject.setAttrIntegerObject(4711);
+    localObject.setAttrJavaClass(getClass());
+    localObject.setAttrJavaObject(new int[] { 4, 7, 1, 1 });
+    localObject.setAttrLong(4711L);
+    localObject.setAttrLongObject(4711L);
+    localObject.setAttrShort((short)4711);
+    localObject.setAttrShortObject((short)4711);
+    localObject.setAttrString("4711");
+
+    assertEquals(true, localObject.isSetAttrBigDecimal());
+    assertEquals(true, localObject.isSetAttrBigInteger());
+    assertEquals(true, localObject.isSetAttrBoolean());
+    assertEquals(true, localObject.isSetAttrBooleanObject());
+    assertEquals(true, localObject.isSetAttrByte());
+    assertEquals(true, localObject.isSetAttrByteObject());
+    assertEquals(true, localObject.isSetAttrByteArray());
+    assertEquals(true, localObject.isSetAttrChar());
+    assertEquals(true, localObject.isSetAttrCharacterObject());
+    assertEquals(true, localObject.isSetAttrDate());
+    assertEquals(true, localObject.isSetAttrDouble());
+    assertEquals(true, localObject.isSetAttrDoubleObject());
+    assertEquals(true, localObject.isSetAttrFloat());
+    assertEquals(true, localObject.isSetAttrFloatObject());
+    assertEquals(true, localObject.isSetAttrInt());
+    assertEquals(true, localObject.isSetAttrIntegerObject());
+    assertEquals(true, localObject.isSetAttrJavaClass());
+    assertEquals(true, localObject.isSetAttrJavaObject());
+    assertEquals(true, localObject.isSetAttrLong());
+    assertEquals(true, localObject.isSetAttrLongObject());
+    assertEquals(true, localObject.isSetAttrShort());
+    assertEquals(true, localObject.isSetAttrShortObject());
+    assertEquals(true, localObject.isSetAttrString());
+
+    // Set all attributes to default values
+    localObject.setAttrBigDecimal(null);
+    localObject.setAttrBigInteger(null);
+    localObject.setAttrBoolean(false);
+    localObject.setAttrBooleanObject(false);
+    localObject.setAttrByte((byte)0);
+    localObject.setAttrByteObject(null);
+    localObject.setAttrByteArray(null);
+    localObject.setAttrChar('0');
+    localObject.setAttrCharacterObject(null);
+    localObject.setAttrDate(null);
+    localObject.setAttrDouble(0.0);
+    localObject.setAttrDoubleObject(null);
+    localObject.setAttrFloat(0.0f);
+    localObject.setAttrFloatObject(null);
+    localObject.setAttrInt(0);
+    localObject.setAttrIntegerObject(null);
+    localObject.setAttrJavaClass(null);
+    localObject.setAttrJavaObject(null);
+    localObject.setAttrLong(0L);
+    localObject.setAttrLongObject(null);
+    localObject.setAttrShort((short)0);
+    localObject.setAttrShortObject(null);
+    localObject.setAttrString(null);
+
+    assertEquals(true, localObject.isSetAttrBigDecimal());
+    assertEquals(true, localObject.isSetAttrBigInteger());
+    assertEquals(true, localObject.isSetAttrBoolean());
+    assertEquals(true, localObject.isSetAttrBooleanObject());
+    assertEquals(true, localObject.isSetAttrByte());
+    assertEquals(true, localObject.isSetAttrByteObject());
+    assertEquals(true, localObject.isSetAttrByteArray());
+    assertEquals(true, localObject.isSetAttrChar());
+    assertEquals(true, localObject.isSetAttrCharacterObject());
+    assertEquals(true, localObject.isSetAttrDate());
+    assertEquals(true, localObject.isSetAttrDouble());
+    assertEquals(true, localObject.isSetAttrDoubleObject());
+    assertEquals(true, localObject.isSetAttrFloat());
+    assertEquals(true, localObject.isSetAttrFloatObject());
+    assertEquals(true, localObject.isSetAttrInt());
+    assertEquals(true, localObject.isSetAttrIntegerObject());
+    assertEquals(true, localObject.isSetAttrJavaClass());
+    assertEquals(true, localObject.isSetAttrJavaObject());
+    assertEquals(true, localObject.isSetAttrLong());
+    assertEquals(true, localObject.isSetAttrLongObject());
+    assertEquals(true, localObject.isSetAttrShort());
+    assertEquals(true, localObject.isSetAttrShortObject());
+    assertEquals(true, localObject.isSetAttrString());
   }
 }

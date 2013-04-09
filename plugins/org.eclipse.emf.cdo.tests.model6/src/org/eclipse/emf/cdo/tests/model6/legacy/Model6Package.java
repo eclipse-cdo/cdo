@@ -1119,14 +1119,69 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
   int UNSETTABLE_ATTRIBUTES_FEATURE_COUNT = 23;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}' enum.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.CanReferenceLegacyImpl <em>Can Reference Legacy</em>}' class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.tests.model6.MyEnum
-   * @see org.eclipse.emf.cdo.tests.model6.legacy.impl.Model6PackageImpl#getMyEnum()
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model6.legacy.impl.CanReferenceLegacyImpl
+   * @see org.eclipse.emf.cdo.tests.model6.legacy.impl.Model6PackageImpl#getCanReferenceLegacy()
    * @generated
    */
-  int MY_ENUM = 24;
+  int CAN_REFERENCE_LEGACY = 24;
+
+  /**
+  	 * The feature id for the '<em><b>Single Containment</b></em>' containment reference.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CAN_REFERENCE_LEGACY__SINGLE_CONTAINMENT = 0;
+
+  /**
+  	 * The feature id for the '<em><b>Multiple Containment</b></em>' containment reference list.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CAN_REFERENCE_LEGACY__MULTIPLE_CONTAINMENT = 1;
+
+  /**
+  	 * The feature id for the '<em><b>Single Reference</b></em>' reference.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CAN_REFERENCE_LEGACY__SINGLE_REFERENCE = 2;
+
+  /**
+  	 * The feature id for the '<em><b>Multiple Reference</b></em>' reference list.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CAN_REFERENCE_LEGACY__MULTIPLE_REFERENCE = 3;
+
+  /**
+  	 * The number of structural features of the '<em>Can Reference Legacy</em>' class.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 * @ordered
+  	 */
+  int CAN_REFERENCE_LEGACY_FEATURE_COUNT = 4;
+
+  /**
+  	 * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}' enum.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @see org.eclipse.emf.cdo.tests.model6.MyEnum
+  	 * @see org.eclipse.emf.cdo.tests.model6.legacy.impl.Model6PackageImpl#getMyEnum()
+  	 * @generated
+  	 */
+  int MY_ENUM = 25;
 
   /**
    * The meta object id for the '<em>My String</em>' data type.
@@ -1136,7 +1191,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model6.legacy.impl.Model6PackageImpl#getMyString()
    * @generated
    */
-  int MY_STRING = 25;
+  int MY_STRING = 26;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.Root <em>Root</em>}'.
@@ -2030,13 +2085,67 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
   EAttribute getUnsettableAttributes_AttrString();
 
   /**
-   * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}'.
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy <em>Can Reference Legacy</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @return the meta object for enum '<em>My Enum</em>'.
-   * @see org.eclipse.emf.cdo.tests.model6.MyEnum
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Can Reference Legacy</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy
    * @generated
    */
+  EClass getCanReferenceLegacy();
+
+  /**
+  	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy#getSingleContainment <em>Single Containment</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the containment reference '<em>Single Containment</em>'.
+  	 * @see org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy#getSingleContainment()
+  	 * @see #getCanReferenceLegacy()
+  	 * @generated
+  	 */
+  EReference getCanReferenceLegacy_SingleContainment();
+
+  /**
+  	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy#getMultipleContainment <em>Multiple Containment</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the containment reference list '<em>Multiple Containment</em>'.
+  	 * @see org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy#getMultipleContainment()
+  	 * @see #getCanReferenceLegacy()
+  	 * @generated
+  	 */
+  EReference getCanReferenceLegacy_MultipleContainment();
+
+  /**
+  	 * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy#getSingleReference <em>Single Reference</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the reference '<em>Single Reference</em>'.
+  	 * @see org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy#getSingleReference()
+  	 * @see #getCanReferenceLegacy()
+  	 * @generated
+  	 */
+  EReference getCanReferenceLegacy_SingleReference();
+
+  /**
+  	 * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy#getMultipleReference <em>Multiple Reference</em>}'.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @return the meta object for the reference list '<em>Multiple Reference</em>'.
+  	 * @see org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy#getMultipleReference()
+  	 * @see #getCanReferenceLegacy()
+  	 * @generated
+  	 */
+  EReference getCanReferenceLegacy_MultipleReference();
+
+  /**
+  	 * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}'.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @return the meta object for enum '<em>My Enum</em>'.
+  	 * @see org.eclipse.emf.cdo.tests.model6.MyEnum
+  	 * @generated
+  	 */
   EEnum getMyEnum();
 
   /**

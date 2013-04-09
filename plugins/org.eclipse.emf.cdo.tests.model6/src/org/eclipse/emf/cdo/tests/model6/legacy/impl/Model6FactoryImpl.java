@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.tests.model6.A;
 import org.eclipse.emf.cdo.tests.model6.B;
 import org.eclipse.emf.cdo.tests.model6.BaseObject;
 import org.eclipse.emf.cdo.tests.model6.C;
+import org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
@@ -141,6 +142,8 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
       return createEmptyStringDefaultUnsettable();
     case Model6Package.UNSETTABLE_ATTRIBUTES:
       return createUnsettableAttributes();
+    case Model6Package.CAN_REFERENCE_LEGACY:
+      return createCanReferenceLegacy();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -428,9 +431,20 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public CanReferenceLegacy createCanReferenceLegacy()
+  {
+    CanReferenceLegacyImpl canReferenceLegacy = new CanReferenceLegacyImpl();
+    return canReferenceLegacy;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public MyEnum createMyEnumFromString(EDataType eDataType, String initialValue)
   {
     MyEnum result = MyEnum.get(initialValue);

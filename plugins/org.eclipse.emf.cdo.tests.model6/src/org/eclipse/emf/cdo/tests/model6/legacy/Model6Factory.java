@@ -6,6 +6,7 @@ import org.eclipse.emf.cdo.tests.model6.A;
 import org.eclipse.emf.cdo.tests.model6.B;
 import org.eclipse.emf.cdo.tests.model6.BaseObject;
 import org.eclipse.emf.cdo.tests.model6.C;
+import org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
@@ -245,12 +246,21 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
   UnsettableAttributes createUnsettableAttributes();
 
   /**
-   * Returns the package supported by this factory.
+   * Returns a new object of class '<em>Can Reference Legacy</em>'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-   * @return the package supported by this factory.
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Can Reference Legacy</em>'.
    * @generated
    */
+  CanReferenceLegacy createCanReferenceLegacy();
+
+  /**
+  	 * Returns the package supported by this factory.
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @return the package supported by this factory.
+  	 * @generated
+  	 */
   Model6Package getModel6Package();
 
 } // Model6Factory

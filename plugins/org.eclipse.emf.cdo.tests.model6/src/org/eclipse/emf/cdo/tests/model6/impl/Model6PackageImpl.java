@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.model6.impl;
 
 import org.eclipse.emf.cdo.tests.model6.BaseObject;
+import org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.EmptyStringDefault;
 import org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable;
@@ -206,9 +207,16 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  private EClass canReferenceLegacyEClass = null;
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   private EEnum myEnumEEnum = null;
 
   /**
@@ -1081,9 +1089,59 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getCanReferenceLegacy()
+  {
+    return canReferenceLegacyEClass;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EReference getCanReferenceLegacy_SingleContainment()
+  {
+    return (EReference)canReferenceLegacyEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EReference getCanReferenceLegacy_MultipleContainment()
+  {
+    return (EReference)canReferenceLegacyEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EReference getCanReferenceLegacy_SingleReference()
+  {
+    return (EReference)canReferenceLegacyEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EReference getCanReferenceLegacy_MultipleReference()
+  {
+    return (EReference)canReferenceLegacyEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EEnum getMyEnum()
   {
     return myEnumEEnum;
@@ -1233,6 +1291,12 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_SHORT);
     createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_SHORT_OBJECT);
     createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_STRING);
+
+    canReferenceLegacyEClass = createEClass(CAN_REFERENCE_LEGACY);
+    createEReference(canReferenceLegacyEClass, CAN_REFERENCE_LEGACY__SINGLE_CONTAINMENT);
+    createEReference(canReferenceLegacyEClass, CAN_REFERENCE_LEGACY__MULTIPLE_CONTAINMENT);
+    createEReference(canReferenceLegacyEClass, CAN_REFERENCE_LEGACY__SINGLE_REFERENCE);
+    createEReference(canReferenceLegacyEClass, CAN_REFERENCE_LEGACY__MULTIPLE_REFERENCE);
 
     // Create enums
     myEnumEEnum = createEEnum(MY_ENUM);
@@ -1524,6 +1588,21 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     initEAttribute(getUnsettableAttributes_AttrString(), ecorePackage.getEString(), "attrString", null, 0, 1,
         UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
+
+    initEClass(canReferenceLegacyEClass, CanReferenceLegacy.class, "CanReferenceLegacy", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCanReferenceLegacy_SingleContainment(), ecorePackage.getEObject(), null, "singleContainment",
+        null, 0, 1, CanReferenceLegacy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCanReferenceLegacy_MultipleContainment(), ecorePackage.getEObject(), null, "multipleContainment",
+        null, 0, -1, CanReferenceLegacy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCanReferenceLegacy_SingleReference(), ecorePackage.getEObject(), null, "singleReference", null,
+        0, 1, CanReferenceLegacy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCanReferenceLegacy_MultipleReference(), ecorePackage.getEObject(), null, "multipleReference",
+        null, 0, -1, CanReferenceLegacy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(myEnumEEnum, MyEnum.class, "MyEnum");

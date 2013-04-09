@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.EmptyStringDefault;
+import org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
 import org.eclipse.emf.cdo.tests.model6.HasNillableAttribute;
@@ -33,6 +34,7 @@ import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
 import org.eclipse.emf.cdo.tests.model6.Thing;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
+import org.eclipse.emf.cdo.tests.model6.UnsettableAttributes;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -135,6 +137,10 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
       return createHasNillableAttribute();
     case Model6Package.EMPTY_STRING_DEFAULT:
       return createEmptyStringDefault();
+    case Model6Package.EMPTY_STRING_DEFAULT_UNSETTABLE:
+      return createEmptyStringDefaultUnsettable();
+    case Model6Package.UNSETTABLE_ATTRIBUTES:
+      return createUnsettableAttributes();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -401,6 +407,28 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  public EmptyStringDefaultUnsettable createEmptyStringDefaultUnsettable()
+  {
+    EmptyStringDefaultUnsettableImpl emptyStringDefaultUnsettable = new EmptyStringDefaultUnsettableImpl();
+    return emptyStringDefaultUnsettable;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public UnsettableAttributes createUnsettableAttributes()
+  {
+    UnsettableAttributesImpl unsettableAttributes = new UnsettableAttributesImpl();
+    return unsettableAttributes;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @generated
    */
   public MyEnum createMyEnumFromString(EDataType eDataType, String initialValue)

@@ -63,7 +63,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-@Requires(IRepositoryConfig.CAPABILITY_AUDITING)
+@Requires({ IRepositoryConfig.CAPABILITY_AUDITING, IRepositoryConfig.CAPABILITY_UUIDS })
 @Skips("DB.ranges")
 public class WorkspaceTest extends AbstractCDOTest
 {

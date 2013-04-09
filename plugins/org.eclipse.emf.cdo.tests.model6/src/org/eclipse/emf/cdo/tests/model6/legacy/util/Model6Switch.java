@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.tests.model6.legacy.util;
 
@@ -10,6 +18,7 @@ import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.EmptyStringDefault;
+import org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
 import org.eclipse.emf.cdo.tests.model6.HasNillableAttribute;
@@ -23,6 +32,7 @@ import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
 import org.eclipse.emf.cdo.tests.model6.Thing;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
+import org.eclipse.emf.cdo.tests.model6.UnsettableAttributes;
 import org.eclipse.emf.cdo.tests.model6.legacy.Model6Package;
 
 import org.eclipse.emf.ecore.EClass;
@@ -294,6 +304,22 @@ public class Model6Switch<T>
     {
       EmptyStringDefault emptyStringDefault = (EmptyStringDefault)theEObject;
       T result = caseEmptyStringDefault(emptyStringDefault);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model6Package.EMPTY_STRING_DEFAULT_UNSETTABLE:
+    {
+      EmptyStringDefaultUnsettable emptyStringDefaultUnsettable = (EmptyStringDefaultUnsettable)theEObject;
+      T result = caseEmptyStringDefaultUnsettable(emptyStringDefaultUnsettable);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Model6Package.UNSETTABLE_ATTRIBUTES:
+    {
+      UnsettableAttributes unsettableAttributes = (UnsettableAttributes)theEObject;
+      T result = caseUnsettableAttributes(unsettableAttributes);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -656,11 +682,43 @@ public class Model6Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Empty String Default Unsettable</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
-   * returning a non-null result will terminate the switch, but this is the last case anyway.
+   * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Empty String Default Unsettable</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEmptyStringDefaultUnsettable(EmptyStringDefaultUnsettable object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Unsettable Attributes</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Unsettable Attributes</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseUnsettableAttributes(UnsettableAttributes object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
+   * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch, but this is the last case anyway.
+     * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)

@@ -18,11 +18,13 @@ import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.EmptyStringDefault;
+import org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
 import org.eclipse.emf.cdo.tests.model6.HasNillableAttribute;
 import org.eclipse.emf.cdo.tests.model6.Holdable;
 import org.eclipse.emf.cdo.tests.model6.Holder;
+import org.eclipse.emf.cdo.tests.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.MyEnumList;
 import org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable;
 import org.eclipse.emf.cdo.tests.model6.PropertiesMap;
@@ -31,7 +33,7 @@ import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
 import org.eclipse.emf.cdo.tests.model6.Thing;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
-import org.eclipse.emf.cdo.tests.model6.legacy.Model6Package;
+import org.eclipse.emf.cdo.tests.model6.UnsettableAttributes;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -229,6 +231,18 @@ public class Model6AdapterFactory extends AdapterFactoryImpl
     public Adapter caseEmptyStringDefault(EmptyStringDefault object)
     {
       return createEmptyStringDefaultAdapter();
+    }
+
+    @Override
+    public Adapter caseEmptyStringDefaultUnsettable(EmptyStringDefaultUnsettable object)
+    {
+      return createEmptyStringDefaultUnsettableAdapter();
+    }
+
+    @Override
+    public Adapter caseUnsettableAttributes(UnsettableAttributes object)
+    {
+      return createUnsettableAttributesAdapter();
     }
 
     @Override
@@ -568,9 +582,39 @@ public class Model6AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable <em>Empty String Default Unsettable</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable
+   * @generated
+   */
+  public Adapter createEmptyStringDefaultUnsettableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes <em>Unsettable Attributes</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model6.UnsettableAttributes
+   * @generated
+   */
+  public Adapter createUnsettableAttributesAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for the default case.
    * <!-- begin-user-doc --> This default implementation returns null. <!--
-   * end-user-doc -->
+     * end-user-doc -->
    * @return the new adapter.
    * @generated
    */

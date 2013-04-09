@@ -13,12 +13,12 @@ package org.eclipse.emf.cdo.common.revision;
 import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Internal.DynamicValueHolder;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
-import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 
 /**
  * Encapsulates the modeled information and the EMF system values of a {@link CDORevision revision}.
- * 
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -26,11 +26,11 @@ import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 public interface CDORevisionData
 {
   /**
-   * The equivalent of <code>EStructuralFeatureImpl.NIL</code> (i.e. explicit <code>null</code>).
-   * 
+   * The equivalent of <code>DynamicValueHolder.NIL</code> (i.e. explicit <code>null</code>).
+   *
    * @since 3.0
    */
-  public static final Object NIL = EStoreEObjectImpl.NIL;
+  public static final Object NIL = DynamicValueHolder.NIL;
 
   /**
    * @since 2.0
@@ -52,13 +52,13 @@ public interface CDORevisionData
    * <code><pre>
    * CDORevision revision = ...;
    * CDORevision container = <i>Util.getRevision</i>(revision.data().getContainerID());
-   * 
+   *
    * int containingFeatureID = revision.data().getContainingFeatureID();
-   * 
+   *
    * EStructuralFeature feature = containingFeatureID <= InternalEObject.EOPPOSITE_FEATURE_BASE ?
    *     container.getEClass().getEStructuralFeature(InternalEObject.EOPPOSITE_FEATURE_BASE - containingFeatureID) :
    *     ((EReference)revision.getEClass().getEStructuralFeature(containingFeatureID)).getEOpposite();</pre></code>
-   * 
+   *
    * @see BasicEObjectImpl#eContainingFeature()
    * @see #getContainerID()
    */

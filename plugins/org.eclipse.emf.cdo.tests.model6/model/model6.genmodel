@@ -99,5 +99,33 @@
     <genClasses ecoreClass="model6.ecore#//EmptyStringDefault">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//EmptyStringDefault/attribute"/>
     </genClasses>
+    <genClasses ecoreClass="model6.ecore#//EmptyStringDefaultUnsettable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//EmptyStringDefaultUnsettable/attribute"/>
+    </genClasses>
+    <genClasses ecoreClass="model6.ecore#//UnsettableAttributes">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrBigDecimal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrBigInteger"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrBoolean"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrBooleanObject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrByte"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrByteArray"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrByteObject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrChar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrCharacterObject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrDouble"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrDoubleObject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrFloat"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrFloatObject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrInt"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrIntegerObject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrJavaClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrJavaObject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrLong"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrLongObject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrShort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrShortObject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//UnsettableAttributes/attrString"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

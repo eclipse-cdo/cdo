@@ -10,6 +10,7 @@ import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.EmptyStringDefault;
+import org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
 import org.eclipse.emf.cdo.tests.model6.HasNillableAttribute;
@@ -22,6 +23,7 @@ import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
 import org.eclipse.emf.cdo.tests.model6.Thing;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
+import org.eclipse.emf.cdo.tests.model6.UnsettableAttributes;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -225,9 +227,27 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
   EmptyStringDefault createEmptyStringDefault();
 
   /**
-   * Returns the package supported by this factory.
+   * Returns a new object of class '<em>Empty String Default Unsettable</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @return a new object of class '<em>Empty String Default Unsettable</em>'.
+   * @generated
+   */
+  EmptyStringDefaultUnsettable createEmptyStringDefaultUnsettable();
+
+  /**
+   * Returns a new object of class '<em>Unsettable Attributes</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Unsettable Attributes</em>'.
+   * @generated
+   */
+  UnsettableAttributes createUnsettableAttributes();
+
+  /**
+   * Returns the package supported by this factory.
+   * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
    * @return the package supported by this factory.
    * @generated
    */

@@ -31,6 +31,8 @@ public class AllTestsDBH2All extends DBConfigs
   {
     addScenarios(parent, IDGenerationLocation.STORE);
     addScenarios(parent, IDGenerationLocation.CLIENT);
+
+    addScenario(parent, COMBINED, new H2Config(true, true, false, false, IDGenerationLocation.STORE), JVM, LEGACY);
   }
 
   private void addScenarios(TestSuite parent, IDGenerationLocation idGenerationLocation)

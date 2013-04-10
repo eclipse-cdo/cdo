@@ -11,8 +11,6 @@
 package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.db.ddl.IDBField;
-import org.eclipse.net4j.db.ddl.IDBIndex;
-import org.eclipse.net4j.db.ddl.IDBIndexField;
 import org.eclipse.net4j.db.ddl.IDBNamedElement;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
@@ -274,10 +272,15 @@ public final class DBUtil
       {
         try
         {
-          fixNullableIndexColumns(adapter, connection, schema);
+          Set<IDBField> nullableIndexFields = DBIndex.NULLABLE_INDEX_FIELDS.get();
+          if (nullableIndexFields != null && !nullableIndexFields.isEmpty())
+          {
+            fixNullableIndexFields(adapter, connection, nullableIndexFields);
+          }
         }
         finally
         {
+          DBIndex.NULLABLE_INDEX_FIELDS.remove();
           DBIndex.FIX_NULLABLE_INDEX_COLUMNS.remove();
         }
       }
@@ -286,60 +289,46 @@ public final class DBUtil
     return schema;
   }
 
-  private static void fixNullableIndexColumns(IDBAdapter adapter, Connection connection, IDBSchema schema)
+  private static void fixNullableIndexFields(IDBAdapter adapter, Connection connection,
+      Set<IDBField> nullableIndexFields)
   {
-    Statement statement = null;
     StringBuilder builder = new StringBuilder();
+    builder.append("The internal schema migration has fixed the following nullable index columns:");
+    builder.append(StringUtil.NL);
+
+    boolean autoCommit = false;
+    Statement statement = null;
 
     try
     {
-      for (IDBTable table : schema.getTables())
+      autoCommit = setAutoCommit(connection, false);
+      statement = connection.createStatement();
+
+      for (IDBField field : nullableIndexFields)
       {
-        for (IDBIndex index : table.getIndices())
-        {
-          if (index.getType() != IDBIndex.Type.NON_UNIQUE)
-          {
-            for (IDBIndexField indexField : index.getIndexFields())
-            {
-              IDBField field = indexField.getField();
-              boolean nullable = !field.isNotNull();
-              if (nullable)
-              {
-                field.setNotNull(true);
+        field.setNotNull(true);
 
-                if (statement == null)
-                {
-                  statement = connection.createStatement();
-                  builder.append("The internal schema migration has fixed the following nullable index columns:");
-                  builder.append(StringUtil.NL);
-                }
+        String sql = adapter.sqlModifyField(field);
+        statement.execute(sql);
 
-                String sql = adapter.sqlModifyField(field);
-                builder.append("- ");
-                builder.append(sql);
-                builder.append(StringUtil.NL);
-
-                statement.execute(sql);
-              }
-            }
-          }
-        }
+        builder.append("- ");
+        builder.append(sql);
+        builder.append(StringUtil.NL);
       }
 
-      if (statement != null)
-      {
-        connection.commit();
-        OM.LOG.info(builder.toString());
-      }
+      connection.commit();
+      OM.LOG.info(builder.toString());
     }
     catch (SQLException ex)
     {
+      OM.LOG.error(ex);
       rollback(connection);
       throw new DBException(ex);
     }
     finally
     {
-      DBUtil.close(statement);
+      close(statement);
+      setAutoCommit(connection, autoCommit);
     }
   }
 
@@ -461,6 +450,27 @@ public final class DBUtil
     }
 
     return null;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static boolean setAutoCommit(Connection connection, boolean autoCommit)
+  {
+    try
+    {
+      if (connection.getAutoCommit() != autoCommit)
+      {
+        connection.setAutoCommit(autoCommit);
+        return !autoCommit;
+      }
+
+      return autoCommit;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
   }
 
   private static void rollback(Connection connection)
@@ -588,7 +598,7 @@ public final class DBUtil
     try
     {
       statement = connection.createStatement();
-      for (String tableName : DBUtil.getAllTableNames(connection, dbName))
+      for (String tableName : getAllTableNames(connection, dbName))
       {
         String sql = "DROP TABLE " + tableName; //$NON-NLS-1$
         trace(sql);
@@ -609,7 +619,7 @@ public final class DBUtil
     }
     finally
     {
-      DBUtil.close(statement);
+      close(statement);
     }
 
     return exceptions;
@@ -870,7 +880,7 @@ public final class DBUtil
    */
   public static int update(PreparedStatement stmt, boolean exactlyOne) throws SQLException
   {
-    if (DBUtil.isTracerEnabled())
+    if (isTracerEnabled())
     {
       trace(stmt.toString());
     }

@@ -29,8 +29,10 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -38,6 +40,8 @@ import java.util.List;
 public class DBIndex extends DBSchemaElement implements InternalDBIndex
 {
   public static final ThreadLocal<Boolean> FIX_NULLABLE_INDEX_COLUMNS = new InheritableThreadLocal<Boolean>();
+
+  public static final ThreadLocal<Set<IDBField>> NULLABLE_INDEX_FIELDS = new InheritableThreadLocal<Set<IDBField>>();
 
   private static final boolean DISABLE_NULLABLE_CHECK = Boolean.parseBoolean(OMPlatform.INSTANCE.getProperty(
       "org.eclipse.net4j.db.DisableNullableCheck", "true"));
@@ -118,12 +122,23 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
   {
     assertUnlocked();
 
-    if (type != Type.NON_UNIQUE && !field.isNotNull() && !DISABLE_NULLABLE_CHECK
-        && FIX_NULLABLE_INDEX_COLUMNS.get() != Boolean.TRUE)
+    if (type != Type.NON_UNIQUE && !field.isNotNull())
     {
-      Exception constructionStackTrace = ((InternalDBField)field).getConstructionStackTrace();
-      throw new DBException(
-          "Index field is nullable: " + field + " (to disable this check run with '-Dorg.eclipse.net4j.db.DisableNullableCheck=true')", constructionStackTrace); //$NON-NLS-1$
+      if (!DISABLE_NULLABLE_CHECK && FIX_NULLABLE_INDEX_COLUMNS.get() != Boolean.TRUE)
+      {
+        Exception constructionStackTrace = ((InternalDBField)field).getConstructionStackTrace();
+        throw new DBException(
+            "Index field is nullable: " + field + " (to disable this check run with '-Dorg.eclipse.net4j.db.DisableNullableCheck=true')", constructionStackTrace); //$NON-NLS-1$
+      }
+
+      Set<IDBField> nullableIndexFields = NULLABLE_INDEX_FIELDS.get();
+      if (nullableIndexFields == null)
+      {
+        nullableIndexFields = new HashSet<IDBField>();
+        NULLABLE_INDEX_FIELDS.set(nullableIndexFields);
+      }
+
+      nullableIndexFields.add(field);
     }
 
     if (field.getTable() != table)

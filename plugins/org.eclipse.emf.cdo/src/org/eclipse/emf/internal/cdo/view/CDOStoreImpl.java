@@ -11,6 +11,7 @@
  *    Eike Stepper & Simon McDuff - bug 204890
  *    Simon McDuff - bug 246705
  *    Simon McDuff - bug 246622
+ *    Christian W. Damus (CEA) - bug 400236: get internal instance of objects in ID conversion
  */
 package org.eclipse.emf.internal.cdo.view;
 
@@ -693,12 +694,22 @@ public final class CDOStoreImpl implements CDOStore
       }
     }
 
-    return value;
+    return getInternalInstance(value);
   }
 
   private InternalCDOObject getCDOObject(Object object)
   {
     return FSMUtil.adapt(object, view);
+  }
+
+  private Object getInternalInstance(Object object)
+  {
+    if (object instanceof InternalCDOObject)
+    {
+      return ((InternalCDOObject)object).cdoInternalInstance();
+    }
+
+    return object;
   }
 
   private static InternalCDORevision getRevisionForReading(InternalCDOObject cdoObject)

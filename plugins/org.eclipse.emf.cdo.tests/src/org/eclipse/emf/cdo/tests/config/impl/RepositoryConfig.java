@@ -299,7 +299,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     props.put(Props.OVERRIDE_UUID, ""); // UUID := name !!!
     props.put(Props.SUPPORTING_AUDITS, Boolean.toString(supportingAudits));
     props.put(Props.SUPPORTING_BRANCHES, Boolean.toString(supportingBranches));
-    props.put(Props.SUPPORTING_ECORE, "false");
     props.put(Props.ID_GENERATION_LOCATION, idGenerationLocation.toString());
   }
 

@@ -186,17 +186,6 @@ public class SessionProperties extends Properties<CDOSession> implements CDOComm
       }
     });
 
-    add(new Property<CDOSession>("supportingEcore", Messages.getString("SessionPropertyTester_28"), //
-        Messages.getString("SessionPropertyTester_29"), //$NON-NLS-1$
-        CATEGORY_REPOSITORY)
-    {
-      @Override
-      protected Object eval(CDOSession session)
-      {
-        return session.getRepositoryInfo().isSupportingEcore();
-      }
-    });
-
     add(new Property<CDOSession>("serializeCommits", Messages.getString("SessionPropertyTester_38"), //
         Messages.getString("SessionPropertyTester_39"), //$NON-NLS-1$
         CATEGORY_REPOSITORY)
@@ -329,6 +318,7 @@ public class SessionProperties extends Properties<CDOSession> implements CDOComm
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public boolean isSupportingEcore()
   {
     throw new UnsupportedOperationException();

@@ -356,6 +356,7 @@ public abstract class DelegatingRepository implements InternalRepository
     return getDelegate().processPackage(value);
   }
 
+  @Deprecated
   public boolean isSupportingEcore()
   {
     return getDelegate().isSupportingEcore();

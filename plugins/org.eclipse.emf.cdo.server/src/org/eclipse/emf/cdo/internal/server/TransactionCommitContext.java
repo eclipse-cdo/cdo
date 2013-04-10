@@ -131,6 +131,10 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private boolean clearResourcePathCache;
 
+  private boolean usingEcore;
+
+  private boolean usingEtypes;
+
   private InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[0];
 
   private CDOLockState[] locksOnNewObjects = new CDOLockState[0];
@@ -237,6 +241,16 @@ public class TransactionCommitContext implements InternalCommitContext
   public boolean isClearResourcePathCache()
   {
     return clearResourcePathCache;
+  }
+
+  public boolean isUsingEcore()
+  {
+    return usingEcore;
+  }
+
+  public boolean isUsingEtypes()
+  {
+    return usingEtypes;
   }
 
   public InternalCDOPackageUnit[] getNewPackageUnits()
@@ -412,6 +426,16 @@ public class TransactionCommitContext implements InternalCommitContext
   public void setClearResourcePathCache(boolean clearResourcePathCache)
   {
     this.clearResourcePathCache = clearResourcePathCache;
+  }
+
+  public void setUsingEcore(boolean usingEcore)
+  {
+    this.usingEcore = usingEcore;
+  }
+
+  public void setUsingEtypes(boolean usingEtypes)
+  {
+    this.usingEtypes = usingEtypes;
   }
 
   public void setNewPackageUnits(InternalCDOPackageUnit[] newPackageUnits)

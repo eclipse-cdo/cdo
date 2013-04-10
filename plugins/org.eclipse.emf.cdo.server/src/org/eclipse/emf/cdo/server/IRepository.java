@@ -281,7 +281,9 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
 
     /**
      * @since 4.0
+     * @deprecated As of 4.2 instances of Ecore are always supported (on demand).
      */
+    @Deprecated
     public static final String SUPPORTING_ECORE = "supportingEcore"; //$NON-NLS-1$
 
     /**

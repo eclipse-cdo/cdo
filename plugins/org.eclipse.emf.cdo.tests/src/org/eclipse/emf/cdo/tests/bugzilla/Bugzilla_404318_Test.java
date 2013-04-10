@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -24,7 +23,6 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import java.net.URL;
-import java.util.Map;
 
 /**
  * Bug 404318: Tests that we don't get certain NPEs when processing dynamic objects whose
@@ -72,14 +70,6 @@ public class Bugzilla_404318_Test extends AbstractCDOTest
 
   //
   // test framework
-
-  @Override
-  public Map<String, String> getRepositoryProperties()
-  {
-    Map<String, String> result = super.getRepositoryProperties();
-    result.put(IRepository.Props.SUPPORTING_ECORE, Boolean.toString(true));
-    return result;
-  }
 
   protected EPackage getTestPackage(ResourceSet rset) throws Exception
   {

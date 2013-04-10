@@ -153,8 +153,6 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private boolean supportingBranches;
 
-  private boolean supportingEcore;
-
   private boolean serializingCommits;
 
   private boolean ensuringReferentialIntegrity;
@@ -325,9 +323,10 @@ public class Repository extends Container<Object> implements InternalRepository
     return supportingBranches;
   }
 
+  @Deprecated
   public boolean isSupportingEcore()
   {
-    return supportingEcore;
+    return true;
   }
 
   public boolean isSerializingCommits()
@@ -1632,12 +1631,6 @@ public class Repository extends Container<Object> implements InternalRepository
     else
     {
       supportingBranches = store.getRevisionParallelism() == IStore.RevisionParallelism.BRANCHING;
-    }
-
-    String valueEcore = properties.get(Props.SUPPORTING_ECORE);
-    if (valueEcore != null)
-    {
-      supportingEcore = Boolean.valueOf(valueEcore);
     }
 
     String valueCommits = properties.get(Props.SERIALIZE_COMMITS);

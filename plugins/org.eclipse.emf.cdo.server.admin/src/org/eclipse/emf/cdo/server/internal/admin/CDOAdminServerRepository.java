@@ -162,6 +162,7 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     return delegate.isSupportingBranches();
   }
 
+  @Deprecated
   public boolean isSupportingEcore()
   {
     return delegate.isSupportingEcore();
@@ -223,7 +224,6 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     new CDODataOutputImpl(out).writeCDOID(getRootResourceID());
     out.writeBoolean(isSupportingAudits());
     out.writeBoolean(isSupportingBranches());
-    out.writeBoolean(isSupportingEcore());
     out.writeBoolean(isSerializingCommits());
     out.writeBoolean(isEnsuringReferentialIntegrity());
     out.writeEnum(getIDGenerationLocation());

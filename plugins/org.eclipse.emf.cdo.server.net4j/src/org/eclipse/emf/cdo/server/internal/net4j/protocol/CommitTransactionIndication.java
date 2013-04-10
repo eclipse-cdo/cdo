@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -40,6 +41,8 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -170,9 +173,22 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
         TRACER.format("Reading {0} new objects", newObjects.length); //$NON-NLS-1$
       }
 
+      boolean usingEcore = false;
+      boolean usingEtypes = false;
       for (int i = 0; i < newObjects.length; i++)
       {
         newObjects[i] = (InternalCDORevision)in.readCDORevision();
+
+        EPackage ePackage = newObjects[i].getEClass().getEPackage();
+        if (ePackage == EcorePackage.eINSTANCE)
+        {
+          usingEcore = true;
+        }
+        else if (ePackage == EtypesPackage.eINSTANCE)
+        {
+          usingEtypes = true;
+        }
+
         monitor.worked();
       }
 
@@ -251,6 +267,8 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       }
 
       commitContext.setClearResourcePathCache(clearResourcePathCache);
+      commitContext.setUsingEcore(usingEcore);
+      commitContext.setUsingEtypes(usingEtypes);
       commitContext.setNewPackageUnits(newPackageUnits);
       commitContext.setLocksOnNewObjects(locksOnNewObjects);
       commitContext.setNewObjects(newObjects);

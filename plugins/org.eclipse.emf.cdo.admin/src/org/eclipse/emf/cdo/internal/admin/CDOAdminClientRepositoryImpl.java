@@ -61,8 +61,6 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
 
   private boolean supportingBranches;
 
-  private boolean supportingEcore;
-
   private boolean serializingCommits;
 
   private boolean ensuringReferentialIntegrity;
@@ -90,7 +88,6 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
     rootResourceID = new CDODataInputImpl.Default(in).readCDOID();
     supportingAudits = in.readBoolean();
     supportingBranches = in.readBoolean();
-    supportingEcore = in.readBoolean();
     serializingCommits = in.readBoolean();
     ensuringReferentialIntegrity = in.readBoolean();
     idGenerationLocation = in.readEnum(IDGenerationLocation.class);
@@ -151,9 +148,10 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
     return supportingBranches;
   }
 
+  @Deprecated
   public boolean isSupportingEcore()
   {
-    return supportingEcore;
+    return true;
   }
 
   public boolean isSerializingCommits()

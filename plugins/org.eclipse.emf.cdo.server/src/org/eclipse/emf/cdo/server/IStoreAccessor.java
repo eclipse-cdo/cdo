@@ -324,6 +324,16 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public boolean isClearResourcePathCache();
 
     /**
+     * @since 4.2
+     */
+    public boolean isUsingEcore();
+
+    /**
+     * @since 4.2
+     */
+    public boolean isUsingEtypes();
+
+    /**
      * Returns an array of the new package units that are part of the commit operation represented by this
      * <code>CommitContext</code>.
      */

@@ -35,6 +35,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Bug 316444.
+ *
  * @author Martin Fluegge
  * @since 4.0
  */

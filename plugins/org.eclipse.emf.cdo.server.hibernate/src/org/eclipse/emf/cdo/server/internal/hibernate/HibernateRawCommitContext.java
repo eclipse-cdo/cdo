@@ -55,6 +55,10 @@ public class HibernateRawCommitContext implements InternalCommitContext
 
   private CDOBranchPoint branchPoint;
 
+  private boolean usingEcore;
+
+  private boolean usingEtypes;
+
   public CDORevision getRevision(CDOID id)
   {
     for (CDORevision cdoRevision : newObjects)
@@ -111,6 +115,16 @@ public class HibernateRawCommitContext implements InternalCommitContext
   public boolean isClearResourcePathCache()
   {
     return false;
+  }
+
+  public boolean isUsingEcore()
+  {
+    return usingEcore;
+  }
+
+  public boolean isUsingEtypes()
+  {
+    return usingEtypes;
   }
 
   public InternalCDOPackageUnit[] getNewPackageUnits()
@@ -236,6 +250,16 @@ public class HibernateRawCommitContext implements InternalCommitContext
 
   public void setClearResourcePathCache(boolean clearResourcePathCache)
   {
+  }
+
+  public void setUsingEcore(boolean usingEcore)
+  {
+    this.usingEcore = usingEcore;
+  }
+
+  public void setUsingEtypes(boolean usingEtypes)
+  {
+    this.usingEtypes = usingEtypes;
   }
 
   public void setNewPackageUnits(InternalCDOPackageUnit[] newPackageUnits)

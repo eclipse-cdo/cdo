@@ -50,6 +50,7 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -77,6 +78,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.Semaphore;
 
 /**
  * This abstract base class implements those methods which are most likely common to most mapping strategies. It can be
@@ -115,13 +117,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   private boolean allClassMappingsCreated;
 
-  // -- factories for mapping of classes, values, lists ------------------
-
-  private boolean mappedInfoInitialized;
-
-  private boolean mappedEcore;
-
-  private boolean mappedEtypes;
+  private SystemPackageMappingInfo systemPackageMappingInfo;
 
   public AbstractMappingStrategy()
   {
@@ -432,68 +428,10 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public void createMapping(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
-    boolean isInitialCommit = contains(packageUnits, EresourcePackage.eINSTANCE.getNsURI());
-    if (isInitialCommit)
-    {
-      // Don't create tables for Ecore and Etypes upon repository initialization
-      List<InternalCDOPackageUnit> reducedPackageUnits = new ArrayList<InternalCDOPackageUnit>();
-      for (InternalCDOPackageUnit packageUnit : packageUnits)
-      {
-        String id = packageUnit.getID();
-        if (id.equals(EcorePackage.eINSTANCE.getNsURI()) || id.equals(EtypesPackage.eINSTANCE.getNsURI()))
-        {
-          continue;
-        }
-
-        reducedPackageUnits.add(packageUnit);
-      }
-
-      packageUnits = reducedPackageUnits.toArray(new InternalCDOPackageUnit[reducedPackageUnits.size()]);
-      mappedInfoInitialized = true;
-    }
-    else
-    {
-      if (!mappedInfoInitialized)
-      {
-        mappedInfoInitialized = true;
-        mappedEcore = hasTableFor(EcorePackage.eINSTANCE.getEPackage());
-        mappedEtypes = hasTableFor(EtypesPackage.eINSTANCE.getAnnotation());
-      }
-
-      if (!mappedEcore || !mappedEtypes)
-      {
-        CommitContext commitContext = StoreThreadLocal.getCommitContext();
-        if (commitContext != null)
-        {
-          CDOPackageRegistry packageRegistry = store.getRepository().getPackageRegistry();
-          List<InternalCDOPackageUnit> extendedPackageUnits = new ArrayList<InternalCDOPackageUnit>();
-          if (packageUnits != null)
-          {
-            extendedPackageUnits.addAll(Arrays.asList(packageUnits));
-          }
-
-          boolean changed = false;
-          if (!mappedEcore && commitContext.isUsingEcore())
-          {
-            CDOPackageUnit packageUnit = packageRegistry.getPackageUnit(EcorePackage.eINSTANCE);
-            extendedPackageUnits.add((InternalCDOPackageUnit)packageUnit);
-            changed = true;
-          }
-
-          if (!mappedEtypes && commitContext.isUsingEtypes())
-          {
-            CDOPackageUnit packageUnit = packageRegistry.getPackageUnit(EtypesPackage.eINSTANCE);
-            extendedPackageUnits.add((InternalCDOPackageUnit)packageUnit);
-            changed = true;
-          }
-
-          if (changed)
-          {
-            packageUnits = extendedPackageUnits.toArray(new InternalCDOPackageUnit[extendedPackageUnits.size()]);
-          }
-        }
-      }
-    }
+    boolean passedPackageUnits = packageUnits != null && packageUnits.length != 0;
+    Semaphore packageRegistryCommitLock = null;
+    boolean ecoreNew = false;
+    boolean etypesNew = false;
 
     Async async = null;
     monitor.begin();
@@ -501,24 +439,111 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     try
     {
       async = monitor.forkAsync();
-      IDBSchemaTransaction schemaTransaction = store.getDatabase().openSchemaTransaction();
 
-      try
+      boolean isInitialCommit = passedPackageUnits && contains(packageUnits, EresourcePackage.eINSTANCE.getNsURI());
+      if (isInitialCommit)
       {
-        mapPackageUnits(packageUnits, connection, false);
-        schemaTransaction.commit();
-      }
-      finally
-      {
-        schemaTransaction.close();
-        if (async != null)
+        // Don't create tables for Ecore and Etypes upon repository initialization
+        List<InternalCDOPackageUnit> reducedPackageUnits = new ArrayList<InternalCDOPackageUnit>();
+        for (InternalCDOPackageUnit packageUnit : packageUnits)
         {
-          async.stop();
+          String id = packageUnit.getID();
+          if (id.equals(EcorePackage.eINSTANCE.getNsURI()) || id.equals(EtypesPackage.eINSTANCE.getNsURI()))
+          {
+            continue;
+          }
+
+          reducedPackageUnits.add(packageUnit);
+        }
+
+        packageUnits = reducedPackageUnits.toArray(new InternalCDOPackageUnit[reducedPackageUnits.size()]);
+        systemPackageMappingInfo = new SystemPackageMappingInfo();
+      }
+      else
+      {
+        CommitContext commitContext = StoreThreadLocal.getCommitContext();
+        if (commitContext != null && (commitContext.isUsingEcore() || commitContext.isUsingEtypes()))
+        {
+          InternalRepository repository = (InternalRepository)store.getRepository();
+          if (!passedPackageUnits)
+          {
+            try
+            {
+              packageRegistryCommitLock = repository.getPackageRegistryCommitLock();
+              packageRegistryCommitLock.acquire();
+            }
+            catch (InterruptedException ex)
+            {
+              throw WrappedException.wrap(ex);
+            }
+          }
+
+          if (systemPackageMappingInfo == null)
+          {
+            systemPackageMappingInfo = new SystemPackageMappingInfo();
+            systemPackageMappingInfo.ecoreMapped = hasTableFor(EcorePackage.eINSTANCE.getEPackage());
+            systemPackageMappingInfo.etypesMapped = hasTableFor(EtypesPackage.eINSTANCE.getAnnotation());
+          }
+
+          if (!systemPackageMappingInfo.ecoreMapped || !systemPackageMappingInfo.etypesMapped)
+          {
+            CDOPackageRegistry packageRegistry = repository.getPackageRegistry();
+            List<InternalCDOPackageUnit> extendedPackageUnits = new ArrayList<InternalCDOPackageUnit>();
+            if (passedPackageUnits)
+            {
+              extendedPackageUnits.addAll(Arrays.asList(packageUnits));
+            }
+
+            if (!systemPackageMappingInfo.ecoreMapped && commitContext.isUsingEcore())
+            {
+              CDOPackageUnit packageUnit = packageRegistry.getPackageUnit(EcorePackage.eINSTANCE);
+              extendedPackageUnits.add((InternalCDOPackageUnit)packageUnit);
+              ecoreNew = true;
+            }
+
+            if (!systemPackageMappingInfo.etypesMapped && commitContext.isUsingEtypes())
+            {
+              CDOPackageUnit packageUnit = packageRegistry.getPackageUnit(EtypesPackage.eINSTANCE);
+              extendedPackageUnits.add((InternalCDOPackageUnit)packageUnit);
+              etypesNew = true;
+            }
+
+            if (ecoreNew || etypesNew)
+            {
+              packageUnits = extendedPackageUnits.toArray(new InternalCDOPackageUnit[extendedPackageUnits.size()]);
+            }
+          }
+        }
+      }
+
+      if (packageUnits != null && packageUnits.length != 0)
+      {
+        IDBSchemaTransaction schemaTransaction = store.getDatabase().openSchemaTransaction();
+
+        try
+        {
+          mapPackageUnits(packageUnits, connection, false);
+          schemaTransaction.commit();
+        }
+        finally
+        {
+          schemaTransaction.close();
+          if (async != null)
+          {
+            async.stop();
+          }
         }
       }
     }
     finally
     {
+      if (packageRegistryCommitLock != null)
+      {
+        systemPackageMappingInfo.ecoreMapped |= ecoreNew;
+        systemPackageMappingInfo.etypesMapped |= etypesNew;
+        packageRegistryCommitLock.release();
+      }
+
       monitor.done();
     }
   }
@@ -546,14 +571,11 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   private boolean contains(InternalCDOPackageUnit[] packageUnits, String packageUnitID)
   {
-    if (packageUnits != null && packageUnits.length != 0)
+    for (InternalCDOPackageUnit packageUnit : packageUnits)
     {
-      for (InternalCDOPackageUnit packageUnit : packageUnits)
+      if (packageUnit.getID().equals(packageUnitID))
       {
-        if (packageUnit.getID().equals(packageUnitID))
-        {
-          return true;
-        }
+        return true;
       }
     }
 
@@ -744,4 +766,14 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   public abstract IListMapping doCreateListMapping(EClass containingClass, EStructuralFeature feature);
 
   public abstract IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature);
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class SystemPackageMappingInfo
+  {
+    public boolean ecoreMapped;
+
+    public boolean etypesMapped;
+  }
 }

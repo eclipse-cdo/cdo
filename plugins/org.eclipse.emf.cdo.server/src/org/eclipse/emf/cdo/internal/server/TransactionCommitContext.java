@@ -493,6 +493,34 @@ public class TransactionCommitContext implements InternalCommitContext
     lobs = in;
   }
 
+  private InternalCDOPackageUnit[] lockPackageRegistry(InternalCDOPackageUnit[] packageUnits)
+      throws InterruptedException
+  {
+    if (!packageRegistryLocked)
+    {
+      repository.getPackageRegistryCommitLock().acquire();
+      packageRegistryLocked = true;
+    }
+
+    List<InternalCDOPackageUnit> noDuplicates = new ArrayList<InternalCDOPackageUnit>();
+    for (InternalCDOPackageUnit packageUnit : packageUnits)
+    {
+      String id = packageUnit.getID();
+      if (!repositoryPackageRegistry.containsKey(id))
+      {
+        noDuplicates.add(packageUnit);
+      }
+    }
+
+    int newSize = noDuplicates.size();
+    if (packageUnits.length != newSize)
+    {
+      return noDuplicates.toArray(new InternalCDOPackageUnit[newSize]);
+    }
+
+    return packageUnits;
+  }
+
   /**
    * @since 2.0
    */
@@ -512,24 +540,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
       if (newPackageUnits.length != 0)
       {
-        repository.getPackageRegistryCommitLock().acquire();
-        packageRegistryLocked = true;
-
-        List<InternalCDOPackageUnit> noDuplicates = new ArrayList<InternalCDOPackageUnit>();
-        for (InternalCDOPackageUnit newPackageUnit : newPackageUnits)
-        {
-          String id = newPackageUnit.getID();
-          if (!repositoryPackageRegistry.containsKey(id))
-          {
-            noDuplicates.add(newPackageUnit);
-          }
-        }
-
-        int newSize = noDuplicates.size();
-        if (newPackageUnits.length != newSize)
-        {
-          newPackageUnits = noDuplicates.toArray(new InternalCDOPackageUnit[newSize]);
-        }
+        newPackageUnits = lockPackageRegistry(newPackageUnits);
       }
 
       lockObjects(); // Can take long and must come before setTimeStamp()

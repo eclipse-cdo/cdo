@@ -327,7 +327,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
   {
     CDOBranchPoint branchPoint = in.readCDOBranchPoint();
     long previousTimeStamp = in.readLong();
-    return new CommitTransactionResult(idProvider, branchPoint, previousTimeStamp);
+    return new CommitTransactionResult(idProvider, branchPoint, previousTimeStamp, clearResourcePathCache);
   }
 
   protected void confirmingMappingNewObjects(CDODataInput in, CommitTransactionResult result) throws IOException

@@ -718,12 +718,24 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     /**
      * @since 4.0
+     * @deprecated As of 4.2
      */
+    @Deprecated
     public CommitTransactionResult(CDOIDProvider idProvider, CDOBranchPoint branchPoint, long previousTimeStamp)
+    {
+      this(idProvider, branchPoint, previousTimeStamp, false);
+    }
+
+    /**
+     * @since 4.2
+     */
+    public CommitTransactionResult(CDOIDProvider idProvider, CDOBranchPoint branchPoint, long previousTimeStamp,
+        boolean clearResourcePathCache)
     {
       this.idProvider = idProvider;
       this.branchPoint = branchPoint;
       this.previousTimeStamp = previousTimeStamp;
+      this.clearResourcePathCache = clearResourcePathCache;
     }
 
     /**

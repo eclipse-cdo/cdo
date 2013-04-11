@@ -24,6 +24,7 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -54,6 +55,12 @@ import java.util.Set;
  */
 public final class DBUtil
 {
+  /**
+   * @since 4.2
+   */
+  public static final int MAX_BATCH_SIZE = Integer.parseInt(OMPlatform.INSTANCE.getProperty(
+      "org.eclipse.net4j.db.MAX_BATCH_SIZE", "2000"));
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SQL, DBUtil.class);
 
   private DBUtil()
@@ -1263,6 +1270,7 @@ public final class DBUtil
 
       Object[] values = handler != null ? new Object[fields.length] : null;
 
+      int batchSize = 0;
       for (int row = 0; row < size; row++)
       {
         for (int i = 0; i < fields.length; i++)
@@ -1284,17 +1292,17 @@ public final class DBUtil
         }
 
         monitor.worked();
+
+        if (++batchSize == MAX_BATCH_SIZE)
+        {
+          executeBatch(statement, batchSize, monitor);
+          batchSize = 0;
+        }
       }
 
-      Async async = monitor.forkAsync(size);
-
-      try
+      if (batchSize != 0)
       {
-        statement.executeBatch();
-      }
-      finally
-      {
-        async.stop();
+        executeBatch(statement, batchSize, monitor);
       }
 
       successful = true;
@@ -1321,6 +1329,20 @@ public final class DBUtil
         close(statement);
         monitor.done();
       }
+    }
+  }
+
+  private static void executeBatch(PreparedStatement statement, int batchSize, OMMonitor monitor) throws SQLException
+  {
+    Async async = monitor.forkAsync(batchSize);
+
+    try
+    {
+      statement.executeBatch();
+    }
+    finally
+    {
+      async.stop();
     }
   }
 

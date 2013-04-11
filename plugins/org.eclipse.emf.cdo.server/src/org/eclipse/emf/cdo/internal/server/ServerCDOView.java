@@ -450,6 +450,16 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       return this;
     }
 
+    public String getUserID()
+    {
+      return internalSession.getUserID();
+    }
+
+    public int getSessionID()
+    {
+      return internalSession.getSessionID();
+    }
+
     public CDOView[] getElements()
     {
       return new ServerCDOView[] { ServerCDOView.this };
@@ -718,16 +728,6 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     public long getLastUpdateTime()
     {
       return getBranchPoint().getTimeStamp();
-    }
-
-    public String getUserID()
-    {
-      return null;
-    }
-
-    public int getSessionID()
-    {
-      return internalSession.getSessionID();
     }
 
     public long refresh()

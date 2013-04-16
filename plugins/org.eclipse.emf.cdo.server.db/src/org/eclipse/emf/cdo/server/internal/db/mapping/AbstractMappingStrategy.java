@@ -528,15 +528,16 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
         finally
         {
           schemaTransaction.close();
-          if (async != null)
-          {
-            async.stop();
-          }
         }
       }
     }
     finally
     {
+      if (async != null)
+      {
+        async.stop();
+      }
+
       if (packageRegistryCommitLock != null)
       {
         systemPackageMappingInfo.ecoreMapped |= ecoreNew;

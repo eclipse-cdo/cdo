@@ -176,8 +176,8 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     thread11.start();
     thread21.start();
 
-    thread11.join();
-    thread21.join();
+    thread11.join(DEFAULT_TIMEOUT);
+    thread21.join(DEFAULT_TIMEOUT);
 
     transaction22.waitForUpdate(transaction11async.getLastCommitTime(), DEFAULT_TIMEOUT);
     transaction22.waitForUpdate(transaction21async.getLastCommitTime(), DEFAULT_TIMEOUT);
@@ -282,8 +282,8 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     commitThread1.start();
     commitThread2.start();
 
-    commitThread1.join();
-    commitThread2.join();
+    commitThread1.join(DEFAULT_TIMEOUT);
+    commitThread2.join(DEFAULT_TIMEOUT);
 
     transaction1.waitForUpdate(transaction3.getLastCommitTime(), DEFAULT_TIMEOUT);
     transaction1.waitForUpdate(transaction2.getLastCommitTime(), DEFAULT_TIMEOUT);
@@ -381,8 +381,8 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     commitThread1.start();
     commitThread2.start();
 
-    commitThread1.join();
-    commitThread2.join();
+    commitThread1.join(DEFAULT_TIMEOUT);
+    commitThread2.join(DEFAULT_TIMEOUT);
 
     transaction1.waitForUpdate(transaction3.getLastCommitTime(), DEFAULT_TIMEOUT);
     transaction1.waitForUpdate(transaction2.getLastCommitTime(), DEFAULT_TIMEOUT);

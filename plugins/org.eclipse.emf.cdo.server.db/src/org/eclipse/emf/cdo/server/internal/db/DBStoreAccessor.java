@@ -75,6 +75,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.TrackableTimerTask;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -105,7 +106,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TimerTask;
 
 /**
  * @author Eike Stepper
@@ -1372,7 +1372,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   /**
    * @author Stefan Winkler
    */
-  private static final class ConnectionKeepAliveTask extends TimerTask
+  private static final class ConnectionKeepAliveTask extends TrackableTimerTask
   {
     public static final long EXECUTION_PERIOD = 1000 * 60 * 60 * 4; // 4 hours
 

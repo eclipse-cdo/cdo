@@ -14,6 +14,7 @@ import org.eclipse.net4j.internal.util.test.TestExecuter;
 import org.eclipse.net4j.tests.bundle.OM;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.concurrent.TrackableTimerTask;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IORuntimeException;
@@ -195,6 +196,15 @@ public abstract class AbstractOMTest extends TestCase
     try
     {
       super.tearDown();
+    }
+    catch (Exception ex)
+    {
+      IOUtil.print(ex);
+    }
+
+    try
+    {
+      TrackableTimerTask.logConstructionStackTraces(2 * DEFAULT_TIMEOUT);
     }
     catch (Exception ex)
     {

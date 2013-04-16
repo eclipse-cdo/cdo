@@ -1116,7 +1116,18 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     if (invalidationRunner == null)
     {
-      invalidationRunner = new QueueRunner();
+      invalidationRunner = new QueueRunner()
+      {
+        @Override
+        protected void noWork(WorkContext context)
+        {
+          if (isClosed())
+          {
+            context.terminate();
+          }
+        }
+      };
+
       invalidationRunner.activate();
     }
 

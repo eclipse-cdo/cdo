@@ -330,6 +330,15 @@ public class Channel extends Lifecycle implements InternalChannel
     {
       return "Net4jReceiveSerializer-" + Channel.this; //$NON-NLS-1$
     }
+
+    @Override
+    protected void noWork(WorkContext context)
+    {
+      if (isClosed())
+      {
+        context.terminate();
+      }
+    }
   }
 
   /**

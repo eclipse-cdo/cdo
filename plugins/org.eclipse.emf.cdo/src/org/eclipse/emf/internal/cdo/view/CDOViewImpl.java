@@ -130,9 +130,9 @@ public class CDOViewImpl extends AbstractCDOView
 
   private long lastUpdateTime;
 
-  private QueueRunner invalidationRunner;
-
   private Map<CDOObject, CDOLockState> lockStates = new WeakHashMap<CDOObject, CDOLockState>();
+
+  private QueueRunner invalidationRunner;
 
   @ExcludeFromDump
   private InvalidationRunnerLock invalidationRunnerLock = new InvalidationRunnerLock();
@@ -926,6 +926,15 @@ public class CDOViewImpl extends AbstractCDOView
       protected String getThreadName()
       {
         return "CDOInvalidationRunner-" + CDOViewImpl.this; //$NON-NLS-1$
+      }
+
+      @Override
+      protected void noWork(WorkContext context)
+      {
+        if (isClosed())
+        {
+          context.terminate();
+        }
       }
 
       @Override

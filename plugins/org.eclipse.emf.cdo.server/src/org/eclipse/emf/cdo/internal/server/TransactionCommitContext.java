@@ -1321,6 +1321,7 @@ public class TransactionCommitContext implements InternalCommitContext
         {
           InternalCDOPackageUnit packageUnit = newPackageUnits[i];
           packageUnit.setState(CDOPackageUnit.State.LOADED);
+          packageUnit.setPackageRegistry(repositoryPackageRegistry);
           repositoryPackageRegistry.putPackageUnit(packageUnit);
           monitor.worked();
         }

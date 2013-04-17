@@ -205,23 +205,27 @@ public final class CDOStoreImpl implements CDOStore
         TRACER.format("isSet({0}, {1})", cdoObject, feature); //$NON-NLS-1$
       }
 
-      if (!feature.isUnsettable())
+      InternalCDORevision revision = getRevisionForReading(cdoObject);
+      if (feature.isMany())
       {
-        if (feature.isMany())
-        {
-          InternalCDORevision revision = getRevisionForReading(cdoObject);
-          CDOList list = revision.getList(feature);
-          return list != null && !list.isEmpty();
-        }
-
-        Object value = eObject.eGet(feature);
-        Object defaultValue = feature.getDefaultValue();
-        return !ObjectUtil.equals(value, defaultValue);
+        CDOList list = revision.getList(feature);
+        return list != null && !list.isEmpty();
       }
 
-      // TODO This get() may not work for lists, see above
-      Object value = get(eObject, feature, NO_INDEX);
-      return value != null;
+      Object value = revision.getValue(feature);
+      if (feature.isUnsettable())
+      {
+        return value != null;
+      }
+
+      if (value == null)
+      {
+        return false;
+      }
+
+      value = convertToEMF(eObject, revision, feature, NO_INDEX, value);
+      Object defaultValue = feature.getDefaultValue();
+      return !ObjectUtil.equals(value, defaultValue);
     }
   }
 

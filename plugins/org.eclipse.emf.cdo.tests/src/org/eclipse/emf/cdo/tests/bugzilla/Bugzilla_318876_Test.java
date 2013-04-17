@@ -25,8 +25,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import java.util.Date;
 
 /**
- * Bug 318876 - Mechanism for avoiding dangling refs can introduce spurious conflicts</p>
- * http://bugs.eclipse.org/318876</p>
+ * Bug 318876 - Mechanism for avoiding dangling refs can introduce spurious conflicts.
  *
  * @author Caspar De Groot
  */
@@ -34,50 +33,49 @@ public class Bugzilla_318876_Test extends AbstractCDOTest
 {
   public void test() throws CommitException
   {
-    final CDOSession session = openSession();
+    CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
-    CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.createResource(getResourcePath("/r1")); //$NON-NLS-1$
 
-    PurchaseOrder po1 = getModel1Factory().createPurchaseOrder();
-    po1.setDate(new Date());
-    r1.getContents().add(po1);
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
+
+    PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
+    purchaseOrder.setDate(new Date());
+    resource.getContents().add(purchaseOrder);
 
     Supplier supplier = getModel1Factory().createSupplier();
-    supplier.getPurchaseOrders().add(po1);
-    r1.getContents().add(supplier);
+    supplier.getPurchaseOrders().add(purchaseOrder);
+    resource.getContents().add(supplier);
 
-    tx.commit();
+    transaction.commit();
 
-    // Remove po2 in another session
+    // Remove purchaseOrder in another session
     doSecondSession();
 
     // Make the supplier dirty so that it will be scanned for dangling refs
-    // during processing of the refresh results
+    // in supplier.getPurchaseOrders() during processing of the refresh results
     supplier.setName("Supplier");
 
     session.refresh();
 
-    CDOState state = CDOUtil.getCDOObject(po1).cdoState();
-    System.out.println("--> purchaseOrder state (should be INVALID) = " + state);
-    assertEquals(CDOState.INVALID, state);
+    CDOState state = CDOUtil.getCDOObject(purchaseOrder).cdoState();
+    assertEquals(CDOState.INVALID_CONFLICT, state);
 
-    tx.close();
+    transaction.close();
     session.close();
   }
 
   private void doSecondSession() throws CommitException
   {
     CDOSession session = openSession();
-    CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.getResource(getResourcePath("/r1")); //$NON-NLS-1$
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource(getResourcePath("/res"));
 
-    // Detach the po
-    PurchaseOrder po = (PurchaseOrder)r1.getContents().get(0);
-    EcoreUtil.delete(po);
+    // Detach the purchaseOrder
+    PurchaseOrder purchaseOrder = (PurchaseOrder)resource.getContents().get(0);
+    EcoreUtil.delete(purchaseOrder);
 
-    tx.commit();
-    tx.close();
+    transaction.commit();
     session.close();
   }
 }

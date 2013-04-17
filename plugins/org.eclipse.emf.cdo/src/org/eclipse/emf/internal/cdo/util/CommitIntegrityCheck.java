@@ -36,7 +36,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
@@ -445,18 +444,21 @@ public class CommitIntegrityCheck
     {
       if (referencerClassInfo.hasPersistentOpposite(reference))
       {
-        Object value = cleanRev.get(reference, EStore.NO_INDEX);
-        if (value != null)
+        if (reference.isMany())
         {
-          if (reference.isMany())
+          EList<?> list = cleanRev.getList(reference);
+          if (list != null)
           {
-            EList<?> list = (EList<?>)value;
             for (Object element : list)
             {
               checkBidiRefTargetIncluded(element, referencer, reference.getName(), msgFrag);
             }
           }
-          else
+        }
+        else
+        {
+          Object value = cleanRev.getValue(reference);
+          if (value != null)
           {
             checkBidiRefTargetIncluded(value, referencer, reference.getName(), msgFrag);
           }

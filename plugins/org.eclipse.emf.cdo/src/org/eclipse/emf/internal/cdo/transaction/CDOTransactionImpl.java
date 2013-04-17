@@ -137,7 +137,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.impl.EClassImpl.FeatureSubsetSupplier;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
@@ -2379,12 +2378,27 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           {
             InternalCDORevision cleanRevision = cleanRevisions.get(referencer);
 
-            Object value = cleanRevision.get(reference, EStore.NO_INDEX);
-            if (value instanceof CDOObject && value == referencedObject || //
-                value instanceof CDOID && value.equals(referencedOID) || //
-                value instanceof CDOList && ((CDOList)value).contains(referencedOID))
+            if (reference.isMany())
             {
-              continue;
+              CDOList list = cleanRevision.getList(reference);
+              if (list != null)
+              {
+                for (Object value : list)
+                {
+                  if (value == referencedOID || value == referencedObject)
+                  {
+                    continue;
+                  }
+                }
+              }
+            }
+            else
+            {
+              Object value = cleanRevision.getValue(reference);
+              if (value == referencedOID || value == referencedObject)
+              {
+                continue;
+              }
             }
           }
 

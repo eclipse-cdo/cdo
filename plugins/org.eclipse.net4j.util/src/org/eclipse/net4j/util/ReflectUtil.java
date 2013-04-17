@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA) - bug 376620: switch on primitive types
  */
 package org.eclipse.net4j.util;
 
@@ -624,5 +625,54 @@ public final class ReflectUtil
   @Target(ElementType.FIELD)
   public @interface ExcludeFromDump
   {
+  }
+
+  /**
+   * @author Christian W. Damus (CEA)
+   * @since 3.3
+   */
+  public static enum PrimitiveType
+  {
+    BOOLEAN(boolean.class), //
+    BYTE(byte.class), //
+    CHAR(char.class), //
+    SHORT(short.class), //
+    INT(int.class), //
+    LONG(long.class), //
+    FLOAT(float.class), //
+    DOUBLE(double.class), //
+    VOID(void.class), //
+    NONE(null);
+
+    private static final Map<Class<?>, PrimitiveType> INSTANCES = new HashMap<Class<?>, PrimitiveType>();
+
+    private final Class<?> type;
+
+    static
+    {
+      for (PrimitiveType primitiveType : values())
+      {
+        if (primitiveType.type != null)
+        {
+          INSTANCES.put(primitiveType.type, primitiveType);
+        }
+      }
+    }
+
+    private PrimitiveType(Class<?> type)
+    {
+      this.type = type;
+    }
+
+    public Class<?> type()
+    {
+      return type;
+    }
+
+    public static PrimitiveType forClass(Class<?> clazz)
+    {
+      PrimitiveType result = INSTANCES.get(clazz);
+      return result == null ? NONE : result;
+    }
   }
 }

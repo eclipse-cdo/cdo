@@ -17,15 +17,13 @@ import junit.framework.TestSuite;
 /**
  * @author Andre Dietisheim
  */
-public class AllTestsCDORevisionCache
+public class AllTestsRevisionCache
 {
   public static Test suite()
   {
     TestSuite suite = new TestSuite("Tests for CDORevisionCache"); //$NON-NLS-1$
 
     // $JUnit-BEGIN$
-    suite.addTestSuite(DerbyDBRevisionCacheTest.class);
-    suite.addTestSuite(H2DBRevisionCacheTest.class);
     suite.addTestSuite(DefaultRevisionCacheTest.class);
     // $JUnit-END$
 

@@ -15,7 +15,8 @@ Require-Bundle: org.eclipse.emf.cdo.tests;bundle-version="[4.0.0,5.0.0)";visibil
  org.eclipse.net4j.db.derby;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.net4j.db.mysql;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.net4j.db.h2;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
- org.eclipse.net4j.db.postgresql;bundle-version="[4.0.0,5.0.0)"
+ org.eclipse.net4j.db.postgresql;bundle-version="[4.0.0,5.0.0)",
+ org.eclipse.emf.cdo.common.db;bundle-version="[3.0.0,4.0.0)"
 Eclipse-BuddyPolicy: dependent
 Import-Package: com.mysql.jdbc.jdbc2.optional;version="[5.0.0,6.0.0)",
  org.apache.derby.jdbc;version="[10.0.0,11.0.0)",
@@ -28,4 +29,5 @@ Export-Package: org.eclipse.emf.cdo.tests.db;version="4.0.200";x-friends:="org.e
  org.eclipse.emf.cdo.tests.db.capabilities;version="4.0.200";x-friends:="org.eclipse.emf.cdo.tests.all",
  org.eclipse.emf.cdo.tests.db.offline;version="4.0.200";x-friends:="org.eclipse.emf.cdo.tests.all",
  org.eclipse.emf.cdo.tests.db.performance;version="4.0.200";x-friends:="org.eclipse.emf.cdo.tests.all",
+ org.eclipse.emf.cdo.tests.db.revisioncache;version="4.0.200";x-friends:="org.eclipse.emf.cdo.tests.all",
  org.eclipse.emf.cdo.tests.db.verifier;version="4.0.200";x-friends:="org.eclipse.emf.cdo.tests.all"

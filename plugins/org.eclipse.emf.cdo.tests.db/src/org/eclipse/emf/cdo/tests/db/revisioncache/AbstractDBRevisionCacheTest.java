@@ -9,13 +9,14 @@
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.emf.cdo.tests.revisioncache;
+package org.eclipse.emf.cdo.tests.db.revisioncache;
 
 import org.eclipse.emf.cdo.common.db.CDOCommonDBUtil;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
+import org.eclipse.emf.cdo.tests.revisioncache.AbstractRevisionCacheTest;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
@@ -31,7 +32,7 @@ import java.sql.SQLException;
 /**
  * @author Andre Dietisheim
  */
-public abstract class AbstractDBRevisionCacheTest extends AbstractCDORevisionCacheTest
+public abstract class AbstractDBRevisionCacheTest extends AbstractRevisionCacheTest
 {
   private DataSource dataSource;
 

@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.internal.db.cache.DBRevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -44,12 +43,9 @@ import java.util.List;
  *
  * @author Andre Dietisheim
  * @see CDORevisionCache
- * @see DBRevisionCache
- * @see DerbyDBRevisionCacheTest
- * @see H2DBRevisionCacheTest
  * @see DefaultRevisionCacheTest
  */
-public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
+public abstract class AbstractRevisionCacheTest extends AbstractOMTest
 {
   private static final String RESOURCE_PATH = "/res1";
 

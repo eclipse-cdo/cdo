@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 /**
  * @author Andre Dietisheim
  */
-public class DefaultRevisionCacheTest extends AbstractCDORevisionCacheTest
+public class DefaultRevisionCacheTest extends AbstractRevisionCacheTest
 {
   @Override
   protected InternalCDORevisionCache createRevisionCache(CDOSession session) throws Exception

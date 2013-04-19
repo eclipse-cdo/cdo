@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EPackage;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ import java.io.IOException;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalCDOPackageInfo extends CDOPackageInfo
+public interface InternalCDOPackageInfo extends CDOPackageInfo, Adapter.Internal
 {
   public InternalCDOPackageUnit getPackageUnit();
 

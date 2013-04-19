@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 
+import org.eclipse.emf.ecore.EPackage;
+
 import java.io.IOException;
 
 /**
@@ -33,6 +35,11 @@ public interface InternalCDOPackageInfo extends CDOPackageInfo
   public void setPackageURI(String packageURI);
 
   public void setParentURI(String parentURI);
+
+  /**
+   * @since 4.2
+   */
+  public void setEPackage(EPackage ePackage);
 
   /**
    * @since 3.0

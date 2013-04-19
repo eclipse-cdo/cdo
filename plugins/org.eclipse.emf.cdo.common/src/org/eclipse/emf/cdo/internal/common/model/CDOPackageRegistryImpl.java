@@ -284,6 +284,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
 
   public synchronized void registerPackageInfo(EPackage ePackage, InternalCDOPackageInfo packageInfo)
   {
+    packageInfo.setEPackage(ePackage);
     packageInfoMap.put(ePackage, packageInfo);
   }
 

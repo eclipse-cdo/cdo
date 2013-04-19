@@ -16,10 +16,13 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -116,6 +119,11 @@ public class CDOPackageInfoImpl implements InternalCDOPackageInfo
     return ePackage;
   }
 
+  public void setEPackage(EPackage ePackage)
+  {
+    this.ePackage = ePackage;
+  }
+
   public boolean isCorePackage()
   {
     return CDOModelUtil.isCorePackage(getEPackage());
@@ -145,5 +153,45 @@ public class CDOPackageInfoImpl implements InternalCDOPackageInfo
   public String toString()
   {
     return MessageFormat.format("CDOPackageInfo[packageURI={0}, parentURI={1}]", packageURI, parentURI); //$NON-NLS-1$
+  }
+
+  /**
+   * @deprecated As of 4.2 CDOPackageInfos are no longer mapped through Adapters.
+   * @see InternalCDOPackageRegistry#registerPackageInfo(EPackage, InternalCDOPackageInfo)
+   */
+  @Deprecated
+  public void notifyChanged(Notification notification)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @deprecated As of 4.2 CDOPackageInfos are no longer mapped through Adapters.
+   * @see InternalCDOPackageRegistry#registerPackageInfo(EPackage, InternalCDOPackageInfo)
+   */
+  @Deprecated
+  public Notifier getTarget()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @deprecated As of 4.2 CDOPackageInfos are no longer mapped through Adapters.
+   * @see InternalCDOPackageRegistry#registerPackageInfo(EPackage, InternalCDOPackageInfo)
+   */
+  @Deprecated
+  public void setTarget(Notifier newTarget)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @deprecated As of 4.2 CDOPackageInfos are no longer mapped through Adapters.
+   * @see InternalCDOPackageRegistry#registerPackageInfo(EPackage, InternalCDOPackageInfo)
+   */
+  @Deprecated
+  public boolean isAdapterForType(Object type)
+  {
+    throw new UnsupportedOperationException();
   }
 }

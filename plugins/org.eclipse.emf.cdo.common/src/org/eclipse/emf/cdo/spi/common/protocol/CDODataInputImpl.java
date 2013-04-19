@@ -626,8 +626,6 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return StringIO.DIRECT;
   }
 
-  protected abstract CDOPackageRegistry getPackageRegistry();
-
   protected abstract CDOBranchManager getBranchManager();
 
   protected abstract CDOCommitInfoManager getCommitInfoManager();
@@ -654,8 +652,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
       throw new UnsupportedOperationException();
     }
 
-    @Override
-    protected CDOPackageRegistry getPackageRegistry()
+    public CDOPackageRegistry getPackageRegistry()
     {
       throw new UnsupportedOperationException();
     }

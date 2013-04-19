@@ -183,8 +183,7 @@ public class LissomeFileHandle extends DataInputOutputFile implements CDODataInp
         return super.readCDORevision(freeze);
       }
 
-      @Override
-      protected CDOPackageRegistry getPackageRegistry()
+      public CDOPackageRegistry getPackageRegistry()
       {
         return LissomeFileHandle.this.getPackageRegistry();
       }

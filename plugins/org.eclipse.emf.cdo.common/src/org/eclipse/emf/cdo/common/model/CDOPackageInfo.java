@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.common.model;
 
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.State;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Descriptor;
 
@@ -25,7 +24,7 @@ import org.eclipse.emf.ecore.EPackage.Descriptor;
  * package unit is loaded all contained package infos/descriptors are resolved and replaced by their actual packages. At
  * the same time the describing package info objects are attached as adapters to the resolved packages. This way the
  * descriptive information is available before and after loading the packages.
- * 
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -33,7 +32,7 @@ import org.eclipse.emf.ecore.EPackage.Descriptor;
  * @apiviz.has {@link org.eclipse.emf.ecore.EPackage}
  * @apiviz.composedOf {@link CDOClassInfo}
  */
-public interface CDOPackageInfo extends Adapter, EPackage.Descriptor, Comparable<CDOPackageInfo>
+public interface CDOPackageInfo extends EPackage.Descriptor, Comparable<CDOPackageInfo>
 {
   /**
    * Returns the package unit containing this package info.
@@ -53,7 +52,7 @@ public interface CDOPackageInfo extends Adapter, EPackage.Descriptor, Comparable
 
   /**
    * Returns the {@link EPackage package} described by this package info.
-   * 
+   *
    * @param loadOnDemand
    *          If <code>true</code> and the containing {@link CDOPackageUnit package unit} is not {@link State#LOADED
    *          LOADED} the package unit is implicitely loaded. If <code>false</code> and this package unit is not
@@ -76,7 +75,7 @@ public interface CDOPackageInfo extends Adapter, EPackage.Descriptor, Comparable
   /**
    * Returnes <code>true</code> if the package described by this package info is the <i>Etypes</i> model,
    * <code>false</code> oterwise.
-   * 
+   *
    * @since 4.0
    */
   public boolean isTypePackage();

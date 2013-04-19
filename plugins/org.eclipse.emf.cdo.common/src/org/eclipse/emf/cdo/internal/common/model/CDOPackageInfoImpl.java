@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -30,7 +29,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public class CDOPackageInfoImpl extends AdapterImpl implements InternalCDOPackageInfo
+public class CDOPackageInfoImpl implements InternalCDOPackageInfo
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOPackageInfoImpl.class);
 
@@ -39,6 +38,8 @@ public class CDOPackageInfoImpl extends AdapterImpl implements InternalCDOPackag
   private String packageURI;
 
   private String parentURI;
+
+  private EPackage ePackage;
 
   public CDOPackageInfoImpl()
   {
@@ -107,24 +108,12 @@ public class CDOPackageInfoImpl extends AdapterImpl implements InternalCDOPackag
 
   public EPackage getEPackage(boolean loadOnDemand)
   {
-    return doGetEPackage(loadOnDemand);
-  }
-
-  public EPackage doGetEPackage(boolean loadOnDemand)
-  {
-    EPackage ePackage = (EPackage)getTarget();
-    if (ePackage != null)
+    if (ePackage == null && loadOnDemand)
     {
-      return ePackage;
+      packageUnit.load(true);
     }
 
-    if (loadOnDemand)
-    {
-      packageUnit.load(true); // TODO (CD) Dubious: is resolution-on-load really a good idea?
-      return (EPackage)getTarget();
-    }
-
-    return null;
+    return ePackage;
   }
 
   public boolean isCorePackage()

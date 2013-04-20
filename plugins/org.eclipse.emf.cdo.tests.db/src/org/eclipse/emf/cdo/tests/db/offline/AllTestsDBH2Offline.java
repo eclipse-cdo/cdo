@@ -39,7 +39,7 @@ public class AllTestsDBH2Offline extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBH2Offline().getTestSuite("CDO Tests (DBStore H2 Horizontal - offline mode)");
+    return new AllTestsDBH2Offline().getTestSuite();
   }
 
   @Override

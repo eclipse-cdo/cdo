@@ -7,6 +7,7 @@
  *  
  * Contributors:
  *     Martin Fluegge - initial API and implementation
+ *     Christian W. Damus (CEA) - bug 399933 NPE in editor when finishing Ecore wizard
  * 
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.presentation;
@@ -92,6 +93,11 @@ public class DawnAcoreEditor extends AcoreEditor implements IDawnEditor
   {
     super.createPages();
 
+    if (!(getEditorInput() instanceof DawnEditorInput))
+    {
+      return;
+    }
+
     selectionViewer.setContentProvider(new DawnSelectionViewerAdapterFactoryContentProvider(adapterFactory,
         ((DawnEditorInput)getEditorInput()).getResource()));
     selectionViewer
@@ -127,6 +133,9 @@ public class DawnAcoreEditor extends AcoreEditor implements IDawnEditor
       {
         super.doSave(progressMonitor);
       }
+    }
+    {
+      super.doSave(progressMonitor);
     }
   }
 

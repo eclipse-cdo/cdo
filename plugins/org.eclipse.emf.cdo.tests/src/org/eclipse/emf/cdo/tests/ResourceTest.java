@@ -897,6 +897,71 @@ public class ResourceTest extends AbstractCDOTest
     session.close();
   }
 
+  @CleanRepositoriesBefore
+  public void testDeleteResourceFromRoot() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+
+    Product1 p = getModel1Factory().createProduct1();
+    p.setName("Product1");
+    p.setVat(VAT.VAT0);
+
+    CDOResource resource = transaction.createResource("/res-" + System.currentTimeMillis());
+    resource.getContents().add(p);
+
+    CDOID resourceID = resource.cdoID();
+
+    CDOObject object = CDOUtil.getCDOObject(resource.getContents().get(0));
+    CDOID objectID = object.cdoID();
+
+    transaction.commit();
+    resource.delete(null);
+    transaction.commit();
+    transaction.close();
+
+    CDOView view = session.openView();
+    assertEquals(false, view.hasResource(getResourcePath("/resource1")));
+
+    try
+    {
+      view.getResourceNode("/resource1");
+      fail("Exception expected");
+    }
+    catch (Exception expected)
+    {
+    }
+
+    try
+    {
+      view.getResource(getResourcePath("/resource1"));
+      fail("Exception expected");
+    }
+    catch (Exception expected)
+    {
+    }
+
+    try
+    {
+      view.getObject(resourceID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException expected)
+    {
+    }
+
+    try
+    {
+      view.getObject(objectID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException expected)
+    {
+    }
+
+    session.close();
+  }
+
   public void testDeleteResource() throws Exception
   {
     CDOSession session = openSession();

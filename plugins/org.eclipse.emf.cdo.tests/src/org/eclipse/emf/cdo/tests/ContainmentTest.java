@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.tests.model2.TaskContainer;
 import org.eclipse.emf.cdo.tests.model2.TransientContainer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.DanglingReferenceException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -564,22 +566,41 @@ public class ContainmentTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getOrCreateResource(getResourcePath("res1"));
+    EList<EObject> contents = resource.getContents();
 
     Company company = getModel1Factory().createCompany();
-    resource.getContents().add(company);
+    contents.add(company);
 
     Category category = getModel1Factory().createCategory();
     company.getCategories().add(category);
 
     Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("supplier" + System.currentTimeMillis());
-    resource.getContents().add(supplier);
-    company.getSuppliers().add(supplier);
+    contents.add(supplier);
 
-    // transaction.commit();
+    EList<Supplier> suppliers = company.getSuppliers();
+    suppliers.add(supplier);
 
-    resource.getContents().addAll(resource.getContents().get(0).eContents());
-    resource.getContents().remove(0);
+    // "Control" all company contents (supplier + category) to resource contents.
+    // These two objects now have eContainer and eDirectResource set
+    contents.addAll(company.eContents());
+
+    // Detach the eContainer of supplier + category
+    contents.remove(company);
+
+    try
+    {
+      transaction.commit();
+      fail("CommitException expected");
+    }
+    catch (CommitException expected)
+    {
+      assertInstanceOf(DanglingReferenceException.class, expected.getCause());
+    }
+
+    // Unset eContainer of supplier + category
+    company.getSuppliers().remove(supplier);
+    company.getCategories().remove(category);
 
     transaction.commit();
   }

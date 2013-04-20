@@ -20,7 +20,7 @@ public class AllTestsMEMLegacy extends AllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsMEMLegacy().getTestSuite(AllConfigs.class.getName());
+    return new AllTestsMEMLegacy().getTestSuite();
   }
 
   @Override

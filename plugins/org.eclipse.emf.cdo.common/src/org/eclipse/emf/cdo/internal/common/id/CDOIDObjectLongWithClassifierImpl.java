@@ -15,31 +15,41 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
+import org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
+import org.eclipse.net4j.util.ref.Interner;
 
 import java.io.IOException;
+import java.io.ObjectStreamException;
 
 /**
  * @author Martin Taal
  * @since 3.0
  */
-public class CDOIDObjectLongWithClassifierImpl extends CDOIDObjectLongImpl implements CDOClassifierRef.Provider
+public final class CDOIDObjectLongWithClassifierImpl extends AbstractCDOID implements InternalCDOIDObject,
+    CDOClassifierRef.Provider
 {
   private static final long serialVersionUID = 1L;
 
-  private CDOClassifierRef classifierRef;
+  private static final LongWithClassifierInterner INTERNER = new LongWithClassifierInterner();
 
-  public CDOIDObjectLongWithClassifierImpl()
+  private final long value;
+
+  private final CDOClassifierRef classifierRef;
+
+  private CDOIDObjectLongWithClassifierImpl(long value, CDOClassifierRef classifierRef)
   {
+    CheckUtil.checkArg(value != 0L, "Zero not allowed");
+    this.value = value;
+    this.classifierRef = classifierRef;
   }
 
-  public CDOIDObjectLongWithClassifierImpl(CDOClassifierRef classifierRef, long value)
+  public long getLongValue()
   {
-    super(value);
-    this.classifierRef = classifierRef;
+    return value;
   }
 
   public CDOClassifierRef getClassifierRef()
@@ -48,85 +58,47 @@ public class CDOIDObjectLongWithClassifierImpl extends CDOIDObjectLongImpl imple
   }
 
   @Override
+  public void write(CDODataOutput out) throws IOException
+  {
+    out.writeLong(value);
+    out.writeCDOClassifierRef(classifierRef);
+  }
+
+  public String toURIFragment()
+  {
+    return classifierRef.getPackageURI() + CDOClassifierRef.URI_SEPARATOR + classifierRef.getClassifierName()
+        + CDOClassifierRef.URI_SEPARATOR + value;
+  }
+
   public Type getType()
   {
     return Type.OBJECT;
   }
 
-  @Override
   public CDOID.ObjectType getSubType()
   {
     return CDOID.ObjectType.LONG_WITH_CLASSIFIER;
   }
 
-  @Override
-  public String toURIFragment()
+  public boolean isExternal()
   {
-    return getClassifierRef().getPackageURI() + CDOClassifierRef.URI_SEPARATOR + getClassifierRef().getClassifierName()
-        + CDOClassifierRef.URI_SEPARATOR + super.toURIFragment();
+    return false;
   }
 
-  @Override
-  public void read(String fragmentPart)
+  public boolean isObject()
   {
-    // get the CDOClassifierRef part
-    int index1 = fragmentPart.indexOf(CDOClassifierRef.URI_SEPARATOR);
-    int index2 = fragmentPart.indexOf(CDOClassifierRef.URI_SEPARATOR, index1 + 1);
-    if (index1 == -1 || index2 == -1)
-    {
-      throw new IllegalArgumentException("The fragment " + fragmentPart + " is not a valid fragment");
-    }
-
-    classifierRef = new CDOClassifierRef(fragmentPart.substring(0, index1), fragmentPart.substring(index1 + 1, index2));
-
-    // let the super take care of the rest
-    super.read(fragmentPart.substring(index2 + 1));
+    return true;
   }
 
-  @Override
-  public void read(ExtendedDataInput in) throws IOException
+  public boolean isTemporary()
   {
-    // TODO: change the parameter to prevent casting to CDODataInput
-    CDODataInput cdoDataInput = (CDODataInput)in;
-    classifierRef = cdoDataInput.readCDOClassifierRef();
-
-    // and let the super take care of the rest
-    super.read(in);
-  }
-
-  @Override
-  public void write(ExtendedDataOutput out) throws IOException
-  {
-    // TODO: change the parameter to prevent casting to CDODataInput
-    CDODataOutput cdoDataOutput = (CDODataOutput)out;
-    cdoDataOutput.writeCDOClassifierRef(classifierRef);
-
-    // and let the super write the rest
-    super.write(out);
-  }
-
-  @Override
-  public boolean equals(Object obj)
-  {
-    if (obj == this)
-    {
-      return true;
-    }
-
-    if (obj != null && obj.getClass() == getClass())
-    {
-      CDOIDObjectLongWithClassifierImpl that = (CDOIDObjectLongWithClassifierImpl)obj;
-      return ObjectUtil.equals(classifierRef, that.classifierRef) && getLongValue() == that.getLongValue();
-    }
-
     return false;
   }
 
   @Override
   public int hashCode()
   {
-    int hashCode = classifierRef.hashCode() ^ ObjectUtil.hashCode(getLongValue());
-    return getClass().hashCode() ^ hashCode;
+    return getHashCode(value, classifierRef);
   }
 
   @Override
@@ -138,8 +110,75 @@ public class CDOIDObjectLongWithClassifierImpl extends CDOIDObjectLongImpl imple
   @Override
   protected int doCompareTo(CDOID o) throws ClassCastException
   {
-    // conversion to uri fragment is pretty heavy but afaics the compareTo
-    // is not used in a critical place.
     return toURIFragment().compareTo(o.toURIFragment());
+  }
+
+  private Object readResolve() throws ObjectStreamException
+  {
+    return create(value, classifierRef);
+  }
+
+  private static int getHashCode(long value, CDOClassifierRef classifierRef)
+  {
+    return ObjectUtil.hashCode(value) ^ classifierRef.hashCode();
+  }
+
+  public static CDOIDObjectLongWithClassifierImpl create(long value, CDOClassifierRef classifierRef)
+  {
+    return INTERNER.intern(value, classifierRef);
+  }
+
+  public static CDOIDObjectLongWithClassifierImpl create(CDODataInput in) throws IOException
+  {
+    long value = in.readLong();
+    CDOClassifierRef classifierRef = in.readCDOClassifierRef();
+    return create(value, classifierRef);
+  }
+
+  public static CDOIDObjectLongWithClassifierImpl create(String fragmentPart)
+  {
+    int index1 = fragmentPart.indexOf(CDOClassifierRef.URI_SEPARATOR);
+    int index2 = fragmentPart.indexOf(CDOClassifierRef.URI_SEPARATOR, index1 + 1);
+    if (index1 == -1 || index2 == -1)
+    {
+      throw new IllegalArgumentException("The fragment " + fragmentPart + " is not a valid fragment");
+    }
+
+    String packageURI = fragmentPart.substring(0, index1);
+    String classifierName = fragmentPart.substring(index1 + 1, index2);
+    CDOClassifierRef classifierRef = new CDOClassifierRef(packageURI, classifierName);
+
+    long value = Long.parseLong(fragmentPart.substring(index2 + 1));
+    return create(value, classifierRef);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class LongWithClassifierInterner extends Interner<CDOIDObjectLongWithClassifierImpl>
+  {
+    public synchronized CDOIDObjectLongWithClassifierImpl intern(long value, CDOClassifierRef classifierRef)
+    {
+      int hashCode = getHashCode(value, classifierRef);
+      for (Entry<CDOIDObjectLongWithClassifierImpl> entry = getEntry(hashCode); entry != null; entry = entry
+          .getNextEntry())
+      {
+        CDOIDObjectLongWithClassifierImpl id = entry.get();
+        if (id != null && id.value == value && id.classifierRef.equals(classifierRef))
+        {
+          return id;
+        }
+      }
+
+      CDOIDObjectLongWithClassifierImpl id = new CDOIDObjectLongWithClassifierImpl(value, classifierRef);
+      addEntry(createEntry(id, hashCode));
+      return id;
+    }
+
+    @Override
+    protected int hashCode(CDOIDObjectLongWithClassifierImpl id)
+    {
+      return getHashCode(id.value, id.classifierRef);
+    }
   }
 }

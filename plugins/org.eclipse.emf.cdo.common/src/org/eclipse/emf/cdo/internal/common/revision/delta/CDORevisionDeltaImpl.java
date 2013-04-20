@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.id.CDOWithID;
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
@@ -114,7 +113,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     version = sourceRevision.getVersion();
     target = CDORevisionUtil.copyRevisable(targetRevision);
 
-    compare(sourceRevision, targetRevision);
+    compare((InternalCDORevision)sourceRevision, (InternalCDORevision)targetRevision);
 
     CDORevisionData originData = sourceRevision.data();
     CDORevisionData dirtyData = targetRevision.data();
@@ -127,9 +126,9 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
 
     CDOID dirtyResourceID = dirtyData.getResourceID();
     int dirtyContainingFeatureID = dirtyData.getContainingFeatureID();
-    if (!compare(originData.getContainerID(), dirtyContainerID)
-        || !compare(originData.getContainingFeatureID(), dirtyContainingFeatureID)
-        || !compare(originData.getResourceID(), dirtyResourceID))
+    if (!compareValue(originData.getContainerID(), dirtyContainerID)
+        || !compareValue(originData.getContainingFeatureID(), dirtyContainingFeatureID)
+        || !compareValue(originData.getResourceID(), dirtyResourceID))
     {
       CDOFeatureDelta delta = new CDOContainerFeatureDeltaImpl(dirtyResourceID, dirtyContainerID,
           dirtyContainingFeatureID);
@@ -334,13 +333,12 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     }
   }
 
-  private void compare(final CDORevision originRevision, final CDORevision dirtyRevision)
+  private void compare(final InternalCDORevision originRevision, final InternalCDORevision dirtyRevision)
   {
     CDORevisionData originData = originRevision.data();
     CDORevisionData dirtyData = dirtyRevision.data();
 
-    EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
-    for (final EStructuralFeature feature : allPersistentFeatures)
+    for (final EStructuralFeature feature : originRevision.getClassInfo().getAllPersistentFeatures())
     {
       if (feature.isMany())
       {
@@ -404,7 +402,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
             @Override
             protected boolean equal(Object originValue, Object dirtyValue)
             {
-              return compare(originValue, dirtyValue);
+              return compareValue(originValue, dirtyValue);
             }
 
             private void checkNoProxies(EList<?> list, CDORevision revision)
@@ -422,8 +420,8 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
             }
           };
 
-          CDOList originList = ((InternalCDORevision)originRevision).getList(feature);
-          CDOList dirtyList = ((InternalCDORevision)dirtyRevision).getList(feature);
+          CDOList originList = originRevision.getList(feature);
+          CDOList dirtyList = dirtyRevision.getList(feature);
 
           analyzer.analyzeLists(originList, dirtyList, new NOOPList());
           if (!changes.isEmpty())
@@ -436,7 +434,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
       {
         Object originValue = originData.get(feature, 0);
         Object dirtyValue = dirtyData.get(feature, 0);
-        if (!compare(originValue, dirtyValue))
+        if (!compareValue(originValue, dirtyValue))
         {
           if (dirtyValue == null)
           {
@@ -453,7 +451,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     }
   }
 
-  private boolean compare(Object originValue, Object dirtyValue)
+  private boolean compareValue(Object originValue, Object dirtyValue)
   {
     Object origin = convertEObject(originValue);
     Object dirty = convertEObject(dirtyValue);
@@ -468,7 +466,17 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
       return false;
     }
 
-    return origin == dirty || origin.equals(dirty);
+    if (origin == dirty)
+    {
+      return true;
+    }
+
+    if (origin instanceof CDOID)
+    {
+      return false;
+    }
+
+    return origin.equals(dirty);
   }
 
   private Object convertEObject(Object value)

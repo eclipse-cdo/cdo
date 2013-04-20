@@ -64,7 +64,7 @@ public class AllTestsHibernate extends AllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsHibernate().getTestSuite("CDO Tests (Hibernate)");
+    return new AllTestsHibernate().getTestSuite();
   }
 
   @Override

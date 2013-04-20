@@ -191,12 +191,6 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
       TRACER.format("Read repositorySupportingBranches: {0}", repositorySupportingBranches); //$NON-NLS-1$
     }
 
-    boolean repositorySupportingEcore = in.readBoolean();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Read repositorySupportingEcore: {0}", repositorySupportingEcore); //$NON-NLS-1$
-    }
-
     boolean repositorySerializingCommits = in.readBoolean();
     if (TRACER.isEnabled())
     {
@@ -217,8 +211,8 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
 
     result = new OpenSessionResult(sessionID, userID, repositoryUUID, repositoryType, repositoryState, storeType,
         objectIDTypes, repositoryCreationTime, lastUpdateTime, rootResourceID, repositorySupportingAudits,
-        repositorySupportingBranches, repositorySupportingEcore, repositorySerializingCommits,
-        repositoryEnsuringReferentialIntegrity, repositoryIDGenerationLocation);
+        repositorySupportingBranches, repositorySerializingCommits, repositoryEnsuringReferentialIntegrity,
+        repositoryIDGenerationLocation);
 
     CDOPackageUnit[] packageUnits = in.readCDOPackageUnits(null);
     for (int i = 0; i < packageUnits.length; i++)

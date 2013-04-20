@@ -421,7 +421,7 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
     Optimizer optimizer = getStore().getOptimizer();
     optimizer.addTask(task);
 
-    return new Pair<Integer, Long>(branchID, branchInfo.getBaseTimeStamp());
+    return Pair.create(branchID, branchInfo.getBaseTimeStamp());
   }
 
   public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,

@@ -1,0 +1,11 @@
+Multi-line Replace
+==================
+
+for i in `find -name org.eclipse.pde.api.tools.prefs`; do sed -f sed-script $i > $i.new; mv -f $i.new $i; done
+
+sed-script
+==========
+
+1,$s/^search$/search\
+addition/
+

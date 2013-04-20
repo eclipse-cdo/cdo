@@ -20,7 +20,7 @@ public class AllTestsMEMBranchesUUIDs extends AllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsMEMBranchesUUIDs().getTestSuite(AllConfigs.class.getName());
+    return new AllTestsMEMBranchesUUIDs().getTestSuite();
   }
 
   @Override

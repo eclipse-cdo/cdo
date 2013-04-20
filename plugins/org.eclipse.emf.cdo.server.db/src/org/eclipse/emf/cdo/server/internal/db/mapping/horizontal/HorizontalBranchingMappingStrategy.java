@@ -15,10 +15,12 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.IDBPreparedStatement;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -26,8 +28,6 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -57,7 +57,7 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
   }
 
   @Override
-  public IClassMapping doCreateClassMapping(EClass eClass)
+  protected IClassMapping doCreateClassMapping(EClass eClass)
   {
     return new HorizontalBranchingClassMapping(this, eClass);
   }
@@ -95,39 +95,34 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
 
   protected String modifyListJoin(String attrTable, String listTable, String join, boolean forRawExport)
   {
-    join += " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_VERSION;
-    join += "=" + listTable + "." + CDODBSchema.LIST_REVISION_VERSION;
-    join += " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_BRANCH;
-    join += "=" + listTable + "." + CDODBSchema.LIST_REVISION_BRANCH;
+    join += " AND " + attrTable + "." + ATTRIBUTES_VERSION;
+    join += "=" + listTable + "." + LIST_REVISION_VERSION;
+    join += " AND " + attrTable + "." + ATTRIBUTES_BRANCH;
+    join += "=" + listTable + "." + LIST_REVISION_BRANCH;
     return join;
   }
 
   @Override
-  protected void rawImportReviseOldRevisions(Connection connection, IDBTable table, OMMonitor monitor)
+  protected void rawImportReviseOldRevisions(IDBConnection connection, IDBTable table, OMMonitor monitor)
   {
-    String sqlUpdate = "UPDATE " + table + " SET " + CDODBSchema.ATTRIBUTES_REVISED + "=? WHERE "
-        + CDODBSchema.ATTRIBUTES_ID + "=? AND " + CDODBSchema.ATTRIBUTES_BRANCH + "=? AND "
-        + CDODBSchema.ATTRIBUTES_VERSION + "=?";
+    String sqlUpdate = "UPDATE " + table + " SET " + ATTRIBUTES_REVISED + "=? WHERE " + ATTRIBUTES_ID + "=? AND "
+        + ATTRIBUTES_BRANCH + "=? AND " + ATTRIBUTES_VERSION + "=?";
 
-    String sqlQuery = "SELECT cdo1." + CDODBSchema.ATTRIBUTES_ID + ", cdo1." + CDODBSchema.ATTRIBUTES_BRANCH
-        + ", cdo1." + CDODBSchema.ATTRIBUTES_VERSION + ", cdo2." + CDODBSchema.ATTRIBUTES_CREATED + " FROM " + table
-        + " cdo1, " + table + " cdo2 WHERE cdo1." + CDODBSchema.ATTRIBUTES_ID + "=cdo2." + CDODBSchema.ATTRIBUTES_ID
-        + " AND cdo1." + CDODBSchema.ATTRIBUTES_BRANCH + "=cdo2." + CDODBSchema.ATTRIBUTES_BRANCH + " AND (cdo1."
-        + CDODBSchema.ATTRIBUTES_VERSION + "=cdo2." + CDODBSchema.ATTRIBUTES_VERSION + "-1 OR (cdo1."
-        + CDODBSchema.ATTRIBUTES_VERSION + "+cdo2." + CDODBSchema.ATTRIBUTES_VERSION + "=-1 AND cdo1."
-        + CDODBSchema.ATTRIBUTES_VERSION + ">cdo2." + CDODBSchema.ATTRIBUTES_VERSION + ")) AND cdo1."
-        + CDODBSchema.ATTRIBUTES_REVISED + "=0";
+    String sqlQuery = "SELECT cdo1." + ATTRIBUTES_ID + ", cdo1." + ATTRIBUTES_BRANCH + ", cdo1." + ATTRIBUTES_VERSION
+        + ", cdo2." + ATTRIBUTES_CREATED + " FROM " + table + " cdo1, " + table + " cdo2 WHERE cdo1." + ATTRIBUTES_ID
+        + "=cdo2." + ATTRIBUTES_ID + " AND cdo1." + ATTRIBUTES_BRANCH + "=cdo2." + ATTRIBUTES_BRANCH + " AND (cdo1."
+        + ATTRIBUTES_VERSION + "=cdo2." + ATTRIBUTES_VERSION + "-1 OR (cdo1." + ATTRIBUTES_VERSION + "+cdo2."
+        + ATTRIBUTES_VERSION + "=-1 AND cdo1." + ATTRIBUTES_VERSION + ">cdo2." + ATTRIBUTES_VERSION + ")) AND cdo1."
+        + ATTRIBUTES_REVISED + "=0";
 
     IIDHandler idHandler = getStore().getIDHandler();
-    PreparedStatement stmtUpdate = null;
-    PreparedStatement stmtQuery = null;
+    IDBPreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmtQuery = connection.prepareStatement(sqlQuery, ResultSet.TYPE_SCROLL_INSENSITIVE,
+        ResultSet.CONCUR_READ_ONLY, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
     {
-      stmtUpdate = connection.prepareStatement(sqlUpdate);
-      stmtQuery = connection.prepareStatement(sqlQuery, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
       resultSet = stmtQuery.executeQuery();
       int size = DBUtil.getRowCount(resultSet);
       if (size == 0)
@@ -152,6 +147,7 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
       }
 
       Async async = monitor.forkAsync(size);
+
       try
       {
         stmtUpdate.executeBatch();
@@ -175,25 +171,23 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
   }
 
   @Override
-  protected void rawImportUnreviseNewRevisions(Connection connection, IDBTable table, long fromCommitTime,
+  protected void rawImportUnreviseNewRevisions(IDBConnection connection, IDBTable table, long fromCommitTime,
       long toCommitTime, OMMonitor monitor)
   {
-    String sqlUpdate = "UPDATE " + table + " SET " + CDODBSchema.ATTRIBUTES_REVISED + "=0 WHERE "
-        + CDODBSchema.ATTRIBUTES_BRANCH + ">=0 AND " + CDODBSchema.ATTRIBUTES_CREATED + "<=" + toCommitTime + " AND "
-        + CDODBSchema.ATTRIBUTES_REVISED + ">" + toCommitTime + " AND " + CDODBSchema.ATTRIBUTES_VERSION + ">0";
+    String sql = "UPDATE " + table + " SET " + ATTRIBUTES_REVISED + "=0 WHERE " + ATTRIBUTES_BRANCH + ">=0 AND "
+        + ATTRIBUTES_CREATED + "<=" + toCommitTime + " AND " + ATTRIBUTES_REVISED + ">" + toCommitTime + " AND "
+        + ATTRIBUTES_VERSION + ">0";
 
-    PreparedStatement stmtUpdate = null;
+    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
 
     try
     {
-      stmtUpdate = connection.prepareStatement(sqlUpdate);
-
       monitor.begin();
       Async async = monitor.forkAsync();
 
       try
       {
-        stmtUpdate.executeUpdate();
+        stmt.executeUpdate();
       }
       finally
       {
@@ -206,7 +200,7 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
     }
     finally
     {
-      DBUtil.close(stmtUpdate);
+      DBUtil.close(stmt);
       monitor.done();
     }
   }

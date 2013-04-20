@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
@@ -199,7 +198,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
       assertEquals(1, lockStates.length);
       assertLockedObject(cdoCompany, lockStates[0].getLockedObject());
       assertLockOwner(tx1, lockStates[0].getWriteLockOwner());
-      assertSame(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
     }
 
     cdoCompany.cdoWriteLock().unlock();
@@ -216,7 +215,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
       assertEquals(1, lockStates.length);
       assertLockedObject(cdoCompany, lockStates[0].getLockedObject());
       assertNull(lockStates[0].getWriteLockOwner());
-      assertSame(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
     }
 
     /* Test read lock */
@@ -236,7 +235,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
       assertEquals(1, lockStates[0].getReadLockOwners().size());
       CDOLockOwner tx1Lo = CDOLockUtil.createLockOwner(tx1);
       assertEquals(true, lockStates[0].getReadLockOwners().contains(tx1Lo));
-      assertSame(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
     }
 
     cdoCompany.cdoReadLock().unlock();
@@ -252,7 +251,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
       CDOLockState[] lockStates = event.getLockStates();
       assertEquals(1, lockStates.length);
       assertEquals(0, lockStates[0].getReadLockOwners().size());
-      assertSame(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
     }
 
     /* Test write option */
@@ -270,7 +269,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
       assertEquals(1, lockStates.length);
       assertLockedObject(cdoCompany, lockStates[0].getLockedObject());
       assertLockOwner(tx1, lockStates[0].getWriteOptionOwner());
-      assertSame(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
     }
 
     cdoCompany.cdoWriteOption().unlock();
@@ -287,7 +286,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
       assertEquals(1, lockStates.length);
       assertLockedObject(cdoCompany, lockStates[0].getLockedObject());
       assertNull(lockStates[0].getWriteOptionOwner());
-      assertSame(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
     }
 
     assertEquals(0, transactionListener.getEvents().size());
@@ -330,8 +329,8 @@ public class LockingNotificationsTest extends AbstractLockingTest
     {
       controlViewListener.waitFor(1);
       e = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(0);
-      assertSame(Operation.LOCK, e.getOperation());
-      assertSame(LockType.WRITE, e.getLockType());
+      assertEquals(Operation.LOCK, e.getOperation());
+      assertEquals(LockType.WRITE, e.getLockType());
     }
 
     tx.commit();
@@ -340,7 +339,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
     {
       controlViewListener.waitFor(2);
       e = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(1);
-      assertSame(Operation.UNLOCK, e.getOperation());
+      assertEquals(Operation.UNLOCK, e.getOperation());
       assertNull(e.getLockType());
     }
 
@@ -354,8 +353,9 @@ public class LockingNotificationsTest extends AbstractLockingTest
   {
     if (lockedObject instanceof CDOIDAndBranch)
     {
-      CDOIDAndBranch idAndBranch = CDOIDUtil.createIDAndBranch(obj.cdoID(), obj.cdoView().getBranch());
-      assertEquals(idAndBranch, lockedObject);
+      CDOIDAndBranch idAndBranch = (CDOIDAndBranch)lockedObject;
+      assertEquals(obj.cdoID(), idAndBranch.getID());
+      assertEquals(obj.cdoView().getBranch().getID(), idAndBranch.getBranch().getID());
     }
     else if (lockedObject instanceof CDOID)
     {

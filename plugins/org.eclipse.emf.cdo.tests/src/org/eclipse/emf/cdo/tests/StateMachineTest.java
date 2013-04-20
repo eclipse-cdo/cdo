@@ -148,7 +148,8 @@ public class StateMachineTest extends AbstractCDOTest
     assertTransient(supplier);
     try
     {
-      commit(supplier, new CommitTransactionResult(null, BRANCH.getPoint(TIMESTAMP), CDOBranchPoint.UNSPECIFIED_DATE));
+      commit(supplier, new CommitTransactionResult(null, BRANCH.getPoint(TIMESTAMP), CDOBranchPoint.UNSPECIFIED_DATE,
+          false));
       fail("IllegalStateException expected");
     }
     catch (IllegalStateException expected)
@@ -272,7 +273,8 @@ public class StateMachineTest extends AbstractCDOTest
 
     try
     {
-      commit(supplier, new CommitTransactionResult(null, BRANCH.getPoint(TIMESTAMP), CDOBranchPoint.UNSPECIFIED_DATE));
+      commit(supplier, new CommitTransactionResult(null, BRANCH.getPoint(TIMESTAMP), CDOBranchPoint.UNSPECIFIED_DATE,
+          false));
       fail("IllegalStateException expected");
     }
     catch (IllegalStateException expected)

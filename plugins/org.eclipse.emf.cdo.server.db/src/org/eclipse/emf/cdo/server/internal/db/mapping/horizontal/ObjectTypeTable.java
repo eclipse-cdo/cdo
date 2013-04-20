@@ -20,16 +20,17 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema;
+import org.eclipse.net4j.db.IDBPreparedStatement;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -37,7 +38,6 @@ import org.eclipse.emf.ecore.EClass;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -46,15 +46,9 @@ import java.sql.Statement;
  * @author Eike Stepper
  * @since 4.0
  */
-public class ObjectTypeTable extends AbstractObjectTypeMapper
+public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappingConstants
 {
   private IDBTable table;
-
-  private IDBField idField;
-
-  private IDBField typeField;
-
-  private IDBField timeField;
 
   private String sqlDelete;
 
@@ -69,12 +63,10 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
   public final CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelect, ReuseProbability.MAX);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlSelect, ReuseProbability.MAX);
       idHandler.setCDOID(stmt, 1, id);
 
       if (DBUtil.isTracerEnabled())
@@ -104,7 +96,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -112,12 +104,10 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
   {
     IDBStore store = getMappingStrategy().getStore();
     IIDHandler idHandler = store.getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsert, ReuseProbability.MAX);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlInsert, ReuseProbability.MAX);
       idHandler.setCDOID(stmt, 1, id);
       idHandler.setCDOID(stmt, 2, getMetaDataManager().getMetaID(type, timeStamp));
       stmt.setLong(3, timeStamp);
@@ -144,19 +134,17 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
   public final void removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDelete, ReuseProbability.MAX);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlDelete, ReuseProbability.MAX);
       idHandler.setCDOID(stmt, 1, id);
 
       if (DBUtil.isTracerEnabled())
@@ -176,7 +164,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -188,7 +176,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
     try
     {
       stmt = connection.createStatement();
-      resultSet = stmt.executeQuery("SELECT MAX(" + idField + ") FROM " + table);
+      resultSet = stmt.executeQuery("SELECT MAX(" + ATTRIBUTES_ID + ") FROM " + table);
 
       if (resultSet.next())
       {
@@ -211,7 +199,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
       throws IOException
   {
-    String where = " WHERE " + timeField + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
+    String where = " WHERE " + ATTRIBUTES_CREATED + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, table, null, where);
   }
 
@@ -226,48 +214,29 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
     super.doActivate();
 
     IDBStore store = getMappingStrategy().getStore();
-    DBType idType = store.getIDHandler().getDBType();
-    int idLength = store.getIDColumnLength();
+    final DBType idType = store.getIDHandler().getDBType();
+    final int idLength = store.getIDColumnLength();
 
-    table = store.getDBSchema().addTable(CDODBSchema.CDO_OBJECTS);
-    idField = table.addField(CDODBSchema.ATTRIBUTES_ID, idType, idLength);
-    typeField = table.addField(CDODBSchema.ATTRIBUTES_CLASS, idType, idLength);
-    timeField = table.addField(CDODBSchema.ATTRIBUTES_CREATED, DBType.BIGINT);
-    table.addIndex(IDBIndex.Type.UNIQUE, idField);
-
-    IDBAdapter dbAdapter = store.getDBAdapter();
-    IDBStoreAccessor writer = store.getWriter(null);
-    Connection connection = writer.getConnection();
-    Statement statement = null;
-
-    try
+    IDBDatabase database = store.getDatabase();
+    table = database.getSchema().getTable(CDODBSchema.CDO_OBJECTS);
+    if (table == null)
     {
-      statement = connection.createStatement();
-      dbAdapter.createTable(table, statement);
-      connection.commit();
-    }
-    catch (SQLException ex)
-    {
-      connection.rollback();
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(statement);
-      writer.release();
+      database.updateSchema(new RunnableWithSchema()
+      {
+        public void run(IDBSchema schema)
+        {
+          table = schema.addTable(CDODBSchema.CDO_OBJECTS);
+          table.addField(ATTRIBUTES_ID, idType, idLength, true);
+          table.addField(ATTRIBUTES_CLASS, idType, idLength);
+          table.addField(ATTRIBUTES_CREATED, DBType.BIGINT);
+          table.addIndex(IDBIndex.Type.PRIMARY_KEY, ATTRIBUTES_ID);
+        }
+      });
     }
 
-    sqlSelect = "SELECT " + typeField + " FROM " + table + " WHERE " + idField + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-    sqlInsert = "INSERT INTO " + table + "(" + idField + "," + typeField + "," + timeField + ") VALUES (?, ?, ?)";
-    sqlDelete = "DELETE FROM " + table + " WHERE " + idField + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-  }
-
-  @Override
-  protected void doDeactivate() throws Exception
-  {
-    table = null;
-    idField = null;
-    typeField = null;
-    super.doDeactivate();
+    sqlSelect = "SELECT " + ATTRIBUTES_CLASS + " FROM " + table + " WHERE " + ATTRIBUTES_ID + "=?";
+    sqlInsert = "INSERT INTO " + table + "(" + ATTRIBUTES_ID + "," + ATTRIBUTES_CLASS + "," + ATTRIBUTES_CREATED
+        + ") VALUES (?, ?, ?)";
+    sqlDelete = "DELETE FROM " + table + " WHERE " + ATTRIBUTES_ID + "=?";
   }
 }

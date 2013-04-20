@@ -21,7 +21,7 @@ public class AllTestsObjyBranching extends ObjyDBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsObjyBranching().getTestSuite("CDO Tests (ObjectivityStore - branching mode)"); //$NON-NLS-1$
+    return new AllTestsObjyBranching().getTestSuite();
   }
 
   @Override

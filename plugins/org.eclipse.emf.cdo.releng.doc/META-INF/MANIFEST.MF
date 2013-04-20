@@ -7,8 +7,8 @@ Bundle-Vendor: Eclipse Modeling Project
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.osgi.util;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.osgi;bundle-version="[3.0.0,4.0.0)",
- org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)",
- org.eclipse.emf.ecore.xmi;bundle-version="[2.7.0,3.0.0)",
+ org.eclipse.emf.ecore;bundle-version="[2.5.0,3.0.0)",
+ org.eclipse.emf.ecore.xmi;bundle-version="[2.5.0,3.0.0)",
  org.eclipse.emf.cdo.releng.doc.supplemental;bundle-version="[1.0.0,2.0.0)";resolution:=optional
 Export-Package: org.eclipse.emf.cdo.releng.doc;version="4.1.100";x-internal:=true,
  org.eclipse.emf.cdo.releng.doc.article;version="4.1.100";x-internal:=true,

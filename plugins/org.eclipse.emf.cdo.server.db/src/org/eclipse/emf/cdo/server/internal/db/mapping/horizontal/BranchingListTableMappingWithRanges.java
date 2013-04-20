@@ -37,12 +37,9 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
@@ -51,7 +48,9 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBPreparedStatement;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
@@ -63,13 +62,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -84,7 +81,7 @@ import java.util.List;
  * @author Stefan Winkler
  * @author Lothar Werzinger
  */
-public class BranchingListTableMappingWithRanges extends BasicAbstractListTableMapping implements
+public class BranchingListTableMappingWithRanges extends AbstractBasicListTableMapping implements
     IListMappingDeltaSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, BranchingListTableMappingWithRanges.class);
@@ -130,34 +127,39 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
 
   private void initTable()
   {
+    String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
+    typeMapping = getMappingStrategy().createValueMapping(getFeature());
+
     IDBStore store = getMappingStrategy().getStore();
     DBType idType = store.getIDHandler().getDBType();
     int idLength = store.getIDColumnLength();
 
-    String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
-    table = store.getDBSchema().addTable(tableName);
-
-    IDBField[] dbFields = new IDBField[5];
-    dbFields[0] = table.addField(CDODBSchema.LIST_REVISION_ID, idType, idLength);
-    dbFields[1] = table.addField(CDODBSchema.LIST_REVISION_BRANCH, DBType.INTEGER);
-    dbFields[2] = table.addField(CDODBSchema.LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
-    dbFields[3] = table.addField(CDODBSchema.LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
-    dbFields[4] = table.addField(CDODBSchema.LIST_IDX, DBType.INTEGER);
-
-    // add field for value
-    typeMapping = getMappingStrategy().createValueMapping(getFeature());
-    typeMapping.createDBField(table, CDODBSchema.LIST_VALUE);
-
-    // add table indexes
-    for (IDBField dbField : dbFields)
+    IDBDatabase database = getMappingStrategy().getStore().getDatabase();
+    table = database.getSchema().getTable(tableName);
+    if (table == null)
     {
-      table.addIndex(Type.NON_UNIQUE, dbField);
+      table = database.getSchemaTransaction().getWorkingCopy().addTable(tableName);
+      table.addField(LIST_REVISION_ID, idType, idLength, true);
+      table.addField(LIST_REVISION_BRANCH, DBType.INTEGER, true);
+      table.addField(LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
+      table.addField(LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
+      table.addField(LIST_IDX, DBType.INTEGER, true);
+
+      // TODO think about indexes
+      table.addIndex(Type.NON_UNIQUE, LIST_REVISION_ID, LIST_REVISION_BRANCH, LIST_REVISION_VERSION_ADDED,
+          LIST_REVISION_VERSION_REMOVED, LIST_IDX);
+
+      typeMapping.createDBField(table, LIST_VALUE);
+    }
+    else
+    {
+      typeMapping.setDBField(table, LIST_VALUE);
     }
   }
 
   public Collection<IDBTable> getDBTables()
   {
-    return Arrays.asList(table);
+    return Collections.singleton(table);
   }
 
   private void initSQLStrings()
@@ -167,41 +169,41 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     // ---------------- read chunks ----------------------------
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(LIST_VALUE);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(tableName);
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_BRANCH);
+    builder.append(LIST_REVISION_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
+    builder.append(LIST_REVISION_VERSION_ADDED);
     builder.append("<=? AND ("); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NULL OR "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append(">?)"); //$NON-NLS-1$
     sqlSelectChunksPrefix = builder.toString();
 
-    sqlOrderByIndex = " ORDER BY " + CDODBSchema.LIST_IDX; //$NON-NLS-1$
+    sqlOrderByIndex = " ORDER BY " + LIST_IDX; //$NON-NLS-1$
 
     // ----------------- insert entry -----------------
     builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
     builder.append(tableName);
     builder.append("("); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append(","); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_BRANCH);
+    builder.append(LIST_REVISION_BRANCH);
     builder.append(","); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
+    builder.append(LIST_REVISION_VERSION_ADDED);
     builder.append(","); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append(","); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append(","); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(LIST_VALUE);
     builder.append(") VALUES (?, ?, ?, ?, ?, ?)"); //$NON-NLS-1$
     sqlInsertEntry = builder.toString();
 
@@ -209,16 +211,16 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_BRANCH);
+    builder.append(LIST_REVISION_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlRemoveEntry = builder.toString();
 
@@ -226,13 +228,13 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_BRANCH);
+    builder.append(LIST_REVISION_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
+    builder.append(LIST_REVISION_VERSION_ADDED);
     builder.append("=?"); //$NON-NLS-1$
     sqlDeleteEntry = builder.toString();
 
@@ -240,31 +242,31 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append("=? WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_BRANCH);
+    builder.append(LIST_REVISION_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
+    builder.append(LIST_REVISION_VERSION_ADDED);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append("=?"); //$NON-NLS-1$
     sqlUpdateIndex = builder.toString();
 
     // ----------------- get current value -----------------
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(LIST_VALUE);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_BRANCH);
+    builder.append(LIST_REVISION_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlGetValue = builder.toString();
 
@@ -272,14 +274,14 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_BRANCH);
+    builder.append(LIST_REVISION_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
+    builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlClearList = builder.toString();
   }
@@ -318,17 +320,15 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
           getFeature().getName(), revision);
     }
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
-    ResultSet resultSet = null;
+    String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
 
-    // list of chunks to be read from base revision
-    ArrayList<Pair<Integer, Integer>> toReadFromBase = null;
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.HIGH);
+    ResultSet resultSet = null;
+    ArrayList<Pair<Integer, Integer>> toReadFromBase = null; // list of chunks to be read from base revision
+
     try
     {
-      String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
-      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.HIGH);
       idHandler.setCDOID(stmt, 1, id);
       stmt.setInt(2, branchID);
       stmt.setInt(3, revision.getVersion());
@@ -348,7 +348,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
           {
             toReadFromBase = new ArrayList<Pair<Integer, Integer>>();
           }
-          toReadFromBase.add(new Pair<Integer, Integer>(currentIndex, index));
+          toReadFromBase.add(Pair.create(currentIndex, index));
 
           if (TRACER.isEnabled())
           {
@@ -375,7 +375,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
         {
           toReadFromBase = new ArrayList<Pair<Integer, Integer>>();
         }
-        toReadFromBase.add(new Pair<Integer, Integer>(currentIndex, currentIndex + valuesToRead));
+        toReadFromBase.add(Pair.create(currentIndex, currentIndex + valuesToRead));
       }
     }
     catch (SQLException ex)
@@ -385,7 +385,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
 
     // read missing values from base revision ...
@@ -430,36 +430,33 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
 
   public final void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String where)
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Reading list chunk values for feature {0}.{1} of {2}", getContainingClass().getName(), //$NON-NLS-1$
+          getFeature().getName(), chunkReader.getRevision());
+    }
+
     CDORevision revision = chunkReader.getRevision();
     CDOID id = revision.getID();
     int branchID = revision.getBranch().getID();
 
-    if (TRACER.isEnabled())
+    StringBuilder builder = new StringBuilder(sqlSelectChunksPrefix);
+    if (where != null)
     {
-      TRACER.format("Reading list chunk values for feature {0}.{1} of {2}", getContainingClass().getName(), //$NON-NLS-1$
-          getFeature().getName(), revision);
+      builder.append(" AND "); //$NON-NLS-1$
+      builder.append(where);
     }
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = chunkReader.getAccessor().getStatementCache();
-    PreparedStatement stmt = null;
-    ResultSet resultSet = null;
+    builder.append(sqlOrderByIndex);
+    String sql = builder.toString();
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = chunkReader.getAccessor().getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
+    ResultSet resultSet = null;
     IStoreChunkReader baseReader = null;
 
     try
     {
-      StringBuilder builder = new StringBuilder(sqlSelectChunksPrefix);
-      if (where != null)
-      {
-        builder.append(" AND "); //$NON-NLS-1$
-        builder.append(where);
-      }
-
-      builder.append(sqlOrderByIndex);
-
-      String sql = builder.toString();
-      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.LOW);
       idHandler.setCDOID(stmt, 1, id);
       stmt.setInt(2, branchID);
       stmt.setInt(3, revision.getVersion());
@@ -568,7 +565,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
 
     // now read missing values from base revision.
@@ -652,23 +649,21 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
    */
   public void clearList(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, int lastIndex)
   {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    // check for each index if the value exists in the current branch
+    for (int i = 0; i <= lastIndex; i++)
+    {
+      if (getValue(accessor, id, branchId, i, false) == null)
+      {
+        // if not, add a historic entry for missing ones.
+        addHistoricEntry(accessor, id, branchId, 0, newVersion, i, getValueFromBase(accessor, id, branchId, i));
+      }
+    }
+
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlClearList, ReuseProbability.HIGH);
 
     try
     {
-      // check for each index if the value exists in the current branch
-      for (int i = 0; i <= lastIndex; i++)
-      {
-        if (getValue(accessor, id, branchId, i, false) == null)
-        {
-          // if not, add a historic entry for missing ones.
-          addHistoricEntry(accessor, id, branchId, 0, newVersion, i, getValueFromBase(accessor, id, branchId, i));
-        }
-      }
-
       // clear rest of the list
-      stmt = statementCache.getPreparedStatement(sqlClearList, ReuseProbability.HIGH);
       stmt.setInt(1, newVersion);
       getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 2, id);
       stmt.setInt(3, branchId);
@@ -685,7 +680,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -952,13 +947,10 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
         int startIndex, int endIndex)
     {
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      IPreparedStatementCache statementCache = accessor.getStatementCache();
-      PreparedStatement stmt = null;
+      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
 
       try
       {
-        stmt = statementCache.getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
-
         for (int index = startIndex; index <= endIndex; ++index)
         {
           if (TRACER.isEnabled())
@@ -1031,7 +1023,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
       }
       finally
       {
-        statementCache.releasePreparedStatement(stmt);
+        DBUtil.close(stmt);
       }
     }
 
@@ -1039,13 +1031,10 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
         int startIndex, int endIndex)
     {
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      IPreparedStatementCache statementCache = accessor.getStatementCache();
-      PreparedStatement stmt = null;
+      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
 
       try
       {
-        stmt = statementCache.getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
-
         for (int index = endIndex; index >= startIndex; --index)
         {
           if (TRACER.isEnabled())
@@ -1118,27 +1107,24 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
       }
       finally
       {
-        statementCache.releasePreparedStatement(stmt);
+        DBUtil.close(stmt);
       }
     }
   }
 
   private void addEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int version, int index, Object value)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
-
     if (TRACER.isEnabled())
     {
       TRACER.format("Adding value for feature {0}.{1} index {2} of {3}:{4}v{5} : {6}", //$NON-NLS-1$
           getContainingClass().getName(), getFeature().getName(), index, id, branchId, version, value);
     }
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertEntry, ReuseProbability.HIGH);
+
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlInsertEntry, ReuseProbability.HIGH);
-
       int column = 1;
       idHandler.setCDOID(stmt, column++, id);
       stmt.setInt(column++, branchId);
@@ -1159,17 +1145,13 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
   private void addHistoricEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int versionAdded,
       int versionRemoved, int index, Object value)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
-
     if (TRACER.isEnabled())
     {
       TRACER.format(
@@ -1178,10 +1160,11 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
           value);
     }
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertEntry, ReuseProbability.HIGH);
+
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlInsertEntry, ReuseProbability.HIGH);
-
       int column = 1;
       idHandler.setCDOID(stmt, column++, id);
       stmt.setInt(column++, branchId);
@@ -1202,27 +1185,24 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
   private void removeEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, int index)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
-
     if (TRACER.isEnabled())
     {
       TRACER.format("Removing value for feature {0}.{1} index {2} of {3}:{4}v{5}", //$NON-NLS-1$
           getContainingClass().getName(), getFeature().getName(), index, id, branchId, newVersion);
     }
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDeleteEntry, ReuseProbability.HIGH);
+
     try
     {
       // Try to delete a temporary entry first
-      stmt = statementCache.getPreparedStatement(sqlDeleteEntry, ReuseProbability.HIGH);
-
       int column = 1;
       idHandler.setCDOID(stmt, column++, id);
       stmt.setInt(column++, branchId);
@@ -1249,8 +1229,8 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
       else
       {
         // no temporary entry found, so mark the entry as removed
-        statementCache.releasePreparedStatement(stmt);
-        stmt = statementCache.getPreparedStatement(sqlRemoveEntry, ReuseProbability.HIGH);
+        DBUtil.close(stmt);
+        stmt = accessor.getDBConnection().prepareStatement(sqlRemoveEntry, ReuseProbability.HIGH);
 
         column = 1;
         stmt.setInt(column++, newVersion);
@@ -1292,7 +1272,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -1315,13 +1295,11 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
   private Object getValue(IDBStoreAccessor accessor, CDOID id, int branchId, int index, boolean getFromBase)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlGetValue, ReuseProbability.HIGH);
     Object result = null;
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlGetValue, ReuseProbability.HIGH);
       int column = 1;
       idHandler.setCDOID(stmt, column++, id);
       stmt.setInt(column++, branchId);
@@ -1352,7 +1330,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
 
     return result;
@@ -1389,8 +1367,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     CDOBranchPoint base = branch.getBase();
     if (base.getBranch() == null)
     {
-      // Branch is main branch!
-      throw new IllegalArgumentException("Base of main branch is null");
+      throw new IllegalArgumentException("Base branch is null: " + branch);
     }
 
     InternalCDORevisionManager revisionManager = repository.getRevisionManager();
@@ -1408,11 +1385,11 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
 
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT l_t."); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append(LIST_REVISION_ID);
     builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(LIST_VALUE);
     builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(LIST_IDX);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(tableName);
     builder.append(" l_t, ");//$NON-NLS-1$
@@ -1421,24 +1398,23 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
     builder.append("a_t." + mainTableWhere);//$NON-NLS-1$
     builder.append(listJoin);
     builder.append(" AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_VALUE);
+    builder.append(LIST_VALUE);
     builder.append(" IN "); //$NON-NLS-1$
     builder.append(idString);
     String sql = builder.toString();
 
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Query XRefs (list): {0}", sql);
+    }
+
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
-    Statement stmt = null;
 
     try
     {
-      stmt = accessor.getConnection().createStatement();
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Query XRefs (list): {0}", sql);
-      }
-
-      resultSet = stmt.executeQuery(sql);
+      resultSet = stmt.executeQuery();
       while (resultSet.next())
       {
         CDOID sourceID = idHandler.getCDOID(resultSet, 1);

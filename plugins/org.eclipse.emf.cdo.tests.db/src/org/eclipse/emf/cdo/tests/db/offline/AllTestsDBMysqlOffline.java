@@ -39,7 +39,7 @@ public class AllTestsDBMysqlOffline extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBMysqlOffline().getTestSuite("CDO Tests (DBStore Mysql Horizontal - offline mode)");
+    return new AllTestsDBMysqlOffline().getTestSuite();
   }
 
   @Override

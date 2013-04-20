@@ -18,8 +18,7 @@ import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 
-import org.eclipse.net4j.util.collection.MoveableArrayList;
-
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -28,7 +27,7 @@ import java.util.Collection;
 /**
  * @author Simon McDuff
  */
-public class CDOListImpl extends MoveableArrayList<Object> implements InternalCDOList
+public class CDOListImpl extends BasicEList<Object> implements InternalCDOList.ConfigurableEquality
 {
   public static final CDOListFactory FACTORY = new CDOListFactory()
   {
@@ -38,9 +37,13 @@ public class CDOListImpl extends MoveableArrayList<Object> implements InternalCD
     }
   };
 
+  private static final byte FROZEN_FLAG = 1;
+
+  private static final byte USE_EQUALS_FLAG = 2;
+
   private static final long serialVersionUID = 1L;
 
-  private transient boolean frozen;
+  private transient byte flags = USE_EQUALS_FLAG;
 
   public CDOListImpl(int initialCapacity, int size)
   {
@@ -55,7 +58,10 @@ public class CDOListImpl extends MoveableArrayList<Object> implements InternalCD
   {
     CDOType type = CDOModelUtil.getType(classifier);
     int size = size();
-    InternalCDOList list = new CDOListImpl(size, 0);
+
+    CDOListImpl list = new CDOListImpl(size, 0);
+    list.setUseEquals(useEquals());
+
     for (int j = 0; j < size; j++)
     {
       Object value = this.get(j);
@@ -99,12 +105,12 @@ public class CDOListImpl extends MoveableArrayList<Object> implements InternalCD
 
   public void freeze()
   {
-    frozen = true;
+    flags |= FROZEN_FLAG;
   }
 
   private void checkFrozen()
   {
-    if (frozen)
+    if ((flags & FROZEN_FLAG) != 0)
     {
       throw new IllegalStateException("Cannot modify a frozen list");
     }
@@ -183,5 +189,23 @@ public class CDOListImpl extends MoveableArrayList<Object> implements InternalCD
   public void setWithoutFrozenCheck(int index, Object element)
   {
     super.set(index, element);
+  }
+
+  @Override
+  public final boolean useEquals()
+  {
+    return (flags & USE_EQUALS_FLAG) != 0;
+  }
+
+  public final void setUseEquals(boolean useEquals)
+  {
+    if (useEquals)
+    {
+      flags |= USE_EQUALS_FLAG;
+    }
+    else
+    {
+      flags &= ~USE_EQUALS_FLAG;
+    }
   }
 }

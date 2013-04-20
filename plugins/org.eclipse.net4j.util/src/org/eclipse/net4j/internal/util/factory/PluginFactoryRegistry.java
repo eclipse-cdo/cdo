@@ -7,10 +7,12 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus (CEA) - bug 399641: container-aware factories
  */
 package org.eclipse.net4j.internal.util.factory;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.FactoryDescriptor;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
@@ -25,10 +27,13 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
 
   public static final String EXT_POINT = "factories"; //$NON-NLS-1$
 
+  private final IManagedContainer container;
+
   private Object extensionRegistryListener;
 
-  public PluginFactoryRegistry()
+  public PluginFactoryRegistry(IManagedContainer container)
   {
+    this.container = container;
   }
 
   @Override
@@ -39,6 +44,10 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
     {
       FactoryDescriptor descriptor = (FactoryDescriptor)factory;
       factory = descriptor.createFactory();
+      if (factory != null && factory != descriptor)
+      {
+        put(factory.getKey(), factory);
+      }
     }
 
     return factory;
@@ -53,6 +62,7 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
   protected void doActivate() throws Exception
   {
     super.doActivate();
+
     try
     {
       doActivateOSGi();
@@ -77,6 +87,11 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
 
     clear();
     super.doDeactivate();
+  }
+
+  protected final IManagedContainer getManagedContainer()
+  {
+    return container;
   }
 
   private void doActivateOSGi()

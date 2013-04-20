@@ -37,14 +37,11 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
@@ -55,6 +52,8 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBPreparedStatement;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
@@ -65,7 +64,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -204,163 +202,88 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   public HorizontalBranchingClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
     super(mappingStrategy, eClass);
-
     initSQLStrings();
   }
 
   @Override
-  protected IDBField addBranchingField(IDBTable table)
+  protected IDBField addBranchField(IDBTable table)
   {
-    return table.addField(CDODBSchema.ATTRIBUTES_BRANCH, DBType.INTEGER, true);
+    return table.addField(ATTRIBUTES_BRANCH, DBType.INTEGER, true);
   }
 
   private void initSQLStrings()
   {
-    Map<EStructuralFeature, String> unsettableFields = getUnsettableFields();
-    Map<EStructuralFeature, String> listSizeFields = getListSizeFields();
-
     // ----------- Select Revision ---------------------------
     StringBuilder builder = new StringBuilder();
-
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(ATTRIBUTES_VERSION);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    builder.append(ATTRIBUTES_CREATED);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_RESOURCE);
+    builder.append(ATTRIBUTES_RESOURCE);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
+    builder.append(ATTRIBUTES_CONTAINER);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_FEATURE);
-
-    for (ITypeMapping singleMapping : getValueMappings())
-    {
-      builder.append(", "); //$NON-NLS-1$
-      builder.append(singleMapping.getField());
-    }
-
-    if (unsettableFields != null)
-    {
-      for (String fieldName : unsettableFields.values())
-      {
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(fieldName);
-      }
-    }
-
-    if (listSizeFields != null)
-    {
-      for (String fieldName : listSizeFields.values())
-      {
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(fieldName);
-      }
-    }
-
+    builder.append(ATTRIBUTES_FEATURE);
+    appendTypeMappingNames(builder, getValueMappings());
+    appendFieldNames(builder, getUnsettableFields());
+    appendFieldNames(builder, getListSizeFields());
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+    builder.append(ATTRIBUTES_BRANCH);
     builder.append("=? AND ("); //$NON-NLS-1$
     String sqlSelectAttributesPrefix = builder.toString();
-
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append("=0)"); //$NON-NLS-1$
-
     sqlSelectCurrentAttributes = builder.toString();
 
     builder = new StringBuilder(sqlSelectAttributesPrefix);
-
-    builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    builder.append(ATTRIBUTES_CREATED);
     builder.append("<=? AND ("); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append("=0 OR "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append(">=?))"); //$NON-NLS-1$
-
     sqlSelectAttributesByTime = builder.toString();
 
     builder = new StringBuilder(sqlSelectAttributesPrefix);
-
     builder.append("ABS("); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(ATTRIBUTES_VERSION);
     builder.append(")=?)"); //$NON-NLS-1$
-
     sqlSelectAttributesByVersion = builder.toString();
 
     // ----------- Insert Attributes -------------------------
     builder = new StringBuilder();
     builder.append("INSERT INTO "); //$NON-NLS-1$
     builder.append(getTable());
-
     builder.append("("); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(ATTRIBUTES_VERSION);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+    builder.append(ATTRIBUTES_BRANCH);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    builder.append(ATTRIBUTES_CREATED);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_RESOURCE);
+    builder.append(ATTRIBUTES_RESOURCE);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
+    builder.append(ATTRIBUTES_CONTAINER);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_FEATURE);
-
-    for (ITypeMapping singleMapping : getValueMappings())
-    {
-      builder.append(", "); //$NON-NLS-1$
-      builder.append(singleMapping.getField());
-    }
-
-    if (unsettableFields != null)
-    {
-      for (String fieldName : unsettableFields.values())
-      {
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(fieldName);
-      }
-    }
-
-    if (listSizeFields != null)
-    {
-      for (String fieldName : listSizeFields.values())
-      {
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(fieldName);
-      }
-    }
-
+    builder.append(ATTRIBUTES_FEATURE);
+    appendTypeMappingNames(builder, getValueMappings());
+    appendFieldNames(builder, getUnsettableFields());
+    appendFieldNames(builder, getListSizeFields());
     builder.append(") VALUES (?, ?, ?, ?, ?, ?, ?, ?"); //$NON-NLS-1$
-
-    for (int i = 0; i < getValueMappings().size(); i++)
-    {
-      builder.append(", ?"); //$NON-NLS-1$
-    }
-
-    if (unsettableFields != null)
-    {
-      for (int i = 0; i < unsettableFields.size(); i++)
-      {
-        builder.append(", ?"); //$NON-NLS-1$
-      }
-    }
-
-    if (listSizeFields != null)
-    {
-      for (int i = 0; i < listSizeFields.size(); i++)
-      {
-        builder.append(", ?"); //$NON-NLS-1$
-      }
-    }
-
+    appendTypeMappingParameters(builder, getValueMappings());
+    appendFieldParameters(builder, getUnsettableFields());
+    appendFieldParameters(builder, getListSizeFields());
     builder.append(")"); //$NON-NLS-1$
     sqlInsertAttributes = builder.toString();
 
@@ -368,40 +291,40 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append("=? WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+    builder.append(ATTRIBUTES_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append("=0"); //$NON-NLS-1$
     sqlReviseAttributes = builder.toString();
 
     // ----------- Select all unrevised Object IDs ------
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append(ATTRIBUTES_REVISED);
     builder.append("=0"); //$NON-NLS-1$
     sqlSelectAllObjectIDs = builder.toString();
 
     // ----------- Select all revisions (for handleRevision) ---
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(ATTRIBUTES_VERSION);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+    builder.append(ATTRIBUTES_BRANCH);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     sqlSelectForHandle = builder.toString();
 
     // ----------- Select all revisions (for handleRevision) ---
     builder = new StringBuilder("SELECT DISTINCT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
@@ -411,30 +334,28 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+    builder.append(ATTRIBUTES_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(ATTRIBUTES_VERSION);
     builder.append("=?"); //$NON-NLS-1$
     sqlRawDeleteAttributes = builder.toString();
   }
 
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
-    boolean success;
-
     long timeStamp = revision.getTimeStamp();
     int branchID = revision.getBranch().getID();
+
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = null;
 
     try
     {
       if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
       {
-        stmt = statementCache.getPreparedStatement(sqlSelectAttributesByTime, ReuseProbability.MEDIUM);
+        stmt = accessor.getDBConnection().prepareStatement(sqlSelectAttributesByTime, ReuseProbability.MEDIUM);
         idHandler.setCDOID(stmt, 1, revision.getID());
         stmt.setInt(2, branchID);
         stmt.setLong(3, timeStamp);
@@ -442,7 +363,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       }
       else
       {
-        stmt = statementCache.getPreparedStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
+        stmt = accessor.getDBConnection().prepareStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
         idHandler.setCDOID(stmt, 1, revision.getID());
         stmt.setInt(2, branchID);
       }
@@ -453,11 +374,11 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
 
     // Read singleval-attribute table always (even without modeled attributes!)
-    success = readValuesFromStatement(stmt, revision, accessor);
+    boolean success = readValuesFromStatement(stmt, revision, accessor);
 
     // Read multival tables only if revision exists
     if (success && revision.getVersion() >= CDOBranchVersion.FIRST_VERSION)
@@ -471,13 +392,12 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   public boolean readRevisionByVersion(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectAttributesByVersion,
+        ReuseProbability.HIGH);
     boolean success;
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlSelectAttributesByVersion, ReuseProbability.HIGH);
       idHandler.setCDOID(stmt, 1, revision.getID());
       stmt.setInt(2, revision.getBranch().getID());
       stmt.setInt(3, revision.getVersion());
@@ -491,7 +411,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
 
     // Read multival tables only if revision exists
@@ -503,7 +423,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     return success;
   }
 
-  public PreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name,
+  public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name,
       boolean exactMatch, CDOBranchPoint branchPoint)
   {
     EStructuralFeature nameFeature = EresourcePackage.eINSTANCE.getCDOResourceNode_Name();
@@ -519,15 +439,15 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(ATTRIBUTES_ID);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(ATTRIBUTES_VERSION);
     builder.append(">0 AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+    builder.append(ATTRIBUTES_BRANCH);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
+    builder.append(ATTRIBUTES_CONTAINER);
     builder.append("=? AND "); //$NON-NLS-1$
     builder.append(nameValueMapping.getField());
     if (name == null)
@@ -543,28 +463,26 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append("=0)"); //$NON-NLS-1$
     }
     else
     {
-      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+      builder.append(ATTRIBUTES_CREATED);
       builder.append("<=? AND ("); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append("=0 OR "); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append(">=?))"); //$NON-NLS-1$
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = accessor.getDBConnection()
+        .prepareStatement(builder.toString(), ReuseProbability.MEDIUM);
 
     try
     {
       int column = 1;
-
-      stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.MEDIUM);
       stmt.setInt(column++, branchID);
       idHandler.setCDOID(stmt, column++, folderId);
 
@@ -589,33 +507,30 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     catch (SQLException ex)
     {
-      statementCache.releasePreparedStatement(stmt); // only release on error
+      DBUtil.close(stmt); // only release on error
       throw new DBException(ex);
     }
   }
 
-  public PreparedStatement createObjectIDStatement(IDBStoreAccessor accessor)
+  public IDBPreparedStatement createObjectIDStatement(IDBStoreAccessor accessor)
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Created ObjectID Statement : {0}", sqlSelectAllObjectIDs); //$NON-NLS-1$
     }
 
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    return statementCache.getPreparedStatement(sqlSelectAllObjectIDs, ReuseProbability.HIGH);
+    return accessor.getDBConnection().prepareStatement(sqlSelectAllObjectIDs, ReuseProbability.HIGH);
   }
 
   @Override
   protected final void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH);
 
     try
     {
       int column = 1;
-      stmt = statementCache.getPreparedStatement(sqlInsertAttributes, ReuseProbability.HIGH);
       idHandler.setCDOID(stmt, column++, revision.getID());
       stmt.setInt(column++, revision.getVersion());
       stmt.setInt(column++, revision.getBranch().getID());
@@ -647,7 +562,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         mapping.setValueFromRevision(stmt, column++, revision);
       }
 
-      Map<EStructuralFeature, String> listSizeFields = getListSizeFields();
+      Map<EStructuralFeature, IDBField> listSizeFields = getListSizeFields();
       if (listSizeFields != null)
       {
         // isSetCol now points to the first listTableSize-column
@@ -668,7 +583,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -677,13 +592,10 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       OMMonitor mon)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlInsertAttributes, ReuseProbability.HIGH);
-
       int column = 1;
       idHandler.setCDOID(stmt, column++, id);
       stmt.setInt(column++, -version); // cdo_version
@@ -707,7 +619,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         mapping.setDefaultValue(stmt, column++);
       }
 
-      Map<EStructuralFeature, String> listSizeFields = getListSizeFields();
+      Map<EStructuralFeature, IDBField> listSizeFields = getListSizeFields();
       if (listSizeFields != null)
       {
         // list size columns begin after isSet-columns
@@ -727,20 +639,20 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
   @Override
   protected void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version, OMMonitor fork)
   {
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlRawDeleteAttributes,
+        ReuseProbability.HIGH);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlRawDeleteAttributes, ReuseProbability.HIGH);
-      getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, id);
+      idHandler.setCDOID(stmt, 1, id);
       stmt.setInt(2, branch.getID());
       stmt.setInt(3, version);
       DBUtil.update(stmt, false);
@@ -751,7 +663,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -759,17 +671,13 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   protected void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long revised)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlReviseAttributes, ReuseProbability.HIGH);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sqlReviseAttributes, ReuseProbability.HIGH);
-
       stmt.setLong(1, revised);
       idHandler.setCDOID(stmt, 2, id);
       stmt.setInt(3, branch.getID());
-
       DBUtil.update(stmt, false); // No row affected if old revision from other branch!
     }
     catch (SQLException e)
@@ -778,7 +686,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -885,7 +793,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     {
       // TODO: Prepare this string literal
       builder.append(" WHERE "); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+      builder.append(ATTRIBUTES_BRANCH);
       builder.append("=?"); //$NON-NLS-1$
 
       whereAppend = true;
@@ -899,7 +807,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
           builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
-          builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+          builder.append(ATTRIBUTES_CREATED);
           builder.append("=?"); //$NON-NLS-1$
           timeParameters = 1;
         }
@@ -909,17 +817,17 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
         if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
-          builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+          builder.append(ATTRIBUTES_CREATED);
           builder.append("<=? AND ("); //$NON-NLS-1$
-          builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+          builder.append(ATTRIBUTES_REVISED);
           builder.append("=0 OR "); //$NON-NLS-1$
-          builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+          builder.append(ATTRIBUTES_REVISED);
           builder.append(">=?)"); //$NON-NLS-1$
           timeParameters = 2;
         }
         else
         {
-          builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+          builder.append(ATTRIBUTES_REVISED);
           builder.append("="); //$NON-NLS-1$
           builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
         }
@@ -931,14 +839,11 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     CDOBranchManager branchManager = repository.getBranchManager();
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(), ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     try
     {
-      stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.LOW);
-
       int column = 1;
       if (branch != null)
       {
@@ -983,7 +888,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -1004,30 +909,27 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         builder.append(" OR "); //$NON-NLS-1$
       }
 
-      builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+      builder.append(ATTRIBUTES_BRANCH);
       builder.append("=? AND "); //$NON-NLS-1$
 
-      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+      builder.append(ATTRIBUTES_CREATED);
       builder.append(">=?"); //$NON-NLS-1$
       builder.append(" AND ("); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append("<=? OR "); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append("="); //$NON-NLS-1$
       builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
       builder.append(")"); //$NON-NLS-1$
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(), ReuseProbability.LOW);
     ResultSet resultSet = null;
-
     Set<CDOID> result = new HashSet<CDOID>();
 
     try
     {
-      stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.LOW);
       int column = 1;
       for (CDOChangeSetSegment segment : segments)
       {
@@ -1052,7 +954,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -1060,7 +962,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   protected String getListXRefsWhere(QueryXRefsContext context)
   {
     StringBuilder builder = new StringBuilder();
-    builder.append(CDODBSchema.ATTRIBUTES_BRANCH);
+    builder.append(ATTRIBUTES_BRANCH);
     builder.append("=");
     builder.append(context.getBranch().getID());
     builder.append(" AND (");
@@ -1068,18 +970,18 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     long timeStamp = context.getTimeStamp();
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append("=0)"); //$NON-NLS-1$
     }
     else
     {
-      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+      builder.append(ATTRIBUTES_CREATED);
       builder.append("<=");
       builder.append(timeStamp);
       builder.append(" AND ("); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append("=0 OR "); //$NON-NLS-1$
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(ATTRIBUTES_REVISED);
       builder.append(">=");
       builder.append(timeStamp);
       builder.append("))"); //$NON-NLS-1$

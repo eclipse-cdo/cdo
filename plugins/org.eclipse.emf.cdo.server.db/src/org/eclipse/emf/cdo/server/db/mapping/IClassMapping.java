@@ -35,7 +35,7 @@ import java.util.Set;
 
 /**
  * Basic interface for class mappings.
- * 
+ *
  * @author Eike Stepper
  * @author Stefan Winkler
  * @since 2.0
@@ -49,7 +49,7 @@ public interface IClassMapping
 
   /**
    * Returns all DB tables which are used by this class and all its contained features.
-   * 
+   *
    * @return a collection of all tables of this class and all its contained features.
    * @since 3.0
    */
@@ -57,7 +57,7 @@ public interface IClassMapping
 
   /**
    * Get the mapping of the many-valued feature.
-   * 
+   *
    * @param feature
    *          the feature for which the mapping should be returned. <code>feature.isMany()</code> has to be
    *          <code>true</code>.
@@ -79,7 +79,7 @@ public interface IClassMapping
    * Read a revision. The branch and timestamp to be read are derived from the branchPoint which is set to the Revision.
    * Note that non-audit stores only support {@link CDOBranchPoint#UNSPECIFIED_DATE} and non-branching stores only
    * support the main branch.
-   * 
+   *
    * @param accessor
    *          the accessor to use.
    * @param revision
@@ -95,7 +95,7 @@ public interface IClassMapping
 
   /**
    * Write the revision data to the database.
-   * 
+   *
    * @param accessor
    *          the accessor to use.
    * @param revision
@@ -113,7 +113,7 @@ public interface IClassMapping
 
   /**
    * Detaches (deletes) a CDO object leaving a "ghost" revision behind.
-   * 
+   *
    * @param accessor
    *          the accessor to use.
    * @param id
@@ -131,7 +131,7 @@ public interface IClassMapping
 
   /**
    * Create a prepared statement which returns all IDs of instances of the corresponding class.
-   * 
+   *
    * @param accessor
    *          the accessor to use to create the statement
    * @return the prepared statement ready to be executed using <code>result.executeQuery()</code>.
@@ -141,7 +141,7 @@ public interface IClassMapping
 
   /**
    * Create a prepared statement which returns all IDs of instances of the corresponding class.
-   * 
+   *
    * @param accessor
    *          the accessor to use to create the statement
    * @param folderId
@@ -171,7 +171,7 @@ public interface IClassMapping
    * <li>The <code>timeStamp</code> parameter is {@link CDOBranchPoint#UNSPECIFIED_DATE} or equal to
    * <code>revision.getTimeStamp()</code>.
    * </ul>
-   * 
+   *
    * @see IMappingStrategy#handleRevisions(IDBStoreAccessor, org.eclipse.emf.ecore.EClass, CDOBranch, long, boolean,
    *      CDORevisionHandler)
    * @since 4.0
@@ -182,7 +182,7 @@ public interface IClassMapping
   /**
    * Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.
    * DetachedCDORevisions must also be considered!
-   * 
+   *
    * @see IStoreAccessor#readChangeSet(OMMonitor, CDOChangeSetSegment...)
    * @since 3.0
    */
@@ -190,7 +190,7 @@ public interface IClassMapping
 
   /**
    * Retrieve cross-references from DB
-   * 
+   *
    * @param idString
    *          a string of the form "(id1, id2, id3, ...)" which can be used directly in SQL to form the where-part
    *          "SELECT * FROM foobar WHERE foobar.target IN [idString]".

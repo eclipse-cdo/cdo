@@ -20,54 +20,36 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.IObjectActionDelegate;
-import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPage;
+
+import java.util.List;
 
 /**
  * @author Eike Stepper
  */
-public abstract class MergeAction implements IObjectActionDelegate
+public abstract class MergeAction extends AbstractAction<CDOTransaction>
 {
   private final boolean allowTimeStamp;
 
-  private IWorkbenchPart targetPart;
-
-  private CDOTransaction leftView;
-
   public MergeAction(boolean allowTimeStamp)
   {
+    super(CDOTransaction.class);
     this.allowTimeStamp = allowTimeStamp;
   }
 
-  public void setActivePart(IAction action, IWorkbenchPart targetPart)
+  @Override
+  protected void run(IAction action, List<CDOTransaction> targets)
   {
-    this.targetPart = targetPart;
-  }
-
-  public void selectionChanged(IAction action, ISelection selection)
-  {
-    leftView = null;
-    if (selection instanceof IStructuredSelection)
+    if (targets.size() == 1)
     {
-      Object selectedElement = ((IStructuredSelection)selection).getFirstElement();
-      if (selectedElement instanceof CDOTransaction)
-      {
-        leftView = (CDOTransaction)selectedElement;
-      }
-    }
-  }
+      IWorkbenchPage page = getTargetPart().getSite().getPage();
+      CDOTransaction leftView = targets.get(0);
+      CDOSession session = leftView.getSession();
 
-  public void run(IAction action)
-  {
-    if (leftView != null)
-    {
-      SelectBranchPointDialog dialog = new SelectBranchPointDialog(targetPart.getSite().getPage(),
-          leftView.getSession(), leftView, allowTimeStamp);
+      SelectBranchPointDialog dialog = new SelectBranchPointDialog(page, session, leftView, allowTimeStamp);
       if (dialog.open() == SelectBranchPointDialog.OK)
       {
-        CDOView rightView = openView(dialog.getBranchPoint());
+        CDOView rightView = openView(session, dialog.getBranchPoint());
         CDOView[] originView = { null };
 
         try
@@ -86,9 +68,8 @@ public abstract class MergeAction implements IObjectActionDelegate
     }
   }
 
-  private CDOView openView(CDOBranchPoint branchPoint)
+  private CDOView openView(CDOSession session, CDOBranchPoint branchPoint)
   {
-    CDOSession session = leftView.getSession();
     if (branchPoint.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
     {
       return session.openTransaction(branchPoint.getBranch());

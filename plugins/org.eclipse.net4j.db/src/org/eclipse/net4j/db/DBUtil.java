@@ -11,14 +11,20 @@
 package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBNamedElement;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.internal.db.DBDatabase;
 import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 import org.eclipse.net4j.internal.db.bundle.OM;
-import org.eclipse.net4j.spi.db.DBSchema;
+import org.eclipse.net4j.internal.db.ddl.DBIndex;
+import org.eclipse.net4j.internal.db.ddl.DBNamedElement;
+import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -26,6 +32,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import javax.sql.DataSource;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
@@ -36,8 +43,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A utility class with various static factory and convenience methods.
@@ -46,6 +55,12 @@ import java.util.Map;
  */
 public final class DBUtil
 {
+  /**
+   * @since 4.2
+   */
+  public static final int MAX_BATCH_SIZE = Integer.parseInt(OMPlatform.INSTANCE.getProperty(
+      "org.eclipse.net4j.db.MAX_BATCH_SIZE", "2000"));
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SQL, DBUtil.class);
 
   private DBUtil()
@@ -135,9 +150,201 @@ public final class DBUtil
     }
   }
 
+  /**
+   * @since 4.2
+   */
+  public static String dumpToString(IDBNamedElement namedElement)
+  {
+    return ((DBNamedElement)namedElement).dumpToString();
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static void dump(IDBNamedElement namedElement)
+  {
+    ((DBNamedElement)namedElement).dump();
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static void dump(IDBNamedElement namedElement, Writer writer) throws IOException
+  {
+    ((DBNamedElement)namedElement).dump(writer);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static IDBDatabase openDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName)
+  {
+    return openDatabase(adapter, connectionProvider, schemaName, false);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static IDBDatabase openDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider,
+      String schemaName, boolean fixNullableIndexColumns)
+  {
+    return new DBDatabase((DBAdapter)adapter, connectionProvider, schemaName, fixNullableIndexColumns);
+  }
+
+  // /**
+  // * @since 4.2
+  // */
+  // public static <T> T updateSchema(IDBConnectionProvider connectionProvider, RunnableWithConnection<T> runnable)
+  // {
+  // return execute(connectionProvider, new RunnableWithConnection<T>()
+  // {
+  // public T run(Connection connection) throws SQLException
+  // {
+  // return null;
+  // }
+  // });
+  // }
+  //
+  // /**
+  // * @since 4.2
+  // */
+  // public static <T> T updateSchema(Connection connection, RunnableWithConnection<T> runnable)
+  // {
+  // DBConnection dbConnection = null;
+  //
+  // try
+  // {
+  // if (connection instanceof DBConnection)
+  // {
+  // dbConnection = (DBConnection)connection;
+  // dbConnection.getDatabase().beginSchemaAccess(true);
+  // }
+  //
+  // return runnable.run(connection);
+  // }
+  // catch (SQLException ex)
+  // {
+  // throw new DBException(ex);
+  // }
+  // finally
+  // {
+  // if (dbConnection != null)
+  // {
+  //
+  // }
+  // }
+  // }
+
   public static IDBSchema createSchema(String name)
   {
-    return new DBSchema(name);
+    return new org.eclipse.net4j.internal.db.ddl.DBSchema(name);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static void readSchema(IDBAdapter adapter, Connection connection, IDBSchema schema)
+  {
+    adapter.readSchema(connection, schema);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static IDBSchema readSchema(IDBAdapter adapter, Connection connection, String name)
+  {
+    return readSchema(adapter, connection, name, false);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static IDBSchema readSchema(IDBAdapter adapter, Connection connection, String name,
+      boolean fixNullableIndexColumns)
+  {
+    IDBSchema schema = new org.eclipse.net4j.internal.db.ddl.DBSchema(name);
+
+    if (fixNullableIndexColumns)
+    {
+      DBIndex.FIX_NULLABLE_INDEX_COLUMNS.set(true);
+    }
+
+    try
+    {
+      readSchema(adapter, connection, schema);
+    }
+    finally
+    {
+      if (fixNullableIndexColumns)
+      {
+        try
+        {
+          Set<IDBField> nullableIndexFields = DBIndex.NULLABLE_INDEX_FIELDS.get();
+          if (nullableIndexFields != null && !nullableIndexFields.isEmpty())
+          {
+            fixNullableIndexFields(adapter, connection, nullableIndexFields);
+          }
+        }
+        finally
+        {
+          DBIndex.NULLABLE_INDEX_FIELDS.remove();
+          DBIndex.FIX_NULLABLE_INDEX_COLUMNS.remove();
+        }
+      }
+    }
+
+    return schema;
+  }
+
+  private static void fixNullableIndexFields(IDBAdapter adapter, Connection connection,
+      Set<IDBField> nullableIndexFields)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("The internal schema migration has fixed the following nullable index columns:");
+    builder.append(StringUtil.NL);
+
+    boolean autoCommit = false;
+    Statement statement = null;
+
+    try
+    {
+      autoCommit = setAutoCommit(connection, false);
+      statement = connection.createStatement();
+
+      for (IDBField field : nullableIndexFields)
+      {
+        field.setNotNull(true);
+
+        String sql = adapter.sqlModifyField(field);
+        statement.execute(sql);
+
+        builder.append("- ");
+        builder.append(sql);
+        builder.append(StringUtil.NL);
+      }
+
+      connection.commit();
+      OM.LOG.info(builder.toString());
+    }
+    catch (SQLException ex)
+    {
+      OM.LOG.error(ex);
+      rollback(connection);
+      throw new DBException(ex);
+    }
+    finally
+    {
+      close(statement);
+      setAutoCommit(connection, autoCommit);
+    }
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static IDBSchema copySchema(IDBSchema source)
+  {
+    return new org.eclipse.net4j.internal.db.ddl.DBSchema(source);
   }
 
   public static DataSource createDataSource(Map<Object, Object> properties)
@@ -168,67 +375,15 @@ public final class DBUtil
   }
 
   /**
-   * Can only be used when Eclipse is running. In standalone scenarios create the adapter instance by directly calling
-   * the constructor of the adapter class.
+   * Retrieves an {@link IDBAdapter adapter} from the {@link IDBAdapter#REGISTRY adapter registry}.
+   * <p>
+   * If Eclipse is running adapters are automatically created from descriptors that are contributed to the extension point <code>org.eclipse.net4j.db.dbAdapters</code>.
+   * <p>
+   * In standalone scenarios the needed adapter instances must be registered with the {@link IDBAdapter#REGISTRY adapter registry} manually.
    */
   public static IDBAdapter getDBAdapter(String adapterName)
   {
     return IDBAdapter.REGISTRY.get(adapterName);
-  }
-
-  public static Exception close(Connection connection)
-  {
-    if (connection != null)
-    {
-      try
-      {
-        // Only for connections with autoCommit = false, we try a rollback
-        // first to clear any open transactions.
-        if (!connection.getAutoCommit())
-        {
-          rollback(connection);
-        }
-
-        connection.close();
-      }
-      catch (Exception ex)
-      {
-        OM.LOG.error(ex);
-        return ex;
-      }
-    }
-
-    return null;
-  }
-
-  private static void rollback(Connection connection)
-  {
-    try
-    {
-      connection.rollback();
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-    }
-  }
-
-  public static Exception close(Statement statement)
-  {
-    if (statement != null)
-    {
-      try
-      {
-        statement.close();
-      }
-      catch (Exception ex)
-      {
-        OM.LOG.error(ex);
-        return ex;
-      }
-    }
-
-    return null;
   }
 
   public static Exception close(ResultSet resultSet)
@@ -261,15 +416,111 @@ public final class DBUtil
     return null;
   }
 
+  public static Exception close(Statement statement)
+  {
+    if (statement != null)
+    {
+      try
+      {
+        statement.close();
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+        return ex;
+      }
+    }
+
+    return null;
+  }
+
+  public static Exception close(Connection connection)
+  {
+    if (connection != null)
+    {
+      try
+      {
+        // Only for connections with autoCommit = false, we try a rollback
+        // first to clear any open transactions.
+        if (!connection.getAutoCommit())
+        {
+          rollback(connection);
+        }
+
+        connection.close();
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+        return ex;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static boolean setAutoCommit(Connection connection, boolean autoCommit)
+  {
+    try
+    {
+      if (connection.getAutoCommit() != autoCommit)
+      {
+        connection.setAutoCommit(autoCommit);
+        return !autoCommit;
+      }
+
+      return autoCommit;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+  }
+
+  private static void rollback(Connection connection)
+  {
+    try
+    {
+      connection.rollback();
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
+  }
+
   /**
    * @since 3.0
+   * @deprecated As of 4.2 use {@link #getAllSchemaNames(Connection)}.
    */
+  @Deprecated
   public static List<String> getAllSchemaTableNames(Connection connection)
+  {
+    return getAllSchemaNames(connection);
+  }
+
+  /**
+   * @since 3.0
+   * @deprecated As of 4.2 use {@link #getAllSchemaNames(DatabaseMetaData)}.
+   */
+  @Deprecated
+  public static List<String> getAllSchemaTableNames(DatabaseMetaData metaData)
+  {
+    return new ArrayList<String>(getAllSchemaNames(metaData));
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static List<String> getAllSchemaNames(Connection connection)
   {
     try
     {
       DatabaseMetaData metaData = connection.getMetaData();
-      return getAllSchemaTableNames(metaData);
+      return new ArrayList<String>(getAllSchemaNames(metaData));
     }
     catch (SQLException ex)
     {
@@ -278,15 +529,15 @@ public final class DBUtil
   }
 
   /**
-   * @since 3.0
+   * @since 4.2
    */
-  public static List<String> getAllSchemaTableNames(DatabaseMetaData metaData)
+  public static Set<String> getAllSchemaNames(DatabaseMetaData metaData)
   {
     ResultSet schemas = null;
 
     try
     {
-      List<String> names = new ArrayList<String>();
+      Set<String> names = new HashSet<String>();
       schemas = metaData.getSchemas();
       while (schemas.next())
       {
@@ -317,7 +568,7 @@ public final class DBUtil
       if (dbName != null)
       {
         dbName = dbName.toUpperCase();
-        List<String> schemaNames = getAllSchemaTableNames(metaData);
+        Set<String> schemaNames = getAllSchemaNames(metaData);
         if (!schemaNames.contains(dbName))
         {
           dbName = null;
@@ -328,7 +579,6 @@ public final class DBUtil
       while (tables.next())
       {
         String name = tables.getString(3);
-        // System.out.println(tables.getString(2) + "." + name);
         names.add(name);
       }
 
@@ -345,37 +595,6 @@ public final class DBUtil
   }
 
   /**
-   * @since 4.2
-   */
-  public static void createSchema(DataSource dataSource, String name, boolean dropIfExists)
-  {
-    Connection conn = null;
-    Statement stmt = null;
-
-    try
-    {
-      conn = dataSource.getConnection();
-      stmt = conn.createStatement();
-
-      if (dropIfExists)
-      {
-        stmt.execute("DROP SCHEMA IF EXISTS " + name);
-      }
-
-      stmt.execute("CREATE SCHEMA IF NOT EXISTS " + name);
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      close(stmt);
-      close(conn);
-    }
-  }
-
-  /**
    * @since 4.0
    */
   public static List<Exception> dropAllTables(Connection connection, String dbName)
@@ -386,7 +605,7 @@ public final class DBUtil
     try
     {
       statement = connection.createStatement();
-      for (String tableName : DBUtil.getAllTableNames(connection, dbName))
+      for (String tableName : getAllTableNames(connection, dbName))
       {
         String sql = "DROP TABLE " + tableName; //$NON-NLS-1$
         trace(sql);
@@ -407,7 +626,7 @@ public final class DBUtil
     }
     finally
     {
-      DBUtil.close(statement);
+      close(statement);
     }
 
     return exceptions;
@@ -540,6 +759,56 @@ public final class DBUtil
   }
 
   /**
+   * @since 4.2
+   */
+  public static <T> T execute(IDBConnectionProvider connectionProvider, RunnableWithConnection<T> runnable)
+  {
+    Connection connection = null;
+
+    try
+    {
+      connection = connectionProvider.getConnection();
+      return runnable.run(connection);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      close(connection);
+    }
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static void execute(Connection connection, CharSequence sql)
+  {
+    String string = sql.toString();
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(string);
+    }
+
+    Statement statement = null;
+
+    try
+    {
+      statement = connection.createStatement();
+      statement.execute(string);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      close(statement);
+    }
+  }
+
+  /**
    * @since 4.1
    */
   public static void executeBatch(PreparedStatement stmt, int counter)
@@ -618,7 +887,7 @@ public final class DBUtil
    */
   public static int update(PreparedStatement stmt, boolean exactlyOne) throws SQLException
   {
-    if (DBUtil.isTracerEnabled())
+    if (isTracerEnabled())
     {
       trace(stmt.toString());
     }
@@ -1001,6 +1270,7 @@ public final class DBUtil
 
       Object[] values = handler != null ? new Object[fields.length] : null;
 
+      int batchSize = 0;
       for (int row = 0; row < size; row++)
       {
         for (int i = 0; i < fields.length; i++)
@@ -1022,17 +1292,17 @@ public final class DBUtil
         }
 
         monitor.worked();
+
+        if (++batchSize == MAX_BATCH_SIZE)
+        {
+          executeBatch(statement, batchSize, monitor);
+          batchSize = 0;
+        }
       }
 
-      Async async = monitor.forkAsync(size);
-
-      try
+      if (batchSize != 0)
       {
-        statement.executeBatch();
-      }
-      finally
-      {
-        async.stop();
+        executeBatch(statement, batchSize, monitor);
       }
 
       successful = true;
@@ -1062,6 +1332,20 @@ public final class DBUtil
     }
   }
 
+  private static void executeBatch(PreparedStatement statement, int batchSize, OMMonitor monitor) throws SQLException
+  {
+    Async async = monitor.forkAsync(batchSize);
+
+    try
+    {
+      statement.executeBatch();
+    }
+    finally
+    {
+      async.stop();
+    }
+  }
+
   /**
    * @since 3.0
    */
@@ -1084,11 +1368,20 @@ public final class DBUtil
   }
 
   /**
+   * @since 4.2
+   * @author Eike Stepper
+   */
+  public interface RunnableWithConnection<T>
+  {
+    public T run(Connection connection) throws SQLException;
+  }
+
+  /**
    * Call-back interface with a {@link #done(boolean) method} that is called <i>after</i>
    * a number of table rows have been handled by one of the subtypes of this interface.
    *
-   * @author Eike Stepper
    * @since 4.1
+   * @author Eike Stepper
    */
   public interface RowHandler
   {
@@ -1099,8 +1392,8 @@ public final class DBUtil
    * A {@link RowHandler row handler} with a {@link #handleRow(ExtendedDataOutput, Connection, IDBField[], Object[]) method}
    * that is called once per row serialized within {@link DBUtil#serializeTable(ExtendedDataOutput, Connection, IDBTable, String, String, SerializeRowHandler) DBUtil.serializeTable()}.
    *
-   * @author Eike Stepper
    * @since 4.1
+   * @author Eike Stepper
    */
   public interface SerializeRowHandler extends RowHandler
   {
@@ -1112,8 +1405,8 @@ public final class DBUtil
    * A {@link RowHandler row handler} with a {@link #handleRow(ExtendedDataInput, Connection, IDBField[], Object[]) method}
    * that is called once per row deserialized within {@link DBUtil#deserializeTable(ExtendedDataInput, Connection, IDBTable, OMMonitor, DeserializeRowHandler) DBUtil.deserializeTable()}.
    *
-   * @author Eike Stepper
    * @since 4.1
+   * @author Eike Stepper
    */
   public interface DeserializeRowHandler extends RowHandler
   {

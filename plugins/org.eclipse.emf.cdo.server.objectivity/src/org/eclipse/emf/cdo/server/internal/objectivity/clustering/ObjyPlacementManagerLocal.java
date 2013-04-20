@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.objectivity.clustering;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStore;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyScope;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySession;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.OBJYCDOIDUtil;
-import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 
@@ -29,13 +28,12 @@ import org.eclipse.emf.ecore.EClass;
 
 import com.objy.db.app.ooId;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /***
  * This class will attempt to cluster objects with their container, or with a resource. It should be able to use the
  * global clustering which will use model elements to locate where an object will end up.
- * 
+ *
  * @author Ibrahim Sallam
  */
 public class ObjyPlacementManagerLocal
@@ -66,13 +64,13 @@ public class ObjyPlacementManagerLocal
     this.objySession = objySession;
     this.commitContext = commitContext;
     // first put them in a map for easy lookup and processing....
-    newObjectsMap = new HashMap<CDOID, InternalCDORevision>();
+    newObjectsMap = CDOIDUtil.createMap();
     for (InternalCDORevision revision : commitContext.getNewObjects())
     {
       newObjectsMap.put(revision.getID(), revision);
     }
 
-    idMapper = new HashMap<CDOID, CDOID>();
+    idMapper = CDOIDUtil.createMap();
 
     this.newObjyObjectsMap = newObjyObjectsMap;
   }
@@ -218,11 +216,7 @@ public class ObjyPlacementManagerLocal
     // if (OBJYCDOIDUtil.isValidObjyId(id))
     // oid = OBJYCDOIDUtil.getooId(id);
 
-    if (id instanceof AbstractCDOIDLong)
-    {
-      oid = OBJYCDOIDUtil.getooId(id);
-    }
-    else if (id instanceof CDOIDTemp)
+    if (id.isTemporary())
     {
       // see if we've seen it before
       CDOID nearId = idMapper.get(id);
@@ -239,6 +233,10 @@ public class ObjyPlacementManagerLocal
           oid = createObjectAndAddToMapping(containerRevision).ooId();
         }
       }
+    }
+    else
+    {
+      oid = OBJYCDOIDUtil.getooId(id);
     }
 
     return oid;

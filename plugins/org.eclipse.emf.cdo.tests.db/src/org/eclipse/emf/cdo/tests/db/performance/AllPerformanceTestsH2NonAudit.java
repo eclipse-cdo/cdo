@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Stefan Winkler - initial API and implementation
  */
@@ -24,7 +24,7 @@ public class AllPerformanceTestsH2NonAudit extends AllPerformanceTests
 {
   public static Test suite()
   {
-    return new AllPerformanceTestsH2NonAudit().getTestSuite(AllPerformanceTestsH2NonAudit.class.getName());
+    return new AllPerformanceTestsH2NonAudit().getTestSuite();
   }
 
   @Override

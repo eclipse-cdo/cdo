@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 public class HsqldbTest extends AbstractDBTest
 {
   @Override
-  protected IDBAdapter createDBAdapter()
+  protected IDBAdapter createAdapter()
   {
     return new org.eclipse.net4j.db.hsqldb.HSQLDBAdapter();
   }
@@ -30,8 +30,8 @@ public class HsqldbTest extends AbstractDBTest
   protected DataSource createDataSource()
   {
     HSQLDBDataSource dataSource = new HSQLDBDataSource();
-    dataSource.setDatabase("jdbc:hsqldb:mem:dbtest"); //$NON-NLS-1$
-    dataSource.setUser("sa"); //$NON-NLS-1$
+    dataSource.setDatabase("jdbc:hsqldb:mem:dbtest");
+    dataSource.setUser("sa");
     return dataSource;
   }
 }

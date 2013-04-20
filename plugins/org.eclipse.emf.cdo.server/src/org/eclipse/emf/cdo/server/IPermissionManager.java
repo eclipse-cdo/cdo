@@ -19,8 +19,19 @@ import org.eclipse.emf.cdo.common.security.CDOPermission;
  *
  * @author Eike Stepper
  * @since 4.1
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IPermissionManager
 {
+  /**
+   * @deprecated As of 4.2 call {@link #getPermission(CDORevision, CDOBranchPoint, ISession)}.
+   */
+  @Deprecated
   public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID);
+
+  /**
+   * @since 4.2
+   */
+  public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, ISession session);
 }

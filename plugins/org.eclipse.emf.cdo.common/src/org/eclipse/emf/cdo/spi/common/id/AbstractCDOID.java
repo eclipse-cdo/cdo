@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.spi.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
@@ -29,9 +30,58 @@ public abstract class AbstractCDOID implements CDOID
 {
   private static final long serialVersionUID = 1L;
 
-  public AbstractCDOID()
+  protected AbstractCDOID()
   {
   }
+
+  /**
+   * @since 4.2
+   */
+  public boolean isNull()
+  {
+    return false;
+  }
+
+  /**
+   * @since 4.2
+   */
+  @Deprecated
+  public final boolean isDangling()
+  {
+    return false;
+  }
+
+  /**
+   * @deprecated As of 4.2 not called anymore.
+   */
+  @Deprecated
+  public final void read(String fragmentPart)
+  {
+    // Do nothing
+  }
+
+  /**
+   * @deprecated As of 4.2 not called anymore.
+   */
+  @Deprecated
+  public final void read(ExtendedDataInput in) throws IOException
+  {
+    // Do nothing
+  }
+
+  /**
+   * @deprecated As of 4.2 {@link #write(CDODataOutput)} is called.
+   */
+  @Deprecated
+  public void write(ExtendedDataOutput out) throws IOException
+  {
+    // Do nothing
+  }
+
+  /**
+   * @since 4.2
+   */
+  public abstract void write(CDODataOutput out) throws IOException;
 
   @Override
   public String toString()
@@ -51,20 +101,14 @@ public abstract class AbstractCDOID implements CDOID
     }
   }
 
+  @Override
+  public boolean equals(Object obj)
+  {
+    return obj == this;
+  }
+
+  @Override
+  public abstract int hashCode();
+
   protected abstract int doCompareTo(CDOID o) throws ClassCastException;
-
-  /**
-   * <b>Note:</b> {@link CDOID#toURIFragment()} and {@link AbstractCDOID#read(String)} need to match.
-   */
-  public abstract void read(String fragmentPart);
-
-  /**
-   * TODO: Change the parameter to CDODataInput to prevent casting in IDs with classifier.
-   */
-  public abstract void read(ExtendedDataInput in) throws IOException;
-
-  /**
-   * TODO: Change the parameter to CDODataInput to prevent casting in IDs with classifier.
-   */
-  public abstract void write(ExtendedDataOutput out) throws IOException;
 }

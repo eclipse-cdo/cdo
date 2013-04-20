@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 
 import java.sql.Connection;
@@ -45,6 +46,11 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
    * @since 4.0
    */
   public IIDHandler getIDHandler();
+
+  /**
+   * @since 4.2
+   */
+  public IDBDatabase getDatabase();
 
   public IDBAdapter getDBAdapter();
 

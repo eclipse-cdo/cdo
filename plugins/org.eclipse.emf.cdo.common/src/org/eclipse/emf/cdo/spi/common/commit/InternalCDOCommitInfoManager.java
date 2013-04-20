@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.common.commit;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
@@ -28,6 +29,11 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
  */
 public interface InternalCDOCommitInfoManager extends CDOCommitInfoManager, ILifecycle
 {
+  /**
+   * @since 4.2
+   */
+  public void setRepository(CDOCommonRepository repository);
+
   public CommitInfoLoader getCommitInfoLoader();
 
   public void setCommitInfoLoader(CommitInfoLoader commitInfoLoader);

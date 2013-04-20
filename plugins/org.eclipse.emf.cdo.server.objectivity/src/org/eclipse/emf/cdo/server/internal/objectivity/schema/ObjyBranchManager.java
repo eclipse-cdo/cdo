@@ -118,7 +118,7 @@ public class ObjyBranchManager extends ooObj
     // objyBranch.addSubBranch(newObjyBranch);
     // }
 
-    return new Pair<Integer, Long>(branchId, branchInfo.getBaseTimeStamp());
+    return Pair.create(branchId, branchInfo.getBaseTimeStamp());
   }
 
   public ObjyBranch getBranch(int branchId)

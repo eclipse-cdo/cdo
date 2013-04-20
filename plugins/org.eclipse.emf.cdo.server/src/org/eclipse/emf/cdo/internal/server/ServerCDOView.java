@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
@@ -55,8 +56,9 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleState;
+import org.eclipse.net4j.util.ref.KeyedReference;
 import org.eclipse.net4j.util.ref.ReferenceType;
-import org.eclipse.net4j.util.ref.ReferenceValueMap;
+import org.eclipse.net4j.util.ref.ReferenceValueMap2;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -72,6 +74,7 @@ import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
+import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.PlatformObject;
@@ -95,15 +98,18 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
   private CDORevisionProvider revisionProvider;
 
-  public ServerCDOView(InternalSession session, CDOBranchPoint branchPoint, boolean legacyModeEnabled,
-      CDORevisionProvider revisionProvider)
+  public ServerCDOView(InternalSession session, CDOBranchPoint branchPoint, CDORevisionProvider revisionProvider)
   {
-    super(branchPoint, legacyModeEnabled);
+    super(branchPoint);
     this.session = new ServerCDOSession(session);
     this.revisionProvider = revisionProvider;
 
-    setViewSet(SessionUtil.prepareResourceSet(new ResourceSetImpl()));
-    setObjects(new ReferenceValueMap.Weak<CDOID, InternalCDOObject>());
+    InternalCDOViewSet resourceSet = SessionUtil.prepareResourceSet(new ResourceSetImpl());
+    setViewSet(resourceSet);
+
+    Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
+    setObjects(new ReferenceValueMap2.Weak<CDOID, InternalCDOObject>(map));
+
     activate();
   }
 
@@ -444,6 +450,16 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       return this;
     }
 
+    public String getUserID()
+    {
+      return internalSession.getUserID();
+    }
+
+    public int getSessionID()
+    {
+      return internalSession.getSessionID();
+    }
+
     public CDOView[] getElements()
     {
       return new ServerCDOView[] { ServerCDOView.this };
@@ -640,6 +656,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       return repository.isSupportingBranches();
     }
 
+    @Deprecated
     public boolean isSupportingEcore()
     {
       return repository.isSupportingEcore();
@@ -711,16 +728,6 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     public long getLastUpdateTime()
     {
       return getBranchPoint().getTimeStamp();
-    }
-
-    public String getUserID()
-    {
-      return null;
-    }
-
-    public int getSessionID()
-    {
-      return internalSession.getSessionID();
     }
 
     public long refresh()

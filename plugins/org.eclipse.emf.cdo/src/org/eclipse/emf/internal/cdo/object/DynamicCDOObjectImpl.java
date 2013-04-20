@@ -22,29 +22,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  */
 public class DynamicCDOObjectImpl extends CDOObjectImpl
 {
-  private EClass eClass;
-
   public DynamicCDOObjectImpl(EClass eClass)
   {
     eSetClass(eClass);
-  }
-
-  @Override
-  public EClass eClass()
-  {
-    return eClass;
-  }
-
-  @Override
-  public void eSetClass(EClass eClass)
-  {
-    this.eClass = eClass;
-  }
-
-  @Override
-  protected EClass eDynamicClass()
-  {
-    return eClass;
   }
 
   /**

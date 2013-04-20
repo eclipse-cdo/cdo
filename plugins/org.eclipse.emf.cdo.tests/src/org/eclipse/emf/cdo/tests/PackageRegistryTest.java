@@ -29,7 +29,6 @@ import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -333,49 +332,21 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
   }
 
-  public void testGlobalDynamicPackageUnprepared() throws Exception
+  public void testDynamicPackageLoaded() throws Exception
   {
-    String nsURI = "http://dynamic";
+    EPackage model1 = loadModel("model1.ecore");
 
-    try
-    {
-      EPackage p = EcoreFactory.eINSTANCE.createEPackage();
-      p.setName("dynamic");
-      p.setNsPrefix("dynamic");
-      p.setNsURI(nsURI);
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(model1);
 
-      EClass c = EcoreFactory.eINSTANCE.createEClass();
-      c.setName("DClass");
+    EFactory modelFactory = model1.getEFactoryInstance(); // Must happen AFTER putEPackage!!!
+    EObject object = modelFactory.create((EClass)model1.getEClassifier("Company"));
 
-      p.getEClassifiers().add(c);
-      EPackage.Registry.INSTANCE.put(nsURI, p);
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
+    resource.getContents().add(object);
 
-      CDOSession session = openSession();
-
-      // The default case is that legacy is disabled. For our test bed it is always enabled.
-      // To test the default case we must switch of legacy here.
-      CDOUtil.setLegacyModeDefault(false);
-
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource(getResourcePath("/res"));
-
-      EFactory factory = p.getEFactoryInstance();
-      EObject object = factory.create(c);
-
-      res.getContents().add(object);
-      transaction.commit();
-      session.close();
-
-      fail("LegacyModeNotEnabledException expected");
-    }
-    catch (LegacyModeNotEnabledException expected)
-    {
-      // SUCCESS
-    }
-    finally
-    {
-      EPackage.Registry.INSTANCE.remove(nsURI);
-    }
+    transaction.commit();
   }
 
   @CleanRepositoriesBefore

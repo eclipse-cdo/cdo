@@ -87,6 +87,10 @@ public abstract class QueueWorker<E> extends Worker
     {
       work(context, element);
     }
+    else
+    {
+      noWork(context);
+    }
   }
 
   /**
@@ -98,6 +102,13 @@ public abstract class QueueWorker<E> extends Worker
   }
 
   protected abstract void work(WorkContext context, E element);
+
+  /**
+   * @since 3.3
+   */
+  protected void noWork(WorkContext context)
+  {
+  }
 
   protected BlockingQueue<E> createQueue()
   {

@@ -6,30 +6,55 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Martin Taal - initial API and implementation
- *    Eike Stepper - maintenance
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.internal.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDString;
+import org.eclipse.emf.cdo.common.id.CDOIDString;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 import org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject;
 
+import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.ref.Interner;
+
+import java.io.IOException;
+import java.io.ObjectStreamException;
+
 /**
- * @author Martin Taal
- * @since 3.0
+ * @author Eike Stepper
+ * @since 2.0
  */
-public class CDOIDObjectStringImpl extends AbstractCDOIDString implements InternalCDOIDObject
+public final class CDOIDObjectStringImpl extends AbstractCDOID implements InternalCDOIDObject, CDOIDString
 {
   private static final long serialVersionUID = 1L;
 
-  public CDOIDObjectStringImpl()
+  private static final StringInterner INTERNER = new StringInterner();
+
+  private final String value;
+
+  private CDOIDObjectStringImpl(String value)
   {
+    CheckUtil.checkArg(value, "Null not allowed");
+    this.value = value;
   }
 
-  public CDOIDObjectStringImpl(String value)
+  @Override
+  public void write(CDODataOutput out) throws IOException
   {
-    super(value);
+    out.writeString(value);
+  }
+
+  public String toURIFragment()
+  {
+    return value;
+  }
+
+  public String getStringValue()
+  {
+    return value;
   }
 
   public Type getType()
@@ -37,17 +62,12 @@ public class CDOIDObjectStringImpl extends AbstractCDOIDString implements Intern
     return Type.OBJECT;
   }
 
-  public boolean isDangling()
+  public CDOID.ObjectType getSubType()
   {
-    return false;
+    return CDOID.ObjectType.STRING;
   }
 
   public boolean isExternal()
-  {
-    return false;
-  }
-
-  public boolean isNull()
   {
     return false;
   }
@@ -62,20 +82,71 @@ public class CDOIDObjectStringImpl extends AbstractCDOIDString implements Intern
     return false;
   }
 
-  public CDOID.ObjectType getSubType()
+  @Override
+  public int hashCode()
   {
-    return CDOID.ObjectType.STRING;
+    return value.hashCode();
   }
 
   @Override
   public String toString()
   {
-    return "OID" + getStringValue(); //$NON-NLS-1$
+    return "OID" + value; //$NON-NLS-1$
   }
 
   @Override
   protected int doCompareTo(CDOID o) throws ClassCastException
   {
-    return getStringValue().compareTo(((CDOIDObjectStringImpl)o).getStringValue());
+    return value.compareTo(((CDOIDObjectStringImpl)o).value);
+  }
+
+  private Object readResolve() throws ObjectStreamException
+  {
+    return create(value);
+  }
+
+  private static int getHashCode(String value)
+  {
+    return value.hashCode();
+  }
+
+  public static CDOIDObjectStringImpl create(String value)
+  {
+    return INTERNER.intern(value);
+  }
+
+  public static CDOIDObjectStringImpl create(CDODataInput in) throws IOException
+  {
+    String value = in.readString();
+    return create(value);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class StringInterner extends Interner<CDOIDObjectStringImpl>
+  {
+    public synchronized CDOIDObjectStringImpl intern(String value)
+    {
+      int hashCode = getHashCode(value);
+      for (Entry<CDOIDObjectStringImpl> entry = getEntry(hashCode); entry != null; entry = entry.getNextEntry())
+      {
+        CDOIDObjectStringImpl id = entry.get();
+        if (id != null && id.value.equals(value))
+        {
+          return id;
+        }
+      }
+
+      CDOIDObjectStringImpl id = new CDOIDObjectStringImpl(value);
+      addEntry(createEntry(id, hashCode));
+      return id;
+    }
+
+    @Override
+    protected int hashCode(CDOIDObjectStringImpl id)
+    {
+      return getHashCode(id.value);
+    }
   }
 }

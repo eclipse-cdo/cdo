@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model2.TaskContainer;
 import org.eclipse.emf.cdo.tests.util.TestAdapter;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -31,6 +32,7 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
  * See bug 314264
  */
 @CleanRepositoriesBefore
+@Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
 public class Bugzilla_314264_Test extends AbstractCDOTest
 {
   @Override
@@ -40,7 +42,6 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
     skipStoreWithoutChangeSets();
   }
 
-  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testMerge() throws Exception
   {
     // Setup transaction.
@@ -48,7 +49,7 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
     CDOTransaction tr1 = session.openTransaction();
     tr1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    CDOResource resource = tr1.createResource(getResourcePath("/test"));
+    CDOResource resource = tr1.getOrCreateResource(getResourcePath("/test"));
     TaskContainer container1 = getModel2Factory().createTaskContainer();
     resource.getContents().add(container1);
 
@@ -76,33 +77,15 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
 
     tr1.commit();
     assertEquals(false, tr1.isDirty());
+    session.close();
   }
 
-  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
-  public void testMerge1() throws Exception
+  public void testMerge10() throws Exception
   {
     // Try again after some warm up. See bug 383602.
     testMerge();
-  }
-
-  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
-  public void testMerge2() throws Exception
-  {
-    // Try again after some warm up. See bug 383602.
     testMerge();
-  }
-
-  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
-  public void testMerge3() throws Exception
-  {
-    // Try again after some warm up. See bug 383602.
     testMerge();
-  }
-
-  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
-  public void testMerge4() throws Exception
-  {
-    // Try again after some warm up. See bug 383602.
     testMerge();
   }
 

@@ -29,7 +29,6 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.spi.net4j.ConnectorFactory;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -100,7 +99,13 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
   public CDOAdminClientRepository[] getRepositories()
   {
     CDOAdminRepository[] repositories = super.getRepositories();
-    return Arrays.copyOf(repositories, repositories.length, CDOAdminClientRepository[].class);
+    CDOAdminClientRepository[] result = new CDOAdminClientRepository[repositories.length];
+    for (int i = 0; i < repositories.length; i++)
+    {
+      result[i] = (CDOAdminClientRepository)repositories[i];
+    }
+
+    return result;
   }
 
   @Override

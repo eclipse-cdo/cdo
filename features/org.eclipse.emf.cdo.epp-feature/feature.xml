@@ -51,11 +51,27 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.net4j.db.derby"
+         id="org.eclipse.net4j.db.h2"
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.net4j.db.h2"
+         id="org.eclipse.emf.cdo.server.db"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.examples.installer"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.examples.installer"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.compare"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.doc"
          version="0.0.0"/>
 
    <plugin

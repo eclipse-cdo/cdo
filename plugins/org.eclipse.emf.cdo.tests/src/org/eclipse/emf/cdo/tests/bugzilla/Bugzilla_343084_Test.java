@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.security.NoPermissionException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IPermissionManager;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
@@ -60,7 +61,7 @@ public class Bugzilla_343084_Test extends AbstractCDOTest
 
     IPermissionManager permissionManager = new IPermissionManager()
     {
-      public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID)
+      public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, ISession session)
       {
         EClass eClass = revision.getEClass();
         CDOPermission permission = permissions.get(eClass);
@@ -70,6 +71,12 @@ public class Bugzilla_343084_Test extends AbstractCDOTest
         }
 
         return CDOPermission.WRITE;
+      }
+
+      @Deprecated
+      public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID)
+      {
+        throw new UnsupportedOperationException();
       }
     };
 

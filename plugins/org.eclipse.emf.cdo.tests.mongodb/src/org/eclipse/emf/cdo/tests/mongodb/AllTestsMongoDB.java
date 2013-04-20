@@ -29,7 +29,7 @@ public class AllTestsMongoDB extends AllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsMongoDB().getTestSuite("CDO Tests (MongoDB)");
+    return new AllTestsMongoDB().getTestSuite();
   }
 
   @Override

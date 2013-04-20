@@ -4,8 +4,9 @@
     editDirectory="" editorDirectory="" modelPluginID="org.eclipse.emf.cdo.tests.model1"
     modelName="Model1" updateClasspath="false" rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl"
     reflectiveDelegation="true" codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
-    featureDelegation="Reflective" complianceLevel="5.0" providerRootExtendsClass="org.eclipse.emf.cdo.edit.CDOItemProviderAdapter"
-    optimizedHasChildren="true" tableProviders="true" colorProviders="true" fontProviders="true">
+    featureDelegation="Reflective" containmentProxies="true" complianceLevel="5.0"
+    providerRootExtendsClass="org.eclipse.emf.cdo.edit.CDOItemProviderAdapter" optimizedHasChildren="true"
+    tableProviders="true" colorProviders="true" fontProviders="true">
   <foreignModel>model1.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="Model1" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"

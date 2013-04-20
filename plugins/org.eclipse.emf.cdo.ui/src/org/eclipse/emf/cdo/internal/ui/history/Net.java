@@ -197,7 +197,7 @@ public class Net
             continue;
           }
 
-          if (lastSegment.getLastCommitTime() == lastCommit.getTime())
+          if (lastCommit != null && lastCommit.getTime() == lastSegment.getLastCommitTime())
           {
             // Don't block the track of the last commit
             continue;

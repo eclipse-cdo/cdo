@@ -32,7 +32,7 @@ public class AllTestsDawn extends AllTests
 {
   public static Test suite()
   {
-    return new AllTestsDawn().getTestSuite(AllTests.class.getName());
+    return new AllTestsDawn().getTestSuite();
   }
 
   @Override

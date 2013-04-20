@@ -38,7 +38,7 @@ import java.lang.reflect.Array;
 
 /**
  * Implements server side HQL query execution..
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateQueryHandler implements IQueryHandler
@@ -63,7 +63,7 @@ public class HibernateQueryHandler implements IQueryHandler
    * Executes hql queries. Gets the session from the {@link HibernateStoreAccessor} creates a hibernate query and sets
    * the parameters taken from the {@link CDOQueryInfo#getParameters()}. Takes into account the
    * {@link CDOQueryInfo#getMaxResults()} and the {@link IHibernateStore#FIRST_RESULT} values for paging.
-   * 
+   *
    * @param info
    *          the object containing the query and parameters
    * @param context
@@ -281,7 +281,7 @@ public class HibernateQueryHandler implements IQueryHandler
     try
     {
       int featureID = revision.getClassInfo().getEClass().getFeatureID(feature);
-      revision.getClassInfo().getFeatureIndex(featureID);
+      revision.getClassInfo().getPersistentFeatureIndex(featureID);
       return true;
     }
     catch (IllegalArgumentException ex)

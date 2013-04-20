@@ -24,11 +24,13 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.id.CDOWithID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
@@ -120,7 +122,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, AbstractCDOView.class);
 
-  private final boolean legacyModeEnabled;
+  private final ViewAndState[] viewAndStates = ViewAndState.create(this);
 
   private CDOBranchPoint branchPoint;
 
@@ -152,15 +154,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   @ExcludeFromDump
   private transient InternalCDOObject lastLookupObject;
 
-  public AbstractCDOView(CDOBranchPoint branchPoint, boolean legacyModeEnabled)
+  public AbstractCDOView(CDOBranchPoint branchPoint)
   {
-    this(legacyModeEnabled);
     basicSetBranchPoint(branchPoint);
   }
 
-  public AbstractCDOView(boolean legacyModeEnabled)
+  public AbstractCDOView()
   {
-    this.legacyModeEnabled = legacyModeEnabled;
   }
 
   public boolean isReadOnly()
@@ -168,9 +168,10 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return true;
   }
 
+  @Deprecated
   public boolean isLegacyModeEnabled()
   {
-    return legacyModeEnabled;
+    return true;
   }
 
   protected synchronized final Map<CDOID, InternalCDOObject> getModifiableObjects()
@@ -191,6 +192,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   protected synchronized final void setObjects(Map<CDOID, InternalCDOObject> objects)
   {
     this.objects = objects;
+  }
+
+  public ViewAndState getViewAndState(CDOState state)
+  {
+    return viewAndStates[state.ordinal()];
   }
 
   public CDOStore getStore()
@@ -867,12 +873,12 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       return null;
     }
 
-    if (rootResource != null && rootResource.cdoID().equals(id))
+    if (rootResource != null && rootResource.cdoID() == id)
     {
       return rootResource;
     }
 
-    if (id.equals(lastLookupID))
+    if (id == lastLookupID)
     {
       return lastLookupObject;
     }
@@ -916,7 +922,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         {
           registerObject(localLookupObject);
         }
-        else if (id.equals(getSession().getRepositoryInfo().getRootResourceID()))
+        else if (id == getSession().getRepositoryInfo().getRootResourceID())
         {
           setRootResource((CDOResourceImpl)localLookupObject);
         }
@@ -991,7 +997,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       return null;
     }
 
-    if (id.equals(lastLookupID))
+    if (id == lastLookupID)
     {
       lastLookupID = null;
       lastLookupObject = null;
@@ -1018,7 +1024,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
     EClass eClass = revision.getEClass();
     InternalCDOObject object;
-    if (CDOModelUtil.isResource(eClass) && !id.equals(getSession().getRepositoryInfo().getRootResourceID()))
+    if (CDOModelUtil.isResource(eClass) && id != getSession().getRepositoryInfo().getRootResourceID())
     {
       object = (InternalCDOObject)newResourceInstance(revision);
       // object is PROXY
@@ -1058,7 +1064,19 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   private String getResourcePath(InternalCDORevision revision)
   {
-    CDOID folderID = (CDOID)revision.data().getContainerID();
+    CDORevisionData data = revision.data();
+    CDOID folderID;
+
+    Object containerID = data.getContainerID();
+    if (containerID instanceof CDOWithID)
+    {
+      folderID = ((CDOWithID)containerID).cdoID();
+    }
+    else
+    {
+      folderID = (CDOID)containerID;
+    }
+
     String name = (String)revision.data().get(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME, 0);
     if (CDOIDUtil.isNull(folderID))
     {
@@ -1088,7 +1106,6 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   {
     object.cdoInternalSetView(this);
     object.cdoInternalSetRevision(revision);
-    object.cdoInternalSetID(revision.getID());
     object.cdoInternalSetState(CDOState.CLEAN);
     object.cdoInternalPostLoad();
   }
@@ -1208,7 +1225,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
     if (view != null && view.getSession() == getSession())
     {
-      boolean sameTarget = view.getBranch().equals(getBranch()) && view.getTimeStamp() == getTimeStamp();
+      boolean sameTarget = view.getBranch() == getBranch() && view.getTimeStamp() == getTimeStamp();
       if (sameTarget)
       {
         return object.cdoID();
@@ -1398,8 +1415,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       CDOObject changedObject = objects.get(key.getID());
       if (changedObject != null)
       {
-        Pair<CDORevision, CDORevisionDelta> oldInfo = new Pair<CDORevision, CDORevisionDelta>(
-            changedObject.cdoRevision(), delta);
+        Pair<CDORevision, CDORevisionDelta> oldInfo = Pair.create(changedObject.cdoRevision(), delta);
         // if (!isLocked(changedObject))
         {
           CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)changedObject, key);
@@ -1423,8 +1439,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       InternalCDOObject detachedObject = removeObject(key.getID());
       if (detachedObject != null)
       {
-        Pair<CDORevision, CDORevisionDelta> oldInfo = new Pair<CDORevision, CDORevisionDelta>(
-            detachedObject.cdoRevision(), CDORevisionDelta.DETACHED);
+        Pair<CDORevision, CDORevisionDelta> oldInfo = Pair.create((CDORevision)detachedObject.cdoRevision(),
+            CDORevisionDelta.DETACHED);
         // if (!isLocked(detachedObject))
         {
           CDOStateMachine.INSTANCE.detachRemote(detachedObject);
@@ -1675,7 +1691,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
     if (eClass == EresourcePackage.Literals.CDO_RESOURCE)
     {
-      if (rootResourceID.equals(delta.getID()))
+      if (rootResourceID == delta.getID())
       {
         CDOListFeatureDelta featureDelta = (CDOListFeatureDelta)delta
             .getFeatureDelta(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS);

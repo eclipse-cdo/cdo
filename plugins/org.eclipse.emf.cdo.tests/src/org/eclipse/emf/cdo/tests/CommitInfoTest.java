@@ -172,7 +172,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
+    assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -195,7 +195,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
+    assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
   }
 
   @Skips("MongoDB")
@@ -298,7 +298,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
+    assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -321,7 +321,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(1, infos.size());
-    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
+    assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
   }
 
   @Skips("MongoDB")
@@ -537,7 +537,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
+    assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -558,7 +558,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
+    assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
   }
 
   @CleanRepositoriesBefore
@@ -647,7 +647,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
+    assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -667,7 +667,7 @@ public class CommitInfoTest extends AbstractCDOTest
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(1, infos.size());
-    assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
+    assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
   }
 
   @CleanRepositoriesBefore

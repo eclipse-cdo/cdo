@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.security.Assignee;
 import org.eclipse.emf.cdo.security.ClassPermission;
 import org.eclipse.emf.cdo.security.Directory;
 import org.eclipse.emf.cdo.security.Group;
+import org.eclipse.emf.cdo.security.ObjectPermission;
 import org.eclipse.emf.cdo.security.PackagePermission;
 import org.eclipse.emf.cdo.security.Permission;
 import org.eclipse.emf.cdo.security.Realm;
@@ -118,9 +119,13 @@ public class SecuritySwitch<T>
       SecurityElement securityElement = (SecurityElement)theEObject;
       T result = caseSecurityElement(securityElement);
       if (result == null)
+      {
         result = caseModelElement(securityElement);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SecurityPackage.SECURITY_ITEM:
@@ -128,11 +133,17 @@ public class SecuritySwitch<T>
       SecurityItem securityItem = (SecurityItem)theEObject;
       T result = caseSecurityItem(securityItem);
       if (result == null)
+      {
         result = caseSecurityElement(securityItem);
+      }
       if (result == null)
+      {
         result = caseModelElement(securityItem);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SecurityPackage.REALM:
@@ -140,11 +151,17 @@ public class SecuritySwitch<T>
       Realm realm = (Realm)theEObject;
       T result = caseRealm(realm);
       if (result == null)
+      {
         result = caseSecurityElement(realm);
+      }
       if (result == null)
+      {
         result = caseModelElement(realm);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SecurityPackage.DIRECTORY:
@@ -152,13 +169,21 @@ public class SecuritySwitch<T>
       Directory directory = (Directory)theEObject;
       T result = caseDirectory(directory);
       if (result == null)
+      {
         result = caseSecurityItem(directory);
+      }
       if (result == null)
+      {
         result = caseSecurityElement(directory);
+      }
       if (result == null)
+      {
         result = caseModelElement(directory);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SecurityPackage.ROLE:
@@ -166,13 +191,21 @@ public class SecuritySwitch<T>
       Role role = (Role)theEObject;
       T result = caseRole(role);
       if (result == null)
+      {
         result = caseSecurityItem(role);
+      }
       if (result == null)
+      {
         result = caseSecurityElement(role);
+      }
       if (result == null)
+      {
         result = caseModelElement(role);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SecurityPackage.ASSIGNEE:
@@ -180,13 +213,21 @@ public class SecuritySwitch<T>
       Assignee assignee = (Assignee)theEObject;
       T result = caseAssignee(assignee);
       if (result == null)
+      {
         result = caseSecurityItem(assignee);
+      }
       if (result == null)
+      {
         result = caseSecurityElement(assignee);
+      }
       if (result == null)
+      {
         result = caseModelElement(assignee);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SecurityPackage.GROUP:
@@ -194,15 +235,25 @@ public class SecuritySwitch<T>
       Group group = (Group)theEObject;
       T result = caseGroup(group);
       if (result == null)
+      {
         result = caseAssignee(group);
+      }
       if (result == null)
+      {
         result = caseSecurityItem(group);
+      }
       if (result == null)
+      {
         result = caseSecurityElement(group);
+      }
       if (result == null)
+      {
         result = caseModelElement(group);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SecurityPackage.USER:
@@ -210,15 +261,25 @@ public class SecuritySwitch<T>
       User user = (User)theEObject;
       T result = caseUser(user);
       if (result == null)
+      {
         result = caseAssignee(user);
+      }
       if (result == null)
+      {
         result = caseSecurityItem(user);
+      }
       if (result == null)
+      {
         result = caseSecurityElement(user);
+      }
       if (result == null)
+      {
         result = caseModelElement(user);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SecurityPackage.USER_PASSWORD:
@@ -226,7 +287,9 @@ public class SecuritySwitch<T>
       UserPassword userPassword = (UserPassword)theEObject;
       T result = caseUserPassword(userPassword);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SecurityPackage.PERMISSION:
@@ -234,7 +297,9 @@ public class SecuritySwitch<T>
       Permission permission = (Permission)theEObject;
       T result = casePermission(permission);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SecurityPackage.CLASS_PERMISSION:
@@ -242,9 +307,13 @@ public class SecuritySwitch<T>
       ClassPermission classPermission = (ClassPermission)theEObject;
       T result = caseClassPermission(classPermission);
       if (result == null)
+      {
         result = casePermission(classPermission);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SecurityPackage.PACKAGE_PERMISSION:
@@ -252,9 +321,13 @@ public class SecuritySwitch<T>
       PackagePermission packagePermission = (PackagePermission)theEObject;
       T result = casePackagePermission(packagePermission);
       if (result == null)
+      {
         result = casePermission(packagePermission);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case SecurityPackage.RESOURCE_PERMISSION:
@@ -262,9 +335,27 @@ public class SecuritySwitch<T>
       ResourcePermission resourcePermission = (ResourcePermission)theEObject;
       T result = caseResourcePermission(resourcePermission);
       if (result == null)
+      {
         result = casePermission(resourcePermission);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SecurityPackage.OBJECT_PERMISSION:
+    {
+      ObjectPermission objectPermission = (ObjectPermission)theEObject;
+      T result = caseObjectPermission(objectPermission);
+      if (result == null)
+      {
+        result = casePermission(objectPermission);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     default:
@@ -476,6 +567,23 @@ public class SecuritySwitch<T>
    * @generated
    */
   public T caseResourcePermission(ResourcePermission object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Object Permission</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Object Permission</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseObjectPermission(ObjectPermission object)
   {
     return null;
   }

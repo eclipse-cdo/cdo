@@ -16,6 +16,7 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -26,18 +27,19 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBPreparedStatement;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
@@ -52,9 +54,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +66,7 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 3.0
  */
-public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTableMapping
+public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTableMapping
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractFeatureMapTableMapping.class);
 
@@ -74,20 +75,22 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
    */
   private IDBTable table;
 
-  /**
-   * The tags mapped to column names
-   */
-  private HashMap<CDOID, String> tagMap;
+  private FieldInfo[] keyFields;
 
   /**
-   * Column name Set
+   * The tags mapped to column names.
    */
-  private List<String> columnNames;
+  private Map<CDOID, String> tagMap = CDOIDUtil.createMap();
+
+  /**
+   * Column names.
+   */
+  private List<String> columnNames = new ArrayList<String>();
 
   /**
    * The type mappings for the value fields.
    */
-  private Map<CDOID, ITypeMapping> typeMappings;
+  private Map<CDOID, ITypeMapping> typeMappings = CDOIDUtil.createMap();
 
   // --------- SQL strings - see initSQLStrings() -----------------
   private String sqlSelectChunksPrefix;
@@ -120,52 +123,53 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
 
   private void initTable()
   {
-    IDBStore store = getMappingStrategy().getStore();
-    DBType idType = store.getIDHandler().getDBType();
-    int idLength = store.getIDColumnLength();
-
     String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
-    table = store.getDBSchema().addTable(tableName);
+    DBType idType = getMappingStrategy().getStore().getIDHandler().getDBType();
+    int idLength = getMappingStrategy().getStore().getIDColumnLength();
 
-    // add fields for keys (cdo_id, version, feature_id)
-    FieldInfo[] fields = getKeyFields();
-    IDBField[] dbFields = new IDBField[fields.length];
-
-    for (int i = 0; i < fields.length; i++)
+    IDBDatabase database = getMappingStrategy().getStore().getDatabase();
+    table = database.getSchema().getTable(tableName);
+    if (table == null)
     {
-      dbFields[i] = table.addField(fields[i].getName(), fields[i].getDbType(), fields[i].getPrecision());
+      table = database.getSchemaTransaction().getWorkingCopy().addTable(tableName);
+
+      IDBIndex index = table.addIndexEmpty(Type.NON_UNIQUE);
+      for (FieldInfo fieldInfo : getKeyFields())
+      {
+        IDBField field = table.addField(fieldInfo.getName(), fieldInfo.getType(), fieldInfo.getPrecision());
+        index.addIndexField(field);
+      }
+
+      // Add field for list index
+      table.addField(FEATUREMAP_IDX, DBType.INTEGER);
+
+      // Add field for FeatureMap tag (MetaID for Feature in CDO registry)
+      table.addField(FEATUREMAP_TAG, idType, idLength);
+
+      // Create columns for all DBTypes
+      initTypeColumns(true);
+
+      table.addIndex(Type.NON_UNIQUE, FEATUREMAP_IDX);
+      table.addIndex(Type.NON_UNIQUE, FEATUREMAP_TAG);
     }
-
-    // add field for list index
-    IDBField idxField = table.addField(CDODBSchema.FEATUREMAP_IDX, DBType.INTEGER);
-
-    // add field for FeatureMap tag (MetaID for Feature in CDO registry)
-    IDBField tagField = table.addField(CDODBSchema.FEATUREMAP_TAG, idType, idLength);
-
-    tagMap = new HashMap<CDOID, String>();
-    typeMappings = new HashMap<CDOID, ITypeMapping>();
-    columnNames = new ArrayList<String>();
-
-    // create columns for all DBTypes
-    for (DBType type : getDBTypes())
+    else
     {
-      String column = CDODBSchema.FEATUREMAP_VALUE + "_" + type.name();
-      table.addField(column, type);
-      columnNames.add(column);
+      initTypeColumns(false);
     }
-
-    table.addIndex(Type.NON_UNIQUE, dbFields);
-    table.addIndex(Type.NON_UNIQUE, idxField);
-    table.addIndex(Type.NON_UNIQUE, tagField);
   }
 
-  protected abstract FieldInfo[] getKeyFields();
-
-  protected abstract void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException;
-
-  public Collection<IDBTable> getDBTables()
+  private void initTypeColumns(boolean create)
   {
-    return Arrays.asList(table);
+    for (DBType type : getDBTypes())
+    {
+      String column = FEATUREMAP_VALUE + "_" + type.name();
+      if (create)
+      {
+        table.addField(column, type);
+      }
+
+      columnNames.add(column);
+    }
   }
 
   private void initSQLStrings()
@@ -177,7 +181,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT ");
 
-    builder.append(CDODBSchema.FEATUREMAP_TAG);
+    builder.append(FEATUREMAP_TAG);
     builder.append(", ");
 
     Iterator<String> iter = columnNames.iterator();
@@ -211,7 +215,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
 
     sqlSelectChunksPrefix = builder.toString();
 
-    sqlOrderByIndex = " ORDER BY " + CDODBSchema.FEATUREMAP_IDX; //$NON-NLS-1$
+    sqlOrderByIndex = " ORDER BY " + FEATUREMAP_IDX; //$NON-NLS-1$
 
     // INSERT with dynamic field name
     // TODO: Better: universal INSERT-Statement, because of stmt caching!
@@ -232,9 +236,9 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
       builder.append(", "); //$NON-NLS-1$
     }
 
-    builder.append(CDODBSchema.FEATUREMAP_IDX);
+    builder.append(FEATUREMAP_IDX);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.FEATUREMAP_TAG);
+    builder.append(FEATUREMAP_TAG);
     builder.append(") VALUES ("); //$NON-NLS-1$
     for (int i = 0; i < fields.length + columnNames.size(); i++)
     {
@@ -243,6 +247,34 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
 
     builder.append("?, ?)");
     sqlInsert = builder.toString();
+  }
+
+  protected final FieldInfo[] getKeyFields()
+  {
+    if (keyFields == null)
+    {
+      List<FieldInfo> list = new ArrayList<FieldInfo>(3);
+
+      IDBStore store = getMappingStrategy().getStore();
+      DBType type = store.getIDHandler().getDBType();
+      int precision = store.getIDColumnLength();
+      list.add(new FieldInfo(FEATUREMAP_REVISION_ID, type, precision));
+
+      addKeyFields(list);
+
+      keyFields = list.toArray(new FieldInfo[list.size()]);
+    }
+
+    return keyFields;
+  }
+
+  protected abstract void addKeyFields(List<FieldInfo> list);
+
+  protected abstract void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException;
+
+  public Collection<IDBTable> getDBTables()
+  {
+    return Collections.singleton(table);
   }
 
   protected List<DBType> getDBTypes()
@@ -285,15 +317,14 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
           .getName(), revision.getID(), revision.getVersion());
     }
 
+    String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
+
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
     {
-      String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
-      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.HIGH);
       setKeyFields(stmt, revision);
 
       if (listChunk != CDORevision.UNCHUNKED)
@@ -324,7 +355,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
 
     if (TRACER.isEnabled())
@@ -339,7 +370,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
     EStructuralFeature modelFeature = getFeatureByTag(tag);
 
     ITypeMapping typeMapping = getMappingStrategy().createValueMapping(modelFeature);
-    String column = CDODBSchema.FEATUREMAP_VALUE + "_" + typeMapping.getDBType();
+    String column = FEATUREMAP_VALUE + "_" + typeMapping.getDBType();
 
     tagMap.put(tag, column);
     typeMapping.setDBField(table, column);
@@ -354,24 +385,22 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
           getFeature().getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
     }
 
+    StringBuilder builder = new StringBuilder(sqlSelectChunksPrefix);
+    if (where != null)
+    {
+      builder.append(" AND "); //$NON-NLS-1$
+      builder.append(where);
+    }
+
+    builder.append(sqlOrderByIndex);
+    String sql = builder.toString();
+
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = chunkReader.getAccessor().getStatementCache();
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = chunkReader.getAccessor().getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     try
     {
-      StringBuilder builder = new StringBuilder(sqlSelectChunksPrefix);
-      if (where != null)
-      {
-        builder.append(" AND "); //$NON-NLS-1$
-        builder.append(where);
-      }
-
-      builder.append(sqlOrderByIndex);
-
-      String sql = builder.toString();
-      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.LOW);
       setKeyFields(stmt, chunkReader.getRevision());
 
       resultSet = stmt.executeQuery();
@@ -429,7 +458,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -446,10 +475,6 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
 
   protected final void writeValue(IDBStoreAccessor accessor, CDORevision revision, int idx, Object value)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement stmt = null;
-
     if (TRACER.isEnabled())
     {
       TRACER
@@ -457,14 +482,17 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
               "Writing value for feature {0}.{1} index {2} of {3} : {4}", getContainingClass().getName(), getFeature(), idx, revision, value); //$NON-NLS-1$
     }
 
+    FeatureMap.Entry entry = (FeatureMap.Entry)value;
+    EStructuralFeature entryFeature = entry.getEStructuralFeature();
+    CDOID tag = getTagByFeature(entryFeature, revision.getTimeStamp());
+    ITypeMapping typeMapping = getTypeMapping(tag);
+    String columnName = getColumnName(tag);
+
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsert, ReuseProbability.HIGH);
+
     try
     {
-      FeatureMap.Entry entry = (FeatureMap.Entry)value;
-      EStructuralFeature entryFeature = entry.getEStructuralFeature();
-      CDOID tag = getTagByFeature(entryFeature, revision.getTimeStamp());
-      String columnName = getColumnName(tag);
-
-      stmt = statementCache.getPreparedStatement(sqlInsert, ReuseProbability.HIGH);
       setKeyFields(stmt, revision);
       int column = getKeyFields().length + 1;
 
@@ -472,7 +500,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
       {
         if (columnNames.get(i).equals(columnName))
         {
-          getTypeMapping(tag).setValue(stmt, column++, entry.getValue());
+          typeMapping.setValue(stmt, column++, entry.getValue());
         }
         else
         {
@@ -490,7 +518,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 

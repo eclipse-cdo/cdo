@@ -6,33 +6,60 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Simon McDuff - initial API and implementation
- *    Eike Stepper - maintenance
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.internal.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
+import org.eclipse.emf.cdo.common.id.CDOIDString;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 
-import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
+import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.ref.Interner;
 
 import java.io.IOException;
+import java.io.ObjectStreamException;
 
 /**
- * @author Simon McDuff
+ * @author Eike Stepper
+ * @since 2.0
  */
-public class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExternal
+public final class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExternal, CDOIDString
 {
   private static final long serialVersionUID = 1L;
 
-  private String uri;
+  private static final StringInterner INTERNER = new StringInterner();
 
-  public CDOIDExternalImpl(String uri)
+  private final String uri;
+
+  private CDOIDExternalImpl(String uri)
   {
+    CheckUtil.checkArg(uri, "Null not allowed");
     this.uri = uri;
+  }
+
+  @Override
+  public void write(CDODataOutput out) throws IOException
+  {
+    out.writeString(uri);
+  }
+
+  public String toURIFragment()
+  {
+    return uri;
+  }
+
+  public String getURI()
+  {
+    return uri;
+  }
+
+  public String getStringValue()
+  {
+    return uri;
   }
 
   public Type getType()
@@ -40,19 +67,9 @@ public class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExternal
     return Type.EXTERNAL_OBJECT;
   }
 
-  public boolean isDangling()
-  {
-    return false;
-  }
-
   public boolean isExternal()
   {
     return true;
-  }
-
-  public boolean isNull()
-  {
-    return false;
   }
 
   public boolean isObject()
@@ -65,67 +82,71 @@ public class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExternal
     return false;
   }
 
-  public String getURI()
+  @Override
+  public int hashCode()
   {
-    return uri;
+    return uri.hashCode();
   }
 
   @Override
   public String toString()
   {
-    return "oid:" + toURIFragment(); //$NON-NLS-1$
-  }
-
-  @Override
-  public void read(String fragmentPart)
-  {
-    uri = fragmentPart;
-  }
-
-  @Override
-  public void read(ExtendedDataInput in) throws IOException
-  {
-    uri = in.readString();
-  }
-
-  @Override
-  public void write(ExtendedDataOutput out) throws IOException
-  {
-    out.writeString(uri);
-  }
-
-  public String toURIFragment()
-  {
-    return uri;
-  }
-
-  @Override
-  public boolean equals(Object obj)
-  {
-    if (obj == this)
-    {
-      return true;
-    }
-
-    // Could CDOIDTempObjectExternalImpl and CDOIDExternalImpl have the same uri. We don't want to mixed them.
-    if (obj != null && obj.getClass() == getClass())
-    {
-      CDOIDExternal that = (CDOIDExternal)obj;
-      return ObjectUtil.equals(getURI(), that.getURI());
-    }
-
-    return false;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    return getClass().hashCode() ^ uri.hashCode();
+    return "oid:" + uri; //$NON-NLS-1$
   }
 
   @Override
   protected int doCompareTo(CDOID o) throws ClassCastException
   {
-    return getURI().compareTo(((CDOIDExternalImpl)o).getURI());
+    return uri.compareTo(((CDOIDExternalImpl)o).uri);
+  }
+
+  private Object readResolve() throws ObjectStreamException
+  {
+    return create(uri);
+  }
+
+  private static int getHashCode(String uri)
+  {
+    return uri.hashCode();
+  }
+
+  public static CDOIDExternalImpl create(String uri)
+  {
+    return INTERNER.intern(uri);
+  }
+
+  public static CDOIDExternalImpl create(CDODataInput in) throws IOException
+  {
+    String uri = in.readString();
+    return create(uri);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class StringInterner extends Interner<CDOIDExternalImpl>
+  {
+    public synchronized CDOIDExternalImpl intern(String uri)
+    {
+      int hashCode = getHashCode(uri);
+      for (Entry<CDOIDExternalImpl> entry = getEntry(hashCode); entry != null; entry = entry.getNextEntry())
+      {
+        CDOIDExternalImpl id = entry.get();
+        if (id != null && id.uri.equals(uri))
+        {
+          return id;
+        }
+      }
+
+      CDOIDExternalImpl id = new CDOIDExternalImpl(uri);
+      addEntry(createEntry(id, hashCode));
+      return id;
+    }
+
+    @Override
+    protected int hashCode(CDOIDExternalImpl id)
+    {
+      return getHashCode(id.uri);
+    }
   }
 }

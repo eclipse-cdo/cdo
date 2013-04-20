@@ -13,3 +13,4 @@
  * The Net4j DB framework concepts for the abstraction of the SQL data definition language.
  */
 package org.eclipse.net4j.db.ddl;
+

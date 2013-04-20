@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.server.security" version="2">
+    <resource path="src/org/eclipse/emf/cdo/server/internal/security/SecurityManager.java" type="org.eclipse.emf.cdo.server.internal.security.SecurityManager$PermissionManager">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="IPermissionManager"/>
+                <message_argument value="PermissionManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

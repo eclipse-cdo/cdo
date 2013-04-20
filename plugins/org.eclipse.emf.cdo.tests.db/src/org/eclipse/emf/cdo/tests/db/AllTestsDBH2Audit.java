@@ -24,7 +24,7 @@ public class AllTestsDBH2Audit extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBH2Audit().getTestSuite("CDO Tests (DBStore H2 Horizontal)");
+    return new AllTestsDBH2Audit().getTestSuite();
   }
 
   public static void initConfigSuites(ConfigTestSuite suite, TestSuite parent, IDGenerationLocation idGenerationLocation)

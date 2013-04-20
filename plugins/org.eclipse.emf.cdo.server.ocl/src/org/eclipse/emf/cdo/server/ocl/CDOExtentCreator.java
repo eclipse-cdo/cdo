@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOChangeKind;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
@@ -110,31 +111,58 @@ public class CDOExtentCreator implements OCLExtentCreator
       }
     }
 
-    accessor.handleRevisions(eClass, branch, timeStamp, false, new CDORevisionHandler.Filtered.Undetached(
-        new CDORevisionHandler()
+    CDORevisionHandler revisionHandler = new CDORevisionHandler.Filtered.Undetached(new CDORevisionHandler()
+    {
+      public boolean handleRevision(CDORevision revision)
+      {
+        if (revisionCacheAdder != null)
         {
-          public boolean handleRevision(CDORevision revision)
+          revisionCacheAdder.addRevision(revision);
+        }
+
+        CDOID id = revision.getID();
+        if (!isDetached(id))
+        {
+          EObject object = getEObject(id);
+          if (object != null)
           {
-            if (revisionCacheAdder != null)
-            {
-              revisionCacheAdder.addRevision(revision);
-            }
-
-            CDOID id = revision.getID();
-            if (!isDetached(id))
-            {
-              EObject object = getEObject(id);
-              if (object != null)
-              {
-                extent.add(object);
-              }
-            }
-
-            return !canceled.get();
+            extent.add(object);
           }
-        }));
+        }
 
+        return !canceled.get();
+      }
+    });
+
+    createExtent(eClass, accessor, branch, timeStamp, canceled, revisionHandler);
     return extent;
+  }
+
+  /**
+   * @since 4.1
+   */
+  protected void createExtent(EClass eClass, IStoreAccessor accessor, CDOBranch branch, long timeStamp,
+      final AtomicBoolean canceled, CDORevisionHandler revisionHandler)
+  {
+    if (!eClass.isAbstract() && !eClass.isInterface())
+    {
+      accessor.handleRevisions(eClass, branch, timeStamp, false, revisionHandler);
+    }
+
+    CDOPackageRegistry packageRegistry = accessor.getStore().getRepository().getPackageRegistry();
+    List<EClass> subTypes = packageRegistry.getSubTypes().get(eClass);
+    if (subTypes != null)
+    {
+      for (EClass subType : subTypes)
+      {
+        if (canceled.get())
+        {
+          break;
+        }
+
+        accessor.handleRevisions(subType, branch, timeStamp, false, revisionHandler);
+      }
+    }
   }
 
   protected boolean isDetached(CDOID id)
@@ -255,29 +283,30 @@ public class CDOExtentCreator implements OCLExtentCreator
 
             private void handlePersistentState()
             {
-              accessor.handleRevisions(eClass, branch, timeStamp, false, new CDORevisionHandler.Filtered.Undetached(
-                  new CDORevisionHandler()
+              CDORevisionHandler revisionHandler = new CDORevisionHandler.Filtered.Undetached(new CDORevisionHandler()
+              {
+                public boolean handleRevision(CDORevision revision)
+                {
+                  empty = false;
+                  emptyKnown.countDown();
+
+                  CDORevisionCacheAdder revisionCacheAdder = getRevisionCacheAdder();
+                  if (revisionCacheAdder != null)
                   {
-                    public boolean handleRevision(CDORevision revision)
-                    {
-                      empty = false;
-                      emptyKnown.countDown();
+                    revisionCacheAdder.addRevision(revision);
+                  }
 
-                      CDORevisionCacheAdder revisionCacheAdder = getRevisionCacheAdder();
-                      if (revisionCacheAdder != null)
-                      {
-                        revisionCacheAdder.addRevision(revision);
-                      }
+                  CDOID id = revision.getID();
+                  if (!isDetached(id))
+                  {
+                    enqueue(id);
+                  }
 
-                      CDOID id = revision.getID();
-                      if (!isDetached(id))
-                      {
-                        enqueue(id);
-                      }
+                  return !canceled.get();
+                }
+              });
 
-                      return !canceled.get();
-                    }
-                  }));
+              createExtent(eClass, accessor, branch, timeStamp, canceled, revisionHandler);
             }
 
             private void enqueue(CDOID id)

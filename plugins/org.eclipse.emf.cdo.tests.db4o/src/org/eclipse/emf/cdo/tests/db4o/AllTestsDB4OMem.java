@@ -20,7 +20,7 @@ public class AllTestsDB4OMem extends AllTestsDB4O
 {
   public static Test suite()
   {
-    return new AllTestsDB4OMem().getTestSuite("CDO Tests (DB4OMem)");
+    return new AllTestsDB4OMem().getTestSuite();
   }
 
   @Override

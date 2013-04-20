@@ -15,8 +15,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.net4j.util.Predicate;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Internal.DynamicValueHolder;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
-import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 
 /**
  * Encapsulates the modeled information and the EMF system values of a {@link CDORevision revision}.
@@ -28,11 +28,11 @@ import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 public interface CDORevisionData
 {
   /**
-   * The equivalent of <code>EStructuralFeatureImpl.NIL</code> (i.e. explicit <code>null</code>).
+   * The equivalent of <code>DynamicValueHolder.NIL</code> (i.e. explicit <code>null</code>).
    *
    * @since 3.0
    */
-  public static final Object NIL = EStoreEObjectImpl.NIL;
+  public static final Object NIL = DynamicValueHolder.NIL;
 
   /**
    * @since 2.0

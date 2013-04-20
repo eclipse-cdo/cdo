@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.collection.Pair;
@@ -337,33 +338,37 @@ public class Net4jDBTest extends AbstractCDOTest
 
   private void registerColumn(DBType type, Object value)
   {
-    Pair<DBType, Object> column = new Pair<DBType, Object>(type, value);
+    Pair<DBType, Object> column = Pair.create(type, value);
     columns.add(column);
   }
 
-  private void prepareTable(String tableName)
+  private void prepareTable(final String tableName)
   {
-    IDBSchema schema = store.getDBSchema();
-    IDBTable table = schema.addTable(tableName);
-    int c = 0;
-
-    for (Pair<DBType, Object> column : columns)
+    IDBDatabase database = store.getDatabase();
+    database.updateSchema(new IDBDatabase.RunnableWithSchema()
     {
-      switch (column.getElement1())
+
+      public void run(IDBSchema schema)
       {
-      case NUMERIC:
-      case DECIMAL:
-        BigDecimal value = (BigDecimal)column.getElement2();
-        table.addField(FIELD_NAME + c++, column.getElement1(), value.precision(), value.scale());
-        break;
+        IDBTable table = schema.addTable(tableName);
+        int c = 0;
+        for (Pair<DBType, Object> column : columns)
+        {
+          switch (column.getElement1())
+          {
+          case NUMERIC:
+          case DECIMAL:
+            BigDecimal value = (BigDecimal)column.getElement2();
+            table.addField(FIELD_NAME + c++, column.getElement1(), value.precision(), value.scale());
+            break;
 
-      default:
-        table.addField(FIELD_NAME + c++, column.getElement1());
-        break;
+          default:
+            table.addField(FIELD_NAME + c++, column.getElement1());
+            break;
+          }
+        }
       }
-    }
-
-    store.getDBAdapter().createTables(Arrays.asList(table), connection);
+    });
   }
 
   private void writeValues(String tableName) throws Exception

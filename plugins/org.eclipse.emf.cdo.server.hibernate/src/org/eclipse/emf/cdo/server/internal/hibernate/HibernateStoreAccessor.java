@@ -41,7 +41,6 @@ import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.WrappedHibernateLi
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
-import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -96,7 +95,6 @@ import java.sql.Clob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -276,7 +274,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   /**
    * @return the current hibernate session. If there is none then a new one is created and a transaction is started.
-   * 
+   *
    * Note the default is a readonly flushmode manual session.
    */
   public Session getHibernateSession()
@@ -638,8 +636,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       }
       else
       {
-        criteria
-            .add(org.hibernate.criterion.Restrictions.eq("folder.id", ((AbstractCDOIDLong)folderID).getLongValue()));
+        criteria.add(org.hibernate.criterion.Restrictions.eq("folder.id", CDOIDUtil.getLong(folderID)));
       }
 
       result = criteria.list();
@@ -802,8 +799,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       // TODO Can this happen? When?
       // the folder id is always a long
       final Long idValue = CDOIDUtil.getLong(id);
-      return CDOIDUtil.createLongWithClassifier(new CDOClassifierRef(EresourcePackage.eINSTANCE.getCDOResourceNode()),
-          idValue);
+      return CDOIDUtil.createLongWithClassifier(idValue,
+          new CDOClassifierRef(EresourcePackage.eINSTANCE.getCDOResourceNode()));
     }
 
     return null;
@@ -880,7 +877,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       // versions later on. The versions can be updated when inserting new objects
       // this will result in a version difference when the object gets merged
       // this repair is done just before the merge
-      final Map<CDOID, InternalCDORevision> existingRevisions = new HashMap<CDOID, InternalCDORevision>();
+      final Map<CDOID, InternalCDORevision> existingRevisions = CDOIDUtil.createMap();
       for (InternalCDORevision revision : context.getDirtyObjects())
       {
         final String entityName = HibernateUtil.getInstance().getEntityName(revision.getID());

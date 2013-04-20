@@ -14,7 +14,9 @@ import java.util.ArrayList;
 
 /**
  * A list with O(1) effort for random access.
- * 
+ * <p>
+ * Whenever possible EMF's BasicEList should be used in favour of this list implementation.
+ *
  * @author Eike Stepper
  */
 public class MoveableArrayList<E> extends ArrayList<E> implements MoveableList<E>

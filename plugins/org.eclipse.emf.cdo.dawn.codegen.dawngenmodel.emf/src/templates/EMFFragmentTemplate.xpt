@@ -1,4 +1,4 @@
-«REM»
+Â«REMÂ»
  Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
  All rights reserved. This program and the accompanying materials
  are made available under the terms of the Eclipse Public License v1.0
@@ -7,35 +7,37 @@
 
  Contributors:
      Martin Fluegge - initial API and implementation
+	 Christian W. Damus (CEA) - bug 399933 NPE in editor when finishing Ecore wizard
+	 
 
-«ENDREM»
+Â«ENDREMÂ»
 
-«IMPORT emf»
-«IMPORT genmodel»
-«IMPORT ecore»
-«IMPORT dawngenmodel»
-«IMPORT dawnEmfGenmodel»
+Â«IMPORT emfÂ»
+Â«IMPORT genmodelÂ»
+Â«IMPORT ecoreÂ»
+Â«IMPORT dawngenmodelÂ»
+Â«IMPORT dawnEmfGenmodelÂ»
 
-«EXTENSION org::eclipse::emf::cdo::dawn::codegen::util::Utils»
+Â«EXTENSION org::eclipse::emf::cdo::dawn::codegen::util::UtilsÂ»
 
-«DEFINE main FOR DawnEMFGenerator»
+Â«DEFINE main FOR DawnEMFGeneratorÂ»
   
-  «setDiagramPackage(this.emfGenModel.modelPluginID)»
+  Â«setDiagramPackage(this.emfGenModel.modelPluginID)Â»
   
-  «EXPAND dawnEditor FOR this»
-  «EXPAND dawnWizard FOR this»
-  «EXPAND fragmentXML FOR this»
-  «EXPAND manifestMF FOR this»
-  «EXPAND buildPROPERTIES FOR this»
-  «EXPAND classpath FOR this»
-«ENDDEFINE»
+  Â«EXPAND dawnEditor FOR thisÂ»
+  Â«EXPAND dawnWizard FOR thisÂ»
+  Â«EXPAND fragmentXML FOR thisÂ»
+  Â«EXPAND manifestMF FOR thisÂ»
+  Â«EXPAND buildPROPERTIES FOR thisÂ»
+  Â«EXPAND classpath FOR thisÂ»
+Â«ENDDEFINEÂ»
 
-«REM»############################################  Extended Editor ##################################################################«ENDREM»
-«DEFINE dawnEditor FOR DawnEMFGenerator»
-«FILE "src/"+getDiagramPackagePath()+"/presentation/"+this.dawnEditorClassName+".java"»
-package «this.emfGenModel.modelPluginID».presentation;
+Â«REMÂ»############################################  Extended Editor ##################################################################Â«ENDREMÂ»
+Â«DEFINE dawnEditor FOR DawnEMFGeneratorÂ»
+Â«FILE "src/"+getDiagramPackagePath()+"/presentation/"+this.dawnEditorClassName+".java"Â»
+package Â«this.emfGenModel.modelPluginIDÂ».presentation;
 
-import «this.emfGenModel.modelPluginID».presentation.«this.emfGenModel.modelName»Editor;
+import Â«this.emfGenModel.modelPluginIDÂ».presentation.Â«this.emfGenModel.modelNameÂ»Editor;
 
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditorSupport;
@@ -57,13 +59,13 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 
-public class «this.dawnEditorClassName» extends «this.emfGenModel.modelName»Editor implements IDawnEditor
+public class Â«this.dawnEditorClassNameÂ» extends Â«this.emfGenModel.modelNameÂ»Editor implements IDawnEditor
 {
   private IDawnEditorSupport dawnEditorSupport;
 
-  public static String ID = "«this.emfGenModel.modelPluginID».presentation.«this.dawnEditorClassName»ID";
+  public static String ID = "Â«this.emfGenModel.modelPluginIDÂ».presentation.Â«this.dawnEditorClassNameÂ»ID";
 
-  public «this.dawnEditorClassName»()
+  public Â«this.dawnEditorClassNameÂ»()
   {
     super();
     dawnEditorSupport = new DawnEMFEditorSupport(this);
@@ -113,6 +115,11 @@ public class «this.dawnEditorClassName» extends «this.emfGenModel.modelName»Edit
   {
     super.createPages();
 
+    if (!(getEditorInput() instanceof DawnEditorInput))
+    {
+      return;
+    }
+
     selectionViewer.setContentProvider(new DawnSelectionViewerAdapterFactoryContentProvider(adapterFactory,
         ((DawnEditorInput)getEditorInput()).getResource()));
     selectionViewer
@@ -147,6 +154,10 @@ public class «this.dawnEditorClassName» extends «this.emfGenModel.modelName»Edit
       {
         super.doSave(progressMonitor);
       }
+    }
+    else
+    {
+      super.doSave(progressMonitor);
     }
   }
 
@@ -188,12 +199,12 @@ public class «this.dawnEditorClassName» extends «this.emfGenModel.modelName»Edit
     return dawnEditorSupport;
   }
 }
-«ENDFILE»
-«ENDDEFINE»
-«REM»############################################  Extended Wizard ##################################################################«ENDREM»
-«DEFINE dawnWizard FOR DawnEMFGenerator»
-«FILE "src/"+getDiagramPackagePath()+"/presentation/"+"Dawn"+this.emfGenModel.modelName+"ModelWizard.java"»
-package «this.emfGenModel.modelPluginID».presentation;
+Â«ENDFILEÂ»
+Â«ENDDEFINEÂ»
+Â«REMÂ»############################################  Extended Wizard ##################################################################Â«ENDREMÂ»
+Â«DEFINE dawnWizard FOR DawnEMFGeneratorÂ»
+Â«FILE "src/"+getDiagramPackagePath()+"/presentation/"+"Dawn"+this.emfGenModel.modelName+"ModelWizard.java"Â»
+package Â«this.emfGenModel.modelPluginIDÂ».presentation;
 
 import org.eclipse.emf.cdo.dawn.preferences.PreferenceConstants;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
@@ -219,7 +230,7 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
 import java.util.Collections;
 
-public class Dawn«this.emfGenModel.modelName»ModelWizard extends «this.emfGenModel.modelName»ModelWizard implements INewWizard
+public class DawnÂ«this.emfGenModel.modelNameÂ»ModelWizard extends Â«this.emfGenModel.modelNameÂ»ModelWizard implements INewWizard
 {
   private DawnCreateNewResourceWizardPage newResourceCreationPage;
 
@@ -227,7 +238,7 @@ public class Dawn«this.emfGenModel.modelName»ModelWizard extends «this.emfGenMod
 
   private CDOResource resource;
 
-  public Dawn«this.emfGenModel.modelName»ModelWizard()
+  public DawnÂ«this.emfGenModel.modelNameÂ»ModelWizard()
   {
     super();
     CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
@@ -239,12 +250,12 @@ public class Dawn«this.emfGenModel.modelName»ModelWizard extends «this.emfGenMod
   @Override
   public void addPages()
   {
-    newResourceCreationPage = new DawnCreateNewResourceWizardPage("«getEMFFileName(this.emfGenModel.genPackages)»", true, view);
+    newResourceCreationPage = new DawnCreateNewResourceWizardPage("Â«getEMFFileName(this.emfGenModel.genPackages)Â»", true, view);
     addPage(newResourceCreationPage);
 
-    initialObjectCreationPage = new «this.emfGenModel.modelName»ModelWizardInitialObjectCreationPage("Whatever2");
-    initialObjectCreationPage.setTitle(«this.emfGenModel.modelName»EditorPlugin.INSTANCE.getString("_UI_«this.emfGenModel.modelName»ModelWizard_label"));
-    initialObjectCreationPage.setDescription(«this.emfGenModel.modelName»EditorPlugin.INSTANCE
+    initialObjectCreationPage = new Â«this.emfGenModel.modelNameÂ»ModelWizardInitialObjectCreationPage("Whatever2");
+    initialObjectCreationPage.setTitle(Â«this.emfGenModel.modelNameÂ»EditorPlugin.INSTANCE.getString("_UI_Â«this.emfGenModel.modelNameÂ»ModelWizard_label"));
+    initialObjectCreationPage.setDescription(Â«this.emfGenModel.modelNameÂ»EditorPlugin.INSTANCE
         .getString("_UI_Wizard_initial_object_description"));
     addPage(initialObjectCreationPage);
   }
@@ -284,7 +295,7 @@ public class Dawn«this.emfGenModel.modelName»ModelWizard extends «this.emfGenMod
           }
           catch (Exception exception)
           {
-            «this.emfGenModel.modelName»EditorPlugin.INSTANCE.log(exception);
+            Â«this.emfGenModel.modelNameÂ»EditorPlugin.INSTANCE.log(exception);
             throw new RuntimeException(exception);
           }
           finally
@@ -302,7 +313,7 @@ public class Dawn«this.emfGenModel.modelName»ModelWizard extends «this.emfGenMod
     }
     catch (Exception exception)
     {
-      «this.emfGenModel.modelName»EditorPlugin.INSTANCE.log(exception);
+      Â«this.emfGenModel.modelNameÂ»EditorPlugin.INSTANCE.log(exception);
       return false;
     }
   }
@@ -314,85 +325,85 @@ public class Dawn«this.emfGenModel.modelName»ModelWizard extends «this.emfGenMod
     DawnEditorInput dawnEditorInput = new DawnEditorInput(uri);
     try
     {
-      page.openEditor(dawnEditorInput, «this.dawnEditorClassName».ID);
+      page.openEditor(dawnEditorInput, Â«this.dawnEditorClassNameÂ».ID);
     }
     catch (PartInitException exception)
     {
       MessageDialog.openError(workbenchWindow.getShell(),
-          «this.emfGenModel.modelName»EditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
+          Â«this.emfGenModel.modelNameÂ»EditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
       throw new RuntimeException(exception);
     }
   }
 }
-«ENDFILE»
-«ENDDEFINE»
-«REM»########################################## fragment.xml ####################################################################«ENDREM»
-«DEFINE fragmentXML FOR DawnEMFGenerator»
-«FILE "fragment.xml"»<?xml version="1.0" encoding="UTF-8"?>
+Â«ENDFILEÂ»
+Â«ENDDEFINEÂ»
+Â«REMÂ»########################################## fragment.xml ####################################################################Â«ENDREMÂ»
+Â«DEFINE fragmentXML FOR DawnEMFGeneratorÂ»
+Â«FILE "fragment.xml"Â»<?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <fragment>
    <extension point="org.eclipse.ui.newWizards">
       <wizard
-            id="«this.emfGenModel.modelPluginID».presentation.Dawn«this.emfGenModel.modelName»ModelWizardID"
-            name="Dawn «this.emfGenModel.modelName» Model"
-            class="«this.emfGenModel.modelPluginID».presentation.Dawn«this.emfGenModel.modelName»ModelWizard"
+            id="Â«this.emfGenModel.modelPluginIDÂ».presentation.DawnÂ«this.emfGenModel.modelNameÂ»ModelWizardID"
+            name="Dawn Â«this.emfGenModel.modelNameÂ» Model"
+            class="Â«this.emfGenModel.modelPluginIDÂ».presentation.DawnÂ«this.emfGenModel.modelNameÂ»ModelWizard"
             category="org.eclipse.emf.cdo.dawn.ui.category.examples"
-            icon="platform:/plugin/«this.emfGenModel.editPluginID»/icons/full/obj16/«this.emfGenModel.modelName»ModelFile.gif">
-         <description>A Dawn editor for «this.emfGenModel.modelName» models</description>
+            icon="platform:/plugin/Â«this.emfGenModel.editPluginIDÂ»/icons/full/obj16/Â«this.emfGenModel.modelNameÂ»ModelFile.gif">
+         <description>A Dawn editor for Â«this.emfGenModel.modelNameÂ» models</description>
          <selection class="org.eclipse.core.resources.IResource"/>
       </wizard>
    </extension>
 
    <extension point="org.eclipse.ui.editors">
       <editor
-            id="«this.emfGenModel.modelPluginID».presentation.«this.dawnEditorClassName»ID"
-            name="Dawn «this.emfGenModel.modelName» model Editor"
-            icon="platform:/plugin/«this.emfGenModel.editPluginID»/icons/full/obj16/«this.emfGenModel.modelName»ModelFile.gif"
-            extensions="«getEMFFileName(this.emfGenModel.genPackages)»"
-            class="«this.emfGenModel.modelPluginID».presentation.«this.dawnEditorClassName»"
-            contributorClass="«this.emfGenModel.modelPluginID».presentation.«this.emfGenModel.modelName»ActionBarContributor">
+            id="Â«this.emfGenModel.modelPluginIDÂ».presentation.Â«this.dawnEditorClassNameÂ»ID"
+            name="Dawn Â«this.emfGenModel.modelNameÂ» model Editor"
+            icon="platform:/plugin/Â«this.emfGenModel.editPluginIDÂ»/icons/full/obj16/Â«this.emfGenModel.modelNameÂ»ModelFile.gif"
+            extensions="Â«getEMFFileName(this.emfGenModel.genPackages)Â»"
+            class="Â«this.emfGenModel.modelPluginIDÂ».presentation.Â«this.dawnEditorClassNameÂ»"
+            contributorClass="Â«this.emfGenModel.modelPluginIDÂ».presentation.Â«this.emfGenModel.modelNameÂ»ActionBarContributor">
       </editor>
    </extension>
 </fragment>
 
-«ENDFILE»
-«ENDDEFINE»
-«REM»##############################################################################################################«ENDREM»
-«DEFINE manifestMF FOR DawnEMFGenerator»
-«FILE "META-INF/MANIFEST.MF"»Manifest-Version: 1.0
+Â«ENDFILEÂ»
+Â«ENDDEFINEÂ»
+Â«REMÂ»##############################################################################################################Â«ENDREMÂ»
+Â«DEFINE manifestMF FOR DawnEMFGeneratorÂ»
+Â«FILE "META-INF/MANIFEST.MF"Â»Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Dawn
-Bundle-SymbolicName: «this.fragmentName»;singleton:=true
+Bundle-SymbolicName: Â«this.fragmentNameÂ»;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Fragment-Host: «this.emfGenModel.editorPluginID»
+Fragment-Host: Â«this.emfGenModel.editorPluginIDÂ»
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.emf.cdo.dawn;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.cdo.dawn.ui;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.cdo.dawn.util;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.cdo.ui;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo.dawn.emf;bundle-version="[2.0.0,3.0.0)"
-«ENDFILE»
-«ENDDEFINE»
+Â«ENDFILEÂ»
+Â«ENDDEFINEÂ»
 
 
-«DEFINE buildPROPERTIES FOR DawnEMFGenerator»
-«FILE "build.properties"»source.. = src/
+Â«DEFINE buildPROPERTIES FOR DawnEMFGeneratorÂ»
+Â«FILE "build.properties"Â»source.. = src/
 output.. = bin/
 bin.includes = META-INF/,\
                .,\
                fragment.xml
-«ENDFILE»
-«ENDDEFINE»
-«REM»################################### . classpath ###########################################################################«ENDREM»
+Â«ENDFILEÂ»
+Â«ENDDEFINEÂ»
+Â«REMÂ»################################### . classpath ###########################################################################Â«ENDREMÂ»
 
-«DEFINE classpath FOR DawnEMFGenerator»
-«FILE ".classpath"»<?xml version="1.0" encoding="UTF-8"?>
+Â«DEFINE classpath FOR DawnEMFGeneratorÂ»
+Â«FILE ".classpath"Â»<?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
-«ENDFILE»
-«ENDDEFINE»
+Â«ENDFILEÂ»
+Â«ENDDEFINEÂ»
 

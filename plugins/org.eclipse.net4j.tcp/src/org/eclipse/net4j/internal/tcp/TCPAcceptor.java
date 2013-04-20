@@ -124,9 +124,10 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
 
   public void handleRegistration(ITCPSelector selector, ServerSocketChannel serverSocketChannel)
   {
+    InetSocketAddress addr = null;
+
     try
     {
-      InetSocketAddress addr = null;
       if (address != null)
       {
         addr = new InetSocketAddress(InetAddress.getByName(address), port);
@@ -156,7 +157,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
     }
     catch (Exception ex)
     {
-      OM.LOG.error(ex);
+      OM.LOG.error("Problem while binding " + addr, ex);
       deactivateAsync();
     }
     finally

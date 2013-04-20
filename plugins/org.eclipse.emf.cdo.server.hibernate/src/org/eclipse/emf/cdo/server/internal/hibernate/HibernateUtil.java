@@ -25,8 +25,6 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
-import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
-import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDString;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -63,7 +61,7 @@ import java.util.Properties;
 
 /**
  * Provides several utility and convenience methods. Mostly related to {@link CDOID} and {@link CDORevision}.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateUtil
@@ -103,7 +101,7 @@ public class HibernateUtil
 
   /**
    * Sets the singleton used by the Hibernate store.
-   * 
+   *
    * @param instance
    *          the instance to set
    */
@@ -139,7 +137,7 @@ public class HibernateUtil
 
   /**
    * Uses the repository package repository to find the EClass of the identified by the CDOClassifierRef.
-   * 
+   *
    * @param classifierRef
    *          {@link CDOClassifierRef} which identifies an EClass
    * @return the EClass instance identified by the EPackage nsuri and classifier name in the CDOClassifierRef
@@ -179,7 +177,7 @@ public class HibernateUtil
 
   /**
    * Creates an instance of {@link IHibernateStore}.
-   * 
+   *
    * @param mappingProvider
    *          the provider which generates a mapping.
    * @param properties
@@ -198,7 +196,7 @@ public class HibernateUtil
   /**
    * Can only be used when Eclipse is running. In standalone scenarios create the mapping strategy instance by directly
    * calling the constructor of the mapping strategy class.
-   * 
+   *
    * @see #createFileMappingProvider(String)
    * @since 2.0
    */
@@ -234,7 +232,7 @@ public class HibernateUtil
 
   /**
    * Creates a FileMappingProvider using the passed locations.
-   * 
+   *
    * @param location
    *          the locations to load the mappings from
    * @return a {@link FileHibernateMappingProvider}
@@ -248,7 +246,7 @@ public class HibernateUtil
   /**
    * Retrieves the Hibernate Session from the current {@link HibernateStoreAccessor}. The current HibernateStoreAccessor
    * is maintained in the {@link HibernateThreadContext}.
-   * 
+   *
    * @return the current hibernate session, if none is there a new one is created and a transaction is started.
    * @since 2.0
    */
@@ -261,7 +259,7 @@ public class HibernateUtil
   /**
    * Convenience method to convert the properties of the {@link IStore#getRepository()} to a real java Properties
    * object.
-   * 
+   *
    * @param store
    *          the properties of this store are converted to a real Properties object
    * @return a Properties object with the store properties
@@ -347,7 +345,7 @@ public class HibernateUtil
   /**
    * Converts a CDOID to an unique String representations. Null, {@link CDOIDTemp} and null CDOID's are returned as null
    * value. Supports {@link CDOID} and {@link CDOIDExternal}.
-   * 
+   *
    * @param id
    *          the id to convert
    * @return a unique String
@@ -367,7 +365,7 @@ public class HibernateUtil
   /**
    * Converts a String back to its CDOID representation. The same types as in the {@link #convertCDOIDToString(CDOID)}
    * method are supported.
-   * 
+   *
    * @param strID
    *          the String representation of the CDOID
    * @return a valid CDOID, can be null
@@ -386,7 +384,7 @@ public class HibernateUtil
    * Translates a temporary {@link CDOID} into a hibernate ID, by finding the object it refers to in the
    * {@link CommitContext} and then returning or by persisting the object. Note assumes that the hibernate session and
    * CommitContext are set in HibernateThreadContext.
-   * 
+   *
    * @param id
    *          the CDOID to translate to a valid id, if the id is already valid then it is returned.
    * @return the passed id or an instance of CDOID which is valid.
@@ -410,7 +408,7 @@ public class HibernateUtil
   /**
    * Retrieves a {@link CDOID} from the passed CDORevision. If the revision has a non-supported CDOID then the revision
    * is saved to the database.
-   * 
+   *
    * @param revision
    *          the revision to get the id from
    * @return a CDOID supported by this store
@@ -431,7 +429,7 @@ public class HibernateUtil
   /**
    * Retrieves the {@link InternalCDORevision} if the target is a {@link CDOObject} then the CDORevision is retrieved
    * using: {@link CDOObject#cdoRevision()}.
-   * 
+   *
    * @param target
    *          the object which can be a CDOObject or an InternalCDORevision
    * @return the found {@link InternalCDORevision}
@@ -448,7 +446,7 @@ public class HibernateUtil
   /**
    * Gets a current object, first checks the new and dirty objects from the {@link CommitContext}. Otherwise reads it
    * from the session.
-   * 
+   *
    * @param id
    *          the {@link CDOID}, the {@link CDOIDTemp} is resolved against the CommitContext.
    * @return the retrieved {@link CDORevision} or null if the id is a null ({@link CDOIDUtil#isNull(CDOID)})
@@ -492,7 +490,7 @@ public class HibernateUtil
   /**
    * Retrieves a {@link InternalCDORevision} from the {@link CommitContext} or from the database/hibernate session.
    * Resolves temporary id's: {@link CDOIDTemp}.
-   * 
+   *
    * @param id
    *          the {@link CDOID} identifying the object,
    * @return the retrieved CDORevision or null if the revision is not found
@@ -542,7 +540,7 @@ public class HibernateUtil
   /**
    * Converts a String to a containing feature id. Note this is not the same as the feature id. The feature is the
    * containing feature of the passed EObject.
-   * 
+   *
    * @param contained
    *          the object which is contained
    * @param value
@@ -571,7 +569,7 @@ public class HibernateUtil
   /**
    * Computes a valid containing feature id for a passed containing EClass, the contained object and the
    * EStructuralFeature which can be the container or the containment feature.
-   * 
+   *
    * @param containingEClass
    *          the EClass representing the container
    * @param contained
@@ -598,7 +596,7 @@ public class HibernateUtil
 
   /**
    * Creates the correct subclass of {@link CDOID} for the passed EClass and hibernate id object.
-   * 
+   *
    * @param classifierRef
    *          the EClass to set in the CDOID
    * @param idValue
@@ -610,12 +608,12 @@ public class HibernateUtil
   {
     if (idValue instanceof String)
     {
-      return CDOIDUtil.createStringWithClassifier(classifierRef, (String)idValue);
+      return CDOIDUtil.createStringWithClassifier((String)idValue, classifierRef);
     }
 
     if (idValue instanceof Long)
     {
-      return CDOIDUtil.createLongWithClassifier(classifierRef, (Long)idValue);
+      return CDOIDUtil.createLongWithClassifier((Long)idValue, classifierRef);
     }
 
     throw new IllegalArgumentException("The ID value type " + idValue.getClass() //$NON-NLS-1$
@@ -624,7 +622,7 @@ public class HibernateUtil
 
   /**
    * Checks if the passed id is created/used by this store.
-   * 
+   *
    * @param id
    *          the {@link CDOID} to check
    * @return true if this is a CDOID which is used/created by this store.
@@ -638,7 +636,7 @@ public class HibernateUtil
 
   /**
    * Checks if the passed {@link CDOID} is a type supported by this store.
-   * 
+   *
    * @param id
    *          the CDOID instance to check
    * @throws IllegalArgumentException
@@ -660,22 +658,12 @@ public class HibernateUtil
    */
   public Serializable getIdValue(CDOID id)
   {
-    if (id instanceof AbstractCDOIDString)
-    {
-      return ((AbstractCDOIDString)id).getStringValue();
-    }
-
-    if (id instanceof AbstractCDOIDLong)
-    {
-      return ((AbstractCDOIDLong)id).getLongValue();
-    }
-
-    throw new IllegalArgumentException("This CDOID type " + id + " is not supported by this store."); //$NON-NLS-1$ //$NON-NLS-2$
+    return CDOIDUtil.getLong(id);
   }
 
   /**
    * Retrieves the entity name for the EClass present in the CDOID.
-   * 
+   *
    * @param id
    *          the {@link CDOID} to get the EClass from
    * @return the entity name for the EClass of the CDOID.

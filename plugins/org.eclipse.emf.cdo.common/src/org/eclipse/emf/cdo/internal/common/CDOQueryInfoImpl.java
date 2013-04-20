@@ -37,8 +37,6 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
 
   protected int maxResults = UNLIMITED_RESULTS;
 
-  protected boolean legacyModeEnabled;
-
   protected CDOChangeSetData changeSetData;
 
   public CDOQueryInfoImpl(String queryLanguage, String queryString, Object context)
@@ -54,7 +52,6 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     queryString = in.readString();
     context = in.readCDORevisionOrPrimitiveOrClassifier();
     maxResults = in.readInt();
-    legacyModeEnabled = in.readBoolean();
 
     if (in.readBoolean())
     {
@@ -76,7 +73,6 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     out.writeString(queryString);
     out.writeCDORevisionOrPrimitiveOrClassifier(context);
     out.writeInt(maxResults);
-    out.writeBoolean(legacyModeEnabled);
 
     if (changeSetData != null)
     {
@@ -138,14 +134,10 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     return this;
   }
 
+  @Deprecated
   public boolean isLegacyModeEnabled()
   {
-    return legacyModeEnabled;
-  }
-
-  public void setLegacyModeEnabled(boolean legacyModeEnabled)
-  {
-    this.legacyModeEnabled = legacyModeEnabled;
+    return true;
   }
 
   public CDOChangeSetData getChangeSetData()

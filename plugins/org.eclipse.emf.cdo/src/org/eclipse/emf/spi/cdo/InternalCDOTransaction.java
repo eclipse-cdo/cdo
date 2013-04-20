@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -31,7 +32,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -168,7 +168,7 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   {
     private CDOChangeSetData changeSetData = new CDOChangeSetDataImpl();
 
-    private Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
+    private Map<CDOID, CDOID> idMappings = CDOIDUtil.createMap();
 
     private List<CDOID> adjustedObjects = new ArrayList<CDOID>();
 

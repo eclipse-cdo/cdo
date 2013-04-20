@@ -12,12 +12,12 @@ package org.eclipse.emf.cdo.spi.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 
 import java.text.MessageFormat;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,7 +30,7 @@ public final class CDORevisionAvailabilityInfo implements CDORevisionProvider
 {
   private CDOBranchPoint branchPoint;
 
-  private Map<CDOID, CDORevisionKey> availableRevisions = new HashMap<CDOID, CDORevisionKey>();
+  private Map<CDOID, CDORevisionKey> availableRevisions = CDOIDUtil.createMap();
 
   public CDORevisionAvailabilityInfo(CDOBranchPoint branchPoint)
   {

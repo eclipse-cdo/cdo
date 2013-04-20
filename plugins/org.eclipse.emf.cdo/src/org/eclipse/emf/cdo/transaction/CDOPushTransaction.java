@@ -354,6 +354,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.createResource(path);
   }
 
+  @Deprecated
   public boolean isLegacyModeEnabled()
   {
     return delegate.isLegacyModeEnabled();

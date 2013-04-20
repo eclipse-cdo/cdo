@@ -105,6 +105,18 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Order basicGetOrder()
+  {
+    if (eContainerFeatureID() != Model1Package.ORDER_DETAIL__ORDER)
+      return null;
+    return (Order)eInternalContainer();
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -295,7 +307,9 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
     switch (featureID)
     {
     case Model1Package.ORDER_DETAIL__ORDER:
-      return getOrder();
+      if (resolve)
+        return getOrder();
+      return basicGetOrder();
     case Model1Package.ORDER_DETAIL__PRODUCT:
       if (resolve)
         return getProduct();
@@ -360,7 +374,7 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
     switch (featureID)
     {
     case Model1Package.ORDER_DETAIL__ORDER:
-      return getOrder() != null;
+      return basicGetOrder() != null;
     case Model1Package.ORDER_DETAIL__PRODUCT:
       return product != null;
     case Model1Package.ORDER_DETAIL__PRICE:

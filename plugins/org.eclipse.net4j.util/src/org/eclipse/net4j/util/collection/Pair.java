@@ -97,4 +97,28 @@ public class Pair<T1, T2>
   {
     return "Pair[" + element1 + ", " + element2 + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
+
+  /**
+   * @since 3.3
+   */
+  public Pair<T1, T2> copy()
+  {
+    return new Pair<T1, T2>(this);
+  }
+
+  /**
+   * @since 3.3
+   */
+  public static <T1, T2> Pair<T1, T2> create()
+  {
+    return new Pair<T1, T2>();
+  }
+
+  /**
+   * @since 3.3
+   */
+  public static <T1, T2> Pair<T1, T2> create(T1 element1, T2 element2)
+  {
+    return new Pair<T1, T2>(element1, element2);
+  }
 }

@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.common.revision.AbstractCDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
@@ -55,7 +54,7 @@ public class RevisionManagerTest extends AbstractCDOTest
 
   private MEMStore store;
 
-  private InternalCDOSession session;
+  protected InternalCDOSession session;
 
   private InternalSession serverSession;
 
@@ -116,7 +115,7 @@ public class RevisionManagerTest extends AbstractCDOTest
     serverSession = repository.getSessionManager().getSession(session.getSessionID());
     StoreThreadLocal.setSession(serverSession);
 
-    branchManager = session.getBranchManager();
+    branchManager = repository.getBranchManager();
     branchID = 0;
 
     branch0 = branchManager.getMainBranch();
@@ -234,7 +233,7 @@ public class RevisionManagerTest extends AbstractCDOTest
     return timeStamp / 2 + revised / 2;
   }
 
-  private InternalCDORevision getRevision(CDOBranch branch, long timeStamp)
+  protected InternalCDORevision getRevision(CDOBranch branch, long timeStamp)
   {
     CDOBranchPoint branchPoint = branch.getPoint(timeStamp);
     dumpCache(branchPoint);
@@ -256,15 +255,15 @@ public class RevisionManagerTest extends AbstractCDOTest
 
   private static void assertRevision(InternalCDORevision expected, InternalCDORevision actual)
   {
-    if (expected == null)
+    if (expected == null || actual == null)
     {
       assertEquals(null, actual);
     }
     else
     {
-      assertEquals( //
-          CDORevisionUtil.copyRevisionKey(expected), //
-          CDORevisionUtil.copyRevisionKey(actual));
+      assertEquals(expected.getID(), actual.getID());
+      assertEquals(expected.getBranch().getID(), actual.getBranch().getID());
+      assertEquals(expected.getVersion(), actual.getVersion());
     }
   }
 

@@ -4,7 +4,7 @@
     modelDirectory="/org.eclipse.emf.cdo.tests.model1/src" editDirectory="" editorDirectory=""
     modelPluginID="org.eclipse.emf.cdo.tests.model1" modelName="Model1" updateClasspath="false"
     codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="5.0" runtimeVersion="2.6">
+    containmentProxies="true" complianceLevel="5.0" runtimeVersion="2.6">
   <foreignModel>model1.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="Model1" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"

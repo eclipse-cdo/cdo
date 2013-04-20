@@ -19,11 +19,11 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditClassMapping;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalNonAuditClassMapping;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalNonAuditMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.IMappingConstants;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.tests.db.bundle.OM;
@@ -82,7 +82,7 @@ public abstract class DBStoreVerifier
 
     try
     {
-      return accessor.getConnection().createStatement();
+      return accessor.getDBConnection().createStatement();
     }
     catch (SQLException ex)
     {
@@ -281,8 +281,8 @@ public abstract class DBStoreVerifier
       String tableName = mapping.getDBTables().iterator().next().getName();
       TRACER.format("verifyAtMostOneUnrevised: {0} ...", tableName);
 
-      String sql = "SELECT " + CDODBSchema.ATTRIBUTES_ID + ", count(1) FROM " + tableName + " WHERE "
-          + CDODBSchema.ATTRIBUTES_REVISED + "= 0 GROUP BY " + CDODBSchema.ATTRIBUTES_ID;
+      String sql = "SELECT " + IMappingConstants.ATTRIBUTES_ID + ", count(1) FROM " + tableName + " WHERE "
+          + IMappingConstants.ATTRIBUTES_REVISED + "= 0 GROUP BY " + IMappingConstants.ATTRIBUTES_ID;
       TRACER.format("  Executing SQL: {0} ", sql);
 
       ResultSet resultSet = getStatement().executeQuery(sql);
@@ -307,8 +307,9 @@ public abstract class DBStoreVerifier
       String tableName = mapping.getDBTables().iterator().next().getName();
       TRACER.format("verifyUniqueIdVersion: {0} ...", tableName);
 
-      String sql = "SELECT " + CDODBSchema.ATTRIBUTES_ID + "," + CDODBSchema.ATTRIBUTES_VERSION + ", count(1) FROM "
-          + tableName + " GROUP BY " + CDODBSchema.ATTRIBUTES_ID + "," + CDODBSchema.ATTRIBUTES_VERSION;
+      String sql = "SELECT " + IMappingConstants.ATTRIBUTES_ID + "," + IMappingConstants.ATTRIBUTES_VERSION
+          + ", count(1) FROM " + tableName + " GROUP BY " + IMappingConstants.ATTRIBUTES_ID + ","
+          + IMappingConstants.ATTRIBUTES_VERSION;
 
       TRACER.format("  Executing SQL: {0} ", sql);
 
@@ -324,7 +325,7 @@ public abstract class DBStoreVerifier
       catch (AssertionFailedError e)
       {
         TRACER.trace(e.getMessage());
-        sqlDump("SELECT * FROM " + tableName + " WHERE " + CDODBSchema.ATTRIBUTES_REVISED + "=0");
+        sqlDump("SELECT * FROM " + tableName + " WHERE " + IMappingConstants.ATTRIBUTES_REVISED + "=0");
         throw e;
       }
       finally
@@ -342,7 +343,8 @@ public abstract class DBStoreVerifier
       }
 
       String tableName = mapping.getDBTables().iterator().next().getName();
-      String sql = "SELECT " + CDODBSchema.ATTRIBUTES_ID + ", " + CDODBSchema.ATTRIBUTES_VERSION + " FROM " + tableName;
+      String sql = "SELECT " + IMappingConstants.ATTRIBUTES_ID + ", " + IMappingConstants.ATTRIBUTES_VERSION + " FROM "
+          + tableName;
 
       ArrayList<Pair<Long, Integer>> idVersions = new ArrayList<Pair<Long, Integer>>();
 
@@ -351,7 +353,7 @@ public abstract class DBStoreVerifier
       {
         while (resultSet.next())
         {
-          idVersions.add(new Pair<Long, Integer>(resultSet.getLong(1), resultSet.getInt(2)));
+          idVersions.add(Pair.create(resultSet.getLong(1), resultSet.getInt(2)));
         }
       }
       finally
@@ -374,9 +376,9 @@ public abstract class DBStoreVerifier
 
       TRACER.format("verifyUniqueIdVersion: {0} for ID{1}v{2} ...", tableName, id, version);
 
-      String sql = "SELECT " + CDODBSchema.LIST_IDX + " FROM " + tableName + " WHERE " + CDODBSchema.LIST_REVISION_ID
-          + "=" + id + " AND " + CDODBSchema.LIST_REVISION_VERSION + "=" + version + " ORDER BY "
-          + CDODBSchema.LIST_IDX;
+      String sql = "SELECT " + IMappingConstants.LIST_IDX + " FROM " + tableName + " WHERE "
+          + IMappingConstants.LIST_REVISION_ID + "=" + id + " AND " + IMappingConstants.LIST_REVISION_VERSION + "="
+          + version + " ORDER BY " + IMappingConstants.LIST_IDX;
 
       TRACER.format("  Executing SQL: {0} ", sql);
 
@@ -393,8 +395,8 @@ public abstract class DBStoreVerifier
       }
       catch (AssertionFailedError e)
       {
-        sqlDump("SELECT * FROM " + tableName + " WHERE " + CDODBSchema.LIST_REVISION_ID + "=" + id + " AND "
-            + CDODBSchema.LIST_REVISION_VERSION + "=" + version + " ORDER BY " + CDODBSchema.LIST_IDX);
+        sqlDump("SELECT * FROM " + tableName + " WHERE " + IMappingConstants.LIST_REVISION_ID + "=" + id + " AND "
+            + IMappingConstants.LIST_REVISION_VERSION + "=" + version + " ORDER BY " + IMappingConstants.LIST_IDX);
         throw e;
       }
       finally
@@ -444,7 +446,7 @@ public abstract class DBStoreVerifier
     private void verifyNoUnrevisedRevisions(IClassMapping mapping) throws Exception
     {
       String tableName = mapping.getDBTables().iterator().next().getName();
-      String sql = "SELECT count(1) FROM " + tableName + " WHERE " + CDODBSchema.ATTRIBUTES_REVISED + " <> 0";
+      String sql = "SELECT count(1) FROM " + tableName + " WHERE " + IMappingConstants.ATTRIBUTES_REVISED + " <> 0";
       ResultSet resultSet = getStatement().executeQuery(sql);
       try
       {
@@ -463,8 +465,8 @@ public abstract class DBStoreVerifier
     private void verifyUniqueId(IClassMapping mapping) throws Exception
     {
       String tableName = mapping.getDBTables().iterator().next().getName();
-      String sql = "SELECT " + CDODBSchema.ATTRIBUTES_ID + ", count(1) FROM " + tableName + " GROUP BY "
-          + CDODBSchema.ATTRIBUTES_ID;
+      String sql = "SELECT " + IMappingConstants.ATTRIBUTES_ID + ", count(1) FROM " + tableName + " GROUP BY "
+          + IMappingConstants.ATTRIBUTES_ID;
 
       ResultSet resultSet = getStatement().executeQuery(sql);
 
@@ -490,7 +492,8 @@ public abstract class DBStoreVerifier
       }
 
       String tableName = mapping.getDBTables().iterator().next().getName();
-      String sql = "SELECT " + CDODBSchema.ATTRIBUTES_ID + ", " + CDODBSchema.ATTRIBUTES_VERSION + " FROM " + tableName;
+      String sql = "SELECT " + IMappingConstants.ATTRIBUTES_ID + ", " + IMappingConstants.ATTRIBUTES_VERSION + " FROM "
+          + tableName;
 
       ArrayList<Pair<Long, Integer>> idVersions = new ArrayList<Pair<Long, Integer>>();
 
@@ -499,7 +502,7 @@ public abstract class DBStoreVerifier
       {
         while (resultSet.next())
         {
-          idVersions.add(new Pair<Long, Integer>(resultSet.getLong(1), resultSet.getInt(2)));
+          idVersions.add(Pair.create(resultSet.getLong(1), resultSet.getInt(2)));
         }
       }
       finally
@@ -519,8 +522,8 @@ public abstract class DBStoreVerifier
     private void verifyCorrectIndices(IListMapping refMapping, long id) throws Exception
     {
       String tableName = refMapping.getDBTables().iterator().next().getName();
-      String sql = "SELECT " + CDODBSchema.LIST_IDX + " FROM " + tableName + " WHERE " + CDODBSchema.LIST_REVISION_ID
-          + "=" + id + " ORDER BY " + CDODBSchema.LIST_IDX;
+      String sql = "SELECT " + IMappingConstants.LIST_IDX + " FROM " + tableName + " WHERE "
+          + IMappingConstants.LIST_REVISION_ID + "=" + id + " ORDER BY " + IMappingConstants.LIST_IDX;
 
       ResultSet resultSet = getStatement().executeQuery(sql);
       int indexShouldBe = 0;

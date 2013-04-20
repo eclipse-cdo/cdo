@@ -17,11 +17,11 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.State;
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryContext;
@@ -42,7 +42,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -133,12 +132,9 @@ public class XRefsQueryHandler implements IQueryHandler
   {
     if (!eClass.isAbstract() && !eClass.isInterface())
     {
-      for (EStructuralFeature eStructuralFeature : eClass.getEAllStructuralFeatures())
+      for (EReference eReference : CDOModelUtil.getClassInfo(eClass).getAllPersistentReferences())
       {
-        if (eStructuralFeature instanceof EReference && EMFUtil.isPersistent(eStructuralFeature))
-        {
-          collectSourceCandidates(eClass, (EReference)eStructuralFeature, concreteTypes, sourceCandidates);
-        }
+        collectSourceCandidates(eClass, eReference, concreteTypes, sourceCandidates);
       }
     }
   }
@@ -242,7 +238,7 @@ public class XRefsQueryHandler implements IQueryHandler
         IStore store = repository.getStore();
         CDOPackageRegistry packageRegistry = repository.getPackageRegistry();
 
-        targetObjects = new HashMap<CDOID, EClass>();
+        targetObjects = CDOIDUtil.createMap();
         StringTokenizer tokenizer = new StringTokenizer(info.getQueryString(), "|");
         while (tokenizer.hasMoreTokens())
         {

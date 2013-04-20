@@ -1160,4 +1160,87 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/provider/DawnCodeGenEditPlugin.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.provider.DawnCodeGenEditPlugin">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="getPluginResourceLocator()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/provider/DawnFragmentGeneratorItemProvider.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.provider.DawnFragmentGeneratorItemProvider">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="DawnFragmentGeneratorItemProvider(AdapterFactory)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="getResourceLocator()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="notifyChanged(Notification)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/provider/DawnGeneratorItemProvider.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.provider.DawnGeneratorItemProvider">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="DawnGeneratorItemProvider(AdapterFactory)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="getResourceLocator()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="notifyChanged(Notification)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/provider/DawngenmodelItemProviderAdapterFactory.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.provider.DawngenmodelItemProviderAdapterFactory">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="adapt(Notifier, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="addListener(INotifyChangedListener)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createDawnFragmentGeneratorAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createDawnGeneratorAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="fireNotifyChanged(Notification)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="getRootAdapterFactory()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="removeListener(INotifyChangedListener)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="setParentAdapterFactory(ComposedAdapterFactory)"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

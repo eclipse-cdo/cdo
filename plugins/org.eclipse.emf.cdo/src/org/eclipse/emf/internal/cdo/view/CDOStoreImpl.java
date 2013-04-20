@@ -11,6 +11,7 @@
  *    Eike Stepper & Simon McDuff - bug 204890
  *    Simon McDuff - bug 246705
  *    Simon McDuff - bug 246622
+ *    Christian W. Damus (CEA) - bug 400236: get internal instance of objects in ID conversion
  */
 package org.eclipse.emf.internal.cdo.view;
 
@@ -204,23 +205,27 @@ public final class CDOStoreImpl implements CDOStore
         TRACER.format("isSet({0}, {1})", cdoObject, feature); //$NON-NLS-1$
       }
 
-      if (!feature.isUnsettable())
+      InternalCDORevision revision = getRevisionForReading(cdoObject);
+      if (feature.isMany())
       {
-        if (feature.isMany())
-        {
-          InternalCDORevision revision = getRevisionForReading(cdoObject);
-          CDOList list = revision.getList(feature);
-          return list != null && !list.isEmpty();
-        }
-
-        Object value = eObject.eGet(feature);
-        Object defaultValue = feature.getDefaultValue();
-        return !ObjectUtil.equals(value, defaultValue);
+        CDOList list = revision.getList(feature);
+        return list != null && !list.isEmpty();
       }
 
-      // TODO This get() may not work for lists, see above
-      Object value = get(eObject, feature, NO_INDEX);
-      return value != null;
+      Object value = revision.getValue(feature);
+      if (feature.isUnsettable())
+      {
+        return value != null;
+      }
+
+      if (value == null)
+      {
+        return false;
+      }
+
+      value = convertToEMF(eObject, revision, feature, NO_INDEX, value);
+      Object defaultValue = feature.getDefaultValue();
+      return !ObjectUtil.equals(value, defaultValue);
     }
   }
 
@@ -693,12 +698,22 @@ public final class CDOStoreImpl implements CDOStore
       }
     }
 
-    return value;
+    return getInternalInstance(value);
   }
 
   private InternalCDOObject getCDOObject(Object object)
   {
     return FSMUtil.adapt(object, view);
+  }
+
+  private Object getInternalInstance(Object object)
+  {
+    if (object instanceof InternalCDOObject)
+    {
+      return ((InternalCDOObject)object).cdoInternalInstance();
+    }
+
+    return object;
   }
 
   private static InternalCDORevision getRevisionForReading(InternalCDOObject cdoObject)

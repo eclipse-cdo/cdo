@@ -147,17 +147,13 @@ public class InitialTest extends AbstractCDOTest
 
   public void testAttachResource() throws Exception
   {
-    msg("Opening session");
     CDOSession session = openSession();
-
-    msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Creating resource");
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     assertNew(resource, transaction);
     assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + getResourcePath("/test1")),
         resource.getURI());
+
     ResourceSet expected = transaction.getResourceSet();
     ResourceSet actual = resource.getResourceSet();
     assertEquals(expected, actual);
@@ -165,25 +161,14 @@ public class InitialTest extends AbstractCDOTest
 
   public void testAttachObject() throws Exception
   {
-    msg("Creating supplier");
     Supplier supplier = getModel1Factory().createSupplier();
-
-    msg("Setting name");
     supplier.setName("Stepper");
 
-    msg("Opening session");
     CDOSession session = openSession();
-
-    msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Creating resource");
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-    msg("Getting contents");
     EList<EObject> contents = resource.getContents();
-
-    msg("Adding supplier");
     contents.add(supplier);
     assertNew(supplier, transaction);
     assertEquals(transaction, CDOUtil.getCDOObject(supplier).cdoView());
@@ -489,54 +474,36 @@ public class InitialTest extends AbstractCDOTest
 
   public void testReadTransientValue() throws Exception
   {
-    msg("Opening session");
     CDOSession session = openSession();
 
     {
       disableConsole();
-      msg("Opening transaction");
       CDOTransaction transaction = session.openTransaction();
-
-      msg("Creating resource");
       CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-      msg("Creating supplier");
       Product1 product = getModel1Factory().createProduct1();
-
-      msg("Setting name");
       product.setDescription("DESCRIPTION");
       product.setName("McDuff");
 
-      msg("Adding supplier");
       resource.getContents().add(product);
 
       assertEquals("DESCRIPTION", product.getDescription());
 
-      msg("Committing");
       transaction.commit();
       enableConsole();
     }
 
-    msg("Opening transaction");
     CDOView view = session.openView();
-
-    msg("Getting resource");
     CDOResource resource = view.getResource(getResourcePath("/test1"));
 
-    msg("Getting contents");
     EList<EObject> contents = resource.getContents();
-
-    msg("Getting supplier");
     Product1 s = (Product1)contents.get(0);
     assertNotNull(s);
 
-    msg("Verifying name");
     assertEquals("McDuff", s.getName());
-
     assertNull(s.getDescription());
 
     s.setDescription("HELLO");
-
     assertEquals("HELLO", s.getDescription());
   }
 
@@ -787,39 +754,27 @@ public class InitialTest extends AbstractCDOTest
 
   public void testResourceAccessor() throws Exception
   {
-    msg("Opening session");
     CDOSession session = openSession();
-
-    msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Creating resource");
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-    msg("Creating supplier");
     Supplier supplier = getModel1Factory().createSupplier();
-
-    msg("Setting name");
     supplier.setName("Stepper");
 
-    msg("Adding supplier");
     resource.getContents().add(supplier);
 
     URI supplierTempURI = EcoreUtil.getURI(supplier);
 
-    msg("Retrieving supplier from URI before commit");
+    // Retrieving supplier from URI before commit
     EObject supplier1 = transaction.getResourceSet().getEObject(supplierTempURI, true);
-
     assertEquals(supplier, CDOUtil.getEObject(supplier1));
 
-    msg("Committing");
     transaction.commit();
 
     URI supplierURI = EcoreUtil.getURI(supplier);
 
-    msg("Retrieving supplier from URI after commit");
+    // Retrieving supplier from URI after commit
     EObject supplierFromURI = transaction.getResourceSet().getEObject(supplierURI, true);
-
     assertEquals(supplier, CDOUtil.getEObject(supplierFromURI));
 
     EObject supplierAfterCommit2 = transaction.getResourceSet().getEObject(supplierTempURI, true);

@@ -36,6 +36,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.DBUtil.DeserializeRowHandler;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -63,7 +64,7 @@ import java.util.List;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingStrategy
+public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingStrategy implements IMappingConstants
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractHorizontalMappingStrategy.class);
 
@@ -71,6 +72,10 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
    * The associated object type mapper.
    */
   private IObjectTypeMapper objectTypeMapper;
+
+  public AbstractHorizontalMappingStrategy()
+  {
+  }
 
   public CDOClassifierRef readObjectType(IDBStoreAccessor accessor, CDOID id)
   {
@@ -171,14 +176,14 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   {
     StringBuilder builder = new StringBuilder();
     builder.append(" WHERE a_t."); //$NON-NLS-1$
-    builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    builder.append(ATTRIBUTES_CREATED);
     builder.append(" BETWEEN "); //$NON-NLS-1$
     builder.append(fromCommitTime);
     builder.append(" AND "); //$NON-NLS-1$
     builder.append(toCommitTime);
 
     String attrSuffix = builder.toString();
-    Connection connection = accessor.getConnection();
+    IDBConnection connection = accessor.getDBConnection();
 
     Collection<IClassMapping> classMappings = getClassMappings(true).values();
     out.writeInt(classMappings.size());
@@ -200,8 +205,8 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     objectTypeMapper.rawExport(connection, out, fromCommitTime, toCommitTime);
   }
 
-  protected void rawExportList(CDODataOutput out, Connection connection, IListMapping listMapping, IDBTable attrTable,
-      String attrSuffix) throws IOException
+  protected void rawExportList(CDODataOutput out, IDBConnection connection, IListMapping listMapping,
+      IDBTable attrTable, String attrSuffix) throws IOException
   {
     for (IDBTable table : listMapping.getDBTables())
     {
@@ -235,7 +240,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
     try
     {
-      Connection connection = accessor.getConnection();
+      IDBConnection connection = accessor.getDBConnection();
       for (int i = 0; i < size; i++)
       {
         EClass eClass = (EClass)in.readCDOClassifierRefAndResolve();
@@ -279,18 +284,18 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
   }
 
-  protected void rawImportUnreviseNewRevisions(Connection connection, IDBTable table, long fromCommitTime,
+  protected void rawImportUnreviseNewRevisions(IDBConnection connection, IDBTable table, long fromCommitTime,
       long toCommitTime, OMMonitor monitor)
   {
     throw new UnsupportedOperationException("Must be overridden");
   }
 
-  protected void rawImportReviseOldRevisions(Connection connection, IDBTable table, OMMonitor monitor)
+  protected void rawImportReviseOldRevisions(IDBConnection connection, IDBTable table, OMMonitor monitor)
   {
     throw new UnsupportedOperationException("Must be overridden");
   }
 
-  protected void rawImportList(CDODataInput in, Connection connection, IListMapping listMapping, OMMonitor monitor)
+  protected void rawImportList(CDODataInput in, IDBConnection connection, IListMapping listMapping, OMMonitor monitor)
       throws IOException
   {
     Collection<IDBTable> tables = listMapping.getDBTables();
@@ -323,7 +328,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
   public String getListJoin(String attrTable, String listTable)
   {
-    return " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_ID + "=" + listTable + "." + CDODBSchema.LIST_REVISION_ID;
+    return " AND " + attrTable + "." + ATTRIBUTES_ID + "=" + listTable + "." + LIST_REVISION_ID;
   }
 
   @Override
@@ -410,19 +415,17 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
    */
   private boolean queryResources(IDBStoreAccessor accessor, IClassMapping classMapping, QueryResourcesContext context)
   {
-    IIDHandler idHandler = getStore().getIDHandler();
-    PreparedStatement stmt = null;
-    ResultSet resultSet = null;
-
     CDOID folderID = context.getFolderID();
     String name = context.getName();
     boolean exactMatch = context.exactMatch();
 
+    IIDHandler idHandler = getStore().getIDHandler();
+    PreparedStatement stmt = classMapping.createResourceQueryStatement(accessor, folderID, name, exactMatch, context);
+    ResultSet resultSet = null;
+
     try
     {
-      stmt = classMapping.createResourceQueryStatement(accessor, folderID, name, exactMatch, context);
       resultSet = stmt.executeQuery();
-
       while (resultSet.next())
       {
         CDOID id = idHandler.getCDOID(resultSet, 1);
@@ -447,7 +450,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     finally
     {
       DBUtil.close(resultSet);
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -456,11 +459,10 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     final IIDHandler idHandler = getStore().getIDHandler();
     final CDOID[] min = { idHandler.getMaxCDOID() };
 
-    final String prefix = "SELECT MIN(t." + CDODBSchema.ATTRIBUTES_ID + ") FROM " + CDODBSchema.CDO_OBJECTS + " o, ";
+    final String prefix = "SELECT MIN(t." + ATTRIBUTES_ID + ") FROM " + CDODBSchema.CDO_OBJECTS + " o, ";
 
-    final String suffix = " t WHERE t." + CDODBSchema.ATTRIBUTES_BRANCH + "<0 AND t." + CDODBSchema.ATTRIBUTES_ID
-        + "=o." + CDODBSchema.ATTRIBUTES_ID + " AND t." + CDODBSchema.ATTRIBUTES_CREATED + "=o."
-        + CDODBSchema.ATTRIBUTES_CREATED;
+    final String suffix = " t WHERE t." + ATTRIBUTES_BRANCH + "<0 AND t." + ATTRIBUTES_ID + "=o." + ATTRIBUTES_ID
+        + " AND t." + ATTRIBUTES_CREATED + "=o." + ATTRIBUTES_CREATED;
 
     getStore().visitAllTables(connection, new IDBStore.TableVisitor()
     {

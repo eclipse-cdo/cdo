@@ -8,6 +8,7 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Christian W. Damus (CEA) - bug 376620: notifications for primitive-valued attributes
  */
 package org.eclipse.emf.internal.cdo.object;
 
@@ -25,6 +26,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureDeltaVisitorImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.net4j.util.ReflectUtil;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -262,7 +265,7 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
     {
       for (CDOObject object : detachedObjects)
       {
-        if (id.equals(object.cdoID()))
+        if (id == object.cdoID())
         {
           return object;
         }
@@ -286,55 +289,75 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
       Object newValue, int position)
   {
     Class<?> instanceClass = feature.getEType().getInstanceClass();
-    if (instanceClass == Integer.TYPE)
+    if (instanceClass.isPrimitive())
     {
-      int old = oldValue == null ? 0 : ((Integer)oldValue).intValue();
-      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Integer)newValue).intValue());
-    }
+      Object defaultValue = null;
+      if (oldValue == null)
+      {
+        defaultValue = feature.getDefaultValue();
+        oldValue = defaultValue;
+      }
 
-    if (instanceClass == Boolean.TYPE)
-    {
-      boolean old = oldValue == null ? false : ((Boolean)oldValue).booleanValue();
-      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Boolean)newValue).booleanValue());
-    }
+      if (newValue == null)
+      {
+        if (defaultValue == null)
+        {
+          defaultValue = feature.getDefaultValue();
+        }
 
-    if (instanceClass == Long.TYPE)
-    {
-      long old = oldValue == null ? 0 : ((Long)oldValue).longValue();
-      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Long)newValue).longValue());
-    }
+        newValue = defaultValue;
+      }
 
-    if (instanceClass == Float.TYPE)
-    {
-      float old = oldValue == null ? 0 : ((Float)oldValue).floatValue();
-      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Float)newValue).floatValue());
-    }
-
-    if (instanceClass == Double.TYPE)
-    {
-      double old = oldValue == null ? 0 : ((Double)oldValue).doubleValue();
-      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Double)newValue).doubleValue());
-    }
-
-    if (instanceClass == Short.TYPE)
-    {
-      short old = oldValue == null ? 0 : ((Short)oldValue).shortValue();
-      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Short)newValue).shortValue());
-    }
-
-    if (instanceClass == Byte.TYPE)
-    {
-      byte old = oldValue == null ? 0 : ((Byte)oldValue).byteValue();
-      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Byte)newValue).byteValue());
-    }
-
-    if (instanceClass == Character.TYPE)
-    {
-      char old = oldValue == null ? 0 : ((Character)oldValue).charValue();
-      return new CDODeltaNotificationImpl(object, eventType, feature, old, ((Character)newValue).charValue());
+      // There cannot be a position if it's a primitive value because primitives cannot be in lists
+      return createPrimitiveNotification(eventType, feature, instanceClass, oldValue, newValue);
     }
 
     return new CDODeltaNotificationImpl(object, eventType, feature, oldValue, newValue, position);
+  }
+
+  private CDODeltaNotificationImpl createPrimitiveNotification(int eventType, EStructuralFeature feature,
+      Class<?> instanceClass, Object oldValue, Object newValue)
+  {
+    switch (ReflectUtil.PrimitiveType.forClass(instanceClass))
+    {
+    case BOOLEAN:
+      return new CDODeltaNotificationImpl(object, eventType, feature, ((Boolean)oldValue).booleanValue(),
+          ((Boolean)newValue).booleanValue());
+
+    case BYTE:
+      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).byteValue(),
+          ((Number)newValue).byteValue());
+
+    case CHAR:
+      return new CDODeltaNotificationImpl(object, eventType, feature, ((Character)oldValue).charValue(),
+          ((Character)newValue).charValue());
+
+    case SHORT:
+      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).shortValue(),
+          ((Number)newValue).shortValue());
+
+    case INT:
+      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).intValue(),
+          ((Number)newValue).intValue());
+
+    case LONG:
+      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).longValue(),
+          ((Number)newValue).longValue());
+
+    case FLOAT:
+      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).floatValue(),
+          ((Number)newValue).floatValue());
+
+    case DOUBLE:
+      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).doubleValue(),
+          ((Number)newValue).doubleValue());
+
+    case VOID:
+      throw new IllegalArgumentException("Feature of void type not supported: " + feature); //$NON-NLS-1$
+
+    default:
+      throw new IllegalArgumentException("Not a primitive type: " + instanceClass); //$NON-NLS-1$
+    }
   }
 
   private void add(CDODeltaNotificationImpl newNotificaton)

@@ -65,43 +65,121 @@ public final class CDOServerUtil
   {
   }
 
+  // /**
+  // * @since 4.2
+  // */
+  // public static CDOView openView(ISession session, CDOBranchPoint branchPoint, CDORevisionProvider revisionProvider)
+  // {
+  // return new ServerCDOView((InternalSession)session, branchPoint, revisionProvider);
+  // }
+  //
+  // /**
+  // * @since 4.2
+  // */
+  // public static CDOView openView(ISession session, CDOBranchPoint branchPoint)
+  // {
+  // CDORevisionManager revisionManager = session.getManager().getRepository().getRevisionManager();
+  // CDORevisionProvider revisionProvider = new ManagedRevisionProvider(revisionManager, branchPoint);
+  // return new ServerCDOView((InternalSession)session, branchPoint, revisionProvider);
+  // }
+  //
+  // /**
+  // * @since 4.2
+  // */
+  // public static CDOView openView(IView view)
+  // {
+  // ISession session = view.getSession();
+  // CDOBranchPoint branchPoint = CDOBranchUtil.copyBranchPoint(view);
+  // return openView(session, branchPoint, view);
+  // }
+  //
+  // /**
+  // * @since 4.2
+  // */
+  // public static CDOView openView(IStoreAccessor.CommitContext commitContext)
+  // {
+  // ISession session = commitContext.getTransaction().getSession();
+  // CDOBranchPoint branchPoint = commitContext.getBranchPoint();
+  // return openView(session, branchPoint, commitContext);
+  // }
+
   /**
-   * @since 4.0
+   * @since 4.2
    */
-  public static CDOView openView(ISession session, CDOBranchPoint branchPoint, boolean legacyModeEnabled,
-      CDORevisionProvider revisionProvider)
+  public static CDOView openView(ISession session, CDOBranchPoint branchPoint, CDORevisionProvider revisionProvider)
   {
-    return new ServerCDOView((InternalSession)session, branchPoint, legacyModeEnabled, revisionProvider);
+    return new ServerCDOView((InternalSession)session, branchPoint, revisionProvider);
   }
 
   /**
-   * @since 4.0
+   * @since 4.2
    */
-  public static CDOView openView(ISession session, CDOBranchPoint branchPoint, boolean legacyModeEnabled)
+  public static CDOView openView(ISession session, CDOBranchPoint branchPoint)
   {
     CDORevisionManager revisionManager = session.getManager().getRepository().getRevisionManager();
     CDORevisionProvider revisionProvider = new ManagedRevisionProvider(revisionManager, branchPoint);
-    return new ServerCDOView((InternalSession)session, branchPoint, legacyModeEnabled, revisionProvider);
+    return openView(session, branchPoint, revisionProvider);
   }
 
   /**
-   * @since 4.0
+   * @since 4.2
    */
-  public static CDOView openView(IView view, boolean legacyModeEnabled)
+  public static CDOView openView(IView view)
   {
     ISession session = view.getSession();
     CDOBranchPoint branchPoint = CDOBranchUtil.copyBranchPoint(view);
-    return openView(session, branchPoint, legacyModeEnabled, view);
+    return openView(session, branchPoint, view);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public static CDOView openView(IStoreAccessor.CommitContext commitContext)
+  {
+    ISession session = commitContext.getTransaction().getSession();
+    CDOBranchPoint branchPoint = commitContext.getBranchPoint();
+    return openView(session, branchPoint, commitContext);
   }
 
   /**
    * @since 4.0
+   * @deprecated As of 4.2 the legacy mode is always enabled, use {@link #openView(ISession, CDOBranchPoint, CDORevisionProvider)}.
    */
+  @Deprecated
+  public static CDOView openView(ISession session, CDOBranchPoint branchPoint, boolean legacyModeEnabled,
+      CDORevisionProvider revisionProvider)
+  {
+    return openView(session, branchPoint, revisionProvider);
+  }
+
+  /**
+   * @since 4.0
+   * @deprecated As of 4.2 the legacy mode is always enabled, use {@link #openView(ISession, CDOBranchPoint)}.
+   */
+  @Deprecated
+  public static CDOView openView(ISession session, CDOBranchPoint branchPoint, boolean legacyModeEnabled)
+  {
+    return openView(session, branchPoint);
+  }
+
+  /**
+   * @since 4.0
+   * @deprecated As of 4.2 the legacy mode is always enabled, use {@link #openView(IView)}.
+   */
+  @Deprecated
+  public static CDOView openView(IView view, boolean legacyModeEnabled)
+  {
+    return openView(view);
+  }
+
+  /**
+   * @since 4.0
+   * @deprecated As of 4.2 the legacy mode is always enabled, use {@link #openView(IStoreAccessor.CommitContext)}.
+   */
+  @Deprecated
   public static CDOView openView(IStoreAccessor.CommitContext commitContext, boolean legacyModeEnabled)
   {
-    ISession session = commitContext.getTransaction().getSession();
-    CDOBranchPoint branchPoint = commitContext.getBranchPoint();
-    return openView(session, branchPoint, legacyModeEnabled, commitContext);
+    return openView(commitContext);
   }
 
   /**

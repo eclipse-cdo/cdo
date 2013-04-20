@@ -11,20 +11,16 @@
 package org.eclipse.emf.cdo.ui.internal.team.history;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
-import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.LabelProvider;
-import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -35,9 +31,11 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.team.ui.history.HistoryPage;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.part.IPageSite;
@@ -47,6 +45,8 @@ import org.eclipse.ui.part.IPageSite;
  */
 public class CDOHistoryPage extends HistoryPage
 {
+  private static final String POPUP_ID = "org.eclipse.emf.cdo.ui.team.historyPageContributions";
+
   private CommitHistoryComposite commitHistoryComposite;
 
   private boolean commitOnDoubleClick;
@@ -103,31 +103,6 @@ public class CDOHistoryPage extends HistoryPage
         {
           testCommit(commitInfo);
         }
-        else
-        {
-          long previousTimeStamp = commitInfo.getPreviousTimeStamp();
-          if (previousTimeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
-          {
-            CDOBranchPoint previous = CDOBranchUtil.normalizeBranchPoint(commitInfo.getBranch(), previousTimeStamp);
-
-            CDOView leftView = null;
-            CDOView rightView = null;
-
-            try
-            {
-              CDOSession session = input.getSession();
-              leftView = session.openView(commitInfo);
-              rightView = session.openView(previous);
-
-              CDOCompareEditorUtil.openDialog(leftView, rightView, null);
-            }
-            finally
-            {
-              LifecycleUtil.deactivate(rightView);
-              LifecycleUtil.deactivate(leftView);
-            }
-          }
-        }
       }
 
       private void testCommit(CDOCommitInfo commitInfo)
@@ -175,7 +150,13 @@ public class CDOHistoryPage extends HistoryPage
     };
 
     IPageSite site = getSite();
-    site.setSelectionProvider(commitHistoryComposite.getTableViewer());
+    TableViewer tableViewer = commitHistoryComposite.getTableViewer();
+
+    MenuManager menuManager = new MenuManager();
+    Menu menu = menuManager.createContextMenu(tableViewer.getControl());
+    tableViewer.getControl().setMenu(menu);
+    site.registerContextMenu(POPUP_ID, menuManager, tableViewer);
+    site.setSelectionProvider(tableViewer);
 
     IActionBars actionBars = site.getActionBars();
     setupToolBar(actionBars.getToolBarManager());

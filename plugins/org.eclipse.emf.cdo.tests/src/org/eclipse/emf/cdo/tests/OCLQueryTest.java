@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model1.Customer;
+import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
@@ -25,6 +26,8 @@ import org.eclipse.emf.cdo.view.CDOQuery;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.io.IOUtil;
+
+import org.eclipse.emf.ecore.EObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +45,8 @@ public class OCLQueryTest extends AbstractCDOTest
   private static final int NUM_OF_PRODUCTS_CUSTOMER = NUM_OF_PRODUCTS / NUM_OF_CUSTOMERS;
 
   private static final int NUM_OF_SALES_ORDERS = 5;
+
+  private static final int NUM_OF_PURCHASE_ORDERS = 3;
 
   private CDOTransaction transaction;
 
@@ -80,45 +85,52 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testAllProducts() throws Exception
   {
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1());
+    CDOQuery query = createQuery("Product1.allInstances()", getModel1Package().getProduct1());
 
-    List<Product1> products = query.getResult(Product1.class);
+    List<Product1> products = query.getResult();
     assertEquals(NUM_OF_PRODUCTS, products.size());
   }
 
   public void testAllCustomers() throws Exception
   {
-    CDOQuery query = transaction.createQuery("ocl", "Customer.allInstances()", getModel1Package().getCustomer());
+    CDOQuery query = createQuery("Customer.allInstances()", getModel1Package().getCustomer());
 
-    List<Customer> customers = query.getResult(Customer.class);
+    List<Customer> customers = query.getResult();
     assertEquals(NUM_OF_CUSTOMERS, customers.size());
+  }
+
+  public void testAllOrdersAndSubtypes() throws Exception
+  {
+    CDOQuery query = createQuery("Order.allInstances()", getModel1Package().getOrder());
+    // CDOQuery query = createQuery("Order.allInstances()", getModel1Package().getOrder());
+
+    List<Order> orders = query.getResult();
+    assertEquals(NUM_OF_CUSTOMERS * NUM_OF_SALES_ORDERS + NUM_OF_PURCHASE_ORDERS, orders.size());
   }
 
   public void testAllProductsWithName() throws Exception
   {
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.name='1')",
-        getModel1Package().getProduct1());
+    CDOQuery query = createQuery("Product1.allInstances()->select(p | p.name='1')", getModel1Package().getProduct1());
 
-    List<Product1> products = query.getResult(Product1.class);
+    List<Product1> products = query.getResult();
     assertEquals(1, products.size());
   }
 
   public void testAllProductsWithNameParameter() throws Exception
   {
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.name=myname)",
-        getModel1Package().getProduct1());
+    CDOQuery query = createQuery("Product1.allInstances()->select(p | p.name=myname)", getModel1Package().getProduct1());
     query.setParameter("myname", "1");
 
-    List<Product1> products = query.getResult(Product1.class);
+    List<Product1> products = query.getResult();
     assertEquals(1, products.size());
   }
 
   public void testAllProductsWithVAT() throws Exception
   {
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.vat=VAT::vat15)",
-        getModel1Package().getProduct1());
+    CDOQuery query = createQuery("Product1.allInstances()->select(p | p.vat=VAT::vat15)", getModel1Package()
+        .getProduct1());
 
-    List<Product1> products = query.getResult(Product1.class);
+    List<Product1> products = query.getResult();
     assertEquals(10, products.size());
     for (Product1 p : products)
     {
@@ -128,11 +140,10 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testAllProductsWithVATParameter() throws Exception
   {
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.vat=myvat)",
-        getModel1Package().getProduct1());
+    CDOQuery query = createQuery("Product1.allInstances()->select(p | p.vat=myvat)", getModel1Package().getProduct1());
     query.setParameter("myvat", VAT.VAT15);
 
-    List<Product1> products = query.getResult(Product1.class);
+    List<Product1> products = query.getResult();
     assertEquals(10, products.size());
     for (Product1 p : products)
     {
@@ -142,7 +153,7 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testAllProductNames() throws Exception
   {
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances().name", getModel1Package().getProduct1());
+    CDOQuery query = createQuery("Product1.allInstances().name", getModel1Package().getProduct1());
 
     List<String> names = query.getResult(String.class);
     assertEquals(NUM_OF_PRODUCTS, names.size());
@@ -153,7 +164,7 @@ public class OCLQueryTest extends AbstractCDOTest
   public void testSelfNavigation() throws Exception
   {
     SalesOrder salesOrder = salesOrders.get(0);
-    CDOQuery query = transaction.createQuery("ocl", "self.orderDetails", salesOrder);
+    CDOQuery query = createQuery("self.orderDetails", salesOrder);
 
     List<OrderDetail> orderDetails = query.getResult(OrderDetail.class);
     assertEquals(salesOrder.getOrderDetails().size(), orderDetails.size());
@@ -161,7 +172,7 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testProductIterator() throws Exception
   {
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1());
+    CDOQuery query = createQuery("Product1.allInstances()", getModel1Package().getProduct1());
 
     int counter = 0;
     for (CloseableIterator<Product1> it = query.getResultAsync(Product1.class); it.hasNext();)
@@ -182,9 +193,9 @@ public class OCLQueryTest extends AbstractCDOTest
     resource.getContents().add(getModel1Factory().createProduct1());
     assertEquals(true, transaction.isDirty());
 
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1(), true);
+    CDOQuery query = createQuery("Product1.allInstances()", getModel1Package().getProduct1(), true);
 
-    List<Product1> products = query.getResult(Product1.class);
+    List<Product1> products = query.getResult();
     assertEquals(NUM_OF_PRODUCTS + 1, products.size());
   }
 
@@ -193,10 +204,10 @@ public class OCLQueryTest extends AbstractCDOTest
     Product1 product = products.get(2);
     product.setName("1");
 
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()->select(p | p.name='1')",
-        getModel1Package().getProduct1(), true);
+    CDOQuery query = createQuery("Product1.allInstances()->select(p | p.name='1')", getModel1Package().getProduct1(),
+        true);
 
-    List<Product1> products = query.getResult(Product1.class);
+    List<Product1> products = query.getResult();
     assertEquals(2, products.size());
   }
 
@@ -207,25 +218,25 @@ public class OCLQueryTest extends AbstractCDOTest
     resource.getContents().add(0, p1);
     transaction.commit();
 
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1(), true);
+    CDOQuery query = createQuery("Product1.allInstances()", getModel1Package().getProduct1(), true);
 
-    List<Product1> products = query.getResult(Product1.class);
+    List<Product1> products = query.getResult();
     assertEquals(NUM_OF_PRODUCTS + 1, products.size());
 
     resource.getContents().remove(0);
     assertEquals(true, transaction.isDirty());
 
-    query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1(), true);
+    query = createQuery("Product1.allInstances()", getModel1Package().getProduct1(), true);
 
-    products = query.getResult(Product1.class);
+    products = query.getResult();
     assertEquals(NUM_OF_PRODUCTS, products.size());
   }
 
   public void testDeletedObject() throws Exception
   {
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1(), true);
+    CDOQuery query = createQuery("Product1.allInstances()", getModel1Package().getProduct1(), true);
 
-    List<Product1> products = query.getResult(Product1.class);
+    List<Product1> products = query.getResult();
     int numOfProducts = products.size();
 
     Product1 p1 = getModel1Factory().createProduct1();
@@ -236,9 +247,9 @@ public class OCLQueryTest extends AbstractCDOTest
     resource.getContents().remove(0);
     transaction.commit();
 
-    query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1(), true);
+    query = createQuery("Product1.allInstances()", getModel1Package().getProduct1(), true);
 
-    products = query.getResult(Product1.class);
+    products = query.getResult();
     assertEquals(numOfProducts, products.size());
   }
 
@@ -252,9 +263,9 @@ public class OCLQueryTest extends AbstractCDOTest
     resource.getContents().remove(0);
     transaction.commit();
 
-    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1(), false);
+    CDOQuery query = createQuery("Product1.allInstances()", getModel1Package().getProduct1(), false);
 
-    List<Product1> products = query.getResult(Product1.class);
+    List<Product1> products = query.getResult();
     assertEquals(NUM_OF_PRODUCTS, products.size());
   }
 
@@ -263,9 +274,9 @@ public class OCLQueryTest extends AbstractCDOTest
     ISession session = getRepository().getSessionManager().getElements()[0];
     int originalLength = session.getListeners().length;
 
-    for (int counter = 0; counter < 1000; counter++)
+    for (int counter = 0; counter < 10; counter++)
     {
-      CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances().name", getModel1Package().getProduct1());
+      CDOQuery query = createQuery("Product1.allInstances().name", getModel1Package().getProduct1());
       query.getResult(String.class);
     }
 
@@ -306,6 +317,11 @@ public class OCLQueryTest extends AbstractCDOTest
       }
 
       productCounter += NUM_OF_PRODUCTS_CUSTOMER;
+    }
+
+    for (int k = 0; k < NUM_OF_PURCHASE_ORDERS; k++)
+    {
+      resource.getContents().add(getModel1Factory().createPurchaseOrder());
     }
   }
 
@@ -371,5 +387,34 @@ public class OCLQueryTest extends AbstractCDOTest
 
     products.add(product);
     return product;
+  }
+
+  private CDOQuery createQuery(String queryString, EObject context)
+  {
+    return createQuery(queryString, context, false);
+  }
+
+  private CDOQuery createQuery(String queryString, EObject context, boolean considerDirtyState)
+  {
+    CDOQuery query = transaction.createQuery("ocl", queryString, context, considerDirtyState);
+    query.setParameter("cdoLazyExtents", useLazyExtents());
+    return query;
+  }
+
+  protected boolean useLazyExtents()
+  {
+    return false;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class Lazy extends OCLQueryTest
+  {
+    @Override
+    protected boolean useLazyExtents()
+    {
+      return true;
+    }
   }
 }

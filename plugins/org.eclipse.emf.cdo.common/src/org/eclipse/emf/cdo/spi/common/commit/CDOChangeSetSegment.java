@@ -14,8 +14,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchPointImpl;
 
-import org.eclipse.net4j.util.ObjectUtil;
-
 import java.text.MessageFormat;
 import java.util.LinkedList;
 
@@ -75,7 +73,7 @@ public class CDOChangeSetSegment implements CDOBranchPoint
     CDOBranch startBranch = startPoint.getBranch();
     CDOBranch endBranch = endPoint.getBranch();
 
-    while (!ObjectUtil.equals(startBranch, endBranch))
+    while (startBranch != endBranch)
     {
       CDOBranchPoint base = endBranch.getBase();
       result.addFirst(new CDOChangeSetSegment(endBranch, base.getTimeStamp(), endPoint.getTimeStamp()));

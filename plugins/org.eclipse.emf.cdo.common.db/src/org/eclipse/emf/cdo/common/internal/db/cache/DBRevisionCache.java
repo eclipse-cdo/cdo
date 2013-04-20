@@ -60,7 +60,7 @@ import java.util.Map;
 
 /**
  * A JDBC-based {@link CDORevisionCache}.
- * 
+ *
  * @author Andre Dietisheim
  */
 public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCache
@@ -154,7 +154,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
 
   /**
    * Gets the revision with the highest version for a given {@link CDOID}.
-   * 
+   *
    * @param id
    *          the id to match
    * @return the revision that was found
@@ -223,7 +223,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   /**
    * Gets an {@link InternalCDORevision} that matches the given timestamp (it is >= created timestamp AND <= revised
    * timestamp of the revision).
-   * 
+   *
    * @param id
    *          the id
    * @return the revision by time
@@ -288,7 +288,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
 
   /**
    * Gets a {@link InternalCDORevision} by a given id and version.
-   * 
+   *
    * @param id
    *          the id to match the revision against
    * @return the revision by version
@@ -352,7 +352,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
 
   /**
    * Gets the latest revisions of all persisted model versions.
-   * 
+   *
    * @return the revisions
    */
   public List<CDORevision> getCurrentRevisions()
@@ -419,7 +419,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   /**
    * Adds a given revision to this cache. It furthermore updates the revised timestamp of the latest (before inserting
    * the new one) revision
-   * 
+   *
    * @param revision
    *          the revision to add to this cache
    */
@@ -530,7 +530,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
       /**
        * Sets the values in the prepared statment, that are related to the given revision. If the revision is a resource
        * node, the values are set otherwise the fields are set to <tt>null</tt>
-       * 
+       *
        * @param revision
        *          the revision
        * @param preparedStatement
@@ -559,7 +559,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   /**
    * Removes a revision by its Id and version. If the given revision does not exist <tt>null</tt> is returned. Otherwise
    * the {@link InternalCDORevision}, that was removed is returned
-   * 
+   *
    * @param id
    *          the id of the revision to remove
    * @return the {@link InternalCDORevision} that was removed, <tt>null</tt> otherwise
@@ -678,7 +678,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
 
   /**
    * Creates the (single) table that's used to store the cached revisions.
-   * 
+   *
    * @throws SQLException
    *           Signals that an error has occured while getting the connection or committing the transaction
    */
@@ -716,7 +716,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
    * correct type and the revised timestamp is set separatley. Whe you insert a new revision into this cache, the former
    * latest revision gets a new revised timestamp. This timestamp's only updated in the database column 'revised', not
    * in the blob that holds the serialized instance. Therefore the revised timestamp has to be set separately
-   * 
+   *
    * @param revisedTimestamp
    *          the revised timestamp to set to the revision
    * @param blob
@@ -740,8 +740,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   {
     return new CDODataInputImpl(inputStream)
     {
-      @Override
-      protected CDOPackageRegistry getPackageRegistry()
+      public CDOPackageRegistry getPackageRegistry()
       {
         return packageRegistry;
       }
@@ -780,7 +779,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
 
   /**
    * Converts a given {@link CDORevision} to a byte array.
-   * 
+   *
    * @param revision
    *          the revision
    * @return the array of bytes for the given revision
@@ -816,7 +815,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   /**
    * Gets a connection from the {@link IDBConnectionProvider} within this cache. The Connection is set not to auto
    * commit transactions.
-   * 
+   *
    * @return the connection
    * @throws SQLException
    *           Signals that an error occured while getting the connection from the connection provider

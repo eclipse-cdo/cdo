@@ -11,6 +11,8 @@
 package org.eclipse.net4j.util.om.monitor;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.concurrent.TrackableTimerTask;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -21,6 +23,9 @@ import java.util.TimerTask;
  */
 public abstract class AbstractMonitor implements OMMonitor
 {
+  private static final boolean CHECK_BEGIN = Boolean.parseBoolean(OMPlatform.INSTANCE.getProperty(
+      "org.eclipse.net4j.util.om.monitor.CheckBegin", "false"));
+
   private static final long NOT_BEGUN = -1;
 
   private double totalWork = NOT_BEGUN;
@@ -138,7 +143,7 @@ public abstract class AbstractMonitor implements OMMonitor
 
   private void checkBegun() throws MonitorCanceledException
   {
-    if (!hasBegun())
+    if (CHECK_BEGIN && !hasBegun())
     {
       throw new IllegalStateException("begin() has not been called"); //$NON-NLS-1$
     }
@@ -155,7 +160,7 @@ public abstract class AbstractMonitor implements OMMonitor
   /**
    * @author Eike Stepper
    */
-  public static class AsyncTimerTask extends TimerTask implements Async
+  public static class AsyncTimerTask extends TrackableTimerTask implements Async
   {
     private OMMonitor monitor;
 
@@ -172,7 +177,7 @@ public abstract class AbstractMonitor implements OMMonitor
     {
       try
       {
-        if (!canceled)
+        if (!canceled && monitor != null)
         {
           double work = 1 - monitor.getWork();
           monitor.worked(work / TEN);
@@ -188,7 +193,11 @@ public abstract class AbstractMonitor implements OMMonitor
     {
       try
       {
-        monitor.done();
+        if (monitor != null)
+        {
+          monitor.done();
+        }
+
         cancel();
       }
       catch (Exception ex)
@@ -201,6 +210,7 @@ public abstract class AbstractMonitor implements OMMonitor
     public boolean cancel()
     {
       canceled = true;
+      monitor = null;
       return super.cancel();
     }
   }

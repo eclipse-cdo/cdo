@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.tests.util.TestSessionConfiguration;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
@@ -118,15 +117,12 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
 
     JVMUtil.prepareContainer(getClientContainer());
     localStore = createLocalStore();
-
-    CDOUtil.setLegacyModeDefault(true);
   }
 
   @Override
   protected void doTearDown() throws Exception
   {
     disableConsole();
-    CDOUtil.setLegacyModeDefault(false);
     for (CDOWorkspace workspace : workspaces)
     {
       IOUtil.closeSilent(workspace);

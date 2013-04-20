@@ -51,12 +51,12 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
 {
   private final InternalCDOTransaction transaction;
 
-  private Map<CDOID, CDORevision> baseNewObjects = new HashMap<CDOID, CDORevision>();
+  private Map<CDOID, CDORevision> baseNewObjects = CDOIDUtil.createMap();
 
-  private Map<CDOID, CDOObject> newObjects = new HashMap<CDOID, CDOObject>();
+  private Map<CDOID, CDOObject> newObjects = CDOIDUtil.createMap();
 
   // Bug 283985 (Re-attachment)
-  private Map<CDOID, CDOObject> reattachedObjects = new HashMap<CDOID, CDOObject>();
+  private Map<CDOID, CDOObject> reattachedObjects = CDOIDUtil.createMap();
 
   private Map<CDOID, CDOObject> detachedObjects = new HashMap<CDOID, CDOObject>()
   {
@@ -77,7 +77,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     }
   };
 
-  private Map<CDOID, CDOObject> dirtyObjects = new HashMap<CDOID, CDOObject>();
+  private Map<CDOID, CDOObject> dirtyObjects = CDOIDUtil.createMap();
 
   private Map<CDOID, CDORevisionDelta> revisionDeltas = new HashMap<CDOID, CDORevisionDelta>()
   {
@@ -373,7 +373,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
         return Collections.unmodifiableMap(getNewObjects());
       }
 
-      Map<CDOID, CDOObject> newObjects = new HashMap<CDOID, CDOObject>();
+      Map<CDOID, CDOObject> newObjects = CDOIDUtil.createMap();
       for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint
           .getNextSavepoint())
       {
@@ -423,7 +423,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
       }
 
       // We need to combined the result for all delta in different Savepoint
-      Map<CDOID, CDORevisionDelta> allRevisionDeltas = new HashMap<CDOID, CDORevisionDelta>();
+      Map<CDOID, CDORevisionDelta> allRevisionDeltas = CDOIDUtil.createMap();
       for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint
           .getNextSavepoint())
       {
@@ -471,7 +471,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
         return Collections.unmodifiableMap(getDetachedObjects());
       }
 
-      Map<CDOID, CDOObject> detachedObjects = new HashMap<CDOID, CDOObject>();
+      Map<CDOID, CDOObject> detachedObjects = CDOIDUtil.createMap();
       for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint
           .getNextSavepoint())
       {

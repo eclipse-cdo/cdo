@@ -23,7 +23,7 @@ public class AllTestsDBH2NonAudit extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBH2NonAudit().getTestSuite("CDO Tests (DBStore H2 Horizontal - non-audit mode)");
+    return new AllTestsDBH2NonAudit().getTestSuite();
   }
 
   public static void initConfigSuites(ConfigTestSuite suite, TestSuite parent, IDGenerationLocation idGenerationLocation)

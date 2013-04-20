@@ -101,7 +101,9 @@ public interface CDOCommonRepository extends CDOTimeProvider, IAdaptable
    * Returns <code>true</code> if this repository supports instances of Ecore, <code>false</code> otherwise.
    *
    * @since 4.0
+   * @deprecated As of 4.2 instances of Ecore are always supported (on demand).
    */
+  @Deprecated
   public boolean isSupportingEcore();
 
   /**

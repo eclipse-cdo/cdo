@@ -7,19 +7,15 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Christian W. Damus - Fix failure to attach CDOLegacyAdapter to EGenericTypes (bug 403681)
  */
 package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
-import org.eclipse.emf.cdo.view.CDOView;
-
-import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.ReflectUtil;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -49,26 +45,10 @@ import java.util.List;
  */
 public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOObjectWrapperBase.class);
-
-  protected CDOID id;
-
-  protected InternalCDOView view;
-
   protected InternalEObject instance;
 
   public CDOObjectWrapperBase()
   {
-  }
-
-  public CDOID cdoID()
-  {
-    return id;
-  }
-
-  public InternalCDOView cdoView()
-  {
-    return view;
   }
 
   public CDOResourceImpl cdoResource()
@@ -94,26 +74,6 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
     }
 
     return null;
-  }
-
-  public void cdoInternalSetID(CDOID id)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Setting ID: {0} for {1}", id, instance); //$NON-NLS-1$
-    }
-
-    this.id = id;
-  }
-
-  public void cdoInternalSetView(CDOView view)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Setting view: {0} for {1}", view, instance); //$NON-NLS-1$
-    }
-
-    this.view = (InternalCDOView)view;
   }
 
   public InternalEObject cdoInternalInstance()
@@ -142,7 +102,8 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
    */
   public void cdoPrefetch(int depth)
   {
-    view.prefetchRevisions(id, depth);
+    InternalCDOView view = (InternalCDOView)cdoView();
+    view.prefetchRevisions(cdoID(), depth);
   }
 
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
@@ -155,7 +116,8 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
    */
   protected EStructuralFeature eDynamicFeature(int dynamicFeatureID)
   {
-    return eClass().getEStructuralFeature(dynamicFeatureID + eStaticFeatureCount());
+    EClass eClass = eClass();
+    return eClass.getEStructuralFeature(dynamicFeatureID + eStaticFeatureCount());
   }
 
   /**
@@ -380,11 +342,20 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
 
   public boolean eIsSet(EStructuralFeature feature)
   {
-    return instance.eIsSet(feature);
+    return isSetInstanceValue(instance, feature);
   }
 
   public boolean eIsSet(int featureID)
   {
+    // Features that need special handling
+    if (featureID == EcorePackage.ETYPED_ELEMENT__EGENERIC_TYPE
+        || featureID == EcorePackage.ECLASSIFIER__INSTANCE_TYPE_NAME
+        || featureID == EcorePackage.ECLASS__EGENERIC_SUPER_TYPES
+        || featureID == EcorePackage.EOPERATION__EGENERIC_EXCEPTIONS)
+    {
+      return isSetInstanceValue(instance, instance.eClass().getEStructuralFeature(featureID));
+    }
+
     return instance.eIsSet(featureID);
   }
 
@@ -499,7 +470,6 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
   @Override
   public String toString()
   {
-    return getClass().getSimpleName() + "[" + instance.getClass().getSimpleName() + "@" + id + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    return getClass().getSimpleName() + "[" + instance.getClass().getSimpleName() + "@" + cdoID() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
-
 }

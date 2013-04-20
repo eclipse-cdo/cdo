@@ -280,18 +280,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   @Override
   public boolean equals(Object obj)
   {
-    if (obj == this)
-    {
-      return true;
-    }
-
-    if (obj instanceof CDOBranch)
-    {
-      CDOBranch that = (CDOBranch)obj;
-      return id == that.getID();
-    }
-
-    return false;
+    return obj == this;
   }
 
   @Override

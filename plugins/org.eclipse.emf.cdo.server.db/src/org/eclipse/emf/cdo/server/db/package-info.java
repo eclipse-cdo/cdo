@@ -13,3 +13,4 @@
  * Server concepts for dealing with DB stores and accessors.
  */
 package org.eclipse.emf.cdo.server.db;
+

@@ -39,13 +39,10 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
 import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
@@ -69,12 +66,16 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessor;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.IDBPreparedStatement;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.TrackableTimerTask;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -105,7 +106,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TimerTask;
 
 /**
  * @author Eike Stepper
@@ -114,11 +114,9 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreAccessor.class);
 
-  private Connection connection;
+  private IDBConnection connection;
 
   private ConnectionKeepAliveTask connectionKeepAliveTask;
-
-  private IPreparedStatementCache statementCache;
 
   private Set<CDOID> newObjects = new HashSet<CDOID>();
 
@@ -140,9 +138,39 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     return (DBStore)super.getStore();
   }
 
-  public IPreparedStatementCache getStatementCache()
+  public IDBConnection getDBConnection()
   {
-    return statementCache;
+    return connection;
+  }
+
+  public Connection getConnection()
+  {
+    return connection;
+  }
+
+  @Deprecated
+  public org.eclipse.emf.cdo.server.db.IPreparedStatementCache getStatementCache()
+  {
+    return new org.eclipse.emf.cdo.server.db.IPreparedStatementCache()
+    {
+      public void setConnection(Connection connection)
+      {
+        // Do nothing
+      }
+
+      public IDBPreparedStatement getPreparedStatement(String sql, ReuseProbability reuseProbability)
+      {
+        org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability converted = //
+        org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability.values()[reuseProbability.ordinal()];
+
+        return connection.prepareStatement(sql, converted);
+      }
+
+      public void releasePreparedStatement(PreparedStatement ps)
+      {
+        DBUtil.close(ps);
+      }
+    };
   }
 
   public DBStoreChunkReader createChunkReader(InternalCDORevision revision, EStructuralFeature feature)
@@ -322,13 +350,11 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
   public void queryLobs(List<byte[]> ids)
   {
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_QUERY_LOBS, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
     {
-      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_QUERY_LOBS, ReuseProbability.MEDIUM);
-
       for (Iterator<byte[]> it = ids.iterator(); it.hasNext();)
       {
         byte[] id = it.next();
@@ -354,42 +380,33 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
   public void loadLob(byte[] id, OutputStream out) throws IOException
   {
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_LOAD_LOB, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
     {
-      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_LOAD_LOB, ReuseProbability.MEDIUM);
       stmt.setString(1, HexUtil.bytesToHex(id));
+      resultSet = stmt.executeQuery();
+      resultSet.next();
 
-      try
+      long size = resultSet.getLong(1);
+      Blob blob = resultSet.getBlob(2);
+      if (resultSet.wasNull())
       {
-        resultSet = stmt.executeQuery();
-        resultSet.next();
-
-        long size = resultSet.getLong(1);
-        Blob blob = resultSet.getBlob(2);
-        if (resultSet.wasNull())
-        {
-          Clob clob = resultSet.getClob(3);
-          Reader in = clob.getCharacterStream();
-          IOUtil.copyCharacter(in, new OutputStreamWriter(out), size);
-        }
-        else
-        {
-          InputStream in = blob.getBinaryStream();
-          IOUtil.copyBinary(in, out, size);
-        }
+        Clob clob = resultSet.getClob(3);
+        Reader in = clob.getCharacterStream();
+        IOUtil.copyCharacter(in, new OutputStreamWriter(out), size);
       }
-      finally
+      else
       {
-        DBUtil.close(resultSet);
+        InputStream in = blob.getBinaryStream();
+        IOUtil.copyBinary(in, out, size);
       }
     }
     catch (SQLException ex)
@@ -398,65 +415,57 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(resultSet);
+      DBUtil.close(stmt);
     }
   }
 
   public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
   {
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_HANDLE_LOBS, ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     try
     {
-      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_HANDLE_LOBS, ReuseProbability.LOW);
-
-      try
+      resultSet = stmt.executeQuery();
+      while (resultSet.next())
       {
-        resultSet = stmt.executeQuery();
-        while (resultSet.next())
+        byte[] id = HexUtil.hexToBytes(resultSet.getString(1));
+        long size = resultSet.getLong(2);
+        Blob blob = resultSet.getBlob(3);
+        if (resultSet.wasNull())
         {
-          byte[] id = HexUtil.hexToBytes(resultSet.getString(1));
-          long size = resultSet.getLong(2);
-          Blob blob = resultSet.getBlob(3);
-          if (resultSet.wasNull())
+          Clob clob = resultSet.getClob(4);
+          Reader in = clob.getCharacterStream();
+          Writer out = handler.handleClob(id, size);
+          if (out != null)
           {
-            Clob clob = resultSet.getClob(4);
-            Reader in = clob.getCharacterStream();
-            Writer out = handler.handleClob(id, size);
-            if (out != null)
+            try
             {
-              try
-              {
-                IOUtil.copyCharacter(in, out, size);
-              }
-              finally
-              {
-                IOUtil.close(out);
-              }
+              IOUtil.copyCharacter(in, out, size);
             }
-          }
-          else
-          {
-            InputStream in = blob.getBinaryStream();
-            OutputStream out = handler.handleBlob(id, size);
-            if (out != null)
+            finally
             {
-              try
-              {
-                IOUtil.copyBinary(in, out, size);
-              }
-              finally
-              {
-                IOUtil.close(out);
-              }
+              IOUtil.close(out);
             }
           }
         }
-      }
-      finally
-      {
-        DBUtil.close(resultSet);
+        else
+        {
+          InputStream in = blob.getBinaryStream();
+          OutputStream out = handler.handleBlob(id, size);
+          if (out != null)
+          {
+            try
+            {
+              IOUtil.copyBinary(in, out, size);
+            }
+            finally
+            {
+              IOUtil.close(out);
+            }
+          }
+        }
       }
     }
     catch (SQLException ex)
@@ -465,7 +474,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(resultSet);
+      DBUtil.close(stmt);
     }
   }
 
@@ -497,11 +507,10 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
       String comment, OMMonitor monitor)
   {
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_CREATE_COMMIT_INFO, ReuseProbability.HIGH);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_CREATE_COMMIT_INFO, ReuseProbability.HIGH);
       stmt.setLong(1, timeStamp);
       stmt.setLong(2, previousTimeStamp);
       stmt.setInt(3, branch.getID());
@@ -516,7 +525,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -626,11 +635,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
-  public Connection getConnection()
-  {
-    return connection;
-  }
-
   @Override
   protected CDOID getNextCDOID(CDORevision revision)
   {
@@ -640,11 +644,10 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   @Override
   protected void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
   {
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_WRITE_BLOB, ReuseProbability.MEDIUM);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_WRITE_BLOB, ReuseProbability.MEDIUM);
       stmt.setString(1, HexUtil.bytesToHex(id));
       stmt.setLong(2, size);
       stmt.setBinaryStream(3, inputStream, (int)size);
@@ -657,18 +660,17 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
   @Override
   protected void writeClob(byte[] id, long size, Reader reader) throws IOException
   {
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_WRITE_CLOB, ReuseProbability.MEDIUM);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_WRITE_CLOB, ReuseProbability.MEDIUM);
       stmt.setString(1, HexUtil.bytesToHex(id));
       stmt.setLong(2, size);
       stmt.setCharacterStream(3, reader, (int)size);
@@ -681,7 +683,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -755,7 +757,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   protected void doActivate() throws Exception
   {
     DBStore store = getStore();
-    connection = store.getConnection();
+    connection = store.getDatabase().getConnection();
     connectionKeepAliveTask = new ConnectionKeepAliveTask(this);
 
     long keepAlivePeriod = ConnectionKeepAliveTask.EXECUTION_PERIOD;
@@ -770,18 +772,11 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
 
     store.getConnectionKeepAliveTimer().schedule(connectionKeepAliveTask, keepAlivePeriod, keepAlivePeriod);
-
-    // TODO - make this configurable?
-    statementCache = CDODBUtil.createStatementCache();
-    statementCache.setConnection(connection);
-    LifecycleUtil.activate(statementCache);
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    LifecycleUtil.deactivate(statementCache);
-
     connectionKeepAliveTask.cancel();
     connectionKeepAliveTask = null;
 
@@ -794,7 +789,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   {
     // this is called when the accessor is put back into the pool
     // we want to make sure that no DB lock is held (see Bug 276926)
-    connection.rollback();
+    getConnection().rollback();
   }
 
   @Override
@@ -846,11 +841,10 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       branchID = getStore().getNextLocalBranchID();
     }
 
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_CREATE_BRANCH, ReuseProbability.LOW);
 
     try
     {
-      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_CREATE_BRANCH, ReuseProbability.LOW);
       stmt.setInt(1, branchID);
       stmt.setString(2, branchInfo.getName());
       stmt.setInt(3, branchInfo.getBaseBranchID());
@@ -858,7 +852,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
       DBUtil.update(stmt, true);
       getConnection().commit();
-      return new Pair<Integer, Long>(branchID, branchInfo.getBaseTimeStamp());
+      return Pair.create(branchID, branchInfo.getBaseTimeStamp());
     }
     catch (SQLException ex)
     {
@@ -866,19 +860,18 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
     finally
     {
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
   public BranchInfo loadBranch(int branchID)
   {
     checkBranchingSupport();
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_LOAD_BRANCH, ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
     {
-      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_LOAD_BRANCH, ReuseProbability.HIGH);
       stmt.setInt(1, branchID);
 
       resultSet = stmt.executeQuery();
@@ -899,19 +892,18 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
   public SubBranchInfo[] loadSubBranches(int baseID)
   {
     checkBranchingSupport();
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_LOAD_SUB_BRANCHES, ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
     {
-      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_LOAD_SUB_BRANCHES, ReuseProbability.HIGH);
       stmt.setInt(1, baseID);
 
       resultSet = stmt.executeQuery();
@@ -933,7 +925,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -948,7 +940,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   public int loadBranches(int startID, int endID, CDOBranchHandler handler)
   {
     int count = 0;
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_LOAD_BRANCHES, ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     InternalRepository repository = getSession().getManager().getRepository();
@@ -956,7 +948,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
     try
     {
-      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_LOAD_BRANCHES, ReuseProbability.HIGH);
       stmt.setInt(1, startID);
       stmt.setInt(2, endID > 0 ? endID : Integer.MAX_VALUE);
 
@@ -982,7 +973,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -1041,7 +1032,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     builder.append(count < 0 || CDOBranchPoint.UNSPECIFIED_DATE <= endTime && endTime <= startTime ? " DESC" : " ASC"); //$NON-NLS-1$
     String sql = builder.toString();
 
-    PreparedStatement stmt = null;
+    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     InternalRepository repository = getStore().getRepository();
@@ -1051,8 +1042,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
     try
     {
-      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.MEDIUM);
-
       resultSet = stmt.executeQuery();
       while (resultSet.next())
       {
@@ -1084,7 +1073,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(stmt);
+      DBUtil.close(stmt);
     }
   }
 
@@ -1109,6 +1098,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     {
       out.writeCDOID(store.getIDHandler().getLastObjectID()); // See bug 325097
     }
+
+    Connection connection = getConnection();
 
     String where = " WHERE " + CDODBSchema.BRANCHES_ID + " BETWEEN " + fromBranchID + " AND " + toBranchID;
     DBUtil.serializeTable(out, connection, CDODBSchema.BRANCHES, null, where);
@@ -1145,6 +1136,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     monitor.begin(commitWork + size + commitWork);
 
     Collection<InternalCDOPackageUnit> packageUnits = new HashSet<InternalCDOPackageUnit>();
+    Connection connection = getConnection();
 
     try
     {
@@ -1182,6 +1174,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   {
     try
     {
+      Connection connection = getConnection();
       connection.rollback();
     }
     catch (SQLException ex)
@@ -1202,6 +1195,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     {
       DBStore store = getStore();
       IMetaDataManager metaDataManager = store.getMetaDataManager();
+      Connection connection = getConnection();
 
       packageUnits.addAll(metaDataManager.rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork()));
 
@@ -1217,6 +1211,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
       // Using another connection because CREATE TABLE (which is called in createMapping) on H2 databases does a commit.
       Connection connection2 = null;
+
       try
       {
         connection2 = store.getConnection();
@@ -1305,6 +1300,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
     try
     {
+      Connection connection = getConnection();
       connection.commit();
     }
     catch (SQLException ex)
@@ -1376,7 +1372,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   /**
    * @author Stefan Winkler
    */
-  private static final class ConnectionKeepAliveTask extends TimerTask
+  private static final class ConnectionKeepAliveTask extends TrackableTimerTask
   {
     public static final long EXECUTION_PERIOD = 1000 * 60 * 60 * 4; // 4 hours
 

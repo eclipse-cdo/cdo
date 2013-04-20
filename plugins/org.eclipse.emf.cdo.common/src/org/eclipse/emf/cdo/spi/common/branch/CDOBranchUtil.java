@@ -19,8 +19,6 @@ import org.eclipse.emf.cdo.internal.common.branch.CDOBranchManagerImpl;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchPointImpl;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchPointRangeImpl;
 
-import org.eclipse.net4j.util.ObjectUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,7 +86,7 @@ public final class CDOBranchUtil
   public static boolean isContainedBy(CDOBranchPoint contained, CDOBranchPoint container)
   {
     CDOBranch containerBranch = container.getBranch();
-    if (ObjectUtil.equals(containerBranch, contained.getBranch()))
+    if (containerBranch == contained.getBranch())
     {
       return CDOCommonUtil.compareTimeStamps(contained.getTimeStamp(), container.getTimeStamp()) <= 0;
     }
@@ -121,7 +119,7 @@ public final class CDOBranchUtil
     {
       for (CDOBranchPoint pathPoint2 : path2)
       {
-        if (ObjectUtil.equals(pathPoint1.getBranch(), pathPoint2.getBranch()))
+        if (pathPoint1.getBranch() == pathPoint2.getBranch())
         {
           if (CDOCommonUtil.compareTimeStamps(pathPoint1.getTimeStamp(), pathPoint2.getTimeStamp()) < 0)
           {

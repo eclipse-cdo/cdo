@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -71,14 +72,11 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.CheckUtil;
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
-import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -100,8 +98,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Simon McDuff
@@ -135,6 +131,10 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private boolean clearResourcePathCache;
 
+  private boolean usingEcore;
+
+  private boolean usingEtypes;
+
   private InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[0];
 
   private CDOLockState[] locksOnNewObjects = new CDOLockState[0];
@@ -159,7 +159,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private List<CDOID> lockedTargets;
 
-  private ConcurrentMap<CDOID, CDOID> idMappings = new ConcurrentHashMap<CDOID, CDOID>();
+  private Map<CDOID, CDOID> idMappings = CDOIDUtil.createMap();
 
   private CDOReferenceAdjuster idMapper = new CDOIDMapper(idMappings);
 
@@ -243,6 +243,16 @@ public class TransactionCommitContext implements InternalCommitContext
     return clearResourcePathCache;
   }
 
+  public boolean isUsingEcore()
+  {
+    return usingEcore;
+  }
+
+  public boolean isUsingEtypes()
+  {
+    return usingEtypes;
+  }
+
   public InternalCDOPackageUnit[] getNewPackageUnits()
   {
     return newPackageUnits;
@@ -322,7 +332,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private Map<CDOID, InternalCDORevision> cacheRevisions()
   {
-    Map<CDOID, InternalCDORevision> cache = new HashMap<CDOID, InternalCDORevision>();
+    Map<CDOID, InternalCDORevision> cache = CDOIDUtil.createMap();
     if (newObjects != null)
     {
       for (int i = 0; i < newObjects.length; i++)
@@ -364,10 +374,10 @@ public class TransactionCommitContext implements InternalCommitContext
       throw new IllegalStateException("newID=" + newID); //$NON-NLS-1$
     }
 
-    CDOID previousMapping = idMappings.putIfAbsent(oldID, newID);
-    if (previousMapping != null)
+    CDOID previousMapping = idMappings.put(oldID, newID);
+    if (previousMapping != null && previousMapping != newID)
     {
-      throw new IllegalStateException("previousMapping != null"); //$NON-NLS-1$
+      throw new IllegalStateException("previousMapping != null && previousMapping != newID"); //$NON-NLS-1$
     }
   }
 
@@ -416,6 +426,16 @@ public class TransactionCommitContext implements InternalCommitContext
   public void setClearResourcePathCache(boolean clearResourcePathCache)
   {
     this.clearResourcePathCache = clearResourcePathCache;
+  }
+
+  public void setUsingEcore(boolean usingEcore)
+  {
+    this.usingEcore = usingEcore;
+  }
+
+  public void setUsingEtypes(boolean usingEtypes)
+  {
+    this.usingEtypes = usingEtypes;
   }
 
   public void setNewPackageUnits(InternalCDOPackageUnit[] newPackageUnits)
@@ -473,6 +493,34 @@ public class TransactionCommitContext implements InternalCommitContext
     lobs = in;
   }
 
+  private InternalCDOPackageUnit[] lockPackageRegistry(InternalCDOPackageUnit[] packageUnits)
+      throws InterruptedException
+  {
+    if (!packageRegistryLocked)
+    {
+      repository.getPackageRegistryCommitLock().acquire();
+      packageRegistryLocked = true;
+    }
+
+    List<InternalCDOPackageUnit> noDuplicates = new ArrayList<InternalCDOPackageUnit>();
+    for (InternalCDOPackageUnit packageUnit : packageUnits)
+    {
+      String id = packageUnit.getID();
+      if (!repositoryPackageRegistry.containsKey(id))
+      {
+        noDuplicates.add(packageUnit);
+      }
+    }
+
+    int newSize = noDuplicates.size();
+    if (packageUnits.length != newSize)
+    {
+      return noDuplicates.toArray(new InternalCDOPackageUnit[newSize]);
+    }
+
+    return packageUnits;
+  }
+
   /**
    * @since 2.0
    */
@@ -492,24 +540,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
       if (newPackageUnits.length != 0)
       {
-        repository.getPackageRegistryCommitLock().acquire();
-        packageRegistryLocked = true;
-
-        List<InternalCDOPackageUnit> noDuplicates = new ArrayList<InternalCDOPackageUnit>();
-        for (InternalCDOPackageUnit newPackageUnit : newPackageUnits)
-        {
-          String id = newPackageUnit.getID();
-          if (!repositoryPackageRegistry.containsKey(id))
-          {
-            noDuplicates.add(newPackageUnit);
-          }
-        }
-
-        int newSize = noDuplicates.size();
-        if (newPackageUnits.length != newSize)
-        {
-          newPackageUnits = noDuplicates.toArray(new InternalCDOPackageUnit[newSize]);
-        }
+        newPackageUnits = lockPackageRegistry(newPackageUnits);
       }
 
       lockObjects(); // Can take long and must come before setTimeStamp()
@@ -1094,7 +1125,7 @@ public class TransactionCommitContext implements InternalCommitContext
       oldRevision = revisionManager.getRevisionByVersion(id, delta, CDORevision.UNCHUNKED, true);
       if (oldRevision != null)
       {
-        if (ObjectUtil.equals(oldRevision.getBranch(), branch) && oldRevision.isHistorical())
+        if (oldRevision.getBranch() == branch && oldRevision.isHistorical())
         {
           oldRevision = null;
         }
@@ -1290,6 +1321,7 @@ public class TransactionCommitContext implements InternalCommitContext
         {
           InternalCDOPackageUnit packageUnit = newPackageUnits[i];
           packageUnit.setState(CDOPackageUnit.State.LOADED);
+          packageUnit.setPackageRegistry(repositoryPackageRegistry);
           repositoryPackageRegistry.putPackageUnit(packageUnit);
           monitor.worked();
         }
@@ -1451,14 +1483,20 @@ public class TransactionCommitContext implements InternalCommitContext
 
     public abstract CDOID getID();
 
+    @Override
+    public void write(CDODataOutput out) throws IOException
+    {
+      ((AbstractCDOID)getID()).write(out);
+    }
+
+    public String toURIFragment()
+    {
+      return getID().toURIFragment();
+    }
+
     public Type getType()
     {
       return getID().getType();
-    }
-
-    public boolean isNull()
-    {
-      return getID().isNull();
     }
 
     public boolean isObject()
@@ -1471,19 +1509,9 @@ public class TransactionCommitContext implements InternalCommitContext
       return getID().isTemporary();
     }
 
-    public boolean isDangling()
-    {
-      return getID().isDangling();
-    }
-
     public boolean isExternal()
     {
       return getID().isExternal();
-    }
-
-    public String toURIFragment()
-    {
-      return getID().toURIFragment();
     }
 
     @Override
@@ -1493,32 +1521,17 @@ public class TransactionCommitContext implements InternalCommitContext
     }
 
     @Override
-    public void write(ExtendedDataOutput out) throws IOException
-    {
-      ((AbstractCDOID)getID()).write(out);
-    }
-
-    @Override
-    public void read(ExtendedDataInput in) throws IOException
-    {
-      // Not called on the server-side
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void read(String fragmentPart)
-    {
-      // Not called on the server-side
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean equals(Object obj)
     {
       if (obj instanceof DeltaLockWrapper)
       {
         DeltaLockWrapper wrapper = (DeltaLockWrapper)obj;
-        return key.equals(wrapper.getKey());
+        obj = wrapper.getKey();
+      }
+
+      if (key instanceof CDOID)
+      {
+        return key == obj;
       }
 
       return key.equals(obj);

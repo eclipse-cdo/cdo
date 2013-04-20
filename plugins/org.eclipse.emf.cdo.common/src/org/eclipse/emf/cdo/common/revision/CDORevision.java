@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
@@ -67,6 +68,11 @@ public interface CDORevision extends CDORevisionKey, CDORevisable
       return revision.getPermission();
     }
   };
+
+  /**
+   * @since 4.2
+   */
+  public CDOClassInfo getClassInfo();
 
   /**
    * @since 2.0

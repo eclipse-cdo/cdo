@@ -17,14 +17,23 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind;
+import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
+import org.eclipse.net4j.db.ddl.delta.IDBIndexDelta;
+import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
+import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
 import org.eclipse.net4j.internal.db.bundle.OM;
+import org.eclipse.net4j.internal.db.ddl.DBField;
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import javax.sql.DataSource;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.Driver;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +41,9 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -86,8 +97,6 @@ public abstract class DBAdapter implements IDBAdapter
 
   private Set<String> reservedWords;
 
-  private int indexCounter;
-
   public DBAdapter(String name, String version)
   {
     this.name = name;
@@ -122,6 +131,401 @@ public abstract class DBAdapter implements IDBAdapter
   public DataSource createJDBCDataSource()
   {
     throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.2
+   */
+  public IDBSchema readSchema(Connection connection, String name)
+  {
+    return DBUtil.readSchema(this, connection, name);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public void readSchema(Connection connection, IDBSchema schema)
+  {
+    try
+    {
+      DBField.trackConstruction(false);
+      String schemaName = schema.getName();
+
+      DatabaseMetaData metaData = connection.getMetaData();
+      Set<String> schemaNames = DBUtil.getAllSchemaNames(metaData);
+      if (!schemaNames.contains(schemaName))
+      {
+        schemaName = null;
+      }
+
+      ResultSet tables = metaData.getTables(null, schemaName, null, new String[] { "TABLE" });
+      while (tables.next())
+      {
+        String tableName = tables.getString(3);
+
+        IDBTable table = schema.addTable(tableName);
+        readFields(connection, table);
+        readIndices(connection, metaData, table, schemaName);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBField.trackConstruction(true);
+    }
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void readFields(Connection connection, IDBTable table) throws SQLException
+  {
+    Statement statement = null;
+    ResultSet resultSet = null;
+
+    try
+    {
+      statement = connection.createStatement();
+      resultSet = statement.executeQuery("SELECT * FROM " + table);
+      ResultSetMetaData metaData = resultSet.getMetaData();
+
+      for (int i = 0; i < metaData.getColumnCount(); i++)
+      {
+        int column = i + 1;
+
+        String name = metaData.getColumnName(column);
+        DBType type = DBType.getTypeByCode(metaData.getColumnType(column));
+        int precision = metaData.getPrecision(column);
+        int scale = metaData.getScale(column);
+        boolean notNull = metaData.isNullable(column) == ResultSetMetaData.columnNoNulls;
+
+        table.addField(name, type, precision, scale, notNull);
+      }
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+      DBUtil.close(statement);
+    }
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void readIndices(Connection connection, DatabaseMetaData metaData, IDBTable table, String schemaName)
+      throws SQLException
+  {
+    String tableName = table.getName();
+
+    ResultSet primaryKeys = metaData.getPrimaryKeys(null, schemaName, tableName);
+    readIndices(connection, primaryKeys, table, 6, 0, 4, 5);
+
+    ResultSet indexInfo = metaData.getIndexInfo(null, schemaName, tableName, false, false);
+    readIndices(connection, indexInfo, table, 6, 4, 9, 8);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void readIndices(Connection connection, ResultSet resultSet, IDBTable table, int indexNameColumn,
+      int indexTypeColumn, int fieldNameColumn, int fieldPositionColumn) throws SQLException
+  {
+    try
+    {
+      String indexName = null;
+      IDBIndex.Type indexType = null;
+      List<FieldInfo> fieldInfos = new ArrayList<FieldInfo>();
+
+      while (resultSet.next())
+      {
+        String name = resultSet.getString(indexNameColumn);
+        if (indexName != null && !indexName.equals(name))
+        {
+          addIndex(connection, table, indexName, indexType, fieldInfos);
+          fieldInfos.clear();
+        }
+
+        indexName = name;
+
+        if (indexTypeColumn == 0)
+        {
+          indexType = IDBIndex.Type.PRIMARY_KEY;
+        }
+        else
+        {
+          boolean nonUnique = resultSet.getBoolean(indexTypeColumn);
+          indexType = nonUnique ? IDBIndex.Type.NON_UNIQUE : IDBIndex.Type.UNIQUE;
+        }
+
+        FieldInfo fieldInfo = new FieldInfo();
+        fieldInfo.name = resultSet.getString(fieldNameColumn);
+        fieldInfo.position = resultSet.getShort(fieldPositionColumn);
+        fieldInfos.add(fieldInfo);
+      }
+
+      if (indexName != null)
+      {
+        addIndex(connection, table, indexName, indexType, fieldInfos);
+      }
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+    }
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void addIndex(Connection connection, IDBTable table, String name, IDBIndex.Type type,
+      List<FieldInfo> fieldInfos)
+  {
+    IDBField[] fields = new IDBField[fieldInfos.size()];
+
+    Collections.sort(fieldInfos);
+    for (int i = 0; i < fieldInfos.size(); i++)
+    {
+      FieldInfo fieldInfo = fieldInfos.get(i);
+      IDBField field = table.getField(fieldInfo.name);
+      if (field == null)
+      {
+        throw new IllegalStateException("Field not found: " + fieldInfo.name);
+      }
+
+      fields[i] = field;
+    }
+
+    if (!isPrimaryKeyShadow(connection, table, name, type, fields))
+    {
+      table.addIndex(name, type, fields);
+    }
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected boolean isPrimaryKeyShadow(Connection connection, IDBTable table, String name, IDBIndex.Type type,
+      IDBField[] fields)
+  {
+    if (type != IDBIndex.Type.UNIQUE)
+    {
+      return false;
+    }
+
+    IDBIndex primaryKey = table.getPrimaryKeyIndex();
+    if (primaryKey == null)
+    {
+      return false;
+    }
+
+    IDBField[] primaryKeyFields = primaryKey.getFields();
+    return Arrays.equals(primaryKeyFields, fields);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public void updateSchema(final Connection connection, final IDBSchema schema, IDBSchemaDelta delta)
+      throws DBException
+  {
+    // Apply delta to in-memory representation of the schema
+    delta.applyTo(schema);
+
+    // Call DDL methods to update the database schema
+    IDBDeltaVisitor schemaUpdater = new IDBDeltaVisitor.Default()
+    {
+      @Override
+      public void visit(IDBTableDelta delta)
+      {
+        IDBTable table = delta.getSchemaElement(schema);
+        ChangeKind changeKind = delta.getChangeKind();
+        switch (changeKind)
+        {
+        case ADD:
+          createTable(connection, table, delta);
+          break;
+
+        case REMOVE:
+          dropTable(connection, table, delta);
+          break;
+
+        case CHANGE:
+          alterTable(connection, table, delta);
+          break;
+
+        default:
+          throw new IllegalStateException("Illegal change kind: " + changeKind);
+        }
+      }
+
+      @Override
+      public void visit(IDBIndexDelta delta)
+      {
+        IDBIndex element = delta.getSchemaElement(schema);
+        ChangeKind changeKind = delta.getChangeKind();
+        switch (changeKind)
+        {
+        case ADD:
+          createIndex(connection, element, delta);
+          break;
+
+        case REMOVE:
+          dropIndex(connection, element, delta);
+          break;
+
+        case CHANGE:
+          dropIndex(connection, element, delta);
+          createIndex(connection, element, delta);
+          break;
+
+        default:
+          throw new IllegalStateException("Illegal change kind: " + changeKind);
+        }
+      }
+    };
+
+    delta.accept(schemaUpdater);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void createTable(Connection connection, IDBTable table, IDBTableDelta delta)
+  {
+    CheckUtil.checkArg(delta.getChangeKind() == ChangeKind.ADD, "Not added: " + delta.getName());
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("CREATE TABLE "); //$NON-NLS-1$
+    builder.append(delta.getName());
+    builder.append(" ("); //$NON-NLS-1$
+    appendFieldDefs(builder, table, createFieldDefinitions(table));
+    builder.append(")"); //$NON-NLS-1$
+
+    DBUtil.execute(connection, builder);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void dropTable(Connection connection, IDBTable table, IDBTableDelta delta)
+  {
+    String sql = getDropTableSQL(table);
+    DBUtil.execute(connection, sql);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void alterTable(Connection connection, IDBTable table, IDBTableDelta delta)
+  {
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void createIndex(Connection connection, IDBIndex index, IDBIndexDelta delta)
+  {
+    StringBuilder builder = new StringBuilder();
+    if (index.getType() == IDBIndex.Type.PRIMARY_KEY)
+    {
+      createPrimaryKey(index, builder);
+    }
+    else
+    {
+      createIndex(index, builder);
+    }
+
+    createIndexFields(index, builder);
+    DBUtil.execute(connection, builder);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void createPrimaryKey(IDBIndex index, StringBuilder builder)
+  {
+    builder.append("ALTER TABLE "); //$NON-NLS-1$
+    builder.append(index.getTable());
+    builder.append(" ADD CONSTRAINT "); //$NON-NLS-1$
+    builder.append(index);
+    builder.append(" PRIMARY KEY"); //$NON-NLS-1$
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void createIndex(IDBIndex index, StringBuilder builder)
+  {
+    builder.append("CREATE "); //$NON-NLS-1$
+    if (index.getType() == IDBIndex.Type.UNIQUE)
+    {
+      builder.append("UNIQUE "); //$NON-NLS-1$
+    }
+
+    builder.append("INDEX "); //$NON-NLS-1$
+    builder.append(index);
+    builder.append(" ON "); //$NON-NLS-1$
+    builder.append(index.getTable());
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void createIndexFields(IDBIndex index, StringBuilder builder)
+  {
+    builder.append(" ("); //$NON-NLS-1$
+
+    IDBField[] fields = index.getFields();
+    for (int i = 0; i < fields.length; i++)
+    {
+      if (i != 0)
+      {
+        builder.append(", "); //$NON-NLS-1$
+      }
+
+      addIndexField(builder, fields[i]);
+    }
+
+    builder.append(")"); //$NON-NLS-1$
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void dropIndex(Connection connection, IDBIndex index, IDBIndexDelta delta)
+  {
+    StringBuilder builder = new StringBuilder();
+    if (index.getType() == IDBIndex.Type.PRIMARY_KEY)
+    {
+      dropPrimaryKey(index, builder);
+    }
+    else
+    {
+      dropIndex(index, builder);
+    }
+
+    DBUtil.execute(connection, builder);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void dropPrimaryKey(IDBIndex index, StringBuilder builder)
+  {
+    builder.append("ALTER TABLE "); //$NON-NLS-1$
+    builder.append(index.getTable());
+    builder.append(" DROP CONSTRAINT "); //$NON-NLS-1$
+    builder.append(index);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected void dropIndex(IDBIndex index, StringBuilder builder)
+  {
   }
 
   public Set<IDBTable> createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException
@@ -328,22 +732,10 @@ public abstract class DBAdapter implements IDBAdapter
     }
 
     builder.append("INDEX "); //$NON-NLS-1$
-    builder.append(getIndexNameFor(index, num));
+    builder.append(index);
     builder.append(" ON "); //$NON-NLS-1$
     builder.append(table);
-    builder.append(" ("); //$NON-NLS-1$
-    IDBField[] fields = index.getFields();
-    for (int i = 0; i < fields.length; i++)
-    {
-      if (i != 0)
-      {
-        builder.append(", "); //$NON-NLS-1$
-      }
-
-      addIndexField(builder, fields[i]);
-    }
-
-    builder.append(")"); //$NON-NLS-1$
+    createIndexFields(index, builder);
     String sql = builder.toString();
     if (TRACER.isEnabled())
     {
@@ -351,14 +743,6 @@ public abstract class DBAdapter implements IDBAdapter
     }
 
     statement.execute(sql);
-  }
-
-  /**
-   * @since 4.2
-   */
-  protected String getIndexNameFor(IDBIndex index, int num)
-  {
-    return "I" + System.currentTimeMillis() + "_" + ++indexCounter;
   }
 
   protected void addIndexField(StringBuilder builder, IDBField field)
@@ -381,6 +765,12 @@ public abstract class DBAdapter implements IDBAdapter
   {
     return getTypeName(field) + (field.isNotNull() ? " NOT NULL" : ""); //$NON-NLS-1$ //$NON-NLS-2$
   }
+
+  // protected String getTypeName(DBType type)
+  // {
+  // new DBField(null,null)
+  // return getTypeName(field);
+  // }
 
   protected String getTypeName(IDBField field)
   {
@@ -620,6 +1010,26 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.2
    */
+  public String sqlModifyField(IDBField field)
+  {
+    String tableName = field.getTable().getName();
+    String fieldName = field.getName();
+
+    String definition = createFieldDefinition(field);
+    return sqlModifyField(tableName, fieldName, definition);
+  }
+
+  /**
+   * @since 4.2
+   */
+  protected String sqlModifyField(String tableName, String fieldName, String definition)
+  {
+    return "ALTER TABLE " + tableName + " ALTER COLUMN " + fieldName + " " + definition;
+  }
+
+  /**
+   * @since 4.2
+   */
   public String format(PreparedStatement stmt)
   {
     return stmt.toString();
@@ -661,5 +1071,21 @@ public abstract class DBAdapter implements IDBAdapter
   public static int getDefaultDBLength(DBType type)
   {
     return type == DBType.VARCHAR ? 32672 : IDBField.DEFAULT;
+  }
+
+  /**
+   * @since 4.2
+   * @author Eike Stepper
+   */
+  protected static final class FieldInfo implements Comparable<FieldInfo>
+  {
+    public String name;
+
+    public int position;
+
+    public int compareTo(FieldInfo o)
+    {
+      return position - o.position;
+    }
   }
 }

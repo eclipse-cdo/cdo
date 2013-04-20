@@ -20,7 +20,7 @@ public class AllTestsMEMAudit extends AllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsMEMAudit().getTestSuite(AllConfigs.class.getName());
+    return new AllTestsMEMAudit().getTestSuite();
   }
 
   @Override

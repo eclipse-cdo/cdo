@@ -51,7 +51,7 @@ public class DetachTest extends AbstractCDOTest
     c1.setName("Test");
     resource.getContents().add(c1);
 
-    final URI uriC1 = EcoreUtil.getURI(c1);
+    URI uriC1 = EcoreUtil.getURI(c1);
     assertEquals(c1, transaction.getResourceSet().getEObject(uriC1, false));
 
     resource.getContents().remove(0); // remove object by index

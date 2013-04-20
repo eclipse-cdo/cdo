@@ -159,11 +159,10 @@ public class DB4OPackageUnit
     List<Pair<String, String>> infos = new ArrayList<Pair<String, String>>();
     for (InternalCDOPackageInfo info : packageInfos)
     {
-      Pair<String, String> pair = new Pair<String, String>();
-      pair.setElement1(info.getParentURI());
-      pair.setElement2(info.getPackageURI());
+      Pair<String, String> pair = Pair.create(info.getParentURI(), info.getPackageURI());
       infos.add(pair);
     }
+
     return infos;
   }
 

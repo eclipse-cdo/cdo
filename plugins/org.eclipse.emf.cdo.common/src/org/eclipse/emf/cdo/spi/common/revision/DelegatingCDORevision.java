@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
-import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOList;
@@ -24,6 +23,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 
 import org.eclipse.net4j.util.Predicate;
 
@@ -47,6 +48,22 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   public abstract InternalCDORevision getDelegate();
 
   /**
+   * @since 4.2
+   */
+  public InternalCDORevision getRevisionForID(CDOID id)
+  {
+    return getDelegate().getRevisionForID(id);
+  }
+
+  /**
+   * @since 4.2
+   */
+  public InternalCDORevision getProperRevision()
+  {
+    return getDelegate().getProperRevision();
+  }
+
+  /**
    * @since 4.0
    */
   public boolean adjustReferences(CDOReferenceAdjuster referenceAdjuster)
@@ -59,7 +76,10 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
     return getDelegate().getTimeStamp();
   }
 
-  public CDOBranch getBranch()
+  /**
+   * @since 4.2
+   */
+  public InternalCDOBranch getBranch()
   {
     return getDelegate().getBranch();
   }
@@ -145,7 +165,10 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
     return null;
   }
 
-  public CDOClassInfo getClassInfo()
+  /**
+   * @since 4.2
+   */
+  public InternalCDOClassInfo getClassInfo()
   {
     return getDelegate().getClassInfo();
   }

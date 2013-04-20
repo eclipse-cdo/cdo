@@ -137,4 +137,10 @@ public class OracleAdapter extends DBAdapter
     String message = ex.getMessage();
     return message != null && message.toLowerCase().contains("ora-00001") && "23000".equals(ex.getSQLState());
   }
+
+  @Override
+  protected String sqlModifyField(String tableName, String fieldName, String definition)
+  {
+    return "ALTER TABLE " + tableName + " MODIFY " + fieldName + " " + definition;
+  }
 }

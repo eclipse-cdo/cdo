@@ -33,7 +33,6 @@ import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -153,8 +152,6 @@ public class Repository extends Container<Object> implements InternalRepository
   private boolean supportingAudits;
 
   private boolean supportingBranches;
-
-  private boolean supportingEcore;
 
   private boolean serializingCommits;
 
@@ -326,9 +323,10 @@ public class Repository extends Container<Object> implements InternalRepository
     return supportingBranches;
   }
 
+  @Deprecated
   public boolean isSupportingEcore()
   {
-    return supportingEcore;
+    return true;
   }
 
   public boolean isSerializingCommits()
@@ -576,11 +574,8 @@ public class Repository extends Container<Object> implements InternalRepository
   @Deprecated
   protected void ensureChunks(InternalCDORevision revision, int referenceChunk, IStoreAccessor accessor)
   {
-    EClass eClass = revision.getEClass();
-    EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
-    for (int i = 0; i < allPersistentFeatures.length; i++)
+    for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
     {
-      EStructuralFeature feature = allPersistentFeatures[i];
       if (feature.isMany())
       {
         MoveableList<Object> list = revision.getList(feature);
@@ -594,9 +589,7 @@ public class Repository extends Container<Object> implements InternalRepository
   {
     if (!revision.isUnchunked())
     {
-      EClass eClass = revision.getEClass();
-      EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getAllPersistentFeatures(eClass);
-      for (EStructuralFeature feature : allPersistentFeatures)
+      for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
       {
         if (feature.isMany())
         {
@@ -1360,14 +1353,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private InternalCDORevision getRevisionFromBranch(CDOID id, CDOBranchPoint branchPoint)
   {
-    InternalCDORevision revision = revisionManager.getRevision(id, branchPoint, CDORevision.UNCHUNKED,
-        CDORevision.DEPTH_NONE, true);
-    // if (revision == null || !ObjectUtil.equals(revision.getBranch(), branchPoint.getBranch()))
-    // {
-    // return null;
-    // }
-
-    return revision;
+    return revisionManager.getRevision(id, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
   }
 
   public void queryLobs(List<byte[]> ids)
@@ -1447,6 +1433,7 @@ public class Repository extends Container<Object> implements InternalRepository
         lockables.add(id);
       }
     }
+
     return lockables;
   }
 
@@ -1461,6 +1448,7 @@ public class Repository extends Container<Object> implements InternalRepository
       List<CDORevisionKey> loadedRevs, boolean recursive, long timeout)
   {
     List<LockState<Object, IView>> newLockStates = null;
+
     try
     {
       newLockStates = getLockingManager().lock2(true, type, view, lockables, recursive, timeout);
@@ -1536,7 +1524,6 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     // Convert the list to an array, to satisfy the API later
-    //
     CDORevisionKey[] staleRevisionsArray = new CDORevisionKey[staleRevisions.size()];
     staleRevisions.toArray(staleRevisionsArray);
 
@@ -1646,12 +1633,6 @@ public class Repository extends Container<Object> implements InternalRepository
       supportingBranches = store.getRevisionParallelism() == IStore.RevisionParallelism.BRANCHING;
     }
 
-    String valueEcore = properties.get(Props.SUPPORTING_ECORE);
-    if (valueEcore != null)
-    {
-      supportingEcore = Boolean.valueOf(valueEcore);
-    }
-
     String valueCommits = properties.get(Props.SERIALIZE_COMMITS);
     if (valueCommits != null)
     {
@@ -1685,11 +1666,6 @@ public class Repository extends Container<Object> implements InternalRepository
 
     if (initialPackages != null)
     {
-      // if (type != Type.MASTER)
-      // {
-      // throw new IllegalStateException("Only master repositories can have initial packages");
-      // }
-
       for (EPackage initialPackage : initialPackages)
       {
         if (!packageRegistry.containsKey(initialPackage.getNsURI()))
@@ -1863,6 +1839,7 @@ public class Repository extends Container<Object> implements InternalRepository
     revisionManager.setRevisionLoader(this);
     sessionManager.setRepository(this);
     queryManager.setRepository(this);
+    commitInfoManager.setRepository(this);
     commitInfoManager.setCommitInfoLoader(this);
     commitManager.setRepository(this);
     getLockingManager().setRepository(this);

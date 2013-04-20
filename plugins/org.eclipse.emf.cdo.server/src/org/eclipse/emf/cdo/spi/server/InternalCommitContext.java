@@ -84,6 +84,16 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext
    */
   public void setClearResourcePathCache(boolean clearResourcePathCache);
 
+  /**
+   * @since 4.2
+   */
+  public void setUsingEcore(boolean usingEcore);
+
+  /**
+   * @since 4.2
+   */
+  public void setUsingEtypes(boolean usingEtypes);
+
   public void setNewPackageUnits(InternalCDOPackageUnit[] newPackageUnits);
 
   /**

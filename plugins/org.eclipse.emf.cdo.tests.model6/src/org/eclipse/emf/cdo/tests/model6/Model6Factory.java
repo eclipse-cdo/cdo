@@ -188,11 +188,47 @@ public interface Model6Factory extends EFactory
   HasNillableAttribute createHasNillableAttribute();
 
   /**
-   * Returns the package supported by this factory.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @return the package supported by this factory.
+   * Returns a new object of class '<em>Empty String Default</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Empty String Default</em>'.
    * @generated
    */
+  EmptyStringDefault createEmptyStringDefault();
+
+  /**
+   * Returns a new object of class '<em>Empty String Default Unsettable</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Empty String Default Unsettable</em>'.
+   * @generated
+   */
+  EmptyStringDefaultUnsettable createEmptyStringDefaultUnsettable();
+
+  /**
+   * Returns a new object of class '<em>Unsettable Attributes</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Unsettable Attributes</em>'.
+   * @generated
+   */
+  UnsettableAttributes createUnsettableAttributes();
+
+  /**
+   * Returns a new object of class '<em>Can Reference Legacy</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Can Reference Legacy</em>'.
+   * @generated
+   */
+  CanReferenceLegacy createCanReferenceLegacy();
+
+  /**
+  	 * Returns the package supported by this factory.
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @return the package supported by this factory.
+  	 * @generated
+  	 */
   Model6Package getModel6Package();
 
 } // Model6Factory

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.StubCDORevision;
 
@@ -67,9 +68,9 @@ public final class TestRevision extends StubCDORevision
   }
 
   @Override
-  public CDOBranch getBranch()
+  public InternalCDOBranch getBranch()
   {
-    return branchPoint.getBranch();
+    return (InternalCDOBranch)branchPoint.getBranch();
   }
 
   @Override

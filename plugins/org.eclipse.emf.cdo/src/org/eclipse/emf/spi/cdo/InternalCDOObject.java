@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry.CDOObjectMarker;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -32,6 +33,11 @@ import org.eclipse.emf.ecore.InternalEObject;
  */
 public interface InternalCDOObject extends CDOObject, InternalEObject, InternalCDOLoadable, CDOObjectMarker
 {
+  /**
+   * @since 4.2
+   */
+  public InternalCDOClassInfo cdoClassInfo();
+
   public InternalCDOView cdoView();
 
   public InternalCDORevision cdoRevision();
@@ -59,5 +65,9 @@ public interface InternalCDOObject extends CDOObject, InternalEObject, InternalC
 
   public InternalEObject cdoInternalInstance();
 
+  /**
+   * @deprecated As of 4.2 no longer supported.
+   */
+  @Deprecated
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID);
 }

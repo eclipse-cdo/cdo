@@ -12,7 +12,6 @@
     <property name="overrideUUID" value=""/>
     <property name="supportingAudits" value="true"/>
     <property name="supportingBranches" value="true"/>
-    <property name="supportingEcore" value="false"/>
     <property name="ensureReferentialIntegrity" value="false"/>
     <property name="allowInterruptRunningQueries" value="true"/>
     <property name="idGenerationLocation" value="STORE"/> <!-- Possible values: STORE | CLIENT -->
@@ -82,11 +81,12 @@
 
       <!-- Example:
       <dbAdapter name="postgresql"/>
-      <dataSource class="org.postgresql.ds.PGSimpleDataSource"
-        url="jdbc:postgresql://localhost:5432/repo1"
-        databaseName="repo1"
-        user="cdo"
-        password="cdo"/>
+			<dataSource class="org.postgresql.ds.PGSimpleDataSource"
+				serverName="localhost"
+				portNumber="5432"
+				databaseName="repo1"
+				user="cdo"
+				password="cdo"/>
       -->
 
     </store>

@@ -86,11 +86,10 @@ public class CommitHistoryComposite extends Composite
   public CommitHistoryComposite(Composite parent, int style)
   {
     super(parent, style);
-
     setLayout(new FillLayout(SWT.HORIZONTAL));
 
-    tableViewer = new TableViewer(this, SWT.BORDER | SWT.FULL_SELECTION);
-    tableViewer.setContentProvider(new ContentProvider());
+    tableViewer = createTableViewer();
+    tableViewer.setContentProvider(createContentProvider());
     tableViewer.addDoubleClickListener(new DoubleClickListener());
     tableViewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
@@ -105,7 +104,7 @@ public class CommitHistoryComposite extends Composite
       }
     });
 
-    labelProvider = new LabelProvider();
+    labelProvider = createLabelProvider();
     labelProvider.support(tableViewer);
 
     netRenderer = new NetRenderer(tableViewer);
@@ -194,6 +193,21 @@ public class CommitHistoryComposite extends Composite
     input = null;
     history = null;
     super.dispose();
+  }
+
+  protected TableViewer createTableViewer()
+  {
+    return new TableViewer(this, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
+  }
+
+  protected ContentProvider createContentProvider()
+  {
+    return new ContentProvider();
+  }
+
+  protected LabelProvider createLabelProvider()
+  {
+    return new LabelProvider();
   }
 
   protected CDOCommitHistory createHistory(CDOSession session, CDOBranch branch, CDOObject object)

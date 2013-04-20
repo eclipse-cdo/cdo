@@ -14,7 +14,6 @@ package org.eclipse.emf.internal.cdo.view;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
@@ -52,6 +51,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EContentsEList;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -201,7 +201,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     synchronized (transaction)
     {
       List<InternalCDOObject> contents = new ArrayList<InternalCDOObject>();
-      prepare(object, new Pair<InternalCDOTransaction, List<InternalCDOObject>>(transaction, contents));
+      prepare(object, Pair.create(transaction, contents));
 
       attachOrReattach(object, transaction);
       for (InternalCDOObject content : contents)
@@ -298,7 +298,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
         content.cdoInternalSetView(null);
         content.cdoInternalSetID(null);
-        content.cdoInternalSetRevision(null);
       }
     }
   }
@@ -459,7 +458,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
 
       process(object, CDOEvent.ROLLBACK, null);
-      object.cdoInternalPostRollback();
     }
   }
 
@@ -527,7 +525,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       savepoint = savepoint.getNextSavepoint();
     }
 
-    object.cdoInternalSetID(id);
     object.cdoInternalSetView(transaction);
 
     // Construct a new revision
@@ -617,7 +614,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       {
         // Prepare object
         CDOID id = transaction.createIDForNewObject(object.cdoInternalInstance());
-        object.cdoInternalSetID(id);
         object.cdoInternalSetView(transaction);
         changeState(object, CDOState.PREPARED);
 
@@ -640,12 +636,25 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       transaction.registerAttached(object, !reattaching);
 
       // Prepare content tree
-      for (Iterator<InternalCDOObject> it = getProperContents(object, transaction); it.hasNext();)
+      for (Iterator<InternalEObject> it = getPersistentContents(object); it.hasNext();)
       {
-        InternalCDOObject content = it.next();
-        contents.add(content);
-        INSTANCE.process(content, CDOEvent.PREPARE, transactionAndContents);
+        InternalEObject content = it.next();
+        Resource.Internal directResource = content.eDirectResource();
+
+        boolean objectIsResource = directResource == object;
+        if (objectIsResource || directResource == null)
+        {
+          InternalCDOObject adapted = FSMUtil.adapt(content, transaction);
+          contents.add(adapted);
+          INSTANCE.process(adapted, CDOEvent.PREPARE, transactionAndContents);
+        }
       }
+    }
+
+    private Iterator<InternalEObject> getPersistentContents(InternalCDOObject object)
+    {
+      EStructuralFeature[] features = object.cdoClassInfo().getAllPersistentContainments();
+      return new EContentsEList.ResolvingFeatureIteratorImpl<InternalEObject>(object, features);
     }
 
     private void checkPackageRegistrationProblems(InternalCDOSession session, EClass eClass)
@@ -667,45 +676,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
               eClass));
         }
       }
-    }
-
-    private Iterator<InternalCDOObject> getProperContents(final InternalCDOObject object,
-        final CDOTransaction transaction)
-    {
-      final boolean isResource = object instanceof Resource;
-      final Iterator<EObject> delegate = object.eContents().iterator();
-
-      return new Iterator<InternalCDOObject>()
-      {
-        private Object next;
-
-        public boolean hasNext()
-        {
-          while (delegate.hasNext())
-          {
-            InternalEObject eObject = (InternalEObject)delegate.next();
-            EStructuralFeature eContainingFeature = eObject.eContainingFeature();
-            if (isResource || eObject.eDirectResource() == null
-                && (eContainingFeature == null || EMFUtil.isPersistent(eContainingFeature)))
-            {
-              next = FSMUtil.adapt(eObject, transaction);
-              return true;
-            }
-          }
-
-          return false;
-        }
-
-        public InternalCDOObject next()
-        {
-          return (InternalCDOObject)next;
-        }
-
-        public void remove()
-        {
-          throw new UnsupportedOperationException();
-        }
-      };
     }
   }
 
@@ -886,9 +856,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       CDOID newID = idMappings.get(oldID);
       if (newID != null)
       {
-        object.cdoInternalSetID(newID);
-        transaction.remapObject(oldID);
         revision.setID(newID);
+        transaction.remapObject(oldID);
       }
 
       // Adjust revision
@@ -910,8 +879,19 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
+      InternalCDOTransaction transaction = object.cdoView().toTransaction();
+      if (transaction.getLastSavepoint().isNewObject(object.cdoID()))
+      {
+        changeState(object, CDOState.TRANSIENT);
+        object.cdoInternalPostDetach(false);
+      }
+      else
+      {
+        changeState(object, CDOState.PROXY);
+        object.cdoInternalPostRollback();
+      }
+
       object.cdoInternalSetRevision(null);
-      changeState(object, CDOState.PROXY);
     }
   }
 

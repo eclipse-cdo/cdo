@@ -281,9 +281,10 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
             CDOServerUtil.addRepository(serverContainer, repository);
           }
         }
-        catch (Exception ex)
+        catch (RuntimeException ex)
         {
           deactivateRepositories();
+          throw ex;
         }
       }
     }
@@ -298,7 +299,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     props.put(Props.OVERRIDE_UUID, ""); // UUID := name !!!
     props.put(Props.SUPPORTING_AUDITS, Boolean.toString(supportingAudits));
     props.put(Props.SUPPORTING_BRANCHES, Boolean.toString(supportingBranches));
-    props.put(Props.SUPPORTING_ECORE, "false");
     props.put(Props.ID_GENERATION_LOCATION, idGenerationLocation.toString());
   }
 
@@ -385,13 +385,16 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   public void tearDown() throws Exception
   {
     deactivateServerBrowser();
-    if (!isOptimizing() || mustLeaveCleanRepos())
+    if (repositories != null)
     {
-      deactivateRepositories();
-    }
-    else
-    {
-      removeResourcePathChecker();
+      if (!isOptimizing() || mustLeaveCleanRepos())
+      {
+        deactivateRepositories();
+      }
+      else
+      {
+        removeResourcePathChecker();
+      }
     }
 
     resourcePathChecker = null;

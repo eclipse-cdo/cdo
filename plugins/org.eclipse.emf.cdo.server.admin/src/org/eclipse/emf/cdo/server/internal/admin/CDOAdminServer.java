@@ -59,7 +59,7 @@ public class CDOAdminServer extends AbstractCDOAdmin
       if (element instanceof IRepository)
       {
         IRepository repository = (IRepository)element;
-        removeRepository(repository);
+        repositoryRemoved(repository);
       }
     }
   };
@@ -171,7 +171,7 @@ public class CDOAdminServer extends AbstractCDOAdmin
     }
   }
 
-  protected void removeRepository(IRepository delegate)
+  protected void repositoryRemoved(IRepository delegate)
   {
     String name = delegate.getName();
     CDOAdminServerRepository repository = (CDOAdminServerRepository)getRepository(name);

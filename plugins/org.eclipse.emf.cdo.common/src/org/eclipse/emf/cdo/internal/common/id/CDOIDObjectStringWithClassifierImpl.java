@@ -12,34 +12,44 @@
 package org.eclipse.emf.cdo.internal.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDString;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
+import org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject;
 
-import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
+import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.ref.Interner;
 
 import java.io.IOException;
+import java.io.ObjectStreamException;
 
 /**
  * @author Martin Taal
  * @since 3.0
  */
-public class CDOIDObjectStringWithClassifierImpl extends CDOIDObjectStringImpl implements CDOClassifierRef.Provider
+public final class CDOIDObjectStringWithClassifierImpl extends AbstractCDOID implements InternalCDOIDObject,
+    CDOIDString, CDOClassifierRef.Provider
 {
   private static final long serialVersionUID = 1L;
 
-  private CDOClassifierRef classifierRef;
+  private static final StringWithClassifierInterner INTERNER = new StringWithClassifierInterner();
 
-  public CDOIDObjectStringWithClassifierImpl()
+  private final String value;
+
+  private final CDOClassifierRef classifierRef;
+
+  private CDOIDObjectStringWithClassifierImpl(String value, CDOClassifierRef classifierRef)
   {
+    CheckUtil.checkArg(value, "Null not allowed");
+    this.value = value;
+    this.classifierRef = classifierRef;
   }
 
-  public CDOIDObjectStringWithClassifierImpl(CDOClassifierRef classifierRef, String value)
+  public String getStringValue()
   {
-    super(value);
-    this.classifierRef = classifierRef;
+    return value;
   }
 
   public CDOClassifierRef getClassifierRef()
@@ -48,78 +58,47 @@ public class CDOIDObjectStringWithClassifierImpl extends CDOIDObjectStringImpl i
   }
 
   @Override
+  public void write(CDODataOutput out) throws IOException
+  {
+    out.writeString(value);
+    out.writeCDOClassifierRef(classifierRef);
+  }
+
+  public String toURIFragment()
+  {
+    return classifierRef.getPackageURI() + CDOClassifierRef.URI_SEPARATOR + classifierRef.getClassifierName()
+        + CDOClassifierRef.URI_SEPARATOR + value;
+  }
+
+  public Type getType()
+  {
+    return Type.OBJECT;
+  }
+
   public CDOID.ObjectType getSubType()
   {
     return CDOID.ObjectType.STRING_WITH_CLASSIFIER;
   }
 
-  @Override
-  public String toURIFragment()
+  public boolean isExternal()
   {
-    return getClassifierRef().getPackageURI() + CDOClassifierRef.URI_SEPARATOR + getClassifierRef().getClassifierName()
-        + CDOClassifierRef.URI_SEPARATOR + super.toURIFragment();
+    return false;
   }
 
-  @Override
-  public void read(String fragmentPart)
+  public boolean isObject()
   {
-    // get the EClass part
-    int index1 = fragmentPart.indexOf(CDOClassifierRef.URI_SEPARATOR);
-    int index2 = fragmentPart.indexOf(CDOClassifierRef.URI_SEPARATOR, index1 + 1);
-    if (index1 == -1 || index2 == -1)
-    {
-      throw new IllegalArgumentException("The fragment " + fragmentPart + " is invalid");
-    }
-
-    classifierRef = new CDOClassifierRef(fragmentPart.substring(0, index1), fragmentPart.substring(index1 + 1, index2));
-
-    // let the super take care of the rest
-    super.read(fragmentPart.substring(index2 + 1));
+    return true;
   }
 
-  @Override
-  public void read(ExtendedDataInput in) throws IOException
+  public boolean isTemporary()
   {
-    CDODataInput cdoDataInput = (CDODataInput)in;
-    classifierRef = cdoDataInput.readCDOClassifierRef();
-
-    // and let the super take care of the rest
-    super.read(in);
-  }
-
-  @Override
-  public void write(ExtendedDataOutput out) throws IOException
-  {
-    // TODO: change the parameter to prevent casting to CDODataInput
-    CDODataOutput cdoDataOutput = (CDODataOutput)out;
-    cdoDataOutput.writeCDOClassifierRef(classifierRef);
-
-    // and let the super write the rest
-    super.write(out);
-  }
-
-  @Override
-  public boolean equals(Object obj)
-  {
-    if (obj == this)
-    {
-      return true;
-    }
-
-    if (obj != null && obj.getClass() == getClass())
-    {
-      CDOIDObjectStringWithClassifierImpl that = (CDOIDObjectStringWithClassifierImpl)obj;
-      return ObjectUtil.equals(classifierRef, that.classifierRef) && getStringValue().equals(that.getStringValue());
-    }
-
     return false;
   }
 
   @Override
   public int hashCode()
   {
-    int hashCode = classifierRef.hashCode() ^ ObjectUtil.hashCode(getStringValue());
-    return getClass().hashCode() ^ hashCode;
+    return getHashCode(value, classifierRef);
   }
 
   @Override
@@ -131,8 +110,75 @@ public class CDOIDObjectStringWithClassifierImpl extends CDOIDObjectStringImpl i
   @Override
   protected int doCompareTo(CDOID o) throws ClassCastException
   {
-    // conversion to uri fragment is pretty heavy but afaics the compareTo
-    // is not used in a critical place.
     return toURIFragment().compareTo(o.toURIFragment());
+  }
+
+  private Object readResolve() throws ObjectStreamException
+  {
+    return create(value, classifierRef);
+  }
+
+  private static int getHashCode(String value, CDOClassifierRef classifierRef)
+  {
+    return value.hashCode() ^ classifierRef.hashCode();
+  }
+
+  public static CDOIDObjectStringWithClassifierImpl create(String value, CDOClassifierRef classifierRef)
+  {
+    return INTERNER.intern(value, classifierRef);
+  }
+
+  public static CDOIDObjectStringWithClassifierImpl create(CDODataInput in) throws IOException
+  {
+    String value = in.readString();
+    CDOClassifierRef classifierRef = in.readCDOClassifierRef();
+    return create(value, classifierRef);
+  }
+
+  public static CDOIDObjectStringWithClassifierImpl create(String fragmentPart)
+  {
+    int index1 = fragmentPart.indexOf(CDOClassifierRef.URI_SEPARATOR);
+    int index2 = fragmentPart.indexOf(CDOClassifierRef.URI_SEPARATOR, index1 + 1);
+    if (index1 == -1 || index2 == -1)
+    {
+      throw new IllegalArgumentException("The fragment " + fragmentPart + " is invalid");
+    }
+
+    String packageURI = fragmentPart.substring(0, index1);
+    String classifierName = fragmentPart.substring(index1 + 1, index2);
+    CDOClassifierRef classifierRef = new CDOClassifierRef(packageURI, classifierName);
+
+    String value = fragmentPart.substring(index2 + 1);
+    return create(value, classifierRef);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class StringWithClassifierInterner extends Interner<CDOIDObjectStringWithClassifierImpl>
+  {
+    public synchronized CDOIDObjectStringWithClassifierImpl intern(String value, CDOClassifierRef classifierRef)
+    {
+      int hashCode = getHashCode(value, classifierRef);
+      for (Entry<CDOIDObjectStringWithClassifierImpl> entry = getEntry(hashCode); entry != null; entry = entry
+          .getNextEntry())
+      {
+        CDOIDObjectStringWithClassifierImpl id = entry.get();
+        if (id != null && id.value.equals(value) && id.classifierRef.equals(classifierRef))
+        {
+          return id;
+        }
+      }
+
+      CDOIDObjectStringWithClassifierImpl id = new CDOIDObjectStringWithClassifierImpl(value, classifierRef);
+      addEntry(createEntry(id, hashCode));
+      return id;
+    }
+
+    @Override
+    protected int hashCode(CDOIDObjectStringWithClassifierImpl id)
+    {
+      return getHashCode(id.value, id.classifierRef);
+    }
   }
 }

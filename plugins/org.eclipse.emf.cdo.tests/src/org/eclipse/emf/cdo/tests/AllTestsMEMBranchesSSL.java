@@ -20,7 +20,7 @@ public class AllTestsMEMBranchesSSL extends AllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsMEMBranchesSSL().getTestSuite(AllConfigs.class.getName());
+    return new AllTestsMEMBranchesSSL().getTestSuite();
   }
 
   @Override

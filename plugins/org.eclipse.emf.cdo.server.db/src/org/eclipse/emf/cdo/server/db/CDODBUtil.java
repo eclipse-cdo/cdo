@@ -15,7 +15,6 @@ package org.eclipse.emf.cdo.server.db;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.DBBrowserPage;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
-import org.eclipse.emf.cdo.server.internal.db.SmartPreparedStatementCache;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategyWithRanges;
@@ -25,6 +24,7 @@ import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalMappi
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalNonAuditMappingStrategy;
 
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -99,7 +99,7 @@ public final class CDODBUtil
     DBStore store = new DBStore();
     store.setMappingStrategy(mappingStrategy);
     store.setDBAdapter(dbAdapter);
-    store.setDbConnectionProvider(dbConnectionProvider);
+    store.setDBConnectionProvider(dbConnectionProvider);
     store.setProperties(properties);
     return store;
   }
@@ -199,23 +199,22 @@ public final class CDODBUtil
   }
 
   /**
-   * Creates a prepared statement cache with the {@link CDODBUtil#DEFAULT_STATEMENT_CACHE_CAPACITY default capacity}.
-   *
    * @since 2.0
-   * @see CDODBUtil#createStatementCache(int)
+   * @deprecated As of 4.2 use {@link IDBConnection#prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)}.
    */
+  @Deprecated
   public static IPreparedStatementCache createStatementCache()
   {
-    return createStatementCache(DEFAULT_STATEMENT_CACHE_CAPACITY);
+    throw new UnsupportedOperationException();
   }
 
   /**
-   * Creates a prepared statement cache with the given capacity.
-   *
    * @since 2.0
+   * @deprecated As of 4.2 use {@link IDBConnection#prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)}.
    */
+  @Deprecated
   public static IPreparedStatementCache createStatementCache(int capacity)
   {
-    return new SmartPreparedStatementCache(capacity);
+    throw new UnsupportedOperationException();
   }
 }

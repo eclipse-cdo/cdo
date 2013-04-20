@@ -21,7 +21,7 @@ public class AllTestsObjyAudit extends ObjyDBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsObjyAudit().getTestSuite("CDO Tests (ObjectivityStore - audit mode)"); //$NON-NLS-1$
+    return new AllTestsObjyAudit().getTestSuite();
   }
 
   @Override

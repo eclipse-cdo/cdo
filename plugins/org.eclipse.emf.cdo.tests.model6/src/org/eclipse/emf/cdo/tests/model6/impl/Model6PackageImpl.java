@@ -11,7 +11,10 @@
 package org.eclipse.emf.cdo.tests.model6.impl;
 
 import org.eclipse.emf.cdo.tests.model6.BaseObject;
+import org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
+import org.eclipse.emf.cdo.tests.model6.EmptyStringDefault;
+import org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable;
 import org.eclipse.emf.cdo.tests.model6.HasNillableAttribute;
 import org.eclipse.emf.cdo.tests.model6.Holdable;
 import org.eclipse.emf.cdo.tests.model6.Holder;
@@ -26,11 +29,13 @@ import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
 import org.eclipse.emf.cdo.tests.model6.Thing;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
+import org.eclipse.emf.cdo.tests.model6.UnsettableAttributes;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -184,6 +189,34 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass emptyStringDefaultEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass emptyStringDefaultUnsettableEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass unsettableAttributesEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass canReferenceLegacyEClass = null;
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   private EEnum myEnumEEnum = null;
 
   /**
@@ -779,6 +812,336 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getEmptyStringDefault()
+  {
+    return emptyStringDefaultEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEmptyStringDefault_Attribute()
+  {
+    return (EAttribute)emptyStringDefaultEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEmptyStringDefaultUnsettable()
+  {
+    return emptyStringDefaultUnsettableEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEmptyStringDefaultUnsettable_Attribute()
+  {
+    return (EAttribute)emptyStringDefaultUnsettableEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getUnsettableAttributes()
+  {
+    return unsettableAttributesEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrBigDecimal()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrBigInteger()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrBoolean()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrBooleanObject()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrByte()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrByteArray()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrByteObject()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrChar()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrCharacterObject()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrDate()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(9);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrDouble()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(10);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrDoubleObject()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(11);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrFloat()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(12);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrFloatObject()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(13);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrInt()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(14);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrIntegerObject()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(15);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrJavaClass()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(16);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrJavaObject()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(17);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrLong()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(18);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrLongObject()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(19);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrShort()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(20);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrShortObject()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(21);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnsettableAttributes_AttrString()
+  {
+    return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(22);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCanReferenceLegacy()
+  {
+    return canReferenceLegacyEClass;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EReference getCanReferenceLegacy_SingleContainment()
+  {
+    return (EReference)canReferenceLegacyEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EReference getCanReferenceLegacy_MultipleContainment()
+  {
+    return (EReference)canReferenceLegacyEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EReference getCanReferenceLegacy_SingleReference()
+  {
+    return (EReference)canReferenceLegacyEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EReference getCanReferenceLegacy_MultipleReference()
+  {
+    return (EReference)canReferenceLegacyEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EEnum getMyEnum()
   {
     return myEnumEEnum;
@@ -897,6 +1260,43 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
     hasNillableAttributeEClass = createEClass(HAS_NILLABLE_ATTRIBUTE);
     createEAttribute(hasNillableAttributeEClass, HAS_NILLABLE_ATTRIBUTE__NILLABLE);
+
+    emptyStringDefaultEClass = createEClass(EMPTY_STRING_DEFAULT);
+    createEAttribute(emptyStringDefaultEClass, EMPTY_STRING_DEFAULT__ATTRIBUTE);
+
+    emptyStringDefaultUnsettableEClass = createEClass(EMPTY_STRING_DEFAULT_UNSETTABLE);
+    createEAttribute(emptyStringDefaultUnsettableEClass, EMPTY_STRING_DEFAULT_UNSETTABLE__ATTRIBUTE);
+
+    unsettableAttributesEClass = createEClass(UNSETTABLE_ATTRIBUTES);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_BIG_DECIMAL);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_BIG_INTEGER);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN_OBJECT);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_BYTE);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_BYTE_ARRAY);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_BYTE_OBJECT);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_CHAR);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_CHARACTER_OBJECT);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_DATE);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE_OBJECT);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_FLOAT);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_FLOAT_OBJECT);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_INT);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_INTEGER_OBJECT);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_JAVA_CLASS);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_JAVA_OBJECT);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_LONG);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_LONG_OBJECT);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_SHORT);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_SHORT_OBJECT);
+    createEAttribute(unsettableAttributesEClass, UNSETTABLE_ATTRIBUTES__ATTR_STRING);
+
+    canReferenceLegacyEClass = createEClass(CAN_REFERENCE_LEGACY);
+    createEReference(canReferenceLegacyEClass, CAN_REFERENCE_LEGACY__SINGLE_CONTAINMENT);
+    createEReference(canReferenceLegacyEClass, CAN_REFERENCE_LEGACY__MULTIPLE_CONTAINMENT);
+    createEReference(canReferenceLegacyEClass, CAN_REFERENCE_LEGACY__SINGLE_REFERENCE);
+    createEReference(canReferenceLegacyEClass, CAN_REFERENCE_LEGACY__MULTIPLE_REFERENCE);
 
     // Create enums
     myEnumEEnum = createEEnum(MY_ENUM);
@@ -1101,6 +1501,108 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     initEAttribute(getHasNillableAttribute_Nillable(), this.getMyString(), "nillable", null, 0, 1,
         HasNillableAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
+
+    initEClass(emptyStringDefaultEClass, EmptyStringDefault.class, "EmptyStringDefault", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEmptyStringDefault_Attribute(), ecorePackage.getEString(), "attribute", "", 0, 1,
+        EmptyStringDefault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(emptyStringDefaultUnsettableEClass, EmptyStringDefaultUnsettable.class, "EmptyStringDefaultUnsettable",
+        !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEmptyStringDefaultUnsettable_Attribute(), ecorePackage.getEString(), "attribute", "", 0, 1,
+        EmptyStringDefaultUnsettable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(unsettableAttributesEClass, UnsettableAttributes.class, "UnsettableAttributes", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getUnsettableAttributes_AttrBigDecimal(), ecorePackage.getEBigDecimal(), "attrBigDecimal", null, 0,
+        1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrBigInteger(), ecorePackage.getEBigInteger(), "attrBigInteger", null, 0,
+        1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrBoolean(), ecorePackage.getEBoolean(), "attrBoolean", null, 0, 1,
+        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrBooleanObject(), ecorePackage.getEBooleanObject(), "attrBooleanObject",
+        null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrByte(), ecorePackage.getEByte(), "attrByte", null, 0, 1,
+        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrByteArray(), ecorePackage.getEByteArray(), "attrByteArray", null, 0, 1,
+        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrByteObject(), ecorePackage.getEByteObject(), "attrByteObject", null, 0,
+        1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrChar(), ecorePackage.getEChar(), "attrChar", null, 0, 1,
+        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrCharacterObject(), ecorePackage.getECharacterObject(),
+        "attrCharacterObject", null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrDate(), ecorePackage.getEDate(), "attrDate", null, 0, 1,
+        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrDouble(), ecorePackage.getEDouble(), "attrDouble", null, 0, 1,
+        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrDoubleObject(), ecorePackage.getEDoubleObject(), "attrDoubleObject",
+        null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrFloat(), ecorePackage.getEFloat(), "attrFloat", null, 0, 1,
+        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrFloatObject(), ecorePackage.getEFloatObject(), "attrFloatObject", null,
+        0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrInt(), ecorePackage.getEInt(), "attrInt", null, 0, 1,
+        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrIntegerObject(), ecorePackage.getEIntegerObject(), "attrIntegerObject",
+        null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    EGenericType g1 = createEGenericType(ecorePackage.getEJavaClass());
+    EGenericType g2 = createEGenericType();
+    g1.getETypeArguments().add(g2);
+    initEAttribute(getUnsettableAttributes_AttrJavaClass(), g1, "attrJavaClass", null, 0, 1,
+        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrJavaObject(), ecorePackage.getEJavaObject(), "attrJavaObject", null, 0,
+        1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrLong(), ecorePackage.getELong(), "attrLong", null, 0, 1,
+        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrLongObject(), ecorePackage.getELongObject(), "attrLongObject", null, 0,
+        1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrShort(), ecorePackage.getEShort(), "attrShort", null, 0, 1,
+        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrShortObject(), ecorePackage.getEShortObject(), "attrShortObject", null,
+        0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrString(), ecorePackage.getEString(), "attrString", null, 0, 1,
+        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(canReferenceLegacyEClass, CanReferenceLegacy.class, "CanReferenceLegacy", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCanReferenceLegacy_SingleContainment(), ecorePackage.getEObject(), null, "singleContainment",
+        null, 0, 1, CanReferenceLegacy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCanReferenceLegacy_MultipleContainment(), ecorePackage.getEObject(), null, "multipleContainment",
+        null, 0, -1, CanReferenceLegacy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCanReferenceLegacy_SingleReference(), ecorePackage.getEObject(), null, "singleReference", null,
+        0, 1, CanReferenceLegacy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCanReferenceLegacy_MultipleReference(), ecorePackage.getEObject(), null, "multipleReference",
+        null, 0, -1, CanReferenceLegacy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(myEnumEEnum, MyEnum.class, "MyEnum");

@@ -35,18 +35,17 @@ import org.eclipse.emf.ecore.EClass;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Used during raw import.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateRawCommitContext implements InternalCommitContext
 {
-  private Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
+  private Map<CDOID, CDOID> idMappings = CDOIDUtil.createMap();
 
   private List<InternalCDORevision> dirtyObjects = new ArrayList<InternalCDORevision>();
 
@@ -55,6 +54,10 @@ public class HibernateRawCommitContext implements InternalCommitContext
   private int idCounter = 1;
 
   private CDOBranchPoint branchPoint;
+
+  private boolean usingEcore;
+
+  private boolean usingEtypes;
 
   public CDORevision getRevision(CDOID id)
   {
@@ -112,6 +115,16 @@ public class HibernateRawCommitContext implements InternalCommitContext
   public boolean isClearResourcePathCache()
   {
     return false;
+  }
+
+  public boolean isUsingEcore()
+  {
+    return usingEcore;
+  }
+
+  public boolean isUsingEtypes()
+  {
+    return usingEtypes;
   }
 
   public InternalCDOPackageUnit[] getNewPackageUnits()
@@ -237,6 +250,16 @@ public class HibernateRawCommitContext implements InternalCommitContext
 
   public void setClearResourcePathCache(boolean clearResourcePathCache)
   {
+  }
+
+  public void setUsingEcore(boolean usingEcore)
+  {
+    this.usingEcore = usingEcore;
+  }
+
+  public void setUsingEtypes(boolean usingEtypes)
+  {
+    this.usingEtypes = usingEtypes;
   }
 
   public void setNewPackageUnits(InternalCDOPackageUnit[] newPackageUnits)

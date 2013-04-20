@@ -15,17 +15,19 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.spi.db.DBSchema;
+import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 
 /**
  * @author Eike Stepper
  */
-public class CDODBSchema extends DBSchema
+public class CDODBSchema
 {
-  public static final CDODBSchema INSTANCE = new CDODBSchema();
+  public static final IDBSchema INSTANCE = DBUtil.createSchema("CDO");
 
   /**
    * DBTable cdo_properties
@@ -33,7 +35,7 @@ public class CDODBSchema extends DBSchema
   public static final IDBTable PROPERTIES = INSTANCE.addTable("cdo_properties"); //$NON-NLS-1$
 
   public static final IDBField PROPERTIES_NAME = //
-  PROPERTIES.addField("name", DBType.VARCHAR, 255); //$NON-NLS-1$
+  PROPERTIES.addField("name", DBType.VARCHAR, 255, true); //$NON-NLS-1$
 
   public static final IDBField PROPERTIES_VALUE = //
   PROPERTIES.addField("value", DBType.LONGVARCHAR); //$NON-NLS-1$
@@ -58,7 +60,7 @@ public class CDODBSchema extends DBSchema
   public static final IDBTable PACKAGE_UNITS = INSTANCE.addTable("cdo_package_units"); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_UNITS_ID = //
-  PACKAGE_UNITS.addField("id", DBType.VARCHAR, 255); //$NON-NLS-1$
+  PACKAGE_UNITS.addField("id", DBType.VARCHAR, 255, true); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_UNITS_ORIGINAL_TYPE = //
   PACKAGE_UNITS.addField("original_type", DBType.INTEGER); //$NON-NLS-1$
@@ -78,7 +80,7 @@ public class CDODBSchema extends DBSchema
   public static final IDBTable PACKAGE_INFOS = INSTANCE.addTable("cdo_package_infos"); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_INFOS_URI = //
-  PACKAGE_INFOS.addField("uri", DBType.VARCHAR, 255); //$NON-NLS-1$
+  PACKAGE_INFOS.addField("uri", DBType.VARCHAR, 255, true); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_INFOS_PARENT = //
   PACKAGE_INFOS.addField("parent", DBType.VARCHAR, 255); //$NON-NLS-1$
@@ -101,7 +103,7 @@ public class CDODBSchema extends DBSchema
   public static final IDBTable BRANCHES = INSTANCE.addTable("cdo_branches"); //$NON-NLS-1$
 
   public static final IDBField BRANCHES_ID = //
-  BRANCHES.addField("id", DBType.INTEGER); //$NON-NLS-1$
+  BRANCHES.addField("id", DBType.INTEGER, true); //$NON-NLS-1$
 
   public static final IDBField BRANCHES_NAME = //
   BRANCHES.addField("name", DBType.VARCHAR); //$NON-NLS-1$
@@ -134,7 +136,7 @@ public class CDODBSchema extends DBSchema
   public static final IDBTable COMMIT_INFOS = INSTANCE.addTable("cdo_commit_infos"); //$NON-NLS-1$
 
   public static final IDBField COMMIT_INFOS_TIMESTAMP = //
-  COMMIT_INFOS.addField("commit_time", DBType.BIGINT); //$NON-NLS-1$
+  COMMIT_INFOS.addField("commit_time", DBType.BIGINT, true); //$NON-NLS-1$
 
   public static final IDBField COMMIT_INFOS_PREVIOUS_TIMESTAMP = //
   COMMIT_INFOS.addField("previous_time", DBType.BIGINT); //$NON-NLS-1$
@@ -167,7 +169,7 @@ public class CDODBSchema extends DBSchema
   public static final IDBTable LOBS = INSTANCE.addTable("cdo_lobs"); //$NON-NLS-1$
 
   public static final IDBField LOBS_ID = //
-  LOBS.addField("id", DBType.VARCHAR, 64); //$NON-NLS-1$
+  LOBS.addField("id", DBType.VARCHAR, 64, true); //$NON-NLS-1$
 
   public static final IDBField LOBS_SIZE = //
   LOBS.addField("lsize", DBType.BIGINT); //$NON-NLS-1$
@@ -196,72 +198,8 @@ public class CDODBSchema extends DBSchema
    */
   public static final String CDO_OBJECTS = "cdo_objects"; //$NON-NLS-1$
 
-  /**
-   * Field names of attribute tables
-   */
-  public static final String ATTRIBUTES_ID = "cdo_id"; //$NON-NLS-1$
-
-  public static final String ATTRIBUTES_BRANCH = "cdo_branch"; //$NON-NLS-1$
-
-  public static final String ATTRIBUTES_VERSION = "cdo_version"; //$NON-NLS-1$
-
-  public static final String ATTRIBUTES_CLASS = "cdo_class"; //$NON-NLS-1$
-
-  public static final String ATTRIBUTES_CREATED = "cdo_created"; //$NON-NLS-1$
-
-  public static final String ATTRIBUTES_REVISED = "cdo_revised"; //$NON-NLS-1$
-
-  public static final String ATTRIBUTES_RESOURCE = "cdo_resource"; //$NON-NLS-1$
-
-  public static final String ATTRIBUTES_CONTAINER = "cdo_container"; //$NON-NLS-1$
-
-  public static final String ATTRIBUTES_FEATURE = "cdo_feature"; //$NON-NLS-1$
-
-  /**
-   * Field names of list tables
-   */
-  public static final String LIST_FEATURE = "cdo_feature"; //$NON-NLS-1$
-
-  public static final String LIST_REVISION_ID = "cdo_source"; //$NON-NLS-1$
-
-  public static final String LIST_REVISION_VERSION = "cdo_version"; //$NON-NLS-1$
-
-  public static final String LIST_REVISION_VERSION_ADDED = "cdo_version_added"; //$NON-NLS-1$
-
-  public static final String LIST_REVISION_VERSION_REMOVED = "cdo_version_removed"; //$NON-NLS-1$
-
-  public static final String LIST_REVISION_BRANCH = "cdo_branch"; //$NON-NLS-1$
-
-  public static final String LIST_IDX = "cdo_idx"; //$NON-NLS-1$
-
-  public static final String LIST_VALUE = "cdo_value"; //$NON-NLS-1$
-
-  /**
-   * Field names of featuremap tables
-   */
-  public static final String FEATUREMAP_REVISION_ID = LIST_REVISION_ID;
-
-  public static final String FEATUREMAP_VERSION = LIST_REVISION_VERSION;
-
-  public static final String FEATUREMAP_VERSION_ADDED = LIST_REVISION_VERSION_ADDED;
-
-  public static final String FEATUREMAP_VERSION_REMOVED = LIST_REVISION_VERSION_REMOVED;
-
-  public static final String FEATUREMAP_BRANCH = LIST_REVISION_BRANCH;
-
-  public static final String FEATUREMAP_IDX = LIST_IDX;
-
-  public static final String FEATUREMAP_TAG = LIST_FEATURE;
-
-  public static final String FEATUREMAP_VALUE = LIST_VALUE;
-
-  private CDODBSchema()
-  {
-    super("CDO"); //$NON-NLS-1$
-  }
-
   static
   {
-    INSTANCE.lock();
+    ((InternalDBSchema)INSTANCE).lock();
   }
 }

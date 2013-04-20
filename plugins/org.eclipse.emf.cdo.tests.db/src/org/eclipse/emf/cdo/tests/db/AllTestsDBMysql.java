@@ -30,7 +30,7 @@ public class AllTestsDBMysql extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBMysql().getTestSuite("CDO Tests (DBStore MySql Horizontal)");
+    return new AllTestsDBMysql().getTestSuite();
   }
 
   @Override

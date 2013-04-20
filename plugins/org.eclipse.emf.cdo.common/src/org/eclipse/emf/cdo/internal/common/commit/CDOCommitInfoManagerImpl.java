@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.internal.common.commit;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
@@ -22,6 +23,7 @@ import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 
 import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,11 +35,13 @@ import java.util.WeakHashMap;
 public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBranch, CDOCommitHistory> implements
     InternalCDOCommitInfoManager
 {
-  private final Map<CDOCommitInfo, CDOCommitInfo> cache;
+  private final Map<CDOCommitInfo, WeakReference<CDOCommitInfo>> cache;
 
   private final Object cacheLock = new Object();
 
   private final Map<CDOBranch, BranchInfoCache> branches = new WeakHashMap<CDOBranch, BranchInfoCache>();
+
+  private CDOCommonRepository repository;
 
   private CommitInfoLoader loader;
 
@@ -47,12 +51,23 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
   {
     if (caching)
     {
-      cache = new WeakHashMap<CDOCommitInfo, CDOCommitInfo>();
+      cache = new WeakHashMap<CDOCommitInfo, WeakReference<CDOCommitInfo>>();
     }
     else
     {
       cache = null;
     }
+  }
+
+  public CDOCommonRepository getRepository()
+  {
+    return repository;
+  }
+
+  public void setRepository(CDOCommonRepository repository)
+  {
+    checkInactive();
+    this.repository = repository;
   }
 
   public CommitInfoLoader getCommitInfoLoader()
@@ -280,13 +295,14 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     {
       synchronized (cacheLock)
       {
-        CDOCommitInfo cachedCommitInfo = cache.get(commitInfo);
+        WeakReference<CDOCommitInfo> ref = cache.get(commitInfo);
+        CDOCommitInfo cachedCommitInfo = ref != null ? ref.get() : null;
         if (cachedCommitInfo != null)
         {
           return cachedCommitInfo;
         }
 
-        cache.put(commitInfo, commitInfo);
+        cache.put(commitInfo, new WeakReference<CDOCommitInfo>(commitInfo));
       }
     }
 

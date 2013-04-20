@@ -76,6 +76,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList.ConfigurableEquality;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
@@ -99,7 +100,6 @@ import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -317,7 +317,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     boolean readOnly = readBoolean();
 
     int nLockStates = readInt();
-    Map<CDOID, LockGrade> locks = new HashMap<CDOID, LockGrade>();
+    Map<CDOID, LockGrade> locks = CDOIDUtil.createMap();
     for (int i = 0; i < nLockStates; i++)
     {
       CDOID key = readCDOID();
@@ -477,6 +477,11 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     }
 
     InternalCDOList list = (InternalCDOList)getListFactory().createList(size, size, referenceChunk);
+    if (feature instanceof EReference && list instanceof ConfigurableEquality)
+    {
+      ((ConfigurableEquality)list).setUseEquals(false);
+    }
+
     for (int j = 0; j < referenceChunk; j++)
     {
       if (isFeatureMap)
@@ -621,8 +626,6 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return StringIO.DIRECT;
   }
 
-  protected abstract CDOPackageRegistry getPackageRegistry();
-
   protected abstract CDOBranchManager getBranchManager();
 
   protected abstract CDOCommitInfoManager getCommitInfoManager();
@@ -632,4 +635,50 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   protected abstract CDOListFactory getListFactory();
 
   protected abstract CDOLobStore getLobStore();
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class Default extends CDODataInputImpl
+  {
+    public Default(ExtendedDataInput delegate)
+    {
+      super(delegate);
+    }
+
+    @Override
+    protected CDORevisionFactory getRevisionFactory()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOPackageRegistry getPackageRegistry()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected CDOLobStore getLobStore()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected CDOListFactory getListFactory()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected CDOCommitInfoManager getCommitInfoManager()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected CDOBranchManager getBranchManager()
+    {
+      throw new UnsupportedOperationException();
+    }
+  }
 }

@@ -13,7 +13,6 @@ package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
@@ -98,11 +97,6 @@ public final class FSMUtil
 
     if (object instanceof InternalEObject)
     {
-      if (!view.isLegacyModeEnabled())
-      {
-        throw new LegacyModeNotEnabledException(object.toString());
-      }
-
       return adaptLegacy((InternalEObject)object);
     }
 

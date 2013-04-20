@@ -20,16 +20,19 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.MessageFormat;
 
 /**
  * References an {@link EClassifier}.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  */
-public final class CDOClassifierRef
+public final class CDOClassifierRef implements Serializable
 {
+  private static final long serialVersionUID = 1L;
+
   public static final String URI_SEPARATOR = "#"; //$NON-NLS-1$
 
   private String packageURI;
@@ -147,7 +150,7 @@ public final class CDOClassifierRef
 
   /**
    * Provides {@link CDOClassifierRef classifier references}.
-   * 
+   *
    * @author Eike Stepper
    * @since 3.0
    * @apiviz.uses {@link CDOClassifierRef} - - provides

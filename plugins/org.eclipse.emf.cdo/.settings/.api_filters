@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo" version="2">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDByteArray">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDByteArray"/>
+                <message_argument value="org.eclipse.emf.cdo_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDInteger">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDInteger"/>
+                <message_argument value="org.eclipse.emf.cdo_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong"/>
+                <message_argument value="org.eclipse.emf.cdo_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDString">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDString"/>
+                <message_argument value="org.eclipse.emf.cdo_4.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/CDOObject.java" type="org.eclipse.emf.cdo.CDOObject">
         <filter id="403804204">
             <message_arguments>
@@ -159,6 +191,322 @@
             <message_arguments>
                 <message_argument value="CDOLockChangeInfo"/>
                 <message_argument value="CDOViewLocksChangedEvent"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOObjectImpl.java" type="org.eclipse.emf.internal.cdo.CDOObjectImpl">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoBasicSettings()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoDirectResource()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoResource()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoSettings()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="eInitializeContainer()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338849923">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+            </message_arguments>
+        </filter>
+        <filter id="338886760">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl.CDOStoreSettingsImpl"/>
+                <message_argument value="org.eclipse.emf.cdo_4.2.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoConflict()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoDirectResource()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoID()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoInternalDynamicFeature(int)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoInternalInstance()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoInternalPostAttach()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoInternalPostInvalidate()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoInternalPostLoad()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoInternalPostRollback()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoInternalPreCommit()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoInternalSetID(CDOID)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoInternalSetResource(CDOResource)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoInternalSetRevision(CDORevision)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoInternalSetState(CDOState)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoInternalSetView(CDOView)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoInvalid()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoLockState()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoPrefetch(int)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoReadLock()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoReload()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoResource()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoRevision()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoState()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoView()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoWriteLock()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="cdoWriteOption()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="createFeatureMap(EStructuralFeature)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="createMap(EStructuralFeature)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="createUnorderedList(EStructuralFeature)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="dynamicGet(int)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="dynamicSet(int, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="dynamicUnset(int)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="eBasicSetContainer(InternalEObject, int)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="eBasicSetContainer(InternalEObject, int, NotificationChain)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="eContainerFeatureID()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="eDynamicIsSet(int, EStructuralFeature)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="eInternalContainer()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="eInternalResource()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="eIsCaching()"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="eSetDirectResource(Resource.Internal)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="eSetResource(Resource.Internal, NotificationChain)"/>
+            </message_arguments>
+        </filter>
+        <filter id="421654647">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="eStore()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOObjectImpl.java" type="org.eclipse.emf.internal.cdo.CDOObjectImpl$CDOStoreEcoreEMap">
+        <filter id="337686583">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl.CDOStoreEcoreEMap"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOObjectImpl.java" type="org.eclipse.emf.internal.cdo.CDOObjectImpl$CDOStoreFeatureMap">
+        <filter id="337686583">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl.CDOStoreFeatureMap"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOObjectImpl.java" type="org.eclipse.emf.internal.cdo.CDOObjectImpl$CDOStoreUnorderedEList">
+        <filter id="337686583">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl.CDOStoreUnorderedEList"/>
             </message_arguments>
         </filter>
     </resource>

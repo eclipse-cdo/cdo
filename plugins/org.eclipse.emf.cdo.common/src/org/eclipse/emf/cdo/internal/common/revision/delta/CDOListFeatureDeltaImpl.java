@@ -165,7 +165,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   public Pair<ListTargetAdding[], int[]> reconstructAddedIndices()
   {
     reconstructAddedIndicesWithNoCopy();
-    return new Pair<ListTargetAdding[], int[]>(copyOf(cachedSources, cachedSources.length, cachedSources.getClass()),
+    return Pair.create(copyOf(cachedSources, cachedSources.length, cachedSources.getClass()),
         copyOf(cachedIndices, cachedIndices.length));
   }
 

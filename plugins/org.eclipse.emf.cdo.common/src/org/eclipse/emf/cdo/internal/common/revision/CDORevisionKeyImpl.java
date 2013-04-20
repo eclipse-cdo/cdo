@@ -52,7 +52,7 @@ public class CDORevisionKeyImpl extends CDOBranchVersionImpl implements CDORevis
     if (obj instanceof CDORevisionKey)
     {
       CDORevisionKey that = (CDORevisionKey)obj;
-      return id.equals(that.getID()) && getBranch().equals(that.getBranch()) && getVersion() == that.getVersion();
+      return id == that.getID() && getVersion() == that.getVersion() && getBranch() == that.getBranch();
     }
 
     return false;

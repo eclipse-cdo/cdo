@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -66,7 +67,6 @@ public abstract class AbstractTypeMapping implements ITypeMapping
    */
   public AbstractTypeMapping()
   {
-    super();
   }
 
   public final void setMappingStrategy(IMappingStrategy mappingStrategy)
@@ -138,6 +138,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
     }
   }
 
+  @Deprecated
   public final void createDBField(IDBTable table)
   {
     createDBField(table, mappingStrategy.getFieldName(feature));
@@ -152,7 +153,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
 
   public final void setDBField(IDBTable table, String fieldName)
   {
-    field = table.getField(fieldName);
+    field = table.getFieldSafe(fieldName);
   }
 
   public final IDBField getField()
@@ -222,7 +223,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
    * prepared statement.
    *
    * @param stmt
-   *          the {@link PreparedStatement} which is used for DB access
+   *          the {@link IDBPreparedStatement} which is used for DB access
    * @param index
    *          the parameter index in the statement which should be set
    * @param value

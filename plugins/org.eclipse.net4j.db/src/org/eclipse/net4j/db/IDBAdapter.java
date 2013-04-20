@@ -12,7 +12,9 @@
 package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.internal.db.DBAdapterRegistry;
 import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.util.registry.IRegistry;
@@ -51,6 +53,21 @@ public interface IDBAdapter
    */
   @Deprecated
   public DataSource createJDBCDataSource();
+
+  /**
+   * @since 4.2
+   */
+  public IDBSchema readSchema(Connection connection, String name);
+
+  /**
+   * @since 4.2
+   */
+  public void readSchema(Connection connection, IDBSchema schema);
+
+  /**
+   * @since 4.2
+   */
+  public void updateSchema(Connection connection, IDBSchema schema, IDBSchemaDelta delta) throws DBException;
 
   public Set<IDBTable> createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException;
 
@@ -122,4 +139,9 @@ public interface IDBAdapter
    * @since 4.2
    */
   public String sqlRenameField(IDBField field, String oldName);
+
+  /**
+   * @since 4.2
+   */
+  public String sqlModifyField(IDBField field);
 }

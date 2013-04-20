@@ -194,6 +194,15 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
   }
 
   @Override
+  protected void noWork(WorkContext context)
+  {
+    if (!localRepository.isActive())
+    {
+      context.terminate();
+    }
+  }
+
+  @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();

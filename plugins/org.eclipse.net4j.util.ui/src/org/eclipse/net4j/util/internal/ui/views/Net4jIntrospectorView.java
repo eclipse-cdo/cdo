@@ -726,7 +726,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
           Pair<Integer, Object>[] result = new Pair[array.length];
           for (int i = 0; i < array.length; i++)
           {
-            result[i] = new Pair<Integer, Object>(i, array[i]);
+            result[i] = Pair.create(i, array[i]);
           }
 
           return result;

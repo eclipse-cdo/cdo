@@ -101,6 +101,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ResourcePermission" eSuperTypes="#//Permission">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pattern" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ObjectPermission" abstract="true" eSuperTypes="#//Permission"/>
   <eClassifiers xsi:type="ecore:EEnum" name="Access">
     <eLiterals name="READ"/>
     <eLiterals name="WRITE" value="1"/>

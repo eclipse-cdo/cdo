@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
-import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -44,7 +43,7 @@ import java.util.List;
 /**
  * Utility methods to support auditing in the hibernate store.
  * An internal class.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateAuditHandler
@@ -234,8 +233,7 @@ public class HibernateAuditHandler
     String idStr = null;
     if (folderId != null)
     {
-      idStr = auditHandler.idToString(EresourcePackage.eINSTANCE.getCDOResourceFolder(),
-          ((AbstractCDOIDLong)folderId).getLongValue());
+      idStr = auditHandler.idToString(EresourcePackage.eINSTANCE.getCDOResourceFolder(), CDOIDUtil.getLong(folderId));
     }
 
     final String qryStr = "select e from " + entityName + " e where e.folder"

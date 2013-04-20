@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
@@ -35,7 +36,7 @@ import java.util.Map;
  */
 public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
 {
-  private Map<CDOID, Reference<InternalCDORevision>> revisions = new HashMap<CDOID, Reference<InternalCDORevision>>();
+  private Map<CDOID, Reference<InternalCDORevision>> revisions = CDOIDUtil.createMap();
 
   public CDORevisionCacheNonAuditing()
   {
@@ -165,9 +166,10 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
     CheckUtil.checkArg(revision, "revision");
     if (!revision.isHistorical())
     {
+      Reference<InternalCDORevision> reference = createReference(revision);
       synchronized (revisions)
       {
-        revisions.put(revision.getID(), createReference(revision));
+        revisions.put(revision.getID(), reference);
       }
     }
   }

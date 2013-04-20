@@ -14,15 +14,16 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.internal.lissome.LissomeStore;
-import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDByteArray;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.spi.db.DBAdapter;
-import org.eclipse.net4j.spi.db.DBSchema;
+import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -39,7 +40,7 @@ import java.sql.SQLException;
 /**
  * @author Eike Stepper
  */
-public class Index extends DBSchema implements IDBConnectionProvider
+public class Index implements IDBConnectionProvider
 {
   public static final long NULL_POINTER = 0; // A pointer value that has no meaning in the vob.
 
@@ -48,6 +49,8 @@ public class Index extends DBSchema implements IDBConnectionProvider
   private static final String INDENT = "       ";
 
   private LissomeStore store;
+
+  private IDBSchema schema = DBUtil.createSchema(LissomeStore.TYPE);
 
   private IDBAdapter adapter;
 
@@ -63,7 +66,6 @@ public class Index extends DBSchema implements IDBConnectionProvider
 
   public Index(LissomeStore store)
   {
-    super(LissomeStore.TYPE);
     this.store = store;
 
     adapter = createAdapter();
@@ -77,7 +79,7 @@ public class Index extends DBSchema implements IDBConnectionProvider
       branches = new BranchesTable(this);
     }
 
-    lock();
+    ((InternalDBSchema)schema).lock();
   }
 
   public LissomeStore getStore()
@@ -126,7 +128,7 @@ public class Index extends DBSchema implements IDBConnectionProvider
   {
     if (getIDGenerationLocation() == IDGenerationLocation.CLIENT)
     {
-      byte[] value = ((AbstractCDOIDByteArray)id).getByteArrayValue();
+      byte[] value = CDOIDUtil.getByteArray(id);
       statement.setBytes(column, value);
     }
     else
@@ -160,7 +162,12 @@ public class Index extends DBSchema implements IDBConnectionProvider
   public void createTables()
   {
     Connection connection = writer.getConnection();
-    create(adapter, connection);
+    schema.create(adapter, connection);
+  }
+
+  public IDBSchema getSchema()
+  {
+    return schema;
   }
 
   public Connection getConnection()

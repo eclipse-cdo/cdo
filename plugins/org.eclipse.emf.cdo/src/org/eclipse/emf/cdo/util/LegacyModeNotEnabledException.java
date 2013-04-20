@@ -19,9 +19,11 @@ import org.eclipse.emf.cdo.view.CDOView;
  *
  * @author Eike Stepper
  * @since 3.0
+ * @deprecated As of 4.2 the legacy mode is always enabled.
  * @noextend This interface is not intended to be extended by clients.
  * @noinstantiate This class is not intended to be instantiated by clients.
  */
+@Deprecated
 public class LegacyModeNotEnabledException extends IllegalStateException
 {
   private static final long serialVersionUID = 1L;

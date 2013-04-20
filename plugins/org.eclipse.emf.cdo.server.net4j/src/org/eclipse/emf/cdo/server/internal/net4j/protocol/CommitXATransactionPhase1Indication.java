@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.XATransactionCommitContext;
+import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -39,7 +40,8 @@ public class CommitXATransactionPhase1Indication extends CommitTransactionIndica
   protected void initializeCommitContext(CDODataInput in) throws Exception
   {
     int viewID = in.readInt();
-    commitContext = new XATransactionCommitContext(getTransaction(viewID));
+    InternalTransaction transaction = getTransaction(viewID);
+    commitContext = new XATransactionCommitContext(transaction);
   }
 
   @Override

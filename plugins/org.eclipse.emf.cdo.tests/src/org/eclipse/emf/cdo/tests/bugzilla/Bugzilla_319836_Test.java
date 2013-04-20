@@ -36,7 +36,7 @@ import java.text.MessageFormat;
  * Moving nodes in a tree structure (simulate a {@link DragAndDropCommand}) may result in an inconsistent tree.
  * <p>
  * See bug 319836
- * 
+ *
  * @author Cyril Jaquier
  */
 public class Bugzilla_319836_Test extends AbstractCDOTest
@@ -89,7 +89,7 @@ public class Bugzilla_319836_Test extends AbstractCDOTest
       // ___`- n2
 
       // Something bad will happen during the execution of the next line. Set a breakpoint in
-      // org.eclipse.emf.internal.cdo.transaction.CDOSavepointImpl.detachedObjects.new HashMap<CDOID,CDOObject>()
+      // org.eclipse.emf.internal.cdo.transaction.CDOSavepointImpl.detachedObjects.new Map<CDOID, CDOObject>()
       // {...}.put(CDOID, CDOObject) and see how the previous REMOVE is eaten.
       if (SHOW_BUG)
       {
@@ -180,7 +180,7 @@ public class Bugzilla_319836_Test extends AbstractCDOTest
       // `- n3
 
       // Something bad will happen during the execution of the next line. Set a breakpoint in
-      // org.eclipse.emf.internal.cdo.transaction.CDOSavepointImpl.detachedObjects.new HashMap<CDOID,CDOObject>()
+      // org.eclipse.emf.internal.cdo.transaction.CDOSavepointImpl.detachedObjects.new Map<CDOID, CDOObject>()
       // {...}.put(CDOID, CDOObject) and see how the previous REMOVE is eaten.
       if (SHOW_BUG)
       {
@@ -269,7 +269,7 @@ public class Bugzilla_319836_Test extends AbstractCDOTest
       // ______`- n4
 
       // Something bad will happen during the execution of the next line. Set a breakpoint in
-      // org.eclipse.emf.internal.cdo.transaction.CDOSavepointImpl.detachedObjects.new HashMap<CDOID,CDOObject>()
+      // org.eclipse.emf.internal.cdo.transaction.CDOSavepointImpl.detachedObjects.new Map<CDOID, CDOObject>()
       // {...}.put(CDOID, CDOObject) and see how the previous ADD is eaten.
       if (SHOW_BUG)
       {
@@ -337,7 +337,7 @@ public class Bugzilla_319836_Test extends AbstractCDOTest
 
       /**
        * Prints the {@link InternalCDORevisionDelta}s in a more friendly way than {@link #toString()}.
-       * 
+       *
        * @param spacer
        *          the spacer used to increment the output
        * @return {@link String}
@@ -365,7 +365,7 @@ public class Bugzilla_319836_Test extends AbstractCDOTest
 
       /**
        * Pretty prints {@link CDOFeatureDelta}, recursing into {@link CDOListFeatureDelta}.
-       * 
+       *
        * @param sb
        *          {@link StringBuilder} where the output is written
        * @param delta

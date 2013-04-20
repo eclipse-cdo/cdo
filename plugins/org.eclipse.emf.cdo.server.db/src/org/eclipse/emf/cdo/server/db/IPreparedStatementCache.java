@@ -11,17 +11,22 @@
  */
 package org.eclipse.emf.cdo.server.db;
 
+import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.IDBPreparedStatement;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 /**
- * Caches JDBC {@link PreparedStatement statements} according to given {@link ReuseProbability reuse probabilities}.
+ * Caches JDBC {@link IDBPreparedStatement statements} according to given {@link ReuseProbability reuse probabilities}.
  *
  * @author Stefan Winkler
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @deprecated As of 4.2 use {@link IDBConnection}.
  */
+@Deprecated
 public interface IPreparedStatementCache
 {
   public void setConnection(Connection connection);

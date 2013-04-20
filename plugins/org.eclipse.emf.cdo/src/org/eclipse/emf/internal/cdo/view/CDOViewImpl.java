@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
@@ -75,8 +76,10 @@ import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.OptionsEvent;
+import org.eclipse.net4j.util.ref.KeyedReference;
 import org.eclipse.net4j.util.ref.ReferenceType;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
+import org.eclipse.net4j.util.ref.ReferenceValueMap2;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -90,6 +93,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
+import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 
@@ -127,9 +131,9 @@ public class CDOViewImpl extends AbstractCDOView
 
   private long lastUpdateTime;
 
-  private QueueRunner invalidationRunner;
-
   private Map<CDOObject, CDOLockState> lockStates = new WeakHashMap<CDOObject, CDOLockState>();
+
+  private QueueRunner invalidationRunner;
 
   @ExcludeFromDump
   private InvalidationRunnerLock invalidationRunnerLock = new InvalidationRunnerLock();
@@ -141,13 +145,12 @@ public class CDOViewImpl extends AbstractCDOView
    */
   public CDOViewImpl(CDOBranch branch, long timeStamp)
   {
-    super(branch.getPoint(timeStamp), CDOUtil.isLegacyModeDefault());
+    super(branch.getPoint(timeStamp));
     options = createOptions();
   }
 
   public CDOViewImpl(String durableLockingID)
   {
-    super(CDOUtil.isLegacyModeDefault());
     this.durableLockingID = durableLockingID;
     options = createOptions();
   }
@@ -219,7 +222,7 @@ public class CDOViewImpl extends AbstractCDOView
       TRACER.format("Changing view target to {0}", branchPoint); //$NON-NLS-1$
     }
 
-    Map<CDOID, InternalCDORevision> oldRevisions = new HashMap<CDOID, InternalCDORevision>();
+    Map<CDOID, InternalCDORevision> oldRevisions = CDOIDUtil.createMap();
     List<CDORevisionKey> allChangedObjects = new ArrayList<CDORevisionKey>();
     List<CDOIDAndVersion> allDetachedObjects = new ArrayList<CDOIDAndVersion>();
 
@@ -274,6 +277,16 @@ public class CDOViewImpl extends AbstractCDOView
     return result;
   }
 
+  private Set<? extends CDOObject> getSet(Collection<? extends CDOObject> objects)
+  {
+    if (objects instanceof Set)
+    {
+      return (Set<? extends CDOObject>)objects;
+    }
+
+    return new HashSet<CDOObject>(objects);
+  }
+
   /**
    * @throws InterruptedException
    * @since 2.0
@@ -290,9 +303,13 @@ public class CDOViewImpl extends AbstractCDOView
     checkActive();
     checkState(getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE, "Locking not supported for historial views");
 
-    List<CDORevisionKey> revisionKeys = new LinkedList<CDORevisionKey>();
-    List<CDOLockState> locksOnNewObjects = new LinkedList<CDOLockState>();
-    for (CDOObject object : objects)
+    Set<? extends CDOObject> uniqueObjects = getSet(objects);
+    int size = uniqueObjects.size();
+
+    List<CDORevisionKey> revisionKeys = new ArrayList<CDORevisionKey>(size);
+    List<CDOLockState> locksOnNewObjects = new ArrayList<CDOLockState>(size);
+
+    for (CDOObject object : uniqueObjects)
     {
       if (FSMUtil.isNew(object))
       {
@@ -390,7 +407,16 @@ public class CDOViewImpl extends AbstractCDOView
       InternalCDOObject object = getObject(id, false);
       if (object != null)
       {
-        lockStates.put(object, lockState);
+        InternalCDOLockState existingLockState = (InternalCDOLockState)lockStates.get(object);
+        if (existingLockState != null)
+        {
+          Object lockTarget = getLockTarget(object);
+          existingLockState.updateFrom(lockTarget, lockState);
+        }
+        else
+        {
+          lockStates.put(object, lockState);
+        }
       }
     }
   }
@@ -433,7 +459,7 @@ public class CDOViewImpl extends AbstractCDOView
         }
 
         // If lockChangeInfo pertains to a different view, do nothing.
-        if (!lockChangeInfo.getBranch().equals(getBranch()))
+        if (lockChangeInfo.getBranch() != getBranch())
         {
           return;
         }
@@ -509,7 +535,7 @@ public class CDOViewImpl extends AbstractCDOView
     {
       objectIDs = new ArrayList<CDOID>();
 
-      for (CDOObject object : objects)
+      for (CDOObject object : getSet(objects))
       {
         if (FSMUtil.isNew(object))
         {
@@ -748,6 +774,11 @@ public class CDOViewImpl extends AbstractCDOView
     return lockStates.toArray(new CDOLockState[lockStates.size()]);
   }
 
+  protected CDOLockState removeLockState(CDOObject object)
+  {
+    return lockStates.remove(object);
+  }
+
   protected CDOLockState getLockState(CDOObject object)
   {
     return lockStates.get(object);
@@ -828,7 +859,7 @@ public class CDOViewImpl extends AbstractCDOView
   {
     try
     {
-      if (ObjectUtil.equals(branch, getBranch()))
+      if (branch == getBranch())
       {
         if (clearResourcePathCache)
         {
@@ -897,6 +928,15 @@ public class CDOViewImpl extends AbstractCDOView
       protected String getThreadName()
       {
         return "CDOInvalidationRunner-" + CDOViewImpl.this; //$NON-NLS-1$
+      }
+
+      @Override
+      protected void noWork(WorkContext context)
+      {
+        if (isClosed())
+        {
+          context.terminate();
+        }
       }
 
       @Override
@@ -1131,6 +1171,16 @@ public class CDOViewImpl extends AbstractCDOView
     CDOViewRegistryImpl.INSTANCE.register(this);
   }
 
+  @Override
+  protected void doBeforeDeactivate() throws Exception
+  {
+    // Detach viewset from the view
+    InternalCDOViewSet viewSet = getViewSet();
+    viewSet.remove(this);
+
+    super.doBeforeDeactivate();
+  }
+
   /**
    * @since 2.0
    */
@@ -1216,6 +1266,24 @@ public class CDOViewImpl extends AbstractCDOView
         }
       }
     }
+  }
+
+  protected static Object getLockTarget(CDOObject object)
+  {
+    CDOView view = object.cdoView();
+    if (view == null)
+    {
+      return null;
+    }
+
+    CDOID id = object.cdoID();
+    boolean branching = view.getSession().getRepositoryInfo().isSupportingBranches();
+    if (branching)
+    {
+      return CDOIDUtil.createIDAndBranch(id, view.getBranch());
+    }
+
+    return id;
   }
 
   /**
@@ -1314,7 +1382,7 @@ public class CDOViewImpl extends AbstractCDOView
    */
   protected final class ChangeSubscriptionManager
   {
-    private Map<CDOID, SubscribeEntry> subscriptions = new HashMap<CDOID, SubscribeEntry>();
+    private Map<CDOID, SubscribeEntry> subscriptions = CDOIDUtil.createMap();
 
     public ChangeSubscriptionManager()
     {
@@ -2028,36 +2096,45 @@ public class CDOViewImpl extends AbstractCDOView
       synchronized (CDOViewImpl.this)
       {
         Map<CDOID, InternalCDOObject> objects = getModifiableObjects();
-        ReferenceValueMap<CDOID, InternalCDOObject> newObjects;
+        ReferenceValueMap2<CDOID, InternalCDOObject> newObjects;
 
         switch (referenceType)
         {
         case STRONG:
-          if (objects instanceof ReferenceValueMap.Strong<?, ?>)
+        {
+          if (objects instanceof ReferenceValueMap2.Strong<?, ?>)
           {
             return false;
           }
 
-          newObjects = new ReferenceValueMap.Strong<CDOID, InternalCDOObject>();
+          Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
+          newObjects = new ReferenceValueMap2.Strong<CDOID, InternalCDOObject>(map);
           break;
+        }
 
         case SOFT:
-          if (objects instanceof ReferenceValueMap.Soft<?, ?>)
+        {
+          if (objects instanceof ReferenceValueMap2.Soft<?, ?>)
           {
             return false;
           }
 
-          newObjects = new ReferenceValueMap.Soft<CDOID, InternalCDOObject>();
+          Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
+          newObjects = new ReferenceValueMap2.Soft<CDOID, InternalCDOObject>(map);
           break;
+        }
 
         case WEAK:
-          if (objects instanceof ReferenceValueMap.Weak<?, ?>)
+        {
+          if (objects instanceof ReferenceValueMap2.Weak<?, ?>)
           {
             return false;
           }
 
-          newObjects = new ReferenceValueMap.Weak<CDOID, InternalCDOObject>();
+          Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
+          newObjects = new ReferenceValueMap2.Weak<CDOID, InternalCDOObject>(map);
           break;
+        }
 
         default:
           throw new IllegalArgumentException(Messages.getString("CDOViewImpl.29")); //$NON-NLS-1$

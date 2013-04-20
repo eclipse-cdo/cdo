@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.tests.model6.Holdable;
 import org.eclipse.emf.cdo.tests.model6.Holder;
 import org.eclipse.emf.cdo.tests.model6.Thing;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -32,8 +31,6 @@ public class Bugzilla_392956_Test extends AbstractCDOTest
     Holder rootHolder = createModel();
 
     CDOSession session = openSession();
-    CDOUtil.setLegacyModeDefault(true);
-
     CDOTransaction transaction = session.openTransaction();
 
     Resource resource = transaction.getOrCreateResource(getResourcePath("model.model7"));

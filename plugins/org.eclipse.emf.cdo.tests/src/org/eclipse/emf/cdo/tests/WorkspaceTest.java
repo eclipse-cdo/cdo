@@ -63,7 +63,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-@Requires(IRepositoryConfig.CAPABILITY_AUDITING)
+@Requires({ IRepositoryConfig.CAPABILITY_AUDITING, IRepositoryConfig.CAPABILITY_UUIDS })
 @Skips("DB.ranges")
 public class WorkspaceTest extends AbstractCDOTest
 {
@@ -118,14 +118,12 @@ public class WorkspaceTest extends AbstractCDOTest
 
     JVMUtil.prepareContainer(getClientContainer());
     localStore = createLocalStore();
-    CDOUtil.setLegacyModeDefault(true);
   }
 
   @Override
   protected void doTearDown() throws Exception
   {
     disableConsole();
-    CDOUtil.setLegacyModeDefault(false);
     for (CDOWorkspace workspace : workspaces)
     {
       IOUtil.closeSilent(workspace);

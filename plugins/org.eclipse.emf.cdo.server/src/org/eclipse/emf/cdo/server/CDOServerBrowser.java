@@ -15,8 +15,10 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -33,8 +35,10 @@ import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -71,6 +75,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -358,6 +363,7 @@ public class CDOServerBrowser extends Worker
   protected void initPages(List<Page> pages)
   {
     pages.add(new PackagesPage());
+    pages.add(new LocksPage());
     pages.add(new RevisionsPage.FromCache());
     pages.add(new RevisionsPage.FromStore());
     pages.add(new LobsPage());
@@ -661,6 +667,66 @@ public class CDOServerBrowser extends Worker
   }
 
   /**
+   * A {@link Page server browser page} that renders the locking manager contents of a repository.
+   *
+   * @author Eike Stepper
+   * @since 4.2
+   */
+  public static class LocksPage extends AbstractPage
+  {
+    public static final String NAME = "locks";
+
+    public LocksPage()
+    {
+      super(NAME, "Locks");
+    }
+
+    public boolean canDisplay(InternalRepository repository)
+    {
+      return true;
+    }
+
+    public void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out)
+    {
+      InternalLockManager lockingManager = repository.getLockingManager();
+      for (InternalSession session : repository.getSessionManager().getSessions())
+      {
+        boolean sessionRendered = false;
+        for (InternalView view : session.getViews())
+        {
+          Map<CDOID, LockGrade> locks = lockingManager.getLocks(view);
+          if (locks != null && !locks.isEmpty())
+          {
+            if (!sessionRendered)
+            {
+              int sessionID = session.getSessionID();
+              String userID = session.getUserID();
+              out.println("<h3>Session&nbsp;" + sessionID + "&nbsp;&nbsp;[" + userID + "]</h3>");
+              out.println("<ul>");
+              sessionRendered = true;
+            }
+
+            out.println("<li>" + view + "</li>");
+            out.println("<ul>");
+
+            for (Entry<CDOID, LockGrade> entry : locks.entrySet())
+            {
+              out.println("<li>" + entry.getKey() + " = " + entry.getValue() + "</li>");
+            }
+
+            out.println("</ul>");
+          }
+
+          if (sessionRendered)
+          {
+            out.println("</ul>");
+          }
+        }
+      }
+    }
+  }
+
+  /**
    * A {@link Page server browser page} that renders {@link CDORevision revisions}.
    *
    * @author Eike Stepper
@@ -946,7 +1012,7 @@ public class CDOServerBrowser extends Worker
 
     private Map<CDOID, List<CDORevision>> getAllIDs(Map<CDOBranch, List<CDORevision>> allRevisions)
     {
-      Map<CDOID, List<CDORevision>> ids = new HashMap<CDOID, List<CDORevision>>();
+      Map<CDOID, List<CDORevision>> ids = CDOIDUtil.createMap();
       for (List<CDORevision> list : allRevisions.values())
       {
         for (CDORevision revision : list)

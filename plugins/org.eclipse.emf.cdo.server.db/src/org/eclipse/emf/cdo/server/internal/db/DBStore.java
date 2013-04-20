@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.IMappingConstants;
 import org.eclipse.emf.cdo.server.internal.db.messages.Messages;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -41,19 +42,20 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBPreparedStatement;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 
-import javax.sql.DataSource;
-
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -71,11 +73,11 @@ import java.util.Timer;
 /**
  * @author Eike Stepper
  */
-public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
+public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAllRevisionsProvider
 {
   public static final String TYPE = "db"; //$NON-NLS-1$
 
-  public static final int SCHEMA_VERSION = 3;
+  public static final int SCHEMA_VERSION = 4;
 
   private static final int FIRST_START = -1;
 
@@ -115,7 +117,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
   private IMappingStrategy mappingStrategy;
 
-  private IDBSchema dbSchema;
+  private IDBDatabase database;
 
   private IDBAdapter dbAdapter;
 
@@ -195,6 +197,11 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     return idHandler;
   }
 
+  public IDBDatabase getDatabase()
+  {
+    return database;
+  }
+
   public Connection getConnection()
   {
     Connection connection = dbConnectionProvider.getConnection();
@@ -215,14 +222,9 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     return connection;
   }
 
-  public void setDbConnectionProvider(IDBConnectionProvider dbConnectionProvider)
+  public void setDBConnectionProvider(IDBConnectionProvider dbConnectionProvider)
   {
     this.dbConnectionProvider = dbConnectionProvider;
-  }
-
-  public void setDataSource(DataSource dataSource)
-  {
-    dbConnectionProvider = DBUtil.createConnectionProvider(dataSource);
   }
 
   public IMetaDataManager getMetaDataManager()
@@ -258,7 +260,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
   public IDBSchema getDBSchema()
   {
-    return dbSchema;
+    return database.getSchema();
   }
 
   public void visitAllTables(Connection connection, IDBStore.TableVisitor visitor)
@@ -291,24 +293,23 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
   public Map<String, String> getPersistentProperties(Set<String> names)
   {
-    Connection connection = null;
-    PreparedStatement selectStmt = null;
+    IDBConnection connection = database.getConnection();
+    IDBPreparedStatement stmt = null;
     String sql = null;
 
     try
     {
-      connection = getConnection();
       Map<String, String> result = new HashMap<String, String>();
       boolean allProperties = names == null || names.isEmpty();
       if (allProperties)
       {
         sql = CDODBSchema.SQL_SELECT_ALL_PROPERTIES;
-        selectStmt = connection.prepareStatement(sql);
+        stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
         ResultSet resultSet = null;
 
         try
         {
-          resultSet = selectStmt.executeQuery();
+          resultSet = stmt.executeQuery();
           while (resultSet.next())
           {
             String key = resultSet.getString(1);
@@ -324,15 +325,15 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
       else
       {
         sql = CDODBSchema.SQL_SELECT_PROPERTIES;
-        selectStmt = connection.prepareStatement(sql);
+        stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
         for (String name : names)
         {
-          selectStmt.setString(1, name);
+          stmt.setString(1, name);
           ResultSet resultSet = null;
 
           try
           {
-            resultSet = selectStmt.executeQuery();
+            resultSet = stmt.executeQuery();
             if (resultSet.next())
             {
               String value = resultSet.getString(1);
@@ -354,24 +355,22 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     }
     finally
     {
-      DBUtil.close(selectStmt);
+      DBUtil.close(stmt);
       DBUtil.close(connection);
     }
   }
 
   public void setPersistentProperties(Map<String, String> properties)
   {
-    Connection connection = null;
-    PreparedStatement deleteStmt = null;
-    PreparedStatement insertStmt = null;
+    IDBConnection connection = database.getConnection();
+    IDBPreparedStatement deleteStmt = connection.prepareStatement(CDODBSchema.SQL_DELETE_PROPERTIES,
+        ReuseProbability.MEDIUM);
+    IDBPreparedStatement insertStmt = connection.prepareStatement(CDODBSchema.SQL_INSERT_PROPERTIES,
+        ReuseProbability.MEDIUM);
     String sql = null;
 
     try
     {
-      connection = getConnection();
-      deleteStmt = connection.prepareStatement(CDODBSchema.SQL_DELETE_PROPERTIES);
-      insertStmt = connection.prepareStatement(CDODBSchema.SQL_INSERT_PROPERTIES);
-
       for (Entry<String, String> entry : properties.entrySet())
       {
         String name = entry.getKey();
@@ -412,18 +411,15 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
   public void removePersistentProperties(Set<String> names)
   {
-    Connection connection = null;
-    PreparedStatement deleteStmt = null;
+    IDBConnection connection = database.getConnection();
+    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_DELETE_PROPERTIES, ReuseProbability.MEDIUM);
 
     try
     {
-      connection = getConnection();
-      deleteStmt = connection.prepareStatement(CDODBSchema.SQL_DELETE_PROPERTIES);
-
       for (String name : names)
       {
-        deleteStmt.setString(1, name);
-        deleteStmt.executeUpdate();
+        stmt.setString(1, name);
+        stmt.executeUpdate();
       }
 
       connection.commit();
@@ -434,7 +430,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     }
     finally
     {
-      DBUtil.close(deleteStmt);
+      DBUtil.close(stmt);
       DBUtil.close(connection);
     }
   }
@@ -567,7 +563,9 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   {
     super.doActivate();
 
-    if (getRepository().getIDGenerationLocation() == IDGenerationLocation.CLIENT)
+    InternalRepository repository = getRepository();
+    IDGenerationLocation idGenerationLocation = repository.getIDGenerationLocation();
+    if (idGenerationLocation == IDGenerationLocation.CLIENT)
     {
       idHandler = new UUIDHandler(this);
     }
@@ -581,7 +579,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
     if (properties != null)
     {
-      if (getRepository().getIDGenerationLocation() == IDGenerationLocation.CLIENT)
+      if (idGenerationLocation == IDGenerationLocation.CLIENT)
       {
         String prop = properties.get(IDBStore.Props.ID_COLUMN_LENGTH);
         if (prop != null)
@@ -601,7 +599,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     {
       if (isDropAllDataOnActivate())
       {
-        OM.LOG.info("Dropping all tables from repository " + getRepository().getName() + "...");
+        OM.LOG.info("Dropping all tables from repository " + repository.getName() + "...");
         DBUtil.dropAllTables(connection, null);
         connection.commit();
       }
@@ -612,7 +610,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
         migrateSchema(schemaVersion);
       }
 
-      CDODBSchema.INSTANCE.create(dbAdapter, connection);
+      // CDODBSchema.INSTANCE.create(dbAdapter, connection);
       connection.commit();
     }
     finally
@@ -620,7 +618,21 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
       DBUtil.close(connection);
     }
 
-    dbSchema = createSchema();
+    String schemaName = repository.getName();
+    boolean fixNullableIndexColumns = schemaVersion < FIRST_VERSION_WITH_NULLABLE_CHECKS;
+
+    database = DBUtil.openDatabase(dbAdapter, dbConnectionProvider, schemaName, fixNullableIndexColumns);
+    IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
+
+    try
+    {
+      schemaTransaction.ensureSchema(CDODBSchema.INSTANCE);
+      schemaTransaction.commit();
+    }
+    finally
+    {
+      schemaTransaction.close();
+    }
 
     LifecycleUtil.activate(idHandler);
     LifecycleUtil.activate(metaDataManager);
@@ -818,12 +830,6 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     }
   }
 
-  protected IDBSchema createSchema()
-  {
-    String name = getRepository().getName();
-    return new DBSchema(name);
-  }
-
   protected int selectSchemaVersion(Connection connection) throws SQLException
   {
     Statement statement = null;
@@ -894,6 +900,8 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     public abstract void migrateSchema(DBStore store, Connection connection) throws Exception;
   }
 
+  private static final int FIRST_VERSION_WITH_NULLABLE_CHECKS = 4;
+
   private static final SchemaMigrator NO_MIGRATION_NEEDED = null;
 
   private static final SchemaMigrator NON_AUDIT_MIGRATION = new SchemaMigrator()
@@ -914,11 +922,10 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
             {
               statement = connection.createStatement();
 
-              String from = " FROM " + name + " WHERE " + CDODBSchema.ATTRIBUTES_VERSION + "<"
-                  + CDOBranchVersion.FIRST_VERSION;
+              String from = " FROM " + name + " WHERE " + ATTRIBUTES_VERSION + "<" + CDOBranchVersion.FIRST_VERSION;
 
-              statement.executeUpdate("DELETE FROM " + CDODBSchema.CDO_OBJECTS + " WHERE " + CDODBSchema.ATTRIBUTES_ID
-                  + " IN (SELECT " + CDODBSchema.ATTRIBUTES_ID + from + ")");
+              statement.executeUpdate("DELETE FROM " + CDODBSchema.CDO_OBJECTS + " WHERE " + ATTRIBUTES_ID
+                  + " IN (SELECT " + ATTRIBUTES_ID + from + ")");
 
               statement.executeUpdate("DELETE" + from);
             }
@@ -955,7 +962,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   };
 
   private static final SchemaMigrator[] SCHEMA_MIGRATORS = { NO_MIGRATION_NEEDED, NON_AUDIT_MIGRATION,
-      LOB_SIZE_MIGRATION };
+      LOB_SIZE_MIGRATION, NO_MIGRATION_NEEDED };
 
   static
   {

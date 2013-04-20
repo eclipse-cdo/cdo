@@ -57,7 +57,8 @@ public final class OpenDurableViewAction extends AbstractOpenViewAction
   {
     try
     {
-      CDOTransaction transaction = getSession().openTransaction(areaID);
+      CDOSession session = getSession();
+      CDOTransaction transaction = session.openTransaction(areaID);
       new CDOTransactionCommentator(transaction);
     }
     catch (IllegalStateException ex)

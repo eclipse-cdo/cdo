@@ -24,10 +24,10 @@ public class AutomatedTests extends TestSuite
 {
   public static Test suite()
   {
-    TestSuite suite = new TestSuite("Automated Tests");
-    suite.addTest(new AllTests().getTestSuite("MEMStore Tests"));
-    suite.addTest(new AllTestsDBH2All().getTestSuite("DBStore Tests"));
-    suite.addTest(new AllTestsDBH2Offline().getTestSuite("DBStore Offline Tests"));
+    TestSuite suite = new TestSuite(AutomatedTests.class.getName());
+    suite.addTest(new AllTests().getTestSuite());
+    suite.addTest(new AllTestsDBH2All().getTestSuite());
+    suite.addTest(new AllTestsDBH2Offline().getTestSuite());
     return suite;
   }
 }

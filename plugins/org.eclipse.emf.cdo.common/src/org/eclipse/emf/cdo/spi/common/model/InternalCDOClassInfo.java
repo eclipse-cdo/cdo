@@ -10,16 +10,83 @@
  */
 package org.eclipse.emf.cdo.spi.common.model;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject.EStore;
 
 /**
  * @since 4.2
+ * @author Eike Stepper
  */
 public interface InternalCDOClassInfo extends CDOClassInfo
 {
+  public static final int NO_SLOT = EStore.NO_INDEX;
+
+  public InternalCDORevision getRevisionForID(CDOID id);
+
+  /**
+   * Returns the index of the specified {@link EStructuralFeature feature} in the {@link CDORevisionImpl#values} array, never {@link #NO_SLOT}.
+   *
+   * @throws IllegalArgumentException if the specified feature is <b>not</b> {@link #isPersistent(int) persistent}.
+   * @see #getPersistentFeatureIndex(int)
+   */
+  public int getPersistentFeatureIndex(EStructuralFeature feature) throws IllegalArgumentException;
+
+  /**
+   * Returns the index of the specified {@link EStructuralFeature feature} in the {@link CDORevisionImpl#values} array, never {@link #NO_SLOT}.
+   *
+   * @throws IllegalArgumentException if the specified feature is <b>not</b> {@link #isPersistent(int) persistent}.
+   * @see #getPersistentFeatureIndex(EStructuralFeature)
+   */
+  public int getPersistentFeatureIndex(int featureID) throws IllegalArgumentException;
+
+  /**
+   * Returns the number of {@link EStructuralFeature features} whose values are <b>always</b> stored in the
+   * <code>CDOObjectImpl.eSettings</code> array, whether an object is in <code>CDOState.TRANSIENT</code> or not.
+   * <p>
+   * These are the {@link EMFUtil#isPersistent(EStructuralFeature) transient} and/or {@link EStructuralFeature#isMany() many-valued} features.
+   *
+   * @see #getSettingsFeatureIndex(int)
+   */
+  public int getSettingsFeatureCount();
+
+  /**
+   * Returns the index of the specified {@link EStructuralFeature feature} in the <code>CDOObjectImpl.eSettings</code> array,
+   * or {@link #NO_SLOT} if the feature is {@link EMFUtil#isPersistent(EStructuralFeature) non-transient} or {@link EStructuralFeature#isMany() single-valued}.
+   *
+   * @see #getSettingsFeatureCount()
+   */
+  public int getSettingsFeatureIndex(int featureID);
+
+  /**
+   * Returns the number of {@link EStructuralFeature features} whose values are additionally stored in the <code>CDOObjectImpl.eSettings</code> array,
+   * if an object is in <code>CDOState.TRANSIENT</code>.
+   * <p>
+   * These are the {@link EMFUtil#isPersistent(EStructuralFeature) non-transient} and/or {@link EStructuralFeature#isMany() single-valued} features.
+   *
+   * @see #getTransientFeatureIndex(int)
+   */
+  public int getTransientFeatureCount();
+
+  /**
+   * Returns the index of the specified {@link EStructuralFeature feature} in the <code>CDOObjectImpl.eSettings</code> array,
+   * or {@link #NO_SLOT} if the feature is {@link EMFUtil#isPersistent(EStructuralFeature) transient} or {@link EStructuralFeature#isMany() many-valued}
+   *
+   * @see #getTransientFeatureCount()
+   */
+  public int getTransientFeatureIndex(int featureID);
+
+  /**
+   * @see #getTransientFeatureIndex(int)
+   */
+  public int getTransientFeatureIndex(EStructuralFeature feature);
+
   /**
    * Obtains a rule that filters/transforms the persist values of the given
    * {@code feature}.

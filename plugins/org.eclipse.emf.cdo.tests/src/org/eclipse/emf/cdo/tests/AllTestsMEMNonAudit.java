@@ -20,7 +20,7 @@ public class AllTestsMEMNonAudit extends AllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsMEMNonAudit().getTestSuite(AllConfigs.class.getName());
+    return new AllTestsMEMNonAudit().getTestSuite();
   }
 
   @Override

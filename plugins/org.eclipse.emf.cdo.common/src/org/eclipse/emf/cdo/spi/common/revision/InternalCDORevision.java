@@ -15,13 +15,14 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
-import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -38,9 +39,24 @@ import java.io.IOException;
 public interface InternalCDORevision extends CDORevision, CDORevisionData, CDOReferenceAdjustable
 {
   /**
-   * @since 3.0
+   * @since 4.2
    */
-  public CDOClassInfo getClassInfo();
+  public InternalCDOClassInfo getClassInfo();
+
+  /**
+   * @since 4.2
+   */
+  public InternalCDOBranch getBranch();
+
+  /**
+   * @since 4.2
+   */
+  public InternalCDORevision getRevisionForID(CDOID id);
+
+  /**
+   * @since 4.2
+   */
+  public InternalCDORevision getProperRevision();
 
   public void setID(CDOID id);
 

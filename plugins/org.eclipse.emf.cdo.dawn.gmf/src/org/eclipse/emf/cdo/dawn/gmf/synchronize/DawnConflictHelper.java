@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *     Martin Fluegge - initial API and implementation
+ *     Christian W. Damus (CEA) - Bug 404184: handle View that has no element
  */
 package org.eclipse.emf.cdo.dawn.gmf.synchronize;
 
@@ -84,7 +85,7 @@ public class DawnConflictHelper
   /**
    * TODO this method should decide whether the object is conflicted or not using special Policies
    * 
-   * @param object
+   * @param object a non-{@code null} object
    * @return whether the object is conflicted
    */
   public static boolean isConflicted(EObject object)
@@ -96,10 +97,12 @@ public class DawnConflictHelper
     }
     if (object instanceof View)
     {
-      CDOObject element = CDOUtil.getCDOObject(((View)object).getElement());
-      if (element.cdoConflict())
+      // if the view is not, itself, conflicted, maybe its semantic element is (if it has one)
+      EObject element = ((View)object).getElement();
+      if (element != null)
       {
-        return true;
+        CDOObject cdoElement = CDOUtil.getCDOObject(element);
+        return cdoElement.cdoConflict();
       }
     }
     return false;

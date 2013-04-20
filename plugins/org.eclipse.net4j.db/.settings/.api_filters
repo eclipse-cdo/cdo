@@ -1,0 +1,904 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.net4j.db" version="2">
+    <resource path="src/org/eclipse/net4j/internal/db/DBConnection.java" type="org.eclipse.net4j.internal.db.DBConnection">
+        <filter id="630194212">
+            <message_arguments>
+                <message_argument value="DBConnection.cache"/>
+                <message_argument value="NavigableMap"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.createNClob()"/>
+                <message_argument value="NClob"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.createSQLXML()"/>
+                <message_argument value="SQLXML"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.setClientInfo(Properties)"/>
+                <message_argument value="SQLClientInfoException"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.setClientInfo(String, String)"/>
+                <message_argument value="SQLClientInfoException"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.createArrayOf(String, Object[])"/>
+                <message_argument value="Connection"/>
+                <message_argument value="createArrayOf(String, Object[])"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.createBlob()"/>
+                <message_argument value="Connection"/>
+                <message_argument value="createBlob()"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.createClob()"/>
+                <message_argument value="Connection"/>
+                <message_argument value="createClob()"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.createNClob()"/>
+                <message_argument value="Connection"/>
+                <message_argument value="createNClob()"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.createSQLXML()"/>
+                <message_argument value="Connection"/>
+                <message_argument value="createSQLXML()"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.createStruct(String, Object[])"/>
+                <message_argument value="Connection"/>
+                <message_argument value="createStruct(String, Object[])"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.getClientInfo()"/>
+                <message_argument value="Connection"/>
+                <message_argument value="getClientInfo()"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.getClientInfo(String)"/>
+                <message_argument value="Connection"/>
+                <message_argument value="getClientInfo(String)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.invalidateStatementCache()"/>
+                <message_argument value="NavigableMap"/>
+                <message_argument value="clear()"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.invalidateStatementCache()"/>
+                <message_argument value="NavigableMap"/>
+                <message_argument value="values()"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.isValid(int)"/>
+                <message_argument value="Connection"/>
+                <message_argument value="isValid(int)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.isWrapperFor(Class&lt;?&gt;)"/>
+                <message_argument value="Connection"/>
+                <message_argument value="isWrapperFor(Class)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.prepareStatement(String, int, int, IDBPreparedStatementReuseProbability)"/>
+                <message_argument value="NavigableMap"/>
+                <message_argument value="remove(Object)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.releasePreparedStatement(DBPreparedStatement)"/>
+                <message_argument value="NavigableMap"/>
+                <message_argument value="firstKey()"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.releasePreparedStatement(DBPreparedStatement)"/>
+                <message_argument value="NavigableMap"/>
+                <message_argument value="put(Object, Object)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.releasePreparedStatement(DBPreparedStatement)"/>
+                <message_argument value="NavigableMap"/>
+                <message_argument value="remove(Object)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.releasePreparedStatement(DBPreparedStatement)"/>
+                <message_argument value="NavigableMap"/>
+                <message_argument value="size()"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.setClientInfo(Properties)"/>
+                <message_argument value="Connection"/>
+                <message_argument value="setClientInfo(Properties)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.setClientInfo(String, String)"/>
+                <message_argument value="Connection"/>
+                <message_argument value="setClientInfo(String, String)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBConnection.unwrap(Class&lt;T&gt;)"/>
+                <message_argument value="Connection"/>
+                <message_argument value="unwrap(Class)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/db/DBPreparedStatement.java">
+        <filter id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/db/DBPreparedStatement.java" type="org.eclipse.net4j.internal.db.DBPreparedStatement">
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setNClob(int, NClob)"/>
+                <message_argument value="NClob"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setRowId(int, RowId)"/>
+                <message_argument value="RowId"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setSQLXML(int, SQLXML)"/>
+                <message_argument value="SQLXML"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.isClosed()"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="isClosed()"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.isPoolable()"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="isPoolable()"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.isWrapperFor(Class&lt;?&gt;)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="isWrapperFor(Class)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setAsciiStream(int, InputStream)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setAsciiStream(int, InputStream)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setAsciiStream(int, InputStream, long)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setAsciiStream(int, InputStream, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setBinaryStream(int, InputStream)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setBinaryStream(int, InputStream)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setBinaryStream(int, InputStream, long)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setBinaryStream(int, InputStream, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setBlob(int, InputStream)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setBlob(int, InputStream)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setBlob(int, InputStream, long)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setBlob(int, InputStream, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setCharacterStream(int, Reader)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setCharacterStream(int, Reader)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setCharacterStream(int, Reader, long)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setCharacterStream(int, Reader, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setClob(int, Reader)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setClob(int, Reader)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setClob(int, Reader, long)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setClob(int, Reader, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setNCharacterStream(int, Reader)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setNCharacterStream(int, Reader)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setNCharacterStream(int, Reader, long)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setNCharacterStream(int, Reader, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setNClob(int, NClob)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setNClob(int, NClob)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setNClob(int, Reader)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setNClob(int, Reader)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setNClob(int, Reader, long)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setNClob(int, Reader, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setNString(int, String)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setNString(int, String)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setPoolable(boolean)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setPoolable(boolean)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setRowId(int, RowId)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setRowId(int, RowId)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.setSQLXML(int, SQLXML)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="setSQLXML(int, SQLXML)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.unwrap(Class&lt;T&gt;)"/>
+                <message_argument value="PreparedStatement"/>
+                <message_argument value="unwrap(Class)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/db/DBPreparedStatement.java" type="org.eclipse.net4j.internal.db.DBPreparedStatement$DBResultSet">
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.getNClob(String)"/>
+                <message_argument value="NClob"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.getNClob(int)"/>
+                <message_argument value="NClob"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.getRowId(String)"/>
+                <message_argument value="RowId"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.getRowId(int)"/>
+                <message_argument value="RowId"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.getSQLXML(String)"/>
+                <message_argument value="SQLXML"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.getSQLXML(int)"/>
+                <message_argument value="SQLXML"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateNClob(String, NClob)"/>
+                <message_argument value="NClob"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateNClob(int, NClob)"/>
+                <message_argument value="NClob"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateRowId(String, RowId)"/>
+                <message_argument value="RowId"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateRowId(int, RowId)"/>
+                <message_argument value="RowId"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateSQLXML(String, SQLXML)"/>
+                <message_argument value="SQLXML"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="646971428">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateSQLXML(int, SQLXML)"/>
+                <message_argument value="SQLXML"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.getHoldability()"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="getHoldability()"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.getNCharacterStream(String)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="getNCharacterStream(String)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.getNCharacterStream(int)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="getNCharacterStream(int)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.getNClob(String)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="getNClob(String)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.getNClob(int)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="getNClob(int)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.getNString(String)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="getNString(String)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.getNString(int)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="getNString(int)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.getRowId(String)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="getRowId(String)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.getRowId(int)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="getRowId(int)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.getSQLXML(String)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="getSQLXML(String)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.getSQLXML(int)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="getSQLXML(int)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.isClosed()"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="isClosed()"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.isWrapperFor(Class&lt;?&gt;)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="isWrapperFor(Class)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.unwrap(Class&lt;T&gt;)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="unwrap(Class)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateAsciiStream(String, InputStream)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateAsciiStream(String, InputStream)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateAsciiStream(String, InputStream, long)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateAsciiStream(String, InputStream, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateAsciiStream(int, InputStream)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateAsciiStream(int, InputStream)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateAsciiStream(int, InputStream, long)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateAsciiStream(int, InputStream, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateBinaryStream(String, InputStream)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateBinaryStream(String, InputStream)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateBinaryStream(String, InputStream, long)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateBinaryStream(String, InputStream, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateBinaryStream(int, InputStream)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateBinaryStream(int, InputStream)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateBinaryStream(int, InputStream, long)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateBinaryStream(int, InputStream, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateBlob(String, InputStream)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateBlob(String, InputStream)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateBlob(String, InputStream, long)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateBlob(String, InputStream, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateBlob(int, InputStream)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateBlob(int, InputStream)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateBlob(int, InputStream, long)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateBlob(int, InputStream, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateCharacterStream(String, Reader)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateCharacterStream(String, Reader)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateCharacterStream(String, Reader, long)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateCharacterStream(String, Reader, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateCharacterStream(int, Reader)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateCharacterStream(int, Reader)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateCharacterStream(int, Reader, long)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateCharacterStream(int, Reader, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateClob(String, Reader)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateClob(String, Reader)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateClob(String, Reader, long)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateClob(String, Reader, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateClob(int, Reader)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateClob(int, Reader)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateClob(int, Reader, long)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateClob(int, Reader, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateNCharacterStream(String, Reader)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateNCharacterStream(String, Reader)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateNCharacterStream(String, Reader, long)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateNCharacterStream(String, Reader, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateNCharacterStream(int, Reader)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateNCharacterStream(int, Reader)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateNCharacterStream(int, Reader, long)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateNCharacterStream(int, Reader, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateNClob(String, NClob)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateNClob(String, NClob)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateNClob(String, Reader)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateNClob(String, Reader)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateNClob(String, Reader, long)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateNClob(String, Reader, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateNClob(int, NClob)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateNClob(int, NClob)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateNClob(int, Reader)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateNClob(int, Reader)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateNClob(int, Reader, long)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateNClob(int, Reader, long)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateNString(String, String)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateNString(String, String)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateNString(int, String)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateNString(int, String)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateRowId(String, RowId)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateRowId(String, RowId)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateRowId(int, RowId)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateRowId(int, RowId)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateSQLXML(String, SQLXML)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateSQLXML(String, SQLXML)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+        <filter id="647004193">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.internal.db.DBPreparedStatement.DBResultSet.updateSQLXML(int, SQLXML)"/>
+                <message_argument value="ResultSet"/>
+                <message_argument value="updateSQLXML(int, SQLXML)"/>
+                <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/spi/db/DBSchema.java" type="org.eclipse.net4j.spi.db.DBSchema">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="DBSchema"/>
+                <message_argument value="DBSchema"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

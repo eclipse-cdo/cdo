@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.factory.IFactory;
@@ -31,7 +32,7 @@ import java.util.Collection;
 
 /**
  * Mapping of single values to and from the database.
- * 
+ *
  * @author Eike Stepper
  * @author Stefan Winkler
  * @since 2.0
@@ -70,17 +71,15 @@ public interface ITypeMapping
   public void setDBType(DBType dbType);
 
   /**
-   * Creates the DBField and adds it to the given table. The name of the DBField is derived from the feature.
-   * 
-   * @param table
-   *          the table to add this field to.
+   * @deprecated As of 4.2 use {@link #createDBField(IDBTable, String)}.
    */
+  @Deprecated
   public void createDBField(IDBTable table);
 
   /**
    * Creates the DBField and adds it to the given table. The name of the DBField is explicitly determined by the
    * corresponding parameter.
-   * 
+   *
    * @param table
    *          the table to add this field to.
    * @param fieldName
@@ -90,7 +89,7 @@ public interface ITypeMapping
 
   /**
    * Sets the DBField. The name of the DBField is explicitly determined by the corresponding parameter.
-   * 
+   *
    * @param table
    *          the table to add this field to.
    * @param fieldName
@@ -100,8 +99,8 @@ public interface ITypeMapping
   public void setDBField(IDBTable table, String fieldName);
 
   /**
-   * Set the given value to the JDBC {@link PreparedStatement} using an appropriate <code>setXxx</code> method.
-   * 
+   * Set the given value to the JDBC {@link IDBPreparedStatement} using an appropriate <code>setXxx</code> method.
+   *
    * @param stmt
    *          the prepared statement to set the value
    * @param index
@@ -114,9 +113,9 @@ public interface ITypeMapping
   public void setValue(PreparedStatement stmt, int index, Object value) throws SQLException;
 
   /**
-   * Set the feature's default value to the JDBC {@link PreparedStatement} using an appropriate <code>setXxx</code>
+   * Set the feature's default value to the JDBC {@link IDBPreparedStatement} using an appropriate <code>setXxx</code>
    * method.
-   * 
+   *
    * @param stmt
    *          the prepared statement to set the value
    * @param index
@@ -128,9 +127,9 @@ public interface ITypeMapping
   public void setDefaultValue(PreparedStatement stmt, int index) throws SQLException;
 
   /**
-   * Set a value of the given revision to the JDBC {@link PreparedStatement} using an appropriate <code>setXxx</code>
+   * Set a value of the given revision to the JDBC {@link IDBPreparedStatement} using an appropriate <code>setXxx</code>
    * method. The feature from which the value is taken is determined by {@link #getFeature()}.
-   * 
+   *
    * @param stmt
    *          the prepared statement to set the value
    * @param index
@@ -145,7 +144,7 @@ public interface ITypeMapping
   /**
    * Read the value from a {@link ResultSet} and convert it from the DB to the CDO representation. The resultSet field
    * to read from is determined automatically by the internal {@link #getField()} name.
-   * 
+   *
    * @param resultSet
    *          the result set to read from
    * @return the read value
@@ -159,7 +158,7 @@ public interface ITypeMapping
    * Read a value from a {@link ResultSet}, convert it from the DB to the CDO representation and set it to the feature
    * of the revision. The feature is determined by getFeature() The resultSet field to read from is determined
    * automatically by the internal {@link #getField()} name.
-   * 
+   *
    * @param resultSet
    *          the result set to read from
    * @param revision
@@ -174,7 +173,7 @@ public interface ITypeMapping
    * A descriptor which describes one type mapping class. The descriptor is encoded in the factoryType which is used as
    * a string description for the extension point mechanism. Translations and instantiations can be done using the
    * methods in {@link TypeMappingUtil}.
-   * 
+   *
    * @author Stefan Winkler
    * @since 4.0
    */
@@ -205,7 +204,7 @@ public interface ITypeMapping
   /**
    * A global (singleton) registry which collects all available type mappings which are either available in the CDO
    * core, as declared extensions, or registered manually.
-   * 
+   *
    * @author Stefan Winkler
    * @since 4.0
    */
@@ -232,7 +231,7 @@ public interface ITypeMapping
    * A provider for type mapping information. This provider is used by the {@link TypeMappingRegistry} to create an
    * {@link ITypeMapping} instance suitable for a given feature and DB field. Usually, one factory is responsible for
    * one type mapping.
-   * 
+   *
    * @author Stefan Winkler
    * @since 4.0
    */
@@ -245,7 +244,7 @@ public interface ITypeMapping
 
     /**
      * Create an {@link ITypeMapping} implementation.
-     * 
+     *
      * @param mappingStrategy
      *          the mapping strategy
      * @param feature
@@ -259,7 +258,7 @@ public interface ITypeMapping
    * A factory for typeMappings. This is a regular Net4j factory registered by the respective extension point. It
    * enhances the regular factory using a descriptor which is translated from and to the factoryType by the methods in
    * {@link TypeMappingUtil}.
-   * 
+   *
    * @author Stefan Winkler
    * @since 4.0
    */

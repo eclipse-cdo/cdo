@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.id.CDOWithID;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
@@ -308,9 +309,7 @@ public final class CDORevisionUtil
   {
     StringBuilder builder = new StringBuilder();
     getResourceNodePath((InternalCDORevision)revision, provider, builder);
-    String string = builder.toString();
-    System.out.println("Path: " + revision + " --> " + string);
-    return string;
+    return builder.toString();
   }
 
   private static void getResourceNodePath(InternalCDORevision revision, CDORevisionProvider provider,
@@ -341,7 +340,18 @@ public final class CDORevisionUtil
 
   private static InternalCDORevision getParentRevision(InternalCDORevision revision, CDORevisionProvider provider)
   {
-    CDOID parentID = (CDOID)revision.getContainerID();
+    CDOID parentID;
+
+    Object containerID = revision.getContainerID();
+    if (containerID instanceof CDOWithID)
+    {
+      parentID = ((CDOWithID)containerID).cdoID();
+    }
+    else
+    {
+      parentID = (CDOID)containerID;
+    }
+
     if (CDOIDUtil.isNull(parentID))
     {
       parentID = revision.getResourceID();
@@ -349,7 +359,7 @@ public final class CDORevisionUtil
       {
         return null;
       }
-      else if (parentID.equals(revision.getID()))
+      else if (parentID == revision.getID())
       {
         // This must be the root resource!
         return null;

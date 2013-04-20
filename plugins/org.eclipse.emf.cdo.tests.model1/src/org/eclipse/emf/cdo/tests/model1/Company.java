@@ -43,7 +43,7 @@ public interface Company extends Address
    * <!-- end-user-doc -->
    * @return the value of the '<em>Categories</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_Categories()
-   * @model containment="true"
+   * @model containment="true" resolveProxies="true"
    * @generated
    */
   EList<Category> getCategories();
@@ -59,7 +59,7 @@ public interface Company extends Address
    * <!-- end-user-doc -->
    * @return the value of the '<em>Suppliers</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_Suppliers()
-   * @model containment="true"
+   * @model containment="true" resolveProxies="true"
    * @generated
    */
   EList<Supplier> getSuppliers();
@@ -75,7 +75,7 @@ public interface Company extends Address
    * <!-- end-user-doc -->
    * @return the value of the '<em>Purchase Orders</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_PurchaseOrders()
-   * @model containment="true"
+   * @model containment="true" resolveProxies="true"
    * @generated
    */
   EList<PurchaseOrder> getPurchaseOrders();
@@ -91,7 +91,7 @@ public interface Company extends Address
    * <!-- end-user-doc -->
    * @return the value of the '<em>Customers</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_Customers()
-   * @model containment="true"
+   * @model containment="true" resolveProxies="true"
    * @generated
    */
   EList<Customer> getCustomers();
@@ -107,7 +107,7 @@ public interface Company extends Address
    * <!-- end-user-doc -->
    * @return the value of the '<em>Sales Orders</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany_SalesOrders()
-   * @model containment="true"
+   * @model containment="true" resolveProxies="true"
    * @generated
    */
   EList<SalesOrder> getSalesOrders();

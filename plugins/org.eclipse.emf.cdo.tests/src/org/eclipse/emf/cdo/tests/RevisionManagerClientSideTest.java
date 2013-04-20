@@ -10,7 +10,9 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
@@ -38,5 +40,12 @@ public class RevisionManagerClientSideTest extends RevisionManagerTest
   {
     BranchingTest.dump("ServerCache", repository.getRevisionManager().getCache().getAllRevisions());
     super.dumpCache(branchPoint);
+  }
+
+  @Override
+  protected InternalCDORevision getRevision(CDOBranch branch, long timeStamp)
+  {
+    branch = session.getBranchManager().getBranch(branch.getID()); // Make sure that the client-side branch is used!
+    return super.getRevision(branch, timeStamp);
   }
 }

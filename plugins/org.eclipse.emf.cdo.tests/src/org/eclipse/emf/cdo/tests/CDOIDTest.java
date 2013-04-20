@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -31,30 +30,30 @@ public class CDOIDTest extends AbstractCDOTest
 {
   public void testGetLong_Null()
   {
-    assertEquals(AbstractCDOIDLong.NULL_VALUE, CDOIDUtil.getLong(null));
+    assertEquals(0L, CDOIDUtil.getLong(null));
   }
 
   public void testGetLong_NullId()
   {
     CDOIDNullImpl id = CDOIDNullImpl.INSTANCE;
-    assertEquals(AbstractCDOIDLong.NULL_VALUE, CDOIDUtil.getLong(id));
+    assertEquals(0L, CDOIDUtil.getLong(id));
   }
 
   public void testGetLong_LongId()
   {
-    CDOIDObjectLongImpl id = new CDOIDObjectLongImpl(123L);
+    CDOIDObjectLongImpl id = CDOIDObjectLongImpl.create(123L);
     assertEquals(123L, CDOIDUtil.getLong(id));
   }
 
   public void testGetLong_TempId()
   {
-    CDOIDTempObjectImpl id = new CDOIDTempObjectImpl(456);
+    CDOIDTempObjectImpl id = CDOIDTempObjectImpl.create(456);
     assertIllegalArgument(id);
   }
 
   public void testGetLong_ExtTempId()
   {
-    CDOIDTempObjectExternalImpl id = new CDOIDTempObjectExternalImpl("cdo://repo123/resource456");
+    CDOIDTempObjectExternalImpl id = CDOIDTempObjectExternalImpl.create("cdo://repo123/resource456");
     assertIllegalArgument(id);
   }
 
@@ -67,6 +66,7 @@ public class CDOIDTest extends AbstractCDOTest
   private void assertIllegalArgument(CDOID id)
   {
     boolean thrown = false;
+
     try
     {
       CDOIDUtil.getLong(id);

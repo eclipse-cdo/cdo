@@ -862,6 +862,47 @@ public interface SecurityPackage extends EPackage
   int RESOURCE_PERMISSION_FEATURE_COUNT = PERMISSION_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.ObjectPermissionImpl <em>Object Permission</em>}' class.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.security.impl.ObjectPermissionImpl
+   * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getObjectPermission()
+   * @generated
+   */
+  int OBJECT_PERMISSION = 13;
+
+  /**
+   * The feature id for the '<em><b>Role</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OBJECT_PERMISSION__ROLE = PERMISSION__ROLE;
+
+  /**
+   * The feature id for the '<em><b>Access</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OBJECT_PERMISSION__ACCESS = PERMISSION__ACCESS;
+
+  /**
+   * The number of structural features of the '<em>Object Permission</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OBJECT_PERMISSION_FEATURE_COUNT = PERMISSION_FEATURE_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.Access <em>Access</em>}' enum.
    * <!-- begin-user-doc -->
    * @noreference This field is not intended to be referenced by clients.
@@ -870,7 +911,7 @@ public interface SecurityPackage extends EPackage
    * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getAccess()
    * @generated
    */
-  int ACCESS = 13;
+  int ACCESS = 14;
 
   /**
    * The meta object id for the '<em>Access Object</em>' data type.
@@ -881,7 +922,7 @@ public interface SecurityPackage extends EPackage
    * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getAccessObject()
    * @generated
    */
-  int ACCESS_OBJECT = 14;
+  int ACCESS_OBJECT = 15;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.SecurityElement <em>Element</em>}'.
@@ -1479,6 +1520,17 @@ public interface SecurityPackage extends EPackage
   EAttribute getResourcePermission_Pattern();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.ObjectPermission <em>Object Permission</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.2
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Object Permission</em>'.
+   * @see org.eclipse.emf.cdo.security.ObjectPermission
+   * @generated
+   */
+  EClass getObjectPermission();
+
+  /**
    * Returns the meta object for enum '{@link org.eclipse.emf.cdo.security.Access <em>Access</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1993,6 +2045,17 @@ public interface SecurityPackage extends EPackage
      * @generated
      */
     EAttribute RESOURCE_PERMISSION__PATTERN = eINSTANCE.getResourcePermission_Pattern();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.ObjectPermissionImpl <em>Object Permission</em>}' class.
+     * <!-- begin-user-doc -->
+     * @since 4.2
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.security.impl.ObjectPermissionImpl
+     * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getObjectPermission()
+     * @generated
+     */
+    EClass OBJECT_PERMISSION = eINSTANCE.getObjectPermission();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.security.Access <em>Access</em>}' enum.

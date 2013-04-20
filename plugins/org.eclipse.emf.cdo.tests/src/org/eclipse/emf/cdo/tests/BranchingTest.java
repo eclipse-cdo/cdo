@@ -294,8 +294,11 @@ public class BranchingTest extends AbstractCDOTest
 
   private void assertAncestor(CDOBranchPoint expected, CDOBranchPoint point1, CDOBranchPoint point2)
   {
-    assertEquals(expected, CDOBranchUtil.getAncestor(point1, point2));
-    assertEquals(expected, CDOBranchUtil.getAncestor(point2, point1));
+    CDOBranchPoint ancestor1 = CDOBranchUtil.getAncestor(point1, point2);
+    assertEquals(expected, ancestor1);
+
+    CDOBranchPoint ancestor2 = CDOBranchUtil.getAncestor(point2, point1);
+    assertEquals(expected, ancestor2);
   }
 
   public void testContainment() throws Exception
@@ -1057,5 +1060,20 @@ public class BranchingTest extends AbstractCDOTest
     CDORevisionUtil.dumpAllRevisions(revisions, System.out);
     System.out.println();
     System.out.println();
+  }
+
+  public static void assertEquals(Object expected, Object actual)
+  {
+    if (expected instanceof CDOBranch && actual instanceof CDOBranch)
+    {
+      if (((CDOBranch)expected).getID() != ((CDOBranch)actual).getID())
+      {
+        failNotEquals(null, expected, actual);
+      }
+
+      return;
+    }
+
+    AbstractCDOTest.assertEquals(expected, actual);
   }
 }

@@ -35,6 +35,7 @@ public final class OpenViewAction extends AbstractOpenViewAction
   @Override
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
-    getSession().openView();
+    CDOSession session = getSession();
+    session.openView();
   }
 }

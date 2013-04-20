@@ -120,4 +120,72 @@
         unsettable="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="MyString" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EmptyStringDefault">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attribute" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral=""/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EmptyStringDefaultUnsettable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attribute" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="" unsettable="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnsettableAttributes">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrBigDecimal" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigDecimal"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrBigInteger" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrBoolean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrBooleanObject" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrByte" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EByte"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrByteArray" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EByteArray"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrByteObject" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EByteObject"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrChar" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EChar"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrCharacterObject" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ECharacterObject"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrDouble" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrDoubleObject" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrFloat" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrFloatObject" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloatObject"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrInt" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrIntegerObject" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrJavaClass" unsettable="true">
+      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass">
+        <eTypeArguments/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrJavaObject" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrLong" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrLongObject" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrShort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EShort"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrShortObject" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EShortObject"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attrString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        unsettable="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CanReferenceLegacy">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="singleContainment" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="multipleContainment" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="singleReference" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="multipleReference" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+  </eClassifiers>
 </ecore:EPackage>

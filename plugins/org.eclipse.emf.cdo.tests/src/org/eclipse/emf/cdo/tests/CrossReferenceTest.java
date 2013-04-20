@@ -451,7 +451,8 @@ public class CrossReferenceTest extends AbstractCDOTest
     transaction.commit();
     CDORevisionData data = CDOUtil.getCDOObject(salesOrder).cdoRevision().data();
     CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
-    assertEquals(false, id.isExternal());
+
+    assertEquals(true, id.isExternal());
   }
 
   @Skips("Hibernate")
@@ -491,7 +492,7 @@ public class CrossReferenceTest extends AbstractCDOTest
 
   /**
    * Bug 369253: bidirectional cross-reference between containing and contained object that
-   * is not a containment reference. 
+   * is not a containment reference.
    */
   public void testCrossCreferenceBetweenContainerAndContained() throws Exception
   {

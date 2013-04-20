@@ -9,11 +9,11 @@
  *    Eike Stepper - initial API and implementation
  *    Martin Fluegge - bug 247226: Transparently support legacy models
  *    Christian W. Damus (CEA) - bug 397822: handling of REMOVE_MANY notifications
+ *    Christian W. Damus (CEA) - bug 381395: don't notify closed view of adapter changes
  */
 package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDONotification;
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -27,9 +27,11 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Internal.DynamicValueHolder;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.CDOStore;
 import org.eclipse.emf.spi.cdo.FSMUtil;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.List;
 
@@ -84,12 +86,13 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
     }
 
     EStructuralFeature feature = (EStructuralFeature)msg.getFeature();
-    if (view == null || feature == null || !(view instanceof CDOTransaction))
+    if (viewAndState.view == null || feature == null || !(viewAndState.view instanceof CDOTransaction))
     {
       return;
     }
 
-    if (EMFUtil.isPersistent(feature))
+    int featureID = eClass().getFeatureID(feature);
+    if (cdoClassInfo().isPersistent(featureID))
     {
       int eventType = msg.getEventType();
       int position = msg.getPosition();
@@ -141,8 +144,20 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
   protected void notifySet(EStructuralFeature feature, int position, Object oldValue, Object newValue)
   {
-    CDOStore store = view.getStore();
-    store.set(instance, feature, position, newValue);
+    CDOStore store = viewAndState.view.getStore();
+
+    // bug 405257: handle unsettable features set explicitly to null.
+    // Note that an unsettable list feature doesn't allow individual
+    // positions to be set/unset
+    if (newValue == null && feature.isUnsettable() && position == Notification.NO_INDEX)
+    {
+      store.set(instance, feature, position, DynamicValueHolder.NIL);
+    }
+    else
+    {
+      store.set(instance, feature, position, newValue);
+    }
+
     if (feature instanceof EReference)
     {
       EReference reference = (EReference)feature;
@@ -165,7 +180,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
   protected void notifyUnset(EStructuralFeature feature, Object oldValue)
   {
-    CDOStore store = view.getStore();
+    CDOStore store = viewAndState.view.getStore();
     if (feature instanceof EReference)
     {
       EReference reference = (EReference)feature;
@@ -188,13 +203,13 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
   protected void notifyMove(EStructuralFeature feature, int position, Object oldValue)
   {
-    CDOStore store = view.getStore();
+    CDOStore store = viewAndState.view.getStore();
     store.move(instance, feature, position, (Integer)oldValue);
   }
 
   protected void notifyAdd(EStructuralFeature feature, int position, Object newValue)
   {
-    CDOStore store = view.getStore();
+    CDOStore store = viewAndState.view.getStore();
     store.add(instance, feature, position, newValue);
     if (newValue != null && feature instanceof EReference)
     {
@@ -209,7 +224,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
   protected void notifyAddMany(EStructuralFeature feature, int position, Object newValue)
   {
-    CDOStore store = view.getStore();
+    CDOStore store = viewAndState.view.getStore();
     int pos = position;
     @SuppressWarnings("unchecked")
     List<Object> list = (List<Object>)newValue;
@@ -230,7 +245,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
   protected void notifyRemove(EStructuralFeature feature, int position)
   {
-    CDOStore store = view.getStore();
+    CDOStore store = viewAndState.view.getStore();
 
     Object oldChild = store.remove(instance, feature, position);
     if (oldChild instanceof InternalEObject)
@@ -249,7 +264,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
   protected void notifyRemoveMany(EStructuralFeature feature, int[] positions)
   {
-    CDOStore store = view.getStore();
+    CDOStore store = viewAndState.view.getStore();
 
     if (positions == null)
     {
@@ -312,7 +327,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
   }
 
   /**
-   * @author Martin Flügge
+   * @author Martin Fluegge
    * @since 3.0
    */
   protected class AdapterListListener implements
@@ -334,7 +349,11 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
       if (!FSMUtil.isTransient(CDOLegacyAdapter.this))
       {
-        cdoView().handleAddAdapter(CDOLegacyAdapter.this, adapter);
+        InternalCDOView view = cdoView();
+        if (view != null && view.isActive())
+        {
+          view.handleAddAdapter(CDOLegacyAdapter.this, adapter);
+        }
       }
     }
 
@@ -347,7 +366,11 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
       if (!FSMUtil.isTransient(CDOLegacyAdapter.this))
       {
-        cdoView().handleRemoveAdapter(CDOLegacyAdapter.this, adapter);
+        InternalCDOView view = cdoView();
+        if (view != null && view.isActive())
+        {
+          view.handleRemoveAdapter(CDOLegacyAdapter.this, adapter);
+        }
       }
     }
   }

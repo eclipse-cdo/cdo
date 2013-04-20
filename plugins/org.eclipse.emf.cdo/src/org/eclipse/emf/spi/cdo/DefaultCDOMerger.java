@@ -115,7 +115,7 @@ public class DefaultCDOMerger implements CDOMerger
   public synchronized CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source) throws ConflictException
   {
     result = new CDOChangeSetDataImpl();
-    conflicts = new HashMap<CDOID, Conflict>();
+    conflicts = CDOIDUtil.createMap();
 
     targetMap = createMap(target);
     sourceMap = createMap(source);
@@ -315,7 +315,7 @@ public class DefaultCDOMerger implements CDOMerger
 
   private Map<CDOID, Object> createMap(CDOChangeSetData changeSetData)
   {
-    Map<CDOID, Object> map = new HashMap<CDOID, Object>();
+    Map<CDOID, Object> map = CDOIDUtil.createMap();
     for (CDOIDAndVersion data : changeSetData.getNewObjects())
     {
       map.put(data.getID(), data);
@@ -629,7 +629,7 @@ public class DefaultCDOMerger implements CDOMerger
 
       if (conflict != null)
       {
-        return new Pair<InternalCDORevisionDelta, ChangedInSourceAndTargetConflict>(result, conflict);
+        return Pair.create(result, conflict);
       }
 
       return result;

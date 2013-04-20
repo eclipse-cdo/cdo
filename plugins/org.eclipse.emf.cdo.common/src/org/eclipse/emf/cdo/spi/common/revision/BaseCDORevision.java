@@ -13,13 +13,11 @@
  */
 package org.eclipse.emf.cdo.spi.common.revision;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
@@ -40,6 +38,8 @@ import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList.ConfigurableEquality;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
@@ -49,7 +49,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
@@ -175,8 +174,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   protected void readSystemValues(CDODataInput in) throws IOException
   {
     EClassifier classifier = in.readCDOClassifierRefAndResolve();
-    CDOClassInfo classInfo = CDOModelUtil.getClassInfo((EClass)classifier);
-    setClassInfo(classInfo);
+    initClassInfo((EClass)classifier);
 
     id = in.readCDOID();
     branchPoint = in.readCDOBranchPoint();
@@ -357,16 +355,16 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   }
 
   /**
-   * @since 3.0
+   * @since 4.2
    */
-  public CDOBranch getBranch()
+  public InternalCDOBranch getBranch()
   {
     if (branchPoint == null)
     {
       return null;
     }
 
-    return branchPoint.getBranch();
+    return (InternalCDOBranch)branchPoint.getBranch();
   }
 
   /**
@@ -496,7 +494,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public Object get(EStructuralFeature feature, int index)
   {
-    if (feature.isMany() && index != EStore.NO_INDEX)
+    if (feature.isMany())
     {
       CDOList list = getList(feature);
       return list.get(index);
@@ -686,10 +684,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   public CDOList getList(EStructuralFeature feature, int size)
   {
     int featureIndex = getFeatureIndex(feature);
-    CDOList list = (CDOList)getValue(featureIndex);
+    InternalCDOList list = (InternalCDOList)getValue(featureIndex);
     if (list == null && size != -1)
     {
-      list = CDOListFactory.DEFAULT.createList(size, 0, 0);
+      list = (InternalCDOList)CDOListFactory.DEFAULT.createList(size, 0, 0);
+      if (feature instanceof EReference && list instanceof ConfigurableEquality)
+      {
+        ((ConfigurableEquality)list).setUseEquals(false);
+      }
 
       synchronized (this)
       {

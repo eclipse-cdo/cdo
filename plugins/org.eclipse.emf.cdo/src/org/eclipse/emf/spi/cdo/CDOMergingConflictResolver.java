@@ -91,7 +91,8 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
       }
       catch (ConflictException ex)
       {
-        result = ex.getResult();
+        return;
+        // result = ex.getResult();
       }
 
       InternalCDOTransaction transaction = (InternalCDOTransaction)getTransaction();

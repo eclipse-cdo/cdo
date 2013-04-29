@@ -18,11 +18,19 @@ import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
 
 import java.util.List;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 /**
  * @author Eike Stepper
  */
-public abstract class AllConfigs extends ConfigTestSuite
+public class AllConfigs extends ConfigTestSuite
 {
+  public static Test suite()
+  {
+    return new AllConfigs().getTestSuite();
+  }
+
   public List<Class<? extends ConfigTest>> getBugzillaTests()
   {
     return getTestClasses(OM.BUNDLE, "org.eclipse.emf.cdo.tests.bugzilla");
@@ -92,6 +100,7 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(FeatureMapTest.class);
     testClasses.add(AdapterManagerTest.class);
     testClasses.add(ConflictResolverTest.class);
+    testClasses.add(ConflictResolverExtendedTest.class);
     testClasses.add(ConflictResolverMergingTest.class);
     testClasses.add(DynamicXSDTest.class);
     testClasses.add(SetFeatureTest.class);
@@ -113,5 +122,11 @@ public abstract class AllConfigs extends ConfigTestSuite
 
     // Bugzilla verifications
     testClasses.addAll(getBugzillaTests());
+  }
+
+  @Override
+  protected void initConfigSuites(TestSuite parent)
+  {
+    addScenario(parent, COMBINED, MEM_BRANCHES, JVM, NATIVE);
   }
 }

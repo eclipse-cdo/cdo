@@ -1109,16 +1109,21 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public String toString()
   {
-    EClass eClass = eClass();
-    String name = eClass.getName();
+    String str = eClass().getName();
 
     CDOID id = cdoID();
-    if (id == null)
+    if (id != null)
     {
-      return name + "?"; //$NON-NLS-1$
+      str += "@" + id;
     }
 
-    return name + "@" + id; //$NON-NLS-1$
+    CDOState cdoState = cdoState();
+    if (cdoState != CDOState.CLEAN)
+    {
+      str += "[" + cdoState + "]";
+    }
+
+    return str;
   }
 
   @Override

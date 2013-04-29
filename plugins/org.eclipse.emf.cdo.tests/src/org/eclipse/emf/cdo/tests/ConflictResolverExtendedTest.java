@@ -186,7 +186,6 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     addConflictResolver(thatTransaction);
 
     Root thisRoot = getTestModelRoot(thisTransaction);
-    // dumpAllContents(thisRoot);
     EList<BaseObject> thisList = thisRoot.getListB();
     ContainmentObject thisObject = (ContainmentObject)thisList.get(0);
 

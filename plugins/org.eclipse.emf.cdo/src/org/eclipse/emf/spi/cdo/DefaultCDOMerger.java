@@ -60,16 +60,6 @@ import java.util.Set;
  */
 public class DefaultCDOMerger implements CDOMerger
 {
-  /**
-   * @since 4.2
-   */
-  protected static final int SOURCE = 0;
-
-  /**
-   * @since 4.2
-   */
-  protected static final int TARGET = 1;
-
   private final ResolutionPreference resolutionPreference;
 
   private CDOChangeSetData result;
@@ -377,14 +367,6 @@ public class DefaultCDOMerger implements CDOMerger
     }
 
     return true;
-  }
-
-  /**
-   * @since 4.2
-   */
-  protected static int other(int side)
-  {
-    return TARGET - side;
   }
 
   /**
@@ -736,19 +718,17 @@ public class DefaultCDOMerger implements CDOMerger
           Map<Object, List<Element>> additions = new HashMap<Object, List<Element>>();
           Map<CDOFeatureDelta, Element> allElements = new HashMap<CDOFeatureDelta, Element>();
 
-          for (int side = SOURCE; side <= TARGET; side++)
-          {
-            applyChangesToWorkList(side, listPerSide, changesPerSide, allElements, additions);
-          }
+          applyChangesToWorkList(Side.SOURCE, listPerSide, changesPerSide, allElements, additions);
+          applyChangesToWorkList(Side.TARGET, listPerSide, changesPerSide, allElements, additions);
 
           // Pick changes from source and target sides into the merge result
           CDOListFeatureDelta result = new CDOListFeatureDeltaImpl(feature, originSize);
           List<CDOFeatureDelta> resultChanges = result.getListChanges();
 
-          for (int side = SOURCE; side <= TARGET; side++)
-          {
-            pickChangesIntoResult(side, feature, ancestorList, changesPerSide, allElements, additions, resultChanges);
-          }
+          pickChangesIntoResult(Side.SOURCE, feature, ancestorList, changesPerSide, allElements, additions,
+              resultChanges);
+          pickChangesIntoResult(Side.TARGET, feature, ancestorList, changesPerSide, allElements, additions,
+              resultChanges);
 
           // if (!targetChanges.isEmpty() && !sourceChanges.isEmpty())
           // {
@@ -785,11 +765,11 @@ public class DefaultCDOMerger implements CDOMerger
           targetList.add(element);
         }
 
-        listPerSide.set(SOURCE, sourceList);
-        listPerSide.set(TARGET, targetList);
+        listPerSide.set(Side.SOURCE, sourceList);
+        listPerSide.set(Side.TARGET, targetList);
       }
 
-      private void applyChangesToWorkList(int side, PerSide<BasicEList<Element>> listPerSide,
+      private void applyChangesToWorkList(Side side, PerSide<BasicEList<Element>> listPerSide,
           PerSide<List<CDOFeatureDelta>> changesPerSide, Map<CDOFeatureDelta, Element> allElements,
           Map<Object, List<Element>> additions)
       {
@@ -849,6 +829,8 @@ public class DefaultCDOMerger implements CDOMerger
 
           case CLEAR:
           case UNSET:
+            int removeme;
+            System.out.println();
 
           default:
             throw new IllegalStateException("Illegal change type: " + changeType);
@@ -868,7 +850,7 @@ public class DefaultCDOMerger implements CDOMerger
         additionsList.add(element);
       }
 
-      private void pickChangesIntoResult(int side, EStructuralFeature feature, BasicEList<Element> ancestorList,
+      private void pickChangesIntoResult(Side side, EStructuralFeature feature, BasicEList<Element> ancestorList,
           PerSide<List<CDOFeatureDelta>> changesPerSide, Map<CDOFeatureDelta, Element> allElements,
           Map<Object, List<Element>> additions, List<CDOFeatureDelta> result)
       {
@@ -1112,6 +1094,28 @@ public class DefaultCDOMerger implements CDOMerger
       }
 
       /**
+       * @since 4.2
+       */
+      protected static Side other(Side side)
+      {
+        if (side == Side.SOURCE)
+        {
+          return Side.TARGET;
+        }
+
+        return Side.SOURCE;
+      }
+
+      /**
+       * @author Eike Stepper
+       * @since 4.2
+       */
+      public static enum Side
+      {
+        SOURCE, TARGET
+      }
+
+      /**
        * Holds data for the source and target sides.
        *
        * @author Eike Stepper
@@ -1133,9 +1137,9 @@ public class DefaultCDOMerger implements CDOMerger
           this.target = target;
         }
 
-        public final T get(int side)
+        public final T get(Side side)
         {
-          if (side == SOURCE)
+          if (side == Side.SOURCE)
           {
             return source;
           }
@@ -1143,9 +1147,9 @@ public class DefaultCDOMerger implements CDOMerger
           return target;
         }
 
-        public final void set(int side, T value)
+        public final void set(Side side, T value)
         {
-          if (side == SOURCE)
+          if (side == Side.SOURCE)
           {
             this.source = value;
           }

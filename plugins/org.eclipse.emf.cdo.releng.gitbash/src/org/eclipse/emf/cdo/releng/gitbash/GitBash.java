@@ -30,6 +30,8 @@ public class GitBash
 {
   private static final String DEFAULT_EXECUTABLE = "C:\\Program Files (x86)\\Git\\bin\\sh.exe";
 
+  public static boolean quiet;
+
   /**
    * The path to the Git Bash executable.
    */
@@ -91,13 +93,19 @@ public class GitBash
       {
         String message = "Command '" + command + "' executed successfully";
         Activator.log(message + "\n" + output, IStatus.INFO);
-        MessageDialog.openInformation(shell, "Git Bash", message);
+        if (!quiet)
+        {
+          MessageDialog.openInformation(shell, "Git Bash", message);
+        }
       }
       else
       {
         String message = "Command '" + command + "' failed: " + exitValue;
         Activator.log(message + "\n" + output, IStatus.ERROR);
-        MessageDialog.openError(shell, "Git Bash", message);
+        if (!quiet)
+        {
+          MessageDialog.openError(shell, "Git Bash", message);
+        }
       }
     }
     catch (RuntimeException ex)

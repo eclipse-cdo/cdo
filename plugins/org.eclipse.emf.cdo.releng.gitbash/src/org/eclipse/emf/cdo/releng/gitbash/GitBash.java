@@ -92,18 +92,18 @@ public class GitBash
       if (exitValue == 0)
       {
         String message = "Command '" + command + "' executed successfully";
-        Activator.log(message + "\n" + output, IStatus.INFO);
         if (!quiet)
         {
+          Activator.log(message + "\n" + output, IStatus.INFO);
           MessageDialog.openInformation(shell, "Git Bash", message);
         }
       }
       else
       {
         String message = "Command '" + command + "' failed: " + exitValue;
-        Activator.log(message + "\n" + output, IStatus.ERROR);
         if (!quiet)
         {
+          Activator.log(message + "\n" + output, IStatus.ERROR);
           MessageDialog.openError(shell, "Git Bash", message);
         }
       }

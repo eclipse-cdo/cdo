@@ -20,6 +20,16 @@
             id="org.eclipse.emf.cdo.releng.gitbash.contribution1"
             objectClass="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
          <action
+               class="org.eclipse.emf.cdo.releng.gitbash.repository.GitCopyrightsAction"
+               enablesFor="1"
+               icon="icons/gitbash.gif"
+               id="org.eclipse.emf.cdo.releng.gitbash.GitCopyrightsAction"
+               label="Git Copyrights"
+               menubarPath="additions"
+               state="true"
+               style="push"
+               tooltip="Execute git log"/>
+         <action
                class="org.eclipse.emf.cdo.releng.gitbash.repository.GitCleanAction"
                enablesFor="1"
                icon="icons/gitbash.gif"

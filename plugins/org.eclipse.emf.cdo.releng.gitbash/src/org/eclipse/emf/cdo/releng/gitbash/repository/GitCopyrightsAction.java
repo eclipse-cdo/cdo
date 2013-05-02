@@ -15,23 +15,48 @@ import org.eclipse.emf.cdo.releng.gitbash.GitBash;
 import org.eclipse.swt.widgets.Shell;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Eike Stepper
  */
 public class GitCopyrightsAction extends AbstractRepositoryAction
 {
+  private static final String[] IGNORED_PATHS = { "resourcemanager.java", "menucardtemplate.java",
+      "org.eclipse.emf.cdo.releng.version.tests\\tests", "org.eclipse.net4j.jms.api" };
+
+  private static final String[] REQUIRED_EXTENSIONS = { ".java", ".ant", "build.xml", "plugin.xml", "fragment.xml",
+      "feature.xml", "plugin.properties", "fragment.properties", "feature.properties", "about.properties",
+      "build.properties", "messages.properties", "copyright.txt", ".exsd" };
+
+  private static final String[] OPTIONAL_EXTENSIONS = { ".properties", ".xml", ".html", ".ecore", ".genmodel" };
+
+  private static final String[] IGNORED_MESSAGES = { "update copyrights", "updated copyrights", "adjust legal headers",
+      "adjusted legal headers", "update legal headers", "updated legal headers", "adjust copyrights",
+      "adjusted copyrights", "fix copyrights", "fixed copyrights", "fix legal headers", "fixed legal headers" };
+
+  private static final Pattern COPYRIGHT_PATTERN = Pattern
+      .compile("(.*?)Copyright \\(c\\) ([0-9 ,-]+) (.*?) and others.(.*)");
+
   private static final String BEGIN_COMMIT = "--BEGIN-COMMIT--";
 
-  private static final String BEGIN_MESSAGE = "--BEGIN-MESSAGE--";
+  private static final String BEGIN_MESSAGE = "--BEGIN-SUMMARY--";
 
   // "--BEGIN-COMMIT--
   // committer date
@@ -40,31 +65,315 @@ public class GitCopyrightsAction extends AbstractRepositoryAction
   // summary (multiline)"
   private static final String OUTPUT_FORMAT = BEGIN_COMMIT + "%n%ci%n%B%n" + BEGIN_MESSAGE + "%n";
 
+  private static final String NL = System.getProperty("line.separator");
+
+  private File workTree;
+
+  private int workTreeLength;
+
+  private List<String> missingCopyrights = new ArrayList<String>();
+
+  private int rewriteCount;
+
+  private File outFile;
+
   @Override
   protected void run(Shell shell, File workTree) throws Exception
   {
-    // File outFile = File.createTempFile("copyrights-", ".tmp");
-    File outFile = new File("/develop/copyrights.txt");
+    try
+    {
+      this.workTree = workTree;
+      workTreeLength = workTree.getAbsolutePath().length() + 1;
+
+      checkFolder(shell, workTree);
+      System.out.println("Missing count: " + missingCopyrights.size());
+      System.out.println("Rewrite count: " + rewriteCount);
+    }
+    finally
+    {
+      missingCopyrights.clear();
+      rewriteCount = 0;
+      outFile = null;
+    }
+  }
+
+  private void checkFolder(Shell shell, File folder) throws Exception
+  {
+    for (File file : folder.listFiles())
+    {
+      String fileName = file.getName();
+      if (file.isDirectory() && !fileName.equals(".git"))
+      {
+        checkFolder(shell, file);
+      }
+      else if (!fileName.equals(".gitlog"))
+      {
+        checkFile(shell, file);
+      }
+    }
+  }
+
+  private void checkFile(Shell shell, File file) throws Exception
+  {
+    if (hasString(file.getPath(), IGNORED_PATHS))
+    {
+      return;
+    }
+
+    boolean required = hasExtension(file, REQUIRED_EXTENSIONS);
+    boolean optional = required || hasExtension(file, OPTIONAL_EXTENSIONS);
+
+    if (optional)
+    {
+      FileReader fileReader = new FileReader(file);
+      BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+      try
+      {
+        int lineNumber = 0;
+        String line;
+        while ((line = bufferedReader.readLine()) != null)
+        {
+          Matcher matcher = COPYRIGHT_PATTERN.matcher(line);
+          if (matcher.matches())
+          {
+            String prefix = matcher.group(1);
+            String dates = matcher.group(1);
+            String owner = matcher.group(3);
+            String suffix = matcher.group(4);
+
+            rewriteFile(shell, file, lineNumber, prefix, dates, owner, suffix);
+            return;
+          }
+
+          ++lineNumber;
+        }
+
+        if (required)
+        {
+          String path = getPath(file);
+          missingCopyrights.add(path);
+          System.out.println("COPYRIGHT MISSING: " + path);
+        }
+      }
+      finally
+      {
+        bufferedReader.close();
+        fileReader.close();
+      }
+    }
+  }
+
+  private String getPath(File file)
+  {
+    String path = file.getAbsolutePath().replace('\\', '/');
+    return path.substring(workTreeLength);
+  }
+
+  private boolean hasString(String string, String[] strings)
+  {
+    for (int i = 0; i < strings.length; i++)
+    {
+      if (string.indexOf(strings[i]) != -1)
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private boolean hasExtension(File file, String[] extensions)
+  {
+    String fileName = file.getName();
+    for (int i = 0; i < extensions.length; i++)
+    {
+      if (fileName.endsWith(extensions[i]))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private void rewriteFile(Shell shell, File file, int copyrightLineNumber, String prefix, String dates, String owner,
+      String suffix) throws Exception
+  {
+    String path = getPath(file);
+
+    if (outFile == null)
+    {
+      outFile = File.createTempFile("git-", ".log");
+    }
 
     try
     {
       GitBash.quiet = true;
-      GitBash.executeCommand(shell, workTree, "git log --name-only --format=\"" + OUTPUT_FORMAT + "\" > \"/"
-          + outFile.getAbsoluteFile().toString().replace(":", "").replace("\\", "/") + "\"");
+      GitBash.executeCommand(shell, workTree, "git log --follow --name-only --format=\"" + OUTPUT_FORMAT + "\" -- \""
+          + path + "\" > \"/" + outFile.getAbsolutePath().replace(":", "").replace("\\", "/") + "\"");
     }
     finally
     {
       GitBash.quiet = false;
     }
 
-    parseFile(outFile);
+    Set<Integer> years = parseOutFile();
+    String newDates = formatYears(years);
+    if (newDates.equals(dates))
+    {
+      return;
+    }
+
+    ++rewriteCount;
+    String copyrightLine = prefix + "Copyright (c) " + newDates + " " + owner + " and others." + suffix;
+    System.out.println(path + ": " + newDates);
+
+    List<String> lines = readLines(file);
+    lines.set(copyrightLineNumber, copyrightLine);
+
+    writeLines(file, lines);
   }
 
-  private void parseFile(File file) throws FileNotFoundException, IOException
+  private List<String> readLines(File file) throws FileNotFoundException, IOException
   {
-    Map<String, int[]> years = new HashMap<String, int[]>();
+    Reader fileReader = null;
+    BufferedReader bufferedReader = null;
 
-    FileReader fileReader = new FileReader(file);
+    try
+    {
+      fileReader = new FileReader(file);
+      bufferedReader = new BufferedReader(fileReader);
+
+      List<String> lines = new ArrayList<String>();
+      String line;
+      while ((line = bufferedReader.readLine()) != null)
+      {
+        lines.add(line);
+      }
+
+      return lines;
+    }
+    finally
+    {
+      close(bufferedReader);
+      close(fileReader);
+    }
+  }
+
+  private void writeLines(File file, List<String> lines) throws IOException
+  {
+    Writer fileWriter = null;
+    BufferedWriter bufferedWriter = null;
+
+    try
+    {
+      fileWriter = new FileWriter(file);
+      bufferedWriter = new BufferedWriter(fileWriter);
+
+      for (String line : lines)
+      {
+        bufferedWriter.write(line);
+        bufferedWriter.write(NL);
+      }
+    }
+    finally
+    {
+      close(bufferedWriter);
+      close(fileWriter);
+    }
+  }
+
+  private void close(Closeable closeable)
+  {
+    if (closeable != null)
+    {
+      try
+      {
+        closeable.close();
+      }
+      catch (IOException ex)
+      {
+        ex.printStackTrace();
+      }
+    }
+  }
+
+  private String formatYears(Collection<Integer> years)
+  {
+    class YearRange
+    {
+      private int begin;
+
+      private int end;
+
+      public YearRange(int begin)
+      {
+        this.begin = begin;
+        end = begin;
+      }
+
+      public boolean add(int year)
+      {
+        if (year == end + 1)
+        {
+          end = year;
+          return true;
+        }
+
+        return false;
+      }
+
+      @Override
+      public String toString()
+      {
+        if (begin == end)
+        {
+          return "" + begin;
+        }
+
+        if (begin == end - 1)
+        {
+          return "" + begin + ", " + end;
+        }
+
+        return "" + begin + "-" + end;
+      }
+    }
+
+    List<Integer> list = new ArrayList<Integer>(years);
+    Collections.sort(list);
+
+    List<YearRange> ranges = new ArrayList<YearRange>();
+    YearRange lastRange = null;
+    for (Integer year : list)
+    {
+      if (lastRange == null || !lastRange.add(year))
+      {
+        lastRange = new YearRange(year);
+        ranges.add(lastRange);
+      }
+    }
+
+    StringBuilder builder = new StringBuilder();
+    for (YearRange range : ranges)
+    {
+      if (builder.length() != 0)
+      {
+        builder.append(", ");
+      }
+
+      builder.append(range);
+    }
+
+    return builder.toString();
+  }
+
+  private Set<Integer> parseOutFile() throws Exception
+  {
+    Set<Integer> years = new HashSet<Integer>();
+
+    FileReader fileReader = new FileReader(outFile);
     BufferedReader bufferedReader = new BufferedReader(fileReader);
 
     try
@@ -73,66 +382,62 @@ public class GitCopyrightsAction extends AbstractRepositoryAction
 
       // Start of file. First line has to be "--BEGIN-COMMIT--"
       String line = bufferedReader.readLine();
-      if (line == null)
+      if (line != null)
       {
-        return; // Empty log
-      }
-
-      if (!line.equals(BEGIN_COMMIT))
-      {
-        throw new IllegalStateException("Read unexpected line " + line + " at beginning of file "
-            + file.getAbsolutePath());
-      }
-
-      // First line successfully read. Start processing of log entries:
-
-      processing: //
-      for (;;)
-      {
-        String date = readLineSafe(bufferedReader);
-        logEntry = new LogEntry(date);
-
-        // Follows the message until the summary marker is read
-        StringBuilder builder = new StringBuilder();
-        while (!(line = readLineSafe(bufferedReader)).equals(BEGIN_MESSAGE))
+        if (!line.equals(BEGIN_COMMIT))
         {
-          builder.append(line);
-          builder.append("\n");
+          throw new IllegalStateException("Read unexpected line " + line + " at beginning of file "
+              + outFile.getAbsolutePath());
         }
 
-        logEntry.setMessage(builder.toString());
-
-        summaryReading: //
+        // First line successfully read. Start processing of log entries
+        processing: //
         for (;;)
         {
-          line = bufferedReader.readLine();
-          if (line == null)
+          String date = readLineSafe(bufferedReader);
+          logEntry = new LogEntry(date);
+
+          // Follows the message until the summary marker is read
+          StringBuilder builder = new StringBuilder();
+          while (!(line = readLineSafe(bufferedReader)).equals(BEGIN_MESSAGE))
           {
-            handleLogEntry(years, logEntry);
-            break processing; // End of file reached
+            builder.append(line);
+            builder.append("\n");
           }
 
-          if (line.equals(BEGIN_COMMIT))
-          {
-            handleLogEntry(years, logEntry);
-            break summaryReading; // End of summary section reached
-          }
+          logEntry.setMessage(builder.toString());
 
-          if (line.trim().length() == 0)
+          summaryReading: //
+          for (;;)
           {
-            continue; // Read over empty lines
-          }
+            line = bufferedReader.readLine();
+            if (line == null)
+            {
+              handleLogEntry(years, logEntry);
+              break processing; // End of file reached
+            }
 
-          // We are in the summary section. Read line should contain a path
-          logEntry.getPaths().add(line);
+            if (line.equals(BEGIN_COMMIT))
+            {
+              handleLogEntry(years, logEntry);
+              break summaryReading; // End of summary section reached
+            }
+
+            if (line.trim().length() == 0)
+            {
+              continue; // Read over empty lines
+            }
+          }
         }
       }
+
+      return years;
     }
     finally
     {
       bufferedReader.close();
       fileReader.close();
-      file.delete();
+      outFile.delete();
     }
   }
 
@@ -147,44 +452,16 @@ public class GitCopyrightsAction extends AbstractRepositoryAction
     return result;
   }
 
-  private void handleLogEntry(Map<String, int[]> years, LogEntry logEntry)
+  private void handleLogEntry(Set<Integer> years, LogEntry logEntry)
   {
-    if (logEntry.getMessage().equalsIgnoreCase("Update copyrights\n"))
+    String message = logEntry.getMessage().toLowerCase();
+    if (hasString(message, IGNORED_MESSAGES))
     {
       return;
     }
 
     int year = Integer.parseInt(logEntry.getDate().substring(0, 4));
-
-    for (String path : logEntry.getPaths())
-    {
-      handlePath(years, year, path);
-    }
-  }
-
-  private void handlePath(Map<String, int[]> years, int year, String path)
-  {
-    int[] array = years.get(path);
-    if (array == null)
-    {
-      years.put(path, new int[] { year });
-    }
-    else
-    {
-      for (int i = 0; i < array.length; i++)
-      {
-        if (array[i] == year)
-        {
-          return;
-        }
-      }
-
-      int[] newArray = new int[array.length + 1];
-      System.arraycopy(array, 0, newArray, 0, array.length);
-      newArray[array.length] = year;
-
-      years.put(path, newArray);
-    }
+    years.add(year);
   }
 
   /**
@@ -195,8 +472,6 @@ public class GitCopyrightsAction extends AbstractRepositoryAction
     private String date;
 
     private String message;
-
-    private List<String> paths = new ArrayList<String>();
 
     public LogEntry(String date)
     {
@@ -221,11 +496,6 @@ public class GitCopyrightsAction extends AbstractRepositoryAction
     public void setMessage(String message)
     {
       this.message = message;
-    }
-
-    public List<String> getPaths()
-    {
-      return paths;
     }
   }
 }

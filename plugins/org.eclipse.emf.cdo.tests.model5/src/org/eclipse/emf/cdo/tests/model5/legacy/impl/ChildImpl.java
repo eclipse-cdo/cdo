@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -40,13 +40,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class ChildImpl extends EObjectImpl implements Child
 {
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
   /**
    * The cached value of the '{@link #getPreferredBy() <em>Preferred By</em>}' reference.
    * <!-- begin-user-doc -->
@@ -106,7 +99,9 @@ public class ChildImpl extends EObjectImpl implements Child
   public Parent getParent()
   {
     if (eContainerFeatureID() != Model5Package.CHILD__PARENT)
+    {
       return null;
+    }
     return (Parent)eContainer();
   }
 
@@ -128,22 +123,31 @@ public class ChildImpl extends EObjectImpl implements Child
    */
   public void setParent(Parent newParent)
   {
-    if (newParent != eInternalContainer()
-        || (eContainerFeatureID() != Model5Package.CHILD__PARENT && newParent != null))
+    if (newParent != eInternalContainer() || eContainerFeatureID() != Model5Package.CHILD__PARENT && newParent != null)
     {
       if (EcoreUtil.isAncestor(this, newParent))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newParent != null)
+      {
         msgs = ((InternalEObject)newParent).eInverseAdd(this, Model5Package.PARENT__CHILDREN, Parent.class, msgs);
+      }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model5Package.CHILD__PARENT, newParent, newParent));
+    }
   }
 
   /**
@@ -160,8 +164,10 @@ public class ChildImpl extends EObjectImpl implements Child
       if (preferredBy != oldPreferredBy)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model5Package.CHILD__PREFERRED_BY, oldPreferredBy,
               preferredBy));
+        }
       }
     }
     return preferredBy;
@@ -191,9 +197,13 @@ public class ChildImpl extends EObjectImpl implements Child
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model5Package.CHILD__PREFERRED_BY,
           oldPreferredBy, newPreferredBy);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -209,16 +219,24 @@ public class ChildImpl extends EObjectImpl implements Child
     {
       NotificationChain msgs = null;
       if (preferredBy != null)
+      {
         msgs = ((InternalEObject)preferredBy).eInverseRemove(this, Model5Package.PARENT__FAVOURITE, Parent.class, msgs);
+      }
       if (newPreferredBy != null)
+      {
         msgs = ((InternalEObject)newPreferredBy).eInverseAdd(this, Model5Package.PARENT__FAVOURITE, Parent.class, msgs);
+      }
       msgs = basicSetPreferredBy(newPreferredBy, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model5Package.CHILD__PREFERRED_BY, newPreferredBy,
           newPreferredBy));
+    }
   }
 
   public void setPreferredBy(Parent newPreferredBy)
@@ -247,7 +265,9 @@ public class ChildImpl extends EObjectImpl implements Child
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model5Package.CHILD__NAME, oldName, name));
+    }
   }
 
   public void setName(String newName)
@@ -268,11 +288,15 @@ public class ChildImpl extends EObjectImpl implements Child
     {
     case Model5Package.CHILD__PARENT:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetParent((Parent)otherEnd, msgs);
     case Model5Package.CHILD__PREFERRED_BY:
       if (preferredBy != null)
+      {
         msgs = ((InternalEObject)preferredBy).eInverseRemove(this, Model5Package.PARENT__FAVOURITE, Parent.class, msgs);
+      }
       return basicSetPreferredBy((Parent)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -326,7 +350,9 @@ public class ChildImpl extends EObjectImpl implements Child
       return getParent();
     case Model5Package.CHILD__PREFERRED_BY:
       if (resolve)
+      {
         return getPreferredBy();
+      }
       return basicGetPreferredBy();
     case Model5Package.CHILD__NAME:
       return getName();
@@ -409,7 +435,9 @@ public class ChildImpl extends EObjectImpl implements Child
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

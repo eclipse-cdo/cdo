@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -26,7 +26,7 @@ import org.eclipse.gmf.codegen.gmfgen.GMFGenPackage;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  * @author Martin Fluegge
  */
@@ -34,14 +34,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Martin Fluegge - initial API and implementation";
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass dawnGMFGeneratorEClass = null;
@@ -53,7 +46,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.DawnGmfGenmodelPackage#eNS_URI
    * @see #init()
@@ -66,7 +59,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static boolean isInited = false;
@@ -77,7 +70,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
    * This method is used to initialize {@link DawnGmfGenmodelPackage#eINSTANCE} when that field is accessed. Clients
    * should not invoke it directly. Instead, they should simply access that field to obtain the package. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -117,7 +110,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getDawnGMFGenerator()
@@ -127,7 +120,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getDawnGMFGenerator_DawnDocumentProviderClassName()
@@ -137,7 +130,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getDawnGMFGenerator_DawnEditorUtilClassName()
@@ -147,7 +140,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getDawnGMFGenerator_DawnCreationWizardClassName()
@@ -157,7 +150,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getDawnGMFGenerator_DawnCanonicalEditingPolicyClassName()
@@ -167,7 +160,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getDawnGMFGenerator_DawnDiagramEditPartClassName()
@@ -177,7 +170,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getDawnGMFGenerator_DawnEditPartFactoryClassName()
@@ -187,7 +180,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getDawnGMFGenerator_DawnEditPartProviderClassName()
@@ -197,7 +190,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getDawnGMFGenerator_DawnEditPolicyProviderClassName()
@@ -207,7 +200,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getDawnGMFGenerator_GMFGenEditorGenerator()
@@ -217,7 +210,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public DawnGmfGenmodelFactory getDawnGmfGenmodelFactory()
@@ -227,7 +220,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isCreated = false;
@@ -235,7 +228,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
   /**
    * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
    * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void createPackageContents()
@@ -261,7 +254,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isInitialized = false;
@@ -269,7 +262,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
   /**
    * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
    * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void initializePackageContents()

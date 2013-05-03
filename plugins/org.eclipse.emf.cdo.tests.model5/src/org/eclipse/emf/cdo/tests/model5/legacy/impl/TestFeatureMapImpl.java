@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -38,17 +38,11 @@ import java.util.Collection;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model5.impl.TestFeatureMapImpl#getPeople <em>People</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
 {
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
   /**
    * The cached value of the '{@link #getManagers() <em>Managers</em>}' reference list.
    * <!-- begin-user-doc --> <!--
@@ -167,7 +161,9 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
       return getDoctors();
     case Model5Package.TEST_FEATURE_MAP__PEOPLE:
       if (coreType)
+      {
         return getPeople();
+      }
       return ((FeatureMap.Internal)getPeople()).getWrapper();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -247,7 +243,9 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (people: ");

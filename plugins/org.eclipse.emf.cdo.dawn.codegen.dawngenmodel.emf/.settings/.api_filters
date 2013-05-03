@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf" version="2">
+    <resource path="src-gen/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/emf/dawnEmfGenmodel/DawnEMFGenerator.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.DawnEMFGenerator">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.DawnEMFGenerator"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src-gen/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/emf/dawnEmfGenmodel/DawnEmfGenmodelFactory.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.DawnEmfGenmodelFactory">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.DawnEmfGenmodelFactory"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src-gen/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/emf/dawnEmfGenmodel/DawnEmfGenmodelPackage.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.DawnEmfGenmodelPackage">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.DawnEmfGenmodelPackage"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src-gen/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/emf/dawnEmfGenmodel/impl/DawnEMFGeneratorImpl.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.impl.DawnEMFGeneratorImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.impl.DawnEMFGeneratorImpl"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src-gen/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/emf/dawnEmfGenmodel/impl/DawnEmfGenmodelFactoryImpl.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.impl.DawnEmfGenmodelFactoryImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.impl.DawnEmfGenmodelFactoryImpl"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src-gen/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/emf/dawnEmfGenmodel/impl/DawnEmfGenmodelPackageImpl.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.impl.DawnEmfGenmodelPackageImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.impl.DawnEmfGenmodelPackageImpl"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src-gen/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/emf/dawnEmfGenmodel/util/DawnEmfGenmodelAdapterFactory.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.util.DawnEmfGenmodelAdapterFactory">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.util.DawnEmfGenmodelAdapterFactory"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src-gen/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/emf/dawnEmfGenmodel/util/DawnEmfGenmodelSwitch.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.util.DawnEmfGenmodelSwitch">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.util.DawnEmfGenmodelSwitch"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

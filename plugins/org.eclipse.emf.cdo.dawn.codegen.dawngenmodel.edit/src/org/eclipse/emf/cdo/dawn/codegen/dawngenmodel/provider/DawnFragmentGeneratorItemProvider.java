@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2010-2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator}
  * object. <!-- begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  * @since 1.0
  */
@@ -40,15 +40,8 @@ public class DawnFragmentGeneratorItemProvider extends ItemProviderAdapter imple
     ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Martin Fluegge - initial API and implementation";
-
-  /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public DawnFragmentGeneratorItemProvider(AdapterFactory adapterFactory)
@@ -58,7 +51,7 @@ public class DawnFragmentGeneratorItemProvider extends ItemProviderAdapter imple
 
   /**
    * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -77,7 +70,7 @@ public class DawnFragmentGeneratorItemProvider extends ItemProviderAdapter imple
 
   /**
    * This adds a property descriptor for the Fragment Name feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addFragmentNamePropertyDescriptor(Object object)
@@ -94,7 +87,7 @@ public class DawnFragmentGeneratorItemProvider extends ItemProviderAdapter imple
   /**
    * This adds a property descriptor for the Dawn Editor Class Name feature. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    */
   protected void addDawnEditorClassNamePropertyDescriptor(Object object)
@@ -111,7 +104,7 @@ public class DawnFragmentGeneratorItemProvider extends ItemProviderAdapter imple
 
   /**
    * This adds a property descriptor for the Dawn Generator feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addDawnGeneratorPropertyDescriptor(Object object)
@@ -127,7 +120,7 @@ public class DawnFragmentGeneratorItemProvider extends ItemProviderAdapter imple
 
   /**
    * This returns DawnFragmentGenerator.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -138,7 +131,7 @@ public class DawnFragmentGeneratorItemProvider extends ItemProviderAdapter imple
 
   /**
    * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -152,7 +145,7 @@ public class DawnFragmentGeneratorItemProvider extends ItemProviderAdapter imple
   /**
    * This handles model notifications by calling {@link #updateChildren} to update any cached children and by creating a
    * viewer notification, which it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -173,7 +166,7 @@ public class DawnFragmentGeneratorItemProvider extends ItemProviderAdapter imple
   /**
    * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children that can be created under
    * this object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -184,7 +177,7 @@ public class DawnFragmentGeneratorItemProvider extends ItemProviderAdapter imple
 
   /**
    * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

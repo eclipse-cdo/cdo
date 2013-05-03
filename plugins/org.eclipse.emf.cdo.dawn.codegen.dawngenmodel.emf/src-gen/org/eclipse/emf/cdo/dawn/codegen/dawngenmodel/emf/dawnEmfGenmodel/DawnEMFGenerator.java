@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -24,7 +24,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
  * Gen Model</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.DawnEmfGenmodelPackage#getDawnEMFGenerator()
  * @model
  * @generated
@@ -33,20 +33,13 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 public interface DawnEMFGenerator extends DawnFragmentGenerator
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Martin Fluegge - initial API and implementation";
-
-  /**
    * Returns the value of the '<em><b>Emf Gen Model</b></em>' reference. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Emf Gen Model</em>' reference isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Emf Gen Model</em>' reference.
    * @see #setEmfGenModel(GenModel)
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.DawnEmfGenmodelPackage#getDawnEMFGenerator_EmfGenModel()
@@ -59,7 +52,7 @@ public interface DawnEMFGenerator extends DawnFragmentGenerator
    * Sets the value of the '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.DawnEMFGenerator#getEmfGenModel
    * <em>Emf Gen Model</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Emf Gen Model</em>' reference.
    * @see #getEmfGenModel()

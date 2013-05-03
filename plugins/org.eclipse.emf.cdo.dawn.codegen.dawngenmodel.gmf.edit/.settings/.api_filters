@@ -128,4 +128,28 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/gmf/dawnGmfGenmodel/provider/DawnCodeGenEditPlugin.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.provider.DawnCodeGenEditPlugin">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.provider.DawnCodeGenEditPlugin"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/gmf/dawnGmfGenmodel/provider/DawnGMFGeneratorItemProvider.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.provider.DawnGMFGeneratorItemProvider">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.provider.DawnGMFGeneratorItemProvider"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/gmf/dawnGmfGenmodel/provider/DawnGmfGenmodelItemProviderAdapterFactory.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.provider.DawnGmfGenmodelItemProviderAdapterFactory">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.provider.DawnGmfGenmodelItemProviderAdapterFactory"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

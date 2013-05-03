@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -70,22 +70,15 @@ import java.util.StringTokenizer;
 
 /**
  * This is a simple wizard for creating a new model file. <!-- begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  * @author Martin Fluegge
  */
 public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Martin Fluegge - initial API and implementation";
-
-  /**
    * The supported extensions for created files. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public static final List<String> FILE_EXTENSIONS = Collections.unmodifiableList(Arrays
@@ -94,7 +87,7 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
   /**
    * A formatted list of supported file extensions, suitable for display. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public static final String FORMATTED_FILE_EXTENSIONS = DawnGenModelEditorPlugin.INSTANCE.getString(
@@ -102,28 +95,28 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
   /**
    * This caches an instance of the model package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected DawnEmfGenmodelPackage dawnEmfGenmodelPackage = DawnEmfGenmodelPackage.eINSTANCE;
 
   /**
    * This caches an instance of the model factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected DawnEmfGenmodelFactory dawnEmfGenmodelFactory = dawnEmfGenmodelPackage.getDawnEmfGenmodelFactory();
 
   /**
    * This is the file creation page. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected DawnEmfGenmodelModelWizardNewFileCreationPage newFileCreationPage;
 
   /**
    * This is the initial object creation page. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected DawnEmfGenmodelModelWizardInitialObjectCreationPage initialObjectCreationPage;
@@ -131,28 +124,28 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
   /**
    * Remember the selection during initialization for populating the default container. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected IStructuredSelection selection;
 
   /**
    * Remember the workbench during initialization. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected IWorkbench workbench;
 
   /**
    * Caches the names of the types that can be created as the root object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected List<String> initialObjectNames;
 
   /**
    * This just records the information. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void init(IWorkbench workbench, IStructuredSelection selection)
@@ -167,7 +160,7 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
   /**
    * Returns the names of the types that can be created as the root object. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    */
   protected Collection<String> getInitialObjectNames()
@@ -193,7 +186,7 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
   /**
    * Create a new model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected EObject createInitialModel()
@@ -205,7 +198,7 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
   /**
    * Do the work after everything is specified. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -307,14 +300,14 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
   /**
    * This is the one page of the wizard. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public class DawnEmfGenmodelModelWizardNewFileCreationPage extends WizardNewFileCreationPage
   {
     /**
      * Pass in the selection. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public DawnEmfGenmodelModelWizardNewFileCreationPage(String pageId, IStructuredSelection selection)
@@ -324,7 +317,7 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
     /**
      * The framework calls this to see if the file is correct. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -346,7 +339,7 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public IFile getModelFile()
@@ -357,14 +350,14 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
   /**
    * This is the page where the type of object to create is selected. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public class DawnEmfGenmodelModelWizardInitialObjectCreationPage extends WizardPage
   {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected Combo initialObjectField;
@@ -376,14 +369,14 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected Combo encodingField;
 
     /**
      * Pass in the selection. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public DawnEmfGenmodelModelWizardInitialObjectCreationPage(String pageId)
@@ -393,7 +386,7 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public void createControl(Composite parent)
@@ -470,7 +463,7 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected ModifyListener validator = new ModifyListener()
@@ -483,7 +476,7 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected boolean validatePage()
@@ -493,7 +486,7 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -517,7 +510,7 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public String getInitialObjectName()
@@ -536,7 +529,7 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public String getEncoding()
@@ -546,7 +539,7 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
     /**
      * Returns the label for the specified type name. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected String getLabel(String typeName)
@@ -564,7 +557,7 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected Collection<String> getEncodings()
@@ -584,7 +577,7 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
   /**
    * The framework calls this to create the contents of the wizard. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -649,7 +642,7 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
 
   /**
    * Get the file from the page. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public IFile getModelFile()

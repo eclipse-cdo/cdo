@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -31,23 +31,16 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <em>Emf Gen Model</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  * @author Martin Fluegge
  */
 public class DawnEMFGeneratorImpl extends DawnFragmentGeneratorImpl implements DawnEMFGenerator
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Martin Fluegge - initial API and implementation";
-
-  /**
    * The cached value of the '{@link #getEmfGenModel() <em>Emf Gen Model</em>}' reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getEmfGenModel()
    * @generated
    * @ordered
@@ -56,7 +49,7 @@ public class DawnEMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected DawnEMFGeneratorImpl()
@@ -66,7 +59,7 @@ public class DawnEMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -77,7 +70,7 @@ public class DawnEMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public GenModel getEmfGenModel()
@@ -100,7 +93,7 @@ public class DawnEMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public GenModel basicGetEmfGenModel()
@@ -110,7 +103,7 @@ public class DawnEMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setEmfGenModel(GenModel newEmfGenModel)
@@ -126,7 +119,7 @@ public class DawnEMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -146,7 +139,7 @@ public class DawnEMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -163,7 +156,7 @@ public class DawnEMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -180,7 +173,7 @@ public class DawnEMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

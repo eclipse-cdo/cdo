@@ -1161,6 +1161,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/provider/DawnCodeGenEditPlugin.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.provider.DawnCodeGenEditPlugin">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.provider.DawnCodeGenEditPlugin"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="getPluginResourceLocator()"/>
@@ -1168,6 +1174,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/provider/DawnFragmentGeneratorItemProvider.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.provider.DawnFragmentGeneratorItemProvider">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.provider.DawnFragmentGeneratorItemProvider"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="DawnFragmentGeneratorItemProvider(AdapterFactory)"/>
@@ -1185,6 +1197,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/provider/DawnGeneratorItemProvider.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.provider.DawnGeneratorItemProvider">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.provider.DawnGeneratorItemProvider"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="DawnGeneratorItemProvider(AdapterFactory)"/>
@@ -1202,6 +1220,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/provider/DawngenmodelItemProviderAdapterFactory.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.provider.DawngenmodelItemProviderAdapterFactory">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.provider.DawngenmodelItemProviderAdapterFactory"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="adapt(Notifier, Object)"/>

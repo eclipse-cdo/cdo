@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -32,15 +32,8 @@ import java.util.List;
 public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvider
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Martin Fluegge - initial API and implementation";
-
-  /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public DawnGMFGeneratorItemProvider(AdapterFactory adapterFactory)
@@ -50,7 +43,7 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
 
   /**
    * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -76,7 +69,7 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
   /**
    * This adds a property descriptor for the Dawn Document Provider Class Name feature. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addDawnDocumentProviderClassNamePropertyDescriptor(Object object)
@@ -94,7 +87,7 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
   /**
    * This adds a property descriptor for the Dawn Editor Util Class Name feature. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addDawnEditorUtilClassNamePropertyDescriptor(Object object)
@@ -112,7 +105,7 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
   /**
    * This adds a property descriptor for the Dawn Creation Wizard Class Name feature. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addDawnCreationWizardClassNamePropertyDescriptor(Object object)
@@ -130,7 +123,7 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
   /**
    * This adds a property descriptor for the Dawn Canonical Editing Policy Class Name feature. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addDawnCanonicalEditingPolicyClassNamePropertyDescriptor(Object object)
@@ -148,7 +141,7 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
   /**
    * This adds a property descriptor for the Dawn Diagram Edit Part Class Name feature. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addDawnDiagramEditPartClassNamePropertyDescriptor(Object object)
@@ -166,7 +159,7 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
   /**
    * This adds a property descriptor for the Dawn Edit Part Factory Class Name feature. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addDawnEditPartFactoryClassNamePropertyDescriptor(Object object)
@@ -184,7 +177,7 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
   /**
    * This adds a property descriptor for the Dawn Edit Part Provider Class Name feature. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addDawnEditPartProviderClassNamePropertyDescriptor(Object object)
@@ -202,7 +195,7 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
   /**
    * This adds a property descriptor for the Dawn Edit Policy Provider Class Name feature. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addDawnEditPolicyProviderClassNamePropertyDescriptor(Object object)
@@ -220,7 +213,7 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
   /**
    * This adds a property descriptor for the GMF Gen Editor Generator feature. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    */
   protected void addGMFGenEditorGeneratorPropertyDescriptor(Object object)
@@ -236,7 +229,7 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
 
   /**
    * This returns DawnGMFGenerator.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -247,7 +240,7 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
 
   /**
    * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -261,7 +254,7 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
   /**
    * This handles model notifications by calling {@link #updateChildren} to update any cached children and by creating a
    * viewer notification, which it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -288,7 +281,7 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
   /**
    * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children that can be created under
    * this object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -299,7 +292,7 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
 
   /**
    * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

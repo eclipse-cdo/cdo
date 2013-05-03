@@ -640,7 +640,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
       generate(out);
 
       out.write("<HR>" + NL);
-      out.write("<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>" + NL);
+      out.write("<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>" + NL);
       out.write("</BODY>" + NL);
       out.write("</HTML>" + NL);
     }

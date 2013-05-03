@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2010-2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -35,23 +35,16 @@ import java.util.Collection;
  * factory convert EMF adapter notifications into calls to {@link #fireNotifyChanged fireNotifyChanged}. The adapters
  * also support Eclipse property sheets. Note that most of the adapters are shared among multiple instances. <!--
  * begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterFactory implements
     ComposeableAdapterFactory, IChangeNotifier, IDisposable
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Martin Fluegge - initial API and implementation";
-
-  /**
    * This keeps track of the root adapter factory that delegates to this adapter factory. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ComposedAdapterFactory parentAdapterFactory;
@@ -59,7 +52,7 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
   /**
    * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected IChangeNotifier changeNotifier = new ChangeNotifier();
@@ -67,14 +60,14 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
   /**
    * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
   /**
    * This constructs an instance. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public DawngenmodelItemProviderAdapterFactory()
@@ -90,7 +83,7 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
    * This keeps track of the one adapter used for all
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator} instances. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @since 1.0
    */
@@ -99,7 +92,7 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator}. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -117,7 +110,7 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
    * This keeps track of the one adapter used for all
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator} instances. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @since 1.0
    */
@@ -126,7 +119,7 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator}. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -142,7 +135,7 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
 
   /**
    * This returns the root adapter factory that contains this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public ComposeableAdapterFactory getRootAdapterFactory()
@@ -152,7 +145,7 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
 
   /**
    * This sets the composed adapter factory that contains this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory)
@@ -162,7 +155,7 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -174,7 +167,7 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
   /**
    * This implementation substitutes the factory itself as the key for the adapter. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -185,7 +178,7 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -205,7 +198,7 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
 
   /**
    * This adds a listener. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void addListener(INotifyChangedListener notifyChangedListener)
@@ -215,7 +208,7 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
 
   /**
    * This removes a listener. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void removeListener(INotifyChangedListener notifyChangedListener)
@@ -226,7 +219,7 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
   /**
    * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void fireNotifyChanged(Notification notification)
@@ -241,7 +234,7 @@ public class DawngenmodelItemProviderAdapterFactory extends DawngenmodelAdapterF
 
   /**
    * This disposes all of the item providers created by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void dispose()

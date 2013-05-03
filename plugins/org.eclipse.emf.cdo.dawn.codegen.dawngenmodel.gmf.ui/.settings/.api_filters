@@ -64,4 +64,36 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src-gen/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/gmf/dawnGmfGenmodel/presentation/DawnCodeGenEditorPlugin.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.presentation.DawnCodeGenEditorPlugin">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.presentation.DawnCodeGenEditorPlugin"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src-gen/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/gmf/dawnGmfGenmodel/presentation/DawnGmfGenmodelActionBarContributor.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.presentation.DawnGmfGenmodelActionBarContributor">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.presentation.DawnGmfGenmodelActionBarContributor"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src-gen/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/gmf/dawnGmfGenmodel/presentation/DawnGmfGenmodelEditor.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.presentation.DawnGmfGenmodelEditor">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.presentation.DawnGmfGenmodelEditor"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src-gen/org/eclipse/emf/cdo/dawn/codegen/dawngenmodel/gmf/dawnGmfGenmodel/presentation/DawnGmfGenmodelModelWizard.java" type="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.presentation.DawnGmfGenmodelModelWizard">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.presentation.DawnGmfGenmodelModelWizard"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -56,23 +56,16 @@ import org.eclipse.gmf.codegen.gmfgen.GenEditorGenerator;
  * <em>GMF Gen Editor Generator</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  * @author Martin Fluegge
  */
 public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements DawnGMFGenerator
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Martin Fluegge - initial API and implementation";
-
-  /**
    * The default value of the '{@link #getDawnDocumentProviderClassName() <em>Dawn Document Provider Class Name</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnDocumentProviderClassName()
    * @generated
    * @ordered
@@ -82,7 +75,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
   /**
    * The cached value of the '{@link #getDawnDocumentProviderClassName() <em>Dawn Document Provider Class Name</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnDocumentProviderClassName()
    * @generated
    * @ordered
@@ -92,7 +85,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
   /**
    * The default value of the '{@link #getDawnEditorUtilClassName() <em>Dawn Editor Util Class Name</em>}' attribute.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnEditorUtilClassName()
    * @generated
    * @ordered
@@ -102,7 +95,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
   /**
    * The cached value of the '{@link #getDawnEditorUtilClassName() <em>Dawn Editor Util Class Name</em>}' attribute.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnEditorUtilClassName()
    * @generated
    * @ordered
@@ -112,7 +105,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
   /**
    * The default value of the '{@link #getDawnCreationWizardClassName() <em>Dawn Creation Wizard Class Name</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnCreationWizardClassName()
    * @generated
    * @ordered
@@ -122,7 +115,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
   /**
    * The cached value of the '{@link #getDawnCreationWizardClassName() <em>Dawn Creation Wizard Class Name</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnCreationWizardClassName()
    * @generated
    * @ordered
@@ -132,7 +125,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
   /**
    * The default value of the '{@link #getDawnCanonicalEditingPolicyClassName()
    * <em>Dawn Canonical Editing Policy Class Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnCanonicalEditingPolicyClassName()
    * @generated
    * @ordered
@@ -142,7 +135,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
   /**
    * The cached value of the '{@link #getDawnCanonicalEditingPolicyClassName()
    * <em>Dawn Canonical Editing Policy Class Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnCanonicalEditingPolicyClassName()
    * @generated
    * @ordered
@@ -152,7 +145,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
   /**
    * The default value of the '{@link #getDawnDiagramEditPartClassName() <em>Dawn Diagram Edit Part Class Name</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnDiagramEditPartClassName()
    * @generated
    * @ordered
@@ -162,7 +155,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
   /**
    * The cached value of the '{@link #getDawnDiagramEditPartClassName() <em>Dawn Diagram Edit Part Class Name</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnDiagramEditPartClassName()
    * @generated
    * @ordered
@@ -172,7 +165,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
   /**
    * The default value of the '{@link #getDawnEditPartFactoryClassName() <em>Dawn Edit Part Factory Class Name</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnEditPartFactoryClassName()
    * @generated
    * @ordered
@@ -182,7 +175,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
   /**
    * The cached value of the '{@link #getDawnEditPartFactoryClassName() <em>Dawn Edit Part Factory Class Name</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnEditPartFactoryClassName()
    * @generated
    * @ordered
@@ -192,7 +185,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
   /**
    * The default value of the '{@link #getDawnEditPartProviderClassName() <em>Dawn Edit Part Provider Class Name</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnEditPartProviderClassName()
    * @generated
    * @ordered
@@ -202,7 +195,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
   /**
    * The cached value of the '{@link #getDawnEditPartProviderClassName() <em>Dawn Edit Part Provider Class Name</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnEditPartProviderClassName()
    * @generated
    * @ordered
@@ -212,7 +205,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
   /**
    * The default value of the '{@link #getDawnEditPolicyProviderClassName()
    * <em>Dawn Edit Policy Provider Class Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnEditPolicyProviderClassName()
    * @generated
    * @ordered
@@ -222,7 +215,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
   /**
    * The cached value of the '{@link #getDawnEditPolicyProviderClassName()
    * <em>Dawn Edit Policy Provider Class Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDawnEditPolicyProviderClassName()
    * @generated
    * @ordered
@@ -232,7 +225,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
   /**
    * The cached value of the '{@link #getGMFGenEditorGenerator() <em>GMF Gen Editor Generator</em>}' reference. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getGMFGenEditorGenerator()
    * @generated
    * @ordered
@@ -241,7 +234,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected DawnGMFGeneratorImpl()
@@ -251,7 +244,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -262,7 +255,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getDawnDocumentProviderClassName()
@@ -272,7 +265,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setDawnDocumentProviderClassName(String newDawnDocumentProviderClassName)
@@ -289,7 +282,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getDawnEditorUtilClassName()
@@ -299,7 +292,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setDawnEditorUtilClassName(String newDawnEditorUtilClassName)
@@ -316,7 +309,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getDawnCreationWizardClassName()
@@ -326,7 +319,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setDawnCreationWizardClassName(String newDawnCreationWizardClassName)
@@ -343,7 +336,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getDawnCanonicalEditingPolicyClassName()
@@ -353,7 +346,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setDawnCanonicalEditingPolicyClassName(String newDawnCanonicalEditingPolicyClassName)
@@ -370,7 +363,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getDawnDiagramEditPartClassName()
@@ -380,7 +373,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setDawnDiagramEditPartClassName(String newDawnDiagramEditPartClassName)
@@ -397,7 +390,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getDawnEditPartFactoryClassName()
@@ -407,7 +400,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setDawnEditPartFactoryClassName(String newDawnEditPartFactoryClassName)
@@ -424,7 +417,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getDawnEditPartProviderClassName()
@@ -434,7 +427,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setDawnEditPartProviderClassName(String newDawnEditPartProviderClassName)
@@ -451,7 +444,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getDawnEditPolicyProviderClassName()
@@ -461,7 +454,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setDawnEditPolicyProviderClassName(String newDawnEditPolicyProviderClassName)
@@ -478,7 +471,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public GenEditorGenerator getGMFGenEditorGenerator()
@@ -502,7 +495,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public GenEditorGenerator basicGetGMFGenEditorGenerator()
@@ -512,7 +505,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setGMFGenEditorGenerator(GenEditorGenerator newGMFGenEditorGenerator)
@@ -529,7 +522,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -565,7 +558,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -606,7 +599,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -647,7 +640,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -687,7 +680,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

@@ -60,21 +60,23 @@ import java.util.regex.Pattern;
  */
 public class UpdateCopyrightsAction extends AbstractAction<Repository>
 {
-  private static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
-
   private static final String[] IGNORED_PATHS = { "resourcemanager.java", "menucardtemplate.java",
-      "org.eclipse.emf.cdo.releng.version.tests/tests", "org.eclipse.net4j.jms.api/src" };
+      "org.eclipse.emf.cdo.releng.version.tests/tests", "org.eclipse.net4j.jms.api/src",
+      "org/eclipse/net4j/util/ui/proposals/", "org.eclipse.emf.cdo.examples.installer/examples",
+      "org.eclipse.net4j.examples.installer/examples" };
 
   private static final String[] REQUIRED_EXTENSIONS = { ".java", ".ant", "build.xml", "plugin.xml", "fragment.xml",
       "feature.xml", "plugin.properties", "fragment.properties", "feature.properties", "about.properties",
       "build.properties", "messages.properties", "copyright.txt", ".exsd", "org.eclipse.jdt.ui.prefs" };
 
-  private static final String[] OPTIONAL_EXTENSIONS = { ".properties", ".xml", ".html", ".css", ".ecore", ".genmodel",
-      ".mwe", ".xpt", ".ext" };
+  private static final String[] OPTIONAL_EXTENSIONS = { ".properties", ".xml", ".css", ".ecore", ".genmodel", ".mwe",
+      ".xpt", ".ext" };
 
-  private static final String[] IGNORED_MESSAGES = { "update copyrights", "updated copyrights", "adjust legal headers",
-      "adjusted legal headers", "update legal headers", "updated legal headers", "adjust copyrights",
-      "adjusted copyrights", "fix copyrights", "fixed copyrights", "fix legal headers", "fixed legal headers" };
+  private static final String[] IGNORED_MESSAGE_VERBS = { "update", "adjust", "fix" };
+
+  private static final String[] IGNORED_MESSAGE_NOUNS = { "copyright", "legal header" };
+
+  private static final String[] IGNORED_MESSAGES = combineWords(IGNORED_MESSAGE_VERBS, IGNORED_MESSAGE_NOUNS);
 
   private static final Pattern COPYRIGHT_PATTERN = Pattern
       .compile("(.*?)Copyright \\(c\\) ([0-9 ,-]+) (.*?) and others\\.(.*)");
@@ -82,6 +84,10 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
   private static final Calendar CALENDAR = GregorianCalendar.getInstance();
 
   private static final int CURRENT_YEAR = CALENDAR.get(Calendar.YEAR);
+
+  private static final String CURRENT_YEAR_STRING = Integer.toString(CURRENT_YEAR);
+
+  private static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
 
   private static final String NL = System.getProperty("line.separator");
 
@@ -121,7 +127,7 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
           workTreeLength = workTree.getAbsolutePath().length() + 1;
 
           fileCount = countFiles(workTree);
-          monitor.beginTask("Copyrights", fileCount);
+          monitor.beginTask(getTitle(), fileCount);
 
           final long start = System.currentTimeMillis();
           checkFolder(monitor, workTree);
@@ -154,6 +160,7 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
           missingCopyrights.clear();
           rewriteCount = 0;
           fileCount = 0;
+          workTreeLength = 0;
           workTree = null;
           git = null;
           monitor.done();
@@ -221,7 +228,8 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
       boolean required = hasExtension(file, REQUIRED_EXTENSIONS);
       boolean optional = required || hasExtension(file, OPTIONAL_EXTENSIONS);
 
-      if (optional)
+      boolean checkOnly = isCheckOnly();
+      if (checkOnly ? required : optional)
       {
         monitor.subTask(path);
 
@@ -241,7 +249,7 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
             if (matcher.matches())
             {
               copyrightFound = true;
-              if (isCheckOnly())
+              if (checkOnly)
               {
                 break;
               }
@@ -250,6 +258,12 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
               String dates = matcher.group(2);
               String owner = matcher.group(3);
               String suffix = matcher.group(4);
+
+              if (dates.endsWith(CURRENT_YEAR_STRING))
+              {
+                // This file must have been rewritten already in the current year
+                break;
+              }
 
               String newLine = rewriteCopyright(path, line, prefix, dates, owner, suffix);
               if (newLine != line)
@@ -312,6 +326,12 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
           int year = CALENDAR.get(Calendar.YEAR);
           years.add(year);
         }
+      }
+
+      if (years.isEmpty())
+      {
+        // The file doesn't have a history, may be derived.
+        return line;
       }
 
       newDates = formatYears(years);
@@ -395,6 +415,11 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
     return builder.toString();
   }
 
+  private String getTitle()
+  {
+    return (isCheckOnly() ? "Check" : "Update") + " Copyrights";
+  }
+
   private String getPath(File file)
   {
     String path = file.getAbsolutePath().replace('\\', '/');
@@ -440,8 +465,8 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
     if (size != 0)
     {
       StringBuilder builder = new StringBuilder(message);
-      message += "\n\nCopyrights are missing in " + size + " files.\nDo you want to open them in editors?";
-      if (MessageDialog.openQuestion(shell, "Missing Copyrights", message))
+      message += "\n\nDo you want to open the files with missing copyrights in editors?";
+      if (MessageDialog.openQuestion(shell, getTitle(), message))
       {
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
         IWorkbenchPage page = WORKBENCH.getActiveWorkbenchWindow().getActivePage();
@@ -473,9 +498,34 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
     }
     else
     {
-      MessageDialog.openInformation(shell, "Copyrights", message);
+      MessageDialog.openInformation(shell, getTitle(), message);
       Activator.log(new Status(IStatus.INFO, Activator.PLUGIN_ID, message));
     }
+  }
+
+  private static String[] combineWords(String[] verbs, String[] nouns)
+  {
+    List<String> result = new ArrayList<String>();
+    for (String noun : nouns)
+    {
+      for (String verb : verbs)
+      {
+        result.add(verb + " " + noun);
+
+        if (verb.endsWith("e"))
+        {
+          verb += "d";
+        }
+        else
+        {
+          verb += "ed";
+        }
+
+        result.add(verb + " " + noun);
+      }
+    }
+
+    return result.toArray(new String[result.size()]);
   }
 
   private static String formatDuration(long start)

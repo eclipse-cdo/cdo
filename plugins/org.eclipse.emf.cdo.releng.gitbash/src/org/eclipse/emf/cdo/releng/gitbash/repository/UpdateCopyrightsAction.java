@@ -95,6 +95,8 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
 
   private int rewriteCount;
 
+  private int fileCount;
+
   public UpdateCopyrightsAction()
   {
     super(Repository.class);
@@ -118,8 +120,8 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
           workTree = repository.getWorkTree();
           workTreeLength = workTree.getAbsolutePath().length() + 1;
 
-          int totalWork = countFiles(workTree);
-          monitor.beginTask("Copyrights", totalWork);
+          fileCount = countFiles(workTree);
+          monitor.beginTask("Copyrights", fileCount);
 
           final long start = System.currentTimeMillis();
           checkFolder(monitor, workTree);
@@ -151,6 +153,7 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
         {
           missingCopyrights.clear();
           rewriteCount = 0;
+          fileCount = 0;
           workTree = null;
           git = null;
           monitor.done();
@@ -430,6 +433,7 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
   {
     String message = "Copyrights missing: " + missingCopyrights.size();
     message += "\nCopyrights rewritten: " + rewriteCount;
+    message += "\nFiles visited: " + fileCount;
     message += "\nTime needed: " + duration;
 
     int size = missingCopyrights.size();

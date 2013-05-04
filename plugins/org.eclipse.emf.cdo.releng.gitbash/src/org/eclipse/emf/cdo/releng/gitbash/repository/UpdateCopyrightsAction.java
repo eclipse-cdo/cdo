@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -124,13 +124,13 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
           final long start = System.currentTimeMillis();
           checkFolder(monitor, workTree);
 
-          shell.getDisplay().asyncExec(new Runnable()
+          shell.getDisplay().syncExec(new Runnable()
           {
             public void run()
             {
               try
               {
-                openEditors(shell, workTree, formatDuration(start));
+                handleResult(shell, workTree, formatDuration(start));
               }
               catch (Exception ex)
               {
@@ -202,7 +202,7 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
       }
       else
       {
-        if (checkFile(file))
+        if (checkFile(monitor, file))
         {
           monitor.worked(1);
         }
@@ -210,75 +210,77 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
     }
   }
 
-  private boolean checkFile(File file) throws Exception
+  private boolean checkFile(IProgressMonitor monitor, File file) throws Exception
   {
     String path = getPath(file);
-    if (hasString(path, IGNORED_PATHS))
+    if (!hasString(path, IGNORED_PATHS))
     {
-      return false;
-    }
+      boolean required = hasExtension(file, REQUIRED_EXTENSIONS);
+      boolean optional = required || hasExtension(file, OPTIONAL_EXTENSIONS);
 
-    boolean required = hasExtension(file, REQUIRED_EXTENSIONS);
-    boolean optional = required || hasExtension(file, OPTIONAL_EXTENSIONS);
-
-    if (optional)
-    {
-      List<String> lines = new ArrayList<String>();
-      boolean copyrightFound = false;
-      boolean copyrightChanged = false;
-
-      FileReader fileReader = new FileReader(file);
-      BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-      try
+      if (optional)
       {
-        String line;
-        while ((line = bufferedReader.readLine()) != null)
+        monitor.subTask(path);
+
+        List<String> lines = new ArrayList<String>();
+        boolean copyrightFound = false;
+        boolean copyrightChanged = false;
+
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        try
         {
-          Matcher matcher = COPYRIGHT_PATTERN.matcher(line);
-          if (matcher.matches())
+          String line;
+          while ((line = bufferedReader.readLine()) != null)
           {
-            copyrightFound = true;
-            if (isCheckOnly())
+            Matcher matcher = COPYRIGHT_PATTERN.matcher(line);
+            if (matcher.matches())
             {
-              break;
+              copyrightFound = true;
+              if (isCheckOnly())
+              {
+                break;
+              }
+
+              String prefix = matcher.group(1);
+              String dates = matcher.group(2);
+              String owner = matcher.group(3);
+              String suffix = matcher.group(4);
+
+              String newLine = rewriteCopyright(path, line, prefix, dates, owner, suffix);
+              if (newLine != line)
+              {
+                line = newLine;
+                copyrightChanged = true;
+              }
             }
 
-            String prefix = matcher.group(1);
-            String dates = matcher.group(2);
-            String owner = matcher.group(3);
-            String suffix = matcher.group(4);
-
-            String newLine = rewriteCopyright(path, line, prefix, dates, owner, suffix);
-            if (newLine != line)
-            {
-              line = newLine;
-              copyrightChanged = true;
-            }
+            lines.add(line);
           }
+        }
+        finally
+        {
+          close(bufferedReader);
+          close(fileReader);
+        }
 
-          lines.add(line);
+        if (required && !copyrightFound)
+        {
+          missingCopyrights.add(path);
+        }
+
+        if (copyrightChanged)
+        {
+          writeLines(file, lines);
+          ++rewriteCount;
         }
       }
-      finally
-      {
-        close(bufferedReader);
-        close(fileReader);
-      }
 
-      if (required && !copyrightFound)
-      {
-        missingCopyrights.add(path);
-      }
-
-      if (copyrightChanged)
-      {
-        writeLines(file, lines);
-        ++rewriteCount;
-      }
+      return true;
     }
 
-    return true;
+    return false;
   }
 
   private String rewriteCopyright(String path, String line, String prefix, String dates, String owner, String suffix)
@@ -424,10 +426,10 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
     return false;
   }
 
-  private void openEditors(Shell shell, File workTree, String duration) throws PartInitException
+  private void handleResult(Shell shell, File workTree, String duration) throws PartInitException
   {
-    String message = "Missing count: " + missingCopyrights.size();
-    message += "\nRewrite count: " + rewriteCount;
+    String message = "Copyrights missing: " + missingCopyrights.size();
+    message += "\nCopyrights rewritten: " + rewriteCount;
     message += "\nTime needed: " + duration;
 
     int size = missingCopyrights.size();

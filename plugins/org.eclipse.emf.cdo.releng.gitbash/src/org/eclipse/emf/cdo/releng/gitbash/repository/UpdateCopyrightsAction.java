@@ -319,7 +319,7 @@ public class UpdateCopyrightsAction extends AbstractAction<Repository>
 
       for (RevCommit commit : git.log().addPath(path).call())
       {
-        String message = commit.getFullMessage().toLowerCase();
+        String message = commit.getFullMessage();
         if (!hasString(message, IGNORED_MESSAGES))
         {
           CALENDAR.setTimeInMillis(1000L * commit.getCommitTime());

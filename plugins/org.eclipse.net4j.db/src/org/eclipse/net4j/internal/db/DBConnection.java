@@ -36,7 +36,6 @@ import java.sql.Statement;
 import java.sql.Struct;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.NavigableMap;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
@@ -46,7 +45,7 @@ import java.util.TreeMap;
  */
 public final class DBConnection implements IDBConnection
 {
-  private final NavigableMap<String, DBPreparedStatement> cache = new TreeMap<String, DBPreparedStatement>();
+  private final TreeMap<String, DBPreparedStatement> cache = new TreeMap<String, DBPreparedStatement>();
 
   private final Set<DBPreparedStatement> checkOuts = new HashSet<DBPreparedStatement>();
 

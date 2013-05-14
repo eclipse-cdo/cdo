@@ -233,7 +233,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#getAuthenticator()">getAuthenticator</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#getCredentialsProvider()"><CODE>getCredentialsProvider()</CODE></A></I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -256,6 +256,14 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#getCommittedSinceLastRefresh(org.eclipse.emf.cdo.common.id.CDOID)">getCommittedSinceLastRefresh</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IPasswordCredentialsProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#getCredentialsProvider()">getCredentialsProvider</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -429,7 +437,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#setAuthenticator(org.eclipse.emf.cdo.common.protocol.CDOAuthenticator)">setAuthenticator</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/protocol/CDOAuthenticator.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOAuthenticator</A>&nbsp;authenticator)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)"><CODE>setCredentialsProvider(IPasswordCredentialsProvider)</CODE></A></I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -452,6 +460,14 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#setCommittedSinceLastRefresh(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">setCommittedSinceLastRefresh</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id,
                              <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)">setCredentialsProvider</A></B>(<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IPasswordCredentialsProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider</A>&nbsp;credentialsProvider)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -733,8 +749,11 @@ void <B>setSessionProtocol</B>(<A HREF="../../../../../org/eclipse/emf/spi/cdo/C
 <A NAME="getAuthenticator()"><!-- --></A><H3>
 getAuthenticator</H3>
 <PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/common/protocol/CDOAuthenticator.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOAuthenticator</A> <B>getAuthenticator</B>()</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT><A HREF="../../../../../org/eclipse/emf/cdo/common/protocol/CDOAuthenticator.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOAuthenticator</A> <B>getAuthenticator</B>()</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#getCredentialsProvider()"><CODE>getCredentialsProvider()</CODE></A></I>
+<P>
 <DD><DL>
 </DL>
 </DD>
@@ -749,14 +768,49 @@ getAuthenticator</H3>
 <A NAME="setAuthenticator(org.eclipse.emf.cdo.common.protocol.CDOAuthenticator)"><!-- --></A><H3>
 setAuthenticator</H3>
 <PRE>
-void <B>setAuthenticator</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/protocol/CDOAuthenticator.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOAuthenticator</A>&nbsp;authenticator)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>void <B>setAuthenticator</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/protocol/CDOAuthenticator.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOAuthenticator</A>&nbsp;authenticator)</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)"><CODE>setCredentialsProvider(IPasswordCredentialsProvider)</CODE></A></I>
+<P>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getCredentialsProvider()"><!-- --></A><H3>
+getCredentialsProvider</H3>
+<PRE>
+<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IPasswordCredentialsProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider</A> <B>getCredentialsProvider</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)"><!-- --></A><H3>
+setCredentialsProvider</H3>
+<PRE>
+void <B>setCredentialsProvider</B>(<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IPasswordCredentialsProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider</A>&nbsp;credentialsProvider)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>

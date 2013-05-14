@@ -155,6 +155,14 @@ If the meaning of this type isn't clear, there really should be more of a descri
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/DiffieHellman.Server.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">DiffieHellman.Server</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#getAuthenticationServer()">getAuthenticationServer</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/server/IPermissionManager.html" title="interface in org.eclipse.emf.cdo.server">IPermissionManager</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#getPermissionManager()">getPermissionManager</A></B>()</CODE>
 
@@ -191,7 +199,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#getUserManager()">getUserManager</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../../org/eclipse/emf/cdo/server/ISessionManager.html#getAuthenticator()"><CODE>ISessionManager.getAuthenticator()</CODE></A></I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -298,6 +306,14 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#setAuthenticationServer(org.eclipse.net4j.util.security.DiffieHellman.Server)">setAuthenticationServer</A></B>(<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/DiffieHellman.Server.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">DiffieHellman.Server</A>&nbsp;authenticationServer)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#setPermissionManager(org.eclipse.emf.cdo.server.IPermissionManager)">setPermissionManager</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/IPermissionManager.html" title="interface in org.eclipse.emf.cdo.server">IPermissionManager</A>&nbsp;permissionManager)</CODE>
 
 <BR>
@@ -317,7 +333,16 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#setUserManager(org.eclipse.net4j.util.security.IUserManager)">setUserManager</A></B>(<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserManager.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserManager</A>&nbsp;userManager)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../../org/eclipse/emf/cdo/server/ISessionManager.html#setAuthenticator(org.eclipse.net4j.util.security.IAuthenticator)"><CODE>ISessionManager.setAuthenticator(IAuthenticator)</CODE></A></I></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.server.ISessionManager"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.server.<A HREF="../../../../../../org/eclipse/emf/cdo/server/ISessionManager.html" title="interface in org.eclipse.emf.cdo.server">ISessionManager</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/server/ISessionManager.html#getAuthenticator()">getAuthenticator</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/ISessionManager.html#setAuthenticator(org.eclipse.net4j.util.security.IAuthenticator)">setAuthenticator</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
@@ -382,8 +407,11 @@ void <B>setRepository</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/spi/ser
 <A NAME="getUserManager()"><!-- --></A><H3>
 getUserManager</H3>
 <PRE>
-<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserManager.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserManager</A> <B>getUserManager</B>()</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserManager.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserManager</A> <B>getUserManager</B>()</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../../org/eclipse/emf/cdo/server/ISessionManager.html#getAuthenticator()"><CODE>ISessionManager.getAuthenticator()</CODE></A></I>
+<P>
 <DD><DL>
 </DL>
 </DD>
@@ -398,12 +426,47 @@ getUserManager</H3>
 <A NAME="setUserManager(org.eclipse.net4j.util.security.IUserManager)"><!-- --></A><H3>
 setUserManager</H3>
 <PRE>
-void <B>setUserManager</B>(<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserManager.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserManager</A>&nbsp;userManager)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>void <B>setUserManager</B>(<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserManager.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserManager</A>&nbsp;userManager)</PRE>
+<DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../../../org/eclipse/emf/cdo/server/ISessionManager.html#setAuthenticator(org.eclipse.net4j.util.security.IAuthenticator)"><CODE>ISessionManager.setAuthenticator(IAuthenticator)</CODE></A></I>
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getAuthenticationServer()"><!-- --></A><H3>
+getAuthenticationServer</H3>
+<PRE>
+<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/DiffieHellman.Server.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">DiffieHellman.Server</A> <B>getAuthenticationServer</B>()</PRE>
 <DL>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setAuthenticationServer(org.eclipse.net4j.util.security.DiffieHellman.Server)"><!-- --></A><H3>
+setAuthenticationServer</H3>
+<PRE>
+void <B>setAuthenticationServer</B>(<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/DiffieHellman.Server.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">DiffieHellman.Server</A>&nbsp;authenticationServer)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>

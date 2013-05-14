@@ -95,10 +95,10 @@ Interface Permission</H2>
 <DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</A></DD>
 </DL>
 <DL>
-<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/security/ClassPermission.html" title="interface in org.eclipse.emf.cdo.security">ClassPermission</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/PackagePermission.html" title="interface in org.eclipse.emf.cdo.security">PackagePermission</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</A></DD>
+<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/security/ClassPermission.html" title="interface in org.eclipse.emf.cdo.security">ClassPermission</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/ObjectPermission.html" title="interface in org.eclipse.emf.cdo.security">ObjectPermission</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/PackagePermission.html" title="interface in org.eclipse.emf.cdo.security">PackagePermission</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/ResourcePermission.html" title="interface in org.eclipse.emf.cdo.security">ResourcePermission</A></DD>
 </DL>
 <DL>
-<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/security/impl/ClassPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ClassPermissionImpl</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/impl/PackagePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PackagePermissionImpl</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionImpl</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/impl/ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourcePermissionImpl</A></DD>
+<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/security/impl/ClassPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ClassPermissionImpl</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/impl/ObjectPermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ObjectPermissionImpl</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/impl/PackagePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PackagePermissionImpl</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionImpl</A>, <A HREF="../../../../../org/eclipse/emf/cdo/security/impl/ResourcePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">ResourcePermissionImpl</A></DD>
 </DL>
 <HR>
 <DL>
@@ -107,13 +107,14 @@ Interface Permission</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="SecurityPackage.html" title="&#171;interface&#187; SecurityPackage" alt="" coords="5,200,125,240"/>
-<area shape="rect" id="node2" href="ResourcePermission.html" title="&#171;interface&#187; ResourcePermission" alt="" coords="155,200,297,240"/>
-<area shape="rect" id="node3" href="Permission.html" title="&#171;interface&#187; Permission" alt="" coords="354,104,440,144"/>
-<area shape="rect" id="node4" href="PackagePermission.html" title="&#171;interface&#187; PackagePermission" alt="" coords="328,200,467,240"/>
-<area shape="rect" id="node5" href="ClassPermission.html" title="&#171;interface&#187; ClassPermission" alt="" coords="496,200,616,240"/>
-<area shape="rect" id="node6" href="../CDOObject.html" title="&#171;interface&#187; CDOObject (org.eclipse.emf.cdo)" alt="" coords="326,6,468,61"/>
-<area shape="rect" id="node7" href="impl/PermissionImpl.html" title="PermissionImpl (org.eclipse.emf.cdo.security.impl)" alt="" coords="645,200,867,240"/>
+<area shape="rect" id="node1" href="impl/PermissionImpl.html" title="PermissionImpl (org.eclipse.emf.cdo.security.impl)" alt="" coords="496,5,717,45"/>
+<area shape="rect" id="node2" href="../CDOObject.html" title="&#171;interface&#187; CDOObject (org.eclipse.emf.cdo)" alt="" coords="6,145,149,199"/>
+<area shape="rect" id="node3" href="ClassPermission.html" title="&#171;interface&#187; ClassPermission" alt="" coords="547,64,667,104"/>
+<area shape="rect" id="node4" href="ObjectPermission.html" title="&#171;interface&#187; ObjectPermission" alt="" coords="544,123,669,163"/>
+<area shape="rect" id="node5" href="PackagePermission.html" title="&#171;interface&#187; PackagePermission" alt="" coords="537,181,676,221"/>
+<area shape="rect" id="node6" href="Permission.html" title="&#171;interface&#187; Permission" alt="" coords="249,152,335,192"/>
+<area shape="rect" id="node7" href="ResourcePermission.html" title="&#171;interface&#187; ResourcePermission" alt="" coords="535,240,678,280"/>
+<area shape="rect" id="node8" href="SecurityPackage.html" title="&#171;interface&#187; SecurityPackage" alt="" coords="546,299,667,339"/>
 </map>
 
 <CENTER><IMG SRC="Permission.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -414,6 +415,6 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHO
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

@@ -162,7 +162,23 @@ An EMF <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/e
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>[]</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#getAllPersistentContainments()">getAllPersistentContainments</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>[]</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#getAllPersistentFeatures()">getAllPersistentFeatures</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A>[]</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#getAllPersistentReferences()">getAllPersistentReferences</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -181,12 +197,36 @@ An EMF <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/e
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#getFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)">getFeatureIndex</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 pushed down to <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getPersistentFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)"><CODE>InternalCDOClassInfo.getPersistentFeatureIndex(EStructuralFeature)</CODE></A>.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#getFeatureIndex(int)">getFeatureIndex</A></B>(int&nbsp;featureID)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 pushed down to <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getPersistentFeatureIndex(int)"><CODE>InternalCDOClassInfo.getPersistentFeatureIndex(int)</CODE></A>.</I></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#hasPersistentOpposite(org.eclipse.emf.ecore.EStructuralFeature)">hasPersistentOpposite</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)">isPersistent</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#isPersistent(int)">isPersistent</A></B>(int&nbsp;featureID)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -294,6 +334,54 @@ boolean <B>isResource</B>()</PRE>
 </DL>
 <HR>
 
+<A NAME="isPersistent(int)"><!-- --></A><H3>
+isPersistent</H3>
+<PRE>
+boolean <B>isPersistent</B>(int&nbsp;featureID)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><!-- --></A><H3>
+isPersistent</H3>
+<PRE>
+boolean <B>isPersistent</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="hasPersistentOpposite(org.eclipse.emf.ecore.EStructuralFeature)"><!-- --></A><H3>
+hasPersistentOpposite</H3>
+<PRE>
+boolean <B>hasPersistentOpposite</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="getAllPersistentFeatures()"><!-- --></A><H3>
 getAllPersistentFeatures</H3>
 <PRE>
@@ -308,11 +396,46 @@ getAllPersistentFeatures</H3>
 </DL>
 <HR>
 
+<A NAME="getAllPersistentReferences()"><!-- --></A><H3>
+getAllPersistentReferences</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A>[] <B>getAllPersistentReferences</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getAllPersistentContainments()"><!-- --></A><H3>
+getAllPersistentContainments</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>[] <B>getAllPersistentContainments</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="getFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)"><!-- --></A><H3>
 getFeatureIndex</H3>
 <PRE>
-int <B>getFeatureIndex</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>int <B>getFeatureIndex</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature)</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 pushed down to <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getPersistentFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)"><CODE>InternalCDOClassInfo.getPersistentFeatureIndex(EStructuralFeature)</CODE></A>.</I>
+<P>
 <DD><DL>
 </DL>
 </DD>
@@ -325,8 +448,11 @@ int <B>getFeatureIndex</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf
 <A NAME="getFeatureIndex(int)"><!-- --></A><H3>
 getFeatureIndex</H3>
 <PRE>
-int <B>getFeatureIndex</B>(int&nbsp;featureID)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>int <B>getFeatureIndex</B>(int&nbsp;featureID)</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 pushed down to <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getPersistentFeatureIndex(int)"><CODE>InternalCDOClassInfo.getPersistentFeatureIndex(int)</CODE></A>.</I>
+<P>
 <DD><DL>
 </DL>
 </DD>

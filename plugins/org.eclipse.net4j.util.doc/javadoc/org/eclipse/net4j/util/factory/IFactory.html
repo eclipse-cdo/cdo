@@ -92,7 +92,10 @@ org.eclipse.net4j.util.factory</FONT>
 <BR>
 Interface IFactory</H2>
 <DL>
-<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/security/ChallengeNegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">ChallengeNegotiatorFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/CredentialsProviderFactory.html" title="class in org.eclipse.net4j.util.security">CredentialsProviderFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/ui/container/ElementWizardFactory.html" title="class in org.eclipse.net4j.util.ui.container">ElementWizardFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/concurrent/ExecutorServiceFactory.html" title="class in org.eclipse.net4j.util.concurrent">ExecutorServiceFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/factory/Factory.html" title="class in org.eclipse.net4j.util.factory">Factory</A>, <A HREF="../../../../../org/eclipse/net4j/util/factory/FactoryDescriptor.html" title="class in org.eclipse.net4j.util.factory">FactoryDescriptor</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/FileUserManagerFactory.html" title="class in org.eclipse.net4j.util.security">FileUserManagerFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/NegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">NegotiatorFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/RandomizerFactory.html" title="class in org.eclipse.net4j.util.security">RandomizerFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/ResponseNegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">ResponseNegotiatorFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/concurrent/TimerLifecycle.DaemonFactory.html" title="class in org.eclipse.net4j.util.concurrent">TimerLifecycle.DaemonFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/UserManagerFactory.html" title="class in org.eclipse.net4j.util.security">UserManagerFactory</A></DD>
+<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainerFactory.html" title="interface in org.eclipse.net4j.util.container">IManagedContainerFactory</A></DD>
+</DL>
+<DL>
+<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/security/AuthenticatorFactory.html" title="class in org.eclipse.net4j.util.security">AuthenticatorFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/ChallengeNegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">ChallengeNegotiatorFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/CredentialsProviderFactory.html" title="class in org.eclipse.net4j.util.security">CredentialsProviderFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/ui/container/ElementWizardFactory.html" title="class in org.eclipse.net4j.util.ui.container">ElementWizardFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/concurrent/ExecutorServiceFactory.html" title="class in org.eclipse.net4j.util.concurrent">ExecutorServiceFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/factory/Factory.html" title="class in org.eclipse.net4j.util.factory">Factory</A>, <A HREF="../../../../../org/eclipse/net4j/util/factory/FactoryDescriptor.html" title="class in org.eclipse.net4j.util.factory">FactoryDescriptor</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/FileAuthenticatorFactory.html" title="class in org.eclipse.net4j.util.security">FileAuthenticatorFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/FileUserManagerFactory.html" title="class in org.eclipse.net4j.util.security">FileUserManagerFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/NegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">NegotiatorFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/RandomizerFactory.html" title="class in org.eclipse.net4j.util.security">RandomizerFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/ResponseNegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">ResponseNegotiatorFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/concurrent/TimerLifecycle.DaemonFactory.html" title="class in org.eclipse.net4j.util.concurrent">TimerLifecycle.DaemonFactory</A>, <A HREF="../../../../../org/eclipse/net4j/util/security/UserManagerFactory.html" title="class in org.eclipse.net4j.util.security">UserManagerFactory</A></DD>
 </DL>
 <HR>
 <DL>
@@ -100,10 +103,11 @@ Interface IFactory</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="../container/IManagedContainer.html" title="&#171;interface&#187; IManagedContainer (org.eclipse.net4j.util.container)" alt="" coords="5,6,208,61"/>
-<area shape="rect" id="node2" href="IFactoryKey.html" title="&#171;interface&#187; IFactoryKey" alt="" coords="7,200,99,240"/>
-<area shape="rect" id="node3" href="IFactory.html" title="&#171;interface&#187; IFactory" alt="" coords="64,117,149,157"/>
-<area shape="rect" id="node4" href="Factory.html" title="Factory" alt="" coords="129,207,193,233"/>
+<area shape="rect" id="node1" href="../container/IManagedContainerFactory.html" title="&#171;interface&#187; IManagedContainerFactory (org.eclipse.net4j.util.container)" alt="" coords="5,6,208,61"/>
+<area shape="rect" id="node2" href="../container/IManagedContainer.html" title="&#171;interface&#187; IManagedContainer (org.eclipse.net4j.util.container)" alt="" coords="237,6,440,61"/>
+<area shape="rect" id="node3" href="IFactoryKey.html" title="&#171;interface&#187; IFactoryKey" alt="" coords="94,200,185,240"/>
+<area shape="rect" id="node4" href="IFactory.html" title="&#171;interface&#187; IFactory" alt="" coords="151,117,236,157"/>
+<area shape="rect" id="node5" href="Factory.html" title="Factory" alt="" coords="215,207,280,233"/>
 </map>
 
 <CENTER><IMG SRC="IFactory.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -112,9 +116,14 @@ Interface IFactory</H2>
 
 <P>
 <A HREF="../../../../../org/eclipse/net4j/util/factory/IFactory.html#create(java.lang.String)"><CODE>Creates</CODE></A> objects from a string <A HREF="../../../../../org/eclipse/net4j/util/factory/IFactory.html#getDescriptionFor(java.lang.Object)"><CODE>description</CODE></A>.
+ <p>
+ If a factory is registered in an <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>IManagedContainer</CODE></A>, the <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainerFactory.html" title="interface in org.eclipse.net4j.util.container"><CODE>IManagedContainerFactory</CODE></A> extension interface
+ injects that container into the factory for it to reach back into to obtain dependencies.
 <P>
 
 <P>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainerFactory.html" title="interface in org.eclipse.net4j.util.container"><CODE>IManagedContainerFactory</CODE></A></DL>
 <HR>
 
 <P>

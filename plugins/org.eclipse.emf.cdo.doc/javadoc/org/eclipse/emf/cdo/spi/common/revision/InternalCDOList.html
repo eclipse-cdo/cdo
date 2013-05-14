@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDOFeatureDelta.WithIndex.html" title="interface in org.eclipse.emf.cdo.spi.common.revision"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.ConfigurableEquality.html" title="interface in org.eclipse.emf.cdo.spi.common.revision"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../../index.html?org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="InternalCDOList.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -76,7 +76,7 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
 DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
@@ -94,6 +94,9 @@ Interface InternalCDOList</H2>
 <DL>
 <DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;, <A HREF="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/MoveableList.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">MoveableList</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;</DD>
 </DL>
+<DL>
+<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.ConfigurableEquality.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList.ConfigurableEquality</A></DD>
+</DL>
 <HR>
 <DL>
   <DT>public interface <B>InternalCDOList</B>
@@ -101,8 +104,9 @@ Interface InternalCDOList</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="InternalCDOList.html" title="&#171;interface&#187; InternalCDOList" alt="" coords="70,100,183,140"/>
-<area shape="rect" id="node2" href="../../../common/revision/CDOList.html" title="&#171;interface&#187; CDOList (org.eclipse.emf.cdo.common.revision)" alt="" coords="5,6,248,61"/>
+<area shape="rect" id="node1" href="InternalCDOList.ConfigurableEquality.html" title="&#171;interface&#187; InternalCDOList.ConfigurableEquality" alt="" coords="9,179,244,219"/>
+<area shape="rect" id="node2" href="InternalCDOList.html" title="&#171;interface&#187; InternalCDOList" alt="" coords="70,100,183,140"/>
+<area shape="rect" id="node3" href="../../../common/revision/CDOList.html" title="&#171;interface&#187; CDOList (org.eclipse.emf.cdo.common.revision)" alt="" coords="5,6,248,61"/>
 </map>
 
 <CENTER><IMG SRC="InternalCDOList.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -121,7 +125,24 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <HR>
 
 <P>
-<!-- =========== FIELD SUMMARY =========== -->
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.ConfigurableEquality.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList.ConfigurableEquality</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<!-- =========== FIELD SUMMARY =========== -->
 
 <A NAME="field_summary"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
@@ -347,7 +368,7 @@ void <B>setWithoutFrozenCheck</B>(int&nbsp;i,
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDOFeatureDelta.WithIndex.html" title="interface in org.eclipse.emf.cdo.spi.common.revision"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.ConfigurableEquality.html" title="interface in org.eclipse.emf.cdo.spi.common.revision"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../../../index.html?org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="InternalCDOList.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -367,7 +388,7 @@ void <B>setWithoutFrozenCheck</B>(int&nbsp;i,
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
 DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>

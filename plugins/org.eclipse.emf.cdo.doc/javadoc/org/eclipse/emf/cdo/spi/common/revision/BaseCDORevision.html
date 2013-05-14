@@ -303,12 +303,11 @@ If the meaning of this type isn't clear, there really should be more of a descri
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A></CODE></FONT></TD>
+<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/BaseCDORevision.html#getBranch()">getBranch</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the branch of this branch point, or <code>null</code> if this branch point is the
- <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase()"><CODE>base</CODE></A> of the <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getMainBranch()"><CODE>main branch</CODE></A>.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the branch of this branch version.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -437,6 +436,14 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;boolean</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/BaseCDORevision.html#isEmpty(org.eclipse.emf.ecore.EStructuralFeature)">isEmpty</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/BaseCDORevision.html#isFrozen()">isFrozen</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -694,7 +701,7 @@ If the meaning of this type isn't clear, there really should be more of a descri
 <TH ALIGN="left"><B>Methods inherited from class org.eclipse.emf.cdo.spi.common.revision.<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">AbstractCDORevision</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#adjustForCommit(org.eclipse.emf.cdo.common.branch.CDOBranch, long)">adjustForCommit</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#data()">data</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#equals(java.lang.Object)">equals</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getAllPersistentFeatures()">getAllPersistentFeatures</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getClassInfo()">getClassInfo</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getEClass()">getEClass</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)">getFeatureIndex</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#hashCode()">hashCode</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isHistorical()">isHistorical</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isReadable()">isReadable</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isResource()">isResource</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isResourceFolder()">isResourceFolder</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isResourceNode()">isResourceNode</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isValid(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">isValid</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isValid(long)">isValid</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isWritable()">isWritable</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#revision()">revision</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#setClassInfo(org.eclipse.emf.cdo.common.model.CDOClassInfo)">setClassInfo</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#toString()">toString</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#adjustForCommit(org.eclipse.emf.cdo.common.branch.CDOBranch, long)">adjustForCommit</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#data()">data</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#equals(java.lang.Object)">equals</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getAllPersistentFeatures()">getAllPersistentFeatures</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getClassInfo()">getClassInfo</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getEClass()">getEClass</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)">getFeatureIndex</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getProperRevision()">getProperRevision</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getRevisionForID(org.eclipse.emf.cdo.common.id.CDOID)">getRevisionForID</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#hashCode()">hashCode</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#initClassInfo(org.eclipse.emf.ecore.EClass)">initClassInfo</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isHistorical()">isHistorical</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isReadable()">isReadable</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isResource()">isResource</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isResourceFolder()">isResourceFolder</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isResourceNode()">isResourceNode</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isValid(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">isValid</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isValid(long)">isValid</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isWritable()">isWritable</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#revision()">revision</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#toString()">toString</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -878,15 +885,14 @@ public void <B>setID</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/commo
 <A NAME="getBranch()"><!-- --></A><H3>
 getBranch</H3>
 <PRE>
-public <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A> <B>getBranch</B>()</PRE>
+public <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</A> <B>getBranch</B>()</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()">CDOBranchPoint</A></CODE></B></DD>
-<DD>Returns the branch of this branch point, or <code>null</code> if this branch point is the
- <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase()"><CODE>base</CODE></A> of the <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getMainBranch()"><CODE>main branch</CODE></A>.
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getBranch()">CDOBranchVersion</A></CODE></B></DD>
+<DD>Returns the branch of this branch version.
 <P>
 <DD><DL>
 <DT><B>Since:</B></DT>
-  <DD>3.0</DD>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -1048,9 +1054,9 @@ public int <B>getContainingFeatureID</B>()</PRE>
  <code><pre>
  CDORevision revision = ...;
  CDORevision container = <i>Util.getRevision</i>(revision.data().getContainerID());
- 
+
  int containingFeatureID = revision.data().getContainingFeatureID();
- 
+
  EStructuralFeature feature = containingFeatureID <= InternalEObject.EOPPOSITE_FEATURE_BASE ?
      container.getEClass().getEStructuralFeature(InternalEObject.EOPPOSITE_FEATURE_BASE - containingFeatureID) :
      ((EReference)revision.getEClass().getEStructuralFeature(containingFeatureID)).getEOpposite();</pre></code>
@@ -1359,6 +1365,19 @@ public void <B>freeze</B>()</PRE>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isFrozen()"><!-- --></A><H3>
+isFrozen</H3>
+<PRE>
+public boolean <B>isFrozen</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>

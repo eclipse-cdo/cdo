@@ -98,18 +98,18 @@ Class GrowingRandomAccessList&lt;E&gt;</H2>
           <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.collection.GrowingRandomAccessList&lt;E&gt;</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</A>&lt;E&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;E&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;E&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;E&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;E&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/RandomAccess.html?is-external=true" title="class or interface in java.util">RandomAccess</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</A>&lt;E&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;E&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;E&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;E&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/RandomAccess.html?is-external=true" title="class or interface in java.util">RandomAccess</A></DD>
 </DL>
 <HR>
 <DL>
   <DT>public class <B>GrowingRandomAccessList&lt;E&gt;</B>
   <DD>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</A>&lt;E&gt;
-  <DD>implements <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;E&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/RandomAccess.html?is-external=true" title="class or interface in java.util">RandomAccess</A>
+  <DD>implements <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;E&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/RandomAccess.html?is-external=true" title="class or interface in java.util">RandomAccess</A>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" title="&#171;interface&#187; RandomAccess (java.util)" alt="" coords="5,6,120,61"/>
-<area shape="rect" id="node2" title="&#171;interface&#187; Deque (java.util)" alt="" coords="149,6,235,61"/>
+<area shape="rect" id="node2" title="&#171;interface&#187; Queue (java.util)" alt="" coords="149,6,235,61"/>
 <area shape="rect" id="node3" title="AbstractList (java.util)" alt="" coords="264,13,357,53"/>
 <area shape="rect" id="node4" href="GrowingRandomAccessList.html" title="GrowingRandomAccessList" alt="" coords="101,101,283,126"/>
 </map>
@@ -264,6 +264,22 @@ Class GrowingRandomAccessList&lt;E&gt;</H2>
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#getLast()">getLast</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>[]</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#getPage(int)">getPage</A></B>(int&nbsp;index)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html#getPageIndex(int)">getPageIndex</A></B>(int&nbsp;index)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -473,22 +489,13 @@ Class GrowingRandomAccessList&lt;E&gt;</H2>
 <TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
 </TR>
 </TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_java.util.Deque"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface java.util.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#iterator()" title="class or interface in java.util">iterator</A></CODE></TD>
-</TR>
-</TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.util.Collection"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
 <TH ALIGN="left"><B>Methods inherited from interface java.util.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#addAll(java.util.Collection)" title="class or interface in java.util">addAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#hashCode()" title="class or interface in java.util">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#toArray()" title="class or interface in java.util">toArray</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#toArray(T[])" title="class or interface in java.util">toArray</A></CODE></TD>
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#addAll(java.util.Collection)" title="class or interface in java.util">addAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#contains(java.lang.Object)" title="class or interface in java.util">contains</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#containsAll(java.util.Collection)" title="class or interface in java.util">containsAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.util">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#hashCode()" title="class or interface in java.util">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#isEmpty()" title="class or interface in java.util">isEmpty</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#iterator()" title="class or interface in java.util">iterator</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#toArray()" title="class or interface in java.util">toArray</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#toArray(T[])" title="class or interface in java.util">toArray</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.util.List"><!-- --></A>
@@ -551,7 +558,7 @@ size</H3>
 public int <B>size</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#size()" title="class or interface in java.util">size</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#size()" title="class or interface in java.util">size</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#size()" title="class or interface in java.util">size</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#size()" title="class or interface in java.util">size</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#size()" title="class or interface in java.util">size</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#size()" title="class or interface in java.util">size</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#size()" title="class or interface in java.util">size</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
 </DD>
 <DD><DL>
 </DL>
@@ -565,7 +572,7 @@ addFirst</H3>
 public void <B>addFirst</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#addFirst(E)" title="class or interface in java.util">addFirst</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
@@ -579,7 +586,7 @@ addLast</H3>
 public void <B>addLast</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#addLast(E)" title="class or interface in java.util">addLast</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
@@ -593,7 +600,7 @@ add</H3>
 public boolean <B>add</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#add(E)" title="class or interface in java.util">add</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#add(E)" title="class or interface in java.util">add</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#add(E)" title="class or interface in java.util">add</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#add(E)" title="class or interface in java.util">add</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#add(E)" title="class or interface in java.util">add</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#add(E)" title="class or interface in java.util">add</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#add(E)" title="class or interface in java.util">add</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#add(E)" title="class or interface in java.util">add</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true#add(E)" title="class or interface in java.util">add</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractList.html?is-external=true" title="class or interface in java.util">AbstractList</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
 </DD>
 <DD><DL>
 </DL>
@@ -680,7 +687,7 @@ remove</H3>
 public boolean <B>remove</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;o)</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#remove(java.lang.Object)" title="class or interface in java.util">remove</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
 </DD>
 <DD><DL>
 </DL>
@@ -722,7 +729,7 @@ offerFirst</H3>
 public boolean <B>offerFirst</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#offerFirst(E)" title="class or interface in java.util">offerFirst</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
@@ -736,7 +743,7 @@ offerLast</H3>
 public boolean <B>offerLast</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#offerLast(E)" title="class or interface in java.util">offerLast</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
@@ -750,7 +757,7 @@ removeFirst</H3>
 public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>removeFirst</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#removeFirst()" title="class or interface in java.util">removeFirst</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
@@ -764,7 +771,7 @@ removeLast</H3>
 public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>removeLast</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#removeLast()" title="class or interface in java.util">removeLast</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
@@ -778,7 +785,7 @@ pollFirst</H3>
 public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>pollFirst</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#pollFirst()" title="class or interface in java.util">pollFirst</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
@@ -792,7 +799,7 @@ pollLast</H3>
 public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>pollLast</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#pollLast()" title="class or interface in java.util">pollLast</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
@@ -806,7 +813,7 @@ getFirst</H3>
 public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>getFirst</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#getFirst()" title="class or interface in java.util">getFirst</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
@@ -820,7 +827,7 @@ getLast</H3>
 public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>getLast</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#getLast()" title="class or interface in java.util">getLast</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
@@ -834,7 +841,7 @@ peekFirst</H3>
 public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>peekFirst</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#peekFirst()" title="class or interface in java.util">peekFirst</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
@@ -848,7 +855,7 @@ peekLast</H3>
 public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>peekLast</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#peekLast()" title="class or interface in java.util">peekLast</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
@@ -862,7 +869,7 @@ removeFirstOccurrence</H3>
 public boolean <B>removeFirstOccurrence</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;o)</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#removeFirstOccurrence(java.lang.Object)" title="class or interface in java.util">removeFirstOccurrence</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
@@ -876,7 +883,7 @@ removeLastOccurrence</H3>
 public boolean <B>removeLastOccurrence</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;o)</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#removeLastOccurrence(java.lang.Object)" title="class or interface in java.util">removeLastOccurrence</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
@@ -890,7 +897,7 @@ offer</H3>
 public boolean <B>offer</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#offer(E)" title="class or interface in java.util">offer</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#offer(E)" title="class or interface in java.util">offer</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#offer(E)" title="class or interface in java.util">offer</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
 </DD>
 <DD><DL>
 </DL>
@@ -904,7 +911,7 @@ remove</H3>
 public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>remove</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#remove()" title="class or interface in java.util">remove</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#remove()" title="class or interface in java.util">remove</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#remove()" title="class or interface in java.util">remove</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
 </DD>
 <DD><DL>
 </DL>
@@ -918,7 +925,7 @@ poll</H3>
 public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>poll</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#poll()" title="class or interface in java.util">poll</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#poll()" title="class or interface in java.util">poll</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#poll()" title="class or interface in java.util">poll</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
 </DD>
 <DD><DL>
 </DL>
@@ -932,7 +939,7 @@ element</H3>
 public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>element</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#element()" title="class or interface in java.util">element</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#element()" title="class or interface in java.util">element</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#element()" title="class or interface in java.util">element</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
 </DD>
 <DD><DL>
 </DL>
@@ -946,7 +953,7 @@ peek</H3>
 public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>peek</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#peek()" title="class or interface in java.util">peek</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#peek()" title="class or interface in java.util">peek</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#peek()" title="class or interface in java.util">peek</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
 </DD>
 <DD><DL>
 </DL>
@@ -960,7 +967,7 @@ push</H3>
 public void <B>push</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&nbsp;e)</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#push(E)" title="class or interface in java.util">push</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
@@ -974,7 +981,7 @@ pop</H3>
 public <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A> <B>pop</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#pop()" title="class or interface in java.util">pop</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
@@ -988,7 +995,7 @@ descendingIterator</H3>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt; <B>descendingIterator</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true#descendingIterator()" title="class or interface in java.util">descendingIterator</A></CODE> in interface <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Deque.html?is-external=true" title="class or interface in java.util">Deque</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>&gt;</CODE></DL>
+</DL>
 </DD>
 <DD><DL>
 </DL>
@@ -1000,6 +1007,34 @@ public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Itera
 createPage</H3>
 <PRE>
 protected <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>[] <B>createPage</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getPage(int)"><!-- --></A><H3>
+getPage</H3>
+<PRE>
+protected <A HREF="../../../../../org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" title="type parameter in GrowingRandomAccessList">E</A>[] <B>getPage</B>(int&nbsp;index)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getPageIndex(int)"><!-- --></A><H3>
+getPageIndex</H3>
+<PRE>
+protected int <B>getPageIndex</B>(int&nbsp;index)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -1068,6 +1103,6 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&n
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

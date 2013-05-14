@@ -182,7 +182,7 @@ This is a default implementation for the <A HREF="../../../../../../../org/eclip
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/AbstractTypeMapping.html#createDBField(org.eclipse.net4j.db.ddl.IDBTable)">createDBField</A></B>(<A HREF="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/ddl/IDBTable.html?is-external=true" title="class or interface in org.eclipse.net4j.db.ddl">IDBTable</A>&nbsp;table)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates the DBField and adds it to the given table.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -318,7 +318,7 @@ This is a default implementation for the <A HREF="../../../../../../../org/eclip
                 int&nbsp;index)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the feature's default value to the JDBC <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql"><CODE>PreparedStatement</CODE></A> using an appropriate <code>setXxx</code>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the feature's default value to the JDBC <A HREF="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBPreparedStatement.html?is-external=true" title="class or interface in org.eclipse.net4j.db"><CODE>IDBPreparedStatement</CODE></A> using an appropriate <code>setXxx</code>
  method.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -345,7 +345,7 @@ This is a default implementation for the <A HREF="../../../../../../../org/eclip
          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;value)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the given value to the JDBC <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql"><CODE>PreparedStatement</CODE></A> using an appropriate <code>setXxx</code> method.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the given value to the JDBC <A HREF="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBPreparedStatement.html?is-external=true" title="class or interface in org.eclipse.net4j.db"><CODE>IDBPreparedStatement</CODE></A> using an appropriate <code>setXxx</code> method.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -355,7 +355,7 @@ This is a default implementation for the <A HREF="../../../../../../../org/eclip
                      <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set a value of the given revision to the JDBC <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql"><CODE>PreparedStatement</CODE></A> using an appropriate <code>setXxx</code>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set a value of the given revision to the JDBC <A HREF="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBPreparedStatement.html?is-external=true" title="class or interface in org.eclipse.net4j.db"><CODE>IDBPreparedStatement</CODE></A> using an appropriate <code>setXxx</code>
  method.</TD>
 </TR>
 </TABLE>
@@ -466,7 +466,7 @@ public final void <B>setValueFromRevision</B>(<A HREF="http://download.oracle.co
                                 throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></PRE>
 <DL>
 <DD><B>Description copied from interface: <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setValueFromRevision(java.sql.PreparedStatement, int, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">ITypeMapping</A></CODE></B></DD>
-<DD>Set a value of the given revision to the JDBC <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql"><CODE>PreparedStatement</CODE></A> using an appropriate <code>setXxx</code>
+<DD>Set a value of the given revision to the JDBC <A HREF="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBPreparedStatement.html?is-external=true" title="class or interface in org.eclipse.net4j.db"><CODE>IDBPreparedStatement</CODE></A> using an appropriate <code>setXxx</code>
  method. The feature from which the value is taken is determined by <A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#getFeature()"><CODE>ITypeMapping.getFeature()</CODE></A>.
 <P>
 <DD><DL>
@@ -488,7 +488,7 @@ public final void <B>setDefaultValue</B>(<A HREF="http://download.oracle.com/jav
                            throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></PRE>
 <DL>
 <DD><B>Description copied from interface: <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setDefaultValue(java.sql.PreparedStatement, int)">ITypeMapping</A></CODE></B></DD>
-<DD>Set the feature's default value to the JDBC <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql"><CODE>PreparedStatement</CODE></A> using an appropriate <code>setXxx</code>
+<DD>Set the feature's default value to the JDBC <A HREF="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBPreparedStatement.html?is-external=true" title="class or interface in org.eclipse.net4j.db"><CODE>IDBPreparedStatement</CODE></A> using an appropriate <code>setXxx</code>
  method.
 <P>
 <DD><DL>
@@ -511,7 +511,7 @@ public final void <B>setValue</B>(<A HREF="http://download.oracle.com/javase/1.5
                     throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></PRE>
 <DL>
 <DD><B>Description copied from interface: <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setValue(java.sql.PreparedStatement, int, java.lang.Object)">ITypeMapping</A></CODE></B></DD>
-<DD>Set the given value to the JDBC <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql"><CODE>PreparedStatement</CODE></A> using an appropriate <code>setXxx</code> method.
+<DD>Set the given value to the JDBC <A HREF="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBPreparedStatement.html?is-external=true" title="class or interface in org.eclipse.net4j.db"><CODE>IDBPreparedStatement</CODE></A> using an appropriate <code>setXxx</code> method.
 <P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setValue(java.sql.PreparedStatement, int, java.lang.Object)">setValue</A></CODE> in interface <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</A></CODE></DL>
@@ -527,16 +527,16 @@ public final void <B>setValue</B>(<A HREF="http://download.oracle.com/javase/1.5
 <A NAME="createDBField(org.eclipse.net4j.db.ddl.IDBTable)"><!-- --></A><H3>
 createDBField</H3>
 <PRE>
-public final void <B>createDBField</B>(<A HREF="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/ddl/IDBTable.html?is-external=true" title="class or interface in org.eclipse.net4j.db.ddl">IDBTable</A>&nbsp;table)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>public final void <B>createDBField</B>(<A HREF="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/ddl/IDBTable.html?is-external=true" title="class or interface in org.eclipse.net4j.db.ddl">IDBTable</A>&nbsp;table)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#createDBField(org.eclipse.net4j.db.ddl.IDBTable)">ITypeMapping</A></CODE></B></DD>
-<DD>Creates the DBField and adds it to the given table. The name of the DBField is derived from the feature.
+<DD><B>Deprecated.</B>&nbsp;
 <P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#createDBField(org.eclipse.net4j.db.ddl.IDBTable)">createDBField</A></CODE> in interface <CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</A></CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>table</CODE> - the table to add this field to.</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -681,7 +681,7 @@ protected void <B>doSetValue</B>(<A HREF="http://download.oracle.com/javase/1.5.
 </DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>stmt</CODE> - the <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql"><CODE>PreparedStatement</CODE></A> which is used for DB access<DD><CODE>index</CODE> - the parameter index in the statement which should be set<DD><CODE>value</CODE> - the value of the feature which should be written into the DB
+<DT><B>Parameters:</B><DD><CODE>stmt</CODE> - the <A HREF="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBPreparedStatement.html?is-external=true" title="class or interface in org.eclipse.net4j.db"><CODE>IDBPreparedStatement</CODE></A> which is used for DB access<DD><CODE>index</CODE> - the parameter index in the statement which should be set<DD><CODE>value</CODE> - the value of the feature which should be written into the DB
 <DT><B>Throws:</B>
 <DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></CODE></DL>
 </DD>

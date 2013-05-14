@@ -1,0 +1,907 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+IDBDeltaVisitor.Filter.Policy (Net4j DB Framework Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../../html/book.css" TITLE="Style">
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="IDBDeltaVisitor.Filter.Policy (Net4j DB Framework Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/IDBDeltaVisitor.Filter.Policy.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.ForbiddenChangeException.html" title="class in org.eclipse.net4j.db.ddl.delta"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.StopRecursion.html" title="class in org.eclipse.net4j.db.ddl.delta"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="IDBDeltaVisitor.Filter.Policy.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.net4j.db.ddl.delta</FONT>
+<BR>
+Class IDBDeltaVisitor.Filter.Policy</H2>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
+  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter.Policy</B>
+</PRE>
+<DL>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</A></DD>
+</DL>
+<DL>
+<DT><B>Enclosing class:</B><DD><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter</A></DD>
+</DL>
+<HR>
+<DL>
+  <DT>public static final class <B>IDBDeltaVisitor.Filter.Policy</B>
+  <DD>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>
+  <DD>implements <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</A>
+</DL>
+
+<map id="APIVIZ" name="APIVIZ">
+<area shape="rect" id="node1" title="&#171;interface&#187; Serializable (java.io)" alt="" coords="51,6,140,61"/>
+<area shape="rect" id="node2" href="IDBDeltaVisitor.Filter.Policy.html" title="IDBDeltaVisitor.Filter.Policy" alt="" coords="5,101,187,126"/>
+</map>
+
+<CENTER><IMG SRC="IDBDeltaVisitor.Filter.Policy.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+
+
+
+<P>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../serialized-form.html#org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter.Policy">Serialized Form</A></DL>
+<HR>
+
+<P>
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#ALLOWED">ALLOWED</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#FORBIDDEN">FORBIDDEN</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#IGNORED">IGNORED</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#IDBDeltaVisitor.Filter.Policy()">IDBDeltaVisitor.Filter.Policy</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#allow(org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)">allow</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#allow(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType)">allow</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#allow(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType, org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)">allow</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType,
+      <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#allowAll()">allowAll</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#forbid(org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)">forbid</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#forbid(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType)">forbid</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#forbid(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType, org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)">forbid</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType,
+       <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#forbidAll()">forbidAll</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#freeze()">freeze</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#ignore(org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)">ignore</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#ignore(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType)">ignore</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#ignore(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType, org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)">ignore</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType,
+       <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#ignoreAll()">ignoreAll</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#isAllowed(org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)">isAllowed</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#isAllowed(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType)">isAllowed</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#isAllowed(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType, org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)">isAllowed</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType,
+          <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#isAllowed(org.eclipse.net4j.db.ddl.delta.IDBDelta)">isAllowed</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBDelta</A>&nbsp;delta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#isForbidden(org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)">isForbidden</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#isForbidden(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType)">isForbidden</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#isForbidden(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType, org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)">isForbidden</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType,
+            <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#isForbidden(org.eclipse.net4j.db.ddl.delta.IDBDelta)">isForbidden</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBDelta</A>&nbsp;delta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#isIgnored(org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)">isIgnored</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#isIgnored(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType)">isIgnored</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#isIgnored(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType, org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)">isIgnored</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType,
+          <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#isIgnored(org.eclipse.net4j.db.ddl.delta.IDBDelta)">isIgnored</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBDelta</A>&nbsp;delta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#toString()">toString</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ FIELD DETAIL =========== -->
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Field Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="ALLOWED"><!-- --></A><H3>
+ALLOWED</H3>
+<PRE>
+public static final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>ALLOWED</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="FORBIDDEN"><!-- --></A><H3>
+FORBIDDEN</H3>
+<PRE>
+public static final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>FORBIDDEN</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="IGNORED"><!-- --></A><H3>
+IGNORED</H3>
+<PRE>
+public static final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>IGNORED</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="IDBDeltaVisitor.Filter.Policy()"><!-- --></A><H3>
+IDBDeltaVisitor.Filter.Policy</H3>
+<PRE>
+public <B>IDBDeltaVisitor.Filter.Policy</B>()</PRE>
+<DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="isAllowed(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType)"><!-- --></A><H3>
+isAllowed</H3>
+<PRE>
+public boolean <B>isAllowed</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isAllowed(org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)"><!-- --></A><H3>
+isAllowed</H3>
+<PRE>
+public boolean <B>isAllowed</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isAllowed(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType, org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)"><!-- --></A><H3>
+isAllowed</H3>
+<PRE>
+public boolean <B>isAllowed</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType,
+                         <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isAllowed(org.eclipse.net4j.db.ddl.delta.IDBDelta)"><!-- --></A><H3>
+isAllowed</H3>
+<PRE>
+public boolean <B>isAllowed</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBDelta</A>&nbsp;delta)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isForbidden(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType)"><!-- --></A><H3>
+isForbidden</H3>
+<PRE>
+public boolean <B>isForbidden</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isForbidden(org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)"><!-- --></A><H3>
+isForbidden</H3>
+<PRE>
+public boolean <B>isForbidden</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isForbidden(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType, org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)"><!-- --></A><H3>
+isForbidden</H3>
+<PRE>
+public boolean <B>isForbidden</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType,
+                           <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isForbidden(org.eclipse.net4j.db.ddl.delta.IDBDelta)"><!-- --></A><H3>
+isForbidden</H3>
+<PRE>
+public boolean <B>isForbidden</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBDelta</A>&nbsp;delta)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isIgnored(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType)"><!-- --></A><H3>
+isIgnored</H3>
+<PRE>
+public boolean <B>isIgnored</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isIgnored(org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)"><!-- --></A><H3>
+isIgnored</H3>
+<PRE>
+public boolean <B>isIgnored</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isIgnored(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType, org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)"><!-- --></A><H3>
+isIgnored</H3>
+<PRE>
+public boolean <B>isIgnored</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType,
+                         <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isIgnored(org.eclipse.net4j.db.ddl.delta.IDBDelta)"><!-- --></A><H3>
+isIgnored</H3>
+<PRE>
+public boolean <B>isIgnored</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBDelta</A>&nbsp;delta)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="allow(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType)"><!-- --></A><H3>
+allow</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A> <B>allow</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="allow(org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)"><!-- --></A><H3>
+allow</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A> <B>allow</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="allow(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType, org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)"><!-- --></A><H3>
+allow</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A> <B>allow</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType,
+                                           <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="allowAll()"><!-- --></A><H3>
+allowAll</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A> <B>allowAll</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="forbid(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType)"><!-- --></A><H3>
+forbid</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A> <B>forbid</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="forbid(org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)"><!-- --></A><H3>
+forbid</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A> <B>forbid</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="forbid(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType, org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)"><!-- --></A><H3>
+forbid</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A> <B>forbid</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType,
+                                            <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="forbidAll()"><!-- --></A><H3>
+forbidAll</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A> <B>forbidAll</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="ignore(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType)"><!-- --></A><H3>
+ignore</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A> <B>ignore</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="ignore(org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)"><!-- --></A><H3>
+ignore</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A> <B>ignore</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="ignore(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType, org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)"><!-- --></A><H3>
+ignore</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A> <B>ignore</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</A>&nbsp;deltaType,
+                                            <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</A>&nbsp;changeKind)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="ignoreAll()"><!-- --></A><H3>
+ignoreAll</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A> <B>ignoreAll</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="toString()"><!-- --></A><H3>
+toString</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>toString</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="freeze()"><!-- --></A><H3>
+freeze</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A> <B>freeze</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/IDBDeltaVisitor.Filter.Policy.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.ForbiddenChangeException.html" title="class in org.eclipse.net4j.db.ddl.delta"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.StopRecursion.html" title="class in org.eclipse.net4j.db.ddl.delta"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="IDBDeltaVisitor.Filter.Policy.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

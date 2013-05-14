@@ -1,0 +1,480 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+IDBDeltaVisitor.Copier (Net4j DB Framework Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../../html/book.css" TITLE="Style">
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="IDBDeltaVisitor.Copier (Net4j DB Framework Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/IDBDeltaVisitor.Copier.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.html" title="interface in org.eclipse.net4j.db.ddl.delta"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html" title="class in org.eclipse.net4j.db.ddl.delta"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Copier.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="IDBDeltaVisitor.Copier.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_classes_inherited_from_class_org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter">NESTED</A>&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.net4j.db.ddl.delta</FONT>
+<BR>
+Class IDBDeltaVisitor.Copier</H2>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
+  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html" title="class in org.eclipse.net4j.db.ddl.delta">org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Default</A>
+      <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html" title="class in org.eclipse.net4j.db.ddl.delta">org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter</A>
+          <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Copier</B>
+</PRE>
+<DL>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor</A></DD>
+</DL>
+<DL>
+<DT><B>Enclosing interface:</B><DD><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor</A></DD>
+</DL>
+<HR>
+<DL>
+  <DT>public static class <B>IDBDeltaVisitor.Copier</B>
+  <DD>extends <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter</A>
+</DL>
+
+<map id="APIVIZ" name="APIVIZ">
+<area shape="rect" id="node1" href="IDBDeltaVisitor.Filter.html" title="IDBDeltaVisitor.Filter" alt="" coords="9,6,151,31"/>
+<area shape="rect" id="node2" href="IDBDeltaVisitor.Copier.html" title="IDBDeltaVisitor.Copier" alt="" coords="5,71,155,97"/>
+</map>
+
+<CENTER><IMG SRC="IDBDeltaVisitor.Copier.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+
+
+
+<P>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from class org.eclipse.net4j.db.ddl.delta.<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.ForbiddenChangeException.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.ForbiddenChangeException</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.db.ddl.delta.<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Copier.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Copier</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Default</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.StopRecursion.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.StopRecursion</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from class org.eclipse.net4j.db.ddl.delta.<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#DEFAULT_POLICY">DEFAULT_POLICY</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Copier.html#IDBDeltaVisitor.Copier()">IDBDeltaVisitor.Copier</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Copier.html#IDBDeltaVisitor.Copier(org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter.Policy)">IDBDeltaVisitor.Copier</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A>&nbsp;policy)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Copier.html#doVisit(org.eclipse.net4j.db.ddl.delta.IDBFieldDelta)">doVisit</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBFieldDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBFieldDelta</A>&nbsp;delta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Copier.html#doVisit(org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)">doVisit</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBIndexDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexDelta</A>&nbsp;delta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Copier.html#doVisit(org.eclipse.net4j.db.ddl.delta.IDBIndexFieldDelta)">doVisit</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBIndexFieldDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexFieldDelta</A>&nbsp;delta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Copier.html#doVisit(org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta)">doVisit</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBPropertyDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBPropertyDelta</A>&lt;?&gt;&nbsp;delta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Copier.html#doVisit(org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)">doVisit</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</A>&nbsp;delta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Copier.html#doVisit(org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">doVisit</A></B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</A>&nbsp;delta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Copier.html#getResult()">getResult</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.net4j.db.ddl.delta.<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#added(org.eclipse.net4j.db.ddl.delta.IDBFieldDelta)">added</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#added(org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)">added</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#added(org.eclipse.net4j.db.ddl.delta.IDBIndexFieldDelta)">added</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#added(org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta)">added</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#added(org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)">added</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#added(org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">added</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#changed(org.eclipse.net4j.db.ddl.delta.IDBFieldDelta)">changed</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#changed(org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)">changed</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#changed(org.eclipse.net4j.db.ddl.delta.IDBIndexFieldDelta)">changed</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#changed(org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta)">changed</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#changed(org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)">changed</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#changed(org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">changed</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#getPolicy()">getPolicy</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#handle(org.eclipse.net4j.db.ddl.delta.IDBDelta)">handle</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#removed(org.eclipse.net4j.db.ddl.delta.IDBFieldDelta)">removed</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#removed(org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)">removed</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#removed(org.eclipse.net4j.db.ddl.delta.IDBIndexFieldDelta)">removed</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#removed(org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta)">removed</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#removed(org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)">removed</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#removed(org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">removed</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Default"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.net4j.db.ddl.delta.<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Default</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html#stopRecursion()">stopRecursion</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html#visit(org.eclipse.net4j.db.ddl.delta.IDBFieldDelta)">visit</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html#visit(org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)">visit</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html#visit(org.eclipse.net4j.db.ddl.delta.IDBIndexFieldDelta)">visit</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html#visit(org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta)">visit</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html#visit(org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)">visit</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html#visit(org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">visit</A>, <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html#visitDefault(org.eclipse.net4j.db.ddl.delta.IDBDelta)">visitDefault</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="IDBDeltaVisitor.Copier()"><!-- --></A><H3>
+IDBDeltaVisitor.Copier</H3>
+<PRE>
+public <B>IDBDeltaVisitor.Copier</B>()</PRE>
+<DL>
+</DL>
+<HR>
+
+<A NAME="IDBDeltaVisitor.Copier(org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter.Policy)"><!-- --></A><H3>
+IDBDeltaVisitor.Copier</H3>
+<PRE>
+public <B>IDBDeltaVisitor.Copier</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</A>&nbsp;policy)</PRE>
+<DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="getResult()"><!-- --></A><H3>
+getResult</H3>
+<PRE>
+public final <A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</A> <B>getResult</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="doVisit(org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)"><!-- --></A><H3>
+doVisit</H3>
+<PRE>
+protected void <B>doVisit</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</A>&nbsp;delta)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#doVisit(org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)">doVisit</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="doVisit(org.eclipse.net4j.db.ddl.delta.IDBTableDelta)"><!-- --></A><H3>
+doVisit</H3>
+<PRE>
+protected void <B>doVisit</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</A>&nbsp;delta)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#doVisit(org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">doVisit</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="doVisit(org.eclipse.net4j.db.ddl.delta.IDBFieldDelta)"><!-- --></A><H3>
+doVisit</H3>
+<PRE>
+protected void <B>doVisit</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBFieldDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBFieldDelta</A>&nbsp;delta)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#doVisit(org.eclipse.net4j.db.ddl.delta.IDBFieldDelta)">doVisit</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="doVisit(org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)"><!-- --></A><H3>
+doVisit</H3>
+<PRE>
+protected void <B>doVisit</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBIndexDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexDelta</A>&nbsp;delta)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#doVisit(org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)">doVisit</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="doVisit(org.eclipse.net4j.db.ddl.delta.IDBIndexFieldDelta)"><!-- --></A><H3>
+doVisit</H3>
+<PRE>
+protected void <B>doVisit</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBIndexFieldDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexFieldDelta</A>&nbsp;delta)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#doVisit(org.eclipse.net4j.db.ddl.delta.IDBIndexFieldDelta)">doVisit</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="doVisit(org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta)"><!-- --></A><H3>
+doVisit</H3>
+<PRE>
+protected void <B>doVisit</B>(<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBPropertyDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBPropertyDelta</A>&lt;?&gt;&nbsp;delta)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#doVisit(org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta)">doVisit</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/IDBDeltaVisitor.Copier.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.html" title="interface in org.eclipse.net4j.db.ddl.delta"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html" title="class in org.eclipse.net4j.db.ddl.delta"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Copier.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="IDBDeltaVisitor.Copier.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_classes_inherited_from_class_org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter">NESTED</A>&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

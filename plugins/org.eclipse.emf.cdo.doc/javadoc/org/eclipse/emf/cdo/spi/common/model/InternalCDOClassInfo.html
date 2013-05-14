@@ -76,9 +76,9 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_top"></A>
@@ -145,7 +145,24 @@ Interface InternalCDOClassInfo</H2>
 </TR>
 </TABLE>
 &nbsp;
+<!-- =========== FIELD SUMMARY =========== -->
 
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#NO_SLOT">NO_SLOT</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
 <!-- ========== METHOD SUMMARY =========== -->
 
 <A NAME="method_summary"><!-- --></A>
@@ -163,6 +180,74 @@ Interface InternalCDOClassInfo</H2>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Obtains a rule that filters/transforms the persist values of the given
  <code>feature</code>.</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getPersistentFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)">getPersistentFeatureIndex</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the index of the specified <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>feature</CODE></A> in the <CODE>CDORevisionImpl.values</CODE> array, never <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#NO_SLOT"><CODE>NO_SLOT</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getPersistentFeatureIndex(int)">getPersistentFeatureIndex</A></B>(int&nbsp;featureID)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the index of the specified <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>feature</CODE></A> in the <CODE>CDORevisionImpl.values</CODE> array, never <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#NO_SLOT"><CODE>NO_SLOT</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getRevisionForID(org.eclipse.emf.cdo.common.id.CDOID)">getRevisionForID</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getSettingsFeatureCount()">getSettingsFeatureCount</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the number of <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>features</CODE></A> whose values are <b>always</b> stored in the
+ <code>CDOObjectImpl.eSettings</code> array, whether an object is in <code>CDOState.TRANSIENT</code> or not.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getSettingsFeatureIndex(int)">getSettingsFeatureIndex</A></B>(int&nbsp;featureID)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the index of the specified <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>feature</CODE></A> in the <code>CDOObjectImpl.eSettings</code> array,
+ or <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#NO_SLOT"><CODE>NO_SLOT</CODE></A> if the feature is <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><CODE>non-transient</CODE></A> or <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/ETypedElement.html?is-external=true#isMany()" title="class or interface in org.eclipse.emf.ecore"><CODE>single-valued</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getTransientFeatureCount()">getTransientFeatureCount</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the number of <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>features</CODE></A> whose values are additionally stored in the <code>CDOObjectImpl.eSettings</code> array,
+ if an object is in <code>CDOState.TRANSIENT</code>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getTransientFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)">getTransientFeatureIndex</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getTransientFeatureIndex(int)">getTransientFeatureIndex</A></B>(int&nbsp;featureID)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the index of the specified <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>feature</CODE></A> in the <code>CDOObjectImpl.eSettings</code> array,
+ or <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#NO_SLOT"><CODE>NO_SLOT</CODE></A> if the feature is <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><CODE>transient</CODE></A> or <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/ETypedElement.html?is-external=true#isMany()" title="class or interface in org.eclipse.emf.ecore"><CODE>many-valued</CODE></A></TD>
+</TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.model.CDOClassInfo"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
@@ -170,7 +255,7 @@ Interface InternalCDOClassInfo</H2>
 <TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.common.model.<A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassInfo</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#getAllPersistentFeatures()">getAllPersistentFeatures</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#getEClass()">getEClass</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#getFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)">getFeatureIndex</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#getFeatureIndex(int)">getFeatureIndex</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#isResource()">isResource</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#isResourceFolder()">isResourceFolder</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#isResourceNode()">isResourceNode</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#getAllPersistentContainments()">getAllPersistentContainments</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#getAllPersistentFeatures()">getAllPersistentFeatures</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#getAllPersistentReferences()">getAllPersistentReferences</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#getEClass()">getEClass</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#getFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)">getFeatureIndex</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#getFeatureIndex(int)">getFeatureIndex</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#hasPersistentOpposite(org.eclipse.emf.ecore.EStructuralFeature)">hasPersistentOpposite</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)">isPersistent</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#isPersistent(int)">isPersistent</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#isResource()">isResource</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#isResourceFolder()">isResourceFolder</A>, <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#isResourceNode()">isResourceNode</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.common.notify.Adapter"><!-- --></A>
@@ -185,6 +270,25 @@ Interface InternalCDOClassInfo</H2>
 &nbsp;
 <P>
 
+<!-- ============ FIELD DETAIL =========== -->
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Field Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="NO_SLOT"><!-- --></A><H3>
+NO_SLOT</H3>
+<PRE>
+static final int <B>NO_SLOT</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../../constant-values.html#org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo.NO_SLOT">Constant Field Values</A></DL>
+</DL>
+
 <!-- ============ METHOD DETAIL ========== -->
 
 <A NAME="method_detail"><!-- --></A>
@@ -194,6 +298,144 @@ Interface InternalCDOClassInfo</H2>
 <B>Method Detail</B></FONT></TH>
 </TR>
 </TABLE>
+
+<A NAME="getRevisionForID(org.eclipse.emf.cdo.common.id.CDOID)"><!-- --></A><H3>
+getRevisionForID</H3>
+<PRE>
+<A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A> <B>getRevisionForID</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getPersistentFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)"><!-- --></A><H3>
+getPersistentFeatureIndex</H3>
+<PRE>
+int <B>getPersistentFeatureIndex</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature)
+                              throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</A></PRE>
+<DL>
+<DD>Returns the index of the specified <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>feature</CODE></A> in the <CODE>CDORevisionImpl.values</CODE> array, never <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#NO_SLOT"><CODE>NO_SLOT</CODE></A>.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</A></CODE> - if the specified feature is <b>not</b> <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#isPersistent(int)"><CODE>persistent</CODE></A>.<DT><B>See Also:</B><DD><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getPersistentFeatureIndex(int)"><CODE>getPersistentFeatureIndex(int)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getPersistentFeatureIndex(int)"><!-- --></A><H3>
+getPersistentFeatureIndex</H3>
+<PRE>
+int <B>getPersistentFeatureIndex</B>(int&nbsp;featureID)
+                              throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</A></PRE>
+<DL>
+<DD>Returns the index of the specified <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>feature</CODE></A> in the <CODE>CDORevisionImpl.values</CODE> array, never <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#NO_SLOT"><CODE>NO_SLOT</CODE></A>.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</A></CODE> - if the specified feature is <b>not</b> <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#isPersistent(int)"><CODE>persistent</CODE></A>.<DT><B>See Also:</B><DD><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getPersistentFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)"><CODE>getPersistentFeatureIndex(EStructuralFeature)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getSettingsFeatureCount()"><!-- --></A><H3>
+getSettingsFeatureCount</H3>
+<PRE>
+int <B>getSettingsFeatureCount</B>()</PRE>
+<DL>
+<DD>Returns the number of <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>features</CODE></A> whose values are <b>always</b> stored in the
+ <code>CDOObjectImpl.eSettings</code> array, whether an object is in <code>CDOState.TRANSIENT</code> or not.
+ <p>
+ These are the <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><CODE>transient</CODE></A> and/or <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/ETypedElement.html?is-external=true#isMany()" title="class or interface in org.eclipse.emf.ecore"><CODE>many-valued</CODE></A> features.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getSettingsFeatureIndex(int)"><CODE>getSettingsFeatureIndex(int)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getSettingsFeatureIndex(int)"><!-- --></A><H3>
+getSettingsFeatureIndex</H3>
+<PRE>
+int <B>getSettingsFeatureIndex</B>(int&nbsp;featureID)</PRE>
+<DL>
+<DD>Returns the index of the specified <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>feature</CODE></A> in the <code>CDOObjectImpl.eSettings</code> array,
+ or <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#NO_SLOT"><CODE>NO_SLOT</CODE></A> if the feature is <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><CODE>non-transient</CODE></A> or <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/ETypedElement.html?is-external=true#isMany()" title="class or interface in org.eclipse.emf.ecore"><CODE>single-valued</CODE></A>.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getSettingsFeatureCount()"><CODE>getSettingsFeatureCount()</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getTransientFeatureCount()"><!-- --></A><H3>
+getTransientFeatureCount</H3>
+<PRE>
+int <B>getTransientFeatureCount</B>()</PRE>
+<DL>
+<DD>Returns the number of <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>features</CODE></A> whose values are additionally stored in the <code>CDOObjectImpl.eSettings</code> array,
+ if an object is in <code>CDOState.TRANSIENT</code>.
+ <p>
+ These are the <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><CODE>non-transient</CODE></A> and/or <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/ETypedElement.html?is-external=true#isMany()" title="class or interface in org.eclipse.emf.ecore"><CODE>single-valued</CODE></A> features.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getTransientFeatureIndex(int)"><CODE>getTransientFeatureIndex(int)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getTransientFeatureIndex(int)"><!-- --></A><H3>
+getTransientFeatureIndex</H3>
+<PRE>
+int <B>getTransientFeatureIndex</B>(int&nbsp;featureID)</PRE>
+<DL>
+<DD>Returns the index of the specified <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>feature</CODE></A> in the <code>CDOObjectImpl.eSettings</code> array,
+ or <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#NO_SLOT"><CODE>NO_SLOT</CODE></A> if the feature is <A HREF="../../../../../../../org/eclipse/emf/cdo/common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><CODE>transient</CODE></A> or <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/ETypedElement.html?is-external=true#isMany()" title="class or interface in org.eclipse.emf.ecore"><CODE>many-valued</CODE></A>
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getTransientFeatureCount()"><CODE>getTransientFeatureCount()</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getTransientFeatureIndex(org.eclipse.emf.ecore.EStructuralFeature)"><!-- --></A><H3>
+getTransientFeatureIndex</H3>
+<PRE>
+int <B>getTransientFeatureIndex</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.html#getTransientFeatureIndex(int)"><CODE>getTransientFeatureIndex(int)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
 
 <A NAME="getPersistenceFilter(org.eclipse.emf.ecore.EStructuralFeature)"><!-- --></A><H3>
 getPersistenceFilter</H3>
@@ -263,15 +505,15 @@ getPersistenceFilter</H3>
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_bottom"></A>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

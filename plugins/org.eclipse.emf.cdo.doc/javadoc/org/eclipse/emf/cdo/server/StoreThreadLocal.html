@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/RepositoryNotFoundException.html" title="class in org.eclipse.emf.cdo.server"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;NEXT CLASS</FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/StoreThreadLocal.NoSessionRegisteredException.html" title="class in org.eclipse.emf.cdo.server"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/server/StoreThreadLocal.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="StoreThreadLocal.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -76,7 +76,7 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
 DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
@@ -123,7 +123,24 @@ Provides server-side consumers with the <A HREF="../../../../../org/eclipse/emf/
 <HR>
 
 <P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
 
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/StoreThreadLocal.NoSessionRegisteredException.html" title="class in org.eclipse.emf.cdo.server">StoreThreadLocal.NoSessionRegisteredException</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
 <!-- ========== METHOD SUMMARY =========== -->
 
 <A NAME="method_summary"><!-- --></A>
@@ -235,7 +252,8 @@ public static void <B>setSession</B>(<A HREF="../../../../../org/eclipse/emf/cdo
 <A NAME="getSession()"><!-- --></A><H3>
 getSession</H3>
 <PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</A> <B>getSession</B>()</PRE>
+public static <A HREF="../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</A> <B>getSession</B>()
+                                  throws <A HREF="../../../../../org/eclipse/emf/cdo/server/StoreThreadLocal.NoSessionRegisteredException.html" title="class in org.eclipse.emf.cdo.server">StoreThreadLocal.NoSessionRegisteredException</A></PRE>
 <DL>
 <DD>Returns the session associated with the current thread.
 <P>
@@ -243,7 +261,8 @@ public static <A HREF="../../../../../org/eclipse/emf/cdo/spi/server/InternalSes
 
 <DT><B>Returns:</B><DD>Never <code>null</code>.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</A></CODE> - if no session is associated with the current thread.<DT><B>Since:</B></DT>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</A></CODE> - if no session is associated with the current thread.
+<DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/server/StoreThreadLocal.NoSessionRegisteredException.html" title="class in org.eclipse.emf.cdo.server">StoreThreadLocal.NoSessionRegisteredException</A></CODE><DT><B>Since:</B></DT>
   <DD>3.0</DD>
 </DL>
 </DD>
@@ -277,10 +296,13 @@ public static void <B>setAccessor</B>(<A HREF="../../../../../org/eclipse/emf/cd
 <A NAME="getAccessor()"><!-- --></A><H3>
 getAccessor</H3>
 <PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</A> <B>getAccessor</B>()</PRE>
+public static <A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</A> <B>getAccessor</B>()
+                                  throws <A HREF="../../../../../org/eclipse/emf/cdo/server/StoreThreadLocal.NoSessionRegisteredException.html" title="class in org.eclipse.emf.cdo.server">StoreThreadLocal.NoSessionRegisteredException</A></PRE>
 <DL>
 <DD><DL>
-</DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/server/StoreThreadLocal.NoSessionRegisteredException.html" title="class in org.eclipse.emf.cdo.server">StoreThreadLocal.NoSessionRegisteredException</A></CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -349,7 +371,7 @@ public static void <B>release</B>()</PRE>
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/RepositoryNotFoundException.html" title="class in org.eclipse.emf.cdo.server"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;NEXT CLASS</FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/StoreThreadLocal.NoSessionRegisteredException.html" title="class in org.eclipse.emf.cdo.server"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/server/StoreThreadLocal.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="StoreThreadLocal.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -369,7 +391,7 @@ public static void <B>release</B>()</PRE>
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
 DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>

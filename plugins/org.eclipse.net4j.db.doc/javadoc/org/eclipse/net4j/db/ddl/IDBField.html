@@ -55,7 +55,7 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;PREV CLASS&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBElement.html" title="interface in org.eclipse.net4j.db.ddl"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/net4j/db/ddl/IDBField.html" target="_top"><B>FRAMES</B></A>  &nbsp;
@@ -92,17 +92,22 @@ org.eclipse.net4j.db.ddl</FONT>
 <BR>
 Interface IDBField</H2>
 <DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</A></DD>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</A>&lt;<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</A>&gt;, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</A>&gt;, <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBElement</A>, <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</A>, <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/PositionProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">PositionProvider</A></DD>
+</DL>
+<DL>
+<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/net4j/spi/db/ddl/InternalDBField.html" title="interface in org.eclipse.net4j.spi.db.ddl">InternalDBField</A></DD>
 </DL>
 <HR>
 <DL>
   <DT>public interface <B>IDBField</B>
-  <DD>extends <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</A>
+  <DD>extends <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/PositionProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">PositionProvider</A>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="IDBSchemaElement.html" title="&#171;interface&#187; IDBSchemaElement" alt="" coords="5,5,144,45"/>
-<area shape="rect" id="node2" href="IDBField.html" title="&#171;interface&#187; IDBField" alt="" coords="32,84,117,124"/>
+<area shape="rect" id="node1" title="&#171;interface&#187; PositionProvider (org.eclipse.net4j.util.collection)" alt="" coords="5,6,211,61"/>
+<area shape="rect" id="node2" href="../../spi/db/ddl/InternalDBField.html" title="&#171;interface&#187; InternalDBField (org.eclipse.net4j.spi.db.ddl)" alt="" coords="115,179,300,234"/>
+<area shape="rect" id="node3" href="IDBSchemaElement.html" title="&#171;interface&#187; IDBSchemaElement" alt="" coords="240,13,379,53"/>
+<area shape="rect" id="node4" href="IDBField.html" title="&#171;interface&#187; IDBField" alt="" coords="165,100,251,140"/>
 </map>
 
 <CENTER><IMG SRC="IDBField.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -123,6 +128,35 @@ A field (column) specification in a <A HREF="../../../../../org/eclipse/net4j/db
 <HR>
 
 <P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.db.ddl.IDBSchemaElement"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.db.ddl.<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.SchemaElementType.html" title="enum in org.eclipse.net4j.db.ddl">IDBSchemaElement.SchemaElementType</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</A>&lt;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</A>&gt;</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
 <!-- =========== FIELD SUMMARY =========== -->
 
 <A NAME="field_summary"><!-- --></A>
@@ -175,8 +209,8 @@ A field (column) specification in a <A HREF="../../../../../org/eclipse/net4j/db
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBField.html#getPosition()">getPosition</A></B>()</CODE>
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBField.html#getParent()">getParent</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -224,15 +258,7 @@ A field (column) specification in a <A HREF="../../../../../org/eclipse/net4j/db
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBField.html#setName(java.lang.String)">setName</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBField.html#setNotNull(boolean)">setNotNull</A></B>(boolean&nbsp;on)</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBField.html#setNotNull(boolean)">setNotNull</A></B>(boolean&nbsp;notNull)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -268,7 +294,61 @@ A field (column) specification in a <A HREF="../../../../../org/eclipse/net4j/db
 <TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.db.ddl.<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html#getName()">getName</A>, <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html#getProperties()">getProperties</A>, <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html#getSchema()">getSchema</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html#accept(org.eclipse.net4j.db.ddl.IDBSchemaVisitor)">accept</A>, <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html#getElement(java.lang.Class, java.lang.String)">getElement</A>, <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html#getSchema()">getSchema</A>, <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html#getSchemaElementType()">getSchemaElementType</A>, <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html#remove()">remove</A>, <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html#setName(java.lang.String)">setName</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.db.ddl.IDBNamedElement"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.db.ddl.<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBNamedElement.html#getName()">getName</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.db.ddl.IDBElement"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.db.ddl.<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBElement</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBElement.html#getProperties()">getProperties</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.event.<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements()" title="class or interface in org.eclipse.net4j.util.container">getElements</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#isEmpty()" title="class or interface in org.eclipse.net4j.util.container">isEmpty</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Comparable"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true#compareTo(T)" title="class or interface in java.lang">compareTo</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.collection.PositionProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.collection.<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/PositionProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">PositionProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/PositionProvider.html?is-external=true#getPosition()" title="class or interface in org.eclipse.net4j.util.collection">getPosition</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -303,24 +383,26 @@ static final int <B>DEFAULT</B></PRE>
 </TR>
 </TABLE>
 
-<A NAME="getTable()"><!-- --></A><H3>
-getTable</H3>
+<A NAME="getParent()"><!-- --></A><H3>
+getParent</H3>
 <PRE>
-<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A> <B>getTable</B>()</PRE>
+<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A> <B>getParent</B>()</PRE>
 <DL>
 <DD><DL>
-</DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html#getParent()">getParent</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</A></CODE></DL>
 </DD>
 <DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="setName(java.lang.String)"><!-- --></A><H3>
-setName</H3>
+<A NAME="getTable()"><!-- --></A><H3>
+getTable</H3>
 <PRE>
-void <B>setName</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</PRE>
+<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A> <B>getTable</B>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -432,21 +514,7 @@ boolean <B>isNotNull</B>()</PRE>
 <A NAME="setNotNull(boolean)"><!-- --></A><H3>
 setNotNull</H3>
 <PRE>
-void <B>setNotNull</B>(boolean&nbsp;on)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getPosition()"><!-- --></A><H3>
-getPosition</H3>
-<PRE>
-int <B>getPosition</B>()</PRE>
+void <B>setNotNull</B>(boolean&nbsp;notNull)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -527,7 +595,7 @@ formatPrecisionAndScale</H3>
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;PREV CLASS&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBElement.html" title="interface in org.eclipse.net4j.db.ddl"><B>PREV CLASS</B></A>&nbsp;
 &nbsp;<A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/net4j/db/ddl/IDBField.html" target="_top"><B>FRAMES</B></A>  &nbsp;

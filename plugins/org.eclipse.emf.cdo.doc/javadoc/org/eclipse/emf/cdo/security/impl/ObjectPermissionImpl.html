@@ -1,0 +1,561 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+ObjectPermissionImpl (CDO Model Repository Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../../html/book.css" TITLE="Style">
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="ObjectPermissionImpl (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/ObjectPermissionImpl.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/GroupImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PackagePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/security/impl/ObjectPermissionImpl.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="ObjectPermissionImpl.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_classes_inherited_from_class_org.eclipse.emf.ecore.impl.MinimalEObjectImpl">NESTED</A>&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.eclipse.emf.ecore.impl.BasicEObjectImpl">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.emf.cdo.security.impl</FONT>
+<BR>
+Class ObjectPermissionImpl</H2>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
+  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/impl/BasicNotifierImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">org.eclipse.emf.common.notify.impl.BasicNotifierImpl</A>
+      <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.impl">org.eclipse.emf.ecore.impl.BasicEObjectImpl</A>
+          <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.impl">org.eclipse.emf.ecore.impl.MinimalEObjectImpl</A>
+              <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEStoreEObjectImpl.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.impl">org.eclipse.emf.ecore.impl.MinimalEStoreEObjectImpl</A>
+                  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo">org.eclipse.emf.internal.cdo.CDOObjectImpl</A>
+                      <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">org.eclipse.emf.cdo.security.impl.PermissionImpl</A>
+                          <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.emf.cdo.security.impl.ObjectPermissionImpl</B>
+</PRE>
+<DL>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageTypeRegistry.CDOObjectMarker.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageTypeRegistry.CDOObjectMarker</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/security/ObjectPermission.html" title="interface in org.eclipse.emf.cdo.security">ObjectPermission</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.Internal.DynamicValueHolder.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature.Internal.DynamicValueHolder</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">InternalEObject</A>, <A HREF="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOLoadable.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOLoadable</A>, <A HREF="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</A></DD>
+</DL>
+<HR>
+<DL>
+  <DT>public abstract class <B>ObjectPermissionImpl</B>
+  <DD>extends <A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionImpl</A>
+  <DD>implements <A HREF="../../../../../../org/eclipse/emf/cdo/security/ObjectPermission.html" title="interface in org.eclipse.emf.cdo.security">ObjectPermission</A>
+</DL>
+
+<map id="APIVIZ" name="APIVIZ">
+<area shape="rect" id="node1" href="../ObjectPermission.html" title="&#171;interface&#187; ObjectPermission (org.eclipse.emf.cdo.security)" alt="" coords="5,6,197,61"/>
+<area shape="rect" id="node2" href="PermissionImpl.html" title="PermissionImpl" alt="" coords="228,21,340,46"/>
+<area shape="rect" id="node3" href="ObjectPermissionImpl.html" title="ObjectPermissionImpl" alt="" coords="117,101,267,126"/>
+</map>
+
+<CENTER><IMG SRC="ObjectPermissionImpl.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+
+
+
+<P>
+<!-- begin-user-doc -->
+ An implementation of the model object '<em><b>Object Permission</b></em>'.
+<P>
+
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2
+ <!-- end-user-doc -->
+ <p>
+ </p></DD>
+<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.ecore.impl.MinimalEObjectImpl"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from class org.eclipse.emf.ecore.impl.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.impl">MinimalEObjectImpl</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.Container.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.impl">MinimalEObjectImpl.Container</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.ecore.impl.BasicEObjectImpl"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from class org.eclipse.emf.ecore.impl.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.impl">BasicEObjectImpl</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.EPropertiesHolder.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.impl">BasicEObjectImpl.EPropertiesHolder</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.EPropertiesHolderBaseImpl.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.impl">BasicEObjectImpl.EPropertiesHolderBaseImpl</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.EPropertiesHolderImpl.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.impl">BasicEObjectImpl.EPropertiesHolderImpl</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.common.notify.impl.BasicNotifierImpl"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from class org.eclipse.emf.common.notify.impl.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/impl/BasicNotifierImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">BasicNotifierImpl</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/impl/BasicNotifierImpl.EAdapterList.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">BasicNotifierImpl.EAdapterList</A>&lt;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/impl/BasicNotifierImpl.EAdapterList.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">E</A> extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> & <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</A>&gt;, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/impl/BasicNotifierImpl.EObservableAdapterList.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">BasicNotifierImpl.EObservableAdapterList</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.ecore.InternalEObject"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.emf.ecore.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">InternalEObject</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.EStore.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">InternalEObject.EStore</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.emf.ecore.impl.BasicEObjectImpl"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from class org.eclipse.emf.ecore.impl.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.impl">BasicEObjectImpl</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#EVIRTUAL_GET" title="class or interface in org.eclipse.emf.ecore.impl">EVIRTUAL_GET</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#EVIRTUAL_IS_SET" title="class or interface in org.eclipse.emf.ecore.impl">EVIRTUAL_IS_SET</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#EVIRTUAL_NO_VALUE" title="class or interface in org.eclipse.emf.ecore.impl">EVIRTUAL_NO_VALUE</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#EVIRTUAL_SET" title="class or interface in org.eclipse.emf.ecore.impl">EVIRTUAL_SET</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#EVIRTUAL_UNSET" title="class or interface in org.eclipse.emf.ecore.impl">EVIRTUAL_UNSET</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.emf.ecore.InternalEObject"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from interface org.eclipse.emf.ecore.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">InternalEObject</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#EOPPOSITE_FEATURE_BASE" title="class or interface in org.eclipse.emf.ecore">EOPPOSITE_FEATURE_BASE</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.emf.ecore.EStructuralFeature.Internal.DynamicValueHolder"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from interface org.eclipse.emf.ecore.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.Internal.DynamicValueHolder.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature.Internal.DynamicValueHolder</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.Internal.DynamicValueHolder.html?is-external=true#NIL" title="class or interface in org.eclipse.emf.ecore">NIL</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected </CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ObjectPermissionImpl.html#ObjectPermissionImpl()">ObjectPermissionImpl</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ObjectPermissionImpl.html#eStaticClass()">eStaticClass</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ObjectPermissionImpl.html#getView(org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">getView</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;revisionProvider)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected abstract &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ObjectPermissionImpl.html#isApplicable(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">isApplicable</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object,
+             <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;securityContext)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/ObjectPermissionImpl.html#isApplicable(org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">isApplicable</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A>&nbsp;revision,
+             <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;revisionProvider,
+             <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;securityContext)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.security.impl.PermissionImpl"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.emf.cdo.security.impl.<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionImpl</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html#eStaticFeatureCount()">eStaticFeatureCount</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html#getAccess()">getAccess</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html#getRole()">getRole</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html#setAccess(org.eclipse.emf.cdo.security.Access)">setAccess</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html#setRole(org.eclipse.emf.cdo.security.Role)">setRole</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.internal.cdo.CDOObjectImpl"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.emf.internal.cdo.<A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo">CDOObjectImpl</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoClassInfo()">cdoClassInfo</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoConflict()">cdoConflict</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoDirectResource()">cdoDirectResource</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoHistory()">cdoHistory</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoID()">cdoID</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalDynamicFeature(int)">cdoInternalDynamicFeature</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalInstance()">cdoInternalInstance</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalPostAttach()">cdoInternalPostAttach</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalPostDetach(boolean)">cdoInternalPostDetach</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalPostInvalidate()">cdoInternalPostInvalidate</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalPostLoad()">cdoInternalPostLoad</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalPostRollback()">cdoInternalPostRollback</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalPreCommit()">cdoInternalPreCommit</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalPreLoad()">cdoInternalPreLoad</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalSetID(org.eclipse.emf.cdo.common.id.CDOID)">cdoInternalSetID</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalSetResource(org.eclipse.emf.cdo.eresource.CDOResource)">cdoInternalSetResource</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalSetRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">cdoInternalSetRevision</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalSetState(org.eclipse.emf.cdo.CDOState)">cdoInternalSetState</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalSetView(org.eclipse.emf.cdo.view.CDOView)">cdoInternalSetView</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInvalid()">cdoInvalid</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoLockState()">cdoLockState</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoPrefetch(int)">cdoPrefetch</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoReadLock()">cdoReadLock</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoReload()">cdoReload</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoResource()">cdoResource</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoRevision()">cdoRevision</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoState()">cdoState</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoView()">cdoView</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoWriteLock()">cdoWriteLock</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoWriteOption()">cdoWriteOption</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#createFeatureMap(org.eclipse.emf.ecore.EStructuralFeature)">createFeatureMap</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#createList(org.eclipse.emf.ecore.EStructuralFeature)">createList</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#createLock(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)">createLock</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#createMap(org.eclipse.emf.ecore.EStructuralFeature)">createMap</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#createUnorderedList(org.eclipse.emf.ecore.EStructuralFeature)">createUnorderedList</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#dynamicGet(int)">dynamicGet</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#dynamicSet(int, java.lang.Object)">dynamicSet</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#dynamicUnset(int)">dynamicUnset</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eAdapterAdded(org.eclipse.emf.common.notify.Adapter)">eAdapterAdded</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eAdapterRemoved(org.eclipse.emf.common.notify.Adapter)">eAdapterRemoved</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eBasicAdapterListeners()">eBasicAdapterListeners</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eBasicSetAdapterListeners(org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EObservableAdapterList.Listener[])">eBasicSetAdapterListeners</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eBasicSetContainer(org.eclipse.emf.ecore.InternalEObject, int)">eBasicSetContainer</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eBasicSetContainer(org.eclipse.emf.ecore.InternalEObject, int, org.eclipse.emf.common.notify.NotificationChain)">eBasicSetContainer</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eBasicSetSettings(java.lang.Object[])">eBasicSetSettings</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eBasicSettings()">eBasicSettings</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eClass()">eClass</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eContainerAdapterArray()">eContainerAdapterArray</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eContainerFeatureID()">eContainerFeatureID</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eDirectResource()">eDirectResource</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eDynamicClass()">eDynamicClass</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eDynamicFeature(int)">eDynamicFeature</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eDynamicFeatureID(org.eclipse.emf.ecore.EStructuralFeature)">eDynamicFeatureID</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eDynamicIsSet(int, org.eclipse.emf.ecore.EStructuralFeature)">eDynamicIsSet</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eHasSettings()">eHasSettings</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eInternalContainer()">eInternalContainer</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eInternalResource()">eInternalResource</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eIsCaching()">eIsCaching</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#equals(java.lang.Object)">equals</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eSetClass(org.eclipse.emf.ecore.EClass)">eSetClass</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eSetDirectResource(org.eclipse.emf.ecore.resource.Resource.Internal)">eSetDirectResource</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eSetResource(org.eclipse.emf.ecore.resource.Resource.Internal, org.eclipse.emf.common.notify.NotificationChain)">eSetResource</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eSettings()">eSettings</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eStore()">eStore</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#getLockState(org.eclipse.emf.spi.cdo.InternalCDOObject)">getLockState</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#hashCode()">hashCode</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#instanceToRevisionFeature(org.eclipse.emf.spi.cdo.InternalCDOView, org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object)">instanceToRevisionFeature</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#revisionToInstanceFeature(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, org.eclipse.emf.ecore.EStructuralFeature)">revisionToInstanceFeature</A>, <A HREF="../../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#toString()">toString</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.ecore.impl.MinimalEStoreEObjectImpl"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.emf.ecore.impl.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEStoreEObjectImpl.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.impl">MinimalEStoreEObjectImpl</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEStoreEObjectImpl.html?is-external=true#eBasicContainerFeatureID()" title="class or interface in org.eclipse.emf.ecore.impl">eBasicContainerFeatureID</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEStoreEObjectImpl.html?is-external=true#eBasicInternalContainer()" title="class or interface in org.eclipse.emf.ecore.impl">eBasicInternalContainer</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEStoreEObjectImpl.html?is-external=true#eBasicSetAdapterArray(org.eclipse.emf.common.notify.Adapter[])" title="class or interface in org.eclipse.emf.ecore.impl">eBasicSetAdapterArray</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEStoreEObjectImpl.html?is-external=true#eDerivedStructuralFeatureID(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore.impl">eDerivedStructuralFeatureID</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.ecore.impl.MinimalEObjectImpl"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.emf.ecore.impl.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.impl">MinimalEObjectImpl</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true#eAdapters()" title="class or interface in org.eclipse.emf.ecore.impl">eAdapters</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true#eBasicAdapterArray()" title="class or interface in org.eclipse.emf.ecore.impl">eBasicAdapterArray</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true#eBasicAdapters()" title="class or interface in org.eclipse.emf.ecore.impl">eBasicAdapters</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true#eBasicHasAdapters()" title="class or interface in org.eclipse.emf.ecore.impl">eBasicHasAdapters</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true#eBasicProperties()" title="class or interface in org.eclipse.emf.ecore.impl">eBasicProperties</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true#eBasicSetContainer(org.eclipse.emf.ecore.InternalEObject)" title="class or interface in org.eclipse.emf.ecore.impl">eBasicSetContainer</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true#eBasicSetContainerFeatureID(int)" title="class or interface in org.eclipse.emf.ecore.impl">eBasicSetContainerFeatureID</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true#eContents()" title="class or interface in org.eclipse.emf.ecore.impl">eContents</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true#eCrossReferences()" title="class or interface in org.eclipse.emf.ecore.impl">eCrossReferences</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true#eDeliver()" title="class or interface in org.eclipse.emf.ecore.impl">eDeliver</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true#eIsProxy()" title="class or interface in org.eclipse.emf.ecore.impl">eIsProxy</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true#eProperties()" title="class or interface in org.eclipse.emf.ecore.impl">eProperties</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true#eProxyURI()" title="class or interface in org.eclipse.emf.ecore.impl">eProxyURI</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true#eSetDeliver(boolean)" title="class or interface in org.eclipse.emf.ecore.impl">eSetDeliver</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true#eSetProxyURI(org.eclipse.emf.common.util.URI)" title="class or interface in org.eclipse.emf.ecore.impl">eSetProxyURI</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.ecore.impl.BasicEObjectImpl"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.emf.ecore.impl.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.impl">BasicEObjectImpl</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eAddVirtualValue(int, java.lang.Object)" title="class or interface in org.eclipse.emf.ecore.impl">eAddVirtualValue</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore.impl">eAllContents</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eBaseStructuralFeatureID(int, java.lang.Class)" title="class or interface in org.eclipse.emf.ecore.impl">eBaseStructuralFeatureID</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eBasicRemoveFromContainer(org.eclipse.emf.common.notify.NotificationChain)" title="class or interface in org.eclipse.emf.ecore.impl">eBasicRemoveFromContainer</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eBasicRemoveFromContainerFeature(org.eclipse.emf.common.notify.NotificationChain)" title="class or interface in org.eclipse.emf.ecore.impl">eBasicRemoveFromContainerFeature</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eComputeVirtualValuesCapacity(int)" title="class or interface in org.eclipse.emf.ecore.impl">eComputeVirtualValuesCapacity</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eContainer()" title="class or interface in org.eclipse.emf.ecore.impl">eContainer</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eContainingFeature()" title="class or interface in org.eclipse.emf.ecore.impl">eContainingFeature</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eContainmentFeature()" title="class or interface in org.eclipse.emf.ecore.impl">eContainmentFeature</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eContainmentFeature(org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EObject, int)" title="class or interface in org.eclipse.emf.ecore.impl">eContainmentFeature</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eContains(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.impl">eContains</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDerivedOperationID(org.eclipse.emf.ecore.EOperation)" title="class or interface in org.eclipse.emf.ecore.impl">eDerivedOperationID</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDerivedOperationID(int, java.lang.Class)" title="class or interface in org.eclipse.emf.ecore.impl">eDerivedOperationID</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDerivedStructuralFeatureID(int, java.lang.Class)" title="class or interface in org.eclipse.emf.ecore.impl">eDerivedStructuralFeatureID</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicBasicRemoveFromContainer(org.eclipse.emf.common.notify.NotificationChain)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicBasicRemoveFromContainer</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicGet(org.eclipse.emf.ecore.EStructuralFeature, boolean)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicGet(int, boolean, boolean)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicGet(int, org.eclipse.emf.ecore.EStructuralFeature, boolean, boolean)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicInverseAdd(org.eclipse.emf.ecore.InternalEObject, int, java.lang.Class, org.eclipse.emf.common.notify.NotificationChain)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicInverseAdd</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicInverseAdd(org.eclipse.emf.ecore.InternalEObject, int, org.eclipse.emf.common.notify.NotificationChain)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicInverseAdd</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicInverseRemove(org.eclipse.emf.ecore.InternalEObject, int, java.lang.Class, org.eclipse.emf.common.notify.NotificationChain)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicInverseRemove</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicInverseRemove(org.eclipse.emf.ecore.InternalEObject, int, org.eclipse.emf.common.notify.NotificationChain)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicInverseRemove</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicInvoke(org.eclipse.emf.ecore.EOperation, org.eclipse.emf.common.util.EList)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicInvoke</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicInvoke(int, org.eclipse.emf.common.util.EList)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicInvoke</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicIsSet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicIsSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicIsSet(int)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicIsSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicSet(org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicSet(int, org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicSet(int, java.lang.Object)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicUnset(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicUnset</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicUnset(int)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicUnset</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eDynamicUnset(int, org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore.impl">eDynamicUnset</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore.impl">eGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature, boolean)" title="class or interface in org.eclipse.emf.ecore.impl">eGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature, boolean, boolean)" title="class or interface in org.eclipse.emf.ecore.impl">eGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eGet(int, boolean, boolean)" title="class or interface in org.eclipse.emf.ecore.impl">eGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eInverseAdd(org.eclipse.emf.ecore.InternalEObject, int, java.lang.Class, org.eclipse.emf.common.notify.NotificationChain)" title="class or interface in org.eclipse.emf.ecore.impl">eInverseAdd</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eInverseAdd(org.eclipse.emf.ecore.InternalEObject, int, org.eclipse.emf.common.notify.NotificationChain)" title="class or interface in org.eclipse.emf.ecore.impl">eInverseAdd</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eInverseRemove(org.eclipse.emf.ecore.InternalEObject, int, java.lang.Class, org.eclipse.emf.common.notify.NotificationChain)" title="class or interface in org.eclipse.emf.ecore.impl">eInverseRemove</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eInverseRemove(org.eclipse.emf.ecore.InternalEObject, int, org.eclipse.emf.common.notify.NotificationChain)" title="class or interface in org.eclipse.emf.ecore.impl">eInverseRemove</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eInvocationDelegate(org.eclipse.emf.ecore.EOperation)" title="class or interface in org.eclipse.emf.ecore.impl">eInvocationDelegate</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eInvoke(org.eclipse.emf.ecore.EOperation, org.eclipse.emf.common.util.EList)" title="class or interface in org.eclipse.emf.ecore.impl">eInvoke</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eInvoke(int, org.eclipse.emf.common.util.EList)" title="class or interface in org.eclipse.emf.ecore.impl">eInvoke</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eIsSet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore.impl">eIsSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eIsSet(int)" title="class or interface in org.eclipse.emf.ecore.impl">eIsSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eObjectForURIFragmentSegment(java.lang.String)" title="class or interface in org.eclipse.emf.ecore.impl">eObjectForURIFragmentSegment</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eOpenGet(org.eclipse.emf.ecore.EStructuralFeature, boolean)" title="class or interface in org.eclipse.emf.ecore.impl">eOpenGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eOpenIsSet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore.impl">eOpenIsSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eOpenSet(org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object)" title="class or interface in org.eclipse.emf.ecore.impl">eOpenSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eOpenUnset(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore.impl">eOpenUnset</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eRemoveVirtualValue(int)" title="class or interface in org.eclipse.emf.ecore.impl">eRemoveVirtualValue</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eResolveProxy(org.eclipse.emf.ecore.InternalEObject)" title="class or interface in org.eclipse.emf.ecore.impl">eResolveProxy</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eResource()" title="class or interface in org.eclipse.emf.ecore.impl">eResource</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eSet(org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object)" title="class or interface in org.eclipse.emf.ecore.impl">eSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eSet(int, java.lang.Object)" title="class or interface in org.eclipse.emf.ecore.impl">eSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eSetStore(org.eclipse.emf.ecore.InternalEObject.EStore)" title="class or interface in org.eclipse.emf.ecore.impl">eSetStore</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eSetting(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore.impl">eSetting</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eSettingDelegate(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore.impl">eSettingDelegate</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eSetVirtualIndexBits(int, int)" title="class or interface in org.eclipse.emf.ecore.impl">eSetVirtualIndexBits</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eSetVirtualValue(int, java.lang.Object)" title="class or interface in org.eclipse.emf.ecore.impl">eSetVirtualValue</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eSetVirtualValues(java.lang.Object[])" title="class or interface in org.eclipse.emf.ecore.impl">eSetVirtualValues</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eStaticOperationCount()" title="class or interface in org.eclipse.emf.ecore.impl">eStaticOperationCount</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eUnset(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore.impl">eUnset</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eUnset(int)" title="class or interface in org.eclipse.emf.ecore.impl">eUnset</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eURIFragmentSegment(org.eclipse.emf.ecore.EStructuralFeature, org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.impl">eURIFragmentSegment</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eVirtualBitCount(int)" title="class or interface in org.eclipse.emf.ecore.impl">eVirtualBitCount</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eVirtualGet(int)" title="class or interface in org.eclipse.emf.ecore.impl">eVirtualGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eVirtualGet(int, java.lang.Object)" title="class or interface in org.eclipse.emf.ecore.impl">eVirtualGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eVirtualIndex(int, int)" title="class or interface in org.eclipse.emf.ecore.impl">eVirtualIndex</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eVirtualIndexBits(int)" title="class or interface in org.eclipse.emf.ecore.impl">eVirtualIndexBits</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eVirtualIsSet(int)" title="class or interface in org.eclipse.emf.ecore.impl">eVirtualIsSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eVirtualSet(int, java.lang.Object)" title="class or interface in org.eclipse.emf.ecore.impl">eVirtualSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eVirtualUnset(int)" title="class or interface in org.eclipse.emf.ecore.impl">eVirtualUnset</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eVirtualValue(int)" title="class or interface in org.eclipse.emf.ecore.impl">eVirtualValue</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eVirtualValues()" title="class or interface in org.eclipse.emf.ecore.impl">eVirtualValues</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.common.notify.impl.BasicNotifierImpl"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.emf.common.notify.impl.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/impl/BasicNotifierImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">BasicNotifierImpl</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/impl/BasicNotifierImpl.html?is-external=true#eNotificationRequired()" title="class or interface in org.eclipse.emf.common.notify.impl">eNotificationRequired</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/impl/BasicNotifierImpl.html?is-external=true#eNotify(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify.impl">eNotify</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.security.Permission"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.security.<A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html#getAccess()">getAccess</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html#getRole()">getRole</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html#setAccess(org.eclipse.emf.cdo.security.Access)">setAccess</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html#setRole(org.eclipse.emf.cdo.security.Role)">setRole</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.CDOObject"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.<A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoConflict()">cdoConflict</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoDirectResource()">cdoDirectResource</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoHistory()">cdoHistory</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoID()">cdoID</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoInvalid()">cdoInvalid</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoLockState()">cdoLockState</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoPrefetch(int)">cdoPrefetch</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoReadLock()">cdoReadLock</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoReload()">cdoReload</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoResource()">cdoResource</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoRevision()">cdoRevision</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoState()">cdoState</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoView()">cdoView</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoWriteLock()">cdoWriteLock</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoWriteOption()">cdoWriteOption</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.ecore.EObject"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.ecore.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore">eAllContents</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eClass()" title="class or interface in org.eclipse.emf.ecore">eClass</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainer()" title="class or interface in org.eclipse.emf.ecore">eContainer</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainingFeature()" title="class or interface in org.eclipse.emf.ecore">eContainingFeature</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainmentFeature()" title="class or interface in org.eclipse.emf.ecore">eContainmentFeature</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContents()" title="class or interface in org.eclipse.emf.ecore">eContents</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eCrossReferences()" title="class or interface in org.eclipse.emf.ecore">eCrossReferences</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore">eGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature, boolean)" title="class or interface in org.eclipse.emf.ecore">eGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eInvoke(org.eclipse.emf.ecore.EOperation, org.eclipse.emf.common.util.EList)" title="class or interface in org.eclipse.emf.ecore">eInvoke</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsProxy()" title="class or interface in org.eclipse.emf.ecore">eIsProxy</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsSet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore">eIsSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eResource()" title="class or interface in org.eclipse.emf.ecore">eResource</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eSet(org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object)" title="class or interface in org.eclipse.emf.ecore">eSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eUnset(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore">eUnset</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.common.notify.Notifier"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.common.notify.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eAdapters()" title="class or interface in org.eclipse.emf.common.notify">eAdapters</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eDeliver()" title="class or interface in org.eclipse.emf.common.notify">eDeliver</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eNotify(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify">eNotify</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eSetDeliver(boolean)" title="class or interface in org.eclipse.emf.common.notify">eSetDeliver</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.ecore.InternalEObject"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.ecore.<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">InternalEObject</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eBaseStructuralFeatureID(int, java.lang.Class)" title="class or interface in org.eclipse.emf.ecore">eBaseStructuralFeatureID</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eBasicRemoveFromContainer(org.eclipse.emf.common.notify.NotificationChain)" title="class or interface in org.eclipse.emf.ecore">eBasicRemoveFromContainer</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eDerivedOperationID(int, java.lang.Class)" title="class or interface in org.eclipse.emf.ecore">eDerivedOperationID</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eDerivedStructuralFeatureID(int, java.lang.Class)" title="class or interface in org.eclipse.emf.ecore">eDerivedStructuralFeatureID</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature, boolean, boolean)" title="class or interface in org.eclipse.emf.ecore">eGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eGet(int, boolean, boolean)" title="class or interface in org.eclipse.emf.ecore">eGet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eInverseAdd(org.eclipse.emf.ecore.InternalEObject, int, java.lang.Class, org.eclipse.emf.common.notify.NotificationChain)" title="class or interface in org.eclipse.emf.ecore">eInverseAdd</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eInverseRemove(org.eclipse.emf.ecore.InternalEObject, int, java.lang.Class, org.eclipse.emf.common.notify.NotificationChain)" title="class or interface in org.eclipse.emf.ecore">eInverseRemove</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eInvoke(int, org.eclipse.emf.common.util.EList)" title="class or interface in org.eclipse.emf.ecore">eInvoke</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eIsSet(int)" title="class or interface in org.eclipse.emf.ecore">eIsSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eNotificationRequired()" title="class or interface in org.eclipse.emf.ecore">eNotificationRequired</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eObjectForURIFragmentSegment(java.lang.String)" title="class or interface in org.eclipse.emf.ecore">eObjectForURIFragmentSegment</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eProxyURI()" title="class or interface in org.eclipse.emf.ecore">eProxyURI</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eResolveProxy(org.eclipse.emf.ecore.InternalEObject)" title="class or interface in org.eclipse.emf.ecore">eResolveProxy</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eSet(int, java.lang.Object)" title="class or interface in org.eclipse.emf.ecore">eSet</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eSetProxyURI(org.eclipse.emf.common.util.URI)" title="class or interface in org.eclipse.emf.ecore">eSetProxyURI</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eSetStore(org.eclipse.emf.ecore.InternalEObject.EStore)" title="class or interface in org.eclipse.emf.ecore">eSetStore</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eSetting(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore">eSetting</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eUnset(int)" title="class or interface in org.eclipse.emf.ecore">eUnset</A>, <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true#eURIFragmentSegment(org.eclipse.emf.ecore.EStructuralFeature, org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore">eURIFragmentSegment</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="ObjectPermissionImpl()"><!-- --></A><H3>
+ObjectPermissionImpl</H3>
+<PRE>
+protected <B>ObjectPermissionImpl</B>()</PRE>
+<DL>
+<DD><!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DL>
+<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="eStaticClass()"><!-- --></A><H3>
+eStaticClass</H3>
+<PRE>
+protected <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A> <B>eStaticClass</B>()</PRE>
+<DL>
+<DD><!-- begin-user-doc -->
+ <!-- end-user-doc -->
+<P>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html#eStaticClass()">eStaticClass</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl">PermissionImpl</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getView(org.eclipse.emf.cdo.common.revision.CDORevisionProvider)"><!-- --></A><H3>
+getView</H3>
+<PRE>
+protected <A HREF="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A> <B>getView</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;revisionProvider)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isApplicable(org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><!-- --></A><H3>
+isApplicable</H3>
+<PRE>
+public boolean <B>isApplicable</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A>&nbsp;revision,
+                            <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;revisionProvider,
+                            <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;securityContext)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html#isApplicable(org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">isApplicable</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/security/Permission.html" title="interface in org.eclipse.emf.cdo.security">Permission</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Added</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isApplicable(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><!-- --></A><H3>
+isApplicable</H3>
+<PRE>
+protected abstract boolean <B>isApplicable</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object,
+                                        <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;securityContext)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/ObjectPermissionImpl.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/GroupImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/security/impl/PackagePermissionImpl.html" title="class in org.eclipse.emf.cdo.security.impl"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/security/impl/ObjectPermissionImpl.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="ObjectPermissionImpl.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_classes_inherited_from_class_org.eclipse.emf.ecore.impl.MinimalEObjectImpl">NESTED</A>&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.eclipse.emf.ecore.impl.BasicEObjectImpl">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

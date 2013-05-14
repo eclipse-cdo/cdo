@@ -73,7 +73,6 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="overrideUUID"</font>&nbsp;value<font color="#000080">=""</font>/&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="supportingAudits"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="supportingBranches"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="supportingEcore"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="ensureReferentialIntegrity"</font>&nbsp;value<font color="#000080">="false"</font>/&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="allowInterruptRunningQueries"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="idGenerationLocation"</font>&nbsp;value<font color="#000080">="STORE"</font>/&gt;</font>&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Possible&nbsp;values:&nbsp;STORE&nbsp;|&nbsp;CLIENT&nbsp;--&gt;</font><br/>
@@ -84,11 +83,7 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example&nbsp;http://bugs.eclipse.org/302775<br/>
-			&lt;userManager&nbsp;type="file"&nbsp;description="_database/repo1.users"/&gt;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
-<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example&nbsp;http://bugs.eclipse.org/34583<br/>
-			&lt;userManager&nbsp;type="TestRepository"&nbsp;description="repo1"/&gt;<br/>
+			&lt;authenticator&nbsp;type="file"&nbsp;description="_database/repo1.users"/&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example&nbsp;http://bugs.eclipse.org/345431<br/>
@@ -96,6 +91,10 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;store&nbsp;type<font color="#000080">="db"</font>&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example&nbsp;http://bugs.eclipse.org/396379&nbsp;(if&nbsp;idGenerationLocation&nbsp;==&nbsp;CLIENT)<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&nbsp;name="idColumnLength"&nbsp;value="34"/&gt;<br/>
+			--&gt;</font><br/>
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Period&nbsp;at&nbsp;which&nbsp;to&nbsp;execute&nbsp;an&nbsp;SQL&nbsp;statement&nbsp;to&nbsp;keep&nbsp;DB&nbsp;connection&nbsp;alive,&nbsp;in&nbsp;minutes&nbsp;--&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="connectionKeepAlivePeriod"</font>&nbsp;value<font color="#000080">="60"</font>/&gt;</font><br/>
@@ -150,11 +149,12 @@ function windowTitle()
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example:<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dbAdapter&nbsp;name="postgresql"/&gt;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dataSource&nbsp;class="org.postgresql.ds.PGSimpleDataSource"<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url="jdbc:postgresql://localhost:5432/repo1"<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;databaseName="repo1"<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user="cdo"<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password="cdo"/&gt;<br/>
+			&lt;dataSource&nbsp;class="org.postgresql.ds.PGSimpleDataSource"<br/>
+				serverName="localhost"<br/>
+				portNumber="5432"<br/>
+				databaseName="repo1"<br/>
+				user="cdo"<br/>
+				password="cdo"/&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example:<br/>

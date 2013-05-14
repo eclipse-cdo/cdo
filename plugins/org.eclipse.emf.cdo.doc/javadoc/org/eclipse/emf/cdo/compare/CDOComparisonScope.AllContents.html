@@ -120,10 +120,9 @@ Takes an arbitrary <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" t
  and returns <CODE>matches</CODE> for <b>all</b> elements of its <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore"><CODE>content tree</CODE></A>. This scope has the advantage that the comparison can
  be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
  matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.
- The following methods return comparisons that are based on this scope algorithm:
+ The following method returns comparisons that are based on this scope algorithm:
  <ul>
- <li><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><CODE>CDOCompareUtil.compare(EObject, CDOBranchPoint)</CODE></A>
- <li><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><CODE>CDOCompareUtil.compare(EObject, CDOBranchPoint, boolean)</CODE></A>
+ <li><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[])"><CODE>CDOCompareUtil.compare(CDOObject, CDOView, CDOView[])</CODE></A>
  </ul>
 <P>
 
@@ -179,6 +178,16 @@ Takes an arbitrary <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" t
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.AllContents.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope.AllContents</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.AllContents.html#create(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[])">create</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;left,
+       <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;rightView,
+       <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>[]&nbsp;originView)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Takes an arbitrary <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>object</CODE></A> (including <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>resource nodes</CODE></A>) and returns <CODE>matches</CODE> for <b>all</b> elements of its <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore"><CODE>content tree</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</A>&lt;? extends <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&gt;</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.AllContents.html#getChildren(org.eclipse.emf.ecore.EObject)">getChildren</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&nbsp;eObject)</CODE>
 
@@ -192,7 +201,7 @@ Takes an arbitrary <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" t
 <TH ALIGN="left"><B>Methods inherited from class org.eclipse.emf.cdo.compare.<A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html#getCoveredEObjects(org.eclipse.emf.ecore.resource.Resource)">getCoveredEObjects</A>, <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html#getCoveredResources(org.eclipse.emf.ecore.resource.ResourceSet)">getCoveredResources</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html#getCoveredEObjects(org.eclipse.emf.ecore.resource.Resource)">getCoveredEObjects</A>, <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html#getCoveredResources(org.eclipse.emf.ecore.resource.ResourceSet)">getCoveredResources</A>, <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html#isResolveProxies()">isResolveProxies</A>, <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.html#setResolveProxies(boolean)">setResolveProxies</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -241,6 +250,23 @@ getChildren</H3>
 <PRE>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</A>&lt;? extends <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&gt; <B>getChildren</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&nbsp;eObject)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="create(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[])"><!-- --></A><H3>
+create</H3>
+<PRE>
+public static <A HREF="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.AllContents.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope.AllContents</A> <B>create</B>(<A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;left,
+                                                    <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;rightView,
+                                                    <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>[]&nbsp;originView)</PRE>
+<DL>
+<DD>Takes an arbitrary <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>object</CODE></A> (including <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>resource nodes</CODE></A>) and returns <CODE>matches</CODE> for <b>all</b> elements of its <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore"><CODE>content tree</CODE></A>. This scope has the advantage that the comparison can
+ be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
+ matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.
+<P>
 <DD><DL>
 </DL>
 </DD>
@@ -305,6 +331,6 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&n
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 
 <HR>
-<i>Copyright (c) 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

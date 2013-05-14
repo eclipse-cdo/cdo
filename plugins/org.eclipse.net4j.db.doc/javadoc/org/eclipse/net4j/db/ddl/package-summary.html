@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/net4j/db/package-summary.html"><B>PREV PACKAGE</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/db/derby/package-summary.html"><B>NEXT PACKAGE</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/db/ddl/delta/package-summary.html"><B>NEXT PACKAGE</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/net4j/db/ddl/package-summary.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="package-summary.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -88,12 +88,26 @@ The Net4j DB framework concepts for the abstraction of the SQL data definition l
 <P>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="IDBField.html" title="&#171;interface&#187; IDBField" alt="" coords="176,5,261,45"/>
-<area shape="rect" id="node2" href="IDBIndex.html" title="&#171;interface&#187; IDBIndex" alt="" coords="176,69,261,109"/>
-<area shape="rect" id="node3" href="IDBSchema.html" title="&#171;interface&#187; IDBSchema" alt="" coords="173,133,264,173"/>
-<area shape="rect" id="node4" href="IDBSchemaElement.html" title="&#171;interface&#187; IDBSchemaElement" alt="" coords="5,101,144,141"/>
-<area shape="rect" id="node5" href="IDBTable.html" title="&#171;interface&#187; IDBTable" alt="" coords="176,197,261,237"/>
-<area shape="rect" id="node6" href="IDBIndex.Type.html" title="&#171;enum&#187; IDBIndex.Type" alt="" coords="21,37,128,77"/>
+<area shape="rect" id="node1" href="../DBException.html" title="&#171;exception&#187; DBException (org.eclipse.net4j.db)" alt="" coords="67,421,210,475"/>
+<area shape="rect" id="node2" href="IDBSchemaVisitor.StopRecursion.html" title="&#171;exception&#187; IDBSchemaVisitor.StopRecursion" alt="" coords="309,349,526,389"/>
+<area shape="rect" id="node3" title="&#171;exception&#187; RuntimeException (java.lang)" alt="" coords="75,342,203,397"/>
+<area shape="rect" id="node4" href="SchemaElementNotFoundException.html" title="&#171;exception&#187; SchemaElementNotFoundException" alt="" coords="301,428,533,468"/>
+<area shape="rect" id="node5" href="IDBSchemaVisitor.Default.html" title="IDBSchemaVisitor.Default" alt="" coords="331,285,503,310"/>
+<area shape="rect" id="node6" title="&#171;interface&#187; Comparable (java.lang)" alt="" coords="619,47,709,102"/>
+<area shape="rect" id="node7" title="&#171;interface&#187; IContainer (org.eclipse.net4j.util.container)" alt="" coords="563,126,765,181"/>
+<area shape="rect" id="node8" href="IDBElement.html" title="&#171;interface&#187; IDBElement" alt="" coords="372,205,463,245"/>
+<area shape="rect" id="node9" href="IDBField.html" title="&#171;interface&#187; IDBField" alt="" coords="1039,69,1124,109"/>
+<area shape="rect" id="node10" href="IDBIndex.html" title="&#171;interface&#187; IDBIndex" alt="" coords="1039,133,1124,173"/>
+<area shape="rect" id="node11" href="IDBIndexField.html" title="&#171;interface&#187; IDBIndexField" alt="" coords="1030,5,1133,45"/>
+<area shape="rect" id="node12" href="IDBNamedElement.html" title="&#171;interface&#187; IDBNamedElement" alt="" coords="598,205,730,245"/>
+<area shape="rect" id="node13" href="IDBSchema.html" title="&#171;interface&#187; IDBSchema" alt="" coords="1036,197,1127,237"/>
+<area shape="rect" id="node14" href="IDBSchemaElement.html" title="&#171;interface&#187; IDBSchemaElement" alt="" coords="828,133,967,173"/>
+<area shape="rect" id="node15" href="IDBSchemaVisitor.html" title="&#171;interface&#187; IDBSchemaVisitor" alt="" coords="75,277,203,317"/>
+<area shape="rect" id="node16" href="IDBTable.html" title="&#171;interface&#187; IDBTable" alt="" coords="1039,261,1124,301"/>
+<area shape="rect" id="node17" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="49,198,229,253"/>
+<area shape="rect" id="node18" title="&#171;interface&#187; PositionProvider (org.eclipse.net4j.util.collection)" alt="" coords="795,26,1000,81"/>
+<area shape="rect" id="node19" href="IDBIndex.Type.html" title="&#171;enum&#187; IDBIndex.Type" alt="" coords="85,133,192,173"/>
+<area shape="rect" id="node20" href="IDBSchemaElement.SchemaElementType.html" title="&#171;enum&#187; IDBSchemaElement.SchemaElementType" alt="" coords="5,69,272,109"/>
 </map>
 
 <CENTER><IMG SRC="package-summary.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -104,12 +118,24 @@ The Net4j DB framework concepts for the abstraction of the SQL data definition l
 <B>Interface Summary</B></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBElement</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A></B></TD>
 <TD>A field (column) specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</A></B></TD>
 <TD>An index specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBIndexField.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndexField</A></B></TD>
+<TD>An index field specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB index</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</A></B></TD>
+<TD>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A></B></TD>
@@ -121,8 +147,26 @@ The Net4j DB framework concepts for the abstraction of the SQL data definition l
 <TD>Specifies a hierachical namespace for elements in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB schema</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaVisitor.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaVisitor</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A></B></TD>
 <TD>A table specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB schema</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaVisitor.Default.html" title="class in org.eclipse.net4j.db.ddl">IDBSchemaVisitor.Default</A></B></TD>
+<TD>&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -137,6 +181,28 @@ The Net4j DB framework concepts for the abstraction of the SQL data definition l
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</A></B></TD>
 <TD>The type of an <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>index</CODE></A> specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.SchemaElementType.html" title="enum in org.eclipse.net4j.db.ddl">IDBSchemaElement.SchemaElementType</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Exception Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaVisitor.StopRecursion.html" title="class in org.eclipse.net4j.db.ddl">IDBSchemaVisitor.StopRecursion</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/SchemaElementNotFoundException.html" title="class in org.eclipse.net4j.db.ddl">SchemaElementNotFoundException</A></B></TD>
+<TD>&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -177,7 +243,7 @@ The Net4j DB framework concepts for the abstraction of the SQL data definition l
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/net4j/db/package-summary.html"><B>PREV PACKAGE</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/db/derby/package-summary.html"><B>NEXT PACKAGE</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/db/ddl/delta/package-summary.html"><B>NEXT PACKAGE</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/net4j/db/ddl/package-summary.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="package-summary.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

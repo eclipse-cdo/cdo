@@ -76,9 +76,9 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_top"></A>
@@ -147,11 +147,36 @@ A utility class with various static factory and convenience methods.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.RunnableWithConnection.html" title="interface in org.eclipse.net4j.db">DBUtil.RunnableWithConnection</A>&lt;<A HREF="../../../../org/eclipse/net4j/db/DBUtil.RunnableWithConnection.html" title="type parameter in DBUtil.RunnableWithConnection">T</A>&gt;</B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;interface</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.SerializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.SerializeRowHandler</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../org/eclipse/net4j/db/DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db"><CODE>row handler</CODE></A> with a <A HREF="../../../../org/eclipse/net4j/db/DBUtil.SerializeRowHandler.html#handleRow(org.eclipse.net4j.util.io.ExtendedDataOutput, java.sql.Connection, org.eclipse.net4j.db.ddl.IDBField[], java.lang.Object[])"><CODE>method</CODE></A>
  that is called once per row serialized within <A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput, java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String, java.lang.String, org.eclipse.net4j.db.DBUtil.SerializeRowHandler)"><CODE>DBUtil.serializeTable()</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#MAX_BATCH_SIZE">MAX_BATCH_SIZE</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -223,6 +248,14 @@ A utility class with various static factory and convenience methods.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#copySchema(org.eclipse.net4j.db.ddl.IDBSchema)">copySchema</A></B>(<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A>&nbsp;source)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;<A HREF="../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#createConnectionProvider(javax.sql.DataSource)">createConnectionProvider</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</A>&nbsp;dataSource)</CODE>
 
@@ -252,16 +285,6 @@ A utility class with various static factory and convenience methods.
 <TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#createDataSource(java.util.Map, java.lang.String, java.lang.String)">createDataSource</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;properties,
                  <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;namespace,
                  <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;driverClassKey)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#createSchema(javax.sql.DataSource, java.lang.String, boolean)">createSchema</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</A>&nbsp;dataSource,
-             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
-             boolean&nbsp;dropIfExists)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -309,6 +332,56 @@ A utility class with various static factory and convenience methods.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#dump(org.eclipse.net4j.db.ddl.IDBNamedElement)">dump</A></B>(<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</A>&nbsp;namedElement)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#dump(org.eclipse.net4j.db.ddl.IDBNamedElement, java.io.Writer)">dump</A></B>(<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</A>&nbsp;namedElement,
+     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</A>&nbsp;writer)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#dumpToString(org.eclipse.net4j.db.ddl.IDBNamedElement)">dumpToString</A></B>(<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</A>&nbsp;namedElement)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#execute(java.sql.Connection, java.lang.CharSequence)">execute</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</A>&nbsp;sql)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T&gt; T</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#execute(org.eclipse.net4j.db.IDBConnectionProvider, org.eclipse.net4j.db.DBUtil.RunnableWithConnection)">execute</A></B>(<A HREF="../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</A>&nbsp;connectionProvider,
+        <A HREF="../../../../org/eclipse/net4j/db/DBUtil.RunnableWithConnection.html" title="interface in org.eclipse.net4j.db">DBUtil.RunnableWithConnection</A>&lt;T&gt;&nbsp;runnable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#executeBatch(java.sql.PreparedStatement, int)">executeBatch</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</A>&nbsp;stmt,
              int&nbsp;counter)</CODE>
 
@@ -328,7 +401,15 @@ A utility class with various static factory and convenience methods.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#getAllSchemaTableNames(java.sql.Connection)">getAllSchemaTableNames</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection)</CODE>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#getAllSchemaNames(java.sql.Connection)">getAllSchemaNames</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#getAllSchemaNames(java.sql.DatabaseMetaData)">getAllSchemaNames</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/DatabaseMetaData.html?is-external=true" title="class or interface in java.sql">DatabaseMetaData</A>&nbsp;metaData)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -336,10 +417,18 @@ A utility class with various static factory and convenience methods.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#getAllSchemaTableNames(java.sql.Connection)">getAllSchemaTableNames</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#getAllSchemaNames(java.sql.Connection)"><CODE>getAllSchemaNames(Connection)</CODE></A>.</I></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#getAllSchemaTableNames(java.sql.DatabaseMetaData)">getAllSchemaTableNames</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/DatabaseMetaData.html?is-external=true" title="class or interface in java.sql">DatabaseMetaData</A>&nbsp;metaData)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#getAllSchemaNames(java.sql.DatabaseMetaData)"><CODE>getAllSchemaNames(DatabaseMetaData)</CODE></A>.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -356,7 +445,7 @@ A utility class with various static factory and convenience methods.
 <TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#getDBAdapter(java.lang.String)">getDBAdapter</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;adapterName)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Can only be used when Eclipse is running.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Retrieves an <A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db"><CODE>adapter</CODE></A> from the <A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html#REGISTRY"><CODE>adapter registry</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -370,6 +459,58 @@ A utility class with various static factory and convenience methods.
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;boolean</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#isTracerEnabled()">isTracerEnabled</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../org/eclipse/net4j/db/IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#openDatabase(org.eclipse.net4j.db.IDBAdapter, org.eclipse.net4j.db.IDBConnectionProvider, java.lang.String)">openDatabase</A></B>(<A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;adapter,
+             <A HREF="../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</A>&nbsp;connectionProvider,
+             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;schemaName)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../org/eclipse/net4j/db/IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#openDatabase(org.eclipse.net4j.db.IDBAdapter, org.eclipse.net4j.db.IDBConnectionProvider, java.lang.String, boolean)">openDatabase</A></B>(<A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;adapter,
+             <A HREF="../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</A>&nbsp;connectionProvider,
+             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;schemaName,
+             boolean&nbsp;fixNullableIndexColumns)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection, org.eclipse.net4j.db.ddl.IDBSchema)">readSchema</A></B>(<A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;adapter,
+           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+           <A HREF="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A>&nbsp;schema)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection, java.lang.String)">readSchema</A></B>(<A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;adapter,
+           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection, java.lang.String, boolean)">readSchema</A></B>(<A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;adapter,
+           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+           boolean&nbsp;fixNullableIndexColumns)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -472,6 +613,15 @@ A utility class with various static factory and convenience methods.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#setAutoCommit(java.sql.Connection, boolean)">setAutoCommit</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+              boolean&nbsp;autoCommit)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#sqlDump(java.sql.Connection, java.lang.String)">sqlDump</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;conn,
         <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;sql)</CODE>
@@ -527,6 +677,27 @@ A utility class with various static factory and convenience methods.
 &nbsp;
 <P>
 
+<!-- ============ FIELD DETAIL =========== -->
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Field Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="MAX_BATCH_SIZE"><!-- --></A><H3>
+MAX_BATCH_SIZE</H3>
+<PRE>
+public static final int <B>MAX_BATCH_SIZE</B></PRE>
+<DL>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DL>
+
 <!-- ============ METHOD DETAIL ========== -->
 
 <A NAME="method_detail"><!-- --></A>
@@ -575,12 +746,145 @@ sqlDump</H3>
 </DL>
 <HR>
 
+<A NAME="dumpToString(org.eclipse.net4j.db.ddl.IDBNamedElement)"><!-- --></A><H3>
+dumpToString</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>dumpToString</B>(<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</A>&nbsp;namedElement)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="dump(org.eclipse.net4j.db.ddl.IDBNamedElement)"><!-- --></A><H3>
+dump</H3>
+<PRE>
+public static void <B>dump</B>(<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</A>&nbsp;namedElement)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="dump(org.eclipse.net4j.db.ddl.IDBNamedElement, java.io.Writer)"><!-- --></A><H3>
+dump</H3>
+<PRE>
+public static void <B>dump</B>(<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</A>&nbsp;namedElement,
+                        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</A>&nbsp;writer)
+                 throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE><DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="openDatabase(org.eclipse.net4j.db.IDBAdapter, org.eclipse.net4j.db.IDBConnectionProvider, java.lang.String)"><!-- --></A><H3>
+openDatabase</H3>
+<PRE>
+public static <A HREF="../../../../org/eclipse/net4j/db/IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</A> <B>openDatabase</B>(<A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;adapter,
+                                       <A HREF="../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</A>&nbsp;connectionProvider,
+                                       <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;schemaName)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="openDatabase(org.eclipse.net4j.db.IDBAdapter, org.eclipse.net4j.db.IDBConnectionProvider, java.lang.String, boolean)"><!-- --></A><H3>
+openDatabase</H3>
+<PRE>
+public static <A HREF="../../../../org/eclipse/net4j/db/IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</A> <B>openDatabase</B>(<A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;adapter,
+                                       <A HREF="../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</A>&nbsp;connectionProvider,
+                                       <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;schemaName,
+                                       boolean&nbsp;fixNullableIndexColumns)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="createSchema(java.lang.String)"><!-- --></A><H3>
 createSchema</H3>
 <PRE>
 public static <A HREF="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A> <B>createSchema</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</PRE>
 <DL>
 <DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="readSchema(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection, org.eclipse.net4j.db.ddl.IDBSchema)"><!-- --></A><H3>
+readSchema</H3>
+<PRE>
+public static void <B>readSchema</B>(<A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;adapter,
+                              <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+                              <A HREF="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A>&nbsp;schema)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="readSchema(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection, java.lang.String)"><!-- --></A><H3>
+readSchema</H3>
+<PRE>
+public static <A HREF="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A> <B>readSchema</B>(<A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;adapter,
+                                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+                                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="readSchema(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection, java.lang.String, boolean)"><!-- --></A><H3>
+readSchema</H3>
+<PRE>
+public static <A HREF="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A> <B>readSchema</B>(<A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>&nbsp;adapter,
+                                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+                                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
+                                   boolean&nbsp;fixNullableIndexColumns)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="copySchema(org.eclipse.net4j.db.ddl.IDBSchema)"><!-- --></A><H3>
+copySchema</H3>
+<PRE>
+public static <A HREF="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A> <B>copySchema</B>(<A HREF="../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A>&nbsp;source)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -638,8 +942,11 @@ getDBAdapter</H3>
 <PRE>
 public static <A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A> <B>getDBAdapter</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;adapterName)</PRE>
 <DL>
-<DD>Can only be used when Eclipse is running. In standalone scenarios create the adapter instance by directly calling
- the constructor of the adapter class.
+<DD>Retrieves an <A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db"><CODE>adapter</CODE></A> from the <A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html#REGISTRY"><CODE>adapter registry</CODE></A>.
+ <p>
+ If Eclipse is running adapters are automatically created from descriptors that are contributed to the extension point <code>org.eclipse.net4j.db.dbAdapters</code>.
+ <p>
+ In standalone scenarios the needed adapter instances must be registered with the <A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html#REGISTRY"><CODE>adapter registry</CODE></A> manually.
 <P>
 <DD><DL>
 </DL>
@@ -647,10 +954,10 @@ public static <A HREF="../../../../org/eclipse/net4j/db/IDBAdapter.html" title="
 </DL>
 <HR>
 
-<A NAME="close(java.sql.Connection)"><!-- --></A><H3>
+<A NAME="close(java.sql.ResultSet)"><!-- --></A><H3>
 close</H3>
 <PRE>
-public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A> <B>close</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection)</PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A> <B>close</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</A>&nbsp;resultSet)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -669,12 +976,26 @@ public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lan
 </DL>
 <HR>
 
-<A NAME="close(java.sql.ResultSet)"><!-- --></A><H3>
+<A NAME="close(java.sql.Connection)"><!-- --></A><H3>
 close</H3>
 <PRE>
-public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A> <B>close</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</A>&nbsp;resultSet)</PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A> <B>close</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection)</PRE>
 <DL>
 <DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setAutoCommit(java.sql.Connection, boolean)"><!-- --></A><H3>
+setAutoCommit</H3>
+<PRE>
+public static boolean <B>setAutoCommit</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+                                    boolean&nbsp;autoCommit)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -683,8 +1004,11 @@ public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lan
 <A NAME="getAllSchemaTableNames(java.sql.Connection)"><!-- --></A><H3>
 getAllSchemaTableNames</H3>
 <PRE>
-public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt; <B>getAllSchemaTableNames</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt; <B>getAllSchemaTableNames</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection)</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#getAllSchemaNames(java.sql.Connection)"><CODE>getAllSchemaNames(Connection)</CODE></A>.</I>
+<P>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>3.0</DD>
@@ -696,11 +1020,40 @@ public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/uti
 <A NAME="getAllSchemaTableNames(java.sql.DatabaseMetaData)"><!-- --></A><H3>
 getAllSchemaTableNames</H3>
 <PRE>
-public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt; <B>getAllSchemaTableNames</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/DatabaseMetaData.html?is-external=true" title="class or interface in java.sql">DatabaseMetaData</A>&nbsp;metaData)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt; <B>getAllSchemaTableNames</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/DatabaseMetaData.html?is-external=true" title="class or interface in java.sql">DatabaseMetaData</A>&nbsp;metaData)</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.2 use <A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#getAllSchemaNames(java.sql.DatabaseMetaData)"><CODE>getAllSchemaNames(DatabaseMetaData)</CODE></A>.</I>
+<P>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getAllSchemaNames(java.sql.Connection)"><!-- --></A><H3>
+getAllSchemaNames</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt; <B>getAllSchemaNames</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getAllSchemaNames(java.sql.DatabaseMetaData)"><!-- --></A><H3>
+getAllSchemaNames</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt; <B>getAllSchemaNames</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/DatabaseMetaData.html?is-external=true" title="class or interface in java.sql">DatabaseMetaData</A>&nbsp;metaData)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -713,21 +1066,6 @@ public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/uti
                                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;dbName)</PRE>
 <DL>
 <DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="createSchema(javax.sql.DataSource, java.lang.String, boolean)"><!-- --></A><H3>
-createSchema</H3>
-<PRE>
-public static void <B>createSchema</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</A>&nbsp;dataSource,
-                                <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
-                                boolean&nbsp;dropIfExists)</PRE>
-<DL>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -840,6 +1178,34 @@ public static long <B>selectMaximumLong</B>(<A HREF="http://download.oracle.com/
 <DT><B>Throws:</B>
 <DD><CODE><A HREF="../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</A></CODE><DT><B>Since:</B></DT>
   <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="execute(org.eclipse.net4j.db.IDBConnectionProvider, org.eclipse.net4j.db.DBUtil.RunnableWithConnection)"><!-- --></A><H3>
+execute</H3>
+<PRE>
+public static &lt;T&gt; T <B>execute</B>(<A HREF="../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</A>&nbsp;connectionProvider,
+                            <A HREF="../../../../org/eclipse/net4j/db/DBUtil.RunnableWithConnection.html" title="interface in org.eclipse.net4j.db">DBUtil.RunnableWithConnection</A>&lt;T&gt;&nbsp;runnable)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="execute(java.sql.Connection, java.lang.CharSequence)"><!-- --></A><H3>
+execute</H3>
+<PRE>
+public static void <B>execute</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+                           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</A>&nbsp;sql)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>
@@ -1166,9 +1532,9 @@ public static boolean <B>isTracerEnabled</B>()</PRE>
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_bottom"></A>

@@ -88,23 +88,29 @@ A framework for memory-sensitive keyed references and value maps.
 <P>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="KeyedPhantomReference.html" title="KeyedPhantomReference" alt="" coords="246,293,415,318"/>
-<area shape="rect" id="node2" href="KeyedSoftReference.html" title="KeyedSoftReference" alt="" coords="261,357,401,382"/>
-<area shape="rect" id="node3" href="KeyedStrongReference.html" title="KeyedStrongReference" alt="" coords="253,413,408,438"/>
-<area shape="rect" id="node4" href="KeyedWeakReference.html" title="KeyedWeakReference" alt="" coords="255,470,406,495"/>
-<area shape="rect" id="node5" title="PhantomReference (java.lang.ref)" alt="" coords="45,277,177,317"/>
-<area shape="rect" id="node6" href="ReferenceValueMap.Soft.html" title="ReferenceValueMap.Soft" alt="" coords="453,127,619,153"/>
-<area shape="rect" id="node7" href="ReferenceValueMap.Strong.html" title="ReferenceValueMap.Strong" alt="" coords="446,177,626,202"/>
-<area shape="rect" id="node8" href="ReferenceValueMap.Weak.html" title="ReferenceValueMap.Weak" alt="" coords="448,226,624,251"/>
-<area shape="rect" id="node9" title="SoftReference (java.lang.ref)" alt="" coords="59,341,162,381"/>
-<area shape="rect" id="node10" title="WeakReference (java.lang.ref)" alt="" coords="53,469,168,509"/>
-<area shape="rect" id="node11" title="AbstractMap (java.util)" alt="" coords="63,133,159,173"/>
-<area shape="rect" id="node12" href="ReferenceQueueWorker.html" title="ReferenceQueueWorker" alt="" coords="249,77,412,102"/>
-<area shape="rect" id="node13" href="ReferenceValueMap.html" title="ReferenceValueMap" alt="" coords="261,177,400,202"/>
-<area shape="rect" id="node14" href="../concurrent/Worker.html" title="Worker (org.eclipse.net4j.util.concurrent)" alt="" coords="5,69,216,109"/>
-<area shape="rect" id="node15" title="&#171;interface&#187; ConcurrentMap (java.util.concurrent)" alt="" coords="41,198,180,253"/>
-<area shape="rect" id="node16" href="KeyedReference.html" title="&#171;interface&#187; KeyedReference" alt="" coords="52,405,169,445"/>
-<area shape="rect" id="node17" href="ReferenceType.html" title="&#171;enum&#187; ReferenceType" alt="" coords="57,5,165,45"/>
+<area shape="rect" id="node1" href="Interner.html" title="Interner" alt="" coords="78,551,143,577"/>
+<area shape="rect" id="node2" href="Interner.Entry.html" title="Interner.Entry" alt="" coords="281,286,381,311"/>
+<area shape="rect" id="node3" href="KeyedPhantomReference.html" title="KeyedPhantomReference" alt="" coords="246,385,415,410"/>
+<area shape="rect" id="node4" href="KeyedSoftReference.html" title="KeyedSoftReference" alt="" coords="261,490,401,515"/>
+<area shape="rect" id="node5" href="KeyedStrongReference.html" title="KeyedStrongReference" alt="" coords="253,434,408,459"/>
+<area shape="rect" id="node6" href="KeyedWeakReference.html" title="KeyedWeakReference" alt="" coords="255,335,406,361"/>
+<area shape="rect" id="node7" title="PhantomReference (java.lang.ref)" alt="" coords="45,359,177,399"/>
+<area shape="rect" id="node8" href="ReferenceValueMap.Soft.html" title="ReferenceValueMap.Soft" alt="" coords="669,173,835,198"/>
+<area shape="rect" id="node9" href="ReferenceValueMap.Strong.html" title="ReferenceValueMap.Strong" alt="" coords="662,222,842,247"/>
+<area shape="rect" id="node10" href="ReferenceValueMap.Weak.html" title="ReferenceValueMap.Weak" alt="" coords="664,271,840,297"/>
+<area shape="rect" id="node11" href="ReferenceValueMap2.Soft.html" title="ReferenceValueMap2.Soft" alt="" coords="453,74,625,99"/>
+<area shape="rect" id="node12" href="ReferenceValueMap2.Strong.html" title="ReferenceValueMap2.Strong" alt="" coords="445,123,632,149"/>
+<area shape="rect" id="node13" href="ReferenceValueMap2.Weak.html" title="ReferenceValueMap2.Weak" alt="" coords="447,173,630,198"/>
+<area shape="rect" id="node14" title="SoftReference (java.lang.ref)" alt="" coords="59,487,162,527"/>
+<area shape="rect" id="node15" title="WeakReference (java.lang.ref)" alt="" coords="53,287,168,327"/>
+<area shape="rect" id="node16" title="AbstractMap (java.util)" alt="" coords="63,133,159,173"/>
+<area shape="rect" id="node17" href="ReferenceQueueWorker.html" title="ReferenceQueueWorker" alt="" coords="249,77,412,102"/>
+<area shape="rect" id="node18" href="ReferenceValueMap.html" title="ReferenceValueMap" alt="" coords="469,222,608,247"/>
+<area shape="rect" id="node19" href="ReferenceValueMap2.html" title="ReferenceValueMap2" alt="" coords="258,141,403,166"/>
+<area shape="rect" id="node20" href="../concurrent/Worker.html" title="Worker (org.eclipse.net4j.util.concurrent)" alt="" coords="5,69,216,109"/>
+<area shape="rect" id="node21" title="&#171;interface&#187; ConcurrentMap (java.util.concurrent)" alt="" coords="261,207,400,262"/>
+<area shape="rect" id="node22" href="KeyedReference.html" title="&#171;interface&#187; KeyedReference" alt="" coords="52,423,169,463"/>
+<area shape="rect" id="node23" href="ReferenceType.html" title="&#171;enum&#187; ReferenceType" alt="" coords="57,5,165,45"/>
 </map>
 
 <CENTER><IMG SRC="package-summary.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -127,6 +133,14 @@ A framework for memory-sensitive keyed references and value maps.
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/ref/Interner.html" title="class in org.eclipse.net4j.util.ref">Interner&lt;E&gt;</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/ref/Interner.Entry.html" title="class in org.eclipse.net4j.util.ref">Interner.Entry&lt;E&gt;</A></B></TD>
+<TD>A weak reference holder that caches the hash code of the referent and is chained in the <A HREF="../../../../../org/eclipse/net4j/util/ref/Interner.html#entries"><CODE>Interner.entries</CODE></A> to handle collisions.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/ref/KeyedPhantomReference.html" title="class in org.eclipse.net4j.util.ref">KeyedPhantomReference&lt;K,T&gt;</A></B></TD>
@@ -163,6 +177,23 @@ A framework for memory-sensitive keyed references and value maps.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap.Weak.html" title="class in org.eclipse.net4j.util.ref">ReferenceValueMap.Weak&lt;K,V&gt;</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="class in org.eclipse.net4j.util.ref">ReferenceValueMap2&lt;K,V&gt;</A></B></TD>
+<TD>A <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><CODE>Map</CODE></A> implementation that uses <A HREF="../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref"><CODE>KeyedReference</CODE></A> instances (<A HREF="../../../../../org/eclipse/net4j/util/ref/KeyedStrongReference.html" title="class in org.eclipse.net4j.util.ref"><CODE>KeyedStrongReference</CODE></A>,
+ <A HREF="../../../../../org/eclipse/net4j/util/ref/KeyedSoftReference.html" title="class in org.eclipse.net4j.util.ref"><CODE>KeyedSoftReference</CODE></A>, <A HREF="../../../../../org/eclipse/net4j/util/ref/KeyedWeakReference.html" title="class in org.eclipse.net4j.util.ref"><CODE>KeyedWeakReference</CODE></A> or <A HREF="../../../../../org/eclipse/net4j/util/ref/KeyedPhantomReference.html" title="class in org.eclipse.net4j.util.ref"><CODE>KeyedPhantomReference</CODE></A>) as its values.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Soft.html" title="class in org.eclipse.net4j.util.ref">ReferenceValueMap2.Soft&lt;K,V&gt;</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Strong.html" title="class in org.eclipse.net4j.util.ref">ReferenceValueMap2.Strong&lt;K,V&gt;</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.Weak.html" title="class in org.eclipse.net4j.util.ref">ReferenceValueMap2.Weak&lt;K,V&gt;</A></B></TD>
 <TD>&nbsp;</TD>
 </TR>
 </TABLE>

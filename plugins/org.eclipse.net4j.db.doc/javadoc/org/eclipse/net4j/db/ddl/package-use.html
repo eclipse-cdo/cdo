@@ -98,6 +98,10 @@ Packages that use <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summa
 <TD>The Net4j DB framework concepts for the abstraction of the SQL data definition language.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.net4j.db.ddl.delta"><B>org.eclipse.net4j.db.ddl.delta</B></A></TD>
+<TD>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.net4j.db.derby"><B>org.eclipse.net4j.db.derby</B></A></TD>
 <TD>The Net4j DB Framework support for Derby databases.&nbsp;</TD>
 </TR>
@@ -129,6 +133,10 @@ Packages that use <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summa
 <TD><A HREF="#org.eclipse.net4j.spi.db"><B>org.eclipse.net4j.spi.db</B></A></TD>
 <TD>Server service provider interfaces and useful base implementations for the Net4j DB framework.&nbsp;</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.net4j.spi.db.ddl"><B>org.eclipse.net4j.spi.db.ddl</B></A></TD>
+<TD>Server service provider interfaces for the Net4j DB framework.&nbsp;</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -143,6 +151,12 @@ Classes in <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summary.html
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A field (column) specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBNamedElement.html#org.eclipse.net4j.db"><B>IDBNamedElement</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBSchema.html#org.eclipse.net4j.db"><B>IDBSchema</B></A></B>
@@ -167,6 +181,12 @@ Classes in <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summary.html
 Classes in <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</A> used by <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</A></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBElement.html#org.eclipse.net4j.db.ddl"><B>IDBElement</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBField.html#org.eclipse.net4j.db.ddl"><B>IDBField</B></A></B>
 
 <BR>
@@ -185,6 +205,18 @@ Classes in <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summary.html
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The type of an <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>index</CODE></A> specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBIndexField.html#org.eclipse.net4j.db.ddl"><B>IDBIndexField</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An index field specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB index</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBNamedElement.html#org.eclipse.net4j.db.ddl"><B>IDBNamedElement</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBSchema.html#org.eclipse.net4j.db.ddl"><B>IDBSchema</B></A></B>
 
 <BR>
@@ -198,7 +230,83 @@ Classes in <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summary.html
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies a hierachical namespace for elements in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB schema</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBSchemaElement.SchemaElementType.html#org.eclipse.net4j.db.ddl"><B>IDBSchemaElement.SchemaElementType</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBSchemaVisitor.html#org.eclipse.net4j.db.ddl"><B>IDBSchemaVisitor</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBTable.html#org.eclipse.net4j.db.ddl"><B>IDBTable</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A table specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB schema</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/SchemaElementNotFoundException.html#org.eclipse.net4j.db.ddl"><B>SchemaElementNotFoundException</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.net4j.db.ddl.delta"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</A> used by <A HREF="../../../../../org/eclipse/net4j/db/ddl/delta/package-summary.html">org.eclipse.net4j.db.ddl.delta</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBElement.html#org.eclipse.net4j.db.ddl.delta"><B>IDBElement</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBField.html#org.eclipse.net4j.db.ddl.delta"><B>IDBField</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A field (column) specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBIndex.html#org.eclipse.net4j.db.ddl.delta"><B>IDBIndex</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An index specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBIndexField.html#org.eclipse.net4j.db.ddl.delta"><B>IDBIndexField</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An index field specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB index</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBNamedElement.html#org.eclipse.net4j.db.ddl.delta"><B>IDBNamedElement</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBSchema.html#org.eclipse.net4j.db.ddl.delta"><B>IDBSchema</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies a number of <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB tables</CODE></A> that can be created in or dropped from a database through a
+ <A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db"><CODE>DB adapter</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBSchemaElement.html#org.eclipse.net4j.db.ddl.delta"><B>IDBSchemaElement</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies a hierachical namespace for elements in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB schema</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBTable.html#org.eclipse.net4j.db.ddl.delta"><B>IDBTable</B></A></B>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A table specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB schema</CODE></A>.</TD>
@@ -254,6 +362,18 @@ Classes in <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summary.html
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A field (column) specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBIndex.Type.html#org.eclipse.net4j.db.h2"><B>IDBIndex.Type</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The type of an <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>index</CODE></A> specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBTable.html#org.eclipse.net4j.db.h2"><B>IDBTable</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A table specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB schema</CODE></A>.</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -284,6 +404,12 @@ Classes in <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summary.html
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A field (column) specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBIndex.html#org.eclipse.net4j.db.mysql"><B>IDBIndex</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An index specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -299,6 +425,12 @@ Classes in <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summary.html
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A field (column) specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBTable.html#org.eclipse.net4j.db.postgresql"><B>IDBTable</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A table specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB schema</CODE></A>.</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -307,6 +439,25 @@ Classes in <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summary.html
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 Classes in <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</A> used by org.eclipse.net4j.internal.db.ddl</FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBElement.html#org.eclipse.net4j.internal.db.ddl"><B>IDBElement</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBNamedElement.html#org.eclipse.net4j.internal.db.ddl"><B>IDBNamedElement</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBSchema.html#org.eclipse.net4j.internal.db.ddl"><B>IDBSchema</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies a number of <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB tables</CODE></A> that can be created in or dropped from a database through a
+ <A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db"><CODE>DB adapter</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBSchemaElement.html#org.eclipse.net4j.internal.db.ddl"><B>IDBSchemaElement</B></A></B>
@@ -336,6 +487,12 @@ Classes in <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summary.html
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An index specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBIndex.Type.html#org.eclipse.net4j.spi.db"><B>IDBIndex.Type</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The type of an <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>index</CODE></A> specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBSchema.html#org.eclipse.net4j.spi.db"><B>IDBSchema</B></A></B>
 
 <BR>
@@ -343,13 +500,71 @@ Classes in <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summary.html
  <A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db"><CODE>DB adapter</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBSchemaElement.html#org.eclipse.net4j.spi.db"><B>IDBSchemaElement</B></A></B>
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBTable.html#org.eclipse.net4j.spi.db"><B>IDBTable</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A table specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB schema</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.net4j.spi.db.ddl"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</A> used by <A HREF="../../../../../org/eclipse/net4j/spi/db/ddl/package-summary.html">org.eclipse.net4j.spi.db.ddl</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBElement.html#org.eclipse.net4j.spi.db.ddl"><B>IDBElement</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBField.html#org.eclipse.net4j.spi.db.ddl"><B>IDBField</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A field (column) specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBIndex.html#org.eclipse.net4j.spi.db.ddl"><B>IDBIndex</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An index specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBIndex.Type.html#org.eclipse.net4j.spi.db.ddl"><B>IDBIndex.Type</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The type of an <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>index</CODE></A> specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB table</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBIndexField.html#org.eclipse.net4j.spi.db.ddl"><B>IDBIndexField</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An index field specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB index</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBNamedElement.html#org.eclipse.net4j.spi.db.ddl"><B>IDBNamedElement</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBSchema.html#org.eclipse.net4j.spi.db.ddl"><B>IDBSchema</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies a number of <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB tables</CODE></A> that can be created in or dropped from a database through a
+ <A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db"><CODE>DB adapter</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBSchemaElement.html#org.eclipse.net4j.spi.db.ddl"><B>IDBSchemaElement</B></A></B>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies a hierachical namespace for elements in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB schema</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBTable.html#org.eclipse.net4j.spi.db"><B>IDBTable</B></A></B>
+<TD><B><A HREF="../../../../../org/eclipse/net4j/db/ddl/class-use/IDBTable.html#org.eclipse.net4j.spi.db.ddl"><B>IDBTable</B></A></B>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A table specification in a <A HREF="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB schema</CODE></A>.</TD>

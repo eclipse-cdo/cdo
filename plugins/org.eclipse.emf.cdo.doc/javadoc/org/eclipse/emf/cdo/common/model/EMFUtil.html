@@ -313,6 +313,22 @@ Various static helper methods for dealing with EMF meta models.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T&gt; T</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/EMFUtil.html#getAdapter(org.eclipse.emf.common.notify.Notifier, java.lang.Class)">getAdapter</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</A>&nbsp;notifier,
+           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</A>&lt;T&gt;&nbsp;type)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A>[]</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/EMFUtil.html#getAllPackages(org.eclipse.emf.ecore.EPackage)">getAllPackages</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</A>&nbsp;ePackage)</CODE>
 
@@ -367,7 +383,7 @@ Various static helper methods for dealing with EMF meta models.
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/EMFUtil.html#getPersistentFeatures(org.eclipse.emf.common.util.EList)">getPersistentFeatures</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&gt;&nbsp;eFeatures)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>This method is expensive and will be removed in the future.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -425,7 +441,7 @@ Various static helper methods for dealing with EMF meta models.
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)">isPersistent</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <code>true</code> if CDO considers the given feature <i>persistent</i>, <code>false</code> otherwise.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -765,12 +781,15 @@ public static <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.
 <A NAME="getPersistentFeatures(org.eclipse.emf.common.util.EList)"><!-- --></A><H3>
 getPersistentFeatures</H3>
 <PRE>
-public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&gt; <B>getPersistentFeatures</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&gt;&nbsp;eFeatures)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&gt; <B>getPersistentFeatures</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</A>&lt;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&gt;&nbsp;eFeatures)</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>This method is expensive and will be removed in the future.</I>
+<P>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>3.0</DD>
-</DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><CODE>isPersistent(EStructuralFeature)</CODE></A></DL>
 </DD>
 </DL>
 <HR>
@@ -780,6 +799,15 @@ isPersistent</H3>
 <PRE>
 public static boolean <B>isPersistent</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</A>&nbsp;feature)</PRE>
 <DL>
+<DD>Returns <code>true</code> if CDO considers the given feature <i>persistent</i>, <code>false</code> otherwise.
+ <p>
+ Note that CDO <i>persistent</i> is not identical to <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true#isTransient()" title="class or interface in org.eclipse.emf.ecore"><CODE>non-transient</CODE></A> because that can be
+ overridden with <A HREF="../../../../../../org/eclipse/emf/cdo/common/model/EMFUtil.html#CDO_ANNOTATION_KEY_PERSISTENT"><CODE>CDO_ANNOTATION_KEY_PERSISTENT</CODE></A>. Another reason for possible deviations is that CDO considers transient
+ <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>references</CODE></A> <i>persistent</i> if they have a <i>persistent</i> <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EReference.html?is-external=true#getEOpposite()" title="class or interface in org.eclipse.emf.ecore"><CODE>opposite</CODE></A>.
+ <p>
+ Note also that the checks for the aforementioned deviations from <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true#isTransient()" title="class or interface in org.eclipse.emf.ecore"><CODE>EStructuralFeature.isTransient()</CODE></A> make this method somewhat
+ expensive. Whenever possible <A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html#isPersistent(int)"><CODE>CDOClassInfo.isPersistent()</CODE></A> should be called instead.
+<P>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>3.0</DD>
@@ -847,6 +875,20 @@ public static <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getAdapter(org.eclipse.emf.common.notify.Notifier, java.lang.Class)"><!-- --></A><H3>
+getAdapter</H3>
+<PRE>
+public static &lt;T&gt; T <B>getAdapter</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.8.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</A>&nbsp;notifier,
+                               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</A>&lt;T&gt;&nbsp;type)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.2</DD>
 </DL>
 </DD>
 </DL>

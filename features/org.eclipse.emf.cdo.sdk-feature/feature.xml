@@ -52,7 +52,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.server.objectivity"
+         id="org.eclipse.emf.cdo.server.lissome"
          version="0.0.0"/>
 
    <includes
@@ -73,6 +73,10 @@
 
    <includes
          id="org.eclipse.emf.cdo.server.db4o.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.server.objectivity.source"
          version="0.0.0"/>
 
    <includes

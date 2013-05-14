@@ -24,13 +24,10 @@ import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.NClob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
-import java.sql.SQLXML;
 import java.sql.Savepoint;
 import java.sql.Statement;
 import java.sql.Struct;
@@ -342,12 +339,12 @@ public final class DBConnection implements IDBConnection
     return delegate.createBlob();
   }
 
-  public NClob createNClob() throws SQLException
+  public java.sql.NClob createNClob() throws SQLException
   {
     return delegate.createNClob();
   }
 
-  public SQLXML createSQLXML() throws SQLException
+  public java.sql.SQLXML createSQLXML() throws SQLException
   {
     return delegate.createSQLXML();
   }
@@ -357,12 +354,12 @@ public final class DBConnection implements IDBConnection
     return delegate.isValid(timeout);
   }
 
-  public void setClientInfo(String name, String value) throws SQLClientInfoException
+  public void setClientInfo(String name, String value) throws java.sql.SQLClientInfoException
   {
     delegate.setClientInfo(name, value);
   }
 
-  public void setClientInfo(Properties properties) throws SQLClientInfoException
+  public void setClientInfo(Properties properties) throws java.sql.SQLClientInfoException
   {
     delegate.setClientInfo(properties);
   }

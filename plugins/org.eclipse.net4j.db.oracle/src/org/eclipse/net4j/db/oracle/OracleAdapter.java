@@ -36,6 +36,7 @@ public class OracleAdapter extends DBAdapter
     List<String> list = new ArrayList<String>(Arrays.asList(getSQL92ReservedWords()));
     list.add("INDEX");
     list.add("COMMENT");
+    list.add("ACCESS");
     return list.toArray(new String[list.size()]);
   }
 

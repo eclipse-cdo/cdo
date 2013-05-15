@@ -60,7 +60,7 @@
         -->
 
         <!-- Optional:
-        <property name="objectTypeCacheSize" value="100000" />
+        <property name="objectTypeCacheSize" value="100000"/>
         -->
 
       </mappingStrategy>
@@ -102,10 +102,13 @@
 
       <!-- Example:
 			<dbAdapter name="oracle"/>
-      <dataSource class="oracle.jdbc.pool.OracleDataSource"
-        url="jdbc:oracle:thin:@localhost:1521:xe"
-        user="username"
-        password="password"/>
+			<dataSource class="oracle.jdbc.pool.OracleDataSource"
+				driverType="thin"
+				serverName="serverURL"
+				portNumber="1521"
+				databaseName="SID"
+				user="user"
+				password="passwd"/>
 			-->
 
     </store>

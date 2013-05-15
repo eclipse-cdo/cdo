@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.admin.CDOAdminClient;
 import org.eclipse.emf.cdo.admin.CDOAdminClientManager;
 import org.eclipse.emf.cdo.admin.CDOAdminClientRepository;
 import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
 import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
@@ -278,6 +279,8 @@ public class CDOAdminView extends ContainerView
         CDONet4jSession session = repository.openSession(this);
         if (session != null)
         {
+          CDOPackageRegistryPopulator.populate(session.getPackageRegistry());
+
           IManagedContainer container = adminManager.getContainer();
           String description = "session" + getNextSessionNumber();
           container.putElement(CDOSessionFactory.PRODUCT_GROUP, "admin", description, session);

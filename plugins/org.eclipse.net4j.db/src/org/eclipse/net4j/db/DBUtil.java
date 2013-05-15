@@ -832,14 +832,17 @@ public final class DBUtil
       for (int i = 0; i < results.length; i++)
       {
         int result = results[i];
-        if (result < 0 && result != Statement.SUCCESS_NO_INFO)
+        if (result != Statement.SUCCESS_NO_INFO)
         {
-          throw new DBException("Result " + i + " is not successful: " + result);
-        }
+          if (result < 0)
+          {
+            throw new DBException("Result " + i + " is not successful: " + result);
+          }
 
-        if (checkExactlyOne && result != 1)
-        {
-          throw new DBException("Result " + i + " did not affect exactly one row: " + result);
+          if (checkExactlyOne && result != 1)
+          {
+            throw new DBException("Result " + i + " did not affect exactly one row: " + result);
+          }
         }
       }
     }

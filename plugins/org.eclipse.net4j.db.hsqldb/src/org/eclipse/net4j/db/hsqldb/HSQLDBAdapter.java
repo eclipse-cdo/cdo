@@ -15,6 +15,8 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.spi.db.DBAdapter;
 
+import java.sql.SQLException;
+
 /**
  * A {@link IDBAdapter DB adapter} for <a href="http://hsqldb.org/">HyperSQL</a> databases.
  *
@@ -81,5 +83,19 @@ public class HSQLDBAdapter extends DBAdapter
   public String[] getReservedWords()
   {
     return getSQL92ReservedWords();
+  }
+
+  @Override
+  public boolean isTableNotFoundException(SQLException ex)
+  {
+    String sqlState = ex.getSQLState();
+    return "42501".equals(sqlState);
+  }
+
+  @Override
+  public boolean isColumnNotFoundException(SQLException ex)
+  {
+    String sqlState = ex.getSQLState();
+    return "42501".equals(sqlState);
   }
 }

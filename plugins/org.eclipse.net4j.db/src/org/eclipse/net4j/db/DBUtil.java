@@ -768,7 +768,10 @@ public final class DBUtil
     try
     {
       connection = connectionProvider.getConnection();
-      return runnable.run(connection);
+
+      T result = runnable.run(connection);
+      connection.commit();
+      return result;
     }
     catch (SQLException ex)
     {

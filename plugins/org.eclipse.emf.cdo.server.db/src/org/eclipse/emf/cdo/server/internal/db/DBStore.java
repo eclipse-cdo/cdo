@@ -619,7 +619,8 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
 
     String schemaName = repository.getName();
-    boolean fixNullableIndexColumns = schemaVersion < FIRST_VERSION_WITH_NULLABLE_CHECKS;
+    boolean fixNullableIndexColumns = schemaVersion != FIRST_START
+        && schemaVersion < FIRST_VERSION_WITH_NULLABLE_CHECKS;
 
     database = DBUtil.openDatabase(dbAdapter, dbConnectionProvider, schemaName, fixNullableIndexColumns);
     IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();

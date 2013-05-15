@@ -980,7 +980,8 @@ public abstract class DBAdapter implements IDBAdapter
    */
   public boolean isDuplicateKeyException(SQLException ex)
   {
-    return "23001".equals(ex.getSQLState());
+    String sqlState = ex.getSQLState();
+    return "23001".equals(sqlState);
   }
 
   /**
@@ -988,7 +989,8 @@ public abstract class DBAdapter implements IDBAdapter
    */
   public boolean isTableNotFoundException(SQLException ex)
   {
-    return "42S02".equals(ex.getSQLState());
+    String sqlState = ex.getSQLState();
+    return "42S02".equals(sqlState);
   }
 
   /**
@@ -996,7 +998,8 @@ public abstract class DBAdapter implements IDBAdapter
    */
   public boolean isColumnNotFoundException(SQLException ex)
   {
-    return "42S22".equals(ex.getSQLState());
+    String sqlState = ex.getSQLState();
+    return "42S22".equals(sqlState);
   }
 
   /**

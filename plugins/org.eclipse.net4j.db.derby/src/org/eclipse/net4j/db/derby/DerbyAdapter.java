@@ -107,4 +107,14 @@ public abstract class DerbyAdapter extends DBAdapter
     String sqlState = ex.getSQLState();
     return "42X05".equals(sqlState);
   }
+
+  @Override
+  public boolean isColumnNotFoundException(SQLException ex)
+  {
+    // Column '<columnName>' is either not in any table in the FROM list or appears within a join specification and is
+    // outside the scope of the join specification or appears in a HAVING clause and is not in the GROUP BY list. If
+    // this is a CREATE or ALTER TABLE statement then '<columnName>' is not a column in the target table.
+    String sqlState = ex.getSQLState();
+    return "42X04".equals(sqlState);
+  }
 }

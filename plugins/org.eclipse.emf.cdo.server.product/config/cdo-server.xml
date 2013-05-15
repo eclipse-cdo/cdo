@@ -79,7 +79,7 @@
       <!-- Example:
       <dbAdapter name="hsqldb"/>
       <dataSource class="org.eclipse.net4j.db.hsqldb.HSQLDBDataSource"
-        database="jdbc:hsqldb:mem:repo1"
+        database="jdbc:hsqldb:file:/temp/repo1"
         user="sa"/>
       -->
 

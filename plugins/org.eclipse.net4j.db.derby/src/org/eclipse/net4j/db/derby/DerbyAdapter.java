@@ -97,7 +97,7 @@ public abstract class DerbyAdapter extends DBAdapter
     // The statement was aborted because it would have caused a duplicate key value in a unique or primary key
     // constraint or unique index identified by '<value>' defined on '<value>'
     String sqlState = ex.getSQLState();
-    return "23505".equals(sqlState);
+    return "23505".equals(sqlState) || super.isDuplicateKeyException(ex);
   }
 
   @Override
@@ -105,7 +105,7 @@ public abstract class DerbyAdapter extends DBAdapter
   {
     // Table/View '<objectName>' does not exist
     String sqlState = ex.getSQLState();
-    return "42X05".equals(sqlState);
+    return "42X05".equals(sqlState) || super.isTableNotFoundException(ex);
   }
 
   @Override
@@ -115,6 +115,6 @@ public abstract class DerbyAdapter extends DBAdapter
     // outside the scope of the join specification or appears in a HAVING clause and is not in the GROUP BY list. If
     // this is a CREATE or ALTER TABLE statement then '<columnName>' is not a column in the target table.
     String sqlState = ex.getSQLState();
-    return "42X04".equals(sqlState);
+    return "42X04".equals(sqlState) || super.isColumnNotFoundException(ex);
   }
 }

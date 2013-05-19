@@ -4,16 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
-import org.eclipse.emf.cdo.server.IRepository.Props;
 
-import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.mysql.MYSQLAdapter;
 
@@ -21,17 +19,10 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import javax.sql.DataSource;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 /**
  * @author Simon McDuff
  */
-public class MysqlConfig extends DBConfig
+public class MysqlConfig extends AbstractSetupDBConfig
 {
   public static final String DB_ADAPTER_NAME = "Mysql";
 
@@ -47,10 +38,6 @@ public class MysqlConfig extends DBConfig
   public static final String PASS = "root";
 
   private static final long serialVersionUID = 1L;
-
-  private transient DataSource setupDataSource;
-
-  private transient List<String> databases = new ArrayList<String>();
 
   public MysqlConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
   {
@@ -70,98 +57,16 @@ public class MysqlConfig extends DBConfig
   }
 
   @Override
-  protected DataSource createDataSource(String repoName)
+  protected DataSource createDataSourceForDB(String dbName)
   {
-    MysqlDataSource ds = new MysqlDataSource();
-
-    initDatabase("test_" + repoName);
-
-    ds.setUrl("jdbc:mysql://" + MysqlConfig.HOST + "/test_" + repoName);
-    ds.setUser(MysqlConfig.USER);
-    if (MysqlConfig.PASS != null)
+    MysqlDataSource dataSource = new MysqlDataSource();
+    dataSource.setUrl("jdbc:mysql://" + HOST);
+    dataSource.setUser(USER);
+    if (PASS != null)
     {
-      ds.setPassword(MysqlConfig.PASS);
+      dataSource.setPassword(PASS);
     }
 
-    return ds;
-  }
-
-  private void initDatabase(String dbName)
-  {
-    dropDatabase(dbName);
-    Connection connection = null;
-    Statement stmt = null;
-
-    try
-    {
-      connection = getSetupDataSource().getConnection();
-      stmt = connection.createStatement();
-      stmt.execute("create database " + dbName);
-    }
-    catch (SQLException ignore)
-    {
-    }
-    finally
-    {
-      DBUtil.close(stmt);
-      DBUtil.close(connection);
-    }
-  }
-
-  @Override
-  protected void deactivateRepositories()
-  {
-    super.deactivateRepositories();
-    for (String dbName : databases)
-    {
-      dropDatabase(dbName);
-    }
-  }
-
-  private void dropDatabase(String dbName)
-  {
-    Connection connection = null;
-    Statement stmt = null;
-
-    try
-    {
-      connection = getSetupDataSource().getConnection();
-      stmt = connection.createStatement();
-      stmt.execute("DROP database " + dbName);
-    }
-    catch (SQLException ignore)
-    {
-    }
-    finally
-    {
-      DBUtil.close(stmt);
-      DBUtil.close(connection);
-    }
-  }
-
-  private DataSource getSetupDataSource()
-  {
-    if (setupDataSource == null)
-    {
-      MysqlDataSource ds = new MysqlDataSource();
-      ds.setUrl("jdbc:mysql://" + MysqlConfig.HOST);
-      ds.setUser(MysqlConfig.USER);
-      if (MysqlConfig.PASS != null)
-      {
-        ds.setPassword(MysqlConfig.PASS);
-      }
-
-      setupDataSource = ds;
-    }
-
-    return setupDataSource;
-  }
-
-  @Override
-  protected void initRepositoryProperties(Map<String, String> props)
-  {
-    super.initRepositoryProperties(props);
-    props.put(Props.SUPPORTING_AUDITS, "true");
-    props.put(Props.SUPPORTING_BRANCHES, "true");
+    return dataSource;
   }
 }

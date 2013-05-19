@@ -11,35 +11,30 @@
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
-import org.eclipse.emf.cdo.tests.db.bundle.OM;
 
-import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.postgresql.PostgreSQLAdapter;
-import org.eclipse.net4j.util.io.IOUtil;
 
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
 
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.SQLException;
-
 /**
  * @author Victor Roldan Betancort
  */
-public class PostgresqlConfig extends DBConfig
+public class PostgresqlConfig extends AbstractSetupDBConfig
 {
   public static final String DB_ADAPTER_NAME = "Postgresql";
 
+  public static final String HOST = "localhost";
+
+  public static final String USER = "postgres";
+
+  public static final String PASS = "postgres";
+
+  public static final String SETUP_DATABASE_NAME = "postgres";
+
   private static final long serialVersionUID = 1L;
-
-  private transient PGSimpleDataSource dataSource;
-
-  // private transient PGSimpleDataSource setupDataSource;
-
-  // private transient String currentRepositoryName;
 
   public PostgresqlConfig(boolean supportingAudits, boolean supportingBranches,
       IDGenerationLocation idGenerationLocation)
@@ -60,60 +55,17 @@ public class PostgresqlConfig extends DBConfig
   }
 
   @Override
-  protected DataSource createDataSource(String repoName)
-  {
-    dataSource = internalCreateDataSource(repoName);
-
-    try
-    {
-      dataSource.setLogWriter(new PrintWriter(System.err));
-    }
-    catch (SQLException ex)
-    {
-      OM.LOG.warn(ex.getMessage());
-    }
-
-    dropDatabase();
-
-    return dataSource;
-  }
-
-  @Override
-  protected void deactivateRepositories()
-  {
-    super.deactivateRepositories();
-    dropDatabase();
-    dataSource = null;
-  }
-
-  private void dropDatabase()
-  {
-    Connection connection = null;
-
-    try
-    {
-      connection = dataSource.getConnection();
-      String databaseName = dataSource.getDatabaseName();
-
-      DBUtil.dropAllTables(connection, databaseName);
-    }
-    catch (SQLException ex)
-    {
-      IOUtil.ERR().println(ex);
-    }
-    finally
-    {
-      DBUtil.close(connection);
-    }
-  }
-
-  private PGSimpleDataSource internalCreateDataSource(String databaseName)
+  protected DataSource createDataSourceForDB(String dbName)
   {
     PGSimpleDataSource dataSource = new PGSimpleDataSource();
-    dataSource.setServerName("localhost");
-    dataSource.setDatabaseName(databaseName);
-    dataSource.setUser("postgres");
-    dataSource.setPassword("postgres");
+    dataSource.setServerName(HOST);
+    dataSource.setDatabaseName(dbName == null ? SETUP_DATABASE_NAME : dbName);
+    dataSource.setUser(USER);
+    if (PASS != null)
+    {
+      dataSource.setPassword(PASS);
+    }
+
     return dataSource;
   }
 }

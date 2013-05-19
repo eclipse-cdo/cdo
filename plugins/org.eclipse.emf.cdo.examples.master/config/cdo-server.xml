@@ -96,8 +96,8 @@
 				serverName="localhost"
 				portNumber="5432"
 				databaseName="repo1"
-				user="cdo"
-				password="cdo"/>
+				user="postgres"
+				password="postgres"/>
       -->
 
       <!-- Example:

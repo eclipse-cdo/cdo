@@ -92,8 +92,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
-import java.sql.Blob;
-import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -396,17 +394,15 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       resultSet.next();
 
       long size = resultSet.getLong(1);
-      Blob blob = resultSet.getBlob(2);
+      InputStream inputStream = resultSet.getBinaryStream(2);
       if (resultSet.wasNull())
       {
-        Clob clob = resultSet.getClob(3);
-        Reader in = clob.getCharacterStream();
-        IOUtil.copyCharacter(in, new OutputStreamWriter(out), size);
+        Reader reader = resultSet.getCharacterStream(3);
+        IOUtil.copyCharacter(reader, new OutputStreamWriter(out), size);
       }
       else
       {
-        InputStream in = blob.getBinaryStream();
-        IOUtil.copyBinary(in, out, size);
+        IOUtil.copyBinary(inputStream, out, size);
       }
     }
     catch (SQLException ex)
@@ -432,17 +428,16 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       {
         byte[] id = HexUtil.hexToBytes(resultSet.getString(1));
         long size = resultSet.getLong(2);
-        Blob blob = resultSet.getBlob(3);
+        InputStream inputStream = resultSet.getBinaryStream(3);
         if (resultSet.wasNull())
         {
-          Clob clob = resultSet.getClob(4);
-          Reader in = clob.getCharacterStream();
+          Reader reader = resultSet.getCharacterStream(4);
           Writer out = handler.handleClob(id, size);
           if (out != null)
           {
             try
             {
-              IOUtil.copyCharacter(in, out, size);
+              IOUtil.copyCharacter(reader, out, size);
             }
             finally
             {
@@ -452,13 +447,12 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
         }
         else
         {
-          InputStream in = blob.getBinaryStream();
           OutputStream out = handler.handleBlob(id, size);
           if (out != null)
           {
             try
             {
-              IOUtil.copyBinary(in, out, size);
+              IOUtil.copyBinary(inputStream, out, size);
             }
             finally
             {

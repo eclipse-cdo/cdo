@@ -214,12 +214,18 @@ public final class DBConnection implements IDBConnection
 
   public void commit() throws SQLException
   {
-    delegate.commit();
+    if (!delegate.getAutoCommit())
+    {
+      delegate.commit();
+    }
   }
 
   public void rollback() throws SQLException
   {
-    delegate.rollback();
+    if (!delegate.getAutoCommit())
+    {
+      delegate.rollback();
+    }
   }
 
   public DatabaseMetaData getMetaData() throws SQLException

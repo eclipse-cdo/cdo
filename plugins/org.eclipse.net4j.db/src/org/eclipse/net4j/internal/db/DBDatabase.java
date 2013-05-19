@@ -53,7 +53,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
     this.adapter = adapter;
     this.connectionProvider = connectionProvider;
 
-    schema = DBUtil.execute(connectionProvider, new RunnableWithConnection<IDBSchema>()
+    schema = DBUtil.execute(DBDatabase.this, new RunnableWithConnection<IDBSchema>()
     {
       public IDBSchema run(Connection connection) throws SQLException
       {

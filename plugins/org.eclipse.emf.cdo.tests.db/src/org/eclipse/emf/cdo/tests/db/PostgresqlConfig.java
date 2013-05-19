@@ -37,9 +37,9 @@ public class PostgresqlConfig extends DBConfig
 
   private transient PGSimpleDataSource dataSource;
 
-  private transient PGSimpleDataSource setupDataSource;
+  // private transient PGSimpleDataSource setupDataSource;
 
-  private String currentRepositoryName = "cdodb1";
+  // private transient String currentRepositoryName;
 
   public PostgresqlConfig(boolean supportingAudits, boolean supportingBranches,
       IDGenerationLocation idGenerationLocation)
@@ -62,13 +62,7 @@ public class PostgresqlConfig extends DBConfig
   @Override
   protected DataSource createDataSource(String repoName)
   {
-    currentRepositoryName = repoName;
-
-    dataSource = new PGSimpleDataSource();
-    dataSource.setServerName("localhost");
-    dataSource.setDatabaseName(currentRepositoryName);
-    dataSource.setUser("sa");
-    dataSource.setPassword("sa");
+    dataSource = internalCreateDataSource(repoName);
 
     try
     {
@@ -88,9 +82,8 @@ public class PostgresqlConfig extends DBConfig
   protected void deactivateRepositories()
   {
     super.deactivateRepositories();
-    dataSource = null;
-    setupDataSource = null;
     dropDatabase();
+    dataSource = null;
   }
 
   private void dropDatabase()
@@ -99,12 +92,14 @@ public class PostgresqlConfig extends DBConfig
 
     try
     {
-      connection = getSetupDataSource().getConnection();
-      DBUtil.dropAllTables(connection, currentRepositoryName);
+      connection = dataSource.getConnection();
+      String databaseName = dataSource.getDatabaseName();
+
+      DBUtil.dropAllTables(connection, databaseName);
     }
-    catch (SQLException ignore)
+    catch (SQLException ex)
     {
-      IOUtil.ERR().println(ignore);
+      IOUtil.ERR().println(ex);
     }
     finally
     {
@@ -112,17 +107,13 @@ public class PostgresqlConfig extends DBConfig
     }
   }
 
-  private DataSource getSetupDataSource()
+  private PGSimpleDataSource internalCreateDataSource(String databaseName)
   {
-    if (setupDataSource == null)
-    {
-      setupDataSource = new PGSimpleDataSource();
-      setupDataSource.setServerName("localhost");
-      setupDataSource.setDatabaseName(currentRepositoryName);
-      setupDataSource.setUser("sa");
-      setupDataSource.setPassword("sa");
-    }
-
-    return setupDataSource;
+    PGSimpleDataSource dataSource = new PGSimpleDataSource();
+    dataSource.setServerName("localhost");
+    dataSource.setDatabaseName(databaseName);
+    dataSource.setUser("postgres");
+    dataSource.setPassword("postgres");
+    return dataSource;
   }
 }

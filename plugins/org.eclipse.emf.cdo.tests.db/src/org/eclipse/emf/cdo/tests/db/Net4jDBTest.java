@@ -21,6 +21,7 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.ExtendedIOUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.ByteArrayInputStream;
@@ -46,19 +47,12 @@ public class Net4jDBTest extends AbstractCDOTest
 {
   private static final String FIELD_NAME = "testField";
 
-  private ArrayList<Pair<DBType, Object>> columns = new ArrayList<Pair<DBType, Object>>();
-
-  private DBStore store;
-
-  private Connection connection;
+  private transient ArrayList<Pair<DBType, Object>> columns = new ArrayList<Pair<DBType, Object>>();
 
   @Override
   protected void doTearDown() throws Exception
   {
     columns.clear();
-    columns = null;
-    store = null;
-    connection = null;
     super.doTearDown();
   }
 
@@ -158,7 +152,7 @@ public class Net4jDBTest extends AbstractCDOTest
   {
     registerColumn(DBType.CLOB, "Test");
 
-    StringBuffer b = new StringBuffer();
+    StringBuilder b = new StringBuilder();
     for (int i = 0; i < 1000000; i++)
     {
       b.append("x");
@@ -336,13 +330,31 @@ public class Net4jDBTest extends AbstractCDOTest
     doTest(getName());
   }
 
-  private void registerColumn(DBType type, Object value)
+  private void registerColumn(DBType type, Object value) throws IOException
   {
+    testIOSymmetry(type, value);
+
     Pair<DBType, Object> column = Pair.create(type, value);
     columns.add(column);
   }
 
-  private void prepareTable(final String tableName)
+  private void testIOSymmetry(DBType type, Object value) throws IOException
+  {
+    ByteArrayOutputStream output = new ByteArrayOutputStream();
+    ExtendedDataOutputStream outs = new ExtendedDataOutputStream(output);
+    writeTypeValue(outs, type, value);
+    outs.close();
+    output.flush();
+    byte[] buffer = output.toByteArray();
+    output.close();
+
+    ByteArrayInputStream input = new ByteArrayInputStream(buffer);
+    ExtendedDataInputStream ins = new ExtendedDataInputStream(input);
+    Object actualValue = readTypeValue(ins, type);
+    assertEquals(value, actualValue, type, -1);
+  }
+
+  private void prepareTable(DBStore store, final String tableName)
   {
     IDBDatabase database = store.getDatabase();
     database.updateSchema(new IDBDatabase.RunnableWithSchema()
@@ -371,7 +383,7 @@ public class Net4jDBTest extends AbstractCDOTest
     });
   }
 
-  private void writeValues(String tableName) throws Exception
+  private void writeValues(Connection connection, String tableName) throws Exception
   {
     ByteArrayOutputStream output = new ByteArrayOutputStream();
     ExtendedDataOutputStream outs = new ExtendedDataOutputStream(output);
@@ -418,7 +430,7 @@ public class Net4jDBTest extends AbstractCDOTest
     input.close();
   }
 
-  private void checkValues(String tableName) throws Exception
+  private void checkValues(Connection connection, String tableName) throws Exception
   {
     Statement stmt = connection.createStatement();
     ResultSet resultSet = stmt.executeQuery("SELECT * FROM " + tableName);
@@ -430,7 +442,8 @@ public class Net4jDBTest extends AbstractCDOTest
     int c = 1;
     for (Pair<DBType, Object> column : columns)
     {
-      column.getElement1().writeValue(outs, resultSet, c++, false);
+      DBType dbType = column.getElement1();
+      dbType.writeValue(outs, resultSet, c++, false);
     }
 
     resultSet.close();
@@ -451,50 +464,53 @@ public class Net4jDBTest extends AbstractCDOTest
       Object expected = column.getElement2();
 
       Object actual = readTypeValue(ins, dbType);
-      Class<? extends Object> type = expected.getClass();
-      if (type.isArray())
+      assertEquals(expected, actual, dbType, c++);
+    }
+  }
+
+  private void assertEquals(Object expected, Object actual, DBType dbType, int c)
+  {
+    Class<? extends Object> type = expected.getClass();
+    if (type.isArray())
+    {
+      Class<?> componentType = type.getComponentType();
+      if (componentType == byte.class)
       {
-        Class<?> componentType = type.getComponentType();
-        if (componentType == byte.class)
-        {
-          assertEquals("Error in column " + c + " of type " + dbType, true,
-              Arrays.equals((byte[])expected, (byte[])actual));
-        }
-        else if (componentType == char.class)
-        {
-          assertEquals("Error in column " + c + " with type " + dbType, true,
-              Arrays.equals((char[])expected, (char[])actual));
-        }
-        else
-        {
-          throw new IllegalStateException("Unexpected component type: " + componentType);
-        }
+        assertEquals("Error in column " + c + " of type " + dbType, true,
+            Arrays.equals((byte[])expected, (byte[])actual));
+      }
+      else if (componentType == char.class)
+      {
+        assertEquals("Error in column " + c + " with type " + dbType, true,
+            Arrays.equals((char[])expected, (char[])actual));
       }
       else
       {
-        if (dbType == DBType.TIME)
-        {
-          actual = (Long)actual % 86400000L;
-          expected = (Long)expected % 86400000L;
-        }
-
-        assertEquals("Error in column " + c + " with type " + dbType, expected, actual);
+        throw new IllegalStateException("Unexpected component type: " + componentType);
+      }
+    }
+    else
+    {
+      if (dbType == DBType.TIME)
+      {
+        actual = (Long)actual % 86400000L;
+        expected = (Long)expected % 86400000L;
       }
 
-      ++c;
+      assertEquals("Error in column " + c + " with type " + dbType, expected, actual);
     }
   }
 
   private void doTest(String tableName) throws Exception
   {
-    store = (DBStore)getRepository().getStore();
-    connection = store.getConnection();
+    DBStore store = (DBStore)getRepository().getStore();
+    Connection connection = store.getConnection();
 
     try
     {
-      prepareTable(tableName);
-      writeValues(tableName);
-      checkValues(tableName);
+      prepareTable(store, tableName);
+      writeValues(connection, tableName);
+      checkValues(connection, tableName);
     }
     finally
     {
@@ -563,25 +579,8 @@ public class Net4jDBTest extends AbstractCDOTest
       return;
 
     case CLOB:
-    {
-      long length = ((String)value).length();
-      StringReader source = new StringReader((String)value);
-      try
-      {
-        outs.writeLong(length);
-        while (length-- > 0)
-        {
-          int c = source.read();
-          outs.writeChar(c);
-        }
-      }
-      finally
-      {
-        IOUtil.close(source);
-      }
-
+      ExtendedIOUtil.writeCharacterStream(outs, new StringReader((String)value));
       return;
-    }
 
     case BIGINT:
     case DATE:
@@ -597,25 +596,8 @@ public class Net4jDBTest extends AbstractCDOTest
       return;
 
     case BLOB:
-    {
-      long length = ((byte[])value).length;
-      ByteArrayInputStream source = new ByteArrayInputStream((byte[])value);
-      try
-      {
-        outs.writeLong(length);
-        while (length-- > 0)
-        {
-          int b = source.read();
-          outs.writeByte(b + Byte.MIN_VALUE);
-        }
-      }
-      finally
-      {
-        IOUtil.close(source);
-      }
-
+      ExtendedIOUtil.writeBinaryStream(outs, new ByteArrayInputStream((byte[])value));
       return;
-    }
 
     default:
       throw new UnsupportedOperationException("not implemented");
@@ -670,19 +652,16 @@ public class Net4jDBTest extends AbstractCDOTest
     case CLOB:
     {
       StringWriter result = new StringWriter();
+
       try
       {
-        long length = ins.readLong();
-        while (length-- > 0)
-        {
-          char c = ins.readChar();
-          result.append(c);
-        }
+        ExtendedIOUtil.readCharacterStream(ins, result);
       }
       finally
       {
         IOUtil.close(result);
       }
+
       return result.toString();
     }
 
@@ -703,12 +682,7 @@ public class Net4jDBTest extends AbstractCDOTest
 
       try
       {
-        long length = ins.readLong();
-        while (length-- > 0)
-        {
-          int b = ins.readByte();
-          result.write(b - Byte.MIN_VALUE);
-        }
+        ExtendedIOUtil.readBinaryStream(ins, result);
       }
       finally
       {

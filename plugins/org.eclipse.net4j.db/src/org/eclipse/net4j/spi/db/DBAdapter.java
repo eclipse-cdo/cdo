@@ -189,6 +189,7 @@ public abstract class DBAdapter implements IDBAdapter
     try
     {
       statement = connection.createStatement();
+      statement.setMaxRows(1);
       resultSet = statement.executeQuery("SELECT * FROM " + table);
       ResultSetMetaData metaData = resultSet.getMetaData();
 

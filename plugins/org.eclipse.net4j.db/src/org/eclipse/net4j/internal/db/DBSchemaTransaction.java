@@ -101,10 +101,13 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
 
     try
     {
-      return run(connection);
+      DBSchemaDelta result = run(connection);
+      connection.commit();
+      return result;
     }
     catch (SQLException ex)
     {
+      DBUtil.rollbackSilently(connection);
       throw new DBException(ex);
     }
   }

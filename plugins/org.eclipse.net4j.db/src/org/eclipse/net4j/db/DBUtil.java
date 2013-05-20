@@ -329,7 +329,7 @@ public final class DBUtil
     catch (SQLException ex)
     {
       OM.LOG.error(ex);
-      rollback(connection);
+      rollbackSilently(connection);
       throw new DBException(ex);
     }
     finally
@@ -444,7 +444,7 @@ public final class DBUtil
         // first to clear any open transactions.
         if (!connection.getAutoCommit())
         {
-          rollback(connection);
+          rollbackSilently(connection);
         }
 
         connection.close();
@@ -480,15 +480,24 @@ public final class DBUtil
     }
   }
 
-  private static void rollback(Connection connection)
+  /**
+   * @since 4.2
+   */
+  public static Exception rollbackSilently(Connection connection)
   {
     try
     {
-      connection.rollback();
+      if (!connection.getAutoCommit())
+      {
+        connection.rollback();
+      }
+
+      return null;
     }
     catch (Exception ex)
     {
       OM.LOG.error(ex);
+      return ex;
     }
   }
 

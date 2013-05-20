@@ -632,6 +632,53 @@ public class CoreTypeMappings
   }
 
   /**
+   * @author Stefan Winkler
+   */
+  public static class TMCharacter2Integer extends AbstractTypeMapping
+  {
+    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(
+        ID_PREFIX + ".Character2Integer", EcorePackage.eINSTANCE.getEChar(), DBType.INTEGER));
+
+    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
+        + ".CharacterObject2Integer", EcorePackage.eINSTANCE.getECharacterObject(), DBType.INTEGER));
+
+    @Override
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
+    {
+      int intRepresentation = resultSet.getInt(getField().getName());
+      if (resultSet.wasNull())
+      {
+        return getFeature().isUnsettable() ? CDORevisionData.NIL : null;
+      }
+
+      return Character.valueOf((char)intRepresentation);
+    }
+
+    @Override
+    protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
+    {
+      stmt.setInt(index, /* (int) */((Character)value).charValue());
+    }
+
+    /**
+     * @author Stefan Winkler
+     */
+    public static class Factory extends AbstractTypeMappingFactory
+    {
+      public Factory(Descriptor descriptor)
+      {
+        super(descriptor);
+      }
+
+      @Override
+      public ITypeMapping create(String description) throws ProductCreationException
+      {
+        return new TMCharacter2Integer();
+      }
+    }
+  }
+
+  /**
    * @author Eike Stepper
    */
   public static class TMByte extends AbstractTypeMapping

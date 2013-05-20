@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.ColumnTypeModifier;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping.Provider;
 import org.eclipse.emf.cdo.server.internal.db.DBAnnotation;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingUtil.FactoryTypeParserException;
@@ -104,6 +105,27 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
   {
     populator.disconnect();
 
+    registerColumnTypeModifier("postgresql", new ColumnTypeModifier()
+    {
+      @Override
+      public DBType modify(Provider provider, IMappingStrategy mappingStrategy, EStructuralFeature feature,
+          DBType dbType)
+      {
+        EClassifier classifier = feature.getEType();
+        if (classifier == EcorePackage.eINSTANCE.getEChar())
+        {
+          return DBType.INTEGER;
+        }
+
+        if (classifier == EcorePackage.eINSTANCE.getECharacterObject())
+        {
+          return DBType.INTEGER;
+        }
+
+        return dbType;
+      }
+    });
+
     defaultFeatureMapDBTypes = new HashSet<DBType>();
     typeMappingsById = new HashMap<String, ITypeMapping.Descriptor>();
     typeMappingByTypes = new HashMap<Pair<EClassifier, DBType>, ITypeMapping.Descriptor>();
@@ -145,6 +167,8 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     container.registerFactory(CoreTypeMappings.TMBytesVarbinary.FACTORY);
     container.registerFactory(CoreTypeMappings.TMCharacter.FACTORY);
     container.registerFactory(CoreTypeMappings.TMCharacter.FACTORY_OBJECT);
+    container.registerFactory(CoreTypeMappings.TMCharacter2Integer.FACTORY);
+    container.registerFactory(CoreTypeMappings.TMCharacter2Integer.FACTORY_OBJECT);
     container.registerFactory(CoreTypeMappings.TMCustom.FACTORY_VARCHAR);
     container.registerFactory(CoreTypeMappings.TMCustom.FACTORY_CLOB);
     container.registerFactory(CoreTypeMappings.TMCustom.FACTORY_LONG_VARCHAR);

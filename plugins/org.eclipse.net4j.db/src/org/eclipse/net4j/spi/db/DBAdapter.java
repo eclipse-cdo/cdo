@@ -196,8 +196,13 @@ public abstract class DBAdapter implements IDBAdapter
       for (int i = 0; i < metaData.getColumnCount(); i++)
       {
         int column = i + 1;
-
         String name = metaData.getColumnName(column);
+        if (name == null)
+        {
+          // Bug 405924: Just to be sure in case this happens with Oracle.
+          continue;
+        }
+
         DBType type = DBType.getTypeByCode(metaData.getColumnType(column));
         int precision = metaData.getPrecision(column);
         int scale = metaData.getScale(column);
@@ -243,6 +248,12 @@ public abstract class DBAdapter implements IDBAdapter
       while (resultSet.next())
       {
         String name = resultSet.getString(indexNameColumn);
+        if (name == null)
+        {
+          // Bug 405924: It seems that this can happen with Oracle.
+          continue;
+        }
+
         if (indexName != null && !indexName.equals(name))
         {
           addIndex(connection, table, indexName, indexType, fieldInfos);
